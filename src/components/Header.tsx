@@ -8,7 +8,12 @@ import { useEffect, useState } from "react";
 export default function Header() {
     const router = useRouter(); // Initialize router without condition
     const pathname = usePathname(); // Initialize pathname without condition
-    const user = localStorage.getItem("user")
+    const [user,setUser] = useState<any>()
+
+    useEffect(()=>{
+       setUser(localStorage.getItem("user"))
+
+    },[])
     const navigateToSignIn = () => {
         router.push('/login');
     };
