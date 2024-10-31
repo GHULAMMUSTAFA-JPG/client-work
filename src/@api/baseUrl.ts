@@ -10,7 +10,7 @@ apiController.interceptors.request.use((request) => {
   if (localStorage.getItem("user")) {
     request.headers.Authorization = `Bearer ${JSON.parse(
       localStorage.getItem("user") ?? ""
-    ).token}`;
+    )?.token}`;
   }
   return request;
 });
