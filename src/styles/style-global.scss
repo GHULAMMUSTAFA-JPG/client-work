@@ -1,0 +1,74 @@
+@import "./variables.scss";
+@import "./bootstrap-custom-theme.scss";
+@import "./fonts.scss";
+@import "./icons.scss";
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    background-color: $light;
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $dark;
+        border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: $primary;
+    }
+
+    ul {
+        padding-left: 0;
+        list-style-type: none;
+    }
+
+    div {
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $dark;
+            border-radius: 20px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background: $primary;
+        }
+    }
+
+    .cursor {
+        cursor: pointer;
+    }
+
+    .user-img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .creator-img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .margin-overlap {
+        margin-right: -5px;
+    }
+}
