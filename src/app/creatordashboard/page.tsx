@@ -19,7 +19,7 @@ const CreatorDashboard = () => {
                             <div className="card">
                                 <div className="card-body p-4">
                                     <div className="row align-items-center">
-                                        <div className="col-sm-6 col-md-6">
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12">Campaign Creators</p>
                                             <div className="d-flex">
                                                 {/* {users.slice(0, 4).map((user, index) => (
@@ -35,7 +35,7 @@ const CreatorDashboard = () => {
                                             </div>
 
                                         </div>
-                                        <div className="col-sm-6 col-md-6">
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12">Creators Score</p>
                                             <div className="d-flex align-items-center">
                                                 <Icon icon="tabler:users" width={32} height={32} />
@@ -45,7 +45,7 @@ const CreatorDashboard = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-sm-6 col-md-6">
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12">Videos & Media</p>
                                             <div className="d-flex align-items-center">
                                                 <Icon icon="akar-icons:video" width={32} height={32} />
@@ -55,7 +55,7 @@ const CreatorDashboard = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-sm-6 col-md-6">
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12">Social Media Posts</p>
                                             <div className="d-flex align-items-center">
                                                 <Icon icon="iconoir:post" width={32} height={32} />
