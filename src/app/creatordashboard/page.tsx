@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
 
 
-const CreatorDashboard = () => {
+function CreatorDashboard  ()  {
 
     return (
         <>
@@ -87,7 +87,7 @@ const CreatorDashboard = () => {
                                     <div className="tab-content " id="myTabContent">
                                         <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex={0}>
                                             <div className='d-flex'>
-                                                <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                 <div className='d-flex justify-content-between align-items-baseline'>
                                                     <div className='mt-2'>
                                                         <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -108,7 +108,7 @@ const CreatorDashboard = () => {
                                             </div>
                                             <hr />
                                             <div className='d-flex'>
-                                                <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                 <div className='d-flex justify-content-between align-items-baseline'>
                                                     <div className='mt-2'>
                                                         <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -129,7 +129,7 @@ const CreatorDashboard = () => {
                                             </div>
                                             <hr />
                                             <div className='d-flex'>
-                                                <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                 <div className='d-flex justify-content-between align-items-baseline'>
                                                     <div className='mt-2'>
                                                         <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -150,7 +150,7 @@ const CreatorDashboard = () => {
                                             </div>
                                             <hr />
                                             <div className='d-flex'>
-                                                <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                 <div className='d-flex justify-content-between align-items-baseline'>
                                                     <div className='mt-2'>
                                                         <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -171,7 +171,7 @@ const CreatorDashboard = () => {
                                             </div>
                                             <hr />
                                             <div className='d-flex'>
-                                                <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                 <div className='d-flex justify-content-between align-items-baseline'>
                                                     <div className='mt-2'>
                                                         <h6 className='mb-0'>Senior Digital Designer</h6>
