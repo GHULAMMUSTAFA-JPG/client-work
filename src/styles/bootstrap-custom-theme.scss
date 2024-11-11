@@ -78,4 +78,40 @@ body {
         font-size: 14px
     }
 
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // width: auto;
+    }
+
+    .dashboard {
+        .creator-img {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+        }
+
+        .nav-link {
+            color: #333532 !important;
+        }
+
+        .cursor {
+            cursor: pointer;
+        }
+
+        .creator-scroll {
+            scroll-behavior: smooth;
+            overflow: auto;
+            max-height: 520px;
+        }
+
+        .nav-pills .nav-link.active {
+            color: white !important;
+            background-color: black !important;
+        }
+    }
+
 }

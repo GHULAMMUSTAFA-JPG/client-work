@@ -31,7 +31,7 @@ function Homepage() {
                         <div className="card">
                             <div className="card-body p-4">
                                 <div className="row align-items-center">
-                                    <div className="col-sm-6 col-md-3">
+                                    <div className="col-sm-6 col-md-6 col-xl-3">
                                         <p className="mb-2 fw-medium fs-12">Campaign Creators</p>
                                         <div className="d-flex">
                                             {users.slice(0, 4).map((user, index) => (
@@ -47,7 +47,7 @@ function Homepage() {
                                         </div>
 
                                     </div>
-                                    <div className="col-sm-6 col-md-3">
+                                    <div className="col-sm-6 col-md-6 col-xl-3">
                                         <p className="mb-2 fw-medium fs-12">Creators Score</p>
                                         <div className="d-flex align-items-center">
                                             <Icon icon="tabler:users" width={32} height={32} />
@@ -57,7 +57,7 @@ function Homepage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm-6 col-md-3">
+                                    <div className="col-sm-6 col-md-6 col-xl-3">
                                         <p className="mb-2 fw-medium fs-12">Videos & Media</p>
                                         <div className="d-flex align-items-center">
                                             <Icon icon="akar-icons:video" width={32} height={32} />
@@ -67,7 +67,7 @@ function Homepage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm-6 col-md-3">
+                                    <div className="col-sm-6 col-md-6 col-xl-3">
                                         <p className="mb-2 fw-medium fs-12">Social Media Posts</p>
                                         <div className="d-flex align-items-center">
                                             <Icon icon="iconoir:post" width={32} height={32} />
@@ -123,7 +123,7 @@ function Homepage() {
                                                     <td className="text-start ps-4">
                                                         <div className="d-flex align-items-center">
                                                             <img src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                            <span className="ms-2 fw-medium">{user.Name}</span>
+                                                            <span className="ms-2 fw-medium text-truncate">{user.Name}</span>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -133,7 +133,7 @@ function Homepage() {
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <Icon icon="mdi:linkedin" width={18} height={18} />
 
-                                                            <span className="ms-2"> {user.Username}</span>
+                                                            <span className="ms-2 text-truncate"> {user.Username}</span>
                                                         </div>
                                                     </td>
                                                     <td>
