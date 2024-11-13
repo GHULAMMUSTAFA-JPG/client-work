@@ -5,9 +5,9 @@
 
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     font-size: 14px;
-    background-color: $light;
+    background-color: $black;
 
     &::-webkit-scrollbar {
         width: 6px;
@@ -70,5 +70,11 @@ body {
 
     .margin-overlap {
         margin-right: -5px;
+    }
+
+    .hero-circle {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
     }
 }

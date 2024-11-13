@@ -21,7 +21,7 @@ export default function Header() {
     return (
         <>
             <header>
-                <nav className="navbar navbar-expand-lg bg-white">
+                <nav className="navbar navbar-expand-lg bg-dark">
                     <div className="container">
                         <a className="navbar-brand" href="#">
                             <Image

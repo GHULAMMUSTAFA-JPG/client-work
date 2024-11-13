@@ -21,6 +21,10 @@ body {
         font-weight: 900;
     }
 
+    .fs-9 {
+        font-size: 9px;
+    }
+
     .fs-12 {
         font-size: 12px;
     }
@@ -67,11 +71,17 @@ body {
             td {
                 padding: 1rem;
             }
+
+            tr {
+                --bs-table-bg: $dark;
+            }
         }
     }
 
     .card {
         border-radius: 12px;
+        background-color: $dark;
+        // border: 2px solid #fff;
     }
 
     .dropdown-item {
@@ -89,13 +99,13 @@ body {
 
     .dashboard {
         .creator-img {
-            width: 85px;
-            height: 85px;
+            width: 60px;
+            // height: 60px;
             object-fit: contain;
         }
 
         .nav-link {
-            color: #333532 !important;
+            color: #fff !important;
         }
 
         .cursor {
@@ -111,6 +121,25 @@ body {
         .nav-pills .nav-link.active {
             color: white !important;
             background-color: black !important;
+        }
+
+        .dashboard-img-circle {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 1px solid $warning;
+        }
+
+        .sidecard-scroll {
+            scroll-behavior: smooth;
+            overflow: auto;
+            max-height: 338px;
+        }
+
+        .table-badge {
+            width: 20%;
         }
     }
 
