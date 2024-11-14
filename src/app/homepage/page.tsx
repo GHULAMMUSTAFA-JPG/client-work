@@ -35,7 +35,7 @@ function Homepage() {
                                         <p className="mb-2 fw-medium fs-12">Campaign Creators</p>
                                         <div className="d-flex">
                                             {users.slice(0, 4).map((user, index) => (
-                                                <img
+                                                <Image
                                                     key={index}
                                                     src={user.Profile_Image}
                                                     alt={`User ${index + 1}`}
@@ -122,7 +122,7 @@ function Homepage() {
                                                 <tr key={user._id}>
                                                     <td className="text-start ps-4">
                                                         <div className="d-flex align-items-center">
-                                                            <img src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
+                                                            <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
                                                             <span className="ms-2 fw-medium text-truncate">{user.Name}</span>
                                                         </div>
                                                     </td>

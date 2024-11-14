@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
 
 
-const CreatorDashboard = () => {
+function CreatorDashboard  ()  {
 
     return (
         <>

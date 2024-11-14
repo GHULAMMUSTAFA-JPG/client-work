@@ -6,7 +6,7 @@ import Image from "next/image";
 
 
 
-export const buyerdashboard = () => {
+function buyerdashboard ()  {
     return (
         <section className='dashboard'>
             <div className='container'>
@@ -120,7 +120,7 @@ export const buyerdashboard = () => {
                                                     </div>
                                                     <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabIndex={0}>
                                                         <div className='d-flex'>
-                                                            <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                            <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
                                                                     <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -141,7 +141,7 @@ export const buyerdashboard = () => {
                                                         </div>
                                                         <hr />
                                                         <div className='d-flex'>
-                                                            <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                            <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
                                                                     <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -162,7 +162,7 @@ export const buyerdashboard = () => {
                                                         </div>
                                                         <hr />
                                                         <div className='d-flex'>
-                                                            <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                            <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
                                                                     <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -183,7 +183,7 @@ export const buyerdashboard = () => {
                                                         </div>
                                                         <hr />
                                                         <div className='d-flex'>
-                                                            <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                            <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
                                                                     <h6 className='mb-0'>Senior Digital Designer</h6>
@@ -204,7 +204,7 @@ export const buyerdashboard = () => {
                                                         </div>
                                                         <hr />
                                                         <div className='d-flex'>
-                                                            <img src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
+                                                            <Image src="../assets/images/logo1.svg" className="creator-img" alt="logo" />
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
                                                                     <h6 className='mb-0'>Senior Digital Designer</h6>
