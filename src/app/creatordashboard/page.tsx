@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
 
 
-function CreatorDashboard  ()  {
+function CreatorDashboard() {
 
     return (
         <>
@@ -22,7 +22,8 @@ function CreatorDashboard  ()  {
                                         <div className="col-sm-6 col-md-6 col-xl-2">
                                             {/* <p className="mb-2 fw-medium fs-12">Campaign Creators</p> */}
                                             <div className="hero-circle mx-xl-auto mx-md-0">
-                                                <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={90} height={90} />
 
                                             </div>
 
@@ -30,7 +31,7 @@ function CreatorDashboard  ()  {
                                         <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12 text-white">Network Reach</p>
                                             <div className="d-flex align-items-center">
-                                                <Icon icon="tabler:users" width={32} height={32} className='text-white'/>
+                                                <Icon icon="tabler:users" width={32} height={32} className='text-white' />
                                                 <div className="ms-2">
                                                     {/* <p className="mb-0 fs-12"><span className="fs-14 fw-medium text-dark me-1">50.1</span></p> */}
                                                     <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">50</span>Connections</p>
@@ -41,7 +42,7 @@ function CreatorDashboard  ()  {
                                         <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12 text-white">Post Frequency Tracker</p>
                                             <div className="d-flex align-items-center">
-                                                <Icon icon="akar-icons:video" width={32} height={32} className='text-white'/>
+                                                <Icon icon="akar-icons:video" width={32} height={32} className='text-white' />
                                                 <div className="ms-2">
                                                     <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">90</span>Total Post</p>
                                                     <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">10</span>Post Frequency</p>
@@ -51,7 +52,7 @@ function CreatorDashboard  ()  {
                                         <div className="col-sm-6 col-md-6 col-xl-3">
                                             <p className="mb-2 fw-medium fs-12 text-white">Social Media Posts</p>
                                             <div className="d-flex align-items-center">
-                                                <Icon icon="iconoir:post" width={32} height={32} className='text-white'/>
+                                                <Icon icon="iconoir:post" width={32} height={32} className='text-white' />
                                                 <div className="ms-2">
                                                     <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">504.6</span>Impressions</p>
                                                     <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">20.45</span>Engagements</p>
@@ -83,7 +84,8 @@ function CreatorDashboard  ()  {
                                                     <div className='d-flex'>
                                                         {/* <img src="../assets/images/logo.png" className="img-fluid creator-img me-2" alt="logo" /> */}
                                                         <div className='dashboard-img-circle me-2'>
-                                                            <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                            {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
                                                         </div>
                                                         <div className='d-flex justify-content-between align-items-baseline'>
                                                             <div className=''>
@@ -120,11 +122,12 @@ function CreatorDashboard  ()  {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr className='text-warning'/>
+                                                    <hr className='text-warning' />
                                                     <div className='d-flex'>
                                                         {/* <img src="../assets/images/logo.png" className="img-fluid creator-img me-2" alt="logo" /> */}
                                                         <div className='dashboard-img-circle me-2'>
-                                                            <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                            {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
                                                         </div>
                                                         <div className='d-flex justify-content-between align-items-baseline'>
                                                             <div className='mt-2'>
@@ -161,11 +164,12 @@ function CreatorDashboard  ()  {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr className='text-warning'/>
+                                                    <hr className='text-warning' />
                                                     <div className='d-flex'>
                                                         {/* <img src="../assets/images/logo.png" className="img-fluid creator-img me-2" alt="logo" /> */}
                                                         <div className='dashboard-img-circle me-2'>
-                                                            <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                            {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
                                                         </div>
                                                         <div className='d-flex justify-content-between align-items-baseline'>
                                                             <div className='mt-2'>
@@ -202,11 +206,12 @@ function CreatorDashboard  ()  {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr className='text-warning'/>
+                                                    <hr className='text-warning' />
                                                     <div className='d-flex'>
                                                         {/* <img src="../assets/images/logo.png" className="img-fluid creator-img me-2" alt="logo" /> */}
                                                         <div className='dashboard-img-circle me-2'>
-                                                            <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                            {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
                                                         </div>
                                                         <div className='d-flex justify-content-between align-items-baseline'>
                                                             <div className='mt-2'>
@@ -243,11 +248,12 @@ function CreatorDashboard  ()  {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr className='text-warning'/>
+                                                    <hr className='text-warning' />
                                                     <div className='d-flex'>
                                                         {/* <img src="../assets/images/logo.png" className="img-fluid creator-img me-2" alt="logo" /> */}
                                                         <div className='dashboard-img-circle me-2'>
-                                                            <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                            {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
                                                         </div>
                                                         <div className='d-flex justify-content-between align-items-baseline'>
                                                             <div className='mt-2'>
@@ -284,7 +290,7 @@ function CreatorDashboard  ()  {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr className='text-warning'/>
+                                                    <hr className='text-warning' />
                                                 </div>
                                             </div>
                                         </div>
@@ -492,8 +498,8 @@ function CreatorDashboard  ()  {
                                                                 {/* <p className="mb-0 text-warning">20k</p> */}
                                                             </td>
                                                             {/* <td> */}
-                                                                {/* <p className="mb-2">103k</p> */}
-                                                                {/* <p className="mb-0 text-warning">20k</p> */}
+                                                            {/* <p className="mb-2">103k</p> */}
+                                                            {/* <p className="mb-0 text-warning">20k</p> */}
                                                             {/* </td> */}
                                                             <td className='table-badge'>
                                                                 {/* <p className="mb-2">$2.2k</p>
@@ -536,8 +542,8 @@ function CreatorDashboard  ()  {
                                                                 {/* <p className="mb-0 text-warning">20k</p> */}
                                                             </td>
                                                             {/* <td> */}
-                                                                {/* <p className="mb-2">103k</p> */}
-                                                                {/* <p className="mb-0 text-warning">20k</p> */}
+                                                            {/* <p className="mb-2">103k</p> */}
+                                                            {/* <p className="mb-0 text-warning">20k</p> */}
                                                             {/* </td> */}
                                                             <td className='table-badge'>
                                                                 {/* <p className="mb-2">$2.2k</p>
@@ -632,7 +638,8 @@ function CreatorDashboard  ()  {
                                     <div className="card">
                                         <div className='card-header bg-transparent border-warning'>
                                             <div className='dashboard-img-circle mx-auto mb-2'>
-                                                <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" />
+                                                {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
                                             </div>
                                             <p className='mb-1 text-center fs-16 text-white'>Peterson</p>
                                             <p className='text-warning fs-12 text-center mb-1'>Frontend Developer</p>
@@ -660,7 +667,7 @@ function CreatorDashboard  ()  {
                                                     <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                 </div>
                                             </div>
-                                            <hr className='text-warning'/>
+                                            <hr className='text-warning' />
                                             <p className='mb-1 me-1 text-white'>Experience:</p>
                                             <div className='mb-1'>
                                                 <p className='mb-0 fs-12 text-white'>Company </p>
@@ -690,7 +697,7 @@ function CreatorDashboard  ()  {
                                                 <p className='mb-0 fs-12 text-white'>End Date</p>
                                                 <p className='text-warning fs-12 mb-0'>Aug 2024</p>
                                             </div> */}
-                                            <hr className='text-warning'/>
+                                            <hr className='text-warning' />
                                         </div>
                                     </div>
                                 </div>

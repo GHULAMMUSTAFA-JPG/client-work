@@ -26,7 +26,7 @@ function Homepage() {
     return (
         <>
             <div className="container">
-                <div className="row my-3">
+                {/* <div className="row my-3">
                     <div className="col-12">
                         <div className="card">
                             <div className="card-body p-4">
@@ -81,11 +81,62 @@ function Homepage() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
+
+<div className='row my-3'>
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body ">
+                                    <div className="row align-items-center">
+                                        <div className="col-sm-6 col-md-6 col-xl-2">
+                                            {/* <p className="mb-2 fw-medium fs-12">Campaign Creators</p> */}
+                                            <div className="hero-circle mx-xl-auto mx-md-0">
+                                                {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                                                <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={90} height={90} />
+
+                                            </div>
+
+                                        </div>
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
+                                            <p className="mb-2 fw-medium fs-12 text-white">Network Reach</p>
+                                            <div className="d-flex align-items-center">
+                                                <Icon icon="tabler:users" width={32} height={32} className='text-white' />
+                                                <div className="ms-2">
+                                                    {/* <p className="mb-0 fs-12"><span className="fs-14 fw-medium text-dark me-1">50.1</span></p> */}
+                                                    <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">50</span>Connections</p>
+                                                    <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">30</span>Followers</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
+                                            <p className="mb-2 fw-medium fs-12 text-white">Post Frequency Tracker</p>
+                                            <div className="d-flex align-items-center">
+                                                <Icon icon="akar-icons:video" width={32} height={32} className='text-white' />
+                                                <div className="ms-2">
+                                                    <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">90</span>Total Post</p>
+                                                    <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">10</span>Post Frequency</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-sm-6 col-md-6 col-xl-3">
+                                            <p className="mb-2 fw-medium fs-12 text-white">Social Media Posts</p>
+                                            <div className="d-flex align-items-center">
+                                                <Icon icon="iconoir:post" width={32} height={32} className='text-white' />
+                                                <div className="ms-2">
+                                                    <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">504.6</span>Impressions</p>
+                                                    <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">20.45</span>Engagements</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <div className="row my-3">
                     <div className="col-12">
                         <div className="d-flex justify-content-between align-items-end">
-                            <p className="mb-0 fw-medium">Campaign Creators</p>
+                            <p className="mb-0 fw-medium text-white">Campaign Creators</p>
                             {/* <button className="btn btn-primary btn-sm ms-auto">Add Campaign</button> */}
                             {/* <div className="dropdown ms-3">
                                 <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,7 +151,7 @@ function Homepage() {
                                 </ul>
                             </div> */}
                         </div>
-                        <hr />
+                        <hr className="text-white"/>
                         <div className="card">
                             <div className="card-body p-0">
                                 <div className="table-responsive">
