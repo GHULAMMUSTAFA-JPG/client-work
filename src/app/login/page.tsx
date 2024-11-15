@@ -70,11 +70,11 @@ const Login = () => {
                         <div className='col-sm-8 col-md-6 col-xl-4 mx-auto'>
                             <div className='card'>
                                 <div className='card-body'>
-                                    <h5 className='mb-4 text-center'>Login to Synnc</h5>
+                                    <h5 className='mb-4 text-center text-white'>Login to Synnc</h5>
                                     {loginError && <div className="alert alert-danger">{loginError}</div>} {/* Show login error */}
                                     <form onSubmit={(e) => handleSubmit(e, handleLogin)}>
                                         <div className="mb-3 text-start">
-                                            <label htmlFor="email" className="form-label">Email address</label>
+                                            <label htmlFor="email" className="form-label text-white">Email address</label>
                                             <input
                                                 type="email"
                                                 name="email"
@@ -87,7 +87,7 @@ const Login = () => {
                                             {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                                         </div>
                                         <div className="mb-3 text-start">
-                                            <label htmlFor="password" className="form-label">Password</label>
+                                            <label htmlFor="password" className="form-label text-white">Password</label>
                                             <input
                                                 type="password"
                                                 name="password"

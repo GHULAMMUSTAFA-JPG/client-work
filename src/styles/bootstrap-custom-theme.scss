@@ -115,7 +115,7 @@ body {
         .creator-scroll {
             scroll-behavior: smooth;
             overflow: auto;
-            max-height: 520px;
+            max-height: 470px;
         }
 
         .nav-pills .nav-link.active {
@@ -135,7 +135,7 @@ body {
         .sidecard-scroll {
             scroll-behavior: smooth;
             overflow: auto;
-            max-height: 338px;
+            max-height: 288px;
         }
 
         .table-badge {
@@ -143,4 +143,13 @@ body {
         }
     }
 
+    .navbar-section {
+        .dropdown-menu[data-bs-popper] {
+            left: -6rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: transparent !important;
+        }
+    }
 }

@@ -663,33 +663,33 @@ function CreatorDashboard  ()  {
                                             <hr className='text-warning'/>
                                             <p className='mb-1 me-1 text-white'>Experience:</p>
                                             <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>Company </p>
-                                                <p className='text-primary fs-12 mb-0'>Funavry Technologies</p>
+                                                <p className='mb-0 fs-12 text-white'>Company </p>
+                                                <p className='text-warning fs-12 mb-0'>Funavry Technologies</p>
                                             </div>
                                             <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>Position</p>
-                                                <p className='text-primary fs-12 mb-0'>Software Trainee Engineer</p>
+                                                <p className='mb-0 fs-12 text-white'>Position</p>
+                                                <p className='text-warning fs-12 mb-0'>Software Trainee Engineer</p>
                                             </div>
                                             <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>Employment Type</p>
-                                                <p className='text-primary fs-12 mb-0'>FUll-Tim</p>
+                                                <p className='mb-0 fs-12 text-white'>Employment Type</p>
+                                                <p className='text-warning fs-12 mb-0'>Full-Time</p>
+                                            </div>
+                                            {/* <div className='mb-1'>
+                                                <p className='mb-0 fs-12 text-white'>Start Date</p>
+                                                <p className='text-warning fs-12 mb-0'>Aug 2024</p>
                                             </div>
                                             <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>Start Date</p>
-                                                <p className='text-primary fs-12 mb-0'>Aug 2024</p>
+                                                <p className='mb-0 fs-12 text-white'>End Date</p>
+                                                <p className='text-warning fs-12 mb-0'>Aug 2024</p>
                                             </div>
                                             <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>End Date</p>
-                                                <p className='text-primary fs-12 mb-0'>Aug 2024</p>
+                                                <p className='mb-0 fs-12 text-white'>End Date</p>
+                                                <p className='text-warning fs-12 mb-0'>Aug 2024</p>
                                             </div>
                                             <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>End Date</p>
-                                                <p className='text-primary fs-12 mb-0'>Aug 2024</p>
-                                            </div>
-                                            <div className='mb-1'>
-                                                <p className='mb-0 fs-12 text-warning'>End Date</p>
-                                                <p className='text-primary fs-12 mb-0'>Aug 2024</p>
-                                            </div>
+                                                <p className='mb-0 fs-12 text-white'>End Date</p>
+                                                <p className='text-warning fs-12 mb-0'>Aug 2024</p>
+                                            </div> */}
                                             <hr className='text-warning'/>
                                         </div>
                                     </div>
