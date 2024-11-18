@@ -4,6 +4,7 @@ import useForm from '@/hooks/useForm';
 import React, { useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Login = () => {
     // const { login: authLogin, isAuthenticated } = useAuth(); // Use login function from AuthContext
@@ -14,6 +15,8 @@ const Login = () => {
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
     const router = useRouter()
+
+    const {loginUser} = useAuth()
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
 
@@ -44,11 +47,10 @@ const Login = () => {
         setLoginError(null); // Reset previous error
 
         try {
-            const response = await login(values); // Perform login (assumed you get user data on success)
+            const response:any = await login(values); // Perform login (assumed you get user data on success)
             setLoader(false);
             if (response?.data) {
-                router.push('homepage')
-                localStorage.setItem('user',JSON.stringify(response?.data))
+                loginUser(response?.data)
             }
         } catch (error: any) { // Catch any error that might occur during login
             console.error("Login error:", error);

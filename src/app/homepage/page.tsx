@@ -1,7 +1,7 @@
 "use client";
 
 import { fetch_dashboard_data } from "@/@api";
-import withAuth from "@/components/withAuth";
+import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
 import Image from "next/image";
