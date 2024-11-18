@@ -2,12 +2,30 @@
 @import "./bootstrap-custom-theme.scss";
 @import "./fonts.scss";
 @import "./icons.scss";
+@import "./sidebar.scss";
+@import "./header.scss";
 
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $dark;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: $primary;
+}
 
 body {
     font-family: 'Helvetica', sans-serif;
     font-size: 14px;
-    background-color: $black;
+    background-color: $base;
 
     &::-webkit-scrollbar {
         width: 6px;
@@ -48,6 +66,12 @@ body {
         &::-webkit-scrollbar-thumb:hover {
             background: $primary;
         }
+    }
+
+    .main-content {
+        height: calc(100vh - 72px);
+        overflow: auto;
+        padding: 0.5rem
     }
 
     .cursor {

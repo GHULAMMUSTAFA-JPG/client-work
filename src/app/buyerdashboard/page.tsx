@@ -81,33 +81,33 @@ function buyerdashboard() {
 
                                     </div>
                                     <div className="col-sm-6 col-md-6 col-xl-3">
-                                        <p className="mb-2 fw-medium fs-12 text-white">Network Reach</p>
+                                        <p className="mb-2 fw-medium fs-12 ">Network Reach</p>
                                         <div className="d-flex align-items-center">
-                                            <Icon icon="tabler:users" width={32} height={32} className='text-white' />
+                                            <Icon icon="tabler:users" width={32} height={32} className='' />
                                             <div className="ms-2">
                                                 {/* <p className="mb-0 fs-12"><span className="fs-14 fw-medium text-dark me-1">50.1</span></p> */}
-                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">50</span>Connections</p>
-                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">30</span>Followers</p>
+                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">50</span>Connections</p>
+                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">30</span>Followers</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-sm-6 col-md-6 col-xl-3">
-                                        <p className="mb-2 fw-medium fs-12 text-white">Post Frequency Tracker</p>
+                                        <p className="mb-2 fw-medium fs-12 ">Post Frequency Tracker</p>
                                         <div className="d-flex align-items-center">
-                                            <Icon icon="akar-icons:video" width={32} height={32} className='text-white' />
+                                            <Icon icon="akar-icons:video" width={32} height={32} className='' />
                                             <div className="ms-2">
-                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">90</span>Total Post</p>
-                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">10</span>Post Frequency</p>
+                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">90</span>Total Post</p>
+                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">10</span>Post Frequency</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-sm-6 col-md-6 col-xl-3">
-                                        <p className="mb-2 fw-medium fs-12 text-white">Social Media Posts</p>
+                                        <p className="mb-2 fw-medium fs-12 ">Social Media Posts</p>
                                         <div className="d-flex align-items-center">
-                                            <Icon icon="iconoir:post" width={32} height={32} className='text-white' />
+                                            <Icon icon="iconoir:post" width={32} height={32} className='' />
                                             <div className="ms-2">
-                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">504.6</span>Impressions</p>
-                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium text-white me-1">20.45</span>Engagements</p>
+                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">504.6</span>Impressions</p>
+                                                <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">20.45</span>Engagements</p>
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@ function buyerdashboard() {
                                                                 </div>
                                                             </div>
                                                             <div className='col-12 text-center'>
-                                                                <button className="btn btn-dark text-white border" type="button">Submit Data</button>
+                                                                <button className="btn btn-dark  border" type="button">Submit Data</button>
                                                             </div>
 
                                                         </div>
@@ -175,11 +175,11 @@ function buyerdashboard() {
                                                             </div>
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className=''>
-                                                                    <h6 className='mb-0 text-white'>Senior Digital Designer</h6>
+                                                                    <h6 className='mb-0 '>Senior Digital Designer</h6>
                                                                     {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                                     <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="tdesign:location" className='me-1 text-white' />
-                                                                        <p className='mb-0 fs-12 text-white'>Islamababd</p>
+                                                                        <Icon icon="tdesign:location" className='me-1 ' />
+                                                                        <p className='mb-0 fs-12 '>Islamababd</p>
                                                                     </div>
                                                                     <p className='line-clamp-3 text-warning fs-12 mb-2'>
                                                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
@@ -195,7 +195,7 @@ function buyerdashboard() {
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                     </div>
-                                                                    <p className='mb-0 fs-9'><span className='text-white'>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
+                                                                    <p className='mb-0 fs-9'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
                                                                     {/* <div className='d-flex align-items-center'>
                                                                     <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
                                                                     <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
@@ -203,8 +203,8 @@ function buyerdashboard() {
                                                                 </div> */}
                                                                 </div>
                                                                 <div>
-                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm text-white border">Apply</button>
-                                                                    {/* <span className="badge text-white bg-dark fw-normal cursor">Apply</span> */}
+                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm  border">Apply</button>
+                                                                    {/* <span className="badge  bg-dark fw-normal cursor">Apply</span> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -217,11 +217,11 @@ function buyerdashboard() {
                                                             </div>
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
-                                                                    <h6 className='mb-0 text-white'>Senior Digital Designer</h6>
+                                                                    <h6 className='mb-0 '>Senior Digital Designer</h6>
                                                                     {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                                     <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="tdesign:location" className='me-1 text-white' />
-                                                                        <p className='mb-0 fs-12 text-white'>Islamababd</p>
+                                                                        <Icon icon="tdesign:location" className='me-1 ' />
+                                                                        <p className='mb-0 fs-12 '>Islamababd</p>
                                                                     </div>
                                                                     <p className='line-clamp-3 text-warning fs-12 mb-2'>
                                                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
@@ -237,7 +237,7 @@ function buyerdashboard() {
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                     </div>
-                                                                    <p className='mb-0 fs-9'><span className='text-white'>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
+                                                                    <p className='mb-0 fs-9'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
                                                                     {/* <div className='d-flex align-items-center'>
                                                                     <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
                                                                     <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
@@ -245,8 +245,8 @@ function buyerdashboard() {
                                                                 </div> */}
                                                                 </div>
                                                                 <div>
-                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm text-white border">Apply</button>
-                                                                    {/* <span className="badge text-white bg-dark fw-normal cursor">Apply</span> */}
+                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm  border">Apply</button>
+                                                                    {/* <span className="badge  bg-dark fw-normal cursor">Apply</span> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -259,11 +259,11 @@ function buyerdashboard() {
                                                             </div>
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
-                                                                    <h6 className='mb-0 text-white'>Senior Digital Designer</h6>
+                                                                    <h6 className='mb-0 '>Senior Digital Designer</h6>
                                                                     {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                                     <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="tdesign:location" className='me-1 text-white' />
-                                                                        <p className='mb-0 fs-12 text-white'>Islamababd</p>
+                                                                        <Icon icon="tdesign:location" className='me-1 ' />
+                                                                        <p className='mb-0 fs-12 '>Islamababd</p>
                                                                     </div>
                                                                     <p className='line-clamp-3 text-warning fs-12 mb-2'>
                                                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
@@ -279,7 +279,7 @@ function buyerdashboard() {
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                     </div>
-                                                                    <p className='mb-0 fs-9'><span className='text-white'>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
+                                                                    <p className='mb-0 fs-9'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
                                                                     {/* <div className='d-flex align-items-center'>
                                                                     <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
                                                                     <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
@@ -287,8 +287,8 @@ function buyerdashboard() {
                                                                 </div> */}
                                                                 </div>
                                                                 <div>
-                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm text-white border">Apply</button>
-                                                                    {/* <span className="badge text-white bg-dark fw-normal cursor">Apply</span> */}
+                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm  border">Apply</button>
+                                                                    {/* <span className="badge  bg-dark fw-normal cursor">Apply</span> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -301,11 +301,11 @@ function buyerdashboard() {
                                                             </div>
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
-                                                                    <h6 className='mb-0 text-white'>Senior Digital Designer</h6>
+                                                                    <h6 className='mb-0 '>Senior Digital Designer</h6>
                                                                     {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                                     <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="tdesign:location" className='me-1 text-white' />
-                                                                        <p className='mb-0 fs-12 text-white'>Islamababd</p>
+                                                                        <Icon icon="tdesign:location" className='me-1 ' />
+                                                                        <p className='mb-0 fs-12 '>Islamababd</p>
                                                                     </div>
                                                                     <p className='line-clamp-3 text-warning fs-12 mb-2'>
                                                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
@@ -321,7 +321,7 @@ function buyerdashboard() {
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                     </div>
-                                                                    <p className='mb-0 fs-9'><span className='text-white'>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
+                                                                    <p className='mb-0 fs-9'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
                                                                     {/* <div className='d-flex align-items-center'>
                                                                     <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
                                                                     <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
@@ -329,8 +329,8 @@ function buyerdashboard() {
                                                                 </div> */}
                                                                 </div>
                                                                 <div>
-                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm text-white border">Apply</button>
-                                                                    {/* <span className="badge text-white bg-dark fw-normal cursor">Apply</span> */}
+                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm  border">Apply</button>
+                                                                    {/* <span className="badge  bg-dark fw-normal cursor">Apply</span> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -343,11 +343,11 @@ function buyerdashboard() {
                                                             </div>
                                                             <div className='d-flex justify-content-between align-items-baseline'>
                                                                 <div className='mt-2'>
-                                                                    <h6 className='mb-0 text-white'>Senior Digital Designer</h6>
+                                                                    <h6 className='mb-0 '>Senior Digital Designer</h6>
                                                                     {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                                     <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="tdesign:location" className='me-1 text-white' />
-                                                                        <p className='mb-0 fs-12 text-white'>Islamababd</p>
+                                                                        <Icon icon="tdesign:location" className='me-1 ' />
+                                                                        <p className='mb-0 fs-12 '>Islamababd</p>
                                                                     </div>
                                                                     <p className='line-clamp-3 text-warning fs-12 mb-2'>
                                                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
@@ -363,7 +363,7 @@ function buyerdashboard() {
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                         <span className="badge bg-info me-1 rounded-pill fw-light">Software</span>
                                                                     </div>
-                                                                    <p className='mb-0 fs-9'><span className='text-white'>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
+                                                                    <p className='mb-0 fs-9'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
                                                                     {/* <div className='d-flex align-items-center'>
                                                                     <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
                                                                     <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
@@ -371,8 +371,8 @@ function buyerdashboard() {
                                                                 </div> */}
                                                                 </div>
                                                                 <div>
-                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm text-white border">Apply</button>
-                                                                    {/* <span className="badge text-white bg-dark fw-normal cursor">Apply</span> */}
+                                                                    <button type="button" className="btn btn-dark fs-12 btn-sm  border">Apply</button>
+                                                                    {/* <span className="badge  bg-dark fw-normal cursor">Apply</span> */}
                                                                 </div>
                                                             </div>
                                                         </div>

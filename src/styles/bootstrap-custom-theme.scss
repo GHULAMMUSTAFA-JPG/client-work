@@ -80,12 +80,22 @@ body {
 
     .card {
         border-radius: 12px;
-        background-color: $dark;
-        // border: 2px solid #fff;
     }
 
     .dropdown-item {
         font-size: 14px
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+
+    .btn {
+        font-size: 14px;
     }
 
     .line-clamp-3 {
@@ -119,8 +129,8 @@ body {
         }
 
         .nav-pills .nav-link.active {
-            color: white !important;
-            background-color: black !important;
+            color: $primary !important;
+            background-color: transparent;
         }
 
         .dashboard-img-circle {
@@ -140,16 +150,6 @@ body {
 
         .table-badge {
             width: 20%;
-        }
-    }
-
-    .navbar-section {
-        .dropdown-menu[data-bs-popper] {
-            left: -6rem;
-        }
-
-        .dropdown-item:hover {
-            background-color: transparent !important;
         }
     }
 }

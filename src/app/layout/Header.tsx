@@ -23,17 +23,9 @@ export default function Header() {
     return (
         <>
             <header className="navbar-section">
-                <nav className="navbar navbar-expand-lg bg-dark">
+                <nav className="navbar navbar-expand-lg bg-white">
                     <div className="container">
-                        <a className="navbar-brand" href="#">
-                            <Image
-                                src="/assets/images/logo.png"
-                                alt="logo"
-                                width={100}
-                                height={30}
-                                className="img-fluid"
-                            />
-                        </a>
+                        <Icon icon="ic:round-menu" width={24} height={24} />
                         <button
                             className="navbar-toggler bg-primary"
                             type="button"
@@ -61,31 +53,30 @@ export default function Header() {
                                 )} */}
                             {/* Register button if needed */}
                             {/* </form> */}
-                            <div className="dropdown">
+                            <Icon icon="mingcute:notification-line" width={27} height={27}  className="text-warning" />
+                            <Icon icon="mdi:message-outline" width={24} height={24} className="ms-3 text-warning"/>
+                            <div className="dropdown ms-2">
                                 <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <Icon icon="ion:settings" className="text-primary fs-4" />
+                                    <div className="d-flex align-items-center">
+                                        <Image src="/assets/images/user.jpg" alt="user" width={32} height={32} className="user-img" />
+                                        <p className="mb-0 ms-2">Mark Phillips</p>
+                                        <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
+                                    </div>
                                 </a>
-                                <ul className="dropdown-menu bg-black">
+                                <ul className="dropdown-menu">
                                     <li><a className="dropdown-item" href="#">
-                                        <button
-                                            className="btn btn-sm btn-outline-primary w-100"
-                                            type="button" // Ensure button type is 'button'
-                                            // onClick={navigateToSignIn}
-                                        >
-                                            Update Profile
-                                        </button>
+                                        Update Profile
                                     </a>
                                     </li>
                                     <li><a className="dropdown-item" href="#">
                                         <form className="d-flex" role="search">
                                             {(pathname !== '/' && pathname !== '/login') && (
-                                                <button
-                                                    className="btn btn-sm btn-outline-primary w-100"
-                                                    type="button" // Ensure button type is 'button'
+                                                <p
+                                                    className="mb-0"
                                                     onClick={navigateToSignIn}
                                                 >
                                                     {user ? "Sign Out" : "Sign In"}
-                                                </button>
+                                                </p>
                                             )}
                                         </form>
 

@@ -8,10 +8,12 @@ import Sidebar from '@/app/layout/Sidebar';
 import withAuth from '@/utils/withAuth';
 
 const menuItems = [
-  { label: "Home", href: "/homepage", icon: "bi bi-house" },
-  { label: "Creater Dashboard", href: "/creatordashboard", icon: "bi bi-speedometer2" },
-  { label: "Buyer Dashboard", href: "/buyerdashboard", icon: "bi bi-person" },
-//   { label: "Logout", href: "/settings", icon: "bi bi-gear" },
+  { label: "Dashboard", href: "/homepage", icon: "bi bi-house" },
+  { label: "Campaigns", href: "/creatordashboard", icon: "bi bi-speedometer2" },
+  { label: "Discover", href: "/buyerdashboard", icon: "bi bi-person" },
+  { label: "My Company", href: "/buyerdashboard", icon: "bi bi-person" },
+  { label: "Analytics", href: "/buyerdashboard", icon: "bi bi-person" },
+  //   { label: "Logout", href: "/settings", icon: "bi bi-gear" },
 ];
 
 const Main = ({
@@ -24,7 +26,7 @@ const Main = ({
           <Sidebar menuItems={menuItems} />
           <div className="flex-grow-1">
             <Header />
-            <main>{children}</main>
+            <main className='main-content'>{children}</main>
             <Footer />
           </div>
         </div>
