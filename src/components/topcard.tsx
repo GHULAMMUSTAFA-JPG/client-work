@@ -85,7 +85,7 @@ function TopCard() {
 
                                 </div>
                                 <div className="col-sm-6 col-md-6 col-xl-3">
-                                    <p className="mb-2 fw-medium fs-12 ">Network Reach</p>
+                                    <p className="mb-2 fw-medium">Network Reach</p>
                                     <div className="d-flex align-items-center">
                                         <Icon icon="tabler:users" width={32} height={32} className='' />
                                         <div className="ms-2">
@@ -96,7 +96,7 @@ function TopCard() {
                                     </div>
                                 </div>
                                 <div className="col-sm-6 col-md-6 col-xl-3">
-                                    <p className="mb-2 fw-medium fs-12 ">Post Frequency Tracker</p>
+                                    <p className="mb-2 fw-medium">Post Frequency Tracker</p>
                                     <div className="d-flex align-items-center">
                                         <Icon icon="akar-icons:video" width={32} height={32} className='' />
                                         <div className="ms-2">
@@ -106,7 +106,7 @@ function TopCard() {
                                     </div>
                                 </div>
                                 <div className="col-sm-6 col-md-6 col-xl-3">
-                                    <p className="mb-2 fw-medium fs-12 ">Social Media Posts</p>
+                                    <p className="mb-2 fw-medium">Social Media Posts</p>
                                     <div className="d-flex align-items-center">
                                         <Icon icon="iconoir:post" width={32} height={32} className='' />
                                         <div className="ms-2">

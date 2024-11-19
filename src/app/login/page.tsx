@@ -16,7 +16,7 @@ const Login = () => {
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
     const router = useRouter()
 
-    const {loginUser} = useAuth()
+    const { loginUser } = useAuth()
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
 
@@ -47,7 +47,7 @@ const Login = () => {
         setLoginError(null); // Reset previous error
 
         try {
-            const response:any = await login(values); // Perform login (assumed you get user data on success)
+            const response: any = await login(values); // Perform login (assumed you get user data on success)
             setLoader(false);
             if (response?.data) {
                 loginUser(response?.data)
@@ -65,10 +65,10 @@ const Login = () => {
 
     return (
         <div className='container-fluid'>
-            <div className='row py-5'>
+            <div className='row'>
                 <div className='col-12'>
                     {/* <Image src="/assets/images/logo.png" alt="logo" width={100} height={30} className="img-fluid" /> */}
-                    <div className='row'>
+                    <div className='row align-items-center vh-100'>
                         <div className='col-sm-8 col-md-6 col-xl-4 mx-auto'>
                             <div className='card'>
                                 <div className='card-body'>

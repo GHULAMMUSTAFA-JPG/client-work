@@ -293,7 +293,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -308,7 +308,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -323,7 +323,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -338,7 +338,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -383,7 +383,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -398,7 +398,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -413,7 +413,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -428,7 +428,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -473,7 +473,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -488,7 +488,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -503,7 +503,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
@@ -518,7 +518,7 @@ function Campaigns() {
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
                                                                             <p className='mb-0'>Initiated Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>

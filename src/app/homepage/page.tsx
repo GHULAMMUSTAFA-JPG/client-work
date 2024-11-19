@@ -31,7 +31,7 @@ function Homepage() {
                 <div className="row my-3">
                     <div className="col-12">
                         <div className="d-flex justify-content-between align-items-end">
-                            <p className="mb-0 fw-medium ">Campaign Creators</p>
+                            <p className="mb-0 fw-medium fs-16">Campaign Creators</p>
                             {/* <button className="btn btn-primary btn-sm ms-auto">Add Campaign</button> */}
                             {/* <div className="dropdown ms-3">
                                 <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
