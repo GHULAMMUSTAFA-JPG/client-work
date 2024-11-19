@@ -1,15 +1,17 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import 'bootstrap/dist/css/bootstrap.css';
 import Image from "next/image";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface SidebarProps {
   menuItems: { label: string; href: string; icon?: string }[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
+  const [isActive, setIsActive] = useState<number>(0)
+
   return (
     <div className={`d-flex flex-column sidebar`}>
       <a className="navbar-brand" href="#">
@@ -22,15 +24,20 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
         />
       </a>
       <ul className="nav flex-column">
-        {menuItems.map((item, index) => (
-          <li key={index} className="nav-item">
-            {/* add active class in below link tag  */}
-            <Link href={item.href} className="nav-link d-flex align-items-center">
-              {item.icon && <i className={`${item.icon} me-3`}></i>}
-              {item.label}
-            </Link>
-          </li>
-        ))}
+        {menuItems.map((item, index) => {
+          return (
+            <li key={index} className="nav-item">
+              <Link
+                onClick={() => { setIsActive(index) }}
+                href={item.href}
+                className={`nav-link d-flex align-items-center ${isActive == index ? 'active' : ''}`}
+              >
+                {item.icon && <i className={`${item.icon} me-3`}></i>}
+                {item.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
