@@ -22,7 +22,7 @@ function CampaignOffcanvas() {
                 </div>
                 <div className="offcanvas-body">
                     <div className='row'>
-                        <div className='col-md-9'>
+                        <div className='col-md-8 pe-4'>
                             <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                                 <div className='campaign-post'>
                                     <div className='d-flex'>
@@ -31,7 +31,7 @@ function CampaignOffcanvas() {
                                                         </div> */}
                                         <div className='d-flex justify-content-between'>
                                             <div>
-                                                <h5>Senior Digital Designer for SAAS Company</h5>
+                                                <h5 className='mb-3'>Senior Digital Designer for SAAS Company</h5>
                                                 {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                 <div className='d-flex align-items-center mb-2'>
                                                     <Icon icon="tdesign:location" className='me-1 text-warning' />
@@ -49,7 +49,7 @@ function CampaignOffcanvas() {
                                     </div>
                                 </div>
                                 <hr className='text-warning my-4' />
-                                <h5>Skills and Expertise</h5>
+                                <h5 className='mb-3'>Skills and Expertise</h5>
                                 <div className='d-flex gap-2 flex-wrap mb-3'>
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent    ">Backend developer</span>
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
@@ -62,20 +62,56 @@ function CampaignOffcanvas() {
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">SCSS</span>
                                 </div>
                                 <hr className='text-warning my-4' />
-                                <h5>Activity on this Campaign</h5>
-                                <p className='mb-2'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                <p className='mb-2'><span className=''>Campaign Accepted:</span> <span className='fw-medium text-warning'>4</span></p>
-                                <p className='mb-2'><span className=''>Campaign Sent:</span> <span className='fw-medium text-warning'>7</span></p>
-
-                                <div className='d-flex align-items-center'>
-                                    <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' width={22} height={22} />
-                                    <p className='mb-0 text-warning me-3'>payment verified</p>
-                                    <p className='mb-0'>$10k+ <span className='text-warning ms-1'>spent</span></p>
+                                <div className='row'>
+                                    <div className='col-12'>
+                                        <h5 className='mb-3'>Activity on this Campaign</h5>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <p className='mb-2'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
+                                        <p className='mb-2'><span className=''>Campaign Accepted:</span> <span className='fw-medium text-warning'>4</span></p>
+                                        <p className='mb-2'><span className=''>Campaign Sent:</span> <span className='fw-medium text-warning'>7</span></p>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <div className='d-flex align-items-center'>
+                                            <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' width={22} height={22} />
+                                            <p className='mb-0 text-warning me-3'>payment verified</p>
+                                            <p className='mb-0'>$10k+ <span className='text-warning ms-1'>spent</span></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-3 border-start'>
-                            <button className='btn btn-primary w-100'>Apply Now</button>
+                        <div className='col-md-4 border-start ps-4'>
+                            <p className='mb-1 text-warning fs-12'>Apply to Campaign</p>
+                            <h6 className='mb-3'>How it works</h6>
+                            <div className='d-flex mb-2'>
+                                <div className='number-circle'>
+                                    <p className='mb-0 text-secondary fw-medium'>1</p>
+                                </div>
+                                <div className='ms-3'>
+                                    <p className='fw-medium mb-2'>Quick Apply</p>
+                                    <p>Quickly apply to campaigns by sending a message including yoour collaboration ideas and pricing</p>
+                                </div>
+                            </div>
+                            <div className='d-flex mb-2'>
+                                <div className='number-circle'>
+                                    <p className='mb-0 text-secondary fw-medium'>2</p>
+                                </div>
+                                <div className='ms-3'>
+                                    <p className='fw-medium mb-2'>Review</p>
+                                    <p>your meesage and profile are reviewed to see if you are a good fit for the campaign</p>
+                                </div>
+                            </div>
+                            <div className='d-flex mb-2'>
+                                <div className='number-circle'>
+                                    <p className='mb-0 text-secondary fw-medium'>3</p>
+                                </div>
+                                <div className='ms-3'>
+                                    <p className='fw-medium mb-2'>Get Started</p>
+                                    <p>Once you're in, its time to send over your proposal to get paid and get started</p>
+                                </div>
+                            </div>
+                            <button className='btn btn-primary w-100 mt-3'>Apply Now</button>
                         </div>
                     </div>
                 </div>
