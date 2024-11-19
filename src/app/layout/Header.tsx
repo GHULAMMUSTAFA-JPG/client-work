@@ -5,20 +5,20 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useAuth } from "@/contexts/AuthContext";
 
 
 export default function Header() {
-    const router = useRouter(); // Initialize router without condition
     const pathname = usePathname(); // Initialize pathname without condition
     const [user, setUser] = useState<any>()
+    const {logout} = useAuth()
 
     useEffect(() => {
         setUser(localStorage.getItem("user"))
 
     }, [])
     const navigateToSignIn = () => {
-        localStorage.removeItem("user")
-        router.push('/login');
+        logout()
     };
 
     return (
@@ -71,14 +71,14 @@ export default function Header() {
                                     </li>
                                     <li><a className="dropdown-item" href="#">
                                         <form className="d-flex" role="search">
-                                            {(pathname !== '/' && pathname !== '/login') && (
+                                            {/* {(pathname !== '/' && pathname !== '/login') && ( */}
                                                 <p
                                                     className="mb-0"
                                                     onClick={navigateToSignIn}
                                                 >
-                                                    {user ? "Sign Out" : "Sign In"}
+                                                    Sign Out
                                                 </p>
-                                            )}
+                                            
                                         </form>
 
                                     </a>
