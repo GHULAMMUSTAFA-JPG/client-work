@@ -26,7 +26,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
           <li key={index} className="nav-item">
             {/* add active class in below link tag  */}
             <Link href={item.href} className="nav-link d-flex align-items-center">
-              {item.icon && <i className={`${item.icon} me-2`}></i>}
+              {item.icon && <i className={`${item.icon} me-3`}></i>}
               {item.label}
             </Link>
           </li>

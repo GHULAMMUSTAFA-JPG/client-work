@@ -26,7 +26,7 @@ function Homepage() {
     }
     return (
         <>
-            <div className="container">
+            <div className="container-fluid">
                 <Topcard />
                 <div className="row my-3">
                     <div className="col-12">

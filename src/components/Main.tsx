@@ -9,10 +9,10 @@ import withAuth from '@/utils/withAuth';
 
 const menuItems = [
   { label: "Dashboard", href: "/creatordashboard", icon: "bi bi-house" },
-  { label: "Campaigns", href: "/campaigns", icon: "bi bi-speedometer2" },
-  { label: "Discover", href: "/discover", icon: "bi bi-person" },
-  { label: "My Company", href: "/mycompany", icon: "bi bi-person" },
-  { label: "Analytics", href: "/analytics", icon: "bi bi-person" },
+  { label: "Campaigns", href: "/campaigns", icon: "bi bi-briefcase" },
+  { label: "Discover", href: "/discover", icon: "bi bi-kanban" },
+  { label: "My Company", href: "/mycompany", icon: "bi bi-building" },
+  { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },
   //   { label: "Logout", href: "/settings", icon: "bi bi-gear" },
 ];
 

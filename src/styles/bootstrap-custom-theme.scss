@@ -134,14 +134,16 @@ body {
 
     .accordion-item {
         margin-bottom: 1rem;
-        border-radius: 1rem;
 
         .accordion-header {
-            border-radius: 1rem;
 
             .accordion-button {
                 font-weight: 500;
                 font-size: 20px;
+
+                &:focus {
+                    box-shadow: none;
+                }
             }
         }
     }

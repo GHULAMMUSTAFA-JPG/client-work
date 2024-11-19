@@ -24,7 +24,7 @@ export default function Header() {
         <>
             <header className="navbar-section">
                 <nav className="navbar navbar-expand-lg bg-white">
-                    <div className="container">
+                    <div className="container-fluid">
                         <Icon icon="ic:round-menu" width={24} height={24} />
                         <button
                             className="navbar-toggler bg-primary"
