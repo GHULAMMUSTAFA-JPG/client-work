@@ -17,6 +17,7 @@ export default function Header() {
 
     }, [])
     const navigateToSignIn = () => {
+        localStorage.removeItem("user")
         router.push('/login');
     };
 
