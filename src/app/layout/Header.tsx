@@ -53,8 +53,8 @@ export default function Header() {
                                 )} */}
                             {/* Register button if needed */}
                             {/* </form> */}
-                            <Icon icon="mingcute:notification-line" width={27} height={27}  className="text-warning" />
-                            <Icon icon="mdi:message-outline" width={24} height={24} className="ms-3 text-warning"/>
+                            <Icon icon="mingcute:notification-line" width={24} height={24}  className="text-warning" />
+                            <Icon icon="mdi:message-outline" width={21} height={21} className="ms-3 text-warning"/>
                             <div className="dropdown ms-2">
                                 <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div className="d-flex align-items-center">
