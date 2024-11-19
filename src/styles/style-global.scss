@@ -112,4 +112,15 @@ body {
         text-overflow: ellipsis;
         // width: auto;
     }
+
+    .number-circle {
+        height: 25px;
+        width: 25px;
+        min-width: 25px;
+        border-radius: 50%;
+        background-color: $success;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
