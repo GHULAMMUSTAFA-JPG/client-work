@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignOffcanvas from '@/components/campaignoffcanvas';
+import CampaignFilterModal from '@/components/campaignfiltermodal';
 
 
 
@@ -33,6 +34,12 @@ function Campaigns() {
                                 <div className='col-12 mb-2'>
                                     <div className="tab-content " id="myTabContent">
                                         <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex={0}>
+                                            <div className="position-relative mb-3">
+                                                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="Search for Campaigns" />
+                                                <Icon icon="ph:magnifying-glass" width={20} height={20} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
+                                                <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-5 cursor' />
+                                                <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" />
+                                            </div>
                                             <div className='card campaign-card'>
                                                 <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                                                     <div className='campaign-post'>
@@ -551,6 +558,7 @@ function Campaigns() {
                 </div>
             </section >
             <CampaignOffcanvas />
+            <CampaignFilterModal />
         </>
     );
 }

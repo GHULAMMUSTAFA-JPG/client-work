@@ -147,4 +147,28 @@ body {
             }
         }
     }
+
+    .accordion-button:not(.collapsed) {
+        color: $black;
+    }
+
+    .modal {
+        .accordion-button:not(.collapsed) {
+            background-color: transparent;
+        }
+
+        .accordion-button {
+            font-weight: 500;
+            font-size: 14px !important;
+        }
+
+        .accordion-button::after {
+            background-size: 12px;
+        }
+    }
+
+    .form-check {
+        margin-bottom: 0.5rem;
+    }
+
 }
