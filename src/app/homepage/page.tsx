@@ -8,6 +8,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
+import ChartsDashboard from "@/components/chartsdashboard";
 function Homepage() {
 
     const [users, setUsers] = useState<any[]>([]);
@@ -28,6 +29,7 @@ function Homepage() {
         <>
             <div className="container-fluid">
                 <Topcard />
+                <ChartsDashboard />
             </div>
         </>
     );
