@@ -38,10 +38,10 @@ function CampaignOffcanvas() {
                                                     <p className='mb-0 fs-12 text-secondary'>Islamababd</p>
                                                 </div>
                                                 <p className='text-secondary fs-12 mb-2'>Jan 24, 2024 - July 25 2024</p>
-                                                <p className='text-dark mb-3'>
+                                                <p className='text-dark mb-3 fs-12'>
                                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
                                                 </p>
-                                                <p className='text-dark mb-3'>
+                                                <p className='text-dark mb-3 fs-12'>
                                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
                                                 </p>
                                             </div>
@@ -90,7 +90,7 @@ function CampaignOffcanvas() {
                                 </div>
                                 <div className='ms-3'>
                                     <p className='fw-medium mb-2'>Quick Apply</p>
-                                    <p>Quickly apply to campaigns by sending a message including yoour collaboration ideas and pricing</p>
+                                    <p className='fs-12'>Quickly apply to campaigns by sending a message including yoour collaboration ideas and pricing</p>
                                 </div>
                             </div>
                             <div className='d-flex mb-2'>
@@ -99,7 +99,7 @@ function CampaignOffcanvas() {
                                 </div>
                                 <div className='ms-3'>
                                     <p className='fw-medium mb-2'>Review</p>
-                                    <p>your meesage and profile are reviewed to see if you are a good fit for the campaign</p>
+                                    <p className='fs-12'>your meesage and profile are reviewed to see if you are a good fit for the campaign</p>
                                 </div>
                             </div>
                             <div className='d-flex mb-2'>
@@ -108,7 +108,7 @@ function CampaignOffcanvas() {
                                 </div>
                                 <div className='ms-3'>
                                     <p className='fw-medium mb-2'>Get Started</p>
-                                    <p>Once you're in, its time to send over your proposal to get paid and get started</p>
+                                    <p className='fs-12'>Once you're in, its time to send over your proposal to get paid and get started</p>
                                 </div>
                             </div>
                             <button className='btn btn-primary w-100 mt-3'>Apply Now</button>

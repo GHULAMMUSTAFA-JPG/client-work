@@ -8,10 +8,10 @@ import Sidebar from '@/app/layout/Sidebar';
 import withAuth from '@/utils/withAuth';
 
 const menuItems = [
-  { label: "Dashboard", href: "/creatordashboard", icon: "bi bi-house" },
+  { label: "Dashboard", href: "/homepage", icon: "bi bi-house" },
   { label: "Campaigns", href: "/campaigns", icon: "bi bi-briefcase" },
   { label: "Discover", href: "/discover", icon: "bi bi-kanban" },
-  { label: "My Company", href: "/mycompany", icon: "bi bi-building" },
+  { label: "My Company", href: "/creatordashboard", icon: "bi bi-building" },
   { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },
   //   { label: "Logout", href: "/settings", icon: "bi bi-gear" },
 ];
