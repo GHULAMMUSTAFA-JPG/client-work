@@ -64,7 +64,8 @@ export default function Header() {
                                         <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                     </div>
                                 </a>
-                                
+                                 
+                                 
                                 <ul className="dropdown-menu">
                                     <li><a className="dropdown-item" href="#">
                                         Update Profile
