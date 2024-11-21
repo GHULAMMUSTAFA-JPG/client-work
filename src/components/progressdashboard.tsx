@@ -5,7 +5,7 @@ import { Bar } from "react-chartjs-2";
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const ProgressDashboard = () => {
-    const data = {
+    const data:any = {
         labels: ["20 Application sent", "10 were viewed", "4 Interview", "2 hires"], // Your 4 labels
         datasets: [
             {
@@ -19,7 +19,7 @@ const ProgressDashboard = () => {
         ],
     };
 
-    const options = {
+    const options:any = {
         responsive: true,
         indexAxis: "y", // Make the chart horizontal
         plugins: {

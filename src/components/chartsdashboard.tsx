@@ -13,7 +13,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ChartsDashboard = () => {
-    const data = {
+    const data:any = {
         labels: ["Completed", "Remaining"],
         datasets: [
             {
@@ -24,7 +24,7 @@ const ChartsDashboard = () => {
         ],
     };
 
-    const options = {
+    const options:any = {
         responsive: true,
         cutout: "90%",
         plugins: {

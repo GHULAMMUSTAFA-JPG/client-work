@@ -5,7 +5,7 @@ import { Bar } from "react-chartjs-2";
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const VerticalBarChart = () => {
-    const data = {
+    const data:any = {
         labels: ["Nov 13", "Nov 14", "Nov 15", "Nov 16"], // Your 4 labels
         datasets: [
             {
@@ -19,7 +19,7 @@ const VerticalBarChart = () => {
         ],
     };
 
-    const options = {
+    const options:any = {
         responsive: true,
         indexAxis: "x", // Make the chart vertical (default)
         plugins: {

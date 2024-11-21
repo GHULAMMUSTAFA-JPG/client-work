@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
 const BarsDashboard = () => {
-    const data = {
+    const data:any = {
         labels: ["Nov 13", "Nov 14", "Nov 15", "Nov 16", "Nov 17", "Nov 18", "Nov 19"],
         datasets: [
             {
@@ -35,7 +35,7 @@ const BarsDashboard = () => {
         ],
     };
 
-    const options = {
+    const options:any= {
         responsive: true,
         plugins: {
             legend: {
