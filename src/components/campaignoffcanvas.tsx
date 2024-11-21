@@ -34,8 +34,8 @@ function CampaignOffcanvas() {
                                                 <h5 className='mb-3'>Senior Digital Designer for SAAS Company</h5>
                                                 {/* <p className='mb-0'>Halal Company ltd</p> */}
                                                 <div className='d-flex align-items-center mb-2'>
-                                                    <Icon icon="tdesign:location" className='me-1 text-warning' />
-                                                    <p className='mb-0 fs-12 text-secondary'>Islamababd</p>
+                                                    <Icon icon="ph:building-fill" className='me-1 text-warning' />
+                                                    <p className='mb-0 fs-12 text-secondary'>Cisco</p>
                                                 </div>
                                                 <p className='text-secondary fs-12 mb-2'>Jan 24, 2024 - July 25 2024</p>
                                                 <p className='text-dark mb-3 fs-12'>

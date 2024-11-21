@@ -13,7 +13,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ChartsDashboard = () => {
-    const data:any = {
+    const data: any = {
         labels: ["Completed", "Remaining"],
         datasets: [
             {
@@ -24,7 +24,7 @@ const ChartsDashboard = () => {
         ],
     };
 
-    const options:any = {
+    const options: any = {
         responsive: true,
         cutout: "90%",
         plugins: {
@@ -36,7 +36,7 @@ const ChartsDashboard = () => {
     return (
         <>
             <div className='card'>
-                <div className='card-body p-4'>
+                <div className='card-body py-5 px-4'>
                     <div className='row align-items-center'>
                         <div className='col-md'>
                             <h5>Campaign Success Score</h5>
@@ -60,6 +60,7 @@ const ChartsDashboard = () => {
                                 </div>
                             </div>
                             <h6 className='text-center mt-3'>Excellent</h6>
+                            <p className='text-center mb-0 text-muted'>As of Nov 20, 2024.</p>
                         </div>
                     </div>
                 </div>
