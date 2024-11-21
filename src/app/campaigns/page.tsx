@@ -549,9 +549,6 @@ function Campaigns() {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <div className='col-md-3 mb-2'>
-                                    <ProfileCard />
-                                </div> */}
                             </div>
                         </div>
                     </div>

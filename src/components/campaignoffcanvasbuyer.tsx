@@ -11,18 +11,18 @@ import ProfileCard from '@/components/profilecard';
 
 
 
-function CampaignOffcanvas() {
+function CampaignOffcanvasBuyer() {
 
     return (
         <>
-            <div className="offcanvas offcanvas-end" tabIndex={1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div className="offcanvas offcanvas-end" tabIndex={1} id="offcanvasRight1" aria-labelledby="offcanvasRight1Label">
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasRightLabel">Apply for Campaign</h5>
+                    <h5 className="offcanvas-title" id="offcanvasRight1Label">Campaign Details</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body">
                     <div className='row'>
-                        <div className='col-md-8 pe-4'>
+                        <div className='col-md-12'>
                             <div className='campaign-post-wrapper'>
                                 <div className='campaign-post'>
                                     <div className='d-flex'>
@@ -81,38 +81,6 @@ function CampaignOffcanvas() {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-4 border-start ps-4'>
-                            <p className='mb-1 text-warning fs-12'>Apply to Campaign</p>
-                            <h6 className='mb-3'>How it works</h6>
-                            <div className='d-flex mb-2'>
-                                <div className='number-circle'>
-                                    <p className='mb-0 text-secondary fw-medium'>1</p>
-                                </div>
-                                <div className='ms-3'>
-                                    <p className='fw-medium mb-2'>Quick Apply</p>
-                                    <p className='fs-12'>Quickly apply to campaigns by sending a message including yoour collaboration ideas and pricing</p>
-                                </div>
-                            </div>
-                            <div className='d-flex mb-2'>
-                                <div className='number-circle'>
-                                    <p className='mb-0 text-secondary fw-medium'>2</p>
-                                </div>
-                                <div className='ms-3'>
-                                    <p className='fw-medium mb-2'>Review</p>
-                                    <p className='fs-12'>your meesage and profile are reviewed to see if you are a good fit for the campaign</p>
-                                </div>
-                            </div>
-                            <div className='d-flex mb-2'>
-                                <div className='number-circle'>
-                                    <p className='mb-0 text-secondary fw-medium'>3</p>
-                                </div>
-                                <div className='ms-3'>
-                                    <p className='fw-medium mb-2'>Get Started</p>
-                                    <p className='fs-12'>Once you're in, its time to send over your proposal to get paid and get started</p>
-                                </div>
-                            </div>
-                            <button className='btn btn-primary w-100 mt-3'>Apply Now</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -120,4 +88,4 @@ function CampaignOffcanvas() {
     );
 }
 
-export default CampaignOffcanvas
+export default CampaignOffcanvasBuyer

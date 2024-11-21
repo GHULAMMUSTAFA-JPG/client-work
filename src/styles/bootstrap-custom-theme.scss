@@ -87,6 +87,14 @@ body {
         height: 100%;
     }
 
+    .listing-card {
+        border-radius: 0;
+
+        .card-body {
+            padding: 0;
+        }
+    }
+
     .dropdown-item {
         font-size: 14px
     }
