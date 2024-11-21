@@ -9,6 +9,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
 import ChartsDashboard from "@/components/chartsdashboard";
+import BarsDashboard from "@/components/barsdasboard";
+import ProgressDashboard from "@/components/progressdashboard";
+import VerticalBarChart from "@/components/verticalbarchart";
 function Homepage() {
 
     const [users, setUsers] = useState<any[]>([]);
@@ -29,7 +32,20 @@ function Homepage() {
         <>
             <div className="container-fluid">
                 <Topcard />
-                <ChartsDashboard />
+                <div className="row g-3">
+                    <div className="col-md-6">
+                        <ChartsDashboard />
+                    </div>
+                    <div className="col-md-6">
+                        <BarsDashboard />
+                    </div>
+                    <div className="col-md-6">
+                        <VerticalBarChart />
+                    </div>
+                    <div className="col-md-6">
+                        <ProgressDashboard />
+                    </div>
+                </div>
             </div>
         </>
     );

@@ -38,7 +38,7 @@ function Campaigns() {
                                                 <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="Search for Campaigns" />
                                                 <Icon icon="ph:magnifying-glass" width={20} height={20} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
                                                 <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-5 cursor' />
-                                                <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" />
+                                                <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" />
                                             </div>
                                             <div className='card campaign-card'>
                                                 <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
