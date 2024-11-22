@@ -216,6 +216,15 @@ body {
         padding: 1rem 1.5rem;
     }
 
+    .offcanvas-lg {
+        background-color: $dark !important;
+
+        .btn-close {
+            filter: invert(1);
+            opacity: 1;
+        }
+    }
+
     .accordion-item {
         margin-bottom: 1rem;
 

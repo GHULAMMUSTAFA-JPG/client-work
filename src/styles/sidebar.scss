@@ -3,6 +3,11 @@
     min-width: 280px;
     height: 100vh;
     background-color: $dark;
+    overflow: auto;
+
+    @media (max-width: 991.98px) {
+        width: 100%;
+    }
 
     .nav-link {
         color: $light;
