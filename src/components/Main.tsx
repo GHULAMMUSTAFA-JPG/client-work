@@ -14,7 +14,6 @@ const menuItems = [
   // { label: "Discover", href: "/discover", icon: "bi bi-kanban" },
   { label: "My Company", href: "/creatordashboard", icon: "bi bi-building" },
   { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },
-  //   { label: "Logout", href: "/settings", icon: "bi bi-gear" },
 
   // Buyers dashbaord menus
   { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-briefcase" },
