@@ -51,7 +51,7 @@ function CampaignOffcanvas() {
                                 <hr className='text-warning my-4' />
                                 <h5 className='mb-3'>Skills and Expertise</h5>
                                 <div className='d-flex gap-2 flex-wrap mb-3'>
-                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent    ">Backend developer</span>
+                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">IT officer</span>
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Premire pro</span>

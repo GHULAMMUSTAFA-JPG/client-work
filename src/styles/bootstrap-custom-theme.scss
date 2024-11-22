@@ -57,6 +57,10 @@ body {
         width: 45%;
     }
 
+    h5 {
+        font-size: 18px;
+    }
+
     .table {
         border-radius: 12px;
         overflow: hidden;
@@ -93,6 +97,54 @@ body {
         .card-body {
             padding: 0;
         }
+    }
+
+    .campaign-card {
+        border-radius: 0;
+        border: none;
+
+        .campaign-post {
+            cursor: pointer;
+            padding: 1.5rem 1rem;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: $hover;
+                transition: all 0.3s ease-in-out;
+
+                .icon-apply {
+                    background-color: $white;
+                }
+
+                .badge {
+                    border: 1px solid $light !important;
+                }
+            }
+        }
+    }
+
+    .modal {
+        .campaign-card {
+            border: none;
+
+            .campaign-post {
+                padding: 1.5rem 0.5rem;
+            }
+        }
+    }
+
+    .create-campaign-wrapper {
+
+        .form-control,
+        .form-select {
+            background-color: $base;
+            border: none;
+            font-size: 14px;
+        }
+    }
+
+    .form-control {
+        font-size: 14px;
     }
 
     .dropdown-item {
@@ -137,8 +189,22 @@ body {
         font-size: 12px;
     }
 
+    .modal {
+        .modal-title {
+            font-size: 18px !important;
+        }
+    }
+
     .offcanvas.offcanvas-end {
         width: 70vw;
+    }
+
+    .offcanvas.offcanvas-end.offcanvas-create-campaign {
+        width: 50vw;
+    }
+
+    .offcanvas.offcanvas-end.campaign-offcanvas-buyer {
+        width: 60vw;
     }
 
     .offcanvas-header {
@@ -189,4 +255,7 @@ body {
         margin-bottom: 0.5rem;
     }
 
+    .nowrap {
+        white-space: nowrap;
+    }
 }
