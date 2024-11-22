@@ -26,7 +26,8 @@ export default function Header() {
             <header className="navbar-section">
                 <nav className="navbar bg-white">
                     <div className="container-fluid">
-                        <Icon icon="ic:round-menu" width={24} height={24} type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" />
+                        <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" />
+                        <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-none d-lg-block" />
                         {/* <button
                             className="navbar-toggler bg-primary"
                             type="button"
