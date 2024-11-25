@@ -12,6 +12,7 @@ import ChartsDashboard from "@/components/chartsdashboard";
 import BarsDashboard from "@/components/barsdasboard";
 import ProgressDashboard from "@/components/progressdashboard";
 import VerticalBarChart from "@/components/verticalbarchart";
+import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 function homepagebuyer() {
 
     const [users, setUsers] = useState<any[]>([]);
@@ -34,21 +35,18 @@ function homepagebuyer() {
                 <Topcard />
                 <div className="row graphs g-3">
                     <div className="col-md-6">
-                        <ChartsDashboard />
-                    </div>
-                    <div className="col-md-6">
                         <BarsDashboard />
-                    </div>
-                    <div className="col-md-6">
-                        <VerticalBarChart />
                     </div>
                     <div className="col-md-6">
                         <ProgressDashboard />
                     </div>
+                </div>
+                <div className="row g-3 my-3">
+                    <CardsDashboardBuyer />
                 </div>
             </div>
         </>
     );
 }
 
-export default withAuth(homepagebuyer)
+export default homepagebuyer
