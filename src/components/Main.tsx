@@ -29,7 +29,7 @@ const Main = ({
 
   // Determine which menu items to show based on role
   const menuItems =
-    user?.role === "creator" ? creatorMenuItems : buyerMenuItems;
+    !user?.isBuyer ? creatorMenuItems : buyerMenuItems;
 
     return (
       <>
