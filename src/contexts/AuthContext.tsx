@@ -36,7 +36,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
-    router.push("/homepage");
+
+    console.log(userData, "User Data")
+
+    if(userData.isBuyer)
+      router.push("/homepagebuyer");
+    else
+      router.push("/homepage")
   };
 
   const logout = () => {
@@ -49,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, loginUser, logout }}>
       {children}
-      
+
     </AuthContext.Provider>
   );
 };
