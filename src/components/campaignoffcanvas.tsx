@@ -49,6 +49,22 @@ function CampaignOffcanvas() {
                                     </div>
                                 </div>
                                 <hr className='text-warning my-4' />
+                                <div className='row'>
+                                    <div className='col-12'>
+                                        <h5 className='mb-3'>Budget</h5>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <p className='fw-medium mb-0 fs-16'>$5.00</p>
+                                        <p className='m-0 text-secondary'>Fixed Price</p>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <p className='fw-medium mb-0 fs-16'>Expert</p>
+                                        <p className='m-0 text-secondary'>
+                                            I am willing to pay higher rates for the most experienced creators
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr className='text-warning my-4' />
                                 <h5 className='mb-3'>Skills and Expertise</h5>
                                 <div className='d-flex gap-2 flex-wrap mb-3'>
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
@@ -66,25 +82,27 @@ function CampaignOffcanvas() {
                                     <div className='col-12'>
                                         <h5 className='mb-3'>Activity on this Campaign</h5>
                                     </div>
-                                    <div className='col-md-6'>
+                                    <div className='col-12'>
                                         <p className='mb-2'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                        <p className='mb-2'><span className=''>Campaign Accepted:</span> <span className='fw-medium text-warning'>4</span></p>
-                                        <p className='mb-2'><span className=''>Campaign Sent:</span> <span className='fw-medium text-warning'>7</span></p>
+                                        <p className='mb-2'><span className=''>Invites Sent:</span> <span className='fw-medium text-warning'>4</span></p>
+                                        <p className='mb-2'><span className=''>Hires:</span> <span className='fw-medium text-warning'>7</span></p>
                                     </div>
-                                    <div className='col-md-6'>
+                                    {/* <div className='col-md-6'>
                                         <div className='d-flex align-items-center'>
                                             <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' width={22} height={22} />
                                             <p className='mb-0 text-warning me-3'>payment verified</p>
                                             <p className='mb-0'>$10k+ <span className='text-warning ms-1'>spent</span></p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
                         <div className='col-md-4 border-start ps-4'>
-                            <p className='mb-1 text-warning fs-12'>Apply to Campaign</p>
-                            <h6 className='mb-3'>How it works</h6>
-                            <div className='d-flex mb-2'>
+                            {/* <p className='mb-1 text-warning fs-12'>Apply to Campaign</p> */}
+                            <button className='btn btn-primary w-100 my-3'>Apply Now</button>
+
+                            <h6 className='mb-3'>About the Client</h6>
+                            {/* <div className='d-flex mb-2'>
                                 <div className='number-circle'>
                                     <p className='mb-0 text-secondary fw-medium'>1</p>
                                 </div>
@@ -110,8 +128,23 @@ function CampaignOffcanvas() {
                                     <p className='fw-medium mb-2'>Get Started</p>
                                     <p className='fs-12'>Once you're in, its time to send over your proposal to get paid and get started</p>
                                 </div>
+                            </div> */}
+                            <div className='mb-3'>
+                                <p className='fw-medium mb-0 text-secondary'>United States</p>
+                                <p>Doral 5:20 am</p>
                             </div>
-                            <button className='btn btn-primary w-100 mt-3'>Apply Now</button>
+                            <div className='mb-3'>
+                                <p className='fw-medium mb-0 text-secondary'>20 Campaigns Posted</p>
+                                <p>30% hire rate, 1 open campaign</p>
+                            </div>
+                            <div className='mb-3'>
+                                <p className='fw-medium mb-0 text-secondary'>$4.5k total spent</p>
+                                <p>5 hires, 1 active</p>
+                            </div>
+                            <div className='mb-3'>
+                                <p className='fw-medium mb-0 text-secondary'>$5 /hr average hourly rate</p>
+                                <p>315 hours</p>
+                            </div>
                         </div>
                     </div>
                 </div>

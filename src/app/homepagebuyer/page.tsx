@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
 import ChartsDashboard from "@/components/chartsdashboard";
 import BarsDashboard from "@/components/barsdasboard";
-import ProgressDashboard from "@/components/progressdashboard";
+import ProgressDashboardBuyer from "@/components/progressdashboardbuyer";
 import VerticalBarChart from "@/components/verticalbarchart";
 import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 function homepagebuyer() {
@@ -38,10 +38,10 @@ function homepagebuyer() {
                         <BarsDashboard />
                     </div>
                     <div className="col-md-6">
-                        <ProgressDashboard />
+                        <ProgressDashboardBuyer />
                     </div>
                 </div>
-                <div className="row g-3 my-3">
+                <div className="row my-3">
                     <CardsDashboardBuyer />
                 </div>
             </div>

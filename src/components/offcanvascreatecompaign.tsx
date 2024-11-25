@@ -30,13 +30,25 @@ function OffcanvasCreateCompaign() {
                                     <input type="name" className="form-control" id="exampleFormControlInput1" placeholder="I will need a digital designer for my SAAS company" />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="exampleFormControlSelect1" className="form-label">Campaign Type</label>
-                                    <select className="form-select" aria-label="Default select example">
-                                        <option selected>Select Campaign Type</option>
-                                        <option value="1">Full Time</option>
-                                        <option value="2">Part Time</option>
-                                        <option value="3">Remote</option>
-                                    </select>
+                                    <label htmlFor="exampleFormControlSelect1" className="form-label">What level of experience are you looking for? </label>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                        <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                            Entry Level
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                        <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                            Intermediate Level
+                                        </label>
+                                    </div>
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
+                                        <label className="form-check-label" htmlFor="flexRadioDefault3">
+                                            Expert
+                                        </label>
+                                    </div>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlTextarea1" className="form-label">Description</label>
