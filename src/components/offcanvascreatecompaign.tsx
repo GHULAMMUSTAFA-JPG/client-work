@@ -71,17 +71,13 @@ function OffcanvasCreateCompaign() {
                                 <div className='row'>
                                     <div className='col-12'>
                                         <h5 className='mb-3'>Budget</h5>
-                                    </div>
-                                    <div className='col-md-6'>
-                                        <div className="mb-3">
-                                            <label htmlFor="exampleFormControlInput1" className="form-label">Starting Budget</label>
-                                            <input type="name" className="form-control" id="exampleFormControlInput1" placeholder="Enter starting budget" />
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" />
+                                            <label className="form-check-label" htmlFor="inlineRadio1">Fixed Price</label>
                                         </div>
-                                    </div>
-                                    <div className='col-md-6'>
-                                        <div className="mb-3">
-                                            <label htmlFor="exampleFormControlInput1" className="form-label">Ending Budget</label>
-                                            <input type="name" className="form-control" id="exampleFormControlInput1" placeholder="Enter ending budget" />
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" />
+                                            <label className="form-check-label" htmlFor="inlineRadio2">Hourly Rate</label>
                                         </div>
                                     </div>
                                 </div>
