@@ -1,5 +1,15 @@
 module.exports = {
 
+  async headers() {
+    return [
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store' },
+        ],
+      },
+    ];
+  },
     images: {
         remotePatterns: [
           {
