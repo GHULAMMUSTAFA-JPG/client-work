@@ -1,7 +1,7 @@
 "use client";
 
 import { fetch_dashboard_data } from "@/@api";
-import Topcard from "@/components/topcard";
+import TopCardBuyer from "@/components/TopCardBuyer";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
@@ -32,7 +32,7 @@ function homepagebuyer() {
     return (
         <>
             <div className="container-fluid">
-                <Topcard />
+                <TopCardBuyer />
                 <div className="row graphs g-3">
                     <div className="col-md-6">
                         <BarsDashboard />

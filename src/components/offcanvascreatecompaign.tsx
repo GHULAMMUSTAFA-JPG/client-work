@@ -80,6 +80,18 @@ function OffcanvasCreateCompaign() {
                                             <label className="form-check-label" htmlFor="inlineRadio2">Hourly Rate</label>
                                         </div>
                                     </div>
+                                    <div className='col-md-3'>
+                                        <div className="mb-3">
+                                            <label htmlFor="exampleFormControlInput1" className="form-label">From</label>
+                                            <input type="name" className="form-control" id="exampleFormControlInput1" placeholder="$/ hr" />
+                                        </div>
+                                    </div>
+                                    <div className='col-md-3'>
+                                        <div className="mb-3">
+                                            <label htmlFor="exampleFormControlInput1" className="form-label">To</label>
+                                            <input type="name" className="form-control" id="exampleFormControlInput1" placeholder="$/ hr" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

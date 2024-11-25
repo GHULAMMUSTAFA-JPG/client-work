@@ -41,11 +41,27 @@ function CampaignOffcanvasBuyer() {
                                                 <p className='text-dark mb-3 fs-12'>
                                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
                                                 </p>
-                                                <p className='text-dark mb-3 fs-12'>
+                                                <p className='text-dark mb-0 fs-12'>
                                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
                                                 </p>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <hr className='text-warning my-4' />
+                                <div className='row'>
+                                    <div className='col-12'>
+                                        <h5 className='mb-3'>Budget</h5>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <p className='fw-medium mb-0 fs-16'>$5.00</p>
+                                        <p className='m-0 text-secondary'>Fixed Price</p>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <p className='fw-medium mb-0 fs-16'>Expert</p>
+                                        <p className='m-0 text-secondary'>
+                                            I am willing to pay higher rates for the most experienced creators
+                                        </p>
                                     </div>
                                 </div>
                                 <hr className='text-warning my-4' />
@@ -66,18 +82,18 @@ function CampaignOffcanvasBuyer() {
                                     <div className='col-12'>
                                         <h5 className='mb-3'>Activity on this Campaign</h5>
                                     </div>
-                                    <div className='col-md-6'>
+                                    <div className='col-12'>
                                         <p className='mb-2'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                        <p className='mb-2'><span className=''>Campaign Accepted:</span> <span className='fw-medium text-warning'>4</span></p>
-                                        <p className='mb-2'><span className=''>Campaign Sent:</span> <span className='fw-medium text-warning'>7</span></p>
+                                        <p className='mb-2'><span className=''>Invites Sent:</span> <span className='fw-medium text-warning'>4</span></p>
+                                        <p className='mb-2'><span className=''>Hires:</span> <span className='fw-medium text-warning'>7</span></p>
                                     </div>
-                                    <div className='col-md-6'>
+                                    {/* <div className='col-md-6'>
                                         <div className='d-flex align-items-center'>
                                             <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' width={22} height={22} />
                                             <p className='mb-0 text-warning me-3'>payment verified</p>
                                             <p className='mb-0'>$10k+ <span className='text-warning ms-1'>spent</span></p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

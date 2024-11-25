@@ -70,7 +70,7 @@ function CreatorDashboard() {
                                                     <td className="text-start ps-4">
                                                         <div className="d-flex align-items-center">
                                                             <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                            <span className="ms-2 fw-medium text-truncate">{user.Name}</span>
+                                                            <span className="ms-2 text-truncate">{user.Name}</span>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -78,7 +78,7 @@ function CreatorDashboard() {
                                                             <span className="ms-2">{user.Name}</span>
                                                         </div>
                                                         <div className="d-flex align-items-center justify-content-center">
-                                                            <Icon icon="mdi:linkedin" width={18} height={18} />
+                                                            <Icon icon="mdi:linkedin" width={22} height={22} className="text-info"/>
 
                                                             <span className="ms-2 text-truncate"> {user.Username}</span>
                                                         </div>

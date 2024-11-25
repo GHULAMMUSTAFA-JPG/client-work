@@ -44,11 +44,17 @@ function CampaignReviewModal() {
                                         <div className='col-12 mb-2'>
                                             <div className="tab-content " id="myTabContent">
                                                 <div className="tab-pane fade show active" id="user1-tab-pane" role="tabpanel" aria-labelledby="user1-tab" tabIndex={0}>
-                                                    <div className="position-relative mt-3">
-                                                        <input type="email" className="form-control ps-5" id="exampleFormControlInput1" placeholder="Search for Creators" />
-                                                        <Icon icon="ph:magnifying-glass" width={20} height={20} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
-                                                        <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-5 cursor' />
-                                                        <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor'/>
+                                                    <div className='d-flex align-items-center justify-content-between my-3'>
+                                                        <div className="position-relative w-50">
+                                                            <input type="email" className="form-control ps-5 rounded-pill" id="exampleFormControlInput1" placeholder="Search for Campaigns" />
+                                                            <Icon icon="ph:magnifying-glass" width={20} height={20} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
+                                                            <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-3 cursor' />
+                                                            {/* <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" /> */}
+                                                        </div>
+                                                        <button className='btn btn-primary rounded-pill d-flex align-items-center' data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                            <Icon icon="akar-icons:settings-vertical" width={20} height={20} />
+                                                            <span className='ms-2'>Advanced Filters</span>
+                                                        </button>
                                                     </div>
                                                     <hr className='text-warning' />
                                                     <div className='card campaign-card'>
@@ -70,16 +76,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -121,16 +127,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -172,16 +178,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -227,16 +233,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -278,16 +284,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -329,16 +335,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -384,16 +390,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -435,16 +441,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -486,16 +492,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -541,16 +547,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -592,16 +598,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>
@@ -643,16 +649,16 @@ function CampaignReviewModal() {
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                        <p className='mb-1'>Newyork, America</p>
                                                                         <div className='d-flex align-items-center mb-2'>
+                                                                            <p className='mb-0'>Newyork, America</p>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <Icon icon="mdi:dollar" width={20} height={20} />
                                                                             <p className='mb-0 text-secondary'><span className='text-dark fw-medium'>$20</span> /hr</p>
                                                                         </div>
-                                                                        <div className='d-flex align-items-center mb-2'>
+                                                                        <div className='d-flex align-items-center mb-3'>
                                                                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                                                                             <p className='text-info mb-0'>Completed 80 campaigns</p>
-                                                                        </div>
-                                                                        <div className='d-flex align-items-center mb-3'>
+                                                                            <Icon icon="ph:circle-fill" className='text-warning mx-2' width={4} height={4} />
                                                                             <p className='mb-0 text-secondary'>has <span className='text-dark fw-medium'>13 relevant skills</span> to your job</p>
                                                                         </div>
                                                                         <div className='d-flex gap-2 flex-wrap mb-2'>

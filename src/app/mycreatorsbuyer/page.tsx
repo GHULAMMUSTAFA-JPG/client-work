@@ -2,7 +2,7 @@
 "use client";
 
 import { fetch_dashboard_data } from "@/@api";
-import Topcard from "@/components/topcard";
+import TopCardBuyer from "@/components/TopCardBuyer";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
@@ -28,11 +28,11 @@ function mycreatorsbuyer() {
     return (
         <>
             <div className="container-fluid">
-                <Topcard />
+                <TopCardBuyer />
                 <div className="row my-3">
                     <div className="col-12">
                         <div className="d-flex justify-content-between align-items-end">
-                            <p className="mb-0 fw-medium fs-16">My Company Creators</p>
+                            <p className="mb-0 fw-medium fs-16">My Company</p>
                             {/* <button className="btn btn-primary btn-sm ms-auto">Add Campaign</button> */}
                             {/* <div className="dropdown ms-3">
                                 <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,7 +70,7 @@ function mycreatorsbuyer() {
                                                     <td className="text-start ps-4">
                                                         <div className="d-flex align-items-center">
                                                             <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                            <span className="ms-2 fw-medium text-truncate">{user.Name}</span>
+                                                            <span className="ms-2 text-truncate">{user.Name}</span>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -78,7 +78,7 @@ function mycreatorsbuyer() {
                                                             <span className="ms-2">{user.Name}</span>
                                                         </div>
                                                         <div className="d-flex align-items-center justify-content-center">
-                                                            <Icon icon="mdi:linkedin" width={18} height={18} />
+                                                            <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
 
                                                             <span className="ms-2 text-truncate"> {user.Username}</span>
                                                         </div>

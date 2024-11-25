@@ -3,7 +3,7 @@
 import React from 'react'
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
-import Topcard from '@/components/topcard';
+import TopCardBuyer from '@/components/TopCardBuyer';
 import CampaignOffcanvasBuyer from '@/components/campaignoffcanvasbuyer';
 import CampaignReviewModal from '@/components/campaignreviewmodal';
 import OffcanvasCreateCompaign from '@/components/offcanvascreatecompaign';
@@ -13,7 +13,7 @@ function buyerdashboard() {
         <>
             <section className='dashboard'>
                 <div className='container-fluid'>
-                    <Topcard />
+                    <TopCardBuyer />
                     <div className='row my-3'>
                         <div className='col-12'>
                             <ul className="nav nav-underline mb-3 border-bottom" id="myTab" role="tablist">
@@ -63,7 +63,73 @@ function buyerdashboard() {
                                                                         </div>
                                                                     </div>
                                                                 </td>
+                                                                <td className='text-center'>
+                                                                    {/* <span className="badge bg-primary-subtle rounded-pill fw-light px-3 text-primary">Draft</span> */}
+                                                                    <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1">Completed</button>
+                                                                </td>
                                                                 <td>
+                                                                    <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning cursor' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" />
+                                                                    <Icon icon="octicon:person-24" width={24} height={24} className='text-warning cursor ms-3' data-bs-toggle="modal" data-bs-target="#exampleModal1" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                    <p className='fs-12 text-warning mb-0'>2 hours ago</p>
+                                                                </td>
+                                                                <td>
+                                                                    <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                </td>
+                                                                <td>
+                                                                    <div className='d-flex align-items-center'>
+                                                                        <div>
+                                                                            <p className='mb-0'>0</p>
+                                                                            <p className='fs-12 text-warning mb-0'>Proposals</p>
+                                                                        </div>
+                                                                        <div className='ms-5'>
+                                                                            <p className='mb-0'>0</p>
+                                                                            <p className='fs-12 text-warning mb-0'>Interviewd</p>
+                                                                        </div>
+                                                                        <div className='ms-5'>
+                                                                            <p className='mb-0'>0</p>
+                                                                            <p className='fs-12 text-warning mb-0'>Hired</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td className='text-center'>
+                                                                    {/* <span className="badge bg-primary-subtle rounded-pill fw-light px-3 text-primary">Draft</span> */}
+                                                                    <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Draft</button>
+                                                                </td>
+                                                                <td>
+                                                                    <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning cursor' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" />
+                                                                    <Icon icon="octicon:person-24" width={24} height={24} className='text-warning cursor ms-3' data-bs-toggle="modal" data-bs-target="#exampleModal1" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                    <p className='fs-12 text-warning mb-0'>2 hours ago</p>
+                                                                </td>
+                                                                <td>
+                                                                    <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                </td>
+                                                                <td>
+                                                                    <div className='d-flex align-items-center'>
+                                                                        <div>
+                                                                            <p className='mb-0'>0</p>
+                                                                            <p className='fs-12 text-warning mb-0'>Proposals</p>
+                                                                        </div>
+                                                                        <div className='ms-5'>
+                                                                            <p className='mb-0'>0</p>
+                                                                            <p className='fs-12 text-warning mb-0'>Interviewd</p>
+                                                                        </div>
+                                                                        <div className='ms-5'>
+                                                                            <p className='mb-0'>0</p>
+                                                                            <p className='fs-12 text-warning mb-0'>Hired</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td className='text-center'>
                                                                     {/* <span className="badge bg-primary-subtle rounded-pill fw-light px-3 text-primary">Draft</span> */}
                                                                     <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Draft</button>
                                                                 </td>
@@ -96,75 +162,9 @@ function buyerdashboard() {
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td className='text-center'>
                                                                     {/* <span className="badge bg-primary-subtle rounded-pill fw-light px-3 text-primary">Draft</span> */}
-                                                                    <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Draft</button>
-                                                                </td>
-                                                                <td>
-                                                                    <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning cursor' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" />
-                                                                    <Icon icon="octicon:person-24" width={24} height={24} className='text-warning cursor ms-3' data-bs-toggle="modal" data-bs-target="#exampleModal1" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <p className='mb-0'>Initiated Nov 18, 2024</p>
-                                                                    <p className='fs-12 text-warning mb-0'>2 hours ago</p>
-                                                                </td>
-                                                                <td>
-                                                                    <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
-                                                                </td>
-                                                                <td>
-                                                                    <div className='d-flex align-items-center'>
-                                                                        <div>
-                                                                            <p className='mb-0'>12</p>
-                                                                            <p className='fs-12 text-warning mb-0'>Proposals</p>
-                                                                        </div>
-                                                                        <div className='ms-5'>
-                                                                            <p className='mb-0'>6</p>
-                                                                            <p className='fs-12 text-warning mb-0'>Interviewd</p>
-                                                                        </div>
-                                                                        <div className='ms-5'>
-                                                                            <p className='mb-0'>2</p>
-                                                                            <p className='fs-12 text-warning mb-0'>Hired</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {/* <span className="badge bg-primary-subtle rounded-pill fw-light px-3 text-primary">Draft</span> */}
-                                                                    <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Draft</button>
-                                                                </td>
-                                                                <td>
-                                                                    <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning cursor' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" />
-                                                                    <Icon icon="octicon:person-24" width={24} height={24} className='text-warning cursor ms-3' data-bs-toggle="modal" data-bs-target="#exampleModal1" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <p className='mb-0'>Initiated Nov 18, 2024</p>
-                                                                    <p className='fs-12 text-warning mb-0'>2 hours ago</p>
-                                                                </td>
-                                                                <td>
-                                                                    <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
-                                                                </td>
-                                                                <td>
-                                                                    <div className='d-flex align-items-center'>
-                                                                        <div>
-                                                                            <p className='mb-0'>12</p>
-                                                                            <p className='fs-12 text-warning mb-0'>Proposals</p>
-                                                                        </div>
-                                                                        <div className='ms-5'>
-                                                                            <p className='mb-0'>6</p>
-                                                                            <p className='fs-12 text-warning mb-0'>Interviewd</p>
-                                                                        </div>
-                                                                        <div className='ms-5'>
-                                                                            <p className='mb-0'>2</p>
-                                                                            <p className='fs-12 text-warning mb-0'>Hired</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    {/* <span className="badge bg-primary-subtle rounded-pill fw-light px-3 text-primary">Draft</span> */}
-                                                                    <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Draft</button>
+                                                                    <button className='btn btn-sm btn-outline-primary px-3 rounded-pill' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1">Completed</button>
                                                                 </td>
                                                                 <td>
                                                                     <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning cursor' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" />
