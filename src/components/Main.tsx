@@ -16,7 +16,10 @@ const menuItems = [
   { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },
 
   // Buyers dashbaord menus
+  { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-briefcase" },
   { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-briefcase" },
+  { label: "My Company", href: "/mycreatorsbuyer", icon: "bi bi-briefcase" },
+  { label: "Analytics", href: "/analyticsbuyer", icon: "bi bi-briefcase" },
   //   { label: "Logout", href: "/settings", icon: "bi bi-gear" },
 
 ];
