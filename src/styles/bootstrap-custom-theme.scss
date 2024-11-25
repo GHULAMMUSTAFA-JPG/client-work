@@ -64,6 +64,7 @@ body {
     .table {
         border-radius: 12px;
         overflow: hidden;
+        margin-bottom: 0;
 
         thead {
             th {
@@ -88,7 +89,12 @@ body {
     .card {
         border-radius: 12px;
         border: none;
-        height: 100%;
+    }
+
+    .graphs {
+        .card {
+            height: 100%;
+        }
     }
 
     .listing-card {

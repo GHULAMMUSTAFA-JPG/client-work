@@ -32,7 +32,7 @@ function Homepage() {
         <>
             <div className="container-fluid">
                 <Topcard />
-                <div className="row g-3">
+                <div className="row graphs g-3">
                     <div className="col-md-6">
                         <ChartsDashboard />
                     </div>
