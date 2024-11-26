@@ -1,6 +1,6 @@
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
-
+import { Icon } from "@iconify/react/dist/iconify.js";
 // Register the necessary components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -75,6 +75,14 @@ const ProgressDashboardBuyer = () => {
                             <div className="bar-chart">
                                 <h5>Campaign Overview</h5>
                                 <Bar data={data} options={options} />
+                                <div className="card bg-primary-subtle">
+                                    <div className="card-body p-4">
+                                        <div className="d-flex align-items-center gap-3">
+                                            <Icon icon="ph:lightbulb" width={32} height={32} className='text-primary' />
+                                            <p className="mb-0 fw-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
