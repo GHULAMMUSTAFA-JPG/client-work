@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
-
+import CampaignFilterModal from '@/components/campaignfiltermodal';
 
 
 function CampaignReviewModal() {
@@ -697,6 +697,7 @@ function CampaignReviewModal() {
                     </div>
                 </div>
             </div>
+            <CampaignFilterModal />
         </>
     );
 }

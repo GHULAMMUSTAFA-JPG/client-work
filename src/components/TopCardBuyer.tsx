@@ -79,7 +79,7 @@ function TopCardBuyer() {
                                     {/* <p className="mb-2 fw-medium fs-12">Campaign Creators</p> */}
                                     <div className="hero-circle mx-xl-auto mx-md-0">
                                         {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
-                                        <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={90} height={90} />
+                                        <Image src="/assets/images/user.jpg" className="img-fluid rounded-circle" alt="logo" width={90} height={90} />
 
                                     </div>
 
@@ -87,31 +87,31 @@ function TopCardBuyer() {
                                 <div className="col-sm-6 col-md-6 col-xl-3">
                                     <p className="mb-2 fw-medium">Campaigns</p>
                                     <div className="d-flex align-items-center">
-                                        <Icon icon="tabler:users" width={32} height={32} className='' />
+                                        <Icon icon="bi:briefcase" width={32} height={32} className='' />
                                         <div className="ms-2">
                                             {/* <p className="mb-0 fs-12"><span className="fs-14 fw-medium text-dark me-1">50.1</span></p> */}
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">50</span>Published</p>
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">30</span>Active</p>
+                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">10</span>Published</p>
+                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">4</span>Active</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-sm-6 col-md-6 col-xl-3">
+                                <div className="col-sm-6 col-md-6 col-xl-4">
                                     <p className="mb-2 fw-medium">Spending Summary</p>
                                     <div className="d-flex align-items-center">
-                                        <Icon icon="akar-icons:video" width={32} height={32} className='' />
+                                        <Icon icon="solar:dollar-broken" width={32} height={32} className='' />
                                         <div className="ms-2">
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">90</span>Total Spent</p>
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">10</span>Average Spent per Campaign</p>
+                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">$ 90k</span>Total Spent</p>
+                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">$ 10k</span>Average Spent per Campaign</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-sm-6 col-md-6 col-xl-3">
                                     <p className="mb-2 fw-medium">Feedback Overview</p>
                                     <div className="d-flex align-items-center">
-                                        <Icon icon="iconoir:post" width={32} height={32} className='' />
+                                        <Icon icon="material-symbols-light:reviews-outline" width={34} height={34} className='' />
                                         <div className="ms-2">
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">504.6</span>Total Reviews</p>
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">20.45</span>Ratings</p>
+                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">120</span>Total Reviews</p>
+                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">4.7</span>Ratings</p>
                                         </div>
                                     </div>
                                 </div>
