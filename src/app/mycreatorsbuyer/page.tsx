@@ -14,9 +14,7 @@ function mycreatorsbuyer() {
     const [users, setUsers] = useState<any[]>([]);
     // const router = useRouter()
     useEffect(() => {
-
         fetchData()
-
     }, [])
 
 
