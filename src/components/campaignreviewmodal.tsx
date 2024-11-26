@@ -30,13 +30,13 @@ function CampaignReviewModal() {
                                             <button className="nav-link active" id="user1-tab" data-bs-toggle="tab" data-bs-target="#user1-tab-pane" type="button" role="tab" aria-controls="user1-tab-pane" aria-selected="false">Search</button>
                                         </li>
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link" id="home1-tab" data-bs-toggle="tab" data-bs-target="#home1-tab-pane" type="button" role="tab" aria-controls="home1-tab-pane" aria-selected="true">Proposals</button>
+                                            <button className="nav-link" id="home1-tab" data-bs-toggle="tab" data-bs-target="#home1-tab-pane" type="button" role="tab" aria-controls="home1-tab-pane" aria-selected="true">Proposals (5)</button>
                                         </li>
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link" id="profile1-tab" data-bs-toggle="tab" data-bs-target="#profile1-tab-pane" type="button" role="tab" aria-controls="profile1-tab-pane" aria-selected="false">Invited</button>
+                                            <button className="nav-link" id="profile1-tab" data-bs-toggle="tab" data-bs-target="#profile1-tab-pane" type="button" role="tab" aria-controls="profile1-tab-pane" aria-selected="false">Invited (2)</button>
                                         </li>
                                         <li className="nav-item" role="presentation">
-                                            <button className="nav-link" id="settings1-tab" data-bs-toggle="tab" data-bs-target="#settings1-tab-pane" type="button" role="tab" aria-controls="settings1-tab-pane" aria-selected="false">Hires</button>
+                                            <button className="nav-link" id="settings1-tab" data-bs-toggle="tab" data-bs-target="#settings1-tab-pane" type="button" role="tab" aria-controls="settings1-tab-pane" aria-selected="false">Hires (3)</button>
                                         </li>
                                     </ul>
                                     {/* <hr /> */}

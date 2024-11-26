@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
+import CampaignReviewModal from './campaignreviewmodal';
 
 
 
@@ -47,7 +48,7 @@ function CardsDashboardBuyer() {
                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                             <p className='text-info mb-0'>Completed 80 campaigns</p>
                         </div>
-                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill">View compaign</button>
+                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View compaign</button>
                     </div>
                 </div>
             </div>
@@ -79,7 +80,7 @@ function CardsDashboardBuyer() {
                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                             <p className='text-info mb-0'>Completed 80 campaigns</p>
                         </div>
-                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill">View compaign</button>
+                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View compaign</button>
                     </div>
                 </div>
             </div>
@@ -111,7 +112,7 @@ function CardsDashboardBuyer() {
                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                             <p className='text-info mb-0'>Completed 80 campaigns</p>
                         </div>
-                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill">View compaign</button>
+                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View compaign</button>
                     </div>
                 </div>
             </div>
@@ -143,10 +144,11 @@ function CardsDashboardBuyer() {
                             <Icon icon="mdi:file-document-tick-outline" className='me-1 text-info' width={18} height={18} />
                             <p className='text-info mb-0'>Completed 80 campaigns</p>
                         </div>
-                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill">View compaign</button>
+                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View compaign</button>
                     </div>
                 </div>
             </div>
+            <CampaignReviewModal />
         </>
     );
 }
