@@ -276,9 +276,15 @@ body {
 
     .drop-down-table {
 
-        .dropdown-item:hover {
-            
-            background-color: transparent !important;
+        // .dropdown-item:hover {
+
+        //     background-color: transparent !important;
+        // }
+        .scroll {
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: 150px;
         }
     }
 }
