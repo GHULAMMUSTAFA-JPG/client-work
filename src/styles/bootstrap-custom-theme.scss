@@ -273,4 +273,12 @@ body {
     .nowrap {
         white-space: nowrap;
     }
+
+    .drop-down-table {
+
+        .dropdown-item:hover {
+            
+            background-color: transparent !important;
+        }
+    }
 }
