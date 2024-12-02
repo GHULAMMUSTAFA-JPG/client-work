@@ -24,7 +24,9 @@ const Main = ({
     { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-house" },
     { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-briefcase" },
     { label: "My Company", href: "/mycreatorsbuyer", icon: "bi bi-building" },
+    { label: "Active Compaigns", href: "/analyticsbuyer", icon: "bi bi-megaphone" },
     { label: "Analytics", href: "/analyticsbuyer", icon: "bi bi-bar-chart" },
+
   ];
 
   // Determine which menu items to show based on role

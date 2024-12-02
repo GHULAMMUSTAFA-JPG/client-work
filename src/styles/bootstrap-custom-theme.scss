@@ -287,4 +287,31 @@ body {
             max-height: 150px;
         }
     }
+
+    .text-orange {
+        color: $orange !important;
+    }
+
+    .bg-base {
+        background-color: $base !important;
+    }
+
+    .active-compaigns {
+        .active-compaign-circle {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        .active-mini-circle {
+            height: 20px;
+            width: 20px;
+            min-width: 20px;
+            border-radius: 50%;
+            background-color: $info !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 }
