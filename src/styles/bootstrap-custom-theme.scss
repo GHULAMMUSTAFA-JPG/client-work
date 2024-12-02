@@ -292,6 +292,10 @@ body {
         color: $orange !important;
     }
 
+    .bg-orange {
+        background-color: $orange !important;
+    }
+
     .bg-base {
         background-color: $base !important;
     }
@@ -312,6 +316,13 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        .waiting-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
         }
     }
 }

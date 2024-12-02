@@ -607,25 +607,406 @@ const page = () => {
                             </div>
                           </div>
                         </div>
-                        
+
                       </div>
-                      
+
                     </div>
                     {/* <hr className='mt-2'/> */}
-                    <ul className="nav nav-underline mb-3 border-bottom" id="myTab" role="tablist">
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Internal Company Creators</button>
-                            </li>
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">External Global Creators</button>
-                            </li>
-                            {/* <li className="nav-item" role="presentation">
+                    <div className='col-12'>
+                      <ul className="nav nav-underline mb-3 border-bottom" id="myTab" role="tablist">
+                        <li className="nav-item" role="presentation">
+                          <button className="nav-link active" id="waiting-tab" data-bs-toggle="tab" data-bs-target="#waiting-tab-pane" type="button" role="tab" aria-controls="waiting-tab-pane" aria-selected="true">Waiting for Approvals</button>
+                        </li>
+                        <li className="nav-item" role="presentation">
+                          <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Approved Post</button>
+                        </li>
+                        {/* <li className="nav-item" role="presentation">
                                     <button className="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-tab-pane" type="button" role="tab" aria-controls="settings-tab-pane" aria-selected="false">Draft Campaigns</button>
                                 </li> */}
-                            <li className='nav-item' role="presentation">
-                                <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> Saved List </button>
-                            </li>
-                        </ul>
+                        <li className='nav-item' role="presentation">
+                          <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> Rejected Post </button>
+                        </li>
+                        <li className='nav-item' role="presentation">
+                          <button className="nav-link" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-tab-pane" type="button" role="tab" aria-controls="info-tab-pane" aria-selected="false"> Required Posts </button>
+                        </li>
+                      </ul>
+                      <div className='row'>
+                        <div className='col-12'>
+                          <div className="tab-content" id="myTabContent">
+                            <div className="tab-pane fade show active" id="waiting-tab-pane" role="tabpanel" aria-labelledby="waiting-tab" tabIndex={0}>
+                              <div className='row'>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-orange text-white rounded-pill fw-light px-3 w-100 mb-2">Waiting Approval</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user3.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Linkedin Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-orange text-white rounded-pill fw-light px-3 w-100 mb-2">Waiting Approval</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user3.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Linkedin Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-orange text-white rounded-pill fw-light px-3 w-100 mb-2">Waiting Approval</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user3.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Linkedin Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-orange text-white rounded-pill fw-light px-3 w-100 mb-2">Waiting Approval</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user3.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Linkedin Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex={0}>
+                              <div className='row'>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-primary-subtle text-primary rounded-pill fw-light px-3 w-100 mb-2">Approved</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user2.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Facebook Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-primary-subtle text-primary rounded-pill fw-light px-3 w-100 mb-2">Approved</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user2.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Facebook Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-primary-subtle text-primary rounded-pill fw-light px-3 w-100 mb-2">Approved</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user2.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Facebook Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-primary-subtle text-primary rounded-pill fw-light px-3 w-100 mb-2">Approved</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user2.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Facebook Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
+                            <div className='row'>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-danger text-white rounded-pill fw-light px-3 w-100 mb-2">Rejected Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-danger text-white rounded-pill fw-light px-3 w-100 mb-2">Rejected Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-danger text-white rounded-pill fw-light px-3 w-100 mb-2">Rejected Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-danger text-white rounded-pill fw-light px-3 w-100 mb-2">Rejected Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div className="tab-pane fade" id="info-tab-pane" role="tabpanel" aria-labelledby="info-tab" tabIndex={0}>
+                            <div className='row'>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-info text-white rounded-pill fw-light px-3 w-100 mb-2">Required Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user1.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-info text-white rounded-pill fw-light px-3 w-100 mb-2">Required Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user1.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-info text-white rounded-pill fw-light px-3 w-100 mb-2">Required Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user1.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <div className='col-md-3'>
+                                  <div className='card bg-base'>
+                                    <div className='card-body'>
+                                      <span className="badge bg-info text-white rounded-pill fw-light px-3 w-100 mb-2">Required Post</span>
+                                      <div className="card">
+                                        <Image
+                                          src="/assets/images/user1.jpg"
+                                          alt="logo"
+                                          width={100}
+                                          height={30}
+                                          className="img-fluid waiting-img"
+                                        />
+                                        <div className="card-body">
+                                          <h5 className="card-title">Twitter Post</h5>
+                                          <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </div>
