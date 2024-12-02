@@ -1,17 +1,19 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Icon } from "@iconify/react/dist/iconify.js";
 import CampaignOffcanvasBuyer from '@/components/campaignoffcanvasbuyer';
 import Image from "next/image";
 
 
 const page = () => {
+
+  const [redirect,setRedirect] =useState(false)
   return (
     <>
       <section className='active-compaigns'>
-        <div className='container-fluid'>
-          <div className='row my-3'>
+      <div className='container-fluid'>
+        {  !redirect && ( <div className='row my-3'>
             <div className='col-12'>
               <ul className="nav nav-underline mb-3 border-bottom" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
@@ -68,7 +70,7 @@ const page = () => {
 
                                 <td>
                                   <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning cursor' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" />
-                                  <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor ms-3' />
+                                  <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor ms-3' onClick={()=>{setRedirect(prev=>!prev)}}/>
                                 </td>
                               </tr>
                               <tr>
@@ -357,8 +359,8 @@ const page = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className='row my-3'>
+          </div>)}
+          {redirect && (<div className='row my-3'>
             <div className='col-12'>
               <div className="card ">
                 <div className="card-body">
@@ -370,6 +372,8 @@ const page = () => {
 
                     </div>
                     <div>
+
+                      <span onClick={()=>{setRedirect(prev=>!prev)}}>Back</span>
                       {/* <Icon icon="material-symbols:close" width="24" height="24" /> */}
                       <span className="badge bg-primary text-white">Active</span>
                     </div>
@@ -1011,7 +1015,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div>)}
         </div>
 
       </section>
