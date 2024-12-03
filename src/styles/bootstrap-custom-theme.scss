@@ -273,4 +273,56 @@ body {
     .nowrap {
         white-space: nowrap;
     }
+
+    .drop-down-table {
+
+        // .dropdown-item:hover {
+
+        //     background-color: transparent !important;
+        // }
+        .scroll {
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: 150px;
+        }
+    }
+
+    .text-orange {
+        color: $orange !important;
+    }
+
+    .bg-orange {
+        background-color: $orange !important;
+    }
+
+    .bg-base {
+        background-color: $base !important;
+    }
+
+    .active-compaigns {
+        .active-compaign-circle {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        .active-mini-circle {
+            height: 20px;
+            width: 20px;
+            min-width: 20px;
+            border-radius: 50%;
+            background-color: $info !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .waiting-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
 }
