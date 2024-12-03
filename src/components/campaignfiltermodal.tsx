@@ -27,7 +27,7 @@ function CampaignFilterModal() {
                                 <div className="accordion-item mb-0">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
-                                            Experience Level
+                                            Number of Followers
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
