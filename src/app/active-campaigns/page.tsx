@@ -360,6 +360,7 @@ const page = () => {
               </div>
             </div>
           </div>)}
+          
           {redirect && (<div className='row my-3'>
             <div className='col-12'>
               <div className="card ">
