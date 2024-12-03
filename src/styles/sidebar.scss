@@ -1,6 +1,6 @@
 .sidebar {
-    width: 280px;
-    min-width: 280px;
+    width: 120px;
+    min-width: 120px;
     height: 100vh;
     background-color: $dark;
     overflow: auto;
@@ -12,7 +12,7 @@
     .nav-link {
         color: $light;
         padding: 1rem;
-        font-size: 14px;
+        font-size: 12px;
 
         &.active {
             background-color: $active;

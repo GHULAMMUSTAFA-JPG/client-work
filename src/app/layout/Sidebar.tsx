@@ -34,9 +34,9 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
                     <Link
                       onClick={() => { setIsActive(index) }}
                       href={item.href}
-                      className={`nav-link d-flex align-items-center ${isActive == index ? 'active' : ''}`}
+                      className={`nav-link d-flex flex-column align-items-center ${isActive == index ? 'active' : ''}`}
                     >
-                      {item.icon && <i className={`${item.icon} me-3`}></i>}
+                      {item.icon && <i className={`${item.icon} mb-2`}></i>}
                       {item.label}
                     </Link>
                   </li>
