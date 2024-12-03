@@ -359,7 +359,7 @@ const page = () => {
                 </div>
               </div>
             </div>
-            
+
           </div>)}
           
           {redirect && (<div className='row my-3'>
@@ -373,6 +373,7 @@ const page = () => {
                       <p className='fs-12 mb-1 ms-3'>Date: <span className='text-warning ms-2'> Dec,2 2024</span></p> */}
 
                     </div>
+                    
                     <div>
 
                       <span onClick={()=>{setRedirect(prev=>!prev)}}>Back</span>
