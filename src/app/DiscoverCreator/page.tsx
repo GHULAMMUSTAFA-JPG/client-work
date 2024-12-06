@@ -69,7 +69,7 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-outline-dark btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
                                         <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
                                     </div>
                                 </div>
