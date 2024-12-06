@@ -16,14 +16,14 @@ function CampaignFilterModal() {
     return (
         <>
             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Filters</h1>
+                        {/* <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Campaign Details</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body p-0">
-                            <div className="accordion accordion-flush" id="accordionFlushExample">
+                        </div> */}
+                        <div className="modal-body p-4">
+                            {/* <div className="accordion accordion-flush" id="accordionFlushExample">
                                 <div className="accordion-item mb-0">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
@@ -168,12 +168,36 @@ function CampaignFilterModal() {
                                         </div>
                                     </div>
                                 </div>
+                            </div> */}
+                            <div className='d-flex gap-3'>
+                                <div>
+                                    <p className='fw-medium mb-2 fs-18'>Apollo | Join our Creator Program</p>
+                                    <p className='text-warning'>We are growing our wordclass B2B creator program at Apollo. We are looking to partner with great GTM focused creators.</p>
+                                </div>
+                                <Image
+                                    src="/assets/images/apollo.png"
+                                    className="border object-fit-cover rounded flex-shrink-0"
+                                    alt="logo"
+                                    width={110}
+                                    height={110}
+                                />
+                                <button type="button" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            <div className='d-flex gap-2 align-items-center mb-2'>
+                                <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                            </div>
+                            <div className='d-flex gap-2 align-items-center mb-3'>
+                                <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                <p className='mb-0'>LinkedIn Posts, Newsletters, Podcasts, Event Speakers</p>
+                            </div>
+                            <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
+                            <p className='text-warning mb-0'>This is a general application to show that you are interested in partnering with our brand. We are interested in partnering with creators we believe can elevate our brand and raise awareness for upcoming product launches, events, and general marketing activities.</p>
                         </div>
-                        <div className="modal-footer">
+                        {/* <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary">Apply filters</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

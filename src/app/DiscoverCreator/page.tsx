@@ -18,233 +18,305 @@ function DiscoverCreator() {
         <>
             <section className='dashboard'>
                 <div className='container-fluid'>
-                    {/* <TopCard /> */}
                     <div className='row my-3'>
                         <div className='col-12'>
-                            {/* <ul className="nav nav-underline mb-3 border-bottom" id="myTab" role="tablist">
-                                <li className="nav-item" role="presentation">
-                                    <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">All Compaigns</button>
-                                </li>
-                                <li className="nav-item" role="presentation">
-                                    <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Accepted Campaigns</button>
-                                </li>
-                            </ul> */}
-                            {/* <hr /> */}
-                            <div className='row'>
-                                <div className='col-12 mb-2'>
-                                    <div className="tab-content " id="myTabContent">
-                                        <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex={0}>
-                                            <div className='d-flex align-items-center justify-content-between mb-3'>
-                                                <div className="position-relative w-50">
-                                                    <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="Search for Campaigns" />
-                                                    <Icon icon="ph:magnifying-glass" width={20} height={20} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
-                                                    <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-3 cursor' />
-                                                    {/* <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" /> */}
-                                                </div>
-                                                <button className='btn btn-primary rounded-pill d-flex align-items-center' data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                    <Icon icon="akar-icons:settings-vertical" width={20} height={20} />
-                                                    <span className='ms-2'>Advanced Filters</span>
-                                                </button>
-                                            </div>
-                                            <div className='card campaign-card'>
-                                                <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                                    <div className='campaign-post'>
-                                                        <div className='d-flex'>
-                                                            {/* <div className='dashboard-img-circle me-2'>
-                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
-                                                        </div> */}
-                                                            <div className='d-flex justify-content-between'>
-                                                                <div>
-                                                                    <h5 className='mb-2'>Senior Digital Designer for SAAS Company</h5>
-                                                                    {/* <p className='mb-0'>Halal Company ltd</p> */}
-                                                                    <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="ph:building-fill" className='me-1 text-warning' />
-                                                                        <p className='mb-0 fs-12 text-secondary'>Cisco</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='text-secondary fs-12 mb-0'>Jan 24, 2024 - July 25 2024</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='mb-0 fs-12'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                                                    </div>
-                                                                    <p className='line-clamp-1 text-dark fs-12 mb-2'>
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
-                                                                    </p>
-                                                                    <div className='d-flex gap-2 flex-wrap'>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">IT officer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Premire pro</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Software</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adone After Effets</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Content Writing</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Bootstrap</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">SCSS</span>
-                                                                    </div>
-                                                                    {/* <div className='d-flex align-items-center'>
-                                                                    <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
-                                                                    <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
-                                                                    <p className='fs-9 mb-0'>$10k+ <span className='text-warning'>spent</span></p>
-                                                                </div> */}
-                                                                </div>
-                                                                <div className='d-flex gap-2 align-items-start'>
-                                                                    <button className='btn btn-outline-primary btn-sm rounded-pill fs-12 nowrap px-3'>Apply Now</button>
-                                                                    <button type="button" className="btn border border-light fs-12 btn-sm rounded-circle p-1 icon-apply nowrap">
-                                                                        <Icon icon="solar:arrow-right-broken" width={24} height={24} className='text-primary' />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr className='text-warning m-0' />
-                                                </div>
-                                                <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                                    <div className='campaign-post'>
-                                                        <div className='d-flex'>
-                                                            {/* <div className='dashboard-img-circle me-2'>
-                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
-                                                        </div> */}
-                                                            <div className='d-flex justify-content-between'>
-                                                                <div>
-                                                                    <h5 className='mb-2'>Senior Digital Designer for SAAS Company</h5>
-                                                                    {/* <p className='mb-0'>Halal Company ltd</p> */}
-                                                                    <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="ph:building-fill" className='me-1 text-warning' />
-                                                                        <p className='mb-0 fs-12 text-secondary'>Cisco</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='text-secondary fs-12 mb-0'>Jan 24, 2024 - July 25 2024</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='mb-0 fs-12'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                                                    </div>
-                                                                    <p className='line-clamp-1 text-dark fs-12 mb-2'>
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
-                                                                    </p>
-                                                                    <div className='d-flex gap-2 flex-wrap'>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">IT officer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Premire pro</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Software</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adone After Effets</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Content Writing</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Bootstrap</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">SCSS</span>
-                                                                    </div>
-                                                                    {/* <div className='d-flex align-items-center'>
-                                                                    <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
-                                                                    <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
-                                                                    <p className='fs-9 mb-0'>$10k+ <span className='text-warning'>spent</span></p>
-                                                                </div> */}
-                                                                </div>
-                                                                <div className='d-flex gap-2 align-items-start'>
-                                                                    <button className='btn btn-outline-primary btn-sm rounded-pill fs-12 nowrap px-3'>Apply Now</button>
-                                                                    <button type="button" className="btn border border-light fs-12 btn-sm rounded-circle p-1 icon-apply nowrap">
-                                                                        <Icon icon="solar:arrow-right-broken" width={24} height={24} className='text-primary' />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr className='text-warning m-0' />
-                                                </div>
-                                                <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                                    <div className='campaign-post'>
-                                                        <div className='d-flex'>
-                                                            {/* <div className='dashboard-img-circle me-2'>
-                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
-                                                        </div> */}
-                                                            <div className='d-flex justify-content-between'>
-                                                                <div>
-                                                                    <h5 className='mb-2'>Senior Digital Designer for SAAS Company</h5>
-                                                                    {/* <p className='mb-0'>Halal Company ltd</p> */}
-                                                                    <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="ph:building-fill" className='me-1 text-warning' />
-                                                                        <p className='mb-0 fs-12 text-secondary'>Cisco</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='text-secondary fs-12 mb-0'>Jan 24, 2024 - July 25 2024</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='mb-0 fs-12'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                                                    </div>
-                                                                    <p className='line-clamp-1 text-dark fs-12 mb-2'>
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
-                                                                    </p>
-                                                                    <div className='d-flex gap-2 flex-wrap'>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">IT officer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Premire pro</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Software</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adone After Effets</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Content Writing</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Bootstrap</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">SCSS</span>
-                                                                    </div>
-                                                                    {/* <div className='d-flex align-items-center'>
-                                                                    <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
-                                                                    <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
-                                                                    <p className='fs-9 mb-0'>$10k+ <span className='text-warning'>spent</span></p>
-                                                                </div> */}
-                                                                </div>
-                                                                <div className='d-flex gap-2 align-items-start'>
-                                                                    <button className='btn btn-outline-primary btn-sm rounded-pill fs-12 nowrap px-3'>Apply Now</button>
-                                                                    <button type="button" className="btn border border-light fs-12 btn-sm rounded-circle p-1 icon-apply nowrap">
-                                                                        <Icon icon="solar:arrow-right-broken" width={24} height={24} className='text-primary' />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr className='text-warning m-0' />
-                                                </div>
-                                                <div className='campaign-post-wrapper' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                                    <div className='campaign-post'>
-                                                        <div className='d-flex'>
-                                                            {/* <div className='dashboard-img-circle me-2'>
-                                                            <Image src="/assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" width={60} height={60} />
-                                                        </div> */}
-                                                            <div className='d-flex justify-content-between'>
-                                                                <div>
-                                                                    <h5 className='mb-2'>Senior Digital Designer for SAAS Company</h5>
-                                                                    {/* <p className='mb-0'>Halal Company ltd</p> */}
-                                                                    <div className='d-flex align-items-center mb-2'>
-                                                                        <Icon icon="ph:building-fill" className='me-1 text-warning' />
-                                                                        <p className='mb-0 fs-12 text-secondary'>Cisco</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='text-secondary fs-12 mb-0'>Jan 24, 2024 - July 25 2024</p>
-                                                                        <Icon icon="ph:circle-fill" className='text-warning mx-3' width={4} height={4} />
-                                                                        <p className='mb-0 fs-12'><span className=''>Applicants:</span> <span className='fw-medium text-warning'>5 to 10</span></p>
-                                                                    </div>
-                                                                    <p className='line-clamp-1 text-dark fs-12 mb-2'>
-                                                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently versions of Lorem Ipsum
-                                                                    </p>
-                                                                    <div className='d-flex gap-2 flex-wrap'>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">IT officer</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Premire pro</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Software</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adone After Effets</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Content Writing</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Bootstrap</span>
-                                                                        <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">SCSS</span>
-                                                                    </div>
-                                                                    {/* <div className='d-flex align-items-center'>
-                                                                    <Icon icon="majesticons:settings-cog-check" className='text-primary me-1' />
-                                                                    <p className='fs-9 mb-0 text-warning me-2'>payment verified</p>
-                                                                    <p className='fs-9 mb-0'>$10k+ <span className='text-warning'>spent</span></p>
-                                                                </div> */}
-                                                                </div>
-                                                                <div className='d-flex gap-2 align-items-start'>
-                                                                    <button className='btn btn-outline-primary btn-sm rounded-pill fs-12 nowrap px-3'>Apply Now</button>
-                                                                    <button type="button" className="btn border border-light fs-12 btn-sm rounded-circle p-1 icon-apply nowrap">
-                                                                        <Icon icon="solar:arrow-right-broken" width={24} height={24} className='text-primary' />
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr className='text-warning m-0' />
-                                                </div>
+                            <div className='d-flex align-items-center justify-content-between mb-3'>
+                                <div className="position-relative w-25">
+                                    <input type="email" className="form-control custom-input" id="exampleFormControlInput1" placeholder="Search for Campaigns" />
+                                    <Icon icon="ph:magnifying-glass" width={16} height={16} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
+                                    {/* <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-3 cursor' /> */}
+                                    {/* <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" /> */}
+                                </div>
+                                <select className="form-select custom-select" aria-label="Small select example">
+                                    <option selected>Most Popular</option>
+                                    <option value="1">Newest</option>
+                                    <option value="2">Oldest</option>
+                                </select>
+                                {/* <button className='btn btn-primary rounded-pill d-flex align-items-center' data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <Icon icon="akar-icons:settings-vertical" width={20} height={20} />
+                                    <span className='ms-2'>Advanced Filters</span>
+                                </button> */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className='row g-2 mb-3'>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/hubspot.svg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>HubSpot: Join our Creator Program</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Hubspot</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/apollo.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>Apollo: Join our Creator Program</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Apollo.io</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/statsig.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>Statsig | Experimentation Awareness</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Statsig</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/lemlist.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>lemlist: Creator Program</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>lemlist</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/avoma.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>
+                                                Avoma - Growth Acceleration Platform</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Avoma</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/avacast.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>Acast: General Application</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Acast</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/intercom.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>Intercom | Creator Program</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Intercom for Startups</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div className='d-flex gap-2 mb-4'>
+                                        <Image
+                                            src="/assets/images/chili_piper.png"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='fw-medium mb-0 fs-16'>Chili Piper: SpicyOps Creator Programm</p>
+                                            <div className='d-flex align-items-center'>
+                                                <p className='mb-0 text-warning'>Chiil Piper</p>
+                                                <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-2'>
+                                        <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                    </div>
+                                    <div className='d-flex gap-2 align-items-center mb-3'>
+                                        <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                        <p className='mb-0'>LinkedIn, X/Twitter</p>
+                                    </div>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
+                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>

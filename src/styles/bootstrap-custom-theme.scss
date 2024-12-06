@@ -87,8 +87,8 @@ body {
     }
 
     .card {
-        border-radius: 12px;
-        border: none;
+        border-radius: 8px;
+        border: 1px solid $border;
     }
 
     .graphs {
@@ -147,6 +147,19 @@ body {
             border: none;
             font-size: 14px;
         }
+    }
+
+    .custom-select {
+        width: 190px;
+        min-width: 190px;
+        font-size: 13px;
+    }
+
+    .dashboard .custom-input {
+        width: 220px;
+        min-width: 220px;
+        font-size: 13px;
+        padding-left: 2.5rem;
     }
 
     .form-control {
@@ -290,6 +303,10 @@ body {
 
     .text-orange {
         color: $orange !important;
+    }
+
+    .text-gray {
+        color: $gray !important;
     }
 
     .bg-orange {
