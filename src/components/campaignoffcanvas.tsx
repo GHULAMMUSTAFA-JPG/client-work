@@ -61,12 +61,12 @@ function CampaignOffcanvas() {
                                         <p className='fw-medium mb-0 fs-16'>$5.00</p>
                                         <p className='m-0 text-secondary'>Fixed Price</p>
                                     </div>
-                                    <div className='col-md-6'>
+                                    {/* <div className='col-md-6'>
                                         <p className='fw-medium mb-0 fs-16'>Expert</p>
                                         <p className='m-0 text-secondary'>
                                             I am willing to pay higher rates for the most experienced creators
                                         </p>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <hr className='text-warning my-4' />
                                 <h5 className='mb-3'>Skills and Expertise</h5>
