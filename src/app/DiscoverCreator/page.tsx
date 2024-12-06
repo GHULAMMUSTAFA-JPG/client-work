@@ -69,8 +69,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +104,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -139,8 +139,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm'>Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -174,8 +174,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm'>Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -210,8 +210,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm'>Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -245,8 +245,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm'>Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -280,8 +280,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm'>Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -315,8 +315,8 @@ function DiscoverCreator() {
                                         <p className='mb-0'>LinkedIn, X/Twitter</p>
                                     </div>
                                     <div className='d-flex justify-content-end'>
-                                        <button className='btn btn-outline-dark btn-sm'>Detail</button>
-                                        <button className='btn btn-dark ms-3 btn-sm'>Apply</button>
+                                        <button className='btn btn-outline-info btn-sm'>Detail</button>
+                                        <button className='btn btn-info ms-2 btn-sm'>Apply</button>
                                     </div>
                                 </div>
                             </div>
