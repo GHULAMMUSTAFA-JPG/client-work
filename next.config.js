@@ -1,3 +1,5 @@
+const { StrictMode } = require("react");
+
 module.exports = {
 
   async headers() {
@@ -22,5 +24,6 @@ module.exports = {
       eslint: {
         ignoreDuringBuilds: true,
     },
+    StrictMode:false
   };
   

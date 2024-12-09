@@ -37,12 +37,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(true);
     setUser(userData);
 
-    console.log(userData, "User Data")
-
     if(userData.isBuyer)
       router.push("/homepagebuyer");
+
     else
       router.push("/homepage")
+
   };
 
   const logout = () => {
