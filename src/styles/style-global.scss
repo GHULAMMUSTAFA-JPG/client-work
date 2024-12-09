@@ -128,4 +128,14 @@ body {
     .charts-select {
         width: 200px;
     }
+
+    .p-height {
+        min-height: 40px;
+    }
+
+    .bg-campaigns {
+        background-color: $base;
+        padding: 1rem;
+        border-radius: 8px;
+    }
 }
