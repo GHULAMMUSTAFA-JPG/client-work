@@ -12,6 +12,8 @@ import ChartsDashboard from "@/components/chartsdashboard";
 import BarsDashboard from "@/components/barsdasboard";
 import ProgressDashboard from "@/components/progressdashboard";
 import VerticalBarChart from "@/components/verticalbarchart";
+import Calendar from "@/components/Calendar";
+import PostCalendar from "@/components/Calendar";
 function Homepage() {
 
     const [users, setUsers] = useState<any[]>([]);
@@ -31,10 +33,15 @@ function Homepage() {
     return (
         <>
             <div className="container-fluid">
-                <div className="row">
+                <div className="row mt-3">
                     <div className="col-md-8">
                         <div className="card">
                             <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                    <p className='mb-0 fs-16 fw-medium'>Profile</p>
+                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor'>Edit Profile</p>
+                                    <Icon icon="ri:edit-line" width="16" height="16" className='cursor ms-1' />
+                                </div>
                                 <div className='d-flex gap-2 mb-3'>
                                     <Image
                                         src="/assets/images/user.jpg"
@@ -66,6 +73,9 @@ function Homepage() {
                                     <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Photoshop</span>
                                 </div>
                                 <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
+                                <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
+                                <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
+                                
                                 <div className="row my-3 text-center">
                                     <div className="col-md-4 border-end">
                                         <p className='mb-0 fs-14 p-height'>Average Engagaements per post</p>
@@ -183,14 +193,8 @@ function Homepage() {
                     <div className="col-md-4">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <p className='mb-2 fs-16 fw-medium'>Upcoming Posts</p>
-                                <Image
-                                    src="/assets/images/calendar.png"
-                                    className="border rounded img-fluid"
-                                    alt="logo"
-                                    width={400}
-                                    height={50}
-                                />
+                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
+                                <PostCalendar />
                             </div>
                         </div>
                         <div className="card mb-3">
@@ -242,6 +246,11 @@ function Homepage() {
                         <div className="card">
                             <div className="card-body">
                                 <p className='mb-2 fs-16 fw-medium'>Payments</p>
+                                <div className='d-flex justify-content-between align-items-center mb-2'>
+                                    <p className='mb-0 fs-12'>Total Sync Earnings</p>
+                                    <p className='mb-0 fw-medium fs-16'>$30k</p>
+                                </div>
+                                <hr className='my-2 text-warning' />
                                 <div className='d-flex justify-content-between align-items-center mb-2'>
                                     <p className='mb-0 fs-12'>Payement Incoming for Campaign</p>
                                     <i className="bi bi-check-circle-fill text-primary ms-2"></i>

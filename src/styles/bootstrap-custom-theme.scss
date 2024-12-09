@@ -342,4 +342,25 @@ body {
             border-radius: 10px;
         }
     }
+
+    /* styles/calendar.css */
+    .react-calendar {
+        border: none;
+        border-radius: 8px;
+        padding: 0;
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .react-calendar__tile--active {
+        background: $primary;
+        color: $white;
+        border-radius: 8px;
+    }
+
+    .react-calendar__tile--now {
+        background: $info;
+        color: $white;
+        border-radius: 8px;
+    }
 }
