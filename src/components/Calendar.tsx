@@ -9,7 +9,6 @@ const PostCalendar = () => {
         setDate(newDate);
         console.log('Selected Date:', newDate);
     };
-
     return (
         <Calendar onChange={onChange} value={date} />
     );
