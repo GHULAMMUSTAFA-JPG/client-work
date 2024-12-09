@@ -15,13 +15,10 @@ import VerticalBarChart from "@/components/verticalbarchart";
 import Calendar from "@/components/Calendar";
 import PostCalendar from "@/components/Calendar";
 function Homepage() {
-
     const [users, setUsers] = useState<any[]>([]);
     // const router = useRouter()
     useEffect(() => {
-
         fetchData()
-
     }, [])
 
 
