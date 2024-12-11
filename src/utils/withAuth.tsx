@@ -18,10 +18,7 @@ const withAuth = <P extends {}>(WrappedComponent: ComponentType<P & { isAuthenti
 
     useEffect(() => {
       if (typeof window !== "undefined") {
-        if(pathname == "/authentication"){
-          console.log(pathname,"walled")
-        }
-       else if (!isAuthenticated ) {
+        if (!isAuthenticated ) {
           router.push("/login"); // Redirect to login page
         }
     
