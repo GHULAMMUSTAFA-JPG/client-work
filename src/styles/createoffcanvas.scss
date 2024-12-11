@@ -1,0 +1,47 @@
+// Add to your existing SCSS file
+.create-campaign-wrapper {
+    .react-datepicker-wrapper {
+        flex: 1;
+    }
+
+    .react-datepicker__input-container input {
+        border: none;
+        background-color: #f8fafd;
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: #15ab63 !important;
+        color: white !important;
+    }
+
+    .nav-pills .nav-link {
+        color: #666;
+        padding: 5px 10px;
+
+        &:hover {
+            color: #15ab63;
+        }
+    }
+
+    .border-dashed {
+        border: 1px dashed #666;
+    }
+
+    .size-box {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-control {
+        resize: none;
+    }
+
+}
+
+.vr-public {
+    height: 14px;
+    margin: auto;
+}
