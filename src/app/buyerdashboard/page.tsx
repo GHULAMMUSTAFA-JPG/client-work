@@ -34,7 +34,7 @@ function buyerdashboard() {
                             </ul> */}
                                         <div className='d-flex align-items-center justify-content-between mb-3'>
                                             <p className='fs-18 fw-medium mb-0'>Campaigns</p>
-                                            <button className='btn btn-primary btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Create new campaign</button>
+                                            <button className='btn btn-info btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Create new campaign</button>
                                         </div>
 
                                         {/* <hr /> */}
