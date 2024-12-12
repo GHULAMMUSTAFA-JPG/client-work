@@ -21,6 +21,7 @@ const withAuth = <P extends {}>(WrappedComponent: ComponentType<P & { isAuthenti
         if (!isAuthenticated ) {
           router.push("/login"); // Redirect to login page
         }
+        
     
         else {
           if (!user.isBuyer)
