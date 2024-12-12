@@ -35,55 +35,155 @@ function CampaignOverview({ setCampaigns }: any) {
                         <Icon icon="akar-icons:arrow-left" width={18} height={18} />
                         <span className='ms-2' onClick={() => setCampaigns(true)}>All Campaigns</span>
                     </a>
-                    <div className='d-flex align-items-center'>
-                        <span>Budget: <strong>$100</strong></span>
-                        <div className="vr mx-3 vr-public"></div>
-                        <span className='me-3'>Public</span>
-                        <div className='form-check form-switch mb-0'>
+                </div>
+                <div className='card mb-3'>
+                    <div className='card-body'>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <div>
+                                <div className='d-flex align-items-center gap-3 mb-1'>
+                                    <h5 className='mb-0'>Help us launch our new marketplace for IRL advertising</h5>
+                                    <button className='bg-primary-subtle border-0 btn btn-outline-primary btn-sm py-1 px-2 rounded-pill'>Public</button>
+                                </div>
+                                <div className='d-flex align-items-center'>
+                                    <p className='fs-12 text-warning mb-0'>Dec 9, 2024</p>
+                                    <div className="vr mx-2 vr-public"></div>
+                                    <p className='fs-12 text-warning mb-0'>2 Days ago</p>
+                                    <div className="vr mx-2 vr-public"></div>
+                                    <span>Budget: <strong>$100</strong></span>
+                                    {/* <span className='me-3'>Public</span>     */}
+                                    {/* <div className='form-check form-switch mb-0'>
                             <input className='form-check-input' type='checkbox' id='publicSwitch' checked />
+                        </div> */}
+                                </div>
+                            </div>
+                            <button className='btn btn-outline-dark fs-12 btn-sm ms-3'>
+                                Edit Campaign <Icon icon="ri:settings-4-line" width={16} height={16} />
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div className='d-flex align-items-center justify-content-between mb-3'>
-                    <h5 className='mb-0'>Help us launch our new marketplace for IRL advertising</h5>
-                    <button className='btn btn-outline-dark fs-12 btn-sm ms-3'>
-                        Edit Campaign <Icon icon="ri:settings-4-line" width={16} height={16} />
-                    </button>
-                </div>
+                {/* <div className='row'>
+                    <div className='col-md-3'>
+                        <div className='card'>
+                            <div className='card-body text-center'>
+                                <div className='d-flex align-items-center mb-3'>
+                                    <div className='rounded-circle bg-circle bg-circle1 p-2 me-2'>
+                                        <Icon icon="mdi:eye-outline" width={20} height={20} className="text-white" />
+                                    </div>
+                                    <p className='mb-0 text-muted text-start'>Impressions</p>
+                                </div>
+                                <h5>10</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-md-3'>
+                        <div className='card'>
+                            <div className='card-body text-center'>
+                                <div className='d-flex align-items-center mb-3'>
+                                    <div className='rounded-circle bg-circle bg-circle2 p-2 me-2'>
+                                        <Icon icon="mdi:file-document-outline" width={20} height={20} className="text-white" />
+                                    </div>
+                                    <p className='mb-0 text-muted text-start'>New Applications</p>
+                                </div>
+                                <h5>0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-md-3'>
+                        <div className='card'>
+                            <div className='card-body text-center'>
+                                <div className='d-flex align-items-center mb-3'>
+                                    <div className='rounded-circle bg-circle bg-circle3 p-2 me-2'>
+                                        <Icon icon="mdi:account-check-outline" width={20} height={20} className="text-white" />
+                                    </div>
+                                    <p className='mb-0 text-muted text-start'>Activated Creators</p>
+                                </div>
+                                <h5>1</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-md-3'>
+                        <div className='card'>
+                            <div className='card-body text-center'>
+                                <div className='d-flex align-items-center mb-3'>
+                                    <div className='rounded-circle bg-circle bg-circle4 p-2 me-2'>
+                                        <Icon icon="mdi:currency-usd" width={20} height={20} className="text-white" />
+                                    </div>
+                                    <p className='mb-0 text-muted text-start'>Total Spend</p>
+                                </div>
+                                <h5>$10</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
                 <div className='row'>
                     <div className='col-md-3'>
                         <div className='card'>
-                            <div className='card-body text-center'>
-                                <p className='mb-3 text-muted text-start'>Impressions</p>
-                                <h5>10</h5>
-                                {/* <a href="#" className='text-dark'>Analytics <Icon icon="akar-icons:arrow-right" width={16} height={16} /></a> */}
+                            <div className='card-body'>
+                                <div className='d-flex align-items-center mb-2'>
+                                    <div className='rounded-circle bg-circle bg-circle1 p-2 me-2'>
+                                        <Icon icon="mdi:trending-up" width={20} height={20} className="text-white" />
+                                    </div>
+                                </div>
+                                <p className='mb-2 text-muted'>Impressions</p>
+                                <div className='d-flex align-items-baseline'>
+                                    <h4 className='mb-0 me-2 fs-20'>200</h4>
+                                    {/* <span className='text-muted small'>this month</span> */}
+                                </div>
+                                {/* <div className='text-primary mt-2'>+12.5%</div> */}
                             </div>
                         </div>
                     </div>
                     <div className='col-md-3'>
                         <div className='card'>
-                            <div className='card-body text-center'>
-                                <p className='mb-3 text-muted text-start'>New Applications</p>
-                                <h5>0</h5>
-                                {/* <a href="#" className='text-dark'>Review <Icon icon="akar-icons:arrow-right" width={16} height={16} /></a> */}
+                            <div className='card-body'>
+                                <div className='d-flex align-items-center mb-2'>
+                                    <div className='rounded-circle bg-circle bg-circle2 p-2 me-2'>
+                                        <Icon icon="mdi:account-outline" width={20} height={20} className="text-white" />
+                                    </div>
+                                </div>
+                                <p className='mb-2 text-muted'>New Applications</p>
+                                <div className='d-flex align-items-baseline'>
+                                    <h4 className='mb-0 me-2 fs-20'>0</h4>
+                                    {/* <span className='text-muted small'>this month</span> */}
+                                </div>
+                                {/* <div className='text-success mt-2'>+8.2%</div> */}
                             </div>
                         </div>
                     </div>
                     <div className='col-md-3'>
                         <div className='card'>
-                            <div className='card-body text-center'>
-                                <p className='mb-3 text-muted text-start'>Activated Creators</p>
-                                <h5>1</h5>
-                                {/* <p className='mb-0'>0 in discussion</p> */}
+                            <div className='card-body'>
+                                <div className='d-flex align-items-center mb-2'>
+                                    <div className='rounded-circle bg-circle bg-circle3 p-2 me-2'>
+                                        <Icon icon="mdi:account-check" width={20} height={20} className="text-white" />
+                                    </div>
+                                </div>
+                                <p className='mb-2 text-muted'>Activated Creators</p>
+                                <div className='d-flex align-items-center'>
+                                    <h4 className='mb-0 me-2 fs-20'>1</h4>
+                                    <p className='mb-0 fs-12 ms-auto fw-medium'>Review</p>
+                                    <Icon icon="solar:arrow-right-outline" width="18" height="18" className="ms-1" />
+                                    {/* <span className='text-muted small'>this month</span> */}
+                                </div>
+                                {/* <div className='text-purple mt-2'>+15.3%</div> */}
                             </div>
                         </div>
                     </div>
                     <div className='col-md-3'>
                         <div className='card'>
-                            <div className='card-body text-center'>
-                                <p className='mb-3 text-muted text-start'>Total Spend</p>
-                                <h5>$10</h5>
-                                {/* <span className='badge bg-light text-dark'>Beta</span> */}
+                            <div className='card-body'>
+                                <div className='d-flex align-items-center mb-2'>
+                                    <div className='rounded-circle bg-circle bg-circle4 p-2 me-2'>
+                                        <Icon icon="mdi:currency-usd" width={20} height={20} className="text-white" />
+                                    </div>
+                                </div>
+                                <p className='mb-2 text-muted'>Total Spend</p>
+                                <div className='d-flex align-items-baseline'>
+                                    <h4 className='mb-0 me-2 fs-20'>$100</h4>
+                                    {/* <span className='text-muted small'>this month</span> */}
+                                </div>
+                                {/* <div className='text-orange mt-2'>+10.8%</div> */}
                             </div>
                         </div>
                     </div>

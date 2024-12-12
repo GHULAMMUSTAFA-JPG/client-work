@@ -333,6 +333,45 @@ body {
         background-color: $base !important;
     }
 
+    // .bg-circle1 {
+    //     background-color: $circle1 !important;
+    // }
+
+    // .bg-circle2 {
+    //     background-color: $circle2 !important;
+    // }
+
+    // .bg-circle3 {
+    //     background-color: $circle3 !important;
+    // }
+
+    // .bg-circle4 {
+    //     background-color: $circle4 !important;
+    // }
+    .bg-circle1 {
+        background: linear-gradient(to right, #4e37b2, #7b5ac5);
+    }
+
+    .bg-circle3 {
+        background: linear-gradient(to right, #1ea97c, #3cc29e);
+    }
+
+    .bg-circle2 {
+        background: linear-gradient(to right, #2750b0, #4c5fd8);
+    }
+
+    .bg-circle4 {
+        background: linear-gradient(to right, #ff6b00, #ff9248);
+    }
+
+    .bg-circle {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .active-compaigns {
         .active-compaign-circle {
             height: 50px;

@@ -310,8 +310,8 @@ function OffcanvasCreateCompaign() {
                 </div>
             </div>
             <div className="border-top d-flex gap-3 justify-content-end p-3">
-                <button className="btn btn-outline-primary" style={{ width: '120px' }}>Discard</button>
-                <button className="btn btn-primary" style={{ width: '120px' }}>Publish</button>
+                <button className="btn btn-outline-info" style={{ width: '120px' }}>Discard</button>
+                <button className="btn btn-info" style={{ width: '120px' }}>Publish</button>
             </div>
         </div>
     );

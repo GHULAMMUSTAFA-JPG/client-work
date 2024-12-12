@@ -1,5 +1,4 @@
-// $primary: #15ab63;
-$primary: #0761a2;
+$primary: #15ab63;
 $light: #d3d3d3;
 $info: #0761a2;
 $warning: #969696;
@@ -18,6 +17,11 @@ $border: #efefef;
 $discussion: #7189FC;
 $contacted: #74C627;
 $activated: #B2A7F1;
+
+$circle1: #ffd84d; // Brighter yellow/orange
+$circle2: #2196f3; // Brighter blue
+$circle3: #2ecc71; // Brighter green
+$circle4: #0761a2; // Brighter blue     
 
 
 @import "bootstrap/scss/bootstrap";
