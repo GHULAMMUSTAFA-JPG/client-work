@@ -143,8 +143,8 @@ body {
 
         .form-control,
         .form-select {
-            background-color: $base;
-            border: none;
+            // background-color: $base;
+            // border: none;
             font-size: 14px;
         }
     }
@@ -180,6 +180,10 @@ body {
 
     .btn {
         font-size: 14px;
+    }
+
+    .btn-sm {
+        font-size: 12px;
     }
 
     .btn-primary {
@@ -219,7 +223,7 @@ body {
     }
 
     .offcanvas.offcanvas-end.offcanvas-create-campaign {
-        width: 50vw;
+        width: 70vw;
     }
 
     .offcanvas.offcanvas-end.campaign-offcanvas-buyer {
@@ -303,6 +307,18 @@ body {
 
     .text-orange {
         color: $orange !important;
+    }
+
+    .text-discussion {
+        color: $discussion !important;
+    }
+
+    .text-contacted {
+        color: $contacted !important;
+    }
+
+    .text-activated {
+        color: $activated !important;
     }
 
     .text-gray {
