@@ -308,7 +308,18 @@ body {
     .text-orange {
         color: $orange !important;
     }
-
+    .text-yellow{
+        color: #b38b12 !important;
+    }
+    .bg-orange-subtle{
+        background-color: rgb(236, 213, 143) !important;
+    }
+    .bg-purple-subtle{
+        background-color: rgb(223, 180, 238) !important;
+    }
+    .text-purple{
+        color: #8b5cf6 !important;
+    }
     .text-discussion {
         color: $discussion !important;
     }
