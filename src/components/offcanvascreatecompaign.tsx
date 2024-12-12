@@ -118,8 +118,8 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function OffcanvasCreateCompaign() {
     const [activeTab, setActiveTab] = useState('ongoing');
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [startDate, setStartDate] = useState<any>(undefined);
+    const [endDate, setEndDate] = useState<any>(undefined);
 
     // Function to handle calendar icon click
     const handleCalendarClick = () => {

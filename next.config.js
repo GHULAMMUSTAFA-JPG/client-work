@@ -1,4 +1,3 @@
-const { StrictMode } = require("react");
 
 module.exports = {
 
@@ -24,6 +23,8 @@ module.exports = {
       eslint: {
         ignoreDuringBuilds: true,
     },
-    StrictMode:false
+    reactStrictMode: false,
+
+    
   };
   
