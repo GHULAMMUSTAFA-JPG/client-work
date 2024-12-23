@@ -33,7 +33,7 @@ function mycreatorsbuyer() {
                     <div className="col-12">
                         {/* <div className="d-flex justify-content-between align-items-end"> */}
                         {/* <p className="mb-0 fw-medium fs-16">My Company</p> */}
-                        {/* <button className="btn btn-primary btn-sm ms-auto">Add Campaign</button> */}
+                        {/* <button className="btn btn-info btn-sm ms-auto">Add Campaign</button> */}
                         {/* <div className="dropdown ms-3">
                                 <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Export
@@ -128,7 +128,7 @@ function mycreatorsbuyer() {
                                                                     </td>
                                                                     <td className="drop-down-table">
                                                                         <div className="dropdown">
-                                                                            <button className="btn btn-primary btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                            <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                 <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
                                                                             </button>
                                                                             <ul className="dropdown-menu p-0">
@@ -504,7 +504,7 @@ function mycreatorsbuyer() {
                                                                     </td>
                                                                     <td className="drop-down-table">
                                                                         <div className="dropdown">
-                                                                            <button className="btn btn-primary btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                            <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                 <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
                                                                             </button>
                                                                             <ul className="dropdown-menu p-0">
