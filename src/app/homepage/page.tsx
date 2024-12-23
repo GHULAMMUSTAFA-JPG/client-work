@@ -14,6 +14,7 @@ import ProgressDashboard from "@/components/progressdashboard";
 import VerticalBarChart from "@/components/verticalbarchart";
 import Calendar from "@/components/Calendar";
 import PostCalendar from "@/components/Calendar";
+import EditProfileModal from "@/components/EditProfileModal";
 function Homepage() {
     const [users, setUsers] = useState<any[]>([]);
     // const router = useRouter()
@@ -30,13 +31,25 @@ function Homepage() {
     return (
         <>
             <div className="container-fluid">
+                {/* <div className="row mb-3 mt-3">
+                    <div className="col-md-4 ms-auto">
+                        <div className="card bg-primary-subtle">
+                            <div className="card-body p-4">
+                                <div className="d-flex align-items-center gap-3">
+                                    <Icon icon="ph:lightbulb" width={32} height={32} className='text-primary' />
+                                    <p className="mb-0 fw-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
                 <div className="row mt-3">
                     <div className="col-md-8">
                         <div className="card">
                             <div className="card-body">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <p className='mb-0 fs-16 fw-medium'>Profile</p>
-                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor'>Edit Profile</p>
+                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor' data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</p>
                                     <Icon icon="ri:edit-line" width="16" height="16" className='cursor ms-1' />
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
@@ -54,7 +67,7 @@ function Homepage() {
                                             <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-2' />
                                         </div>
                                         <div className="d-flex gap-2 align-items-center">
-                                            <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">CEO</span> at Synnc</p>
+                                            <p className='mb-0 fs-12 text-warning'>@lindsayrosenthal</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
                                             <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">25k </span> followers</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
@@ -72,7 +85,7 @@ function Homepage() {
                                 <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
                                 <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
                                 <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
-                                
+
                                 <div className="row my-3 text-center">
                                     <div className="col-md-4 border-end">
                                         <p className='mb-0 fs-14 p-height'>Average Engagaements per post</p>
@@ -83,8 +96,8 @@ function Homepage() {
                                         <p className='mb-0 fs-20 fw-medium'>40k</p>
                                     </div>
                                     <div className="col-md-4 pe-5">
-                                        <p className='mb-0 fs-14 p-height'>Sponsored posts</p>
-                                        <p className='mb-0 fs-20 fw-medium'>$500</p>
+                                        <p className='mb-0 fs-14 p-height'>S Score</p>
+                                        <p className='mb-0 fs-20 fw-medium'>90</p>
                                     </div>
                                 </div>
                                 <div className="bg-campaigns mt-4">
@@ -283,6 +296,7 @@ function Homepage() {
                     </div>
                 </div> */}
             </div>
+            <EditProfileModal />    
         </>
     );
 }

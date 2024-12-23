@@ -308,18 +308,23 @@ body {
     .text-orange {
         color: $orange !important;
     }
-    .text-yellow{
+
+    .text-yellow {
         color: #b38b12 !important;
     }
-    .bg-orange-subtle{
+
+    .bg-orange-subtle {
         background-color: rgb(236, 213, 143) !important;
     }
-    .bg-purple-subtle{
+
+    .bg-purple-subtle {
         background-color: rgb(223, 180, 238) !important;
     }
-    .text-purple{
+
+    .text-purple {
         color: #8b5cf6 !important;
     }
+
     .text-discussion {
         color: $discussion !important;
     }
@@ -428,5 +433,24 @@ body {
         background: $info;
         color: $white;
         border-radius: 8px;
+    }
+
+    .alert-info {
+        background-color: #e6f3ff;
+        border: 1px solid #67b1e6;
+        box-shadow: 0 2px 8px rgba(7, 97, 162, 0.1);
+        max-width: 300px;
+        color: #0761a2;
+
+        .btn-close {
+            opacity: 0.5;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    .alert-dismissible {
+        padding-right: 1rem;
     }
 }
