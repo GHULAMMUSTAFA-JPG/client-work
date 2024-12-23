@@ -96,7 +96,7 @@ function Homepage() {
                                         <p className='mb-0 fs-20 fw-medium'>40k</p>
                                     </div>
                                     <div className="col-md-4 pe-5">
-                                        <p className='mb-0 fs-14 p-height'>S Score</p>
+                                        <p className='mb-0 fs-14 p-height'>S-Score</p>
                                         <p className='mb-0 fs-20 fw-medium'>90</p>
                                     </div>
                                 </div>

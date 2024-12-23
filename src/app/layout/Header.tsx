@@ -74,12 +74,11 @@ export default function Header() {
                                     Update Profile
                                 </a>
                                 </li>
-                                <li><a className="dropdown-item" href="#">
+                                <li><a className="dropdown-item" href="#" onClick={navigateToSignIn}>
                                     <form className="d-flex" role="search">
                                         {/* {(pathname !== '/' && pathname !== '/login') && ( */}
                                         <p
                                             className="mb-0"
-                                            onClick={navigateToSignIn}
                                         >
                                             Sign Out
                                         </p>

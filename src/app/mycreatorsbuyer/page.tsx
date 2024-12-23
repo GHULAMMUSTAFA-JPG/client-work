@@ -2,7 +2,9 @@
 "use client";
 
 import { fetch_dashboard_data } from "@/@api";
+import CreateNewListModal from "@/components/CreateNewListModal";
 import TopCardBuyer from "@/components/TopCardBuyer";
+import ViewCreatorsModal from "@/components/ViewCreatorsModal";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
@@ -26,7 +28,7 @@ function mycreatorsbuyer() {
     return (
         <>
             <div className="container-fluid">
-                <TopCardBuyer />
+                {/* <TopCardBuyer /> */}
                 <div className="row my-3">
                     <div className="col-12">
                         {/* <div className="d-flex justify-content-between align-items-end"> */}
@@ -75,9 +77,9 @@ function mycreatorsbuyer() {
                                                                 <th scope="col">Company</th>
                                                                 <th scope="col">Followers</th>
                                                                 <th scope="col">Impressions</th>
-                                                                <th scope="col">Reach</th>
+                                                                <th scope="col">Average Impressions</th>
                                                                 <th scope="col">Engagements</th>
-                                                                <th scope="col">Likes</th>
+                                                                <th scope="col">Average Engagements</th>
                                                                 <th scope="col"></th>
                                                                 {/* <th scope="col">Social Media Value</th> */}
                                                             </tr>
@@ -451,9 +453,9 @@ function mycreatorsbuyer() {
                                                                 <th scope="col">Company </th>
                                                                 <th scope="col">Followers</th>
                                                                 <th scope="col">Impressions</th>
-                                                                <th scope="col">Reach</th>
+                                                                <th scope="col">Average Impressions</th>
                                                                 <th scope="col">Engagements</th>
-                                                                <th scope="col">Likes</th>
+                                                                <th scope="col">Average Engagements</th>
                                                                 <th scope="col"></th>
                                                                 {/* <th scope="col">Social Media Value</th> */}
                                                             </tr>
@@ -818,37 +820,77 @@ function mycreatorsbuyer() {
                                     <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
                                         <div className="row">
                                             <div className="col-12 mb-2 text-end">
-                                                <button type="button" className="btn btn-primary btn-sm me-1"><Icon icon="ri:add-fill" /> Create New List</button>
+                                                <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal"><Icon icon="ri:add-fill" /> Create New List</button>
                                             </div>
                                             <div className='col-md-4 col-xl-3'>
                                                 <div className='card'>
                                                     <div className='card-body'>
-                                                        <p className='mb-4'>Front End Developer</p>
-                                                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View</button>
+                                                        <div className="d-flex align-items-center justify-content-between mb-4">
+                                                            <p className='mb-0 fw-medium'>Front End Developer</p>
+                                                            <div>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
+                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
+                                                                </span>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
+                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal">View</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='col-md-4 col-xl-3'>
                                                 <div className='card'>
                                                     <div className='card-body'>
-                                                        <p className='mb-4'>Backend Developer</p>
-                                                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View</button>
+                                                        <div className="d-flex align-items-center justify-content-between mb-4">
+                                                            <p className='mb-0 fw-medium'>Backend Developer</p>
+                                                            <div>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
+                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
+                                                                </span>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
+                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill">View</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='col-md-4 col-xl-3'>
                                                 <div className='card'>
                                                     <div className='card-body'>
-                                                        <p className='mb-4'>Artificial Intelligence</p>
-                                                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View</button>
+                                                        <div className="d-flex align-items-center justify-content-between mb-4">
+                                                            <p className='mb-0 fw-medium'>Artificial Intelligence</p>
+                                                            <div>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
+                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
+                                                                </span>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
+                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill">View</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='col-md-4 col-xl-3'>
                                                 <div className='card'>
                                                     <div className='card-body'>
-                                                        <p className='mb-4'>UI/UX</p>
-                                                        <button type="button" className="btn btn-outline-primary btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal1">View</button>
+                                                        <div className="d-flex align-items-center justify-content-between mb-4">
+                                                            <p className='mb-0 fw-medium'>UI/UX</p>
+                                                            <div>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
+                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
+                                                                </span>
+                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
+                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill">View</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -861,7 +903,10 @@ function mycreatorsbuyer() {
                     </div>
                 </div>
             </div>
+            <CreateNewListModal />
+            <ViewCreatorsModal />
         </>
+
     );
 }
 

@@ -18,7 +18,7 @@ const Main = ({
     { label: "Discover", href: "/DiscoverCreator", icon: "bi bi-briefcase" },
     { label: "Campaigns", href: "/campaigns", icon: "bi bi-briefcase" },
     { label: "My Company", href: "/creatordashboard", icon: "bi bi-building" },
-    { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },  
+    // { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },  
   ];
 
   

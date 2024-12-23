@@ -47,75 +47,75 @@ function Campaigns() {
                                                                 <tbody>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
@@ -137,75 +137,75 @@ function Campaigns() {
                                                                 <tbody>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
@@ -227,75 +227,75 @@ function Campaigns() {
                                                                 <tbody>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
                                                                     </tr>
                                                                     <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
                                                                         <td>
-                                                                            <p className='mb-0'>Initiated Nov 18, 2024</p>
+                                                                            <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
                                                                             <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
                                                                         </td>
-                                                                        <td>
+                                                                        {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
-                                                                        </td>
+                                                                        </td> */}
                                                                         <td>
                                                                             <Icon icon="solar:eye-outline" width={24} height={24} className='text-warning' />
                                                                         </td>
