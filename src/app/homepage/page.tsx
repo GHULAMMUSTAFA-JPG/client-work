@@ -28,7 +28,6 @@ function Homepage() {
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-        console.log(response.data, "response")
         setUsers(response.data?.users)
     }
 
