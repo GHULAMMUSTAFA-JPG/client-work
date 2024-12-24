@@ -1,28 +1,31 @@
 
 "use client";
 
-import { fetch_dashboard_data } from "@/@api";
+import { fetch_dashboard_data, fetchCompanyData } from "@/@api";
 import Topcard from "@/components/topcard";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 // import { useRouter } from "next/navigation";
-function CreatorDashboard() {
-
+function CreatorDashboard() {   
+    const {user} = useAuth()
     const [users, setUsers] = useState<any[]>([]);
+    const [companyData, setCompanyData] = useState<any>([])
     // const router = useRouter()
     useEffect(() => {
 
         fetchData()
-
+      
     }, [])
-
+    useEffect(() => {
+       user?.email && fetchCompanyData(user?.email,setCompanyData)
+    }, [user])
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-        console.log(response.data)
         setUsers(response.data?.users)
     }
     return (
@@ -65,42 +68,42 @@ function CreatorDashboard() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {Array.isArray(users) && users?.map((user: any) => (
-                                                <tr key={user._id}>
+                                            {Array.isArray(companyData?.creators) && companyData?.creators?.map((user: any) => (
+                                                <tr key={user?._id}>
                                                     <td className="text-start ps-4">
                                                         <div className="d-flex align-items-center">
-                                                            <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                            <span className="ms-2 text-truncate">{user.Name}</span>
+                                                            <Image src={user?.Profile_Image} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
+                                                            <span className="ms-2 text-truncate">{user?.Name}</span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div className="d-flex align-items-center justify-content-center mb-2">
-                                                            <span className="ms-2">{user.Name}</span>
+                                                            <span className="ms-2">{user?.Name}</span>
                                                         </div>
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <Icon icon="mdi:linkedin" width={22} height={22} className="text-info"/>
 
-                                                            <span className="ms-2 text-truncate"> {user.Username}</span>
+                                                            <span className="ms-2 text-truncate"> {user?.Username}</span>
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
+                                                        <p className="mb-2">{user?.No_of_Followers?.toLocaleString()}</p>
                                                         {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
                                                     </td>
                                                     <td>
-                                                        <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p>
+                                                        <p className="mb-2">{user?.No_of_Impressions}</p>
                                                         {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                     </td>
                                                     <td>
-                                                        <p className="mb-2">{user?.Post_Reach}</p>
+                                                        <p className="mb-2">{user?.Average_Impressions}</p>
                                                         {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                     </td>
                                                     <td>
                                                         {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                        <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p>
+                                                        <p className="mb-0">{user?.No_of_Engagements}</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-2">{user.No_of_Likes.toLocaleString()}</p>
+                                                        <p className="mb-2">{user?.Average_Engagements}</p>
                                                         {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                     </td>
                                                     {/* <td>

@@ -15,19 +15,23 @@ import VerticalBarChart from "@/components/verticalbarchart";
 import Calendar from "@/components/Calendar";
 import PostCalendar from "@/components/Calendar";
 import EditProfileModal from "@/components/EditProfileModal";
+import { useAuth } from "@/contexts/AuthContext";
 function Homepage() {
+    const { user, setUserProfile, userProfile } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     // const router = useRouter()
     useEffect(() => {
         fetchData()
+
     }, [])
 
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-        console.log(response.data)
+        console.log(response.data, "response")
         setUsers(response.data?.users)
     }
+
     return (
         <>
             <div className="container-fluid">
@@ -54,7 +58,7 @@ function Homepage() {
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
                                     <Image
-                                        src="/assets/images/user.jpg"
+                                        src={userProfile?.Profile_Image}
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
                                         width={40}
@@ -62,42 +66,41 @@ function Homepage() {
                                     />
                                     <div className='flex-grow-1'>
                                         <div className='d-flex align-items-center'>
-                                            <p className='mb-0 fw-medium fs-16'>Lindsay Rosenthal</p>
+                                            <p className='mb-0 fw-medium fs-16'>{userProfile?.Name}</p>
                                             <Icon icon="emojione:flag-for-united-states" width={16} height={16} className='ms-2' />
                                             <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-2' />
                                         </div>
                                         <div className="d-flex gap-2 align-items-center">
-                                            <p className='mb-0 fs-12 text-warning'>@lindsayrosenthal</p>
+                                            <p className='mb-0 fs-12 text-warning'>{userProfile?.Email}</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
-                                            <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">25k </span> followers</p>
+                                            <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">{userProfile?.No_of_Followers} </span> followers</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
                                             <p className='mb-0 fs-12 text-warning'>Post Activity <span className="text-dark fw-medium">Daily</span></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className='d-flex gap-2 flex-wrap mb-3'>
-                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Backend developer</span>
-                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Front end developer</span>
-                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">IT officer</span>
-                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Premire pro</span>
-                                    <span className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">Adobe Photoshop</span>
+                                    {userProfile?.Skills?.map((element: any, index: number) => {
+                                        return (
+                                            <span key={index} className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">{element}</span>
+                                        )
+                                    })}
+
                                 </div>
-                                <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
-                                <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
-                                <p className='mb-0 fs-12 text-warning'>Learn about the future of marketing and emerging trends in the industry. Leading the way in digital marketing, we're at the forefront of innovation. Learn more about our services and how we can help you achieve your goals.</p>
+                                <p className='mb-0 fs-12 text-warning'>{userProfile?.Description}</p>
 
                                 <div className="row my-3 text-center">
                                     <div className="col-md-4 border-end">
                                         <p className='mb-0 fs-14 p-height'>Average Engagaements per post</p>
-                                        <p className='mb-0 fs-20 fw-medium'>10k</p>
+                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Engagements}</p>
                                     </div>
                                     <div className="col-md-4 border-end pe-4">
                                         <p className='mb-0 fs-14 p-height'>Average Impressions per post</p>
-                                        <p className='mb-0 fs-20 fw-medium'>40k</p>
+                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Impressions}</p>
                                     </div>
                                     <div className="col-md-4 pe-5">
                                         <p className='mb-0 fs-14 p-height'>S-Score</p>
-                                        <p className='mb-0 fs-20 fw-medium'>90</p>
+                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.['S-Score']}</p>
                                     </div>
                                 </div>
                                 <div className="bg-campaigns mt-4">
@@ -296,7 +299,7 @@ function Homepage() {
                     </div>
                 </div> */}
             </div>
-            <EditProfileModal />    
+            <EditProfileModal />
         </>
     );
 }

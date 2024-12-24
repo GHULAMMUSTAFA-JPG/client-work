@@ -6,12 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
+import { fetchProfileData } from "@/@api";
 
 
 export default function Header() {
     const pathname = usePathname(); // Initialize pathname without condition
-    const [user, setUser] = useState<any>()
-    const { logout } = useAuth()
+    const [users, setUser] = useState<any>()
+    const { user,logout, userProfile, setUserProfile } = useAuth()
 
     useEffect(() => {
         setUser(localStorage.getItem("user"))
@@ -21,6 +22,9 @@ export default function Header() {
         logout()
     };
 
+    useEffect(() => {
+          user?.email && fetchProfileData(user?.email, setUserProfile)
+    }, [user])
     return (
         <>
             <header className="navbar-section">
@@ -61,13 +65,11 @@ export default function Header() {
                         <div className="dropdown ms-2">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
-                                    <Image src="/assets/images/user.jpg" alt="user" width={32} height={32} className="user-img" />
-                                    <p className="mb-0 ms-2">Mark Phillips</p>
+                                    <Image src={userProfile?.Profile_Image} alt="user" width={32} height={32} className="user-img" />
+                                    <p className="mb-0 ms-2">{userProfile?.Name}</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>
                             </a>
-
-
 
                             <ul className="dropdown-menu">
                                 <li><a className="dropdown-item" href="#">

@@ -6,6 +6,8 @@ interface AuthContextType {
   user: any; // This could be a user object or a token
   loginUser: (userData: any) => void;
   logout: () => void;
+  setUserProfile: any;
+  userProfile:any
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,7 +24,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
-
+  const [userProfile, setUserProfile] = useState<any>()
   // Check authentication on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -36,7 +38,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
-
     if(userData.isBuyer)
       router.push("/homepagebuyer");
 
@@ -53,9 +54,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, loginUser, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, loginUser, logout,setUserProfile, userProfile }}>
       {children}
-
     </AuthContext.Provider>
   );
 };
