@@ -7,7 +7,6 @@ import Image from "next/image";
 
 
 const page = () => {
-
   const [redirect,setRedirect] =useState(false)
   return (
     <>
