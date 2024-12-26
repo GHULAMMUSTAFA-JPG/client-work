@@ -16,7 +16,7 @@ export const fetchProfileData = async (email: string, setUserData: any) => {
 
     try {
         const response = await apiController.get(`dashboard/creators/creator_data/${email}`)
-        console.log(response)
+       
         setUserData(response?.data)
         // return response
     } catch (error) {
@@ -29,7 +29,7 @@ export const fetchProfileData = async (email: string, setUserData: any) => {
 export const fetchCompanyData = async (email: string, setCompanyData: any) => {
     try {
         const response = await apiController.get(`/dashboard/creators/my_company_creators/${email}`)
-        console.log(response)
+        // console.log(response)
         setCompanyData(response?.data)
         // return response
     } catch (error) {
@@ -62,7 +62,7 @@ export const fetchBuyerDiscoveryData = async (email: string, setData: any) => {
             External_Creators: [],
             Internal_Creators: []
         })
-        console.log(error, "lops eror")
+        console.log(error, "Error")
         return null
     }
 }
@@ -71,11 +71,10 @@ export const getSavedList = async (email: string, setData: any) => {
     try {
         const response: any = await apiController.get(`/dashboard/buyers/get_buyer_list_names/${email}`)
         setData(response?.data?.Lists)
-        console.log(response?.data, "ee kha na")
         return response
     } catch (error) {
         setData([])
-        console.log(error, "lops eror")
+        console.log(error, "Error in saving list")
         return null
     }
 }
@@ -88,15 +87,18 @@ export const getSpecificCreatorList = async (id: string, setData: any) => {
         return response
     } catch (error) {
         setData([])
-        console.log(error, "lops eror")
+        console.log(error, "Error in get specific creator list api")
         return null
     }
 }
 
 
-export const updateListName = async (dto: any) => {
+export const updateListName = async (dto: any, rendControl:boolean, setRendControl:any) => {
     try {
-        const response: any = await apiController.put("/dashboard/buyers/udpate_creators_list", dto)
+        const response: any = await apiController.put("/dashboard/buyers/update_creators_list", dto)
+        setRendControl(!rendControl)
+        const closebutton:any = document.getElementById('createNewlistmodalClose')
+        closebutton && closebutton?.click()
         return response
     } catch (error) {
         console.log(error)
@@ -104,9 +106,12 @@ export const updateListName = async (dto: any) => {
     }
 }
 
-export const createListName = async (dto: any) => {
+export const createListName = async (dto: any, rendControl:boolean, setRendControl:any) => {
     try {
-        const response: any = await apiController.put("/dashboard/buyers/create_new_creators_list", dto)
+        const response: any = await apiController.post("/dashboard/buyers/create_new_creators_list", dto)
+        setRendControl(!rendControl)
+        const closebutton:any = document.getElementById('createNewlistmodalClose')
+        closebutton && closebutton?.click()
         return response
     } catch (error) {
         console.log(error)
@@ -114,9 +119,21 @@ export const createListName = async (dto: any) => {
     }
 }
 
-export const deleteListItem =  async (id:any) =>{
+export const deleteListItem =  async (id:any, rendControl:boolean, setRendControl:any) =>{
     try {
         const response:any = await apiController.delete(`/dashboard/buyers/delete_creators_list/${id}`)
+        setRendControl(!rendControl)
+        return response
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export const addCreatorInList = async (dto:any, rendControl:boolean, setRendControl:any) =>{
+    try {
+        const response:any = await apiController.post("/dashboard/buyers/add_creator_to_list", dto)
+        setRendControl(!rendControl)
         return response
     } catch (error) {
         console.log(error)
