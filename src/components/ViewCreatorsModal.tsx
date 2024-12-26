@@ -11,28 +11,22 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
+interface ViewCreatorsModalProps {
+    data: any
+}
 
-
-function ViewCreatorsModal() {
+function ViewCreatorsModal(props: ViewCreatorsModalProps) {
+    const { data } = props
     const [users, setUsers] = useState<any[]>([]);
     // const router = useRouter()
-    useEffect(() => {
-        fetchData()
-    }, [])
 
-
-    const fetchData = async () => {
-        const response = await fetch_dashboard_data()
-        console.log(response.data)
-        setUsers(response.data?.users)
-    }
     return (
         <>
             <div className="modal fade" id="viewCreatorsModal" tabIndex={-1} aria-labelledby="viewCreatorsModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                     <div className="modal-content">
                         <div className="modal-header px-4">
-                            <h1 className="modal-title fs-5" id="viewCreatorsModalLabel">Front End Developer</h1>
+                            <h1 className="modal-title fs-5" id="viewCreatorsModalLabel">{data?.List_Name}</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -57,7 +51,7 @@ function ViewCreatorsModal() {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {Array.isArray(users) && users?.map((user: any) => (
+                                                        {data?.List_Creators?.length !== 0 ? data?.List_Creators?.map((user: any) => (
                                                             <tr key={user._id}>
                                                                 <td className="text-start ps-4">
                                                                     <div className="d-flex align-items-center">
@@ -129,11 +123,16 @@ function ViewCreatorsModal() {
                                                                     </div>
                                                                 </td> */}
                                                                 {/* <td>
-                                                        <p className="mb-2">-</p> Replace with dynamic value if available
-                                                        <p className="mb-0">$1.4k</p> Replace with dynamic value if available
-                                                    </td> */}
+                                                                <p className="mb-2">-</p> Replace with dynamic value if available
+                                                                <p className="mb-0">$1.4k</p> Replace with dynamic value if available
+                                                            </td> */}
                                                             </tr>
-                                                        ))}
+                                                        ) 
+                                    
+                                                        ):
+                                                         <tr>
+                                                            <td colSpan={6}>.............No data Found............</td></tr>
+                                                        }
                                                         {/* <tr>
                                                 <td>
                                                     <div className="d-flex align-items-center justify-content-center">

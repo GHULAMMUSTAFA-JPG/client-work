@@ -298,7 +298,7 @@ function Homepage() {
                     </div>
                 </div> */}
             </div>
-            <EditProfileModal />
+            <EditProfileModal user={user} userProfile={userProfile}/>
         </>
     );
 }

@@ -12,11 +12,10 @@ import { fetchProfileData } from "@/@api";
 export default function Header() {
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { user,logout, userProfile, setUserProfile } = useAuth()
+    const { user,logout, userProfile, setUserProfile,rendControl } = useAuth()
 
     useEffect(() => {
         setUser(localStorage.getItem("user"))
-
     }, [])
     const navigateToSignIn = () => {
         logout()
@@ -24,7 +23,7 @@ export default function Header() {
 
     useEffect(() => {
           user?.email && fetchProfileData(user?.email, setUserProfile)
-    }, [user])
+    }, [user,rendControl])
     return (
         <>
             <header className="navbar-section">
