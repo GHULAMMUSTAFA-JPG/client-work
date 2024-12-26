@@ -1,7 +1,7 @@
 
 "use client";
 
-import { fetch_dashboard_data } from "@/@api";
+import { fetch_dashboard_data, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList } from "@/@api";
 import CreateNewListModal from "@/components/CreateNewListModal";
 import TopCardBuyer from "@/components/TopCardBuyer";
 import ViewCreatorsModal from "@/components/ViewCreatorsModal";
@@ -11,19 +11,40 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 function mycreatorsbuyer() {
-
+    const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
+    const [buyersDetails, setBuyerDetails] = useState<any>()
+    const [buyerList, setBuyerList] = useState<any>()
+    const [selectedId, setSelectedId] =useState<string>('')
+    const [selectedIdCreators, setSelectedIdCreators] = useState<any>()
+    const [selectedList, setSelectedList] = useState<any>()
     // const router = useRouter()
     useEffect(() => {
         fetchData()
+        fetchBuyerDiscoveryData(user?.email, setBuyerDetails)
+        getSavedList(user?.email, setBuyerList)
     }, [])
+
+    useEffect(()=>{
+    selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators)
+    },[selectedId])
 
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
         console.log(response.data)
         setUsers(response.data?.users)
+    }
+
+    const actionFunction = async (action:string, list:string) =>{
+        if(action =="edit"){
+            setSelectedList(list)
+        }
+        else{
+
+        }
     }
     return (
         <>
@@ -85,7 +106,7 @@ function mycreatorsbuyer() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {Array.isArray(users) && users?.map((user: any) => (
+                                                            {buyersDetails?.Internal_Creators !== 0 && buyersDetails?.Internal_Creators?.map((user: any) => (
                                                                 <tr key={user._id}>
                                                                     <td className="text-start ps-4">
                                                                         <div className="d-flex align-items-center">
@@ -104,7 +125,7 @@ function mycreatorsbuyer() {
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p className="mb-2">Cisco</p>
+                                                                        <p className="mb-2">{user?.Current_Company}</p>
                                                                     </td>
                                                                     <td>
                                                                         <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
@@ -115,7 +136,7 @@ function mycreatorsbuyer() {
                                                                         {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                     </td>
                                                                     <td>
-                                                                        <p className="mb-2">{user?.Post_Reach}</p>
+                                                                        <p className="mb-2">{user?.Average_Impressions}</p>
                                                                         {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                     </td>
                                                                     <td>
@@ -123,7 +144,7 @@ function mycreatorsbuyer() {
                                                                         <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
                                                                     </td>
                                                                     <td>
-                                                                        <p className="mb-2">{user.No_of_Likes.toLocaleString()}</p>
+                                                                        <p className="mb-2">{user.Average_Engagements.toLocaleString()}</p>
                                                                         {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                     </td>
                                                                     <td className="drop-down-table">
@@ -134,13 +155,14 @@ function mycreatorsbuyer() {
                                                                             <ul className="dropdown-menu p-0">
                                                                                 <div className="card">
                                                                                     <div className="card-body p-0 scroll">
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Blockchain</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Artificial Intelligence</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">UI/UX</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Web Developer</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Front end</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Backend</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Web Developer</span></a></li>
+                                                                                        {
+                                                                                            user?.Skills?.map((skill: string, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index}><a className="dropdown-item p-1" href="#"><span className="ms-1">{skill}</span></a></li>
+
+                                                                                                )
+                                                                                            })
+                                                                                        }
 
 
                                                                                     </div>
@@ -461,7 +483,7 @@ function mycreatorsbuyer() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {Array.isArray(users) && users?.map((user: any) => (
+                                                            {buyersDetails?.External_Creators !== 0 && buyersDetails?.External_Creators?.map((user: any) => (
                                                                 <tr key={user._id}>
                                                                     <td className="text-start ps-4">
                                                                         <div className="d-flex align-items-center">
@@ -480,7 +502,7 @@ function mycreatorsbuyer() {
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <p className="mb-2">Microsoft</p>
+                                                                        <p className="mb-2">{user?.Current_Company}</p>
                                                                     </td>
                                                                     <td>
                                                                         <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
@@ -491,7 +513,7 @@ function mycreatorsbuyer() {
                                                                         {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                     </td>
                                                                     <td>
-                                                                        <p className="mb-2">{user?.Post_Reach}</p>
+                                                                        <p className="mb-2">{user?.Average_Impressions}</p>
                                                                         {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                     </td>
                                                                     <td>
@@ -499,7 +521,7 @@ function mycreatorsbuyer() {
                                                                         <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
                                                                     </td>
                                                                     <td>
-                                                                        <p className="mb-2">{user.No_of_Likes.toLocaleString()}</p>
+                                                                        <p className="mb-2">{user.Average_Engagements.toLocaleString()}</p>
                                                                         {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                     </td>
                                                                     <td className="drop-down-table">
@@ -510,14 +532,13 @@ function mycreatorsbuyer() {
                                                                             <ul className="dropdown-menu p-0">
                                                                                 <div className="card">
                                                                                     <div className="card-body p-0 scroll">
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Blockchain</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Artificial Intelligence</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">UI/UX</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Web Developer</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Front end</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Backend</span></a></li>
-                                                                                        <li><a className="dropdown-item p-1" href="#"><span className="ms-1">Web Developer</span></a></li>
-
+                                                                                        {
+                                                                                            buyersDetails?.Skills?.map((skill: string, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
+                                                                                                )
+                                                                                            })
+                                                                                        }
 
                                                                                     </div>
                                                                                     <div className="card-footer p-0 bg-transparent">
@@ -822,78 +843,39 @@ function mycreatorsbuyer() {
                                             <div className="col-12 mb-2 text-end">
                                                 <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal"><Icon icon="ri:add-fill" /> Create New List</button>
                                             </div>
-                                            <div className='col-md-4 col-xl-3'>
-                                                <div className='card'>
-                                                    <div className='card-body'>
-                                                        <div className="d-flex align-items-center justify-content-between mb-4">
-                                                            <p className='mb-0 fw-medium'>Front End Developer</p>
-                                                            <div>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
-                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
-                                                                </span>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
-                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
-                                                                </span>
+                                            {
+                                                buyerList?.map((entry: any, index: number) => {
+                                                    
+                                                    return (
+                                                        <div key={index} className='col-md-4 col-xl-3' >
+                                                            <div className='card'>
+                                                                <div className='card-body'>
+                                                                    <div className="d-flex align-items-center justify-content-between mb-4">
+                                                                        <p className='mb-0 fw-medium'>{entry?.List_Name}</p>
+                                                                        <div>
+                                                                            <span data-bs-toggle="modal" data-bs-target="#createNewListModal" className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit" onClick={()=>{
+                                                                                actionFunction('edit',entry)
+                                                                            }}>
+                                                                                <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
+                                                                            </span>
+                                                                            <span onClick={()=>{
+                                                                                actionFunction('delete',entry?._id)
+                                                                            }} className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
+                                                                                <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal" onClick={()=>{
+                                                                        setSelectedId(entry?._id)
+                                                                    }}>View</button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal">View</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='col-md-4 col-xl-3'>
-                                                <div className='card'>
-                                                    <div className='card-body'>
-                                                        <div className="d-flex align-items-center justify-content-between mb-4">
-                                                            <p className='mb-0 fw-medium'>Backend Developer</p>
-                                                            <div>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
-                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
-                                                                </span>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
-                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill">View</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='col-md-4 col-xl-3'>
-                                                <div className='card'>
-                                                    <div className='card-body'>
-                                                        <div className="d-flex align-items-center justify-content-between mb-4">
-                                                            <p className='mb-0 fw-medium'>Artificial Intelligence</p>
-                                                            <div>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
-                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
-                                                                </span>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
-                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill">View</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='col-md-4 col-xl-3'>
-                                                <div className='card'>
-                                                    <div className='card-body'>
-                                                        <div className="d-flex align-items-center justify-content-between mb-4">
-                                                            <p className='mb-0 fw-medium'>UI/UX</p>
-                                                            <div>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit">
-                                                                    <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
-                                                                </span>
-                                                                <span className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
-                                                                    <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill">View</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                    )
+                                                })
+                                            }
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -903,8 +885,8 @@ function mycreatorsbuyer() {
                     </div>
                 </div>
             </div>
-            <CreateNewListModal />
-            <ViewCreatorsModal />
+            <CreateNewListModal data={selectedList} />
+            <ViewCreatorsModal data={selectedIdCreators} />
         </>
 
     );

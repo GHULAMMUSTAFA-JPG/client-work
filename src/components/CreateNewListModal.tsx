@@ -2,7 +2,7 @@
 "use client"
 import { login } from '@/@api';
 import useForm from '@/hooks/useForm';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -10,16 +10,23 @@ import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
 
+interface CreateNewListModalProps {
+    data?:any
+}
+function CreateNewListModal(props:CreateNewListModalProps) {
+const {data} = props
+    const [listName, setListName] = useState<string>('')
 
-function CreateNewListModal() {
-
+    useEffect(()=>{
+        data && setListName(data?.List_Name)
+    },[])
     return (
         <>
             <div className="modal fade" id="createNewListModal" tabIndex={-1} aria-labelledby="createNewListModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                     <div className="modal-content">
                         <div className="modal-header px-4">
-                            <h1 className="modal-title fs-5" id="createNewListModalLabel">Create New List</h1>
+                            <h1 className="modal-title fs-5" id="createNewListModalLabel">{data ? "Edit List Item" :"Create New List"}</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -30,16 +37,22 @@ function CreateNewListModal() {
                                         type="text"
                                         className="form-control mb-2"
                                         placeholder="Enter list name"
+                                        value={listName}
+                                        onChange={(e: any) => {
+                                            setListName(e.target.value)
+                                        }}
                                     />
-                                    <div className="form-text">
+                                  {data ? "" :   <div className="form-text">
                                         Create a descriptive name for your list to help organize your creators. For example: "Tech Influencers", "Fashion Bloggers", etc.
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>
                         <div className='modal-footer'>
                             <button type="button" className="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" className="btn btn-info px-3">Create</button>
+                            <button type="button" className="btn btn-info px-3" onClick={()=>{
+                                console.log(listName,"listName")
+                            }}>{data ? "Update" : "Create"}</button>
                         </div>
                     </div>
                 </div>
