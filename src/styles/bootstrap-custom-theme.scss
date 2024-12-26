@@ -88,6 +88,10 @@ body {
         }
     }
 
+    .table>thead {
+        vertical-align: middle;
+    }
+
     .card-with-table {
         .card-header {
             background-color: $white;
@@ -97,6 +101,11 @@ body {
         .table {
             border-radius: 0;
         }
+    }
+
+    .campaign-listing-table {
+        max-height: 494px;
+        overflow: auto;
     }
 
     .card {

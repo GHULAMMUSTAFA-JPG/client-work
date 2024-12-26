@@ -48,7 +48,7 @@ function buyerdashboard() {
                                                                     <thead>
                                                                         <tr>
                                                                             <th scope="col" className="text-start ps-4">Campaign</th>
-                                                                            <th scope="col" className='text-center'>Insights</th>
+                                                                            <th scope="col" className='text-center'>Creators Insights</th>
                                                                             <th scope="col" className='text-center'>Budget</th>
                                                                             <th scope="col" className='text-center'>Status</th>
                                                                             <th scope="col" className='text-center'>Actions</th>

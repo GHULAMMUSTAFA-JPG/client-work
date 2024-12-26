@@ -128,12 +128,12 @@ function homepagebuyer() {
                                 </div>
                             </div>
                             <div className="card-body p-0">
-                                <div className="table-responsive">
-                                    <table className="table align-middle text-center mb-0">
+                                <div className="table-responsive campaign-listing-table">
+                                    <table className="table align-middle text-center mb-0 table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col" className="text-start ps-4">Campaigns <span className='text-muted fs-12'>(7)</span></th>
-                                                <th scope="col">Creators</th>
+                                                <th scope="col">Activated Creators</th>
                                                 <th scope="col">Posts</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
@@ -148,7 +148,7 @@ function homepagebuyer() {
                                                             <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
                                                         </div>
                                                     </div> */}
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>
@@ -167,7 +167,7 @@ function homepagebuyer() {
                                             </tr>
                                             <tr>
                                                 <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>
@@ -186,7 +186,7 @@ function homepagebuyer() {
                                             </tr>
                                             <tr>
                                                 <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>
@@ -205,7 +205,7 @@ function homepagebuyer() {
                                             </tr>
                                             <tr>
                                                 <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>
@@ -224,7 +224,7 @@ function homepagebuyer() {
                                             </tr>
                                             <tr>
                                                 <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>
@@ -243,7 +243,7 @@ function homepagebuyer() {
                                             </tr>
                                             <tr>
                                                 <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>
@@ -262,7 +262,7 @@ function homepagebuyer() {
                                             </tr>
                                             <tr>
                                                 <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
                                                     <div className='d-flex align-items-center mt-1'>
                                                         <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
                                                         <div className="vr mx-2"></div>

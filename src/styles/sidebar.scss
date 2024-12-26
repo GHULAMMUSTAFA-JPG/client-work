@@ -1,8 +1,8 @@
 .sidebar {
-    width: 120px;
-    min-width: 120px;
+    width: 80px;
+    min-width: 80px;
     height: 100vh;
-    background-color: $dark;
+    background-color: $white;
     overflow: auto;
 
     @media (max-width: 991.98px) {
@@ -10,14 +10,17 @@
     }
 
     .nav-link {
-        color: $light;
+        color: $dark;
         padding: 1rem;
         font-size: 12px;
         text-align: center;
 
         &.active {
-            background-color: $active;
-            color: $white;
+            background-color: $active-bg;
+            color: $dark;
+        }
+        i{
+            font-size: 18px;
         }
     }
 
