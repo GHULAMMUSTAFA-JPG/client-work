@@ -108,93 +108,95 @@ function Homepage() {
                                         <p className='mb-0 fs-12 fw-medium ms-auto cursor'>Campaigns</p>
                                         <Icon icon="ri:arrow-right-line" width="16" height="16" className='cursor ms-1' />
                                     </div>
-                                    <div className="card mb-2">
-                                        <div className="card-body py-2 ps-2 pe-3">
-                                            <div className='d-flex gap-3 align-items-center'>
-                                                <Image
-                                                    src="/assets/images/apollo.png"
-                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                    alt="logo"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                                <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
-                                                <p className='mb-0 fs-12 text-warning ms-auto'>Live Until Feb 08, 2024</p>
+                                    <div className="card-wrapper">
+                                        <div className="card mb-2 card-hover">
+                                            <div className="card-body py-2 ps-2 pe-3">
+                                                <div className='d-flex gap-3 align-items-center'>
+                                                    <Image
+                                                        src="/assets/images/apollo.png"
+                                                        className="border object-fit-cover rounded flex-shrink-0"
+                                                        alt="logo"
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                    <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
+                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="card mb-2">
-                                        <div className="card-body py-2 ps-2 pe-3">
-                                            <div className='d-flex gap-3 align-items-center'>
-                                                <Image
-                                                    src="/assets/images/avacast.png"
-                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                    alt="logo"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                                <p className='mb-0 fw-medium'>Acast: General Application</p>
-                                                <p className='mb-0 fs-12 text-warning ms-auto'>Live Until Feb 08, 2024</p>
+                                        <div className="card mb-2 card-hover">
+                                            <div className="card-body py-2 ps-2 pe-3">
+                                                <div className='d-flex gap-3 align-items-center'>
+                                                    <Image
+                                                        src="/assets/images/avacast.png"
+                                                        className="border object-fit-cover rounded flex-shrink-0"
+                                                        alt="logo"
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                    <p className='mb-0 fw-medium'>Acast: General Application</p>
+                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="card mb-2">
-                                        <div className="card-body py-2 ps-2 pe-3">
-                                            <div className='d-flex gap-3 align-items-center'>
-                                                <Image
-                                                    src="/assets/images/avoma.png"
-                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                    alt="logo"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                                <p className='mb-0 fw-medium'>Avoma - Growth Acceleration Platform</p>
-                                                <p className='mb-0 fs-12 text-warning ms-auto'>Live Until Feb 08, 2024</p>
+                                        <div className="card mb-2 card-hover">
+                                            <div className="card-body py-2 ps-2 pe-3">
+                                                <div className='d-flex gap-3 align-items-center'>
+                                                    <Image
+                                                        src="/assets/images/avoma.png"
+                                                        className="border object-fit-cover rounded flex-shrink-0"
+                                                        alt="logo"
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                    <p className='mb-0 fw-medium'>Avoma - Growth Acceleration Platform</p>
+                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="card mb-2">
-                                        <div className="card-body py-2 ps-2 pe-3">
-                                            <div className='d-flex gap-3 align-items-center'>
-                                                <Image
-                                                    src="/assets/images/avacast.png"
-                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                    alt="logo"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                                <p className='mb-0 fw-medium'>Acast: General Application</p>
-                                                <p className='mb-0 fs-12 text-warning ms-auto'>Live Until Feb 08, 2024</p>
+                                        <div className="card mb-2 card-hover">
+                                            <div className="card-body py-2 ps-2 pe-3">
+                                                <div className='d-flex gap-3 align-items-center'>
+                                                    <Image
+                                                        src="/assets/images/avacast.png"
+                                                        className="border object-fit-cover rounded flex-shrink-0"
+                                                        alt="logo"
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                    <p className='mb-0 fw-medium'>Acast: General Application</p>
+                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="card mb-2">
-                                        <div className="card-body py-2 ps-2 pe-3">
-                                            <div className='d-flex gap-3 align-items-center'>
-                                                <Image
-                                                    src="/assets/images/apollo.png"
-                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                    alt="logo"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                                <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
-                                                <p className='mb-0 fs-12 text-warning ms-auto'>Live Until Feb 08, 2024</p>
+                                        <div className="card mb-2 card-hover">
+                                            <div className="card-body py-2 ps-2 pe-3">
+                                                <div className='d-flex gap-3 align-items-center'>
+                                                    <Image
+                                                        src="/assets/images/apollo.png"
+                                                        className="border object-fit-cover rounded flex-shrink-0"
+                                                        alt="logo"
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                    <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
+                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="card">
-                                        <div className="card-body py-2 ps-2 pe-3">
-                                            <div className='d-flex gap-3 align-items-center'>
-                                                <Image
-                                                    src="/assets/images/apollo.png"
-                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                    alt="logo"
-                                                    width={32}
-                                                    height={32}
-                                                />
-                                                <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
-                                                <p className='mb-0 fs-12 text-warning ms-auto'>Live Until Feb 08, 2024</p>
+                                        <div className="card card-hover">
+                                            <div className="card-body py-2 ps-2 pe-3">
+                                                <div className='d-flex gap-3 align-items-center'>
+                                                    <Image
+                                                        src="/assets/images/apollo.png"
+                                                        className="border object-fit-cover rounded flex-shrink-0"
+                                                        alt="logo"
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                    <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
+                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -298,7 +300,7 @@ function Homepage() {
                     </div>
                 </div> */}
             </div>
-            <EditProfileModal user={user} userProfile={userProfile}/>
+            <EditProfileModal user={user} userProfile={userProfile} />
         </>
     );
 }

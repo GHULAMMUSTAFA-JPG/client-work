@@ -9,6 +9,7 @@ import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignOffcanvas from '@/components/campaignoffcanvas';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
+import ApplyModal from '@/components/ApplyModal';
 
 
 
@@ -70,7 +71,7 @@ function DiscoverCreator() {
                                     </div>
                                     <div className='d-flex justify-content-end'>
                                         <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
-                                        <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Apply</button>
+                                        <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="modal" data-bs-target="#applyModal">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +106,7 @@ function DiscoverCreator() {
                                     </div>
                                     <div className='d-flex justify-content-end'>
                                         <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal">Detail</button>
-                                        <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Apply</button>
+                                        <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="modal" data-bs-target="#applyModal">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -326,6 +327,7 @@ function DiscoverCreator() {
             </section >
             <CampaignOffcanvas />
             <CampaignFilterModal />
+            <ApplyModal />
         </>
     );
 }

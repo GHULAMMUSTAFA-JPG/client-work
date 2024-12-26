@@ -120,7 +120,13 @@ function homepagebuyer() {
                 </div>
                 <div className="row mt-3">
                     <div className="col-md-8">
-                        <div className="card">
+                        <div className="card card-with-table">
+                            <div className="card-header p-3">
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <p className="mb-0 fw-medium fs-16">Campaigns</p>
+                                    <button className='btn btn-info btn-sm'>View All</button>
+                                </div>
+                            </div>
                             <div className="card-body p-0">
                                 <div className="table-responsive">
                                     <table className="table align-middle text-center mb-0">
@@ -134,13 +140,19 @@ function homepagebuyer() {
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
+                                                <td className='text-start'>
+                                                    {/* <div className="d-flex align-items-center">
                                                         <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
                                                         <div className="ms-2 text-start">
                                                             <p className="mb-0">Billi Ellish</p>
                                                             <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
                                                         </div>
+                                                    </div> */}
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -154,13 +166,12 @@ function homepagebuyer() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
+                                                <td className='text-start'>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -174,13 +185,12 @@ function homepagebuyer() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
+                                                <td className='text-start'>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -194,13 +204,12 @@ function homepagebuyer() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
+                                                <td className='text-start'>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -214,13 +223,12 @@ function homepagebuyer() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
+                                                <td className='text-start'>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -234,13 +242,12 @@ function homepagebuyer() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
+                                                <td className='text-start'>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -254,13 +261,12 @@ function homepagebuyer() {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
+                                                <td className='text-start'>
+                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness from SMB to Enterprise customers</a>
+                                                    <div className='d-flex align-items-center mt-1'>
+                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
+                                                        <div className="vr mx-2"></div>
+                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
                                                     </div>
                                                 </td>
                                                 <td>

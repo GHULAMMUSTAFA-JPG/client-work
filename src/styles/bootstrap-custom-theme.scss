@@ -88,9 +88,32 @@ body {
         }
     }
 
+    .card-with-table {
+        .card-header {
+            background-color: $white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .table {
+            border-radius: 0;
+        }
+    }
+
     .card {
         border-radius: 8px;
         border: 1px solid $border;
+    }
+
+    .card-hover {
+        &:hover {
+            background-color: $hover;
+            cursor: pointer;
+        }
+    }
+
+    .card-wrapper {
+        max-height: 297px;
+        overflow: auto;
     }
 
     .graphs {
@@ -439,6 +462,12 @@ body {
         padding: 0;
         width: 100%;
         font-family: 'Poppins', sans-serif;
+        line-height: 10px;
+    }
+
+    .react-calendar__navigation {
+        margin-bottom: 0;
+        height: 30px;
     }
 
     .react-calendar__tile--active {

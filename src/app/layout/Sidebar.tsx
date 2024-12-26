@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
           <div className={`d-flex flex-column sidebar`}>
             <a className="navbar-brand" href="#">
               <Image
-                src="/assets/images/logo.png"
+                src="/assets/images/synnc-logo.svg"
                 alt="logo"
                 width={100}
                 height={30}
