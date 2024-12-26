@@ -43,7 +43,6 @@ function mycreatorsbuyer() {
         setUsers(response.data?.users)
     }
 
-
     const addToCreatorList = async (list:any, user:any)  =>{
         const dto = {
             "List_Id": list?._id,
