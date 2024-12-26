@@ -52,44 +52,44 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                     </thead>
                                                     <tbody>
                                                         {data?.List_Creators?.length !== 0 ? data?.List_Creators?.map((user: any) => (
-                                                            <tr key={user._id}>
+                                                            <tr key={user?._id}>
                                                                 <td className="text-start ps-4">
                                                                     <div className="d-flex align-items-center">
-                                                                        <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                                        <span className="ms-2 text-truncate">{user.Name}</span>
+                                                                        <Image src={user?.Profile_Image} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
+                                                                        <span className="ms-2 text-truncate">{user?.Name}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div className="d-flex align-items-center justify-content-center mb-2">
-                                                                        <span className="ms-2">{user.Name}</span>
+                                                                        <span className="ms-2">@{user?.Profile_URL}</span>
                                                                     </div>
                                                                     <div className="d-flex align-items-center justify-content-center">
                                                                         <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
 
-                                                                        <span className="ms-2 text-truncate"> {user.Username}</span>
+                                                                        <span className="ms-2 text-truncate"> {user?.Username}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <p className="mb-2">Cisco</p>
+                                                                    <p className="mb-2">{user?.Current_Company}</p>
                                                                 </td>
                                                                 <td>
-                                                                    <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
+                                                                    <p className="mb-2">{user?.No_of_Followers?.toLocaleString()}</p>
                                                                     {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
                                                                 </td>
                                                                 <td>
-                                                                    <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p>
+                                                                    <p className="mb-2">{user?.No_of_Impressions?.toLocaleString()}</p>
                                                                     {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                 </td>
                                                                 <td>
-                                                                    <p className="mb-2">{user?.Post_Reach}</p>
+                                                                    <p className="mb-2">{user?.Average_Impressions}</p>
                                                                     {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                 </td>
                                                                 <td>
                                                                     {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                                    <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
+                                                                    <p className="mb-2">{user?.No_of_Engagements?.toLocaleString()}</p>
                                                                 </td>
                                                                 <td>
-                                                                    <p className="mb-2">{user.No_of_Likes.toLocaleString()}</p>
+                                                                    <p className="mb-2">{user?.Average_Engagements?.toLocaleString()}</p>
                                                                     {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                 </td>
                                                                 {/* <td className="drop-down-table">

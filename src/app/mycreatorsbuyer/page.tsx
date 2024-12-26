@@ -1,7 +1,7 @@
 
 "use client";
 
-import { fetch_dashboard_data, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList } from "@/@api";
+import { addCreatorInList, deleteListItem, fetch_dashboard_data, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList } from "@/@api";
 import CreateNewListModal from "@/components/CreateNewListModal";
 import TopCardBuyer from "@/components/TopCardBuyer";
 import ViewCreatorsModal from "@/components/ViewCreatorsModal";
@@ -20,12 +20,17 @@ function mycreatorsbuyer() {
     const [selectedId, setSelectedId] =useState<string>('')
     const [selectedIdCreators, setSelectedIdCreators] = useState<any>()
     const [selectedList, setSelectedList] = useState<any>()
+    const [rendControl,setRendControl] = useState<boolean>(false)
     // const router = useRouter()
     useEffect(() => {
         fetchData()
         fetchBuyerDiscoveryData(user?.email, setBuyerDetails)
-        getSavedList(user?.email, setBuyerList)
+       
     }, [])
+
+    useEffect(()=>{
+        getSavedList(user?.email, setBuyerList)
+    },[rendControl])
 
     useEffect(()=>{
     selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators)
@@ -34,16 +39,25 @@ function mycreatorsbuyer() {
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-        console.log(response.data)
+        // console.log(response.data)
         setUsers(response.data?.users)
     }
 
-    const actionFunction = async (action:string, list:string) =>{
+
+    const addToCreatorList = async (list:any, user:any)  =>{
+        const dto = {
+            "List_Id": list?._id,
+            "Creator_Id": user?._id
+          }
+          addCreatorInList(dto,rendControl,setRendControl)
+    }
+    const actionFunction = async (action:string, list:any) =>{
+       
         if(action =="edit"){
             setSelectedList(list)
         }
         else{
-
+            deleteListItem(list,rendControl,setRendControl)
         }
     }
     return (
@@ -116,7 +130,7 @@ function mycreatorsbuyer() {
                                                                     </td>
                                                                     <td>
                                                                         <div className="d-flex align-items-center justify-content-center mb-2">
-                                                                            <span className="ms-2">{user.Name}</span>
+                                                                            <span className="ms-2">@{user.Profile_URL}</span>
                                                                         </div>
                                                                         <div className="d-flex align-items-center justify-content-center">
                                                                             <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
@@ -167,14 +181,31 @@ function mycreatorsbuyer() {
 
                                                                                     </div>
                                                                                     <div className="card-footer p-0 bg-transparent">
-                                                                                        <li>
-                                                                                            <a className="dropdown-item p-1" href="#">
+                                                                                    <li >
+                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
                                                                                                 <Icon icon="ri:add-fill" className="me-1" />New List
                                                                                                 {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
 
                                                                                             </a>
                                                                                         </li>
 
+                                                                                        {
+                                                                                            buyerList?.map((item:any, index:number)=>{
+                                                                                                return(
+                                                                                                    <li key={index} onClick={()=>{
+                                                                                                        addToCreatorList(item,user)
+                                                                                                    }}>
+                                                                                                    <a className="dropdown-item p-1">
+                                                                                                        <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                        {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+        
+                                                                                                    </a>
+                                                                                                </li>
+        
+                                                                                                )
+                                                                                            })
+                                                                                        }
+                                                                                       
                                                                                     </div>
                                                                                 </div>
                                                                                 {/* <li>
@@ -493,7 +524,7 @@ function mycreatorsbuyer() {
                                                                     </td>
                                                                     <td>
                                                                         <div className="d-flex align-items-center justify-content-center mb-2">
-                                                                            <span className="ms-2">{user.Name}</span>
+                                                                            <span className="ms-2">@{user.Profile_URL}</span>
                                                                         </div>
                                                                         <div className="d-flex align-items-center justify-content-center">
                                                                             <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
@@ -535,20 +566,41 @@ function mycreatorsbuyer() {
                                                                                         {
                                                                                             buyersDetails?.Skills?.map((skill: string, index: number) => {
                                                                                                 return (
-                                                                                                    <li key={index}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
+                                                                                                    <li key={index} onClick={()=>{
+                                                                                                      
+                                                                                                    }}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
                                                                                                 )
                                                                                             })
                                                                                         }
 
                                                                                     </div>
                                                                                     <div className="card-footer p-0 bg-transparent">
-                                                                                        <li>
-                                                                                            <a className="dropdown-item p-1" href="#">
+                                                                                        <li >
+                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
                                                                                                 <Icon icon="ri:add-fill" className="me-1" />New List
                                                                                                 {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
 
                                                                                             </a>
                                                                                         </li>
+
+                                                                                      
+
+                                                                                        {
+                                                                                            buyerList?.map((item:any, index:number)=>{
+                                                                                                return(
+                                                                                                    <li key={index} onClick={()=>{
+                                                                                                        addToCreatorList(item,user)
+                                                                                                    }}>
+                                                                                                    <a className="dropdown-item p-1">
+                                                                                                        <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                        {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+        
+                                                                                                    </a>
+                                                                                                </li>
+        
+                                                                                                )
+                                                                                            })
+                                                                                        }
 
                                                                                     </div>
                                                                                 </div>
@@ -841,7 +893,11 @@ function mycreatorsbuyer() {
                                     <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
                                         <div className="row">
                                             <div className="col-12 mb-2 text-end">
-                                                <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal"><Icon icon="ri:add-fill" /> Create New List</button>
+                                                <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal" onClick={()=>{
+                                                       setSelectedList(undefined)
+                                                }}><Icon icon="ri:add-fill" onClick={()=>{
+                                                    setSelectedList(undefined)
+                                                }} /> Create New List</button>
                                             </div>
                                             {
                                                 buyerList?.map((entry: any, index: number) => {
@@ -885,7 +941,7 @@ function mycreatorsbuyer() {
                     </div>
                 </div>
             </div>
-            <CreateNewListModal data={selectedList} />
+            <CreateNewListModal data={selectedList} setRendControl={setRendControl} rendControl={rendControl} />
             <ViewCreatorsModal data={selectedIdCreators} />
         </>
 
