@@ -66,11 +66,11 @@ function Homepage() {
                                     <div className='flex-grow-1'>
                                         <div className='d-flex align-items-center'>
                                             <p className='mb-0 fw-medium fs-16'>{userProfile?.Name}</p>
-                                            <Icon icon="emojione:flag-for-united-states" width={16} height={16} className='ms-2' />
-                                            <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-2' />
+                                            <img src={`https://flagcdn.com/24x18/${userProfile?.Country_Code}.png`} width={20} height={15} className="me-2"></img>
+                           <a href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}><Icon style={{cursor:"pointer"}} icon="mdi:linkedin" width={18} height={18} className='text-info ms-2' /></a>
                                         </div>
                                         <div className="d-flex gap-2 align-items-center">
-                                            <p className='mb-0 fs-12 text-warning'>{userProfile?.Email}</p>
+                                            <p className='mb-0 fs-12 text-warning'>@{userProfile?.Profile_URL}</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
                                             <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">{userProfile?.No_of_Followers} </span> followers</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>

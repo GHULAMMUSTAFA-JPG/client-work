@@ -11,7 +11,8 @@ import ProfileCard from '@/components/profilecard';
 
 
 
-function CampaignFilterModal() {
+function CampaignFilterModal(props:any) {
+    const {selectedCampaign} = props
 
     return (
         <>
@@ -171,11 +172,11 @@ function CampaignFilterModal() {
                             </div> */}
                             <div className='d-flex gap-3'>
                                 <div>
-                                    <p className='fw-medium mb-2 fs-18'>Apollo | Join our Creator Program</p>
-                                    <p className='text-warning'>We are growing our wordclass B2B creator program at Apollo. We are looking to partner with great GTM focused creators.</p>
+                                    <p className='fw-medium mb-2 fs-18'>{selectedCampaign?.Headline}</p>
+                                    <p className='text-warning'>{selectedCampaign?.Brief_Description}</p>
                                 </div>
                                 <Image
-                                    src="/assets/images/apollo.png"
+                                    src={selectedCampaign?.Company_Logo}
                                     className="border object-fit-cover rounded flex-shrink-0"
                                     alt="logo"
                                     width={110}
@@ -185,14 +186,14 @@ function CampaignFilterModal() {
                             </div>
                             <div className='d-flex gap-2 align-items-center mb-2'>
                                 <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
-                                <p className='mb-0'>Customer Success, Sales, Marketing</p>
+                                <p className='mb-0'>{selectedCampaign?.Target_Audience}</p>
                             </div>
                             <div className='d-flex gap-2 align-items-center mb-3'>
                                 <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
-                                <p className='mb-0'>LinkedIn Posts, Newsletters, Podcasts, Event Speakers</p>
+                                <p className='mb-0'>{selectedCampaign?.Campaign_Required_Channels}</p>
                             </div>
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
-                            <p className='text-warning mb-0'>This is a general application to show that you are interested in partnering with our brand. We are interested in partnering with creators we believe can elevate our brand and raise awareness for upcoming product launches, events, and general marketing activities.</p>
+                            <p className='text-warning mb-0'>{selectedCampaign?.Campaign_Details}</p>
                         </div>
                         {/* <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>

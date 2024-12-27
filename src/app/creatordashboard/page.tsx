@@ -78,7 +78,7 @@ function CreatorDashboard() {
                                                     </td>
                                                     <td>
                                                         <div className="d-flex align-items-center justify-content-center mb-2">
-                                                            <span className="ms-2">{user?.Name}</span>
+                                                            <span className="ms-2">@{user?.Profile_URL}</span>
                                                         </div>
                                                         <div className="d-flex align-items-center justify-content-center">
                                                             <Icon icon="mdi:linkedin" width={22} height={22} className="text-info"/>

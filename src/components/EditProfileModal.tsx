@@ -96,7 +96,7 @@ function EditProfileModal(props: EditProfileModalProps) {
                                         />
                                     </div>
                                     <div className="mb-3">
-                                        <label className="form-label">Headline</label>
+                                        <label className="form-label">LinkedIn Username</label>
                                         <input
                                             type="text"
                                             className="form-control"

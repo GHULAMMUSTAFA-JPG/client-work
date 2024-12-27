@@ -207,3 +207,16 @@ export const deleteCampaign = async (id: string, rendControl: boolean, setRendCo
 }
 
 
+export const getDiscoverCampaigns = async (setData:any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/public_campaigns`)
+        setData(response?.data?.campaigns)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+
