@@ -17,24 +17,24 @@ function mycreatorsbuyer() {
     const [users, setUsers] = useState<any[]>([]);
     const [buyersDetails, setBuyerDetails] = useState<any>()
     const [buyerList, setBuyerList] = useState<any>()
-    const [selectedId, setSelectedId] =useState<string>('')
+    const [selectedId, setSelectedId] = useState<string>('')
     const [selectedIdCreators, setSelectedIdCreators] = useState<any>()
     const [selectedList, setSelectedList] = useState<any>()
-    const [rendControl,setRendControl] = useState<boolean>(false)
+    const [rendControl, setRendControl] = useState<boolean>(false)
     // const router = useRouter()
     useEffect(() => {
         fetchData()
         fetchBuyerDiscoveryData(user?.email, setBuyerDetails)
-       
+
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         getSavedList(user?.email, setBuyerList)
-    },[rendControl])
+    }, [rendControl])
 
-    useEffect(()=>{
-    selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators)
-    },[selectedId])
+    useEffect(() => {
+        selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators)
+    }, [selectedId, rendControl])
 
 
     const fetchData = async () => {
@@ -43,20 +43,20 @@ function mycreatorsbuyer() {
         setUsers(response.data?.users)
     }
 
-    const addToCreatorList = async (list:any, user:any)  =>{
+    const addToCreatorList = async (list: any, user: any) => {
         const dto = {
             "List_Id": list?._id,
             "Creator_Id": user?._id
-          }
-          addCreatorInList(dto,rendControl,setRendControl)
+        }
+        addCreatorInList(dto, rendControl, setRendControl)
     }
-    const actionFunction = async (action:string, list:any) =>{
-       
-        if(action =="edit"){
+    const actionFunction = async (action: string, list: any) => {
+
+        if (action == "edit") {
             setSelectedList(list)
         }
-        else{
-            deleteListItem(list,rendControl,setRendControl)
+        else {
+            deleteListItem(list, rendControl, setRendControl)
         }
     }
     return (
@@ -107,14 +107,14 @@ function mycreatorsbuyer() {
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col" className="text-start ps-4">Creators</th>
-                                                                <th scope="col">Social Platform</th>
+                                                                <th scope="col">Profile_URL</th>
                                                                 <th scope="col">Company</th>
                                                                 <th scope="col">Followers</th>
                                                                 <th scope="col">Impressions</th>
                                                                 <th scope="col">Average Impressions</th>
                                                                 <th scope="col">Engagements</th>
                                                                 <th scope="col">Average Engagements</th>
-                                                                <th scope="col"></th>
+                                                                <th scope="col">Actions</th>
                                                                 {/* <th scope="col">Social Media Value</th> */}
                                                             </tr>
                                                         </thead>
@@ -180,7 +180,7 @@ function mycreatorsbuyer() {
 
                                                                                     </div>
                                                                                     <div className="card-footer p-0 bg-transparent">
-                                                                                    <li >
+                                                                                        <li >
                                                                                             <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
                                                                                                 <Icon icon="ri:add-fill" className="me-1" />New List
                                                                                                 {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
@@ -189,22 +189,22 @@ function mycreatorsbuyer() {
                                                                                         </li>
 
                                                                                         {
-                                                                                            buyerList?.map((item:any, index:number)=>{
-                                                                                                return(
-                                                                                                    <li key={index} onClick={()=>{
-                                                                                                        addToCreatorList(item,user)
+                                                                                            buyerList?.map((item: any, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
+                                                                                                        addToCreatorList(item, user)
                                                                                                     }}>
-                                                                                                    <a className="dropdown-item p-1">
-                                                                                                        <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
-                                                                                                        {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-        
-                                                                                                    </a>
-                                                                                                </li>
-        
+                                                                                                        <a className="dropdown-item p-1">
+                                                                                                            <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                                        </a>
+                                                                                                    </li>
+
                                                                                                 )
                                                                                             })
                                                                                         }
-                                                                                       
+
                                                                                     </div>
                                                                                 </div>
                                                                                 {/* <li>
@@ -501,14 +501,14 @@ function mycreatorsbuyer() {
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col" className="text-start ps-4">Creators</th>
-                                                                <th scope="col">Social Platform</th>
+                                                                <th scope="col">Profile_URL</th>
                                                                 <th scope="col">Company </th>
                                                                 <th scope="col">Followers</th>
                                                                 <th scope="col">Impressions</th>
                                                                 <th scope="col">Average Impressions</th>
                                                                 <th scope="col">Engagements</th>
                                                                 <th scope="col">Average Engagements</th>
-                                                                <th scope="col"></th>
+                                                                <th scope="col">Actions</th>
                                                                 {/* <th scope="col">Social Media Value</th> */}
                                                             </tr>
                                                         </thead>
@@ -565,8 +565,8 @@ function mycreatorsbuyer() {
                                                                                         {
                                                                                             buyersDetails?.Skills?.map((skill: string, index: number) => {
                                                                                                 return (
-                                                                                                    <li key={index} onClick={()=>{
-                                                                                                      
+                                                                                                    <li key={index} onClick={() => {
+
                                                                                                     }}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
                                                                                                 )
                                                                                             })
@@ -582,21 +582,21 @@ function mycreatorsbuyer() {
                                                                                             </a>
                                                                                         </li>
 
-                                                                                      
+
 
                                                                                         {
-                                                                                            buyerList?.map((item:any, index:number)=>{
-                                                                                                return(
-                                                                                                    <li key={index} onClick={()=>{
-                                                                                                        addToCreatorList(item,user)
+                                                                                            buyerList?.map((item: any, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
+                                                                                                        addToCreatorList(item, user)
                                                                                                     }}>
-                                                                                                    <a className="dropdown-item p-1">
-                                                                                                        <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
-                                                                                                        {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-        
-                                                                                                    </a>
-                                                                                                </li>
-        
+                                                                                                        <a className="dropdown-item p-1">
+                                                                                                            <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                                        </a>
+                                                                                                    </li>
+
                                                                                                 )
                                                                                             })
                                                                                         }
@@ -892,15 +892,15 @@ function mycreatorsbuyer() {
                                     <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
                                         <div className="row">
                                             <div className="col-12 mb-2 text-end">
-                                                <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal" onClick={()=>{
-                                                       setSelectedList(undefined)
-                                                }}><Icon icon="ri:add-fill" onClick={()=>{
+                                                <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal" onClick={() => {
+                                                    setSelectedList(undefined)
+                                                }}><Icon icon="ri:add-fill" onClick={() => {
                                                     setSelectedList(undefined)
                                                 }} /> Create New List</button>
                                             </div>
                                             {
                                                 buyerList?.map((entry: any, index: number) => {
-                                                    
+
                                                     return (
                                                         <div key={index} className='col-md-4 col-xl-3' >
                                                             <div className='card'>
@@ -908,19 +908,19 @@ function mycreatorsbuyer() {
                                                                     <div className="d-flex align-items-center justify-content-between mb-4">
                                                                         <p className='mb-0 fw-medium'>{entry?.List_Name}</p>
                                                                         <div>
-                                                                            <span data-bs-toggle="modal" data-bs-target="#createNewListModal" className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit" onClick={()=>{
-                                                                                actionFunction('edit',entry)
+                                                                            <span data-bs-toggle="modal" data-bs-target="#createNewListModal" className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit" onClick={() => {
+                                                                                actionFunction('edit', entry)
                                                                             }}>
                                                                                 <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
                                                                             </span>
-                                                                            <span onClick={()=>{
-                                                                                actionFunction('delete',entry?._id)
+                                                                            <span onClick={() => {
+                                                                                actionFunction('delete', entry?._id)
                                                                             }} className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
                                                                                 <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal" onClick={()=>{
+                                                                    <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal" onClick={() => {
                                                                         setSelectedId(entry?._id)
                                                                     }}>View</button>
                                                                 </div>
@@ -941,7 +941,7 @@ function mycreatorsbuyer() {
                 </div>
             </div>
             <CreateNewListModal data={selectedList} setRendControl={setRendControl} rendControl={rendControl} />
-            <ViewCreatorsModal data={selectedIdCreators} />
+            <ViewCreatorsModal data={selectedIdCreators} rendControl={rendControl} setRendControl={setRendControl} />
         </>
 
     );

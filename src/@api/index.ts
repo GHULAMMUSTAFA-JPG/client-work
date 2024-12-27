@@ -140,3 +140,31 @@ export const addCreatorInList = async (dto:any, rendControl:boolean, setRendCont
         return null
     }
 }
+
+export const getCampaignsList = async (email:any, setData:any) =>{
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/get_buyer_campaigns/${email}`)
+        setData(response?.data?.campaigns || [])
+        return response
+    } catch (error) {
+        setData([])
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const getSelectedCampaignsDetails = async (campaign_id:any, setData:any) =>{
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/get_campaign_buyer_view/${campaign_id}`)
+        setData(response?.data)
+        return response
+    } catch (error) {
+        setData({})
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+
