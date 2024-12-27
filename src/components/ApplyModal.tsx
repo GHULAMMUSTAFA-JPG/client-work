@@ -193,7 +193,7 @@ function ApplyModal() {
                             </div>
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
                             <p className='text-warning mb-0'>This is a general application to show that you are interested in partnering with our brand. We are interested in partnering with creators we believe can elevate our brand and raise awareness for upcoming product launches, events, and general marketing activities.</p>
-                            <hr />
+                            <hr className='text-warning' />
                             <div className="mb-3">
                                 <label className="mb-2 fw-medium fs-16">Send a message to Apply</label>
                                 {/* <small className="text-muted d-block mb-2">We will review your application and get back to you as soon as possible.</small> */}

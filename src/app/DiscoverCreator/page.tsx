@@ -42,7 +42,7 @@ function DiscoverCreator() {
                     </div>
                     <div className='row g-2 mb-3'>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -77,7 +77,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -112,7 +112,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -147,7 +147,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -182,7 +182,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -218,7 +218,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -253,7 +253,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image
@@ -288,7 +288,7 @@ function DiscoverCreator() {
                             </div>
                         </div>
                         <div className='col-md-4'>
-                            <div className='card'>
+                            <div className='card card-hover'>
                                 <div className='card-body'>
                                     <div className='d-flex gap-2 mb-4'>
                                         <Image

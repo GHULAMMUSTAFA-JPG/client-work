@@ -15,7 +15,7 @@ const Main = ({
 
   const creatorMenuItems = [
     { label: "Dashboard", href: "/homepage", icon: "bi bi-house" },
-    { label: "Discover", href: "/DiscoverCreator", icon: "bi bi-briefcase" },
+    { label: "Discover", href: "/DiscoverCreator", icon: "bi bi-compass" },
     { label: "Campaigns", href: "/campaigns", icon: "bi bi-briefcase" },
     { label: "My Company", href: "/creatordashboard", icon: "bi bi-building" },
     // { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },  
@@ -24,11 +24,10 @@ const Main = ({
   
   const buyerMenuItems = [
     { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-house" },
-    { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-building" },
+    { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-people" },
     { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-briefcase" },
-    // { label: "Active Compaigns", href: "/active-campaigns", icon: "bi bi-megaphone" },
+    // { label: "Active Compaigns", href: "/active-campaigns", icon: "bi bi-briefcase-fill" },
     // { label: "Analytics", href: "/analyticsbuyer", icon: "bi bi-bar-chart" },
-
   ];
 
   // Determine which menu items to show based on role

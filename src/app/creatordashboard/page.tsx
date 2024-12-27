@@ -54,7 +54,7 @@ function CreatorDashboard() {
                         <div className="card">
                             <div className="card-body p-0">
                                 <div className="table-responsive">
-                                    <table className="table align-middle text-center mb-0">
+                                    <table className="table align-middle text-center mb-0 table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col" className="text-start ps-4">Creators</th>

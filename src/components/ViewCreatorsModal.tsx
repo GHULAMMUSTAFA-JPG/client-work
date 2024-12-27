@@ -385,10 +385,10 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                 </div>
                             </div>
                         </div>
-                        <div className='modal-footer'>
+                        {/* <div className='modal-footer'>
                             <button type="button" className="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" className="btn btn-info px-3">Create</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

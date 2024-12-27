@@ -103,10 +103,10 @@ body {
         }
     }
 
-    .campaign-listing-table {
-        max-height: 494px;
-        overflow: auto;
-    }
+    // .campaign-listing-table {
+    //     max-height: 494px;
+    //     overflow: auto;
+    // }
 
     .card {
         border-radius: 8px;
@@ -120,10 +120,10 @@ body {
         }
     }
 
-    .card-wrapper {
-        max-height: 297px;
-        overflow: auto;
-    }
+    // .card-wrapper {
+    //     max-height: 297px;
+    //     overflow: auto;
+    // }
 
     .graphs {
         .card {
@@ -210,7 +210,7 @@ body {
 
     .dropdown-menu {
         width: 100%;
-        left: auto;
+        left: auto !important;
         right: 0;
     }
 

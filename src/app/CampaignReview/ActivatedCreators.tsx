@@ -43,222 +43,372 @@ function ActivatedCreators({ setShowActivatedCreators }: any) {
                                 </div>
                             </div>
                         </div>
-                        <div className='d-flex overflow-auto mb-3'>
-                            <div className="card h-100 bg-info-subtle" style={{ width: '350px', marginRight: '1rem' }}>
-                                <div className="card-body py-3 px-4">
-                                    {/* Header with avatar and name */}
-                                    <div className='d-flex align-items-center mb-3'>
-                                        <div className='me-3'>
-                                            <Image
-                                                src="/assets/images/model_1.png"
-                                                className="rounded-circle"
-                                                alt="User avatar"
-                                                width={36}
-                                                height={36}
-                                            />
-                                        </div>
-                                        <div>
-                                            <div className='fw-medium'>Adam Biddlecombe</div>
-                                            <div className='text-muted d-flex align-items-center fs-12'>
-                                                <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                122.1k
+                        <div className='oveflow-wrapper'>
+                            <div className='d-flex mb-3'>
+                                <div className="card h-100 card-hover cursor bg-info-subtle" style={{ width: '350px', minWidth: '350px', marginRight: '1rem' }}>
+                                    <div className="card-body py-3 px-4">
+                                        {/* Header with avatar and name */}
+                                        <div className='d-flex align-items-center mb-3'>
+                                            <div className='me-3'>
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Stats grid */}
-                                    <div className='row g-3'>
-                                        {/* Required Posts & Waiting Approvals */}
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
-                                                        <h6 className='mb-0'>1</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>1</h6>
-                                                    </div>
+                                            <div>
+                                                <div className='fw-medium'>Adam Biddlecombe</div>
+                                                <div className='text-muted d-flex align-items-center fs-12'>
+                                                    <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
+                                                    122.1k
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Approved Posts & Rejected Posts */}
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>1</h6>
+                                        {/* Stats grid */}
+                                        <div className='row g-3'>
+                                            {/* Required Posts & Waiting Approvals */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
+                                                            <h6 className='mb-0'>1</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>0</h6>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
+                                                            <h6 className='mb-0'>1</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card h-100" style={{ width: '350px', marginRight: '1rem' }}>
-                                <div className="card-body py-3 px-4">
-                                    {/* Header with avatar and name */}
-                                    <div className='d-flex align-items-center mb-3'>
-                                        <div className='me-3'>
-                                            <Image
-                                                src="/assets/images/model_2.png"
-                                                className="rounded-circle"
-                                                alt="User avatar"
-                                                width={36}
-                                                height={36}
-                                            />
-                                        </div>
-                                        <div>
-                                            <div className='fw-medium'>Danielle Theobald</div>
-                                            <div className='text-muted d-flex align-items-center fs-12'>
-                                                <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                102.1k
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    {/* Stats grid */}
-                                    <div className='row g-3'>
-                                        {/* Required Posts & Waiting Approvals */}
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
-                                                        <h6 className='mb-0'>10</h6>
+                                            {/* Approved Posts & Rejected Posts */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
+                                                            <h6 className='mb-0'>1</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>5</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Approved Posts & Rejected Posts */}
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>3</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>1</h6>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
+                                                            <h6 className='mb-0'>0</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="card h-100" style={{ width: '350px', marginRight: '1rem' }}>
-                                <div className="card-body py-3 px-4">
-                                    {/* Header with avatar and name */}
-                                    <div className='d-flex align-items-center mb-3'>
-                                        <div className='me-3'>
-                                            <Image
-                                                src="/assets/images/model_3.jpg"
-                                                className="rounded-circle"
-                                                alt="User avatar"
-                                                width={36}
-                                                height={36}
-                                            />
+                                <div className="card h-100 card-hover cursor" style={{ width: '350px', minWidth: '350px', marginRight: '1rem' }}>
+                                    <div className="card-body py-3 px-4">
+                                        {/* Header with avatar and name */}
+                                        <div className='d-flex align-items-center mb-3'>
+                                            <div className='me-3'>
+                                                <Image
+                                                    src="/assets/images/model_2.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className='fw-medium'>Danielle Theobald</div>
+                                                <div className='text-muted d-flex align-items-center fs-12'>
+                                                    <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
+                                                    102.1k
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div className='fw-medium'>Jean Kang</div>
-                                            <div className='text-muted d-flex align-items-center fs-12'>
-                                                <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                80.35k
+
+                                        {/* Stats grid */}
+                                        <div className='row g-3'>
+                                            {/* Required Posts & Waiting Approvals */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
+                                                            <h6 className='mb-0'>10</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
+                                                            <h6 className='mb-0'>5</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Approved Posts & Rejected Posts */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
+                                                            <h6 className='mb-0'>3</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
+                                                            <h6 className='mb-0'>1</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* Stats grid */}
-                                    <div className='row g-3'>
-                                        {/* Required Posts & Waiting Approvals */}
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
-                                                        <h6 className='mb-0'>5</h6>
-                                                    </div>
-                                                </div>
+                                </div>
+                                <div className="card h-100 card-hover cursor" style={{ width: '350px', minWidth: '350px', marginRight: '1rem' }}>
+                                    <div className="card-body py-3 px-4">
+                                        {/* Header with avatar and name */}
+                                        <div className='d-flex align-items-center mb-3'>
+                                            <div className='me-3'>
+                                                <Image
+                                                    src="/assets/images/model_3.jpg"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
                                             </div>
-                                        </div>
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>7</h6>
-                                                    </div>
+                                            <div>
+                                                <div className='fw-medium'>Jean Kang</div>
+                                                <div className='text-muted d-flex align-items-center fs-12'>
+                                                    <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
+                                                    80.35k
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Approved Posts & Rejected Posts */}
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>4</h6>
+                                        {/* Stats grid */}
+                                        <div className='row g-3'>
+                                            {/* Required Posts & Waiting Approvals */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
+                                                            <h6 className='mb-0'>5</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
+                                                            <h6 className='mb-0'>7</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Approved Posts & Rejected Posts */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
+                                                            <h6 className='mb-0'>4</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
+                                                            <h6 className='mb-0'>3</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='col-6'>
-                                            <div className='d-flex flex-column'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>3</h6>
+                                    </div>
+                                </div>
+                                <div className="card h-100 card-hover cursor" style={{ width: '350px', minWidth: '350px', marginRight: '1rem' }}>
+                                    <div className="card-body py-3 px-4">
+                                        {/* Header with avatar and name */}
+                                        <div className='d-flex align-items-center mb-3'>
+                                            <div className='me-3'>
+                                                <Image
+                                                    src="/assets/images/model_3.jpg"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className='fw-medium'>Jean Kang</div>
+                                                <div className='text-muted d-flex align-items-center fs-12'>
+                                                    <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
+                                                    80.35k
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Stats grid */}
+                                        <div className='row g-3'>
+                                            {/* Required Posts & Waiting Approvals */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
+                                                            <h6 className='mb-0'>5</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
+                                                            <h6 className='mb-0'>7</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Approved Posts & Rejected Posts */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
+                                                            <h6 className='mb-0'>4</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
+                                                            <h6 className='mb-0'>3</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card h-100 card-hover cursor" style={{ width: '350px', minWidth: '350px', marginRight: '1rem' }}>
+                                    <div className="card-body py-3 px-4">
+                                        {/* Header with avatar and name */}
+                                        <div className='d-flex align-items-center mb-3'>
+                                            <div className='me-3'>
+                                                <Image
+                                                    src="/assets/images/model_3.jpg"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className='fw-medium'>Jean Kang</div>
+                                                <div className='text-muted d-flex align-items-center fs-12'>
+                                                    <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
+                                                    80.35k
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Stats grid */}
+                                        <div className='row g-3'>
+                                            {/* Required Posts & Waiting Approvals */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:files" width={20} height={20} className='flex-shrink-0 text-dark' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Required Posts</p>
+                                                            <h6 className='mb-0'>5</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
+                                                            <h6 className='mb-0'>7</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Approved Posts & Rejected Posts */}
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
+                                                            <h6 className='mb-0'>4</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='col-6'>
+                                                <div className='d-flex flex-column'>
+                                                    <div className='d-flex align-items-center gap-2'>
+                                                        <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
+                                                        <div>
+                                                            <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
+                                                            <h6 className='mb-0'>3</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -284,107 +434,217 @@ function ActivatedCreators({ setShowActivatedCreators }: any) {
                                 Rejected Posts <span className="badge bg-light text-dark ms-1">0</span>
                             </button>
                         </div>
-                        <div className="d-flex gap-3">
+                        <div className="row g-3">
                             {/* Sustainable Fashion Card */}
-                            <div className="card" style={{ width: '350px' }}>
-                                <div className="position-relative">
-                                    <span className="badge bg-purple-subtle end-0 fw-medium m-2 p-2 position-absolute text-purple top-0">
-                                        Required
-                                    </span>
-                                    <img
-                                        src="/assets/images/daily_news_letter.jpeg"
-                                        className="card-img-top"
-                                        alt="Clothing on hangers"
-                                        style={{ height: '130px', objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className="card-body">
-                                    <div className="d-flex align-items-center gap-2 mb-2">
-                                        <div className="rounded-circle">
-                                            <Image
-                                                src="/assets/images/model_1.png"
-                                                className="rounded-circle"
-                                                alt="User avatar"
-                                                width={36}
-                                                height={36}
-                                            />
-                                        </div>
-                                        <div>
-                                            <div className="fw-medium">Adam Biddlecombe</div>
-                                            <div className="text-muted small">Dec 12, 2024</div>
-                                        </div>
+                            <div className='col-md-3'>
+                                <div className="card">
+                                    <div className="position-relative">
+                                        <span className="badge bg-purple-subtle end-0 fw-medium m-2 p-2 position-absolute text-purple top-0">
+                                            Required
+                                        </span>
+                                        <img
+                                            src="/assets/images/daily_news_letter.jpeg"
+                                            className="card-img-top"
+                                            alt="Clothing on hangers"
+                                            style={{ height: '130px', objectFit: 'cover' }}
+                                        />
                                     </div>
-                                    <h5 className="card-title fs-16">Mindstream News Letter Post</h5>
-                                    <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                            <div className="rounded-circle">
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="fw-medium">Adam Biddlecombe</div>
+                                                <div className="text-muted small">Dec 12, 2024</div>
+                                            </div>
+                                        </div>
+                                        <h5 className="card-title fs-16">Mindstream News Letter Post</h5>
+                                        <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    </div>
                                 </div>
                             </div>
-
                             {/* Urban Photography Card */}
-                            <div className="card" style={{ width: '350px' }}>
-                                <div className="position-relative">
-                                    <span className="position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle">
-                                        Approved
-                                    </span>
-                                    <img
-                                        src="/assets/images/chatgpt_guide.jpeg"
-                                        className="card-img-top"
-                                        alt="City skyline at sunset"
-                                        style={{ height: '130px', objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className="card-body">
-                                    <div className="d-flex align-items-center gap-2 mb-2">
-                                        <div className="rounded-circle">
-                                            <Image
-                                                src="/assets/images/model_1.png"
-                                                className="rounded-circle"
-                                                alt="User avatar"
-                                                width={36}
-                                                height={36}
-                                            />
-                                        </div>
-                                        <div>
-                                            <div className="fw-medium">Adam Biddlecombe</div>
-                                            <div className="text-muted small">Dec 12, 2024</div>
-                                        </div>
+                            <div className='col-md-3'>
+                                <div className="card">
+                                    <div className="position-relative">
+                                        <span className="position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle">
+                                            Approved
+                                        </span>
+                                        <img
+                                            src="/assets/images/chatgpt_guide.jpeg"
+                                            className="card-img-top"
+                                            alt="City skyline at sunset"
+                                            style={{ height: '130px', objectFit: 'cover' }}
+                                        />
                                     </div>
-                                    <h5 className="card-title fs-16">Ultimate Guide Post
-                                    </h5>
-                                    <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                            <div className="rounded-circle">
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="fw-medium">Adam Biddlecombe</div>
+                                                <div className="text-muted small">Dec 12, 2024</div>
+                                            </div>
+                                        </div>
+                                        <h5 className="card-title fs-16">Ultimate Guide Post
+                                        </h5>
+                                        <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    </div>
                                 </div>
                             </div>
-
                             {/* Healthy Cooking Card */}
-                            <div className="card" style={{ width: '350px' }}>
-                                <div className="position-relative">
-                                    <span className="position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle">
-                                        Pending Approval
-                                    </span>
-                                    <img
-                                        src="/assets/images/chatgpt_cheat_sheet.jpeg"
-                                        className="card-img-top"
-                                        alt="Fresh cooking ingredients on wooden board"
-                                        style={{ height: '130px', objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div className="card-body">
-                                    <div className="d-flex align-items-center gap-2 mb-2">
-                                        <div className="rounded-circle">
-                                            <Image
-                                                src="/assets/images/model_1.png"
-                                                className="rounded-circle"
-                                                alt="User avatar"
-                                                width={36}
-                                                height={36}
-                                            />
-                                        </div>
-                                        <div>
-                                            <div className="fw-medium">Adam Biddlecombe</div>
-                                            <div className="text-muted small">Dec 12, 2024</div>
-                                        </div>
+                            <div className='col-md-3'>
+                                <div className="card">
+                                    <div className="position-relative">
+                                        <span className="position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle">
+                                            Pending Approval
+                                        </span>
+                                        <img
+                                            src="/assets/images/chatgpt_cheat_sheet.jpeg"
+                                            className="card-img-top"
+                                            alt="Fresh cooking ingredients on wooden board"
+                                            style={{ height: '130px', objectFit: 'cover' }}
+                                        />
                                     </div>
-                                    <h5 className="card-title fs-16">Ultimate Cheatsheet Post</h5>
-                                    <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                            <div className="rounded-circle">
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="fw-medium">Adam Biddlecombe</div>
+                                                <div className="text-muted small">Dec 12, 2024</div>
+                                            </div>
+                                        </div>
+                                        <h5 className="card-title fs-16">Ultimate Cheatsheet Post</h5>
+                                        <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Healthy Cooking Card */}
+                            <div className='col-md-3'>
+                                <div className="card">
+                                    <div className="position-relative">
+                                        <span className="position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle">
+                                            Pending Approval
+                                        </span>
+                                        <img
+                                            src="/assets/images/chatgpt_cheat_sheet.jpeg"
+                                            className="card-img-top"
+                                            alt="Fresh cooking ingredients on wooden board"
+                                            style={{ height: '130px', objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                            <div className="rounded-circle">
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="fw-medium">Adam Biddlecombe</div>
+                                                <div className="text-muted small">Dec 12, 2024</div>
+                                            </div>
+                                        </div>
+                                        <h5 className="card-title fs-16">Ultimate Cheatsheet Post</h5>
+                                        <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Sustainable Fashion Card */}
+                            <div className='col-md-3'>
+                                <div className="card">
+                                    <div className="position-relative">
+                                        <span className="badge bg-purple-subtle end-0 fw-medium m-2 p-2 position-absolute text-purple top-0">
+                                            Required
+                                        </span>
+                                        <img
+                                            src="/assets/images/daily_news_letter.jpeg"
+                                            className="card-img-top"
+                                            alt="Clothing on hangers"
+                                            style={{ height: '130px', objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                            <div className="rounded-circle">
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="fw-medium">Adam Biddlecombe</div>
+                                                <div className="text-muted small">Dec 12, 2024</div>
+                                            </div>
+                                        </div>
+                                        <h5 className="card-title fs-16">Mindstream News Letter Post</h5>
+                                        <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* Urban Photography Card */}
+                            <div className='col-md-3'>
+                                <div className="card">
+                                    <div className="position-relative">
+                                        <span className="position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle">
+                                            Approved
+                                        </span>
+                                        <img
+                                            src="/assets/images/chatgpt_guide.jpeg"
+                                            className="card-img-top"
+                                            alt="City skyline at sunset"
+                                            style={{ height: '130px', objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                            <div className="rounded-circle">
+                                                <Image
+                                                    src="/assets/images/model_1.png"
+                                                    className="rounded-circle"
+                                                    alt="User avatar"
+                                                    width={36}
+                                                    height={36}
+                                                />
+                                            </div>
+                                            <div>
+                                                <div className="fw-medium">Adam Biddlecombe</div>
+                                                <div className="text-muted small">Dec 12, 2024</div>
+                                            </div>
+                                        </div>
+                                        <h5 className="card-title fs-16">Ultimate Guide Post
+                                        </h5>
+                                        <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
