@@ -1,4 +1,3 @@
-
 "use client";
 
 import { addCreatorInList, deleteListItem, fetch_dashboard_data, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList } from "@/@api";
@@ -12,6 +11,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+
 function mycreatorsbuyer() {
     const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
@@ -34,7 +34,7 @@ function mycreatorsbuyer() {
 
     useEffect(() => {
         selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators)
-    }, [selectedId])
+    }, [selectedId, rendControl])
 
 
     const fetchData = async () => {
@@ -96,852 +96,298 @@ function mycreatorsbuyer() {
                             </li>
                         </ul>
                         {/* <hr className="" /> */}
-
-                        <div className="tab-content " id="myTabContent">
-                            <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex={0}>
-                                <div className="card">
-                                    <div className="card-body p-0">
-                                        <div className="table-responsive">
-                                            <table className="table align-middle text-center mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" className="text-start ps-4">Creators</th>
-                                                        <th scope="col">Social Platform</th>
-                                                        <th scope="col">Company</th>
-                                                        <th scope="col">Followers</th>
-                                                        <th scope="col">Impressions</th>
-                                                        <th scope="col">Average Impressions</th>
-                                                        <th scope="col">Engagements</th>
-                                                        <th scope="col">Average Engagements</th>
-                                                        <th scope="col"></th>
-                                                        {/* <th scope="col">Social Media Value</th> */}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {buyersDetails?.Internal_Creators !== 0 && buyersDetails?.Internal_Creators?.map((user: any) => (
-                                                        <tr key={user._id}>
-                                                            <td className="text-start ps-4">
-                                                                <div className="d-flex align-items-center">
-                                                                    <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                                    <span className="ms-2 text-truncate">{user.Name}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex align-items-center justify-content-center mb-2">
-                                                                    <span className="ms-2">@{user.Profile_URL}</span>
-                                                                </div>
-                                                                <div className="d-flex align-items-center justify-content-center">
-                                                                    <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
-
-                                                                    <span className="ms-2 text-truncate"> {user.Username}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user?.Current_Company}</p>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user?.Average_Impressions}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td>
-                                                                {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                                <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user.Average_Engagements.toLocaleString()}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td className="drop-down-table">
-                                                                <div className="dropdown">
-                                                                    <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
-                                                                    </button>
-                                                                    <ul className="dropdown-menu p-0">
-                                                                        <div className="card">
-                                                                            <div className="card-body p-0 scroll">
-                                                                                {
-                                                                                    user?.Skills?.map((skill: string, index: number) => {
-                                                                                        return (
-                                                                                            <li key={index}><a className="dropdown-item p-1" href="#"><span className="ms-1">{skill}</span></a></li>
-
-                                                                                        )
-                                                                                    })
-                                                                                }
-
-
-                                                                            </div>
-                                                                            <div className="card-footer p-0 bg-transparent">
-                                                                                <li >
-                                                                                    <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
-                                                                                        <Icon icon="ri:add-fill" className="me-1" />New List
-                                                                                        {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                    </a>
-                                                                                </li>
-
-                                                                                {
-                                                                                    buyerList?.map((item: any, index: number) => {
-                                                                                        return (
-                                                                                            <li key={index} onClick={() => {
-                                                                                                addToCreatorList(item, user)
-                                                                                            }}>
-                                                                                                <a className="dropdown-item p-1">
-                                                                                                    <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
-                                                                                                    {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                                </a>
-                                                                                            </li>
-
-                                                                                        )
-                                                                                    })
-                                                                                }
-
-                                                                            </div>
+                        <div className='row'>
+                            <div className='col-12 mb-2'>
+                                <div className="tab-content " id="myTabContent">
+                                    <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex={0}>
+                                        <div className="card">
+                                            <div className="card-body p-0">
+                                                <div className="table-responsive">
+                                                    <table className="table align-middle text-center mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" className="text-start ps-4">Creators</th>
+                                                                <th scope="col">Profile_URL</th>
+                                                                <th scope="col">Company</th>
+                                                                <th scope="col">Followers</th>
+                                                                <th scope="col">Impressions</th>
+                                                                <th scope="col">Average Impressions</th>
+                                                                <th scope="col">Engagements</th>
+                                                                <th scope="col">Average Engagements</th>
+                                                                <th scope="col">Actions</th>
+                                                                {/* <th scope="col">Social Media Value</th> */}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {buyersDetails?.Internal_Creators !== 0 && buyersDetails?.Internal_Creators?.map((user: any) => (
+                                                                <tr key={user._id}>
+                                                                    <td className="text-start ps-4">
+                                                                        <div className="d-flex align-items-center">
+                                                                            <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
+                                                                            <span className="ms-2 text-truncate">{user.Name}</span>
                                                                         </div>
-                                                                        {/* <li>
-                                                                                    <a className="dropdown-item px-1" href="#">
+                                                                    </td>
+                                                                    <td>
+                                                                        <div className="d-flex align-items-center justify-content-center mb-2">
+                                                                            <span className="ms-2">@{user.Profile_URL}</span>
+                                                                        </div>
+                                                                        <div className="d-flex align-items-center justify-content-center">
+                                                                            <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
 
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">List</option>
-                                                                                            <option value="1">Blockchain</option>
-                                                                                            <option value="2">Artificial Intelligence</option>
-                                                                                            <option value="3">UI/UX</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                               
-                                                                                </li>
-                                                                                <li className="mb-3">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">Compaign</option>
-                                                                                            <option value="1">Post about my brand</option>
-                                                                                            <option value="2">Brand awareness</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li className="border-top">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <button type="button" className="btn btn-outline-light btn-sm w-100 text-dark d-flex justify-content-between align-items-center">New List <Icon icon="ri:add-fill" /> </button>
-                                                                                    </a>
+                                                                            <span className="ms-2 text-truncate"> {user.Username}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user?.Current_Company}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user?.Average_Impressions}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td>
+                                                                        {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
+                                                                        <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user.Average_Engagements.toLocaleString()}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td className="drop-down-table">
+                                                                        <div className="dropdown">
+                                                                            <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
+                                                                            </button>
+                                                                            <ul className="dropdown-menu p-0">
+                                                                                <div className="card">
+                                                                                    <div className="card-body p-0 scroll">
+                                                                                        {
+                                                                                            user?.Skills?.map((skill: string, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index}><a className="dropdown-item p-1" href="#"><span className="ms-1">{skill}</span></a></li>
 
-                                                                                </li> */}
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                            {/* <td>
-                                                        <p className="mb-2">-</p> Replace with dynamic value if available
-                                                        <p className="mb-0">$1.4k</p> Replace with dynamic value if available
-                                                    </td> */}
-                                                        </tr>
-                                                    ))}
-                                                    {/* <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr> */}
-                                                </tbody>
-                                            </table>
+                                                                                                )
+                                                                                            })
+                                                                                        }
+
+
+                                                                                    </div>
+                                                                                    <div className="card-footer p-0 bg-transparent">
+                                                                                        <li >
+                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
+                                                                                                <Icon icon="ri:add-fill" className="me-1" />New List
+                                                                                                {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                            </a>
+                                                                                        </li>
+
+                                                                                        {
+                                                                                            buyerList?.map((item: any, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
+                                                                                                        addToCreatorList(item, user)
+                                                                                                    }}>
+                                                                                                        <a className="dropdown-item p-1">
+                                                                                                            <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                                        </a>
+                                                                                                    </li>
+
+                                                                                                )
+                                                                                            })
+                                                                                        }
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex={0}>
-                                <div className="card">
-                                    <div className="card-body p-0">
-                                        <div className="table-responsive">
-                                            <table className="table align-middle text-center mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col" className="text-start ps-4">Creators</th>
-                                                        <th scope="col">Social Platform</th>
-                                                        <th scope="col">Company </th>
-                                                        <th scope="col">Followers</th>
-                                                        <th scope="col">Impressions</th>
-                                                        <th scope="col">Average Impressions</th>
-                                                        <th scope="col">Engagements</th>
-                                                        <th scope="col">Average Engagements</th>
-                                                        <th scope="col"></th>
-                                                        {/* <th scope="col">Social Media Value</th> */}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {buyersDetails?.External_Creators !== 0 && buyersDetails?.External_Creators?.map((user: any) => (
-                                                        <tr key={user._id}>
-                                                            <td className="text-start ps-4">
-                                                                <div className="d-flex align-items-center">
-                                                                    <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
-                                                                    <span className="ms-2 text-truncate">{user.Name}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="d-flex align-items-center justify-content-center mb-2">
-                                                                    <span className="ms-2">@{user.Profile_URL}</span>
-                                                                </div>
-                                                                <div className="d-flex align-items-center justify-content-center">
-                                                                    <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
-
-                                                                    <span className="ms-2 text-truncate"> {user.Username}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user?.Current_Company}</p>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user?.Average_Impressions}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td>
-                                                                {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                                <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-2">{user.Average_Engagements.toLocaleString()}</p>
-                                                                {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                            </td>
-                                                            <td className="drop-down-table">
-                                                                <div className="dropdown">
-                                                                    <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
-                                                                    </button>
-                                                                    <ul className="dropdown-menu p-0">
-                                                                        <div className="card">
-                                                                            <div className="card-body p-0 scroll">
-                                                                                {
-                                                                                    buyersDetails?.Skills?.map((skill: string, index: number) => {
-                                                                                        return (
-                                                                                            <li key={index} onClick={() => {
-
-                                                                                            }}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
-                                                                                        )
-                                                                                    })
-                                                                                }
-
-                                                                            </div>
-                                                                            <div className="card-footer p-0 bg-transparent">
-                                                                                <li >
-                                                                                    <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
-                                                                                        <Icon icon="ri:add-fill" className="me-1" />New List
-                                                                                        {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                    </a>
-                                                                                </li>
-
-
-
-                                                                                {
-                                                                                    buyerList?.map((item: any, index: number) => {
-                                                                                        return (
-                                                                                            <li key={index} onClick={() => {
-                                                                                                addToCreatorList(item, user)
-                                                                                            }}>
-                                                                                                <a className="dropdown-item p-1">
-                                                                                                    <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
-                                                                                                    {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                                </a>
-                                                                                            </li>
-
-                                                                                        )
-                                                                                    })
-                                                                                }
-
-                                                                            </div>
+                                    <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex={0}>
+                                        <div className="card">
+                                            <div className="card-body p-0">
+                                                <div className="table-responsive">
+                                                    <table className="table align-middle text-center mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" className="text-start ps-4">Creators</th>
+                                                                <th scope="col">Profile_URL</th>
+                                                                <th scope="col">Company </th>
+                                                                <th scope="col">Followers</th>
+                                                                <th scope="col">Impressions</th>
+                                                                <th scope="col">Average Impressions</th>
+                                                                <th scope="col">Engagements</th>
+                                                                <th scope="col">Average Engagements</th>
+                                                                <th scope="col">Actions</th>
+                                                                {/* <th scope="col">Social Media Value</th> */}
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {buyersDetails?.External_Creators !== 0 && buyersDetails?.External_Creators?.map((user: any) => (
+                                                                <tr key={user._id}>
+                                                                    <td className="text-start ps-4">
+                                                                        <div className="d-flex align-items-center">
+                                                                            <Image src={user.Profile_Image} alt={user.Name} width={30} height={30} className="user-img img-fluid" />
+                                                                            <span className="ms-2 text-truncate">{user.Name}</span>
                                                                         </div>
-                                                                        {/* <li>
-                                                                                    <a className="dropdown-item px-1" href="#">
+                                                                    </td>
+                                                                    <td>
+                                                                        <div className="d-flex align-items-center justify-content-center mb-2">
+                                                                            <span className="ms-2">@{user.Profile_URL}</span>
+                                                                        </div>
+                                                                        <div className="d-flex align-items-center justify-content-center">
+                                                                            <Icon icon="mdi:linkedin" width={22} height={22} className="text-info" />
 
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">List</option>
-                                                                                            <option value="1">Blockchain</option>
-                                                                                            <option value="2">Artificial Intelligence</option>
-                                                                                            <option value="3">UI/UX</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                               
-                                                                                </li>
-                                                                                <li className="mb-3">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">Compaign</option>
-                                                                                            <option value="1">Post about my brand</option>
-                                                                                            <option value="2">Brand awareness</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li className="border-top">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <button type="button" className="btn btn-outline-light btn-sm w-100 text-dark d-flex justify-content-between align-items-center">New List <Icon icon="ri:add-fill" /> </button>
-                                                                                    </a>
+                                                                            <span className="ms-2 text-truncate"> {user.Username}</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user?.Current_Company}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user.No_of_Followers.toLocaleString()}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user?.Average_Impressions}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td>
+                                                                        {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
+                                                                        <p className="mb-2">{user.No_of_Engagements.toLocaleString()}</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <p className="mb-2">{user.Average_Engagements.toLocaleString()}</p>
+                                                                        {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
+                                                                    </td>
+                                                                    <td className="drop-down-table">
+                                                                        <div className="dropdown">
+                                                                            <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
+                                                                            </button>
+                                                                            <ul className="dropdown-menu p-0">
+                                                                                <div className="card">
+                                                                                    <div className="card-body p-0 scroll">
+                                                                                        {
+                                                                                            buyersDetails?.Skills?.map((skill: string, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
 
-                                                                                </li> */}
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                            {/* <td>
-                                                        <p className="mb-2">-</p> Replace with dynamic value if available
-                                                        <p className="mb-0">$1.4k</p> Replace with dynamic value if available
-                                                    </td> */}
-                                                        </tr>
-                                                    ))}
-                                                    {/* <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr> */}
-                                                </tbody>
-                                            </table>
+                                                                                                    }}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
+                                                                                                )
+                                                                                            })
+                                                                                        }
+
+                                                                                    </div>
+                                                                                    <div className="card-footer p-0 bg-transparent">
+                                                                                        <li >
+                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
+                                                                                                <Icon icon="ri:add-fill" className="me-1" />New List
+                                                                                                {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                            </a>
+                                                                                        </li>
+
+                                                                                        {
+                                                                                            buyerList?.map((item: any, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
+                                                                                                        addToCreatorList(item, user)
+                                                                                                    }}>
+                                                                                                        <a className="dropdown-item p-1">
+                                                                                                            <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                                        </a>
+                                                                                                    </li>
+
+                                                                                                )
+                                                                                            })
+                                                                                        }
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
-                                <div className="row">
-                                    <div className="col-12 mb-2 text-end">
-                                        <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal" onClick={() => {
-                                            setSelectedList(undefined)
-                                        }}><Icon icon="ri:add-fill" onClick={() => {
-                                            setSelectedList(undefined)
-                                        }} /> Create New List</button>
-                                    </div>
-                                    {
-                                        buyerList?.map((entry: any, index: number) => {
-
-                                            return (
-                                                <div key={index} className='col-md-4 col-xl-3' >
-                                                    <div className='card'>
-                                                        <div className='card-body'>
-                                                            <div className="d-flex align-items-center justify-content-between mb-4">
-                                                                <p className='mb-0 fw-medium'>{entry?.List_Name}</p>
-                                                                <div>
-                                                                    <span data-bs-toggle="modal" data-bs-target="#createNewListModal" className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit" onClick={() => {
-                                                                        actionFunction('edit', entry)
-                                                                    }}>
-                                                                        <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
-                                                                    </span>
-                                                                    <span onClick={() => {
-                                                                        actionFunction('delete', entry?._id)
-                                                                    }} className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
-                                                                        <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
-                                                                    </span>
+                                    <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
+                                        <div className="row">
+                                            <div className="col-12 mb-2 text-end">
+                                                <button type="button" className="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#createNewListModal" onClick={() => {
+                                                    setSelectedList(undefined)
+                                                }}><Icon icon="ri:add-fill" onClick={() => {
+                                                    setSelectedList(undefined)
+                                                }} /> Create New List</button>
+                                            </div>
+                                            {
+                                                buyerList?.map((entry: any, index: number) => {
+                                                    return (
+                                                        <div key={index} className='col-md-4 col-xl-3'>
+                                                            <div className='card'>
+                                                                <div className='card-body'>
+                                                                    <div className="d-flex align-items-center justify-content-between mb-4">
+                                                                        <p className='mb-0 fw-medium'>{entry?.List_Name}</p>
+                                                                        <div>
+                                                                            <span data-bs-toggle="modal" data-bs-target="#createNewListModal" className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit" onClick={() => {
+                                                                                actionFunction('edit', entry)
+                                                                            }}>
+                                                                                <Icon icon="heroicons:pencil-square" width={16} height={16} className="text-info" />
+                                                                            </span>
+                                                                            <span onClick={() => {
+                                                                                actionFunction('delete', entry?._id)
+                                                                            }} className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 cursor" title="Delete">
+                                                                                <Icon icon="heroicons:trash" width={16} height={16} className="text-danger" />
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal" onClick={() => {
+                                                                        setSelectedId(entry?._id)
+                                                                    }}>View</button>
                                                                 </div>
                                                             </div>
-                                                            <button type="button" className="btn btn-outline-info btn-sm w-100 rounded-pill" data-bs-toggle="modal" data-bs-target="#viewCreatorsModal" onClick={() => {
-                                                                setSelectedId(entry?._id)
-                                                            }}>View</button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
-
-
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <CreateNewListModal data={selectedList} setRendControl={setRendControl} rendControl={rendControl} />
-            <ViewCreatorsModal data={selectedIdCreators} />
+            <ViewCreatorsModal data={selectedIdCreators} rendControl={rendControl} setRendControl={setRendControl} />
         </>
-
     );
 }
 
-export default (mycreatorsbuyer)
+export default withAuth(mycreatorsbuyer);

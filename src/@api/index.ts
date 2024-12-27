@@ -16,7 +16,7 @@ export const fetchProfileData = async (email: string, setUserData: any) => {
 
     try {
         const response = await apiController.get(`dashboard/creators/creator_data/${email}`)
-       
+
         setUserData(response?.data)
         // return response
     } catch (error) {
@@ -93,11 +93,11 @@ export const getSpecificCreatorList = async (id: string, setData: any) => {
 }
 
 
-export const updateListName = async (dto: any, rendControl:boolean, setRendControl:any) => {
+export const updateListName = async (dto: any, rendControl: boolean, setRendControl: any) => {
     try {
         const response: any = await apiController.put("/dashboard/buyers/update_creators_list", dto)
         setRendControl(!rendControl)
-        const closebutton:any = document.getElementById('createNewlistmodalClose')
+        const closebutton: any = document.getElementById('createNewlistmodalClose')
         closebutton && closebutton?.click()
         return response
     } catch (error) {
@@ -106,11 +106,11 @@ export const updateListName = async (dto: any, rendControl:boolean, setRendContr
     }
 }
 
-export const createListName = async (dto: any, rendControl:boolean, setRendControl:any) => {
+export const createListName = async (dto: any, rendControl: boolean, setRendControl: any) => {
     try {
         const response: any = await apiController.post("/dashboard/buyers/create_new_creators_list", dto)
         setRendControl(!rendControl)
-        const closebutton:any = document.getElementById('createNewlistmodalClose')
+        const closebutton: any = document.getElementById('createNewlistmodalClose')
         closebutton && closebutton?.click()
         return response
     } catch (error) {
@@ -119,9 +119,9 @@ export const createListName = async (dto: any, rendControl:boolean, setRendContr
     }
 }
 
-export const deleteListItem =  async (id:any, rendControl:boolean, setRendControl:any) =>{
+export const deleteListItem = async (id: any, rendControl: boolean, setRendControl: any) => {
     try {
-        const response:any = await apiController.delete(`/dashboard/buyers/delete_creators_list/${id}`)
+        const response: any = await apiController.delete(`/dashboard/buyers/delete_creators_list/${id}`)
         setRendControl(!rendControl)
         return response
     } catch (error) {
@@ -130,9 +130,9 @@ export const deleteListItem =  async (id:any, rendControl:boolean, setRendContro
     }
 }
 
-export const addCreatorInList = async (dto:any, rendControl:boolean, setRendControl:any) =>{
+export const addCreatorInList = async (dto: any, rendControl: boolean, setRendControl: any) => {
     try {
-        const response:any = await apiController.post("/dashboard/buyers/add_creator_to_list", dto)
+        const response: any = await apiController.post("/dashboard/buyers/add_creator_to_list", dto)
         setRendControl(!rendControl)
         return response
     } catch (error) {
@@ -140,3 +140,70 @@ export const addCreatorInList = async (dto:any, rendControl:boolean, setRendCont
         return null
     }
 }
+
+export const getCampaignsList = async (email: any, setData: any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/get_buyer_campaigns/${email}`)
+        setData(response?.data?.campaigns || [])
+        return response
+    } catch (error) {
+        setData([])
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/get_campaign_buyer_view/${campaign_id}`)
+        setData(response?.data)
+        return response
+    } catch (error) {
+        setData({})
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any) => {
+    try {
+        const response: any = await apiController.post(`/dashboard/campaigns/create_campaign`, dto)
+        setRendControl(!rendControl)
+        const buttonClose: any = document.getElementById('createCampaignOffcanvasModal')
+        buttonClose && buttonClose.click()
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any) => {
+    try {
+        const response: any = await apiController.put(`/dashboard/campaigns/update_campaign`, dto)
+        setRendControl(!rendControl)
+        const buttonClose: any = document.getElementById('createCampaignOffcanvasModal')
+        buttonClose && buttonClose.click()
+        return response
+    } catch (error) {
+
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const deleteCampaign = async (id: string, rendControl: boolean, setRendControl: any) => {
+    try {
+        const response: any = await apiController.delete(`/dashboard/campaigns/delete_campaign/${id}`)
+        setRendControl(!rendControl)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+

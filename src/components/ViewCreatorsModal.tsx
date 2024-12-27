@@ -11,15 +11,33 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
+import { apiController } from '@/@api/baseUrl';
 interface ViewCreatorsModalProps {
     data: any
+    rendControl: boolean
+    setRendControl: any
 }
 
 function ViewCreatorsModal(props: ViewCreatorsModalProps) {
-    const { data } = props
+    const { data, rendControl, setRendControl } = props
     const [users, setUsers] = useState<any[]>([]);
     // const router = useRouter()
 
+    const deleteCreator = async (e: any) => {
+        const response: any = await apiController.delete('/dashboard/buyers/remove_creator_from_list', {
+            data: {
+                List_Id: data?._id,
+                Creator_Id: e.target.id
+            }
+        }
+        )
+        if (response?.error) {
+
+        }
+        else {
+            setRendControl(!rendControl)
+        }
+    }
     return (
         <>
             <div className="modal fade" id="viewCreatorsModal" tabIndex={-1} aria-labelledby="viewCreatorsModalLabel" aria-hidden="true">
@@ -46,7 +64,7 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                             <th scope="col">Average Impressions</th>
                                                             <th scope="col">Engagements</th>
                                                             <th scope="col">Average Engagements</th>
-                                                            <th scope="col"></th>
+                                                            <th scope="col">Actions</th>
                                                             {/* <th scope="col">Social Media Value</th> */}
                                                         </tr>
                                                     </thead>
@@ -92,6 +110,9 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                                     <p className="mb-2">{user?.Average_Engagements?.toLocaleString()}</p>
                                                                     {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                 </td>
+                                                                <td>
+                                                                    <Icon icon="heroicons:trash" width={22} height={22} id={user?._id} className="text-danger" onClick={deleteCreator} />
+                                                                </td>
                                                                 {/* <td className="drop-down-table">
                                                                     <div className="dropdown">
                                                                         <button className="btn btn-primary btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -127,11 +148,11 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                                 <p className="mb-0">$1.4k</p> Replace with dynamic value if available
                                                             </td> */}
                                                             </tr>
-                                                        ) 
-                                    
-                                                        ):
-                                                         <tr>
-                                                            <td colSpan={6}>.............No data Found............</td></tr>
+                                                        )
+
+                                                        ) :
+                                                            <tr>
+                                                                <td colSpan={6}>.............No data Found............</td></tr>
                                                         }
                                                         {/* <tr>
                                                 <td>
