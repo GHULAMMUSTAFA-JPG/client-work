@@ -390,4 +390,4 @@ function mycreatorsbuyer() {
     );
 }
 
-export default withAuth(mycreatorsbuyer);
+export default (mycreatorsbuyer);
