@@ -54,7 +54,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                 <div className='d-flex justify-content-between align-items-center'>
                                     <div>
                                         <div className='d-flex align-items-center gap-3 mb-1'>
-                                            <h5 className='mb-0'>{selectedCampaignDetails?.campaign?.Campaign_Details}</h5>
+                                            <h5 className='mb-0'>{selectedCampaignDetails?.campaign?.Headline}</h5>
                                             <button className='bg-primary-subtle border-0 btn btn-outline-primary btn-sm py-1 px-2 rounded-pill'>{selectedCampaignDetails?.campaign?.Is_Public ? "Public" : "Private"}</button>
                                         </div>
                                         <div className='d-flex align-items-center'>
@@ -210,7 +210,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                     All (Recent) <span className={`badge ${selectedTab == "All" ? 'bg-white' : 'bg-light'} text-dark ms-1`}>3</span>
                                 </button>
                                 {
-                                     Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any, index:number) => (
+                               selectedCampaignDetails?.campaign &&  Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any, index:number) => (
                                         <button onClick={()=>{
                                             setSelectedTab(inner_object)
                                         }} key={index} className={selectedTab == inner_object  ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm' }>
@@ -239,7 +239,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                     </thead>
                                     <tbody>
                                         {
-                                            Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
+                                        selectedCampaignDetails?.campaign &&  Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
                                                 selectedCampaignDetails?.campaign?.Campaign_Progress[inner_object]?.map((array_item: any, index: number) => (
                                                     <tr key={index} style={selectedTab=="All" ? {display:'table-row'} : selectedTab == inner_object ? {display:'table-row'} : {display:'none'}}>
                                                         <td className='w-75'>

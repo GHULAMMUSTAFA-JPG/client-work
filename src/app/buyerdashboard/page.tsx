@@ -16,22 +16,22 @@ function buyerdashboard() {
     const { user } = useAuth()
     const [campaigns, setCampaigns] = useState(true)
     const [campaignList, setCampaignList] = useState<any[]>([])
-    const [selectedCampaign, setSelectedCampaign] = useState<any>()
+    const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     const [selectedCampaignDetails, setSelectedCampaignDetails] = useState<any>()
+    const [rendControl, setRendControl] = useState<boolean>(false)
     useEffect(() => {
         getCampaignsList(user?.email, setCampaignList)
-    }, [])
+    }, [rendControl])
 
     useEffect(()=>{
-        getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails)
-        console.log(selectedCampaign)
+        selectedCampaign &&  getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails)
     },[selectedCampaign])
 
     return (
         <>
             {
                 campaigns ?
-                 <CampaignTable campaignList={campaignList} setCampaigns={setCampaigns} setSelectedCampaign={setSelectedCampaign} />
+                 <CampaignTable rendControl={rendControl} setRendControl={setRendControl} campaignList={campaignList} setCampaigns={setCampaigns} setSelectedCampaign={setSelectedCampaign} setSelectedCampaignDetails={setSelectedCampaignDetails} />
                     :
 
                     <div>
@@ -40,7 +40,7 @@ function buyerdashboard() {
             }
             <CampaignOffcanvasBuyer />
             <CampaignReviewModal />
-            <OffcanvasCreateCompaign />
+            <OffcanvasCreateCompaign data={selectedCampaignDetails} setRendControl={setRendControl} rendControl={rendControl} />
         </>
     )
 }

@@ -1,7 +1,9 @@
+import { deleteCampaign } from "@/@api"
 import { Icon } from "@iconify/react/dist/iconify.js"
 
 const CampaignTable = (props:any) =>{
-    const {campaignList, setCampaigns,setSelectedCampaign} = props
+    const {campaignList, setCampaigns,setSelectedCampaign, rendControl, setRendControl,setSelectedCampaignDetails} = props
+   
 return(
     <div>
     <section className='dashboard'>
@@ -11,7 +13,9 @@ return(
                 
                     <div className='d-flex align-items-center justify-content-between mb-3'>
                         <p className='fs-18 fw-medium mb-0'>Campaigns</p>
-                        <button className='btn btn-info btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Create new campaign</button>
+                        <button className='btn btn-info btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" onClick={()=>{
+                            setSelectedCampaignDetails(null)
+                        }}>Create new campaign</button>
                     </div>
 
                     {/* <hr /> */}
@@ -73,8 +77,13 @@ return(
                                                                     <td className='text-center'>
                                                                         <button className='bg-primary-subtle border-0 btn btn-outline-primary btn-sm px-3 rounded-pill'>{camp?.Is_Public ? "Public" : "Private"}</button>
                                                                     </td>
-                                                                    <td className='text-center' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">
-                                                                        <Icon icon="solar:pen-2-outline" width={24} height={24} className='cursor' />
+                                                                    <td className='text-center' >
+                                                                     
+                                                                    <Icon  onClick={  ()=>{setSelectedCampaign(camp)}} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" icon="solar:pen-2-outline" width={24} height={24} className='cursor' />
+                                                                    <Icon  icon="material-symbols:delete-outline-rounded" width={24} height={24} className='cursor' onClick={()=>{
+                                                                        deleteCampaign(camp?._id, rendControl, setRendControl)
+                                                                    }}/>
+                                                                        
                                                                     </td>
                                                                 </tr>
                                                             )

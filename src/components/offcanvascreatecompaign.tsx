@@ -110,24 +110,103 @@
 // ... existing imports ...
 
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useAuth } from '@/contexts/AuthContext';
+import { createCampaign, updateCampaign } from '@/@api';
+interface createCampaignDto {
+        "Is_Public": boolean,
+        "Headline": string,
+        "Budget": number,
+        "Brief_Description": string,
+        "Campaign_Details": string,
+        "Is_Ongoing": boolean,
+        "Start_Date": string,
+        "End_Date": string,
+        "Target_Audience": string,
+        "Campaign_Required_Channels": string,
+        "Campaign_Media":string,
+        "Email":string,
+        "Campaign_Id"? : string 
+}
 
 
-function OffcanvasCreateCompaign() {
+function OffcanvasCreateCompaign(props:any) {
+    const {rendControl,setRendControl, data} = props
     const [activeTab, setActiveTab] = useState('ongoing');
     const [startDate, setStartDate] = useState<any>(undefined);
     const [endDate, setEndDate] = useState<any>(undefined);
-
-    // Function to handle calendar icon click
+    const [dto, setDto] = useState<createCampaignDto>()
+    const {user} = useAuth()
+     // Function to handle calendar icon click
     const handleCalendarClick = () => {
         const startInput = document.getElementById('start-date-input');
         if (startInput) {
             startInput.focus();
         }
     };
+
+    useEffect(()=>{
+     user?.email &&   setDto((prev:any)=>{
+            return{...prev,["Email"] : user?.email }
+        })
+    },[user])
+
+    useEffect(()=>{
+        if(data) {
+            
+            const obj = mapper()
+            setDto(obj)
+        } 
+        else{
+            setDto((prev:any)=>{
+                return{...prev, "Campaign_Media" : '' , 'Is_Public' : dto?.Is_Public ? dto?.Is_Public : false}
+            })
+        }
+       
+       
+    },[data])
+
+
+    const mapper = () =>{
+        const obj = {
+            "Is_Public": data?.campaign?.Is_Public,
+            "Headline":  data?.campaign?.Headline,
+            "Budget":  data?.campaign?.Budget,
+            "Brief_Description":  data?.campaign?.Brief_Description,
+            "Campaign_Details":  data?.campaign?.Campaign_Details,
+            "Is_Ongoing":  data?.campaign?.Is_Ongoing,
+            "Start_Date":  data?.campaign?.Start_Date,
+            "End_Date":  data?.campaign?.End_Date,
+            "Target_Audience":  data?.campaign?.Target_Audience,
+            "Campaign_Required_Channels":  data?.campaign?.Campaign_Required_Channels,
+            "Campaign_Media": data?.campaign?.Campaign_Media,
+            "Email": data?.campaign?.user?.email,
+            "Campaign_Id" :  data?.campaign?._id
+        }
+        return obj
+    }
+
+    const updateDto = (e: any) => {
+
+        setDto((prev: any) => {
+          const updatedDto = { ...prev, [e.target.id]: e.target.value };
+          console.log(updatedDto, "Updated dto"); // Log the updated state here
+          return updatedDto;
+        });
+
+      }
+
+        const handleSubmit = (e:any) =>{
+        
+            e.preventDefault();
+            data ? updateCampaign(dto,rendControl,setRendControl) :
+            createCampaign(dto,rendControl,setRendControl)
+        }
+
+
     return (
         <div
             className="offcanvas offcanvas-end offcanvas-create-campaign"
@@ -137,10 +216,11 @@ function OffcanvasCreateCompaign() {
         >
             <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="offcanvasRight2Label">
-                    Create Campaign
+                   {data ? "Update Campaign" :  "Create Campaign"}
                 </h5>
                 <button
                     type="button"
+                    id="createCampaignOffcanvasModal"
                     className="btn-close"
                     data-bs-dismiss="offcanvas"
                     aria-label="Close"
@@ -159,7 +239,7 @@ function OffcanvasCreateCompaign() {
                                     <div className="d-flex align-items-center gap-2 justify-content-between">
                                         <div className="form-text">Creators can see the info below and apply to partner</div>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" role="switch" id="isPublic" />
+                                            <input  className="form-check-input" type="checkbox" role="switch" checked={dto?.Is_Public} id="Is_Public" onChange={updateDto} />
                                         </div>
                                     </div>
                                 </div>
@@ -169,8 +249,11 @@ function OffcanvasCreateCompaign() {
                                 <label className="form-label">Campaign Name *</label>
                                 <input
                                     type="text"
+                                    id='Headline'
                                     className="form-control"
+                                    value={dto?.Headline}
                                     placeholder="New Generative AI Product Launch: Agentspot"
+                                    onChange={updateDto}
                                 />
                             </div>
                             <div className="mb-3">
@@ -180,7 +263,7 @@ function OffcanvasCreateCompaign() {
                                     <select className="form-select" style={{ maxWidth: '80px' }}>
                                         <option>USD</option>
                                     </select>
-                                    <input type="number" className="form-control" placeholder="0" />
+                                    <input type="number" id="Budget" value={dto?.Budget ? dto?.Budget : 0} className="form-control" placeholder="0" onChange={updateDto} />
                                 </div>
                             </div>
                             
@@ -189,7 +272,10 @@ function OffcanvasCreateCompaign() {
                                 <textarea
                                     className="form-control"
                                     rows={3}
+                                    id='Brief_Description'
                                     placeholder="Help us launch Agentspot, an AI agent for SMBs to enterprises"
+                                    value={dto?.Brief_Description ? dto?.Brief_Description : ''}
+                                    onChange={updateDto}
                                 ></textarea>
                             </div>
 
@@ -199,6 +285,10 @@ function OffcanvasCreateCompaign() {
                                 <textarea
                                     className="form-control"
                                     rows={6}
+                                    id='Campaign_Details'
+                                    value={dto?.Campaign_Details ? dto?.Campaign_Details : ''}
+
+                                    onChange={updateDto}
                                     placeholder="We're launching a new product feature that helps brands manage business creator partnerships at scale! The cold DMs and endless back-and-forths waste countless hours, so we allow brands to book collaborations directly with you and streamline 90% of the process."
                                 ></textarea>
                             </div>
@@ -215,8 +305,15 @@ function OffcanvasCreateCompaign() {
                                         <li className="nav-item" role="presentation">
                                             <button
                                                 className={`nav-link d-flex align-items-center gap-1 ${activeTab === 'ongoing' ? 'active text-white' : ''}`}
-                                                onClick={() => setActiveTab('ongoing')}
+                                                onClick={() => {
+                                                    setActiveTab('ongoing')
+                                                    setDto((prev:any)=>{
+                                                        return{...prev,["Is_Ongoing"] : true}
+                                                    })
+                                                }}
                                                 type="button"
+                                                id='Is_Ongoing'
+
                                                 style={{ backgroundColor: activeTab === 'ongoing' ? '#15ab63' : 'transparent' }}
                                             >
                                                 <Icon icon="tabler:infinity" />
@@ -226,7 +323,11 @@ function OffcanvasCreateCompaign() {
                                         <li className="nav-item" role="presentation">
                                             <button
                                                 className={`nav-link d-flex align-items-center gap-1 ${activeTab === 'dateRange' ? 'active text-white' : ''}`}
-                                                onClick={() => setActiveTab('dateRange')}
+                                                onClick={() => {
+                                                    setDto((prev:any)=>{
+                                                        return{...prev,["Is_Ongoing"] : false}
+                                                    })
+                                                    setActiveTab('dateRange')}}
                                                 type="button"
                                                 style={{ backgroundColor: activeTab === 'dateRange' ? '#15ab63' : 'transparent' }}
                                             >
@@ -239,9 +340,11 @@ function OffcanvasCreateCompaign() {
                                     {activeTab === 'dateRange' && (
                                         <div className="input-group">
                                             <DatePicker
-                                                id="start-date-input"
+                                                id="Start_Date"
                                                 selected={startDate}
-                                                onChange={(date) => setStartDate(date)}
+                                                onChange={(date)=>setDto((prev:any)=>{
+                                                    return{...prev,["Start_Date"] : date}
+                                                })}
                                                 selectsStart
                                                 startDate={startDate}
                                                 endDate={endDate}
@@ -252,8 +355,11 @@ function OffcanvasCreateCompaign() {
                                             <span className="input-group-text">→</span>
                                             <DatePicker
                                                 selected={endDate}
-                                                onChange={(date) => setEndDate(date)}
+                                                onChange={(date)=>setDto((prev:any)=>{
+                                                    return{...prev,["End_Date"] : date}
+                                                })}
                                                 selectsEnd
+                                                id='End_Date'
                                                 startDate={startDate}
                                                 endDate={endDate}
                                                 minDate={startDate}
@@ -277,8 +383,11 @@ function OffcanvasCreateCompaign() {
                                 <label className="form-label">What type of creators and target audience? *</label>
                                 <input
                                     type="text"
+                                    onChange={updateDto}
                                     className="form-control"
+                                    value={dto?.Target_Audience ? dto?.Target_Audience : ""}
                                     placeholder="AI creators with founders and enterprise employee audiences"
+                                    id='Target_Audience'
                                 />
                             </div>
 
@@ -287,7 +396,10 @@ function OffcanvasCreateCompaign() {
                                 <input
                                     type="text"
                                     className="form-control"
+                                    id='Campaign_Required_Channels'
+                                    value={dto?.Campaign_Required_Channels? dto?.Campaign_Required_Channels : ''}
                                     placeholder="Podcasts, LinkedIn Posts, Event Speakers"
+                                    onChange={updateDto}
                                 />
                             </div>
 
@@ -299,7 +411,7 @@ function OffcanvasCreateCompaign() {
                                     <small className="text-muted">Max 10 MB</small>
                                 </div>
                                 <div className="border-dashed rounded-2 text-center bg-base size-box">
-                                    <input type="file" className="d-none" id="campaignImage" accept="image/*" />
+                                    <input type="file" className="d-none" id="Campaign_Media" accept="image/*" />
                                     <label htmlFor="campaignImage" className="cursor-pointer">
                                         <Icon icon="ph:plus-bold" className="fs-4" />
                                         {/* <div className="text-muted fs-14">Click or drag image to upload</div> */}
@@ -312,7 +424,7 @@ function OffcanvasCreateCompaign() {
             </div>
             <div className="border-top d-flex gap-3 justify-content-end p-3">
                 <button className="btn btn-outline-info" style={{ width: '120px' }}>Discard</button>
-                <button className="btn btn-info" style={{ width: '120px' }}>Publish</button>
+                <button className="btn btn-info" style={{ width: '120px' }} onClick={handleSubmit}>{data? "Update" :  "Publish"}</button>
             </div>
         </div>
     );
