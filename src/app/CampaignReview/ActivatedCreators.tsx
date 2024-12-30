@@ -14,17 +14,11 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
     const [selectedFilter, setSelectedFilter] =  useState<"All" | "Approved" | "Pending Approval" | "Rejected">('All')
     useEffect(() => {
         selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData)
-
     }, [selectedCampaign])
-
-
-
 
     useEffect(() => {
         campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
-
     }, [campaignData])
-
 
     return (
         <>
