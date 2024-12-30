@@ -1,4 +1,3 @@
-
 "use client";
 
 import { addCreatorInList, deleteListItem, fetch_dashboard_data, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList } from "@/@api";
@@ -12,6 +11,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 // import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+
 function mycreatorsbuyer() {
     const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
@@ -92,7 +92,7 @@ function mycreatorsbuyer() {
                                     <button className="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-tab-pane" type="button" role="tab" aria-controls="settings-tab-pane" aria-selected="false">Draft Campaigns</button>
                                 </li> */}
                             <li className='nav-item' role="presentation">
-                                <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> Saved List </button>
+                                <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">My List </button>
                             </li>
                         </ul>
                         {/* <hr className="" /> */}
@@ -207,286 +207,11 @@ function mycreatorsbuyer() {
 
                                                                                     </div>
                                                                                 </div>
-                                                                                {/* <li>
-                                                                                    <a className="dropdown-item px-1" href="#">
-
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">List</option>
-                                                                                            <option value="1">Blockchain</option>
-                                                                                            <option value="2">Artificial Intelligence</option>
-                                                                                            <option value="3">UI/UX</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                               
-                                                                                </li>
-                                                                                <li className="mb-3">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">Compaign</option>
-                                                                                            <option value="1">Post about my brand</option>
-                                                                                            <option value="2">Brand awareness</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li className="border-top">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <button type="button" className="btn btn-outline-light btn-sm w-100 text-dark d-flex justify-content-between align-items-center">New List <Icon icon="ri:add-fill" /> </button>
-                                                                                    </a>
-
-                                                                                </li> */}
                                                                             </ul>
                                                                         </div>
                                                                     </td>
-                                                                    {/* <td>
-                                                        <p className="mb-2">-</p> Replace with dynamic value if available
-                                                        <p className="mb-0">$1.4k</p> Replace with dynamic value if available
-                                                    </td> */}
                                                                 </tr>
                                                             ))}
-                                                            {/* <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr> */}
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -582,8 +307,6 @@ function mycreatorsbuyer() {
                                                                                             </a>
                                                                                         </li>
 
-
-
                                                                                         {
                                                                                             buyerList?.map((item: any, index: number) => {
                                                                                                 return (
@@ -603,286 +326,11 @@ function mycreatorsbuyer() {
 
                                                                                     </div>
                                                                                 </div>
-                                                                                {/* <li>
-                                                                                    <a className="dropdown-item px-1" href="#">
-
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">List</option>
-                                                                                            <option value="1">Blockchain</option>
-                                                                                            <option value="2">Artificial Intelligence</option>
-                                                                                            <option value="3">UI/UX</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                               
-                                                                                </li>
-                                                                                <li className="mb-3">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <select className="form-select fs-14" aria-label="Default select example">
-                                                                                            <option selected className="d-none">Compaign</option>
-                                                                                            <option value="1">Post about my brand</option>
-                                                                                            <option value="2">Brand awareness</option>
-                                                                                        </select>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li className="border-top">
-                                                                                    <a className="dropdown-item px-1" href="#">
-                                                                                        <button type="button" className="btn btn-outline-light btn-sm w-100 text-dark d-flex justify-content-between align-items-center">New List <Icon icon="ri:add-fill" /> </button>
-                                                                                    </a>
-
-                                                                                </li> */}
                                                                             </ul>
                                                                         </div>
                                                                     </td>
-                                                                    {/* <td>
-                                                        <p className="mb-2">-</p> Replace with dynamic value if available
-                                                        <p className="mb-0">$1.4k</p> Replace with dynamic value if available
-                                                    </td> */}
                                                                 </tr>
                                                             ))}
-                                                            {/* <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center mb-2">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="logos:youtube-icon" width={20} height={20} />
-                                                        <span className="ms-2"> Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">213,3223</p>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">103k</p>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-2">$2.2k</p>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <span className="ms-2 fw-medium">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center justify-content-center">
-                                                        <Icon icon="skill-icons:instagram" width={18} height={18} />
-                                                        <span className="ms-2">Billi Ellish</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">213,3223</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">20k</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">$1.4k</p>
-                                                </td>
-                                            </tr> */}
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -900,9 +348,8 @@ function mycreatorsbuyer() {
                                             </div>
                                             {
                                                 buyerList?.map((entry: any, index: number) => {
-
                                                     return (
-                                                        <div key={index} className='col-md-4 col-xl-3' >
+                                                        <div key={index} className='col-md-4 col-xl-3'>
                                                             <div className='card'>
                                                                 <div className='card-body'>
                                                                     <div className="d-flex align-items-center justify-content-between mb-4">
@@ -929,22 +376,18 @@ function mycreatorsbuyer() {
                                                     )
                                                 })
                                             }
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <CreateNewListModal data={selectedList} setRendControl={setRendControl} rendControl={rendControl} />
             <ViewCreatorsModal data={selectedIdCreators} rendControl={rendControl} setRendControl={setRendControl} />
         </>
-
     );
 }
 
-export default (mycreatorsbuyer)
+export default (mycreatorsbuyer);

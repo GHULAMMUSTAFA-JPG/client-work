@@ -260,25 +260,6 @@ function homepagebuyer() {
                                                     <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

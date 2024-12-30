@@ -62,7 +62,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                             <div className="vr mx-2 vr-public"></div>
                                             <p className='fs-12 text-warning mb-0'>{selectedCampaignDetails?.campaign?.Time_Ago}</p>
                                             <div className="vr mx-2 vr-public"></div>
-                                            <span>Budget: <strong>${selectedCampaignDetails?.campaign?.Budget}</strong></span>
+                                            <span>Budget: <span className='fw-medium'>${selectedCampaignDetails?.campaign?.Budget}</span></span>
                                             {/* <span className='me-3'>Public</span>     */}
                                             {/* <div className='form-check form-switch mb-0'>
                             <input className='form-check-input' type='checkbox' id='publicSwitch' checked />
