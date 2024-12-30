@@ -49,50 +49,49 @@ function DiscoverCreator() {
                     <div className='row g-2 mb-3'>
                         {
                             campaignData?.map((campaign: any, index: number) => {
-                                return(
+                                return (
                                     <div key={index} className='col-md-4'>
-                                    <div className='card'>
-                                        <div className='card-body'>
-                                            <div className='d-flex gap-2 mb-4'>
-                                                <Image
-                                                    src={campaign?.Company_Logo}
-                                                    className="border object-fit-cover rounded-circle flex-shrink-0"
-                                                    alt="logo"
-                                                    width={40}
-                                                    height={40}
-                                                />
-                                                <div className='flex-grow-1'>
-                                                    <p className='fw-medium mb-0 fs-16'>{campaign?.Headline}</p>
-                                                    <div className='d-flex align-items-center'>
-                                                        <p className='mb-0 text-warning'>{campaign?.Company_Name}</p>
-                                                        <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
-                                                        <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                        <div className='card card-hover'>
+                                            <div className='card-body'>
+                                                <div className='d-flex gap-2 mb-4'>
+                                                    <Image
+                                                        src={campaign?.Company_Logo}
+                                                        className="border object-fit-cover rounded-circle flex-shrink-0"
+                                                        alt="logo"
+                                                        width={40}
+                                                        height={40}
+                                                    />
+                                                    <div className='flex-grow-1'>
+                                                        <p className='fw-medium mb-0 fs-16'>{campaign?.Headline}</p>
+                                                        <div className='d-flex align-items-center'>
+                                                            <p className='mb-0 text-warning'>{campaign?.Company_Name}</p>
+                                                            <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
+                                                            <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-2' />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className='d-flex gap-2 align-items-center mb-2'>
-                                                <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
-                                                <p className='mb-0'>{campaign?.Target_Audience}</p>
-                                            </div>
-                                            <div className='d-flex gap-2 align-items-center mb-3'>
-                                                <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
-                                                <p className='mb-0'>{campaign?.Campaign_Required_Channels}</p>
-                                            </div>
-                                            <div className='d-flex justify-content-end'>
-                                                <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{
-                                                    setSelectedCampaign(campaign)
-                                                }}>Detail</button>
-                                                <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="modal" data-bs-target="#applyModal"
-                                                onClick={()=>{
-                                                    setSelectedCampaign(campaign)
-                                                }}
-                                                >Apply</button>
+                                                <div className='d-flex gap-2 align-items-center mb-2'>
+                                                    <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                                    <p className='mb-0'>{campaign?.Target_Audience}</p>
+                                                </div>
+                                                <div className='d-flex gap-2 align-items-center mb-3'>
+                                                    <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                                    <p className='mb-0'>{campaign?.Campaign_Required_Channels}</p>
+                                                </div>
+                                                <div className='d-flex justify-content-end'>
+                                                    <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
+                                                        setSelectedCampaign(campaign)
+                                                    }}>Detail</button>
+                                                    <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="modal" data-bs-target="#applyModal"
+                                                        onClick={() => {
+                                                            setSelectedCampaign(campaign)
+                                                        }}
+                                                    >Apply</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 )
-                               
                             })
                         }
 
@@ -101,7 +100,7 @@ function DiscoverCreator() {
                 </div>
             </section >
             <CampaignOffcanvas />
-            <CampaignFilterModal selectedCampaign={selectedCampaign}  />
+            <CampaignFilterModal selectedCampaign={selectedCampaign} />
             <ApplyModal selectedCampaign={selectedCampaign} />
         </>
     );

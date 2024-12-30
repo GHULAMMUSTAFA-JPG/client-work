@@ -51,6 +51,10 @@ body {
         background: $primary;
     }
 
+    a {
+        color: $info;
+    }
+
     ul {
         padding-left: 0;
         list-style-type: none;

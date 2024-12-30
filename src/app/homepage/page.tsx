@@ -48,12 +48,14 @@ function Homepage() {
                 </div> */}
                 <div className="row mt-3">
                     <div className="col-md-8">
-                        <div className="card">
+                        <div className="card mb-3">
                             <div className="card-body">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <p className='mb-0 fs-16 fw-medium'>Profile</p>
-                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor' data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</p>
-                                    <Icon icon="ri:edit-line" width="16" height="16" className='cursor ms-1' />
+                                    <div className="d-flex gap-2 align-items-center cursor" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                        <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p>
+                                        <Icon icon="ri:edit-line" width="16" height="16" className='cursor ms-1' />
+                                    </div>
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
                                     <Image
@@ -66,8 +68,8 @@ function Homepage() {
                                     <div className='flex-grow-1'>
                                         <div className='d-flex align-items-center'>
                                             <p className='mb-0 fw-medium fs-16'>{userProfile?.Name}</p>
-                                            <img src={`https://flagcdn.com/24x18/${userProfile?.Country_Code}.png`} width={20} height={15} className="me-2"></img>
-                           <a href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}><Icon style={{cursor:"pointer"}} icon="mdi:linkedin" width={18} height={18} className='text-info ms-2' /></a>
+                                            <img src={`https://flagcdn.com/24x18/${userProfile?.Country_Code}.png`} width={18} height={14} className="mx-2"></img>
+                                            <a href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={18} height={18} className='text-info' /></a>
                                         </div>
                                         <div className="d-flex gap-2 align-items-center">
                                             <p className='mb-0 fs-12 text-warning'>@{userProfile?.Profile_URL}</p>
@@ -102,12 +104,16 @@ function Homepage() {
                                         <p className='mb-0 fs-20 fw-medium'>{userProfile?.['S-Score']}</p>
                                     </div>
                                 </div>
-                                <div className="bg-campaigns mt-4">
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <p className='mb-0 fs-16 fw-medium'>My Campaigns</p>
-                                        <p className='mb-0 fs-12 fw-medium ms-auto cursor'>Campaigns</p>
-                                        <Icon icon="ri:arrow-right-line" width="16" height="16" className='cursor ms-1' />
-                                    </div>
+                            </div>
+                        </div>
+                        <div className="card">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-center mb-3">
+                                    <p className='mb-0 fs-16 fw-medium'>My Campaigns</p>
+                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor'>Campaigns</p>
+                                    <Icon icon="ri:arrow-right-line" width="16" height="16" className='cursor ms-1' />
+                                </div>
+                                <div className="bg-campaigns">
                                     <div className="card-wrapper">
                                         <div className="card mb-2 card-hover">
                                             <div className="card-body py-2 ps-2 pe-3">
@@ -170,21 +176,6 @@ function Homepage() {
                                             </div>
                                         </div>
                                         <div className="card mb-2 card-hover">
-                                            <div className="card-body py-2 ps-2 pe-3">
-                                                <div className='d-flex gap-3 align-items-center'>
-                                                    <Image
-                                                        src="/assets/images/apollo.png"
-                                                        className="border object-fit-cover rounded flex-shrink-0"
-                                                        alt="logo"
-                                                        width={32}
-                                                        height={32}
-                                                    />
-                                                    <p className='mb-0 fw-medium'>Apollo: Join our Creator Program</p>
-                                                    <p className='mb-0 fs-12 text-warning ms-auto'>Feb 08, 2024</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="card card-hover">
                                             <div className="card-body py-2 ps-2 pe-3">
                                                 <div className='d-flex gap-3 align-items-center'>
                                                     <Image

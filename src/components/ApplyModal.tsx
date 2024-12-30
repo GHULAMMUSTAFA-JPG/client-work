@@ -194,7 +194,7 @@ function ApplyModal(props:any) {
                             </div>
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
                             <p className='text-warning mb-0'>{selectedCampaign?.Campaign_Details}</p>
-                            <hr />
+                            <hr className='text-warning'/>
                             <div className="mb-3">
                                 <label className="mb-2 fw-medium fs-16">Send a message to Apply</label>
                                 {/* <small className="text-muted d-block mb-2">We will review your application and get back to you as soon as possible.</small> */}

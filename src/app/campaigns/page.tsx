@@ -51,7 +51,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us launch our new marketplace for IRL advertising</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -66,7 +66,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us get more visibility to our newest feature Website Visitors</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -81,7 +81,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us increase our product awareness from SMB to Enterprise customers.</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -96,7 +96,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>We are accelerating our B2B creator program at HiveGPT.</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -141,7 +141,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us launch our new marketplace for IRL advertising</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -156,7 +156,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us get more visibility to our newest feature Website Visitors</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -171,7 +171,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us increase our product awareness from SMB to Enterprise customers.</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -186,7 +186,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>We are accelerating our B2B creator program at HiveGPT.</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -231,7 +231,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us launch our new marketplace for IRL advertising</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -246,7 +246,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us get more visibility to our newest feature Website Visitors</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -261,7 +261,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>Help us increase our product awareness from SMB to Enterprise customers.</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>
@@ -276,7 +276,7 @@ function Campaigns() {
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>
                                                                         </td>
                                                                         <td>
-                                                                            <a href='#' className='fw-medium'>Senior Digital Designer for Saas Company</a>
+                                                                            <a href='#' className='fw-medium'>We are accelerating our B2B creator program at HiveGPT.</a>
                                                                         </td>
                                                                         {/* <td>
                                                                             <p className='mb-0'>General Profile</p>

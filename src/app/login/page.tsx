@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 const Login = () => {
     // const { login: authLogin, isAuthenticated } = useAuth(); // Use login function from AuthContext
@@ -61,7 +62,7 @@ const Login = () => {
             } else {
                 setLoginError("Failed to login. Please try again later.");
             }
-            
+
         }
     };
 
@@ -103,8 +104,12 @@ const Login = () => {
                                             />
                                             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                                         </div>
-                                        <button type="submit" className="btn btn-primary btn-sm w-100 mb-3" disabled={loader}>
+                                        <button type="submit" className="btn btn-info w-100 mb-3" disabled={loader}>
                                             {loader ? "Logging in..." : "Login"}
+                                        </button>
+                                        <button className='btn btn-info w-100 d-flex align-items-center justify-content-center'>
+                                            <Icon icon="mdi:linkedin" width={18} height={18} className='me-2' />
+                                            Continue with LinkedIn
                                         </button>
                                     </form>
                                 </div>

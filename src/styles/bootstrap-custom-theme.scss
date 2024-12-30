@@ -84,6 +84,12 @@ body {
 
             tr {
                 --bs-table-bg: $dark;
+
+                &:last-child {
+                    td {
+                        border: 0;
+                    }
+                }
             }
         }
     }
@@ -179,7 +185,7 @@ body {
         .form-select {
             // background-color: $base;
             // border: none;
-            font-size: 14px;
+            font-size: 12px;
         }
     }
 
@@ -316,6 +322,7 @@ body {
 
     .accordion-button:not(.collapsed) {
         color: $black;
+        background-color: $info-subtle-active;
     }
 
     .modal {

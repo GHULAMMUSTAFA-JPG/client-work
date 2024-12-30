@@ -10,7 +10,13 @@ const PostCalendar = () => {
         console.log('Selected Date:', newDate);
     };
     return (
-        <Calendar onChange={onChange} value={date} />
+        <div style={{ height: '100%' }}>
+            <Calendar 
+                onChange={onChange} 
+                value={date}
+                className="h-100"
+            />
+        </div>
     );
 };
 
