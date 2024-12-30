@@ -1,12 +1,31 @@
 // src/app/CampaignReview/ActivatedCreators.tsx
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from "@iconify/react/dist/iconify.js"
 import Image from 'next/image'
 import CreatorDetailModal from '@/components/CreatorDetailModal'
+import { getCampaignsActivatedCreators } from '@/@api'
 
-function ActivatedCreators({ setShowActivatedCreators }: any) {
+function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) {
+    const [campaignData, setCampaignData] = useState<any>({})
+    const [selectedCreator, setSelectedCreator] = useState<any>()
+    const [totalCount, setTotalCount] = useState<number>(0)
+    const [selectedFilter, setSelectedFilter] =  useState<"All" | "Approved" | "Pending Approval" | "Rejected">('All')
+    useEffect(() => {
+        selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData)
+
+    }, [selectedCampaign])
+
+
+
+
+    useEffect(() => {
+        campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
+
+    }, [campaignData])
+
+
     return (
         <>
             <section className='dashboard activated-creators'>
@@ -47,478 +66,138 @@ function ActivatedCreators({ setShowActivatedCreators }: any) {
                             </div>
                             <div className='oveflow-wrapper'>
                                 <div className='d-flex mb-3'>
-                                    <div className="card h-100 card-hover cursor bg-info-subtle" style={{ width: '450px', minWidth: '450px', marginRight: '1rem' }}>
-                                        <div className="card-body py-3 px-4">
-                                            {/* Header with avatar and name */}
-                                            <div className='d-flex align-items-center mb-3'>
-                                                <div className='me-3'>
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className='fw-medium'>Adam Biddlecombe</div>
-                                                    <div className='text-muted d-flex align-items-center fs-12'>
-                                                        <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                        122.1k
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    {
+                                        campaignData?.Activated_Creators && campaignData?.Activated_Creators?.map((creator: any, index: number) => {
+                                            return (
+                                                <div onClick={() => {
+                                                    setSelectedCreator(creator)
+                                                }} key={index} className={`card h-100 card-hover cursor ${selectedCreator?._id == creator?._id ? "bg-info-subtle" : ""}`} style={{ width: '450px', minWidth: '450px', marginRight: '1rem' }}>
+                                                    <div className="card-body py-3 px-4">
+                                                        {/* Header with avatar and name */}
+                                                        <div className='d-flex align-items-center mb-3'>
+                                                            <div className='me-3'>
+                                                                <Image
+                                                                    src={creator?.Profile_Image}
+                                                                    className="rounded-circle"
+                                                                    alt="User avatar"
+                                                                    width={36}
+                                                                    height={36}
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <div className='fw-medium'>{creator?.Name}</div>
+                                                                <div className='text-muted d-flex align-items-center fs-12'>
+                                                                    <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
+                                                                    {creator?.No_of_Followers}
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                            {/* Stats grid */}
-                                            <div className='d-flex align-items-center justify-content-between gap-3'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>1</h6>
+                                                        {/* Stats grid */}
+                                                        <div className='d-flex align-items-center justify-content-between gap-3'>
+                                                            <div className='d-flex align-items-center gap-2'>
+                                                                <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
+                                                                <div>
+                                                                    <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
+                                                                    <h6 className='mb-0'>{creator?.Posts_Stats?.["Pending Approval"]}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div className='d-flex align-items-center gap-2'>
+                                                                <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
+                                                                <div>
+                                                                    <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
+                                                                    <h6 className='mb-0'>{creator?.Posts_Stats?.Approved}</h6>
+                                                                </div>
+                                                            </div>
+                                                            <div className='d-flex align-items-center gap-2'>
+                                                                <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
+                                                                <div>
+                                                                    <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
+                                                                    <h6 className='mb-0'>{creator?.Posts_Stats?.Rejected}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>1</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>0</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card h-100 card-hover cursor" style={{ width: '450px', minWidth: '450px', marginRight: '1rem' }}>
-                                        <div className="card-body py-3 px-4">
-                                            {/* Header with avatar and name */}
-                                            <div className='d-flex align-items-center mb-3'>
-                                                <div className='me-3'>
-                                                    <Image
-                                                        src="/assets/images/model_2.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className='fw-medium'>Danielle Theobald</div>
-                                                    <div className='text-muted d-flex align-items-center fs-12'>
-                                                        <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                        102.1k
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            )
+                                        })
+                                    }
 
-                                            {/* Stats grid */}
-                                            <div className='d-flex align-items-center justify-content-between gap-3'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>5</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>3</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>1</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card h-100 card-hover cursor" style={{ width: '450px', minWidth: '450px', marginRight: '1rem' }}>
-                                        <div className="card-body py-3 px-4">
-                                            {/* Header with avatar and name */}
-                                            <div className='d-flex align-items-center mb-3'>
-                                                <div className='me-3'>
-                                                    <Image
-                                                        src="/assets/images/model_3.jpg"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className='fw-medium'>Jean Kang</div>
-                                                    <div className='text-muted d-flex align-items-center fs-12'>
-                                                        <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                        80.35k
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            {/* Stats grid */}
-                                            <div className='d-flex align-items-center justify-content-between gap-3'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>7</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>4</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>3</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card h-100 card-hover cursor" style={{ width: '450px', minWidth: '450px', marginRight: '1rem' }}>
-                                        <div className="card-body py-3 px-4">
-                                            {/* Header with avatar and name */}
-                                            <div className='d-flex align-items-center mb-3'>
-                                                <div className='me-3'>
-                                                    <Image
-                                                        src="/assets/images/model_3.jpg"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className='fw-medium'>Jean Kang</div>
-                                                    <div className='text-muted d-flex align-items-center fs-12'>
-                                                        <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                        80.35k
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Stats grid */}
-                                            <div className='d-flex align-items-center justify-content-between gap-3'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>7</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>4</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>3</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card h-100 card-hover cursor" style={{ width: '450px', minWidth: '450px', marginRight: '1rem' }}>
-                                        <div className="card-body py-3 px-4">
-                                            {/* Header with avatar and name */}
-                                            <div className='d-flex align-items-center mb-3'>
-                                                <div className='me-3'>
-                                                    <Image
-                                                        src="/assets/images/model_3.jpg"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className='fw-medium'>Jean Kang</div>
-                                                    <div className='text-muted d-flex align-items-center fs-12'>
-                                                        <Icon icon="mdi:linkedin" className='me-1 text-info' width={16} height={16} />
-                                                        80.35k
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Stats grid */}
-                                            <div className='d-flex align-items-center justify-content-between gap-3'>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:clock" width={20} height={20} className='flex-shrink-0 text-orange' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Waiting Approvals</p>
-                                                        <h6 className='mb-0'>7</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:check-circle" width={20} height={20} className='flex-shrink-0 text-primary' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Approved Posts</p>
-                                                        <h6 className='mb-0'>4</h6>
-                                                    </div>
-                                                </div>
-                                                <div className='d-flex align-items-center gap-2'>
-                                                    <Icon icon="ph:x-circle" width={20} height={20} className='flex-shrink-0 text-danger' />
-                                                    <div>
-                                                        <p className='text-muted fs-12 mb-0 nowrap'>Rejected Posts</p>
-                                                        <h6 className='mb-0'>3</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div className='d-flex gap-2 mb-3'>
-                                <button className='btn btn-info btn-sm'>
-                                    All (Recent) <span className="badge bg-white text-dark ms-1">3</span>
+                                <button className={selectedFilter=="All" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                    setSelectedFilter('All')
+                                }}>
+                                    All (Recent) <span className="badge bg-white text-dark ms-1">{selectedCreator?.Posts?.length}</span>
                                 </button>
                                 {/* <button className='btn btn-outline-light text-dark btn-sm'>
                                     Required Posts <span className="badge bg-light text-dark ms-1">1</span>
                                 </button> */}
-                                <button className='btn btn-outline-light text-dark btn-sm'>
-                                    Waiting Approvals <span className="badge bg-light text-dark ms-1">1</span>
+                                <button className={selectedFilter=="Pending Approval" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                    setSelectedFilter('Pending Approval')
+                                }}>
+                                    Waiting Approvals <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.["Pending Approval"]}</span>
                                 </button>
-                                <button className='btn btn-outline-light text-dark btn-sm'>
-                                    Approved Posts <span className="badge bg-light text-dark ms-1">1</span>
+                                <button className={selectedFilter=="Approved" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                    setSelectedFilter('Approved')
+                                }}>
+                                    Approved Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Approved}</span>
                                 </button>
-                                <button className='btn btn-outline-light text-dark btn-sm'>
-                                    Rejected Posts <span className="badge bg-light text-dark ms-1">0</span>
+                                <button className={selectedFilter=="Rejected" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                    setSelectedFilter('Rejected')
+                                }}>
+                                    Rejected Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Rejected}</span>
                                 </button>
                             </div>
                             <div className="row g-3">
-                                {/* Sustainable Fashion Card */}
-                                <div className='col-md-3'>
-                                    <div className="card">
-                                        <div className="position-relative">
-                                            <span className="badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0">
-                                                Rejected
-                                            </span>
-                                            <img
-                                                src="/assets/images/daily_news_letter.jpeg"
-                                                className="card-img-top"
-                                                alt="Clothing on hangers"
-                                                style={{ height: '130px', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center gap-2 mb-2">
-                                                <div className="rounded-circle">
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className="fw-medium">Adam Biddlecombe</div>
-                                                    <div className="text-muted small">Dec 12, 2024</div>
-                                                </div>
-                                            </div>
-                                            <h5 className="card-title fs-16">Mindstream News Letter Post</h5>
-                                            <a href="#" className="text-info text-decoration-none float-end" data-bs-toggle="modal" data-bs-target="#creatorDetailModal">View Details →</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Urban Photography Card */}
-                                <div className='col-md-3'>
-                                    <div className="card">
-                                        <div className="position-relative">
-                                            <span className="position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle">
-                                                Approved
-                                            </span>
-                                            <img
-                                                src="/assets/images/chatgpt_guide.jpeg"
-                                                className="card-img-top"
-                                                alt="City skyline at sunset"
-                                                style={{ height: '130px', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center gap-2 mb-2">
-                                                <div className="rounded-circle">
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className="fw-medium">Adam Biddlecombe</div>
-                                                    <div className="text-muted small">Dec 12, 2024</div>
+
+                                           
+                                {
+                                    selectedCreator?.Posts?.map((post: any, index: number) => {
+                                        return (
+                                            <div key={index} className='col-md-3' style={selectedFilter=="All" ? {display:'block'} : selectedFilter == post?.Status ? {display:'block'} : {display:'none'}}>
+                                                <div className="card">
+                                                    <div className="position-relative">
+                                                        <span className={post?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0" : post?.Status=="Pending Approval" ? "position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle" : "position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle"}>
+                                                            {post?.Status}
+                                                        </span>
+                                                        <img
+                                                            src={post?.Image_Content}
+                                                            className="card-img-top"
+                                                            alt="Clothing on hangers"
+                                                            style={{ height: '130px', objectFit: 'cover' }}
+                                                        />
+                                                    </div>
+                                                    <div className="card-body">
+                                                        <div className="d-flex align-items-center gap-2 mb-2">
+                                                            <div className="rounded-circle">
+                                                                <Image
+                                                                    src={selectedCreator?.Profile_Image}
+                                                                    className="rounded-circle"
+                                                                    alt="User avatar"
+                                                                    width={36}
+                                                                    height={36}
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <div className="fw-medium">{selectedCreator?.Name}</div>
+                                                                <div className="text-muted small">{post?.Submitted_At}</div>
+                                                            </div>
+                                                        </div>
+                                                        <h5 className="card-title fs-16">{post?.Post_Title} </h5>
+                                                        <a  className="text-info text-decoration-none float-end" data-bs-toggle="modal" data-bs-target="#creatorDetailModal">View Details →</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <h5 className="card-title fs-16">Ultimate Guide Post
-                                            </h5>
-                                            <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Healthy Cooking Card */}
-                                <div className='col-md-3'>
-                                    <div className="card">
-                                        <div className="position-relative">
-                                            <span className="position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle">
-                                                Pending Approval
-                                            </span>
-                                            <img
-                                                src="/assets/images/chatgpt_cheat_sheet.jpeg"
-                                                className="card-img-top"
-                                                alt="Fresh cooking ingredients on wooden board"
-                                                style={{ height: '130px', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center gap-2 mb-2">
-                                                <div className="rounded-circle">
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className="fw-medium">Adam Biddlecombe</div>
-                                                    <div className="text-muted small">Dec 12, 2024</div>
-                                                </div>
-                                            </div>
-                                            <h5 className="card-title fs-16">Ultimate Cheatsheet Post</h5>
-                                            <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Healthy Cooking Card */}
-                                <div className='col-md-3'>
-                                    <div className="card">
-                                        <div className="position-relative">
-                                            <span className="position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle">
-                                                Pending Approval
-                                            </span>
-                                            <img
-                                                src="/assets/images/chatgpt_cheat_sheet.jpeg"
-                                                className="card-img-top"
-                                                alt="Fresh cooking ingredients on wooden board"
-                                                style={{ height: '130px', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center gap-2 mb-2">
-                                                <div className="rounded-circle">
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className="fw-medium">Adam Biddlecombe</div>
-                                                    <div className="text-muted small">Dec 12, 2024</div>
-                                                </div>
-                                            </div>
-                                            <h5 className="card-title fs-16">Ultimate Cheatsheet Post</h5>
-                                            <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Sustainable Fashion Card */}
-                                <div className='col-md-3'>
-                                    <div className="card">
-                                        <div className="position-relative">
-                                            <span className="badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0">
-                                                Rejected
-                                            </span>
-                                            <img
-                                                src="/assets/images/daily_news_letter.jpeg"
-                                                className="card-img-top"
-                                                alt="Clothing on hangers"
-                                                style={{ height: '130px', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center gap-2 mb-2">
-                                                <div className="rounded-circle">
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className="fw-medium">Adam Biddlecombe</div>
-                                                    <div className="text-muted small">Dec 12, 2024</div>
-                                                </div>
-                                            </div>
-                                            <h5 className="card-title fs-16">Mindstream News Letter Post</h5>
-                                            <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* Urban Photography Card */}
-                                <div className='col-md-3'>
-                                    <div className="card">
-                                        <div className="position-relative">
-                                            <span className="position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle">
-                                                Approved
-                                            </span>
-                                            <img
-                                                src="/assets/images/chatgpt_guide.jpeg"
-                                                className="card-img-top"
-                                                alt="City skyline at sunset"
-                                                style={{ height: '130px', objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="d-flex align-items-center gap-2 mb-2">
-                                                <div className="rounded-circle">
-                                                    <Image
-                                                        src="/assets/images/model_1.png"
-                                                        className="rounded-circle"
-                                                        alt="User avatar"
-                                                        width={36}
-                                                        height={36}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <div className="fw-medium">Adam Biddlecombe</div>
-                                                    <div className="text-muted small">Dec 12, 2024</div>
-                                                </div>
-                                            </div>
-                                            <h5 className="card-title fs-16">Ultimate Guide Post
-                                            </h5>
-                                            <a href="#" className="text-info text-decoration-none float-end">View Details →</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                        )
+
+                                    })
+                                }
+
+
+
                             </div>
                         </div>
                     </div>

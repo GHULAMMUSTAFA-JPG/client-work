@@ -1,5 +1,5 @@
 "use client"
-import { getDiscoverCampaigns, login } from '@/@api';
+import { getDiscoverCampaigns, getDiscoverCampaignsForFilters, getDiscoverCampaignsForSearch, login } from '@/@api';
 import useForm from '@/hooks/useForm';
 import React, { useEffect, useState } from 'react'
 import Image from "next/image";
@@ -14,12 +14,20 @@ import ApplyModal from '@/components/ApplyModal';
 
 
 function DiscoverCreator() {
-
+    const [searchText, setSearchText] = useState<string>('')
     const [campaignData, setCampaignData] = useState<any>()
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     useEffect(() => {
-        getDiscoverCampaigns(setCampaignData)
+       getDiscoverCampaigns(setCampaignData) 
     }, [])
+
+    const searchCampaign  =() =>{
+        getDiscoverCampaignsForSearch(searchText,setCampaignData)
+    }
+
+    const filterCampaignCall =(e:any) =>{
+        getDiscoverCampaignsForFilters(e,setCampaignData)
+    }
 
     return (
         <>
@@ -29,15 +37,21 @@ function DiscoverCreator() {
                         <div className='col-12'>
                             <div className='d-flex align-items-center justify-content-between mb-3'>
                                 <div className="position-relative w-25">
-                                    <input type="email" className="form-control custom-input" id="exampleFormControlInput1" placeholder="Search for Campaigns" />
+                                    <input type="text" onChange={(e:any)=>{
+                                        setSearchText(e?.target?.value)
+                                    }} className="form-control custom-input" id="exampleFormControlInput1" placeholder="Search for Campaigns" onKeyDown={(e:any)=>{
+                                        e.key == "Enter" && searchCampaign()
+                                    }} />
                                     <Icon icon="ph:magnifying-glass" width={16} height={16} className='text-secondary position-absolute top-50 start-0 translate-middle-y ms-3' />
                                     {/* <Icon icon="ph:x" width={20} height={20} className='text-secondary position-absolute top-50 end-0 translate-middle-y me-3 cursor' /> */}
                                     {/* <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" /> */}
                                 </div>
-                                <select className="form-select custom-select" aria-label="Small select example">
-                                    <option selected>Most Popular</option>
-                                    <option value="1">Newest</option>
-                                    <option value="2">Oldest</option>
+                                <select className="form-select custom-select" onChange={(e:any)=>{
+                                    filterCampaignCall(e.target.value)
+                                }} aria-label="Small select example">
+                                    <option selected value="popular">Most Popular</option>
+                                    <option value="newest">Newest</option>
+                                    <option value="oldest">Oldest</option>
                                 </select>
                                 {/* <button className='btn btn-primary rounded-pill d-flex align-items-center' data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <Icon icon="akar-icons:settings-vertical" width={20} height={20} />

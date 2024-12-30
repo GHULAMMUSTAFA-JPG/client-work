@@ -14,7 +14,7 @@ function CreatorDetailModal() {
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                     <div className="modal-content">
                         <div className="modal-header px-4">
-                            <h1 className="modal-title fs-5" id="creatorDetailModalLabel">Mindstream News Letter Post</h1>
+                            <h1 className="modal-title fs-5" id="creatorDetailModalLabel">Mindstream News Letter Posts</h1>
                             <button type="button" id="close_modal_creator_detail" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">

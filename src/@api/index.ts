@@ -219,4 +219,40 @@ export const getDiscoverCampaigns = async (setData:any) => {
 }
 
 
+export const getDiscoverCampaignsForSearch = async (searchText:string, setData:any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/search_campaign?headline=${searchText}`)
+        setData(response?.data?.campaigns)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const getDiscoverCampaignsForFilters = async (filter:string, setData:any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/filter_campaigns?${filter}=true`)
+        setData(response?.data?.campaigns)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const getCampaignsActivatedCreators = async (filter:string, setData:any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/get_campaign_activated_creators/${filter}`)
+        setData(response?.data?.campaign)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
 

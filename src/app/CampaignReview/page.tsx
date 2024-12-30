@@ -29,17 +29,11 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
         }
     };
 
-
-    useEffect(() => {
-        console.log(selectedCampaignDetails, 'selectedCampaignDetails')
-    }, [selectedCampaignDetails])
-
-
     const [selectedTab, setSelectedTab] = useState<"All"| "Applicants"| "Activated" | "In_Discussion" | "Contacted" | "To_Connect" | "Not_Fit">("All")
     return (
         <>
             {showActivatedCreators ? (
-                <ActivatedCreators setShowActivatedCreators={setShowActivatedCreators} />
+                <ActivatedCreators setShowActivatedCreators={setShowActivatedCreators} selectedCampaign={selectedCampaignDetails} />
             ) : (
                 <section className='dashboard campaign-review'>
                     <div className='container-fluid'>
@@ -211,6 +205,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                 </button>
                                 {
                                selectedCampaignDetails?.campaign &&  Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any, index:number) => (
+                                inner_object !== "Applicants" &&
                                         <button onClick={()=>{
                                             setSelectedTab(inner_object)
                                         }} key={index} className={selectedTab == inner_object  ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm' }>
