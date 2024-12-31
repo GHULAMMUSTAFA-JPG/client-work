@@ -107,7 +107,7 @@ function mycreatorsbuyer() {
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col" className="text-start ps-4">Creators</th>
-                                                                <th scope="col">Profile_URL</th>
+                                                                <th scope="col">Social Platform</th>
                                                                 <th scope="col">Company</th>
                                                                 <th scope="col">Followers</th>
                                                                 <th scope="col">Impressions</th>
@@ -226,7 +226,7 @@ function mycreatorsbuyer() {
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col" className="text-start ps-4">Creators</th>
-                                                                <th scope="col">Profile_URL</th>
+                                                                <th scope="col">Social Platform</th>
                                                                 <th scope="col">Company </th>
                                                                 <th scope="col">Followers</th>
                                                                 <th scope="col">Impressions</th>

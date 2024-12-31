@@ -3,17 +3,20 @@ import { login } from '@/@api';
 import useForm from '@/hooks/useForm';
 import React, { useState } from 'react'
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignOffcanvas from '@/components/campaignoffcanvas';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
-
+import { useRouter } from 'next/navigation';
 
 
 function Campaigns() {
+    const router = useRouter();
 
+    const handleRowClick = () => {
+        router.push('/SubmitCampaigns');
+    };
     return (
         <>
             <section className='dashboard'>
@@ -225,7 +228,8 @@ function Campaigns() {
                                                         <div className="accordion-body">
                                                             <table className="table align-middle table-hover">
                                                                 <tbody>
-                                                                    <tr data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className='cursor'>
+                                                                    <tr className='cursor'
+                                                                        onClick={handleRowClick} >
                                                                         <td>
                                                                             <p className='mb-0'>Nov 18, 2024</p>
                                                                             <p className='fs-12 text-warning mb-0'>2 hours ago</p>

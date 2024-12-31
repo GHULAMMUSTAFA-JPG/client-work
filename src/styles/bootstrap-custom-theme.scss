@@ -25,6 +25,10 @@ body {
         font-size: 9px;
     }
 
+    .fs-10 {
+        font-size: 10px;
+    }
+
     .fs-12 {
         font-size: 12px;
     }
@@ -121,7 +125,7 @@ body {
 
     .card-hover {
         &:hover {
-            background-color: $hover;
+            background-color: $hover !important;
             cursor: pointer;
         }
     }
@@ -203,7 +207,7 @@ body {
     }
 
     .form-control {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .dropdown-item {
@@ -516,5 +520,9 @@ body {
 
     .alert-dismissible {
         padding-right: 1rem;
+    }
+
+    .border-dotted {
+        border-style: dotted !important;
     }
 }

@@ -181,7 +181,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                             </div>
                                                         </div>
                                                         <h5 className="card-title fs-16">{post?.Post_Title} </h5>
-                                                        <a  className="text-info text-decoration-none float-end" data-bs-toggle="modal" data-bs-target="#creatorDetailModal">View Details →</a>
+                                                        <a  className="text-info text-decoration-none float-end cursor" data-bs-toggle="modal" data-bs-target="#creatorDetailModal">View Details →</a>
                                                     </div>
                                                 </div>
                                             </div>

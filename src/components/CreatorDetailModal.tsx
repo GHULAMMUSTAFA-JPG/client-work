@@ -95,6 +95,14 @@ function CreatorDetailModal() {
                                                 <p className="text-muted mb-1">Description</p>
                                                 <p className="mb-0">Detailed post about the latest trends and updates in the industry, focusing on sustainable practices and innovation.</p>
                                             </div>
+                                            <div className="d-flex gap-2 justify-content-end mt-5">
+                                                <button className="btn btn-outline-danger btn-sm">
+                                                    Reject
+                                                </button>
+                                                <button className="btn btn-primary btn-sm">
+                                                    Approve
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
