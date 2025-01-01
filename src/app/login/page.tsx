@@ -118,7 +118,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-
             {loader && (<div className="spinner-border text-primary d-flex mx-auto mb-5" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>)}
