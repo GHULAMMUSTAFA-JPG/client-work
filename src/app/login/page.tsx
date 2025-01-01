@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { login } from '@/@api';
 
 const AuthPage = () => {
     const [userType, setUserType] = useState<'brand' | 'creator'>('creator');
@@ -83,26 +84,38 @@ const AuthPage = () => {
         setError(null);
 
         try {
-            const endpoint = isLogin ? '/api/login' : '/api/register';
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...values, userType }),
-            });
+            if (isLogin) {
+                const response: any = await login(values);
+                setLoader(false);
+                if (response?.data) {
+                    loginUser(response?.data);
+                    router.push('/dashboard');
+                }
+            } else {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ ...values, userType }),
+                });
 
-            const data = await response.json();
-
-            setLoader(false);
-            if (data) {
-                loginUser(data);
-                router.push('/dashboard');
+                const data = await response.json();
+                setLoader(false);
+                if (data) {
+                    loginUser(data);
+                    router.push('/dashboard');
+                }
             }
         } catch (error: any) {
             console.error(isLogin ? "Login error:" : "Signup error:", error);
             setLoader(false);
-            setError(error.response?.data?.message || `Failed to ${isLogin ? 'login' : 'create account'}. Please try again later.`);
+            
+            if (error.response?.status === 401) {
+                setError("Incorrect email or password. Please try again.");
+            } else {
+                setError(error.response?.data?.message || `Failed to ${isLogin ? 'login' : 'create account'}. Please try again later.`);
+            }
         }
     };
 
