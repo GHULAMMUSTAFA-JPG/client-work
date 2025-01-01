@@ -101,11 +101,13 @@ const AuthPage = () => {
                 const response: any = await login(values);
                 setLoader(false);
                 if (response?.data) {
+                    console.log(response?.data,"data is obtained")
+                    debugger;
                     loginUser(response?.data);
                     router.push('/dashboard');
                 }
             } else {
-                const response = await fetch('/api/register', {
+                const response = await fetch('https://synncapi.onrender.com/auth/buyer/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -161,7 +163,7 @@ const AuthPage = () => {
 
 
     const signInWithLinkedIn = async (e: any) => {
-        setIsLoading(true)
+        // setIsLoading(true)
         // e.preventDefault()
         // // const result = await getAccessToken()
         // // console.log(result,"token aagya")
@@ -182,7 +184,7 @@ const AuthPage = () => {
         //     console.error('Error:', error.response ? error.response.data : error.message);
         // });
 
-        const redirectUri = 'https://adapted-tour-bracelets-indie.trycloudflare.com/login';
+        const redirectUri = 'https://synncportal.vercel.app/login';
         const clientId = '86kqbx17og1eeb';
         const state = 'foobar';
         const scope = 'email%20openid%20profile';
@@ -196,13 +198,20 @@ const AuthPage = () => {
 
         if (response.status == 200) {
             setIsLoading(false)
-
-            console.log(response, "aagaya reponse")
+            const profileData = response?.data?.profile_data
+            localStorage.setItem('token',response?.data?.oauth_token)
+            const data = {
+                email :profileData?.Email,
+                Is_Creator : profileData?.Is_Creator,
+                name: profileData?.Name,
+                Profile_Image : profileData?.Profile_Image,
+                uuid:profileData?._id
+            }
+            loginUser(data)
+            router.push('/dashboard');
         }
         else {
             setIsLoading(false)
-
-            console.log(response, "ni aata reponse")
         }
     }
 
@@ -369,6 +378,7 @@ const AuthPage = () => {
                                 type="submit"
                                 className="btn btn-dark btn-lg w-100 mb-3 d-flex align-items-center justify-content-center"
                                 disabled={loader}
+
                             >
                                 {loader ? (isLogin ? "Signing In..." : "Creating Account...") : (isLogin ? "Sign In" : "Create an Account")}
                                 <Icon icon="material-symbols:arrow-forward" className="ms-2" width={20} height={20} />
@@ -385,7 +395,7 @@ const AuthPage = () => {
                                         // window.location.href = 'your-linkedin-oauth-url'
                                     }}
                                     className="btn btn-outline-info btn-lg w-100 mb-4 d-flex align-items-center justify-content-center"
-                                    disabled={loader}
+                                    // disabled={loader}
                                 >
                                     <Icon icon="mdi:linkedin" width={20} height={20} className="me-2 text-info" />
                                     Continue with LinkedIn
