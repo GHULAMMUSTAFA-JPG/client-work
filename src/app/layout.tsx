@@ -13,7 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Main from '@/components/Main';
 import { Icon } from "@iconify/react/dist/iconify.js";
-
+import Loader from "@/components/loader";
 const inter = Inter({ subsets: ["latin"] });
 
 interface RootLayoutProps {
@@ -33,7 +33,7 @@ function RootLayout({
 
   const [showTip, setShowTip] = useState(true);
 
-  return (
+  return (  
     <html lang="en">
       <Head>
         <meta charSet="utf-8" />
@@ -43,7 +43,8 @@ function RootLayout({
         <AuthProvider> {/* Wrap with AuthProvider */}
           <Main>{children}</Main>
         </AuthProvider>
-        <ToastContainer />
+      <ToastContainer />
+        
         
         {/* Navigation Tip Alert */}
         {showTip && (

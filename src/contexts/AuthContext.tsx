@@ -9,7 +9,9 @@ interface AuthContextType {
   setUserProfile: any;
   userProfile:any;
   rendControl:boolean;
-  setRendControl:any
+  setRendControl:any;
+  isLoading:boolean;
+  setIsLoading:any
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<any>()
   const [rendControl, setRendControl] =  useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   // Check authentication on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -57,7 +60,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user,setRendControl,rendControl, loginUser, logout,setUserProfile, userProfile }}>
+    <AuthContext.Provider value={{setIsLoading, isLoading, isAuthenticated, user,setRendControl,rendControl, loginUser, logout,setUserProfile, userProfile }}>
       {children}
     </AuthContext.Provider>
   );

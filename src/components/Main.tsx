@@ -6,7 +6,8 @@ import Header from "@/app/layout/Header"
 import Footer from "@/app/layout/Footer"
 import Sidebar from '@/app/layout/Sidebar';
 import withAuth from '@/utils/withAuth';
-
+import Loader from './loader';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Main = ({
   children, isAuthenticated, user
@@ -41,6 +42,7 @@ const Main = ({
             <Sidebar menuItems={menuItems} />
             <div className="flex-grow-1">
               <Header />
+              <Loader />
               <main className="main-content">{children}</main>
               <Footer />
             </div>
