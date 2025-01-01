@@ -1,34 +1,42 @@
-/* Container styling */
+/* Container styling with background blur */
 .loader-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  backdrop-filter: blur(10px); /* Background blur effect */
+  background-color: rgba(255, 255, 255, 0.2); /* Light translucent overlay */
   color: white;
   text-align: center;
+  z-index: 9999; /* Ensures it appears above other elements */
+  overflow: hidden; /* Prevents internal scrolling in the container */
 }
 
 /* Spinner styling */
 .loader {
-  border: 5px solid rgba(255, 255, 255, 0.2);
-  border-top: 5px solid #fff;
+  border: 5px solid rgba(17, 95, 175, 0.2); /* Semi-transparent border */
+  border-top: 5px solid #115FAF; /* Active part of the spinner */
   border-radius: 50%;
   width: 60px;
   height: 60px;
-  animation: spin 1s linear infinite;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  animation: spin 1s linear infinite; /* Smooth spinning animation */
+  box-shadow: 0 0 15px rgba(17, 95, 175, 0.6); /* Glowing effect */
 }
 
 /* Text styling */
 .loader-text {
   font-size: 20px;
+  color: #115FAF; /* Updated text color */
   margin-top: 15px;
   font-family: "Poppins", sans-serif;
   letter-spacing: 1px;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 1.5s ease-in-out infinite;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for better visibility */
+  animation: fadeIn 1.5s ease-in-out infinite; /* Smooth fade animation */
 }
 
 /* Spinner animation */
@@ -43,7 +51,8 @@
 
 /* Text animation */
 @keyframes fadeIn {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.5;
   }
   50% {

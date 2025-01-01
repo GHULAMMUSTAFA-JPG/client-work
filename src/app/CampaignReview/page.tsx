@@ -17,6 +17,22 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
             [creatorName]: newStatus
         }));
     };
+    const [totalLenght, setTotalLenght] = useState<number>(0)
+
+    function getTotalElements(dynamicObject:any) {
+        let total = 0;
+        for (let key in dynamicObject) {
+          if (Array.isArray(dynamicObject[key])) {
+            total += dynamicObject[key].length;
+          }
+        }
+
+        setTotalLenght(total);
+      }
+
+    useEffect(()=>{
+        selectedCampaignDetails?.campaign &&  getTotalElements( selectedCampaignDetails?.campaign?.Campaign_Progress)
+    },[selectedCampaignDetails])
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -38,9 +54,9 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                 <section className='dashboard campaign-review'>
                     <div className='container-fluid'>
                         <div className='d-flex align-items-center justify-content-between my-3'>
-                            <a href="#" className='text-dark text-decoration-none d-flex align-items-center'>
+                            <a style={{cursor:'pointer'}} onClick={() => setCampaigns(true)} className='text-dark text-decoration-none d-flex align-items-center'>
                                 <Icon icon="akar-icons:arrow-left" width={18} height={18} />
-                                <span className='ms-2' onClick={() => setCampaigns(true)}>All Campaigns</span>
+                                <span className='ms-2' >All Campaigns</span>
                             </a>
                         </div>
                         <div className='card mb-3'>
@@ -201,7 +217,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                 <button className={selectedTab == "All"  ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm' } onClick={()=>{
                                     setSelectedTab('All')
                                 }}>
-                                    All (Recent) <span className={`badge ${selectedTab == "All" ? 'bg-white' : 'bg-light'} text-dark ms-1`}>3</span>
+                                    All (Recent) <span className={`badge ${selectedTab == "All" ? 'bg-white' : 'bg-light'} text-dark ms-1`}>{totalLenght}</span>
                                 </button>
                                 {
                                selectedCampaignDetails?.campaign &&  Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any, index:number) => (
@@ -215,9 +231,9 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                 }
                     
                             </div>
-                            <button className='btn btn-info btn-sm'>
+                            {/* <button className='btn btn-info btn-sm'>
                                 Add Creators <Icon icon="material-symbols:add" width={20} height={20} />
-                            </button>
+                            </button> */}
                         </div>
 
                         {/* Table */}
@@ -234,7 +250,8 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                     </thead>
                                     <tbody>
                                         {
-                                        selectedCampaignDetails?.campaign &&  Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
+                                        totalLenght !== 0 ?
+                                          Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
                                                 selectedCampaignDetails?.campaign?.Campaign_Progress[inner_object]?.map((array_item: any, index: number) => (
                                                     <tr key={index} style={selectedTab=="All" ? {display:'table-row'} : selectedTab == inner_object ? {display:'table-row'} : {display:'none'}}>
                                                         <td className='w-75'>
@@ -288,6 +305,13 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
 
                                                 ))
                                             ))
+                                            :
+                                         <tr>
+                                            <td colSpan={3}>
+                                            <div style={{textAlign:'center'}}>No data found</div>
+                                            </td>
+                                         </tr>
+                                            
                                         }
 
                                     </tbody>

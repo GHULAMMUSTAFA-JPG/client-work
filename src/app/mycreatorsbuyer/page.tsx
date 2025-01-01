@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 
 function mycreatorsbuyer() {
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [buyersDetails, setBuyerDetails] = useState<any>()
     const [buyerList, setBuyerList] = useState<any>()
@@ -24,16 +24,16 @@ function mycreatorsbuyer() {
     // const router = useRouter()
     useEffect(() => {
         fetchData()
-        fetchBuyerDiscoveryData(user?.email, setBuyerDetails)
+        fetchBuyerDiscoveryData(user?.email, setBuyerDetails, setIsLoading)
 
     }, [])
 
     useEffect(() => {
-        getSavedList(user?.email, setBuyerList)
+        getSavedList(user?.email, setBuyerList, setIsLoading)
     }, [rendControl])
 
     useEffect(() => {
-        selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators)
+        selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators, setIsLoading)
     }, [selectedId, rendControl])
 
 

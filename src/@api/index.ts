@@ -50,14 +50,17 @@ export const updateProfileInformation = async (email: string, dto: any) => {
 }
 
 
-export const fetchBuyerDiscoveryData = async (email: string, setData: any) => {
-
+export const fetchBuyerDiscoveryData = async (email: string, setData: any, setIsLoading:any) => {
+    setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/buyers/discover_creators/${email}`)
+        setIsLoading(false)
         setData(response?.data)
         return response
 
     } catch (error) {
+        setIsLoading(false)
+
         setData({
             External_Creators: [],
             Internal_Creators: []
@@ -67,12 +70,17 @@ export const fetchBuyerDiscoveryData = async (email: string, setData: any) => {
     }
 }
 
-export const getSavedList = async (email: string, setData: any) => {
+export const getSavedList = async (email: string, setData: any, setIsLoading:any) => {
+    setIsLoading(true)
+    
     try {
+
         const response: any = await apiController.get(`/dashboard/buyers/get_buyer_list_names/${email}`)
+        setIsLoading(false)
         setData(response?.data?.Lists)
         return response
     } catch (error) {
+        setIsLoading(false)
         setData([])
         console.log(error, "Error in saving list")
         return null
@@ -80,13 +88,19 @@ export const getSavedList = async (email: string, setData: any) => {
 }
 
 
-export const getSpecificCreatorList = async (id: string, setData: any) => {
+export const getSpecificCreatorList = async (id: string, setData: any, setIsLoading:any) => {
+    setIsLoading(true)
+
     try {
         const response: any = await apiController.get(`/dashboard/buyers/get_buyer_list_creators/${id}`)
+        setIsLoading(false)
+
         setData(response?.data)
         return response
     } catch (error) {
         setData([])
+        setIsLoading(false)
+
         console.log(error, "Error in get specific creator list api")
         return null
     }
@@ -141,25 +155,33 @@ export const addCreatorInList = async (dto: any, rendControl: boolean, setRendCo
     }
 }
 
-export const getCampaignsList = async (email: any, setData: any) => {
+export const getCampaignsList = async (email: any, setData: any,setIsLoading:any) => {
+setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/get_buyer_campaigns/${email}`)
+setIsLoading(false)
         setData(response?.data?.campaigns || [])
         return response
     } catch (error) {
         setData([])
+setIsLoading(false)
+
         console.log(error, "Error in get campaign list api")
         return null
     }
 }
 
 
-export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any) => {
+export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any, setIsLoading:any) => {
+    setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/get_campaign_buyer_view/${campaign_id}`)
+        setIsLoading(false)
         setData(response?.data)
         return response
     } catch (error) {
+        setIsLoading(false)
+
         setData({})
         console.log(error, "Error in get campaign list api")
         return null
@@ -249,6 +271,24 @@ export const getCampaignsActivatedCreators = async (filter:string, setData:any) 
         setData(response?.data?.campaign)
         return response
     } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const changePostStatus = async (dto:any,setIsLoading:any,setRendControl:any, rendControl:boolean) => {
+    setIsLoading(true)
+    try {
+        const response: any = await apiController.post(`/dashboard/campaigns/change_post_status`, dto)
+        setIsLoading(false)
+        const button = document.getElementById('close_modal_creator_detail')
+        button && button?.click()
+        setRendControl(!rendControl)
+        return response
+    } catch (error) {
+        setIsLoading(false)
+        
         console.log(error, "Error in get campaign list api")
         return null
     }

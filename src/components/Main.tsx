@@ -42,7 +42,7 @@ const Main = ({
             <Sidebar menuItems={menuItems} />
             <div className="flex-grow-1">
               <Header />
-              <Loader />
+              {/* <Loader /> */}
               <main className="main-content">{children}</main>
               <Footer />
             </div>

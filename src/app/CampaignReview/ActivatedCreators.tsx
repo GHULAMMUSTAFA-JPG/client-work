@@ -11,14 +11,16 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
     const [campaignData, setCampaignData] = useState<any>({})
     const [selectedCreator, setSelectedCreator] = useState<any>()
     const [totalCount, setTotalCount] = useState<number>(0)
+    const [selectedPost,setSelectedPost] = useState<any>(null)
+    const [rendControl, setRendControl] = useState<boolean>(false)
     const [selectedFilter, setSelectedFilter] =  useState<"All" | "Approved" | "Pending Approval" | "Rejected">('All')
     useEffect(() => {
         selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData)
-    }, [selectedCampaign])
+    }, [selectedCampaign,rendControl])
 
     useEffect(() => {
         campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
-    }, [campaignData])
+    }, [campaignData, rendControl])
 
     return (
         <>
@@ -37,15 +39,15 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                     <div className='d-flex justify-content-between align-items-center'>
                                         <div>
                                             <div className='d-flex align-items-center gap-3 mb-1'>
-                                                <h5 className='mb-0'>Help us launch our new marketplace for IRL advertising</h5>
+                                                <h5 className='mb-0'>{selectedCampaign?.campaign?.Headline}</h5>
                                                 <button className='bg-primary-subtle border-0 btn btn-outline-primary btn-sm py-1 px-2 rounded-pill'>Public</button>
                                             </div>
                                             <div className='d-flex align-items-center'>
-                                                <p className='fs-12 text-warning mb-0'>Dec 11, 2024</p>
+                                                <p className='fs-12 text-warning mb-0'>{selectedCampaign?.campaign?.Created_At}</p>
                                                 <div className="vr mx-2 vr-public"></div>
-                                                <p className='fs-12 text-warning mb-0'>2 Days ago</p>
+                                                <p className='fs-12 text-warning mb-0'>{selectedCampaign?.campaign?.Time_Ago}</p>
                                                 <div className="vr mx-2 vr-public"></div>
-                                                <span>Budget: <strong>$100</strong></span>
+                                                <span>Budget: <strong>${selectedCampaign?.campaign?.Budget}</strong></span>
                                                 {/* <span className='me-3'>Public</span>     */}
                                                 {/* <div className='form-check form-switch mb-0'>
                             <input className='form-check-input' type='checkbox' id='publicSwitch' checked />
@@ -158,7 +160,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                             {post?.Status}
                                                         </span>
                                                         <img
-                                                            src={post?.Image_Content}
+                                                            src={post?.Media_Content[0]}
                                                             className="card-img-top"
                                                             alt="Clothing on hangers"
                                                             style={{ height: '130px', objectFit: 'cover' }}
@@ -181,7 +183,9 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                             </div>
                                                         </div>
                                                         <h5 className="card-title fs-16">{post?.Post_Title} </h5>
-                                                        <a  className="text-info text-decoration-none float-end cursor" data-bs-toggle="modal" data-bs-target="#creatorDetailModal">View Details →</a>
+                                                        <a  className="text-info text-decoration-none float-end cursor" data-bs-toggle="modal" data-bs-target="#creatorDetailModal" onClick={()=>{
+                                                            setSelectedPost(post)
+                                                        }}>View Details →</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -482,7 +486,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                 </div> */}
                 </div>
             </section>
-            <CreatorDetailModal />
+            <CreatorDetailModal rendControl={rendControl} setRendControl={setRendControl} campaignData={campaignData} selectedPost={selectedPost} selectedCreator={selectedCreator} />
         </>
     )
 }

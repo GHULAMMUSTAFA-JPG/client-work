@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchProfileData } from "@/@api";
+import Loader from "@/components/loader";
 
 
 export default function Header() {
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { user,logout, userProfile, setUserProfile,rendControl } = useAuth()
+    const { user,logout, userProfile, setUserProfile,rendControl, isLoading } = useAuth()
 
     useEffect(() => {
         setUser(localStorage.getItem("user"))
@@ -26,6 +27,7 @@ export default function Header() {
     }, [user,rendControl])
     return (
         <>
+        { isLoading && <Loader />}
             <header className="navbar-section">
                 <nav className="navbar bg-white">
                     <div className="container-fluid">

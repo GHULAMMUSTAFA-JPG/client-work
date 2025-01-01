@@ -13,18 +13,18 @@ import { getCampaignsList, getSelectedCampaignsDetails } from '@/@api';
 import CampaignTable from '@/components/CampaignTable';
 
 function buyerdashboard() {
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const [campaigns, setCampaigns] = useState(true)
     const [campaignList, setCampaignList] = useState<any[]>([])
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     const [selectedCampaignDetails, setSelectedCampaignDetails] = useState<any>()
     const [rendControl, setRendControl] = useState<boolean>(false)
     useEffect(() => {
-        getCampaignsList(user?.email, setCampaignList)
+        getCampaignsList(user?.email, setCampaignList,setIsLoading)
     }, [rendControl])
 
     useEffect(()=>{
-        selectedCampaign &&  getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails)
+        selectedCampaign &&  getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails, setIsLoading)
     },[selectedCampaign])
 
     return (

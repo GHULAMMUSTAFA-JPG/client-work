@@ -9,6 +9,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { url } from 'inspector';
+import { apiController } from '@/@api/baseUrl';
 
 const Login = () => {
     // const { login: authLogin, isAuthenticated } = useAuth(); // Use login function from AuthContext
@@ -23,7 +24,7 @@ const Login = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const codess = queryParams.get('code');
 
-    const { loginUser } = useAuth()
+    const { loginUser, setIsLoading } = useAuth()
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
     const [code, setCode] = useState<any>("")
@@ -51,6 +52,7 @@ const Login = () => {
     // Handle login submission
     const handleLogin = async () => {
         setLoader(true);
+        setIsLoading(true)
         setLoginError(null); // Reset previous error
 
         try {
@@ -59,10 +61,14 @@ const Login = () => {
             setLoader(false);
             if (response?.data) {
                 loginUser(response?.data)
+                setIsLoading(false)
+
             }
         } catch (error: any) { // Catch any error that might occur during login
             console.error("Login error:", error);
             setLoader(false);
+            setIsLoading(false)
+
             if (error.response?.status === 401) {
                 setLoginError("Incorrect email or password. Please try again.");
             } else {
@@ -72,16 +78,15 @@ const Login = () => {
         }
     };
 
+    useEffect(() => {
 
-
-    useEffect(()=>{
-     
         setCode(codess)
         codess && getToken(codess)
-    },[codess])
+    }, [codess])
 
 
     const signInWithLinkedIn = async (e: any) => {
+        setIsLoading(true)
         // e.preventDefault()
         // // const result = await getAccessToken()
         // // console.log(result,"token aagya")
@@ -105,19 +110,24 @@ const Login = () => {
         const redirectUri = 'https://adapted-tour-bracelets-indie.trycloudflare.com/login';
         const clientId = '86kqbx17og1eeb';
         const state = 'foobar';
-        const scope = 'email%20openid%20profile'; 
+        const scope = 'email%20openid%20profile';
         const authorizationUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
         window.location.href = authorizationUrl;
     }
 
-    const getToken = async (code:any) =>{
-        const response = await axios.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
-     
-    if (response.status == 200) {
-            console.log(response,"aagaya reponse")
+    const getToken = async (code: any) => {
+        setIsLoading(true)
+        const response = await apiController.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
+
+        if (response.status == 200) {
+            setIsLoading(false)
+
+            console.log(response, "aagaya reponse")
         }
-        else{
-            console.log(response,"ni aata reponse")
+        else {
+            setIsLoading(false)
+
+            console.log(response, "ni aata reponse")
         }
     }
 
