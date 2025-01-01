@@ -49,7 +49,7 @@ function DiscoverCreator() {
                                 <select className="form-select custom-select" onChange={(e:any)=>{
                                     filterCampaignCall(e.target.value)
                                 }} aria-label="Small select example">
-                                    <option selected value="popular">Most Popular</option>
+                                    {/* <option selected value="popular">Most Popular</option> */}
                                     <option value="newest">Newest</option>
                                     <option value="oldest">Oldest</option>
                                 </select>

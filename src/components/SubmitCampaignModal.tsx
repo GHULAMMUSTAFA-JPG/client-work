@@ -131,7 +131,7 @@ function SubmitCampaignModal() {
                     <div className="modal-footer">
                         <button className='btn btn-outline-info btn-sm me-2' data-bs-dismiss="modal">Cancel</button>
                         <button type='submit' className='btn btn-info btn-sm'>
-                            Submit Campaign
+                            Upload Submission
                         </button>
                     </div>
                 </div>
