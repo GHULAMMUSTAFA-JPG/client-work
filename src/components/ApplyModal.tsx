@@ -194,17 +194,16 @@ function ApplyModal(props:any) {
                             </div>
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
                             <p className='text-warning mb-0'>{selectedCampaign?.Campaign_Details}</p>
-                            <hr className='text-warning'/>
+                            {/* <hr className='text-warning'/>
                             <div className="mb-3">
                                 <label className="mb-2 fw-medium fs-16">Send a message to Apply</label>
-                                {/* <small className="text-muted d-block mb-2">We will review your application and get back to you as soon as possible.</small> */}
                                 <textarea
                                     className="form-control"
                                     rows={3}
                                     placeholder="Send a message about your interest in collaborating with our brand."
                                 ></textarea>
-                            </div>
-                            <button className='btn btn-info w-100'>Send and Apply</button>
+                            </div> */}
+                            <button className='btn btn-info w-100 mt-4'>Apply</button>
 
                         </div>
                         {/* <div className="modal-footer">
