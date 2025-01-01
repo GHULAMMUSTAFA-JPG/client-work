@@ -183,7 +183,6 @@ const AuthPage = () => {
         // }).catch(error => {
         //     console.error('Error:', error.response ? error.response.data : error.message);
         // });
-
         const redirectUri = 'https://synncportal.vercel.app/login';
         const clientId = '86kqbx17og1eeb';
         const state = 'foobar';
