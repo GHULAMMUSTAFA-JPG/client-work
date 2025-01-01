@@ -12,7 +12,6 @@ function CreatorDetailModal(props: any) {
     const {setIsLoading} = useAuth()
   
     const actionFunction = async (type: string) => {
-        // console.log(selectedPost,"selectedPost",campaignData)
         const dto = {
             "campaign_id": campaignData?._id,
             "post_id": selectedPost?.Post_ID,
