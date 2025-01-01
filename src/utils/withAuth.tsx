@@ -16,22 +16,22 @@ const withAuth = <P extends {}>(WrappedComponent: ComponentType<P & { isAuthenti
     // Optionally, you could add logic for loading or redirecting the user
     // Here, we check if the user is authenticated and return a loading state
 
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        if (!isAuthenticated ) {
-          router.push("/login"); // Redirect to login page
-        }
+    // useEffect(() => {
+    //   if (typeof window !== "undefined") {
+    //     if (!isAuthenticated ) {
+    //       router.push("/login"); // Redirect to login page
+    //     }
         
     
-        else {
-          if (!user.isBuyer)
-            router.push("/homepage")
-          else {
-            router.push("/homepagebuyer")
-          }
-        }
-      }
-    }, [isAuthenticated])
+    //     else {
+    //       if (!user.isBuyer)
+    //         router.push("/homepage")
+    //       else {
+    //         router.push("/homepagebuyer")
+    //       }
+    //     }
+    //   }
+    // }, [isAuthenticated])
 
 
     return <WrappedComponent {...props} isAuthenticated={isAuthenticated} user={user} />;

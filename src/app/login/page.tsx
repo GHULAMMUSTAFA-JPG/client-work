@@ -1,11 +1,14 @@
 "use client"
 import { login } from '@/@api';
 import useForm from '@/hooks/useForm';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import axios from 'axios';
+import { useParams } from 'next/navigation';
+import { url } from 'inspector';
 
 const Login = () => {
     // const { login: authLogin, isAuthenticated } = useAuth(); // Use login function from AuthContext
@@ -15,12 +18,15 @@ const Login = () => {
     const [loader, setLoader] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
-    const router = useRouter()
+    const params = useParams()
+    const codes = params?.code
+    const queryParams = new URLSearchParams(window.location.search);
+    const codess = queryParams.get('code');
 
     const { loginUser } = useAuth()
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
-
+    const [code, setCode] = useState<any>("")
     const validate = (values: Record<string, string>) => {
         const errors: Record<string, string> = {};
         if (!values.email) {
@@ -66,6 +72,56 @@ const Login = () => {
         }
     };
 
+
+
+    useEffect(()=>{
+     
+        setCode(codess)
+        codess && getToken(codess)
+    },[codess])
+
+
+    const signInWithLinkedIn = async (e: any) => {
+        // e.preventDefault()
+        // // const result = await getAccessToken()
+        // // console.log(result,"token aagya")
+        // setLoader(true)
+        // const apiKey = '86kqbx17og1eeb';
+        // const redirectUri = 'https://synncportal.vercel.app/login';
+
+        // // Construct the URL for the request
+        // // const url = `https://www.linkedin.com/uas/oauth2/authorization?response_type=code` +
+        // //     `&client_id=${apiKey}` +
+        // //     `&scope=email%20openid%20profile` +
+        // //     `&redirect_uri=${redirectUri}`;
+
+        // const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86kqbx17og1eeb&redirect_uri=${redirectUri}&state=foobar&scope=email%20openid%20profile`
+        // axios.get(url).then(response => {
+        //     console.log('Response Data:', response.data);
+        // }).catch(error => {
+        //     console.error('Error:', error.response ? error.response.data : error.message);
+        // });
+
+        const redirectUri = 'https://adapted-tour-bracelets-indie.trycloudflare.com/login';
+        const clientId = '86kqbx17og1eeb';
+        const state = 'foobar';
+        const scope = 'email%20openid%20profile'; 
+        const authorizationUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
+        window.location.href = authorizationUrl;
+    }
+
+    const getToken = async (code:any) =>{
+        const response = await axios.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
+     
+    if (response.status == 200) {
+            console.log(response,"aagaya reponse")
+        }
+        else{
+            console.log(response,"ni aata reponse")
+        }
+    }
+
+
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -107,11 +163,12 @@ const Login = () => {
                                         <button type="submit" className="btn btn-info w-100 mb-3" disabled={loader}>
                                             {loader ? "Logging in..." : "Login"}
                                         </button>
-                                        <button className='btn btn-info w-100 d-flex align-items-center justify-content-center'>
-                                            <Icon icon="mdi:linkedin" width={18} height={18} className='me-2' />
-                                            Continue with LinkedIn
-                                        </button>
+
                                     </form>
+                                    <button className='btn btn-info w-100 d-flex align-items-center justify-content-center' onClick={signInWithLinkedIn}>
+                                        <Icon icon="mdi:linkedin" width={18} height={18} className='me-2' />
+                                        Continue with LinkedIn
+                                    </button>
                                 </div>
                             </div>
                         </div>
