@@ -32,12 +32,12 @@ const AuthPage = () => {
 
     const validateSignup = (values: Record<string, string>) => {
         const errors: Record<string, string> = {};
-        
+
         if (!values.firstName) errors.firstName = 'First name is required';
         if (!values.lastName) errors.lastName = 'Last name is required';
-        
+
         if (!values.companyName) errors.companyName = 'Company name is required';
-        
+
         if (!values.companyEmail) {
             errors.companyEmail = 'Company email is required';
         } else if (!/\S+@\S+\.\S+/.test(values.companyEmail)) {
@@ -61,7 +61,7 @@ const AuthPage = () => {
 
     const validateLogin = (values: Record<string, string>) => {
         const errors: Record<string, string> = {};
-        
+
         if (!values.email) {
             errors.email = 'Email is required';
         } else if (!/\S+@\S+\.\S+/.test(values.email)) {
@@ -91,9 +91,9 @@ const AuthPage = () => {
                 },
                 body: JSON.stringify({ ...values, userType }),
             });
-            
+
             const data = await response.json();
-            
+
             setLoader(false);
             if (data) {
                 loginUser(data);
@@ -130,11 +130,11 @@ const AuthPage = () => {
     return (
         <div className="min-vh-100 d-flex align-items-center justify-content-center login-container py-5">
             <div className="position-absolute top-0 start-0 p-3">
-                <Image 
-                    src="/assets/images/synnc-logo.svg" 
-                    alt="Synnc" 
-                    width={120} 
-                    height={40} 
+                <Image
+                    src="/assets/images/synnc-logo.svg"
+                    alt="Synnc"
+                    width={120}
+                    height={40}
                     className="img-fluid"
                 />
             </div>
@@ -143,13 +143,13 @@ const AuthPage = () => {
                     <div className="col-md-5">
                         <div className="text-center mb-4">
                             <div className="btn-group mb-4">
-                                <button 
+                                <button
                                     className={`btn ${userType === 'creator' ? 'btn-dark' : 'btn-outline-dark'}`}
                                     onClick={() => toggleUserType()}
                                 >
                                     Creator
                                 </button>
-                                <button 
+                                <button
                                     className={`btn ${userType === 'brand' ? 'btn-dark' : 'btn-outline-dark'}`}
                                     onClick={() => toggleUserType()}
                                 >
@@ -169,7 +169,7 @@ const AuthPage = () => {
                                 {error}
                             </div>
                         )}
-                        
+
                         {linkedInError && (
                             <div className="alert alert-danger py-2 small" role="alert">
                                 {linkedInError}
@@ -269,7 +269,7 @@ const AuthPage = () => {
 
                             <div className="mb-4">
                                 <label htmlFor="password" className="form-label fs-14">
-                                    Password 
+                                    Password
                                     {!isLogin && <span className="text-muted">(min 8 letters, numbers, and symbols required)</span>}
                                 </label>
                                 <input
@@ -285,8 +285,8 @@ const AuthPage = () => {
                                 )}
                             </div>
 
-                            <button 
-                                type="submit" 
+                            <button
+                                type="submit"
                                 className="btn btn-dark btn-lg w-100 mb-3 d-flex align-items-center justify-content-center"
                                 disabled={loader}
                             >
@@ -295,8 +295,8 @@ const AuthPage = () => {
                             </button>
 
                             {userType === 'creator' && (
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     onClick={() => {
                                         setLoader(true);
                                         setLinkedInError(null);
@@ -316,7 +316,7 @@ const AuthPage = () => {
                                 <span className="text-muted small fs-14">
                                     {userType === 'creator' && isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                 </span>
-                                <button 
+                                <button
                                     onClick={toggleAuthMode}
                                     className="btn btn-link text-dark p-0 small text-decoration-none fs-16 fw-medium"
                                 >
