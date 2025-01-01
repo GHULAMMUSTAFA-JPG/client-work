@@ -9,7 +9,8 @@ import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { url } from 'inspector';
 import { apiController } from '@/@api/baseUrl';
-import { login } from '@/@api';
+import { login, newLogin } from '@/@api';
+import { toast } from 'react-toastify';
 
 const AuthPage = () => {
     const [userType, setUserType] = useState<'brand' | 'creator'>('creator');
@@ -47,21 +48,21 @@ const AuthPage = () => {
     const validateSignup = (values: Record<string, string>) => {
         const errors: Record<string, string> = {};
 
-        if (!values.firstName) errors.firstName = 'First name is required';
-        if (!values.lastName) errors.lastName = 'Last name is required';
+        if (!values.first_name) errors.first_name = 'First name is required';
+        if (!values.last_name) errors.last_name = 'Last name is required';
 
-        if (!values.companyName) errors.companyName = 'Company name is required';
+        if (!values.company_name) errors.company_name = 'Company name is required';
 
-        if (!values.companyEmail) {
-            errors.companyEmail = 'Company email is required';
-        } else if (!/\S+@\S+\.\S+/.test(values.companyEmail)) {
-            errors.companyEmail = 'Email address is invalid';
+        if (!values.email) {
+            errors.email = 'Company email is required';
+        } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+            errors.email = 'Email address is invalid';
         }
 
-        if (!values.companyWebsite) {
-            errors.companyWebsite = 'Company website is required';
-        } else if (!/^https?:\/\/.*/.test(values.companyWebsite)) {
-            errors.companyWebsite = 'Website must start with http:// or https://';
+        if (!values.company_website) {
+            errors.company_website = 'Company website is required';
+        } else if (!/^https?:\/\/.*/.test(values.company_website)) {
+            errors.company_website = 'Website must start with http:// or https://';
         }
 
         if (!values.password) {
@@ -93,16 +94,17 @@ const AuthPage = () => {
     });
 
     const handleAuth = async () => {
+        
         setLoader(true);
         setError(null);
-
         try {
             if (isLogin) {
-                const response: any = await login(values);
+                const response: any = await newLogin({
+                    email: values?.email,
+                    password: values?.password
+                });
                 setLoader(false);
                 if (response?.data) {
-                    console.log(response?.data,"data is obtained")
-                    debugger;
                     loginUser(response?.data);
                     router.push('/dashboard');
                 }
@@ -116,11 +118,15 @@ const AuthPage = () => {
                 });
 
                 const data = await response.json();
-                setLoader(false);
-                if (data) {
-                    loginUser(data);
-                    router.push('/dashboard');
+                if(data?.detail){
+                    toast.warn(data?.detail)
                 }
+                else{
+                    toast.success(data?.message)
+                    setIsLogin(true)
+                }
+                setLoader(false);
+               
             }
         } catch (error: any) {
             console.error(isLogin ? "Login error:" : "Signup error:", error);
@@ -264,92 +270,93 @@ const AuthPage = () => {
                             </div>
                         )}
 
-                        <form onSubmit={(e) => handleSubmit(e, handleAuth)}>
+                        <form onSubmit={(e) => {
+                            handleSubmit(e, handleAuth)}}>
                             {(!isLogin && userType === 'brand') && (
                                 <>
                                     <div className="row mb-3">
                                         <div className="col-6">
-                                            <label htmlFor="firstName" className="form-label fs-14">First Name</label>
+                                            <label htmlFor="first_name" className="form-label fs-14">First Name</label>
                                             <input
                                                 type="text"
-                                                name="firstName"
+                                                name="first_name"
                                                 placeholder="Enter your first name"
-                                                className={`form-control ${errors.firstName ? 'is-invalid' : ''}`}
-                                                value={values.firstName || ''}
+                                                className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
+                                                value={values.first_name || ''}
                                                 onChange={handleChange}
                                             />
-                                            {errors.firstName && (
-                                                <div className="invalid-feedback">{errors.firstName}</div>
+                                            {errors.first_name && (
+                                                <div className="invalid-feedback">{errors.first_name}</div>
                                             )}
                                         </div>
                                         <div className="col-6">
-                                            <label htmlFor="lastName" className="form-label fs-14">Last Name</label>
+                                            <label htmlFor="last_name" className="form-label fs-14">Last Name</label>
                                             <input
                                                 type="text"
-                                                name="lastName"
+                                                name="last_name"
                                                 placeholder="Enter your last name"
-                                                className={`form-control ${errors.lastName ? 'is-invalid' : ''}`}
-                                                value={values.lastName || ''}
+                                                className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
+                                                value={values.last_name || ''}
                                                 onChange={handleChange}
                                             />
-                                            {errors.lastName && (
-                                                <div className="invalid-feedback">{errors.lastName}</div>
+                                            {errors.last_name && (
+                                                <div className="invalid-feedback">{errors.last_name}</div>
                                             )}
                                         </div>
                                     </div>
 
                                     <div className="mb-3">
-                                        <label htmlFor="companyName" className="form-label fs-14">Company Name</label>
+                                        <label htmlFor="company_name" className="form-label fs-14">Company Name</label>
                                         <input
                                             type="text"
-                                            name="companyName"
+                                            name="company_name"
                                             placeholder="Enter your company name"
-                                            className={`form-control ${errors.companyName ? 'is-invalid' : ''}`}
-                                            value={values.companyName || ''}
+                                            className={`form-control ${errors.company_name ? 'is-invalid' : ''}`}
+                                            value={values.company_name || ''}
                                             onChange={handleChange}
                                         />
-                                        {errors.companyName && (
-                                            <div className="invalid-feedback">{errors.companyName}</div>
+                                        {errors.company_name && (
+                                            <div className="invalid-feedback">{errors.company_name}</div>
                                         )}
                                     </div>
                                 </>
                             )}
 
                             <div className="mb-3">
-                                <label htmlFor={isLogin ? "email" : "companyEmail"} className="form-label fs-14">
+                                <label htmlFor={isLogin ? "email" : "email"} className="form-label fs-14">
                                     {isLogin ? "Email" : (userType === 'brand' ? "Company Email" : "Email")}
                                     {(!isLogin && userType === 'brand') && <span className="text-muted">(must match site domain)</span>}
                                 </label>
                                 <input
                                     type="email"
-                                    name={isLogin ? "email" : "companyEmail"}
+                                    name={"email"}
                                     placeholder={isLogin ? "Enter your email" : (userType === 'brand' ? "Enter your company email" : "Enter your email")}
-                                    className={`form-control ${errors[isLogin ? "email" : "companyEmail"] ? 'is-invalid' : ''}`}
-                                    value={values[isLogin ? "email" : "companyEmail"] || ''}
+                                    className={`form-control ${errors[isLogin ? "email" : "email"] ? 'is-invalid' : ''}`}
+                                    value={values[isLogin ? "email" : "email"] || ''}
                                     onChange={handleChange}
                                 />
-                                {errors[isLogin ? "email" : "companyEmail"] && (
-                                    <div className="invalid-feedback">{errors[isLogin ? "email" : "companyEmail"]}</div>
+                                {errors[isLogin ? "email" : "email"] && (
+                                    <div className="invalid-feedback">{errors[isLogin ? "email" : "email"]}</div>
                                 )}
                             </div>
 
                             {(!isLogin && userType === 'brand') && (
                                 <div className="mb-3">
-                                    <label htmlFor="companyWebsite" className="form-label fs-14">
+                                    <label htmlFor="company_website" className="form-label fs-14">
                                         Company Website <span className="text-muted">(must match email domain)</span>
                                     </label>
                                     <div className="input-group">
                                         <span className="input-group-text fs-14">https://</span>
                                         <input
                                             type="text"
-                                            name="companyWebsite"
+                                            name="company_website"
                                             placeholder="Enter your company website"
-                                            className={`form-control ${errors.companyWebsite ? 'is-invalid' : ''}`}
-                                            value={values.companyWebsite || ''}
+                                            className={`form-control ${errors.company_website ? 'is-invalid' : ''}`}
+                                            value={values.company_website || ''}
                                             onChange={handleChange}
                                         />
-                                        {errors.companyWebsite && (
-                                            <div className="invalid-feedback">{errors.companyWebsite}</div>
+                                        {errors.company_website && (
+                                            <div className="invalid-feedback">{errors.company_website}</div>
                                         )}
                                     </div>
                                 </div>
@@ -405,12 +412,7 @@ const AuthPage = () => {
                                 <span className="text-muted small fs-14">
                                     {userType === 'creator' && isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                 </span>
-                                <button
-                                    onClick={toggleAuthMode}
-                                    className="btn btn-link text-dark p-0 small text-decoration-none fs-16 fw-medium"
-                                >
-                                    {isLogin ? "Sign up" : "Sign in"}
-                                </button>
+                              
                             </div>
 
                             {/* <hr className="my-4 text-warning" /> */}
@@ -423,6 +425,12 @@ const AuthPage = () => {
                                 </div>
                             </div> */}
                         </form>
+                        <button
+                                    onClick={toggleAuthMode}
+                                    className="btn btn-link text-dark p-0 small text-decoration-none fs-16 fw-medium"
+                                >
+                                    {isLogin ? "Sign up" : "Sign in"}
+                                </button>
                     </div>
                 </div>
             </div>

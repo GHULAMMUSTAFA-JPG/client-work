@@ -12,18 +12,20 @@ const useForm = ({ initialValues, validate }: UseFormProps) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
+        
         setValues({ ...values, [name]: value });
 
         if (validate) {
             const validationErrors = validate({ ...values, [name]: value });
             setErrors(validationErrors);
         }
+       
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>, callback: () => void) => {
         event.preventDefault();
         if (!validate || Object.keys(errors).length === 0) {
-            callback();
+              callback();
         }
     };
 

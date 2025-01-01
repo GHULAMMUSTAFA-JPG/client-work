@@ -12,6 +12,11 @@ export const login = (body: any) => {
     return response
 }
 
+export const newLogin = (body: any) => {
+
+    const response = apiController.post('auth/buyer/login', body)
+    return response
+}
 export const fetchProfileData = async (email: string, setUserData: any) => {
 
     try {
