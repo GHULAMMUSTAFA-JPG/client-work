@@ -236,6 +236,14 @@ body {
         color: $white;
     }
 
+    .btn-outline-info {
+        &:hover {
+            svg {
+                color: $white !important;
+            }
+        }
+    }
+
     .nav-pills .nav-link.active {
         color: $primary !important;
         background-color: transparent;
