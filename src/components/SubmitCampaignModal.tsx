@@ -2,15 +2,16 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-function SubmitCampaignModal() {
-    const router = useRouter();
+function SubmitCampaignModal(props:any) {
+    const {selectedCampaign} = props
+     const router = useRouter();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
     const handleSubmitWork = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Work submitted');
     };
-
+    const [dto, setDto] = useState<any>(null)
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files);

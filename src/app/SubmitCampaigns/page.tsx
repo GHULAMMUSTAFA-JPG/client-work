@@ -153,7 +153,7 @@ const SubmitCampaigns = () => {
                     </div>
                 </div>
             </section>
-            <SubmitCampaignModal />
+            <SubmitCampaignModal selectedCampaign={data} />
             <SubmitDetailModal selectedPost={selectedPost} campaignData={data} />
         </>
     );
