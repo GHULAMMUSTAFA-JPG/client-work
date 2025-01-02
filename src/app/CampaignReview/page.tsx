@@ -35,7 +35,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
 
     useEffect(() => {
         selectedCampaignDetails?.campaign && getTotalElements(selectedCampaignDetails?.campaign?.Campaign_Progress)
-        console.log('selectedCampaignDetails',selectedCampaignDetails)
+       
     }, [selectedCampaignDetails])
 
     const getStatusColor = (status: string) => {
@@ -83,7 +83,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                         </div> */}
                                         </div>
                                     </div>
-                                    <button className='btn btn-outline-dark fs-12 btn-sm ms-3'>
+                                    <button className='btn btn-outline-dark fs-12 btn-sm ms-3'  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">
                                         Edit Campaign <Icon icon="ri:settings-4-line" width={16} height={16} />
                                     </button>
                                 </div>
