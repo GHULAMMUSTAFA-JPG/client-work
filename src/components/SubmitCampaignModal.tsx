@@ -1,16 +1,44 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-
-function SubmitCampaignModal() {
-    const router = useRouter();
+import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+interface submitcampaignprops {
+    
+        "campaign_id": string,
+        "email": string,
+        "post_title": string,
+        "post_description": string
+      
+}
+function SubmitCampaignModal(props:any) {
+    const {user} = useAuth()
+    const {selectedCampaign} = props
+     const router = useRouter();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
     const handleSubmitWork = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Work submitted');
     };
+    const [dto, setDto] = useState<submitcampaignprops>({
+        campaign_id : selectedCampaign?.campaign?._id,
+        email: "", 
+        post_description : "" ,
+        post_title : "" 
+    })
 
+    useEffect(()=>{
+        user?.email && setDto((prev:any)=>{
+            return{...prev,["email"] : user?.email}
+        })
+    },[user])
+
+    useEffect(()=>{
+        selectedCampaign?.campaign?._id && setDto((prev:any)=>{
+            return{...prev,["campaign_id"] :selectedCampaign?.campaign?._id }
+        })
+    },[user])
+    
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const filesArray = Array.from(e.target.files);
@@ -21,6 +49,14 @@ function SubmitCampaignModal() {
     const removeFile = (index: number) => {
         setUploadedFiles(prev => prev.filter((_, i) => i !== index));
     };
+
+
+    const valueAdder = (e:any)=>{
+        setDto((prev:any)=>{
+            return{...prev,[e.target.id]:e.target.value}
+        })
+    }
+
     return (
         <div className="modal fade" id="submitCampaignModal" tabIndex={-1} aria-labelledby="submitCampaignModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -38,6 +74,7 @@ function SubmitCampaignModal() {
                                         <input
                                             type="text"
                                             className='form-control'
+                                            id="post_title"
                                             placeholder='Enter the title of your submission'
                                             required
                                         />
@@ -47,6 +84,7 @@ function SubmitCampaignModal() {
                                         <textarea
                                             className='form-control'
                                             rows={4}
+                                            id="post_description"
                                             placeholder="Describe the work you've completed and any relevant details"
                                             required
                                         />

@@ -1,4 +1,6 @@
 'use client';
+import { Suspense } from 'react';
+
 
 import React, { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -153,10 +155,18 @@ const SubmitCampaigns = () => {
                     </div>
                 </div>
             </section>
-            <SubmitCampaignModal />
+            <SubmitCampaignModal selectedCampaign={data} />
             <SubmitDetailModal selectedPost={selectedPost} campaignData={data} />
         </>
     );
 };
 
-export default SubmitCampaigns;
+export default function AuthPageWrapper() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SubmitCampaigns />
+        </Suspense>
+    );
+}
+
+// export default SubmitCampaigns;
