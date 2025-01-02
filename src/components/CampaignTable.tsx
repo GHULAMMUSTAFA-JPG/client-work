@@ -37,7 +37,7 @@ return(
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        campaignList?.map((camp: any, index: number) => {
+                                                    campaignList?.length !== 0 ?    campaignList?.map((camp: any, index: number) => {
                                                             return (
                                                                 <tr key={index} style={{ cursor: 'pointer' }}>
                                                                     <td>
@@ -88,6 +88,8 @@ return(
                                                                 </tr>
                                                             )
                                                         })
+                                                        :
+                                                        <>No campaign Found</>
                                                     }
 
                                                 </tbody>
