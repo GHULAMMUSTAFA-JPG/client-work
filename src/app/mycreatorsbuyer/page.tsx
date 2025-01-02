@@ -176,7 +176,22 @@ function mycreatorsbuyer() {
                                                                                                 )
                                                                                             })
                                                                                         }
+                                                                                        {
+                                                                                            buyerList?.map((item: any, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
+                                                                                                        addToCreatorList(item, user)
+                                                                                                    }}>
+                                                                                                        <a className="dropdown-item py-1 px-2">
+                                                                                                            {item?.List_Name}
+                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
 
+                                                                                                        </a>
+                                                                                                    </li>
+
+                                                                                                )
+                                                                                            })
+                                                                                        }
 
                                                                                     </div>
                                                                                     <div className="card-footer p-0 bg-transparent">
@@ -187,24 +202,6 @@ function mycreatorsbuyer() {
 
                                                                                             </a>
                                                                                         </li>
-
-                                                                                        {
-                                                                                            buyerList?.map((item: any, index: number) => {
-                                                                                                return (
-                                                                                                    <li key={index} onClick={() => {
-                                                                                                        addToCreatorList(item, user)
-                                                                                                    }}>
-                                                                                                        <a className="dropdown-item p-1">
-                                                                                                            <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
-                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                                        </a>
-                                                                                                    </li>
-
-                                                                                                )
-                                                                                            })
-                                                                                        }
-
                                                                                     </div>
                                                                                 </div>
                                                                             </ul>
@@ -292,29 +289,18 @@ function mycreatorsbuyer() {
                                                                                                 return (
                                                                                                     <li key={index} onClick={() => {
 
-                                                                                                    }}><a className="dropdown-item p-1"><span className="ms-1">{skill}</span></a></li>
+                                                                                                    }}><a className="dropdown-item py-1 px-2"><span className="ms-1">{skill}</span></a></li>
                                                                                                 )
                                                                                             })
                                                                                         }
-
-                                                                                    </div>
-                                                                                    <div className="card-footer p-0 bg-transparent">
-                                                                                        <li >
-                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
-                                                                                                <Icon icon="ri:add-fill" className="me-1" />New List
-                                                                                                {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                            </a>
-                                                                                        </li>
-
-                                                                                        {
+                                                                                                                                                                                {
                                                                                             buyerList?.map((item: any, index: number) => {
                                                                                                 return (
                                                                                                     <li key={index} onClick={() => {
                                                                                                         addToCreatorList(item, user)
                                                                                                     }}>
-                                                                                                        <a className="dropdown-item p-1">
-                                                                                                            <Icon icon="ri:add-fill" className="me-1" />{item?.List_Name}
+                                                                                                        <a className="dropdown-item py-1 px-2">
+                                                                                                            {item?.List_Name}
                                                                                                             {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
 
                                                                                                         </a>
@@ -323,6 +309,16 @@ function mycreatorsbuyer() {
                                                                                                 )
                                                                                             })
                                                                                         }
+
+                                                                                    </div>
+                                                                                    <div className="card-footer p-0">
+                                                                                        <li >
+                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
+                                                                                                <Icon icon="ri:add-fill" className="me-1" />New List
+                                                                                                {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+
+                                                                                            </a>
+                                                                                        </li>
 
                                                                                     </div>
                                                                                 </div>
