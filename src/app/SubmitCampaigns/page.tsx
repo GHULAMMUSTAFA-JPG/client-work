@@ -73,7 +73,7 @@ const SubmitCampaigns = () => {
                                 Rejected Posts <span className="badge bg-light text-dark ms-1">1</span>
                             </button>
                         </div>
-                        <button className='btn btn-primary btn-sm' data-bs-toggle="modal" data-bs-target="#submitCampaignModal"><Icon icon="material-symbols:add" width={16} height={16} /> Add Submission</button>
+                        <button className='btn btn-info btn-sm' data-bs-toggle="modal" data-bs-target="#submitCampaignModal"><Icon icon="material-symbols:add" width={16} height={16} /> Add Submission</button>
                     </div>
                     <div className="row g-3">
                         <div className='col-md-3'>

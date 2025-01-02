@@ -130,10 +130,9 @@ body {
         }
     }
 
-    // .card-wrapper {
-    //     max-height: 297px;
-    //     overflow: auto;
-    // }
+    .card-wrapper {
+        min-height: 280px;
+    }
 
     .graphs {
         .card {

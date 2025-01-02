@@ -40,7 +40,7 @@ function Campaigns() {
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header">
                                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="true" aria-controls="flush-collapseThree">
-                                                            Hired Campaigns (15)
+                                                            Active Campaigns (15)
                                                         </button>
                                                     </h2>
                                                     <div id="flush-collapseThree" className="accordion-collapse show" data-bs-parent="#accordionFlushExample">

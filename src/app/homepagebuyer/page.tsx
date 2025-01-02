@@ -134,7 +134,7 @@ function homepagebuyer() {
                                             <tr>
                                                 <th scope="col" className="text-start ps-4">Campaigns <span className='text-muted fs-12'>(7)</span></th>
                                                 <th scope="col">Activated Creators</th>
-                                                <th scope="col">Posts</th>
+                                                <th scope="col">New Applications</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
