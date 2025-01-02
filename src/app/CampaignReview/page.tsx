@@ -288,16 +288,64 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                                                         {inner_object}
                                                                     </span>
                                                                     <ul className="dropdown-menu">
-                                                                        <li>
+                                                                        {/* <li>
                                                                             <a
                                                                                 className={`dropdown-item ${inner_object === 'Activated' ? 'text-activated' : ''}`}
-                                                                                // href="#"
                                                                                 onClick={(e) => {
                                                                                     e.preventDefault();
-                                                                                    // handleStatusChange('Adam Biddlecombe', 'Activated');
                                                                                 }}
                                                                             >
                                                                                 {inner_object}
+                                                                            </a>
+                                                                        </li> */}
+                                                                        <li>
+                                                                            <a
+                                                                                className="dropdown-item cursor text-activated"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                }}
+                                                                            >
+                                                                                Activated
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                className="dropdown-item cursor text-discussion"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                }}
+                                                                            >
+                                                                                In Discussion
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                className="dropdown-item cursor text-contacted"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                }}
+                                                                            >
+                                                                                Contacted
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                className="dropdown-item cursor text-danger"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                }}
+                                                                            >
+                                                                                Not Fit
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a
+                                                                                className="dropdown-item cursor text-purple"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                }}
+                                                                            >
+                                                                                To Contact
                                                                             </a>
                                                                         </li>
                                                                     </ul>
