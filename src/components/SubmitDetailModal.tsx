@@ -95,7 +95,6 @@ function SubmitDetailModal(props: any) {
                                                 <p className="text-muted mb-1 fs-12">Status</p>
                                                 <span className={selectedPost?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium p-2 text-danger top-0" : selectedPost?.Status == "Pending Approval" ? " badge text-yellow p-2 fw-medium bg-orange-subtle" : " badge p-2 fw-medium text-primary bg-primary-subtle"}>{selectedPost?.Status}</span>
                                             </div>
-
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1 fs-12">Submission Date</p>
                                                 <p className="mb-0 fw-medium">{selectedPost?.Submitted_At}</p>
