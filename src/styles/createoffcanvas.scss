@@ -47,23 +47,46 @@
 }
 
 .campaign-review {
+    .table {
+        overflow: auto;
+    }
+
     .dropdown {
         position: relative;
+
+        &:hover {
+            .dropdown-menu {
+                display: block;
+                padding: 0;
+                width: auto;
+                left: auto !important;
+                right: 0;
+            }
+        }
     }
 
     .dropdown-menu {
-        position: absolute;
-        z-index: 1000;
-        min-width: 120px;
-        padding: 0.5rem 0;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        border: 1px solid #eee;
-        margin-top: 0 !important;
-        top: 0;
-        left: 0;
-        transform: translateY(-100%);
+        display: none;
+        padding: 0;
+        width: auto;
+        left: auto !important;
+        right: 0;
+        
     }
+
+    // .dropdown-menu {
+    //     position: absolute;
+    //     z-index: 1000;
+    //     min-width: 120px;
+    //     padding: 0.5rem 0;
+    //     border-radius: 8px;
+    //     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    //     border: 1px solid #eee;
+    //     margin-top: 0 !important;
+    //     top: 0;
+    //     left: 0;
+    //     transform: translateY(-100%);
+    // }
 
     table {
         position: relative;
@@ -82,16 +105,16 @@
         overflow: visible !important;
     }
 
-    .dropdown:hover .dropdown-menu {
-        display: none;
-    }
+    // .dropdown:hover .dropdown-menu {
+    //     display: none;
+    // }
 
     .dropdown-toggle::after {
         display: none;
     }
 
     .dropdown-item {
-        padding: 0.5rem 1rem;
+        padding: 6px;
         font-size: 14px;
     }
 

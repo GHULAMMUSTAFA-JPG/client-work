@@ -296,7 +296,6 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                                                                 {inner_object}
                                                                             </a>
                                                                         </li>
-
                                                                     </ul>
                                                                 </div>
                                                             </td>
