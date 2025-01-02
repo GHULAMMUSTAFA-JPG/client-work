@@ -23,7 +23,6 @@ const AuthPage = () => {
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
     const searchParams = useSearchParams();
     const codess = searchParams.get('code');
-    console.log(codess,"codess ")
     const getToken = async (code: any) => {
         // setIsLoading(true)
         const response = await apiController.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
@@ -31,13 +30,13 @@ const AuthPage = () => {
         if (response.status == 200) {
             setIsLoading(false)
             const profileData = response?.data?.profile_data
-            localStorage.setItem('token',response?.data?.oauth_token)
+            localStorage.setItem('token', response?.data?.oauth_token)
             const data = {
-                email :profileData?.Email,
-                Is_Creator : profileData?.Is_Creator,
+                email: profileData?.Email,
+                Is_Creator: profileData?.Is_Creator,
                 name: profileData?.Name,
-                Profile_Image : profileData?.Profile_Image,
-                uuid:profileData?._id
+                Profile_Image: profileData?.Profile_Image,
+                uuid: profileData?._id
             }
             loginUser(data)
             router.push('/dashboard');
@@ -47,7 +46,7 @@ const AuthPage = () => {
         }
     }
 
-   
+
     // const queryParams = new URLSearchParams(window.location.search);
     // const codess = queryParams.get('code');
 
@@ -120,7 +119,7 @@ const AuthPage = () => {
     });
 
     const handleAuth = async () => {
-        
+
         setLoader(true);
         setError(null);
         try {
@@ -144,20 +143,20 @@ const AuthPage = () => {
                 });
 
                 const data = await response.json();
-                if(data?.detail){
+                if (data?.detail) {
                     toast.warn(data?.detail)
                 }
-                else{
+                else {
                     toast.success(data?.message)
                     setIsLogin(true)
                 }
                 setLoader(false);
-               
+
             }
         } catch (error: any) {
             console.error(isLogin ? "Login error:" : "Signup error:", error);
             setLoader(false);
-            
+
             if (error.response?.status === 401) {
                 setError("Incorrect email or password. Please try again.");
             } else {
@@ -188,7 +187,7 @@ const AuthPage = () => {
     };
 
     useEffect(() => {
-         codess && getToken(codess)
+        codess && getToken(codess)
     }, [codess])
 
 
@@ -270,57 +269,58 @@ const AuthPage = () => {
                             </div>
                         )}
 
-                        <form onSubmit={(e) => {
-                            handleSubmit(e, handleAuth)}}>
-                            {(!isLogin && userType === 'brand') && (
-                                <>
-                                    <div className="row mb-3">
-                                        <div className="col-6">
-                                            <label htmlFor="first_name" className="form-label fs-14">First Name</label>
-                                            <input
-                                                type="text"
-                                                name="first_name"
-                                                placeholder="Enter your first name"
-                                                className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
-                                                value={values.first_name || ''}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.first_name && (
-                                                <div className="invalid-feedback">{errors.first_name}</div>
-                                            )}
-                                        </div>
-                                        <div className="col-6">
-                                            <label htmlFor="last_name" className="form-label fs-14">Last Name</label>
-                                            <input
-                                                type="text"
-                                                name="last_name"
-                                                placeholder="Enter your last name"
-                                                className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
-                                                value={values.last_name || ''}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.last_name && (
-                                                <div className="invalid-feedback">{errors.last_name}</div>
-                                            )}
-                                        </div>
-                                    </div>
+                        {userType !== 'creator' && <form onSubmit={(e) => {
+                            handleSubmit(e, handleAuth)
+                        }}>
 
-                                    <div className="mb-3">
-                                        <label htmlFor="company_name" className="form-label fs-14">Company Name</label>
+                            {!isLogin && <>
+                                <div className="row mb-3">
+                                    <div className="col-6">
+                                        <label htmlFor="first_name" className="form-label fs-14">First Name</label>
                                         <input
                                             type="text"
-                                            name="company_name"
-                                            placeholder="Enter your company name"
-                                            className={`form-control ${errors.company_name ? 'is-invalid' : ''}`}
-                                            value={values.company_name || ''}
+                                            name="first_name"
+                                            placeholder="Enter your first name"
+                                            className={`form-control ${errors.first_name ? 'is-invalid' : ''}`}
+                                            value={values.first_name || ''}
                                             onChange={handleChange}
                                         />
-                                        {errors.company_name && (
-                                            <div className="invalid-feedback">{errors.company_name}</div>
+                                        {errors.first_name && (
+                                            <div className="invalid-feedback">{errors.first_name}</div>
                                         )}
                                     </div>
-                                </>
-                            )}
+                                    <div className="col-6">
+                                        <label htmlFor="last_name" className="form-label fs-14">Last Name</label>
+                                        <input
+                                            type="text"
+                                            name="last_name"
+                                            placeholder="Enter your last name"
+                                            className={`form-control ${errors.last_name ? 'is-invalid' : ''}`}
+                                            value={values.last_name || ''}
+                                            onChange={handleChange}
+                                        />
+                                        {errors.last_name && (
+                                            <div className="invalid-feedback">{errors.last_name}</div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="company_name" className="form-label fs-14">Company Name</label>
+                                    <input
+                                        type="text"
+                                        name="company_name"
+                                        placeholder="Enter your company name"
+                                        className={`form-control ${errors.company_name ? 'is-invalid' : ''}`}
+                                        value={values.company_name || ''}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.company_name && (
+                                        <div className="invalid-feedback">{errors.company_name}</div>
+                                    )}
+                                </div>
+                            </>}
+
 
                             <div className="mb-3">
                                 <label htmlFor={isLogin ? "email" : "email"} className="form-label fs-14">
@@ -340,27 +340,27 @@ const AuthPage = () => {
                                 )}
                             </div>
 
-                            {(!isLogin && userType === 'brand') && (
-                                <div className="mb-3">
-                                    <label htmlFor="company_website" className="form-label fs-14">
-                                        Company Website <span className="text-muted">(must match email domain)</span>
-                                    </label>
-                                    <div className="input-group">
-                                        <span className="input-group-text fs-14">https://</span>
-                                        <input
-                                            type="text"
-                                            name="company_website"
-                                            placeholder="Enter your company website"
-                                            className={`form-control ${errors.company_website ? 'is-invalid' : ''}`}
-                                            value={values.company_website || ''}
-                                            onChange={handleChange}
-                                        />
-                                        {errors.company_website && (
-                                            <div className="invalid-feedback">{errors.company_website}</div>
-                                        )}
-                                    </div>
+
+                            {!isLogin && <div className="mb-3">
+                                <label htmlFor="company_website" className="form-label fs-14">
+                                    Company Website <span className="text-muted">(must match email domain)</span>
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text fs-14">https://</span>
+                                    <input
+                                        type="text"
+                                        name="company_website"
+                                        placeholder="Enter your company website"
+                                        className={`form-control ${errors.company_website ? 'is-invalid' : ''}`}
+                                        value={values.company_website || ''}
+                                        onChange={handleChange}
+                                    />
+                                    {errors.company_website && (
+                                        <div className="invalid-feedback">{errors.company_website}</div>
+                                    )}
                                 </div>
-                            )}
+                            </div>}
+
 
                             <div className="mb-4">
                                 <label htmlFor="password" className="form-label fs-14">
@@ -390,29 +390,12 @@ const AuthPage = () => {
                                 <Icon icon="material-symbols:arrow-forward" className="ms-2" width={20} height={20} />
                             </button>
 
-                            {userType === 'creator' && (
-                                <button
-                                    type="button"
-                                    onClick={(e:any) => {
-                                        // setLoader(true);
-                                        signInWithLinkedIn(e)
-                                        // Here you would typically initiate LinkedIn OAuth flow
-                                        // For example:
-                                        // window.location.href = 'your-linkedin-oauth-url'
-                                    }}
-                                    className="btn btn-outline-info btn-lg w-100 mb-4 d-flex align-items-center justify-content-center"
-                                    // disabled={loader}
-                                >
-                                    <Icon icon="mdi:linkedin" width={20} height={20} className="me-2 text-info" />
-                                    Continue with LinkedIn
-                                </button>
-                            )}
 
                             <div className="text-center mb-4 d-flex justify-content-center align-items-center gap-3">
                                 <span className="text-muted small fs-14">
-                                    {userType === 'creator' && isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
+                                    {isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                 </span>
-                              
+
                             </div>
 
                             {/* <hr className="my-4 text-warning" /> */}
@@ -424,13 +407,42 @@ const AuthPage = () => {
                                     <a href="#" className="text-decoration-none text-muted">Privacy policy</a>
                                 </div>
                             </div> */}
-                        </form>
-                        <button
-                                    onClick={toggleAuthMode}
-                                    className="btn btn-link text-dark p-0 small text-decoration-none fs-16 fw-medium"
+                        </form>}
+
+                        {userType === 'creator' && (
+                            <>
+
+                               
+                                <button
+                                    type="button"
+                                    onClick={(e: any) => {
+                                        // setLoader(true);
+                                        signInWithLinkedIn(e)
+                                        // Here you would typically initiate LinkedIn OAuth flow
+                                        // For example:
+                                        // window.location.href = 'your-linkedin-oauth-url'
+                                    }}
+                                    className="btn btn-outline-info btn-lg w-100 mb-4 d-flex align-items-center justify-content-center"
+                                // disabled={loader}
                                 >
-                                    {isLogin ? "Sign up" : "Sign in"}
+                                    <Icon icon="mdi:linkedin" width={20} height={20} className="me-2 text-info" />
+                                    Continue with LinkedIn
                                 </button>
+                                <div className="text-center mb-4 d-flex justify-content-center align-items-center gap-3">
+                                    <span className="text-muted small fs-14">
+                                        {isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
+                                    </span>
+
+                                </div>
+                            </>
+
+                        )}
+                        <button
+                            onClick={toggleAuthMode}
+                            className="btn btn-link text-dark p-0 small text-decoration-none fs-16 fw-medium"
+                        >
+                            {isLogin ? "Sign up" : "Sign in"}
+                        </button>
                     </div>
                 </div>
             </div>

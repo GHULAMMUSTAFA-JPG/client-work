@@ -301,3 +301,15 @@ export const changePostStatus = async (dto:any,setIsLoading:any,setRendControl:a
 
 
 
+export const getCampaignsCreatorsOverview = async (email:string,setData:any) => {
+    try {
+        const response: any = await apiController.get(`/dashboard/campaigns/get_creator_campaigns_overview/${email}`)
+        setData(response?.data)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
