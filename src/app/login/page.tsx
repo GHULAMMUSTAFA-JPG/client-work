@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import axios from 'axios';
-import { useParams } from 'next/navigation';
 import { url } from 'inspector';
 import { apiController } from '@/@api/baseUrl';
 import { login, newLogin } from '@/@api';
 import { toast } from 'react-toastify';
+import { useSearchParams } from 'next/navigation';
 
 const AuthPage = () => {
     const [userType, setUserType] = useState<'brand' | 'creator'>('creator');
@@ -18,18 +18,41 @@ const AuthPage = () => {
     const [loader, setLoader] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
-    const params = useParams()
-    const codess = params?.code
+    const searchParams = useSearchParams();
+    const codess = searchParams.get('code');
+   
+    const getToken = async (code: any) => {
+        // setIsLoading(true)
+        const response = await apiController.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
+
+        if (response.status == 200) {
+            setIsLoading(false)
+            const profileData = response?.data?.profile_data
+            localStorage.setItem('token',response?.data?.oauth_token)
+            const data = {
+                email :profileData?.Email,
+                Is_Creator : profileData?.Is_Creator,
+                name: profileData?.Name,
+                Profile_Image : profileData?.Profile_Image,
+                uuid:profileData?._id
+            }
+            loginUser(data)
+            router.push('/dashboard');
+        }
+        else {
+            setIsLoading(false)
+        }
+    }
+
+   
     // const queryParams = new URLSearchParams(window.location.search);
     // const codess = queryParams.get('code');
 
     const { loginUser, setIsLoading } = useAuth()
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
-    const [code, setCode] = useState<any>("")
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
-
     // Form initial values and validation
     const signupInitialValues = {
         firstName: '',
@@ -162,9 +185,7 @@ const AuthPage = () => {
     };
 
     useEffect(() => {
-
-        setCode(codess)
-        codess && getToken(codess)
+         codess && getToken(codess)
     }, [codess])
 
 
@@ -196,30 +217,6 @@ const AuthPage = () => {
         const authorizationUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
         window.location.href = authorizationUrl;
     }
-
-    const getToken = async (code: any) => {
-        setIsLoading(true)
-        const response = await apiController.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
-
-        if (response.status == 200) {
-            setIsLoading(false)
-            const profileData = response?.data?.profile_data
-            localStorage.setItem('token',response?.data?.oauth_token)
-            const data = {
-                email :profileData?.Email,
-                Is_Creator : profileData?.Is_Creator,
-                name: profileData?.Name,
-                Profile_Image : profileData?.Profile_Image,
-                uuid:profileData?._id
-            }
-            loginUser(data)
-            router.push('/dashboard');
-        }
-        else {
-            setIsLoading(false)
-        }
-    }
-
 
     return (
         <div className="min-vh-100 d-flex align-items-center justify-content-center login-container py-5">

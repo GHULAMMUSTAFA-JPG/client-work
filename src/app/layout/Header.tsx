@@ -9,7 +9,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { fetchProfileData } from "@/@api";
 import Loader from "@/components/loader";
 
-
 export default function Header() {
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
