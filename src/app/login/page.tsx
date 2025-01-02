@@ -1,4 +1,7 @@
 "use client"
+
+import { Suspense } from 'react';
+
 import useForm from '@/hooks/useForm';
 import React, { useEffect, useState } from 'react'
 import Image from "next/image";
@@ -20,7 +23,7 @@ const AuthPage = () => {
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
     const searchParams = useSearchParams();
     const codess = searchParams.get('code');
-   
+    console.log(codess,"codess ")
     const getToken = async (code: any) => {
         // setIsLoading(true)
         const response = await apiController.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
@@ -434,5 +437,11 @@ const AuthPage = () => {
         </div>
     );
 }
-
-export default AuthPage;
+export default function AuthPageWrapper() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <AuthPage />
+        </Suspense>
+    );
+}
+// export default AuthPage;
