@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import './Loader.css'
 const Loader = () => {
   const [dots, setDots] = useState("");
 
