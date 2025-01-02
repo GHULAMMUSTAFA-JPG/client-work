@@ -19,9 +19,9 @@ const AuthPage = () => {
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
     const params = useParams()
-    const codes = params?.code
-    const queryParams = new URLSearchParams(window.location.search);
-    const codess = queryParams.get('code');
+    const codess = params?.code
+    // const queryParams = new URLSearchParams(window.location.search);
+    // const codess = queryParams.get('code');
 
     const { loginUser, setIsLoading } = useAuth()
     // Form initial values and validation
