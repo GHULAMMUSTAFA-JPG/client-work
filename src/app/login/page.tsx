@@ -395,7 +395,12 @@ const AuthPage = () => {
                                 <span className="text-muted small fs-14">
                                     {isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                 </span>
-
+                                <span
+                                    onClick={toggleAuthMode}
+                                    className="text-dark p-0 small text-decoration-none fs-16 fw-medium cursor"
+                                >
+                                    {isLogin ? "Sign up" : "Sign in"}
+                                </span>
                             </div>
 
                             {/* <hr className="my-4 text-warning" /> */}
@@ -412,7 +417,7 @@ const AuthPage = () => {
                         {userType === 'creator' && (
                             <>
 
-                               
+
                                 <button
                                     type="button"
                                     onClick={(e: any) => {
@@ -432,17 +437,15 @@ const AuthPage = () => {
                                     <span className="text-muted small fs-14">
                                         {isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                     </span>
-
+                                    <span
+                                        onClick={toggleAuthMode}
+                                        className="text-dark p-0 small text-decoration-none fs-16 fw-medium cursor"
+                                    >
+                                        {isLogin ? "Sign up" : "Sign in"}
+                                    </span>
                                 </div>
                             </>
-
                         )}
-                        <button
-                            onClick={toggleAuthMode}
-                            className="btn btn-link text-dark p-0 small text-decoration-none fs-16 fw-medium"
-                        >
-                            {isLogin ? "Sign up" : "Sign in"}
-                        </button>
                     </div>
                 </div>
             </div>
