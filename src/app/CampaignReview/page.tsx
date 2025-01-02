@@ -30,8 +30,12 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
         setTotalLenght(total);
     }
 
+
+    
+
     useEffect(() => {
         selectedCampaignDetails?.campaign && getTotalElements(selectedCampaignDetails?.campaign?.Campaign_Progress)
+        console.log('selectedCampaignDetails',selectedCampaignDetails)
     }, [selectedCampaignDetails])
 
     const getStatusColor = (status: string) => {
@@ -225,7 +229,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                         <button onClick={() => {
                                             setSelectedTab(inner_object)
                                         }} key={index} className={selectedTab == inner_object ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm'}>
-                                            {inner_object} <span className={`badge ${selectedTab == inner_object ? 'bg-white' : 'bg-light'} text-dark ms-1`}>{selectedCampaignDetails?.campaign?.Campaign_Progress?.[inner_object]?.length}</span>
+                                            {inner_object == "In_Discussion" ? "In Discussion" :inner_object == "To_Contact" ? "To Contact" : inner_object == "Not_Fit" ? "Not Fit":  inner_object} <span className={`badge ${selectedTab == inner_object ? 'bg-white' : 'bg-light'} text-dark ms-1`}>{selectedCampaignDetails?.campaign?.Campaign_Progress?.[inner_object]?.length}</span>
                                         </button>
                                     ))
                                 }
@@ -250,8 +254,8 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                     </thead>
                                     <tbody>
                                         {
-                                            totalLenght !== 0 ?
-                                                Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
+                                           (selectedTab=="All" && totalLenght !== 0 && selectedCampaignDetails || selectedCampaignDetails?.campaign?.Campaign_Progress?.[selectedTab]?.length !== 0 ) ?
+                                           selectedCampaignDetails?.campaign?.Campaign_Progress &&   Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
                                                     selectedCampaignDetails?.campaign?.Campaign_Progress[inner_object]?.map((array_item: any, index: number) => (
                                                         <tr key={index} style={selectedTab == "All" ? { display: 'table-row' } : selectedTab == inner_object ? { display: 'table-row' } : { display: 'none' }}>
                                                             <td className='w-75'>
@@ -307,6 +311,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                                     ))
                                                 ))
                                                 :
+                                                
                                                 <tr>
                                                     <td colSpan={3}>
                                                         <div style={{ textAlign: 'center' }}>No data found</div>

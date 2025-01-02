@@ -139,6 +139,7 @@ function OffcanvasCreateCompaign(props:any) {
     const [startDate, setStartDate] = useState<any>(undefined);
     const [endDate, setEndDate] = useState<any>(undefined);
     const [dto, setDto] = useState<createCampaignDto>()
+    
     const {user} = useAuth()
      // Function to handle calendar icon click
     const handleCalendarClick = () => {
@@ -161,11 +162,10 @@ function OffcanvasCreateCompaign(props:any) {
             setDto(obj)
         } 
         else{
-            setDto((prev:any)=>{
-                return{...prev, "Campaign_Media" : '' , 'Is_Public' : dto?.Is_Public ? dto?.Is_Public : false}
-            })
+            const obj = Newmapper()
+            setDto(obj)
         }
-       
+
        
     },[data])
 
@@ -173,18 +173,37 @@ function OffcanvasCreateCompaign(props:any) {
     const mapper = () =>{
         const obj = {
             "Is_Public": data?.campaign?.Is_Public,
-            "Headline":  data?.campaign?.Headline,
-            "Budget":  data?.campaign?.Budget,
+            "Headline":  data?.campaign?.Headline ,
+            "Budget":  data?.campaign?.Budget ,
             "Brief_Description":  data?.campaign?.Brief_Description,
             "Campaign_Details":  data?.campaign?.Campaign_Details,
             "Is_Ongoing":  data?.campaign?.Is_Ongoing,
-            "Start_Date":  data?.campaign?.Start_Date,
-            "End_Date":  data?.campaign?.End_Date,
-            "Target_Audience":  data?.campaign?.Target_Audience,
-            "Campaign_Required_Channels":  data?.campaign?.Campaign_Required_Channels,
-            "Campaign_Media": data?.campaign?.Campaign_Media,
-            "Email": data?.campaign?.user?.email,
-            "Campaign_Id" :  data?.campaign?._id
+            "Start_Date":  data?.campaign?.Start_Date ,
+            "End_Date":  data?.campaign?.End_Date ,
+            "Target_Audience":  data?.campaign?.Target_Audience ,
+            "Campaign_Required_Channels":  data?.campaign?.Campaign_Required_Channels ,
+            "Campaign_Media": data?.campaign?.Campaign_Media ,
+            "Email": data?.campaign?.user?.email ,
+            "Campaign_Id" :  data?.campaign?._id 
+        }
+        return obj
+    }
+
+    const Newmapper = () =>{
+        const obj = {
+            "Is_Public": dto?.Is_Public ? true: false,
+            "Headline":   "",
+            "Budget":  0,
+            "Brief_Description":   '',
+            "Campaign_Details":   '',
+            "Is_Ongoing":  false,
+            "Start_Date": '',
+            "End_Date":  '',
+            "Target_Audience":  '',
+            "Campaign_Required_Channels":   '',
+            "Campaign_Media":  '',
+            "Email":  '',
+            
         }
         return obj
     }
@@ -263,7 +282,7 @@ function OffcanvasCreateCompaign(props:any) {
                                     <select className="form-select" style={{ maxWidth: '80px' }}>
                                         <option>USD</option>
                                     </select>
-                                    <input type="number" id="Budget" value={dto?.Budget ? dto?.Budget : 0} className="form-control" placeholder="0" onChange={updateDto} />
+                                    <input type="number" id="Budget" value={dto?.Budget } className="form-control" placeholder="0" onChange={updateDto} />
                                 </div>
                             </div>
                             
