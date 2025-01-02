@@ -25,7 +25,7 @@ function buyerdashboard() {
 
     useEffect(()=>{
         selectedCampaign &&  getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails, setIsLoading)
-    },[selectedCampaign])
+    },[selectedCampaign, rendControl])
 
     return (
         <>
@@ -35,7 +35,7 @@ function buyerdashboard() {
                     :
 
                     <div>
-                        <CampaignOverview setCampaigns={setCampaigns} selectedCampaignDetails={selectedCampaignDetails} />
+                        <CampaignOverview setRendControl={setRendControl} rendControl={rendControl} setCampaigns={setCampaigns} selectedCampaignDetails={selectedCampaignDetails} />
                     </div>
             }
             <CampaignOffcanvasBuyer />

@@ -322,3 +322,28 @@ export const applyCampaign = async (dto:any) => {
         return null
     }
 }
+
+
+export const changeCreatorStatus = async (dto:any,setRendControl:any, rendControl:boolean) => {
+    try {
+        const response: any = await apiController.post(`/dashboard/campaigns/change_creator_status` , dto)
+        setRendControl(!rendControl)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}
+
+
+export const getCreatorsCampaignSubmissions = async (dto:any,setData:any) => {
+    try {
+        const response: any = await apiController.post(`/dashboard/campaigns/get_creator_campaign_submissions`,dto)
+        setData(response?.data)
+        console.log(response,"lol")
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}

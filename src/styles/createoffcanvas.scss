@@ -54,19 +54,19 @@
     .dropdown {
         position: relative;
 
-        &:hover {
-            .dropdown-menu {
-                display: block;
-                padding: 0;
-                width: auto;
-                left: auto !important;
-                right: 0;
-            }
-        }
+        // &:hover {
+        //     .dropdown-menu {
+        //         display: block;
+        //         padding: 0;
+        //         width: auto;
+        //         left: auto !important;
+        //         right: 0;
+        //     }
+        // }
     }
 
     .dropdown-menu {
-        display: none;
+        // display: none;
         padding: 0;
         width: auto;
         left: auto !important;

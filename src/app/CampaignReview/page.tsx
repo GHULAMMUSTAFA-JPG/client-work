@@ -5,7 +5,8 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import Image from 'next/image'
 import { useState } from 'react'
 import ActivatedCreators from './ActivatedCreators'
-function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
+import {  changeCreatorStatus } from '@/@api'
+function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, setRendControl }: any) {
     const [creatorStatus, setCreatorStatus] = useState({
         'Adam Biddlecombe': 'Activated',
         'Josh Aharonoff': 'Not Fit'
@@ -18,7 +19,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
         }));
     };
     const [totalLenght, setTotalLenght] = useState<number>(0)
-
+    const [selectedStatus, setSelectedStatus] = useState<string>('')
     function getTotalElements(dynamicObject: any) {
         let total = 0;
         for (let key in dynamicObject) {
@@ -31,11 +32,11 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
     }
 
 
-    
+
 
     useEffect(() => {
         selectedCampaignDetails?.campaign && getTotalElements(selectedCampaignDetails?.campaign?.Campaign_Progress)
-       
+
     }, [selectedCampaignDetails])
 
     const getStatusColor = (status: string) => {
@@ -48,7 +49,18 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                 return 'text-dark';
         }
     };
+    const [isOpen, setIsOpen] = useState(true); 
 
+    const handleItemClick = (status: any,array_item:any) => {
+        console.log(array_item,status,selectedCampaignDetails)
+        changeCreatorStatus({
+            creator_id: array_item?._id,
+            campaign_id : selectedCampaignDetails?.campaign?._id,
+            status : status
+        }, setRendControl, rendControl)
+        setSelectedStatus(status);
+        // setIsOpen(false); 
+    };
     const [selectedTab, setSelectedTab] = useState<"All" | "Applicants" | "Activated" | "In_Discussion" | "Contacted" | "To_Connect" | "Not_Fit">("All")
     return (
         <>
@@ -83,7 +95,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                         </div> */}
                                         </div>
                                     </div>
-                                    <button className='btn btn-outline-dark fs-12 btn-sm ms-3'  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">
+                                    <button className='btn btn-outline-dark fs-12 btn-sm ms-3' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">
                                         Edit Campaign <Icon icon="ri:settings-4-line" width={16} height={16} />
                                     </button>
                                 </div>
@@ -154,7 +166,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                         </div>
                                         <p className='mb-2 text-muted'>Impressions</p>
                                         <div className='d-flex align-items-baseline'>
-                                            <h4 className='mb-0 me-2 fs-20'>200</h4>
+                                            <h4 className='mb-0 me-2 fs-20'>0</h4>
                                             {/* <span className='text-muted small'>this month</span> */}
                                         </div>
                                         {/* <div className='text-primary mt-2'>+12.5%</div> */}
@@ -171,7 +183,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                         </div>
                                         <p className='mb-2 text-muted'>New Applications</p>
                                         <div className='d-flex align-items-baseline'>
-                                            <h4 className='mb-0 me-2 fs-20'>{selectedCampaignDetails?.campaign?.Creator_Insights?.Applicants}</h4>
+                                            <h4 className='mb-0 me-2 fs-20'>{selectedCampaignDetails?.campaign?.Creator_Insights?.['To_Contact']}</h4>
                                             {/* <span className='text-muted small'>this month</span> */}
                                         </div>
                                         {/* <div className='text-success mt-2'>+8.2%</div> */}
@@ -205,7 +217,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                         </div>
                                         <p className='mb-2 text-muted'>Total Spend</p>
                                         <div className='d-flex align-items-baseline'>
-                                            <h4 className='mb-0 me-2 fs-20'>$100</h4>
+                                            <h4 className='mb-0 me-2 fs-20'>$ 0</h4>
                                             {/* <span className='text-muted small'>this month</span> */}
                                         </div>
                                         {/* <div className='text-orange mt-2'>+10.8%</div> */}
@@ -229,7 +241,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                         <button onClick={() => {
                                             setSelectedTab(inner_object)
                                         }} key={index} className={selectedTab == inner_object ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm'}>
-                                            {inner_object == "In_Discussion" ? "In Discussion" :inner_object == "To_Contact" ? "To Contact" : inner_object == "Not_Fit" ? "Not Fit":  inner_object} <span className={`badge ${selectedTab == inner_object ? 'bg-white' : 'bg-light'} text-dark ms-1`}>{selectedCampaignDetails?.campaign?.Campaign_Progress?.[inner_object]?.length}</span>
+                                            {inner_object == "In_Discussion" ? "In Discussion" : inner_object == "To_Contact" ? "To Contact" : inner_object == "Not_Fit" ? "Not Fit" : inner_object} <span className={`badge ${selectedTab == inner_object ? 'bg-white' : 'bg-light'} text-dark ms-1`}>{selectedCampaignDetails?.campaign?.Campaign_Progress?.[inner_object]?.length}</span>
                                         </button>
                                     ))
                                 }
@@ -254,8 +266,8 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                     </thead>
                                     <tbody>
                                         {
-                                           (selectedTab=="All" && totalLenght !== 0 && selectedCampaignDetails || selectedCampaignDetails?.campaign?.Campaign_Progress?.[selectedTab]?.length !== 0 ) ?
-                                           selectedCampaignDetails?.campaign?.Campaign_Progress &&   Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
+                                            (selectedTab == "All" && totalLenght !== 0 && selectedCampaignDetails || selectedCampaignDetails?.campaign?.Campaign_Progress?.[selectedTab]?.length !== 0) ?
+                                                selectedCampaignDetails?.campaign?.Campaign_Progress && Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
                                                     selectedCampaignDetails?.campaign?.Campaign_Progress[inner_object]?.map((array_item: any, index: number) => (
                                                         <tr key={index} style={selectedTab == "All" ? { display: 'table-row' } : selectedTab == inner_object ? { display: 'table-row' } : { display: 'none' }}>
                                                             <td className='w-75'>
@@ -285,70 +297,52 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                                                         aria-expanded="false"
                                                                         role="button"
                                                                     >
-                                                                        {inner_object}
+                                                                        {inner_object =="In_Discussion" ?"In Discussion" : inner_object =="To_Contact" ? "To Contact" : inner_object =="Not_Fit" ? "Not Fit" : inner_object =="To_Contact" ? 'To Contact' : inner_object}
                                                                     </span>
-                                                                    <ul className="dropdown-menu">
-                                                                        {/* <li>
-                                                                            <a
-                                                                                className={`dropdown-item ${inner_object === 'Activated' ? 'text-activated' : ''}`}
-                                                                                onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                {inner_object}
-                                                                            </a>
-                                                                        </li> */}
-                                                                        <li>
-                                                                            <a
-                                                                                className="dropdown-item cursor text-activated"
-                                                                                onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                Activated
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a
-                                                                                className="dropdown-item cursor text-discussion"
-                                                                                onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                In Discussion
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a
-                                                                                className="dropdown-item cursor text-contacted"
-                                                                                onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                Contacted
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a
-                                                                                className="dropdown-item cursor text-danger"
-                                                                                onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                Not Fit
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a
-                                                                                className="dropdown-item cursor text-purple"
-                                                                                onClick={(e) => {
-                                                                                    e.preventDefault();
-                                                                                }}
-                                                                            >
-                                                                                To Contact
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
+                                                                    <div className="dropdown">
+                                                                        <button
+                                                                            className="btn "
+                                                                            type="button"
+                                                                            
+                                                                        >
+                                                                            {inner_object.Status}  
+                                                                        </button>
+
+                                                                        {isOpen && ( 
+                                                                            <ul className="dropdown-menu">
+                                                                                <li
+                                                                                    className="dropdown-item cursor text-activated"
+                                                                                    onClick={() => handleItemClick("Activated",array_item)}
+                                                                                >
+                                                                                    Activated
+                                                                                </li>
+                                                                                <li
+                                                                                    className="dropdown-item cursor text-discussion"
+                                                                                    onClick={() => handleItemClick("In_Discussion",array_item)}
+                                                                                >
+                                                                                    In Discussion
+                                                                                </li>
+                                                                                <li
+                                                                                    className="dropdown-item cursor text-contacted"
+                                                                                    onClick={() => handleItemClick("Contacted",array_item)}
+                                                                                >
+                                                                                    Contacted
+                                                                                </li>
+                                                                                <li
+                                                                                    className="dropdown-item cursor text-danger"
+                                                                                    onClick={() => handleItemClick("Not_Fit",array_item)}
+                                                                                >
+                                                                                    Not Fit
+                                                                                </li>
+                                                                                <li
+                                                                                    className="dropdown-item cursor text-purple"
+                                                                                    onClick={() => handleItemClick("To_Contact",array_item)}
+                                                                                >
+                                                                                    To Contact
+                                                                                </li>
+                                                                            </ul>
+                                                                        )}
+                                                                    </div>
                                                                 </div>
                                                             </td>
                                                             <td className='text-center'>
@@ -359,7 +353,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails }: any) {
                                                     ))
                                                 ))
                                                 :
-                                                
+
                                                 <tr>
                                                     <td colSpan={3}>
                                                         <div style={{ textAlign: 'center' }}>No data found</div>
