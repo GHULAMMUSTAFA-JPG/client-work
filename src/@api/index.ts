@@ -313,3 +313,12 @@ export const getCampaignsCreatorsOverview = async (email:string,setData:any) => 
 }
 
 
+export const applyCampaign = async (dto:any) => {
+    try {
+        const response: any = await apiController.post(`/dashboard/campaigns/apply_campaign` , dto)
+        return response
+    } catch (error) {
+        console.log(error, "Error in get campaign list api")
+        return null
+    }
+}

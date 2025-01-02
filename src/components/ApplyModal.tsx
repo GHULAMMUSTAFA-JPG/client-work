@@ -1,6 +1,6 @@
 
 "use client"
-import { login } from '@/@api';
+import { applyCampaign, login } from '@/@api';
 import useForm from '@/hooks/useForm';
 import React, { useState } from 'react'
 import Image from "next/image";
@@ -8,12 +8,18 @@ import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
-
-
+import { useAuth } from '@/contexts/AuthContext';
 
 function ApplyModal(props:any) {
+    const {user} = useAuth()
     const {selectedCampaign} = props
-
+    const applyCreatorProgram = (e:any) =>{
+        e.preventDefault()
+        applyCampaign({
+            campaign_id : selectedCampaign?._id,
+            creator_email: user?.email
+        })
+    }
     return (
         <>
             <div className="modal fade" id="applyModal" tabIndex={-1} aria-labelledby="applyModalLabel" aria-hidden="true">
@@ -203,7 +209,7 @@ function ApplyModal(props:any) {
                                     placeholder="Send a message about your interest in collaborating with our brand."
                                 ></textarea>
                             </div> */}
-                            <button className='btn btn-info w-100 mt-4'>Apply</button>
+                            <button onClick={applyCreatorProgram} className='btn btn-info w-100 mt-4'>Apply</button>
 
                         </div>
                         {/* <div className="modal-footer">
