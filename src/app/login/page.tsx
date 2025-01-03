@@ -325,7 +325,7 @@ const AuthPage = () => {
                             <div className="mb-3">
                                 <label htmlFor={isLogin ? "email" : "email"} className="form-label fs-14">
                                     {isLogin ? "Email" : (userType === 'brand' ? "Company Email" : "Email")}
-                                    {(!isLogin && userType === 'brand') && <span className="text-muted">(must match site domain)</span>}
+                                    {(!isLogin && userType === 'brand')}
                                 </label>
                                 <input
                                     type="email"
@@ -343,7 +343,7 @@ const AuthPage = () => {
 
                             {!isLogin && <div className="mb-3">
                                 <label htmlFor="company_website" className="form-label fs-14">
-                                    Company Website <span className="text-muted">(must match email domain)</span>
+                                    Company Website 
                                 </label>
                                 <div className="input-group">
                                     <span className="input-group-text fs-14">https://</span>
@@ -365,7 +365,7 @@ const AuthPage = () => {
                             <div className="mb-4">
                                 <label htmlFor="password" className="form-label fs-14">
                                     Password
-                                    {!isLogin && <span className="text-muted">(min 8 letters, numbers, and symbols required)</span>}
+                                    {!isLogin}
                                 </label>
                                 <input
                                     type="password"
