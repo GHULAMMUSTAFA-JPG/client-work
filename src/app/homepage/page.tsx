@@ -23,8 +23,8 @@ function Homepage() {
     // const router = useRouter()
     useEffect(() => {
         fetchData()
-        getCampaignsCreatorsOverview(user?.email,setCampaigns )
-    }, [])
+        user?.email &&  getCampaignsCreatorsOverview(user?.email,setCampaigns )
+    }, [user])
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()

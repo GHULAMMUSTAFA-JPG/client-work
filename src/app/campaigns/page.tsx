@@ -21,8 +21,8 @@ function Campaigns() {
     };
 
     useEffect(() => {
-        getCampaignsCreatorsOverview(user?.email, setCampaigns)
-    }, [])
+        user?.email &&    getCampaignsCreatorsOverview(user?.email, setCampaigns)
+    }, [user])
 
     useEffect(() => {
         console.log(campaigns, "campaigns")
