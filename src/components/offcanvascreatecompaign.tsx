@@ -123,8 +123,8 @@ interface createCampaignDto {
         "Brief_Description": string,
         "Campaign_Details": string,
         "Is_Ongoing": boolean,
-        "Start_Date": string,
-        "End_Date": string,
+        "Start_Date"?: string,
+        "End_Date"?: string,
         "Target_Audience": string,
         "Campaign_Required_Channels": string,
         "Campaign_Media":string,
@@ -197,9 +197,7 @@ function OffcanvasCreateCompaign(props:any) {
             "Budget":  0,
             "Brief_Description":   '',
             "Campaign_Details":   '',
-            "Is_Ongoing":  false,
-            "Start_Date": '2025-01-16T19:00:00.000Z',
-            "End_Date":  '2025-01-16T19:00:00.000Z',
+            "Is_Ongoing":  true,
             "Target_Audience":  '',
             "Campaign_Required_Channels":   '',
             "Campaign_Media":  '',
@@ -334,7 +332,7 @@ function OffcanvasCreateCompaign(props:any) {
                                                 onClick={() => {
                                                     setActiveTab('ongoing')
                                                     setDto((prev:any)=>{
-                                                        return{...prev,["Is_Ongoing"] : false}
+                                                        return{...prev,["Is_Ongoing"] : true}
                                                     })
                                                 }}
                                                 type="button"
