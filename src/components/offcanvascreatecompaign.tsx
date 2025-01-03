@@ -197,7 +197,7 @@ function OffcanvasCreateCompaign(props:any) {
             "Budget":  0,
             "Brief_Description":   '',
             "Campaign_Details":   '',
-            "Is_Ongoing":  true,
+            "Is_Ongoing":  false,
             "Start_Date": '2025-01-16T19:00:00.000Z',
             "End_Date":  '2025-01-16T19:00:00.000Z',
             "Target_Audience":  '',
@@ -334,7 +334,7 @@ function OffcanvasCreateCompaign(props:any) {
                                                 onClick={() => {
                                                     setActiveTab('ongoing')
                                                     setDto((prev:any)=>{
-                                                        return{...prev,["Is_Ongoing"] : true}
+                                                        return{...prev,["Is_Ongoing"] : false}
                                                     })
                                                 }}
                                                 type="button"
