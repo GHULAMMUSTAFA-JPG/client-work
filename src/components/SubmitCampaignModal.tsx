@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { addCampaignPostSubmission } from "@/@api";
 interface submitcampaignprops {
     
         "campaign_id": string,
@@ -12,7 +13,7 @@ interface submitcampaignprops {
 }
 function SubmitCampaignModal(props:any) {
     const {user} = useAuth()
-    const {selectedCampaign} = props
+    const {selectedCampaign, rendControl, setRendControl} = props
      const router = useRouter();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
@@ -37,7 +38,7 @@ function SubmitCampaignModal(props:any) {
         selectedCampaign?.campaign?._id && setDto((prev:any)=>{
             return{...prev,["campaign_id"] :selectedCampaign?.campaign?._id }
         })
-    },[user])
+    },[selectedCampaign])
     
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -51,6 +52,12 @@ function SubmitCampaignModal(props:any) {
     };
 
 
+    const submitForm = async(e:any) =>{
+        e.preventDefault();
+       const result = await addCampaignPostSubmission(dto, rendControl, setRendControl)
+      
+    }
+
     const valueAdder = (e:any)=>{
         setDto((prev:any)=>{
             return{...prev,[e.target.id]:e.target.value}
@@ -63,7 +70,7 @@ function SubmitCampaignModal(props:any) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="submitCampaignModalLabel">Submit Campaign</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSubmissionModal"></button>
                     </div>
                     <div className="modal-body">
                         <div className="row">
@@ -75,6 +82,7 @@ function SubmitCampaignModal(props:any) {
                                             type="text"
                                             className='form-control'
                                             id="post_title"
+                                            onChange={valueAdder}
                                             placeholder='Enter the title of your submission'
                                             required
                                         />
@@ -85,6 +93,7 @@ function SubmitCampaignModal(props:any) {
                                             className='form-control'
                                             rows={4}
                                             id="post_description"
+                                            onChange={valueAdder}
                                             placeholder="Describe the work you've completed and any relevant details"
                                             required
                                         />
@@ -168,7 +177,7 @@ function SubmitCampaignModal(props:any) {
                     </div>
                     <div className="modal-footer">
                         <button className='btn btn-outline-info btn-sm me-2' data-bs-dismiss="modal">Cancel</button>
-                        <button type='submit' className='btn btn-info btn-sm'>
+                        <button type='submit' className='btn btn-info btn-sm' onClick={submitForm}>
                             Upload Submission
                         </button>
                     </div>

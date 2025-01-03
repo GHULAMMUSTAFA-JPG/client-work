@@ -150,6 +150,7 @@ function OffcanvasCreateCompaign(props:any) {
     };
 
     useEffect(()=>{
+        console.log(user)
      user?.email &&   setDto((prev:any)=>{
             return{...prev,["Email"] : user?.email }
         })
@@ -196,17 +197,24 @@ function OffcanvasCreateCompaign(props:any) {
             "Budget":  0,
             "Brief_Description":   '',
             "Campaign_Details":   '',
-            "Is_Ongoing":  false,
+            "Is_Ongoing":  true,
             "Start_Date": '',
             "End_Date":  '',
             "Target_Audience":  '',
             "Campaign_Required_Channels":   '',
             "Campaign_Media":  '',
-            "Email":  '',
+            "Email":  user?.email,
             
         }
         return obj
     }
+
+
+    useEffect(()=>{
+        user?.email && setDto((prev:any)=>{
+            return{...prev,["Email"] : user?.email}
+        })
+    },[user])
 
     const updateDto = (e: any) => {
 

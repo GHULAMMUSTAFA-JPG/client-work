@@ -14,6 +14,7 @@ import { getCreatorsCampaignSubmissions } from '@/@api';
 const SubmitCampaigns = () => {
     const { user } = useAuth()
     const router = useRouter();
+    const [rendControl,setRendControl] = useState<boolean>(false)
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [data, setData] = useState<any>()
     const [selectedPost, setSelectedPost] = useState<any>(null)
@@ -28,7 +29,7 @@ const SubmitCampaigns = () => {
     useEffect(() => {
         const code = searchParams.get('id');
         code && getSubmissionCampaigns(code)
-    }, [])
+    }, [rendControl])
 
     const handleSubmitWork = (e: React.FormEvent) => {
         e.preventDefault();
@@ -155,7 +156,7 @@ const SubmitCampaigns = () => {
                     </div>
                 </div>
             </section>
-            <SubmitCampaignModal selectedCampaign={data} />
+            <SubmitCampaignModal selectedCampaign={data} rendControl={rendControl} setRendControl={setRendControl} />
             <SubmitDetailModal selectedPost={selectedPost} campaignData={data} />
         </>
     );

@@ -1,6 +1,6 @@
 "use client";
 
-import { fetch_dashboard_data } from "@/@api";
+import { fetch_dashboard_data, fetchBuyerActiveCampaigns } from "@/@api";
 import TopCardBuyer from "@/components/TopCardBuyer";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -14,9 +14,11 @@ import ProgressDashboardBuyer from "@/components/progressdashboardbuyer";
 import VerticalBarChart from "@/components/verticalbarchart";
 import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 import PostCalendar from "@/components/Calendar";
+import { useAuth } from "@/contexts/AuthContext";
 function homepagebuyer() {
-
+    const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
+    const [activeCampaigns, setActiveCampaigns] = useState<any>()
     // const router = useRouter()
     useEffect(() => {
 
@@ -24,6 +26,10 @@ function homepagebuyer() {
 
     }, [])
 
+
+    useEffect(() => {
+        fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
+    }, [user?.email])
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
@@ -139,127 +145,48 @@ function homepagebuyer() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    {/* <div className="d-flex align-items-center">
-                                                        <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                        <div className="ms-2 text-start">
-                                                            <p className="mb-0">Billi Ellish</p>
-                                                            <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                        </div>
-                                                    </div> */}
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className='text-start'>
-                                                    <a href='#' className='fw-medium text-dark fs-16'>Help us increase our product awareness</a>
-                                                    <div className='d-flex align-items-center mt-1'>
-                                                        <p className='fs-12 text-warning mb-0'>Dec 10, 2024</p>
-                                                        <div className="vr mx-2"></div>
-                                                        <p className='fs-12 text-warning mb-0'>1 day ago</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">3</p>
-                                                </td>
-                                                <td>
-                                                    <p className="mb-0">7</p>
-                                                </td>
-                                                <td>
-                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                </td>
-                                            </tr>
+                                            {
+                                             activeCampaigns?.campaigns?.length !== 0 ?   activeCampaigns?.campaigns?.map((campaign: any, index: number) => {
+                                                if(index < 6){
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td className='text-start'>
+                                                                {/* <div className="d-flex align-items-center">
+                                                                 <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
+                                                                  <div className="ms-2 text-start">
+                                                                  <p className="mb-0">Billi Ellish</p>
+                                                                      <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
+                                                                    </div>
+                                                                   </div> */}
+                                                                <a href='#' className='fw-medium text-dark fs-16'>{campaign?.Headline}</a>
+                                                                <div className='d-flex align-items-center mt-1'>
+                                                                    <p className='fs-12 text-warning mb-0'>{campaign?.Created_At}</p>
+                                                                    <div className="vr mx-2"></div>
+                                                                    <p className='fs-12 text-warning mb-0'>{campaign?.Time_Ago}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <p className="mb-0">{campaign?.Creator_Insights?.Activated}</p>
+                                                            </td>
+                                                            <td>
+                                                                <p className="mb-0">{campaign?.Creator_Insights?.To_Contact}</p>
+                                                            </td>
+                                                            <td>
+                                                                <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                }
+                                                    
+                                                })
+                                                : 
+                                                <tr>
+                                                    <td colSpan={4} style={{textAlign:'center'}}>
+                                                        No data found
+                                                    </td>
+                                                </tr>                                            }
+
+
                                         </tbody>
                                     </table>
                                 </div>
