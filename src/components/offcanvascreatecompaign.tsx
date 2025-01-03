@@ -204,7 +204,6 @@ function OffcanvasCreateCompaign(props:any) {
             "Campaign_Required_Channels":   '',
             "Campaign_Media":  '',
             "Email":  user?.email,
-            
         }
         return obj
     }
