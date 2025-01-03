@@ -65,7 +65,7 @@ export default function Header() {
                         <div className="dropdown ms-2">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
-                                    <Image src={userProfile?.Profile_Image} alt="user" width={32} height={32} className="user-img" />
+                                   {userProfile?.Profile_Image ? <Image src={userProfile?.Profile_Image} alt="user" width={32} height={32} className="user-img" /> : <h6>{userProfile?.Name ? userProfile?.Name?.slice(0,2) : "NA" }</h6>}
                                     <p className="mb-0 ms-2">{userProfile?.Name}</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>
