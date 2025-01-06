@@ -115,33 +115,33 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from '@/contexts/AuthContext';
-import { createCampaign, updateCampaign } from '@/@api';
+import { createCampaign, handleFileUpload, updateCampaign } from '@/@api';
 interface createCampaignDto {
-        "Is_Public": boolean,
-        "Headline": string,
-        "Budget": number,
-        "Brief_Description": string,
-        "Campaign_Details": string,
-        "Is_Ongoing": boolean,
-        "Start_Date"?: string,
-        "End_Date"?: string,
-        "Target_Audience": string,
-        "Campaign_Required_Channels": string,
-        "Campaign_Media":string,
-        "Email":string,
-        "Campaign_Id"? : string 
+    "Is_Public": boolean,
+    "Headline": string,
+    "Budget": number,
+    "Brief_Description": string,
+    "Campaign_Details": string,
+    "Is_Ongoing": boolean,
+    "Start_Date"?: string,
+    "End_Date"?: string,
+    "Target_Audience": string,
+    "Campaign_Required_Channels": string,
+    "Campaign_Media": string,
+    "Email": string,
+    "Campaign_Id"?: string
 }
 
 
-function OffcanvasCreateCompaign(props:any) {
-    const {rendControl,setRendControl, data} = props
+function OffcanvasCreateCompaign(props: any) {
+    const { rendControl, setRendControl, data } = props
     const [activeTab, setActiveTab] = useState('ongoing');
     const [startDate, setStartDate] = useState<any>(undefined);
     const [endDate, setEndDate] = useState<any>(undefined);
     const [dto, setDto] = useState<createCampaignDto>()
-    
-    const {user} = useAuth()
-     // Function to handle calendar icon click
+
+    const { user } = useAuth()
+    // Function to handle calendar icon click
     const handleCalendarClick = () => {
         const startInput = document.getElementById('start-date-input');
         if (startInput) {
@@ -149,86 +149,86 @@ function OffcanvasCreateCompaign(props:any) {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(user)
-     user?.email &&   setDto((prev:any)=>{
-            return{...prev,["Email"] : user?.email }
+        user?.email && setDto((prev: any) => {
+            return { ...prev, ["Email"]: user?.email }
         })
-    },[user])
+    }, [user])
 
-    useEffect(()=>{
-        if(data) {
-            
+    useEffect(() => {
+        if (data) {
+
             const obj = mapper()
             setDto(obj)
-        } 
-        else{
+        }
+        else {
             const obj = Newmapper()
             setDto(obj)
         }
 
-       
-    },[data])
+
+    }, [data])
 
 
-    const mapper = () =>{
+    const mapper = () => {
         const obj = {
             "Is_Public": data?.campaign?.Is_Public,
-            "Headline":  data?.campaign?.Headline ,
-            "Budget":  data?.campaign?.Budget ,
-            "Brief_Description":  data?.campaign?.Brief_Description,
-            "Campaign_Details":  data?.campaign?.Campaign_Details,
-            "Is_Ongoing":  data?.campaign?.Is_Ongoing,
-            "Start_Date":  data?.campaign?.Start_Date ,
-            "End_Date":  data?.campaign?.End_Date ,
-            "Target_Audience":  data?.campaign?.Target_Audience ,
-            "Campaign_Required_Channels":  data?.campaign?.Campaign_Required_Channels ,
-            "Campaign_Media": data?.campaign?.Campaign_Media ,
-            "Email": data?.campaign?.user?.email ,
-            "Campaign_Id" :  data?.campaign?._id 
+            "Headline": data?.campaign?.Headline,
+            "Budget": data?.campaign?.Budget,
+            "Brief_Description": data?.campaign?.Brief_Description,
+            "Campaign_Details": data?.campaign?.Campaign_Details,
+            "Is_Ongoing": data?.campaign?.Is_Ongoing,
+            "Start_Date": data?.campaign?.Start_Date,
+            "End_Date": data?.campaign?.End_Date,
+            "Target_Audience": data?.campaign?.Target_Audience,
+            "Campaign_Required_Channels": data?.campaign?.Campaign_Required_Channels,
+            "Campaign_Media": data?.campaign?.Campaign_Media,
+            "Email": data?.campaign?.user?.email,
+            "Campaign_Id": data?.campaign?._id
         }
         return obj
     }
 
-    const Newmapper = () =>{
+    const Newmapper = () => {
         const obj = {
-            "Is_Public": dto?.Is_Public ? true: false,
-            "Headline":   "",
-            "Budget":  0,
-            "Brief_Description":   '',
-            "Campaign_Details":   '',
-            "Is_Ongoing":  true,
-            "Target_Audience":  '',
-            "Campaign_Required_Channels":   '',
-            "Campaign_Media":  '',
-            "Email":  user?.email,
+            "Is_Public": dto?.Is_Public ? true : false,
+            "Headline": "",
+            "Budget": 0,
+            "Brief_Description": '',
+            "Campaign_Details": '',
+            "Is_Ongoing": true,
+            "Target_Audience": '',
+            "Campaign_Required_Channels": '',
+            "Campaign_Media": '',
+            "Email": user?.email,
         }
         return obj
     }
 
 
-    useEffect(()=>{
-        user?.email && setDto((prev:any)=>{
-            return{...prev,["Email"] : user?.email}
+    useEffect(() => {
+        user?.email && setDto((prev: any) => {
+            return { ...prev, ["Email"]: user?.email }
         })
-    },[user])
+    }, [user])
 
     const updateDto = (e: any) => {
 
         setDto((prev: any) => {
-          const updatedDto = { ...prev, [e.target.id]: e.target.value };
-          console.log(updatedDto, "Updated dto"); // Log the updated state here
-          return updatedDto;
+            const updatedDto = { ...prev, [e.target.id]: e.target.value };
+            console.log(updatedDto, "Updated dto"); // Log the updated state here
+            return updatedDto;
         });
 
-      }
+    }
 
-        const handleSubmit = (e:any) =>{
-        
-            e.preventDefault();
-            data ? updateCampaign(dto,rendControl,setRendControl) :
-            createCampaign(dto,rendControl,setRendControl)
-        }
+    const handleSubmit = (e: any) => {
+
+        e.preventDefault();
+        data ? updateCampaign(dto, rendControl, setRendControl) :
+            createCampaign(dto, rendControl, setRendControl)
+    }
 
 
     return (
@@ -240,7 +240,7 @@ function OffcanvasCreateCompaign(props:any) {
         >
             <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="offcanvasRight2Label">
-                   {data ? "Update Campaign" :  "Create Campaign"}
+                    {data ? "Update Campaign" : "Create Campaign"}
                 </h5>
                 <button
                     type="button"
@@ -263,7 +263,7 @@ function OffcanvasCreateCompaign(props:any) {
                                     <div className="d-flex align-items-center gap-2 justify-content-between">
                                         <div className="form-text">Creators can see the info below and apply to partner</div>
                                         <div className="form-check form-switch">
-                                            <input  className="form-check-input" type="checkbox" role="switch" checked={dto?.Is_Public} id="Is_Public" onChange={updateDto} />
+                                            <input className="form-check-input" type="checkbox" role="switch" checked={dto?.Is_Public} id="Is_Public" onChange={updateDto} />
                                         </div>
                                     </div>
                                 </div>
@@ -287,10 +287,10 @@ function OffcanvasCreateCompaign(props:any) {
                                     <select className="form-select" style={{ maxWidth: '80px' }}>
                                         <option>USD</option>
                                     </select>
-                                    <input type="number" id="Budget" value={dto?.Budget } className="form-control" placeholder="0" onChange={updateDto} />
+                                    <input type="number" id="Budget" value={dto?.Budget} className="form-control" placeholder="0" onChange={updateDto} />
                                 </div>
                             </div>
-                            
+
                             <div className="mb-3">
                                 <label className="form-label">Brief Description *</label>
                                 <textarea
@@ -331,8 +331,8 @@ function OffcanvasCreateCompaign(props:any) {
                                                 className={`nav-link d-flex align-items-center gap-1 ${activeTab === 'ongoing' ? 'active text-white' : ''}`}
                                                 onClick={() => {
                                                     setActiveTab('ongoing')
-                                                    setDto((prev:any)=>{
-                                                        return{...prev,["Is_Ongoing"] : true}
+                                                    setDto((prev: any) => {
+                                                        return { ...prev, ["Is_Ongoing"]: true }
                                                     })
                                                 }}
                                                 type="button"
@@ -348,10 +348,11 @@ function OffcanvasCreateCompaign(props:any) {
                                             <button
                                                 className={`nav-link d-flex align-items-center gap-1 ${activeTab === 'dateRange' ? 'active text-white' : ''}`}
                                                 onClick={() => {
-                                                    setDto((prev:any)=>{
-                                                        return{...prev,["Is_Ongoing"] : false}
+                                                    setDto((prev: any) => {
+                                                        return { ...prev, ["Is_Ongoing"]: false }
                                                     })
-                                                    setActiveTab('dateRange')}}
+                                                    setActiveTab('dateRange')
+                                                }}
                                                 type="button"
                                                 style={{ backgroundColor: activeTab === 'dateRange' ? '#15ab63' : 'transparent' }}
                                             >
@@ -366,8 +367,8 @@ function OffcanvasCreateCompaign(props:any) {
                                             <DatePicker
                                                 id="Start_Date"
                                                 selected={startDate}
-                                                onChange={(date)=>setDto((prev:any)=>{
-                                                    return{...prev,["Start_Date"] : date}
+                                                onChange={(date) => setDto((prev: any) => {
+                                                    return { ...prev, ["Start_Date"]: date }
                                                 })}
                                                 selectsStart
                                                 startDate={startDate}
@@ -379,8 +380,8 @@ function OffcanvasCreateCompaign(props:any) {
                                             <span className="input-group-text">→</span>
                                             <DatePicker
                                                 selected={endDate}
-                                                onChange={(date)=>setDto((prev:any)=>{
-                                                    return{...prev,["End_Date"] : date}
+                                                onChange={(date) => setDto((prev: any) => {
+                                                    return { ...prev, ["End_Date"]: date }
                                                 })}
                                                 selectsEnd
                                                 id='End_Date'
@@ -421,7 +422,7 @@ function OffcanvasCreateCompaign(props:any) {
                                     type="text"
                                     className="form-control"
                                     id='Campaign_Required_Channels'
-                                    value={dto?.Campaign_Required_Channels? dto?.Campaign_Required_Channels : ''}
+                                    value={dto?.Campaign_Required_Channels ? dto?.Campaign_Required_Channels : ''}
                                     placeholder="Podcasts, LinkedIn Posts, Event Speakers"
                                     onChange={updateDto}
                                 />
@@ -434,12 +435,29 @@ function OffcanvasCreateCompaign(props:any) {
                                     <div className="vr"></div>
                                     <small className="text-muted">Max 10 MB</small>
                                 </div>
-                                <div className="border-dashed rounded-2 text-center bg-base size-box">
-                                    <input type="file" className="d-none" id="Campaign_Media" accept="image/*" />
-                                    <label htmlFor="campaignImage" className="cursor-pointer">
+                                <div
+                                    className="border-dashed rounded-2 text-center bg-base size-box"
+                                   >
+                                    <input
+                                        onChange={async (e: any) => {
+                                            const result:any = await handleFileUpload(e);
+                                            console.log(result,"result")
+                                          setDto((prev:any)=>{
+                                            return{...prev, ['Campaign_Media'] : result?.[0].file_urls}
+                                          }) 
+                                        }}
+                                        type="file"
+                                        className="d-none"
+                                        id="Campaign_Media"
+                                        accept="image/*"
+                                    />
+                                    <label htmlFor="Campaign_Media" className="cursor-pointer">
                                         <Icon icon="ph:plus-bold" className="fs-4" />
                                         {/* <div className="text-muted fs-14">Click or drag image to upload</div> */}
                                     </label>
+                                    {
+                                        dto?.Campaign_Media && <img src={dto?.Campaign_Media} width={100} height={100}/>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -448,7 +466,7 @@ function OffcanvasCreateCompaign(props:any) {
             </div>
             <div className="border-top d-flex gap-3 justify-content-end p-3">
                 <button className="btn btn-outline-info" style={{ width: '120px' }}>Discard</button>
-                <button className="btn btn-info" style={{ width: '120px' }} onClick={handleSubmit}>{data? "Update" :  "Publish"}</button>
+                <button className="btn btn-info" style={{ width: '120px' }} onClick={handleSubmit}>{data ? "Update" : "Publish"}</button>
             </div>
         </div>
     );
