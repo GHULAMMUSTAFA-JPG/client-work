@@ -4,18 +4,18 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { addCampaignPostSubmission, handleFileUpload } from "@/@api";
 interface submitcampaignprops {
-    
-        "campaign_id": string,
-        "email": string,
-        "post_title": string,
-        "post_description": string ,
-        "media_content" : any[]
-      
+
+    "campaign_id": string,
+    "email": string,
+    "post_title": string,
+    "post_description": string,
+    "media_content": any[]
+
 }
-function SubmitCampaignModal(props:any) {
-    const {user} = useAuth()
-    const {selectedCampaign, rendControl, setRendControl} = props
-     const router = useRouter();
+function SubmitCampaignModal(props: any) {
+    const { user } = useAuth()
+    const { selectedCampaign, rendControl, setRendControl } = props
+    const router = useRouter();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
     const handleSubmitWork = (e: React.FormEvent) => {
@@ -23,39 +23,39 @@ function SubmitCampaignModal(props:any) {
         console.log('Work submitted');
     };
     const [dto, setDto] = useState<submitcampaignprops>({
-        campaign_id : selectedCampaign?.campaign?._id,
-        email: "", 
-        post_description : "" ,
-        post_title : "" ,
-        media_content : []
+        campaign_id: selectedCampaign?.campaign?._id,
+        email: "",
+        post_description: "",
+        post_title: "",
+        media_content: []
     })
 
-    useEffect(()=>{
-        user?.email && setDto((prev:any)=>{
-            return{...prev,["email"] : user?.email}
+    useEffect(() => {
+        user?.email && setDto((prev: any) => {
+            return { ...prev, ["email"]: user?.email }
         })
-    },[user])
+    }, [user])
 
-    useEffect(()=>{
-        selectedCampaign?.campaign?._id && setDto((prev:any)=>{
-            return{...prev,["campaign_id"] :selectedCampaign?.campaign?._id }
+    useEffect(() => {
+        selectedCampaign?.campaign?._id && setDto((prev: any) => {
+            return { ...prev, ["campaign_id"]: selectedCampaign?.campaign?._id }
         })
-    },[selectedCampaign])
-  
+    }, [selectedCampaign])
+
     const removeFile = (index: number) => {
         setUploadedFiles(prev => prev.filter((_, i) => i !== index));
     };
 
 
-    const submitForm = async(e:any) =>{
+    const submitForm = async (e: any) => {
         e.preventDefault();
-       const result = await addCampaignPostSubmission(dto, rendControl, setRendControl)
-      
+        const result = await addCampaignPostSubmission(dto, rendControl, setRendControl)
+
     }
 
-    const valueAdder = (e:any)=>{
-        setDto((prev:any)=>{
-            return{...prev,[e.target.id]:e.target.value}
+    const valueAdder = (e: any) => {
+        setDto((prev: any) => {
+            return { ...prev, [e.target.id]: e.target.value }
         })
     }
 
@@ -93,6 +93,29 @@ function SubmitCampaignModal(props:any) {
                                             required
                                         />
                                     </div>
+
+                                    <input
+                                                    id="fileInput"
+                                                    type="file"
+                                                    className='d-none'
+                                                    multiple
+                                                    onChange={async (e) => {
+
+                                                        const result: any = await handleFileUpload(e)
+
+                                                        if (result?.length !== 0) {
+                                                            let array: any = []
+                                                            result?.map((url: any, index: number) => {
+                                                                array.push(url?.file_urls)
+                                                            })
+                                                            setDto((prev: any) => {
+                                                                return { ...prev, ["media_content"]: array }
+                                                            })
+                                                        }
+                                                        console.log(result, "result")
+                                                    }}
+                                                />
+                                    
                                     <div className='mb-5'>
                                         <label className='form-label'>Upload Files</label>
                                         {dto?.media_content.length === 0 ? (
@@ -103,56 +126,50 @@ function SubmitCampaignModal(props:any) {
                                             >
                                                 <Icon icon="mdi:cloud-upload-outline" className='mb-2 text-muted' width={40} height={40} />
                                                 <p className='mb-1 fs-12'>Drag and drop files here or click to browse</p>
-                                                <input
+                                                {/* <input
                                                     id="fileInput"
                                                     type="file"
                                                     className='d-none'
                                                     multiple
-                                                    onChange={async(e) =>{
-                                                        
-                                                       const result:any = await handleFileUpload(e)
+                                                    onChange={async (e) => {
 
-                                                        if(result?.length !== 0 ){
-                                                            let array:any = []
-                                                            result?.map((url:any, index:number)=>{
-                                                              array.push(url?.file_urls)
+                                                        const result: any = await handleFileUpload(e)
+
+                                                        if (result?.length !== 0) {
+                                                            let array: any = []
+                                                            result?.map((url: any, index: number) => {
+                                                                array.push(url?.file_urls)
                                                             })
-                                                                setDto((prev:any)=>{
-                                                                    return{...prev,["media_content"]: array}
-                                                                })
+                                                            setDto((prev: any) => {
+                                                                return { ...prev, ["media_content"]: array }
+                                                            })
                                                         }
-                                                         console.log(result,"result")
+                                                        console.log(result, "result")
                                                     }}
-                                                />
+                                                /> */}
                                                 <p className='text-muted small mt-2 mb-0 fs-10'>Supported formats: JPEG, PNG, PDF (Max 10MB)</p>
                                             </div>
-                                        ) : 
-
-                                      dto?.media_content?.map((ele:any, index:number)=>{
-                                        return(
-                                            <div
-                                            className='align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex justify-content-center mb-3 p-4 rounded-3 text-center upload-area'
-                                            style={{ maxWidth: '100px' }}
-                                            onClick={() => document.getElementById('fileInput')?.click()}
-                                        >
+                                        ) :
                                         
-                                           <img width={100} height={100} src={ele} />
-                                               
-                                            {/* <input
-                                                id="fileInput"
-                                                type="file"
-                                                className='d-none'
-                                                multiple
-                                                onChange={(e) => handleFileUpload(e)}
-                                            /> */}
-                                        </div>
-                                        )
-                                      })
-                                           
-                                    }
-                                    <button className='btn btn-outline-warning btn-sm border-dotted rounded-circle d-flex align-items-center justify-content-center' style={{ width: '40px', height: '40px', padding: 0 }}>
-                                                <Icon icon="material-symbols:add" width={20} height={20} />
-                                            </button>
+
+                                            dto?.media_content?.map((ele: any, index: number) => {
+                                                const fileName = ele.split('/').pop();
+                                                return (
+                                                    <div
+                                                        className='align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex flex-column justify-content-center mb-3 p-3 rounded-3 text-center upload-area'
+                                                        style={{ maxWidth: '150px' }}
+                                                        onClick={() => document.getElementById('fileInput')?.click()}
+                                                    >
+                                                        <Icon icon="mdi:file-document-outline" className='mb-2 text-muted' width={30} height={30} />
+                                                        <p className='mb-0 small text-truncate w-100'>{fileName}</p>
+                                                    </div>
+                                                )
+                                            })
+
+                                        }
+                                        {/* <div className='cursor card-hover upload-area d-flex align-items-center justify-content-center border border-dotted border-2 rounded-3' style={{ width: '150px', height: '92px' }} onClick={() => document.getElementById('fileInput')?.click()}>
+                                            <Icon icon="material-symbols:add" width={20} height={20} />
+                                        </div> */}
 
                                         <div className='uploaded-files'>
                                             <div className='row g-3'>
