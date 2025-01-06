@@ -17,7 +17,7 @@ apiController.interceptors.request.use((request) => {
 
 apiController.interceptors.response.use(
   (response) => {
-    console.log(response.config.url)
+    // console.log(response.config.url)
 
 
     // Display success message if it exists

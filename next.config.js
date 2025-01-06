@@ -14,9 +14,12 @@ module.exports = {
     images: {
         remotePatterns: [
           {
+            protocol: 'http',
+            hostname: '**',
+          },
+          {
             protocol: 'https',
-            hostname: 'media.licdn.com',
-            port: '',
+            hostname: '**',
           },
         ],
       },

@@ -1,4 +1,6 @@
+import axios from "axios";
 import { apiController } from "./baseUrl";
+import { toast } from "react-toastify";
 
 export const fetch_dashboard_data = () => {
     const response = apiController.get('dashboard/dashboard_data')
@@ -44,15 +46,19 @@ export const fetchCompanyData = async (email: string, setCompanyData: any) => {
     }
 }
 
-export const updateProfileInformation = async (email: string, dto: any) => {
+export const updateProfileInformation = async (dto: any) => {
     try {
-        const response = apiController.put(`/dashboard/creators/update_creator/${email}`, dto)
+        const response = apiController.put(`/dashboard/creators/update_creator`, dto)
         return response
     } catch (error) {
         console.log(error)
         return error
     }
 }
+
+
+
+
 
 
 export const fetchBuyerDiscoveryData = async (email: string, setData: any, setIsLoading: any) => {
@@ -361,7 +367,7 @@ export const fetchBuyerActiveCampaigns = async (email: string, setData: any) => 
 }
 
 
-export const addCampaignPostSubmission = async (dto: any, rendControl:boolean, setRendControl:any) => {
+export const addCampaignPostSubmission = async (dto: any, rendControl: boolean, setRendControl: any) => {
     try {
         const response = await apiController.post('/dashboard/campaigns/add_campaign_post_submission', dto)
         const closeButton: any = document.getElementById('closeSubmissionModal')
@@ -374,3 +380,76 @@ export const addCampaignPostSubmission = async (dto: any, rendControl:boolean, s
         return error
     }
 }
+
+const uploadImage = async (file: any) => {
+    try {
+        const formData = new FormData();
+        formData.append('file_request', file);
+
+        const response = await axios.post('https://synncapi.onrender.com/dashboard/upload_files', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        console.log('Upload successful:', response.data);
+        return response?.data;
+    } catch (error: any) {
+        console.error('Error uploading image:', error.response?.data || error.message);
+        return error;
+    }
+};
+
+export const handleFileUpload = async (event: any) => {
+    const files = event.target.files;
+    const maxImageSize = 10 * 1024 * 1024
+    if (files && files.length > 0) {
+        const fileUploadPromises: Promise<any>[] = [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            // Check if the file is an image
+            if (file.type.startsWith('image/')) {
+                
+                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/heic'];
+                if(file.size > maxImageSize ){
+                        toast.warn('Image size cannot exceed 10mb')
+                }
+                else if (allowedImageTypes.includes(file.type)) {
+                    fileUploadPromises.push(uploadImage(file));
+                }
+                
+                else {
+                    toast.warn('Invalid image file. Only JPEG, PNG, JPG, WEBP, HEIC are supported.');
+                }
+            }
+            // Check if the file is a video
+            else if (file.type.startsWith('video/')) {
+                const allowedVideoTypes = ['video/mp4', 'video/mkv', 'video/quicktime']; // .mov is video/quicktime in MIME type
+
+                if (allowedVideoTypes.includes(file.type)) {
+                    fileUploadPromises.push(uploadImage(file));
+                } else {
+                    toast.warn('Invalid video file. Only MP4, MKV, MOV are supported.');
+                }
+            }
+            // Check if the file is a PDF
+            else if (file.type === 'application/pdf') {
+                fileUploadPromises.push(uploadImage(file));
+            } else {
+                toast.warn('The file is not supported.');
+            }
+        }
+
+        // Wait for all files to be uploaded
+        try {
+            const results = await Promise.all(fileUploadPromises);
+            console.log('All files uploaded successfully:', results);
+            return results;
+        } catch (error) {
+            console.error('Error uploading one or more files:', error);
+            return error;
+        }
+    }
+};

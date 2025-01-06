@@ -2,13 +2,14 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { addCampaignPostSubmission } from "@/@api";
+import { addCampaignPostSubmission, handleFileUpload } from "@/@api";
 interface submitcampaignprops {
     
         "campaign_id": string,
         "email": string,
         "post_title": string,
-        "post_description": string
+        "post_description": string ,
+        "media_content" : any[]
       
 }
 function SubmitCampaignModal(props:any) {
@@ -25,7 +26,8 @@ function SubmitCampaignModal(props:any) {
         campaign_id : selectedCampaign?.campaign?._id,
         email: "", 
         post_description : "" ,
-        post_title : "" 
+        post_title : "" ,
+        media_content : []
     })
 
     useEffect(()=>{
@@ -39,14 +41,7 @@ function SubmitCampaignModal(props:any) {
             return{...prev,["campaign_id"] :selectedCampaign?.campaign?._id }
         })
     },[selectedCampaign])
-    
-    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const filesArray = Array.from(e.target.files);
-            setUploadedFiles(prev => [...prev, ...filesArray]);
-        }
-    };
-
+  
     const removeFile = (index: number) => {
         setUploadedFiles(prev => prev.filter((_, i) => i !== index));
     };
@@ -100,7 +95,7 @@ function SubmitCampaignModal(props:any) {
                                     </div>
                                     <div className='mb-5'>
                                         <label className='form-label'>Upload Files</label>
-                                        {uploadedFiles.length === 0 ? (
+                                        {dto?.media_content.length === 0 ? (
                                             <div
                                                 className='cursor card-hover upload-area p-4 rounded-3 bg-white border border-dotted border-2 text-center cursor-pointer'
                                                 style={{ maxWidth: '200px' }}
@@ -113,28 +108,51 @@ function SubmitCampaignModal(props:any) {
                                                     type="file"
                                                     className='d-none'
                                                     multiple
-                                                    onChange={(e) => handleFileUpload(e)}
+                                                    onChange={async(e) =>{
+                                                        
+                                                       const result:any = await handleFileUpload(e)
+
+                                                        if(result?.length !== 0 ){
+                                                            let array:any = []
+                                                            result?.map((url:any, index:number)=>{
+                                                              array.push(url?.file_urls)
+                                                            })
+                                                                setDto((prev:any)=>{
+                                                                    return{...prev,["media_content"]: array}
+                                                                })
+                                                        }
+                                                         console.log(result,"result")
+                                                    }}
                                                 />
                                                 <p className='text-muted small mt-2 mb-0 fs-10'>Supported formats: JPEG, PNG, PDF (Max 10MB)</p>
                                             </div>
-                                        ) : (
+                                        ) : 
+
+                                      dto?.media_content?.map((ele:any, index:number)=>{
+                                        return(
                                             <div
-                                                className='align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex justify-content-center mb-3 p-4 rounded-3 text-center upload-area'
-                                                style={{ maxWidth: '100px' }}
-                                                onClick={() => document.getElementById('fileInput')?.click()}
-                                            >
-                                                <button className='btn btn-outline-warning btn-sm border-dotted rounded-circle d-flex align-items-center justify-content-center' style={{ width: '40px', height: '40px', padding: 0 }}>
-                                                    <Icon icon="material-symbols:add" width={20} height={20} />
-                                                </button>
-                                                <input
-                                                    id="fileInput"
-                                                    type="file"
-                                                    className='d-none'
-                                                    multiple
-                                                    onChange={(e) => handleFileUpload(e)}
-                                                />
-                                            </div>
-                                        )}
+                                            className='align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex justify-content-center mb-3 p-4 rounded-3 text-center upload-area'
+                                            style={{ maxWidth: '100px' }}
+                                            onClick={() => document.getElementById('fileInput')?.click()}
+                                        >
+                                        
+                                           <img width={100} height={100} src={ele} />
+                                               
+                                            {/* <input
+                                                id="fileInput"
+                                                type="file"
+                                                className='d-none'
+                                                multiple
+                                                onChange={(e) => handleFileUpload(e)}
+                                            /> */}
+                                        </div>
+                                        )
+                                      })
+                                           
+                                    }
+                                    <button className='btn btn-outline-warning btn-sm border-dotted rounded-circle d-flex align-items-center justify-content-center' style={{ width: '40px', height: '40px', padding: 0 }}>
+                                                <Icon icon="material-symbols:add" width={20} height={20} />
+                                            </button>
 
                                         <div className='uploaded-files'>
                                             <div className='row g-3'>

@@ -115,7 +115,7 @@ const SubmitCampaigns = () => {
                                                     {element?.Status}
                                                 </span>
                                                 <Image
-                                                    src={element?.Image_Content}
+                                                    src={element?.Media_Content[0]}
                                                     className="card-img-top"
                                                     alt="Campaign image"
                                                     width={500}

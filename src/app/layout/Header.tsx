@@ -22,13 +22,9 @@ export default function Header() {
     };
 
     useEffect(() => {
-          user?.email && fetchProfileData(user?.email, setUserProfile)
+   
+          user?.email && !user?.isBuyer  && fetchProfileData(user?.email, setUserProfile)
     }, [user,rendControl])
-
-
-    useEffect(()=>{
-        console.log("userProfile", user)
-    },[userProfile])
 
     return (
         <>

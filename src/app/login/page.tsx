@@ -17,6 +17,7 @@ import { useSearchParams } from 'next/navigation';
 
 const AuthPage = () => {
     const [userType, setUserType] = useState<'brand' | 'creator'>('creator');
+    const { loginUser,user, setIsLoading } = useAuth()
     const [isLogin, setIsLogin] = useState(true);
     const [loader, setLoader] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
@@ -50,7 +51,7 @@ const AuthPage = () => {
     // const queryParams = new URLSearchParams(window.location.search);
     // const codess = queryParams.get('code');
 
-    const { loginUser, setIsLoading } = useAuth()
+    
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
     const [error, setError] = useState<string | null>(null);
@@ -131,7 +132,7 @@ const AuthPage = () => {
                 setLoader(false);
                 if (response?.data) {
                     loginUser(response?.data);
-                    router.push('/dashboard');
+                    // router.push('/dashboard');
                 }
             } else {
                 const response = await fetch('https://synncapi.onrender.com/auth/buyer/signup', {
@@ -187,7 +188,7 @@ const AuthPage = () => {
     };
 
     useEffect(() => {
-        codess && getToken(codess)
+        codess && !user?.email && getToken(codess)
     }, [codess])
 
 
