@@ -140,7 +140,7 @@ function OffcanvasCreateCompaign(props: any) {
     const [endDate, setEndDate] = useState<any>(undefined);
     const [dto, setDto] = useState<createCampaignDto>()
 
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     // Function to handle calendar icon click
     const handleCalendarClick = () => {
         const startInput = document.getElementById('start-date-input');
@@ -448,8 +448,7 @@ function OffcanvasCreateCompaign(props: any) {
                                     >
                                         <input
                                             onChange={async (e: any) => {
-                                                const result: any = await handleFileUpload(e);
-                                                console.log(result, "result")
+                                                const result: any = await handleFileUpload(e,setIsLoading);
                                                 setDto((prev: any) => {
                                                     return { ...prev, ['Campaign_Media']: result?.[0].file_urls }
                                                 })

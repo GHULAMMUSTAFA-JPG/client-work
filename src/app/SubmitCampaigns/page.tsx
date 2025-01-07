@@ -12,7 +12,7 @@ import SubmitDetailModal from '@/components/SubmitDetailModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { getCreatorsCampaignSubmissions } from '@/@api';
 const SubmitCampaigns = () => {
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const router = useRouter();
     const [rendControl,setRendControl] = useState<boolean>(false)
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -23,7 +23,7 @@ const SubmitCampaigns = () => {
         getCreatorsCampaignSubmissions({
             email: user?.email,
             campaign_id: code
-        }, setData)
+        }, setData, setIsLoading)
     }
     const searchParams = useSearchParams();
     useEffect(() => {

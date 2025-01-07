@@ -19,13 +19,13 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 
 function Homepage() {
-    const { user, setUserProfile, userProfile } = useAuth()
+    const { user, setUserProfile, userProfile, setIsLoading } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [campaigns, setCampaigns] = useState<any>()
     // const router = useRouter()
     useEffect(() => {
         fetchData()
-        user?.email &&  getCampaignsCreatorsOverview(user?.email,setCampaigns )
+        user?.email &&  getCampaignsCreatorsOverview(user?.email,setCampaigns,setIsLoading )
     }, [user])
 
     const fetchData = async () => {

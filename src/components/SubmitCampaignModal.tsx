@@ -13,7 +13,7 @@ interface submitcampaignprops {
 
 }
 function SubmitCampaignModal(props: any) {
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const { selectedCampaign, rendControl, setRendControl } = props
     const router = useRouter();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -49,7 +49,7 @@ function SubmitCampaignModal(props: any) {
 
     const submitForm = async (e: any) => {
         e.preventDefault();
-        const result = await addCampaignPostSubmission(dto, rendControl, setRendControl)
+        const result = await addCampaignPostSubmission(dto, rendControl, setRendControl, setIsLoading)
 
     }
 
@@ -60,17 +60,13 @@ function SubmitCampaignModal(props: any) {
     }
 
 
-    useEffect(()=>{
-        console.log(dto,"helos")
-    },[dto])
-
     return (
         <div className="modal fade" id="submitCampaignModal" tabIndex={-1} aria-labelledby="submitCampaignModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="submitCampaignModalLabel">Submit Campaign</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSubmissionModal"></button>
+                        <button type="button"  className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSubmissionModal"></button>
                     </div>
                     <div className="modal-body">
                         <div className="row">
@@ -106,7 +102,7 @@ function SubmitCampaignModal(props: any) {
                                         multiple
                                         onChange={async (e) => {
 
-                                            const result: any = await handleFileUpload(e)
+                                            const result: any = await handleFileUpload(e,setIsLoading)
 
                                             if (result?.length !== 0) {
                                                 let array: any = []

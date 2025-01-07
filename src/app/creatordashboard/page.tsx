@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 // import { useRouter } from "next/navigation";
 function CreatorDashboard() {   
-    const {user} = useAuth()
+    const {user, setIsLoading} = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [companyData, setCompanyData] = useState<any>([])
     // const router = useRouter()
@@ -21,7 +21,7 @@ function CreatorDashboard() {
       
     }, [])
     useEffect(() => {
-       user?.email && fetchCompanyData(user?.email,setCompanyData)
+       user?.email && fetchCompanyData(user?.email,setCompanyData,setIsLoading)
     }, [user])
 
     const fetchData = async () => {

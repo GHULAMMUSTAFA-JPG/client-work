@@ -10,23 +10,24 @@ import ProfileCard from '@/components/profilecard';
 import CampaignOffcanvas from '@/components/campaignoffcanvas';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
 import ApplyModal from '@/components/ApplyModal';
-
+import { useAuth } from '@/contexts/AuthContext';
 
 
 function DiscoverCreator() {
     const [searchText, setSearchText] = useState<string>('')
     const [campaignData, setCampaignData] = useState<any>()
+    const {setIsLoading} = useAuth()
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     useEffect(() => {
-       getDiscoverCampaigns(setCampaignData) 
+       getDiscoverCampaigns(setCampaignData,setIsLoading) 
     }, [])
 
     const searchCampaign  =() =>{
-        getDiscoverCampaignsForSearch(searchText,setCampaignData)
+        getDiscoverCampaignsForSearch(searchText,setCampaignData,setIsLoading)
     }
 
     const filterCampaignCall =(e:any) =>{
-        getDiscoverCampaignsForFilters(e,setCampaignData)
+        getDiscoverCampaignsForFilters(e,setCampaignData,setIsLoading)
     }
 
     return (

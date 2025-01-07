@@ -14,19 +14,15 @@ function Campaigns() {
     const router = useRouter();
     const [campaigns, setCampaigns] = useState<any>()
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const handleRowClick = (e:any) => {
-        console.log(e.target.id)
         router.push(`/SubmitCampaigns?id=${e.target.id}`);
     };
 
     useEffect(() => {
-        user?.email &&    getCampaignsCreatorsOverview(user?.email, setCampaigns)
+        user?.email &&    getCampaignsCreatorsOverview(user?.email, setCampaigns, setIsLoading)
     }, [user])
 
-    useEffect(() => {
-        console.log(campaigns, "campaigns")
-    }, [campaigns])
 
     return (
         <>

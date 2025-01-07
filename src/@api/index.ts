@@ -33,14 +33,19 @@ export const fetchProfileData = async (email: string, setUserData: any) => {
     }
 }
 
-export const fetchCompanyData = async (email: string, setCompanyData: any) => {
+export const fetchCompanyData = async (email: string, setCompanyData: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
+
     try {
         const response = await apiController.get(`/dashboard/creators/my_company_creators/${email}`)
         // console.log(response)
         setCompanyData(response?.data)
+        setIsLoading && setIsLoading(false)
         // return response
     } catch (error) {
         console.log(error)
+        setIsLoading && setIsLoading(false)
+
         setCompanyData({})
         // return null
     }
@@ -116,29 +121,38 @@ export const getSpecificCreatorList = async (id: string, setData: any, setIsLoad
 }
 
 
-export const updateListName = async (dto: any, rendControl: boolean, setRendControl: any,setListName?:any) => {
+export const updateListName = async (dto: any, rendControl: boolean, setRendControl: any, setListName?: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response: any = await apiController.put("/dashboard/buyers/update_creators_list", dto)
         setRendControl(!rendControl)
         const closebutton: any = document.getElementById('createNewlistmodalClose')
         setListName && setListName('')
+        setIsLoading && setIsLoading(false)
+
         closebutton && closebutton?.click()
         return response
     } catch (error) {
+        setIsLoading && setIsLoading(false)
+
         console.log(error)
         return error
     }
 }
 
-export const createListName = async (dto: any, rendControl: boolean, setRendControl: any,setListName?:any) => {
+export const createListName = async (dto: any, rendControl: boolean, setRendControl: any, setListName?: any,setIsLoading?:any) => {
+    setIsLoading && setIsLoading(true)
+
     try {
         const response: any = await apiController.post("/dashboard/buyers/create_new_creators_list", dto)
         setRendControl(!rendControl)
         const closebutton: any = document.getElementById('createNewlistmodalClose')
+        setIsLoading && setIsLoading(false)
         closebutton && closebutton?.click()
         setListName && setListName('')
         return response
     } catch (error) {
+        setIsLoading && setIsLoading(false)
         console.log(error)
         return error
     }
@@ -200,7 +214,7 @@ export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any
 }
 
 
-export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any,Newmapper:any) => {
+export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any) => {
     try {
         const response: any = await apiController.post(`/dashboard/campaigns/create_campaign`, dto)
         setRendControl(!rendControl)
@@ -214,7 +228,7 @@ export const createCampaign = async (dto: any, rendControl: boolean, setRendCont
     }
 }
 
-export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any,Newmapper:any) => {
+export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any) => {
     try {
         const response: any = await apiController.put(`/dashboard/campaigns/update_campaign`, dto)
         setRendControl(!rendControl)
@@ -242,37 +256,54 @@ export const deleteCampaign = async (id: string, rendControl: boolean, setRendCo
 }
 
 
-export const getDiscoverCampaigns = async (setData: any) => {
+export const getDiscoverCampaigns = async (setData: any, setIsLoading: any) => {
+    setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/public_campaigns`)
         setData(response?.data?.campaigns)
+        setIsLoading(false)
+
         return response
     } catch (error) {
+        setIsLoading(false)
+
         console.log(error, "Error in get campaign list api")
         return error
     }
 }
 
 
-export const getDiscoverCampaignsForSearch = async (searchText: string, setData: any) => {
+export const getDiscoverCampaignsForSearch = async (searchText: string, setData: any, setIsLoading: any) => {
+    setIsLoading(true)
+
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/search_campaign?headline=${searchText}`)
         setData(response?.data?.campaigns)
+        setIsLoading(false)
+
         return response
     } catch (error) {
+        setIsLoading(false)
+
         console.log(error, "Error in get campaign list api")
         return error
     }
 }
 
 
-export const getDiscoverCampaignsForFilters = async (filter: string, setData: any) => {
+export const getDiscoverCampaignsForFilters = async (filter: string, setData: any, setIsLoading: any) => {
+    setIsLoading(true)
+
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/filter_campaigns?${filter}=true`)
         setData(response?.data?.campaigns)
+        setIsLoading(false)
+
         return response
     } catch (error) {
         console.log(error, "Error in get campaign list api")
+        setIsLoading(false)
+
         return error
     }
 }
@@ -309,23 +340,34 @@ export const changePostStatus = async (dto: any, setIsLoading: any, setRendContr
 
 
 
-export const getCampaignsCreatorsOverview = async (email: string, setData: any) => {
+export const getCampaignsCreatorsOverview = async (email: string, setData: any, setIsLoading: any) => {
+    setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/get_creator_campaigns_overview/${email}`)
         setData(response?.data)
+        setIsLoading(false)
         return response
     } catch (error) {
+        setIsLoading(false)
+
         console.log(error, "Error in get campaign list api")
         return error
     }
 }
 
 
-export const applyCampaign = async (dto: any) => {
+export const applyCampaign = async (dto: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response: any = await apiController.post(`/dashboard/campaigns/apply_campaign`, dto)
+        setIsLoading && setIsLoading(false)
+        const result: any = document.getElementById('applyCampaignCloseModalButton')
+        result && result?.click()
         return response
     } catch (error) {
+        setIsLoading && setIsLoading(false)
+        const result: any = document.getElementById('applyCampaignCloseModalButton')
+        result && result?.click()
         console.log(error, "Error in get campaign list api")
         return error
     }
@@ -344,46 +386,62 @@ export const changeCreatorStatus = async (dto: any, setRendControl: any, rendCon
 }
 
 
-export const getCreatorsCampaignSubmissions = async (dto: any, setData: any) => {
+export const getCreatorsCampaignSubmissions = async (dto: any, setData: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
+
     try {
         const response: any = await apiController.post(`/dashboard/campaigns/get_creator_campaign_submissions`, dto)
         setData(response?.data)
-        console.log(response, "lol")
+        setIsLoading && setIsLoading(false)
         return response
     } catch (error) {
         console.log(error, "Error in get campaign list api")
+        setIsLoading && setIsLoading(false)
+
         return error
     }
 }
 
-export const fetchBuyerActiveCampaigns = async (email: string, setData: any) => {
+export const fetchBuyerActiveCampaigns = async (email: string, setData: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/get_buyer_active_campaigns/${email}`)
         setData(response?.data)
+        setIsLoading && setIsLoading(false)
+
         // console.log(response?.data)
         return response
     } catch (error) {
+        setIsLoading && setIsLoading(false)
+
         console.log(error, "Error in get campaign list api")
         return error
     }
 }
 
 
-export const addCampaignPostSubmission = async (dto: any, rendControl: boolean, setRendControl: any) => {
+export const addCampaignPostSubmission = async (dto: any, rendControl: boolean, setRendControl: any, setIsLoading: any) => {
+    setIsLoading(true)
     try {
         const response = await apiController.post('/dashboard/campaigns/add_campaign_post_submission', dto)
         const closeButton: any = document.getElementById('closeSubmissionModal')
         closeButton && closeButton.click()
         setRendControl(!rendControl)
+        setIsLoading(false)
+
         return response
 
     } catch (error) {
         console.log(error, "Error in get campaign list api")
+        setIsLoading(false)
+
         return error
     }
 }
 
-const uploadImage = async (file: any) => {
+const uploadImage = async (file: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
+
     try {
         const formData = new FormData();
         formData.append('file_request', file);
@@ -394,15 +452,18 @@ const uploadImage = async (file: any) => {
             },
         });
 
-        console.log('Upload successful:', response.data);
+        setIsLoading && setIsLoading(false)
+
         return response?.data;
     } catch (error: any) {
         console.error('Error uploading image:', error.response?.data || error.message);
+        setIsLoading && setIsLoading(false)
+
         return error;
     }
 };
 
-export const handleFileUpload = async (event: any) => {
+export const handleFileUpload = async (event: any, setIsLoading?: any) => {
     const files = event.target.files;
     const maxImageSize = 10 * 1024 * 1024
     if (files && files.length > 0) {
@@ -418,7 +479,7 @@ export const handleFileUpload = async (event: any) => {
                     toast.warn('Image size cannot exceed 10mb')
                 }
                 else if (allowedImageTypes.includes(file.type)) {
-                    fileUploadPromises.push(uploadImage(file));
+                    fileUploadPromises.push(uploadImage(file, setIsLoading));
                 }
 
                 else {
@@ -430,14 +491,14 @@ export const handleFileUpload = async (event: any) => {
                 const allowedVideoTypes = ['video/mp4', 'video/mkv', 'video/quicktime']; // .mov is video/quicktime in MIME type
 
                 if (allowedVideoTypes.includes(file.type)) {
-                    fileUploadPromises.push(uploadImage(file));
+                    fileUploadPromises.push(uploadImage(file, setIsLoading));
                 } else {
                     toast.warn('Invalid video file. Only MP4, MKV, MOV are supported.');
                 }
             }
             // Check if the file is a PDF
             else if (file.type === 'application/pdf') {
-                fileUploadPromises.push(uploadImage(file));
+                fileUploadPromises.push(uploadImage(file, setIsLoading));
             } else {
                 toast.warn('The file is not supported.');
             }
@@ -456,13 +517,16 @@ export const handleFileUpload = async (event: any) => {
 };
 
 
-export const fetchBuyersData = async (setData: any, email: string) => {
+export const fetchBuyersData = async (setData: any, email: string, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response = await apiController.get(`/dashboard/buyers/get_buyer/${email}`)
         setData(response?.data)
+        setIsLoading && setIsLoading(false)
         return response?.data
     } catch (error) {
         console.log(error)
+        setIsLoading && setIsLoading(false)
         setData(null)
         return error
     }

@@ -11,14 +11,15 @@ import ProfileCard from '@/components/profilecard';
 import { useAuth } from '@/contexts/AuthContext';
 
 function ApplyModal(props: any) {
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const { selectedCampaign } = props
     const applyCreatorProgram = (e: any) => {
         e.preventDefault()
         applyCampaign({
             campaign_id: selectedCampaign?._id,
             creator_email: user?.email
-        })
+        },
+        setIsLoading)
     }
     return (
         <>
@@ -189,7 +190,7 @@ function ApplyModal(props: any) {
                                         width={110}
                                         height={110}
                                     />
-                                    <button type="button" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" id="applyCampaignCloseModalButton" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
                             <div className='d-flex gap-2 align-items-center mb-2'>

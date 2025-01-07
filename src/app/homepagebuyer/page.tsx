@@ -38,10 +38,6 @@ function homepagebuyer() {
         }
     }, [user?.email])
 
-    useEffect(()=>{
-        console.log(userData,"userData =====")
-    },[userData])
-
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()

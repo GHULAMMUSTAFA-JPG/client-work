@@ -17,7 +17,7 @@ interface EditProfileModalProps {
 }
 let arrayOfSkills: any[]
 function EditProfileModal(props: EditProfileModalProps) {
-    const { rendControl, setRendControl } = useAuth()
+    const { rendControl, setRendControl, setIsLoading } = useAuth()
     const { userProfile, user } = props
 
     const [editUserProfileDto, setEditUserProfileDto] = useState<any>({})
@@ -90,7 +90,7 @@ function EditProfileModal(props: EditProfileModalProps) {
 
     async function convertDtoToFormData(form:any) {
       
-       
+        setIsLoading(true)
         const formData = new FormData(); // Create a FormData object from the form
         
         // Append the dynamic fields manually (since FormData doesn't capture data from state directly)
@@ -115,19 +115,17 @@ function EditProfileModal(props: EditProfileModalProps) {
           fetch("https://synncapi.onrender.com/dashboard/creators/update_creator", requestOptions)
             .then((response) => response.text())
             .then((result) =>{
+                setIsLoading(false)
                 const closeButton: any = document.getElementById('close_modal_edit_profile')
                 closeButton && closeButton.click()
                 setRendControl(!rendControl)
                 console.log(result)
             })
-            .catch((error) => console.error(error));
+            .catch((error) => {
+                setIsLoading(false)
+                console.error(error)});
       }
       
-
-      useEffect(()=>{
-        console.log(editUserProfileDto,arrayOfSkills,"hjkl")
-      },[arrayOfSkills,editUserProfileDto])
-
 
     return (
         <>
@@ -191,8 +189,8 @@ function EditProfileModal(props: EditProfileModalProps) {
                                             </div>
                                             <div className="border-dashed rounded-2 text-center bg-base size-box position-relative">
                                                 <input type="file" className="d-none" id="profileImage" accept="image/*" onChange={async(e:any)=>{
-                                                   const result:any = await handleFileUpload(e)
-                                                   console.log(result)
+                                                   const result:any = await handleFileUpload(e,setIsLoading)
+                                                   
                                                    if(result?.[0]){
                                                     setEditUserProfileDto((prev:any)=>{
                                                      return{...prev,['profile_image'] : result[0]?.file_urls}

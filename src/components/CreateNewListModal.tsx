@@ -17,7 +17,7 @@ interface CreateNewListModalProps {
 }
 function CreateNewListModal(props: CreateNewListModalProps) {
     const { data, rendControl, setRendControl } = props
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
     const [listName, setListName] = useState<string>('')
 
     const listItemAction = () => {
@@ -26,7 +26,7 @@ function CreateNewListModal(props: CreateNewListModalProps) {
                 "List_Id": data?._id,
                 "List_Name": listName
             },
-                rendControl, setRendControl, setListName
+                rendControl, setRendControl, setListName ,setIsLoading
             )
         }
         else {
@@ -36,7 +36,7 @@ function CreateNewListModal(props: CreateNewListModalProps) {
 
             },
                 rendControl,
-                setRendControl,setListName)
+                setRendControl,setListName,setIsLoading)
         }
     }
 
