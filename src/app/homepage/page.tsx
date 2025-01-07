@@ -62,7 +62,7 @@ function Homepage() {
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
                                     <Image
-                                        src={userProfile?.Profile_Image}
+                                        src={userProfile?.Profile_Image || ''}
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
                                         width={40}

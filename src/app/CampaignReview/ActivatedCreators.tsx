@@ -77,7 +77,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                         <div className='d-flex align-items-center mb-3'>
                                                             <div className='me-3'>
                                                                 <Image
-                                                                    src={creator?.Profile_Image}
+                                                                    src={creator?.Profile_Image || ''}
                                                                     className="rounded-circle"
                                                                     alt="User avatar"
                                                                     width={36}
@@ -174,7 +174,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                         <div className="d-flex align-items-center gap-2 mb-2">
                                                             <div className="rounded-circle">
                                                                 <Image
-                                                                    src={selectedCreator?.Profile_Image}
+                                                                    src={selectedCreator?.Profile_Image || ''}
                                                                     className="rounded-circle"
                                                                     alt="User avatar"
                                                                     width={36}

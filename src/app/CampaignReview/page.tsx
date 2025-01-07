@@ -274,7 +274,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                             <td className='w-75'>
                                                                 <div className='d-flex align-items-center'>
                                                                     <Image
-                                                                        src={array_item?.Profile_Image}
+                                                                        src={array_item?.Profile_Image || ''}
                                                                         className="rounded-circle"
                                                                         width={40}
                                                                         height={40}

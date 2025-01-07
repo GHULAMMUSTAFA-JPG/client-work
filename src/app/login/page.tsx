@@ -36,7 +36,7 @@ const AuthPage = () => {
                 email: profileData?.Email,
                 Is_Creator: profileData?.Is_Creator,
                 name: profileData?.Name,
-                Profile_Image: profileData?.Profile_Image,
+                Profile_Image: profileData?.Profile_Image || '',
                 uuid: profileData?._id
             }
             loginUser(data)
