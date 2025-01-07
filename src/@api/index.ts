@@ -116,11 +116,12 @@ export const getSpecificCreatorList = async (id: string, setData: any, setIsLoad
 }
 
 
-export const updateListName = async (dto: any, rendControl: boolean, setRendControl: any) => {
+export const updateListName = async (dto: any, rendControl: boolean, setRendControl: any,setListName?:any) => {
     try {
         const response: any = await apiController.put("/dashboard/buyers/update_creators_list", dto)
         setRendControl(!rendControl)
         const closebutton: any = document.getElementById('createNewlistmodalClose')
+        setListName && setListName('')
         closebutton && closebutton?.click()
         return response
     } catch (error) {
@@ -129,12 +130,13 @@ export const updateListName = async (dto: any, rendControl: boolean, setRendCont
     }
 }
 
-export const createListName = async (dto: any, rendControl: boolean, setRendControl: any) => {
+export const createListName = async (dto: any, rendControl: boolean, setRendControl: any,setListName?:any) => {
     try {
         const response: any = await apiController.post("/dashboard/buyers/create_new_creators_list", dto)
         setRendControl(!rendControl)
         const closebutton: any = document.getElementById('createNewlistmodalClose')
         closebutton && closebutton?.click()
+        setListName && setListName('')
         return response
     } catch (error) {
         console.log(error)
@@ -198,12 +200,13 @@ export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any
 }
 
 
-export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any) => {
+export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any,Newmapper:any) => {
     try {
         const response: any = await apiController.post(`/dashboard/campaigns/create_campaign`, dto)
         setRendControl(!rendControl)
         const buttonClose: any = document.getElementById('createCampaignOffcanvasModal')
         buttonClose && buttonClose.click()
+        Newmapper()
         return response
     } catch (error) {
         console.log(error, "Error in get campaign list api")
@@ -211,12 +214,13 @@ export const createCampaign = async (dto: any, rendControl: boolean, setRendCont
     }
 }
 
-export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any) => {
+export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any,Newmapper:any) => {
     try {
         const response: any = await apiController.put(`/dashboard/campaigns/update_campaign`, dto)
         setRendControl(!rendControl)
         const buttonClose: any = document.getElementById('createCampaignOffcanvasModal')
         buttonClose && buttonClose.click()
+        Newmapper()
         return response
     } catch (error) {
 

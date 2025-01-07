@@ -167,7 +167,7 @@ function homepagebuyer() {
                                                 if(index < 6){
                                                     return (
                                                         <tr key={index} onClick={()=>{
-                                                            router.push(`/SubmitCampaigns?id=${campaign?._id}`);
+                                                            router.push(`/buyerdashboard?id=${campaign?._id}`);
                                                         }}>
                                                             <td className='text-start'>
                                                                 {/* <div className="d-flex align-items-center">

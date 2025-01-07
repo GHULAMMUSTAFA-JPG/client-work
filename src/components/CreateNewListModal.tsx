@@ -26,7 +26,7 @@ function CreateNewListModal(props: CreateNewListModalProps) {
                 "List_Id": data?._id,
                 "List_Name": listName
             },
-                rendControl, setRendControl
+                rendControl, setRendControl, setListName
             )
         }
         else {
@@ -36,7 +36,7 @@ function CreateNewListModal(props: CreateNewListModalProps) {
 
             },
                 rendControl,
-                setRendControl)
+                setRendControl,setListName)
         }
     }
 
@@ -72,7 +72,9 @@ function CreateNewListModal(props: CreateNewListModalProps) {
                             </div>
                         </div>
                         <div className='modal-footer'>
-                            <button type="button" className="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" className="btn btn-outline-info" data-bs-dismiss="modal" onClick={()=>{
+                                setListName('')
+                            }}>Cancel</button>
                             <button type="button" className="btn btn-info px-3" onClick={() => {
                                 listItemAction()
                             }}>{data ? "Update" : "Create"}</button>
