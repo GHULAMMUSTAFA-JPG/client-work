@@ -72,7 +72,7 @@ function CreatorDashboard() {
                                                 <tr key={user?._id}>
                                                     <td className="text-start ps-4">
                                                         <div className="d-flex align-items-center">
-                                                            <Image src={user?.Profile_Image} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
+                                                            <Image src={user?.Profile_Image || ''} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
                                                             <span className="ms-2 text-truncate">{user?.Name}</span>
                                                         </div>
                                                     </td>

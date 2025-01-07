@@ -76,7 +76,7 @@ function CreatorDetailModal(props: any) {
                                             <div className="d-flex align-items-center gap-2 mb-3">
                                                 <div className="rounded-circle">
                                                     <Image
-                                                        src={selectedCreator?.Profile_Image}
+                                                        src={selectedCreator?.Profile_Image || ''}
                                                         className="rounded-circle"
                                                         alt="Creator avatar"
                                                         width={40}

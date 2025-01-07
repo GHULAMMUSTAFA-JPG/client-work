@@ -36,7 +36,7 @@ const AuthPage = () => {
                 email: profileData?.Email,
                 Is_Creator: profileData?.Is_Creator,
                 name: profileData?.Name,
-                Profile_Image: profileData?.Profile_Image,
+                Profile_Image: profileData?.Profile_Image || '',
                 uuid: profileData?._id
             }
             loginUser(data)
@@ -87,9 +87,7 @@ const AuthPage = () => {
 
         if (!values.company_website) {
             errors.company_website = 'Company website is required';
-        } else if (!/^https?:\/\/.*/.test(values.company_website)) {
-            errors.company_website = 'Website must start with http:// or https://';
-        }
+        } 
 
         if (!values.password) {
             errors.password = 'Password is required';

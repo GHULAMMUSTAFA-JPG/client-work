@@ -1,6 +1,6 @@
 "use client";
 
-import { fetch_dashboard_data, fetchBuyerActiveCampaigns } from "@/@api";
+import { fetch_dashboard_data, fetchBuyerActiveCampaigns, fetchBuyersData } from "@/@api";
 import TopCardBuyer from "@/components/TopCardBuyer";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -15,11 +15,14 @@ import VerticalBarChart from "@/components/verticalbarchart";
 import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 import PostCalendar from "@/components/Calendar";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from 'next/navigation';
+
 function homepagebuyer() {
     const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
+    const [userData, setUserData] = useState<any>()
     const [activeCampaigns, setActiveCampaigns] = useState<any>()
-    // const router = useRouter()
+    const router = useRouter()
     useEffect(() => {
 
         fetchData()
@@ -28,12 +31,21 @@ function homepagebuyer() {
 
 
     useEffect(() => {
-        fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
+        if(user?.email){
+
+            fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
+            fetchBuyersData(setUserData, user?.email)
+        }
     }, [user?.email])
+
+    useEffect(()=>{
+        console.log(userData,"userData =====")
+    },[userData])
+
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-        console.log(response.data)
+       
         setUsers(response.data?.users)
     }
     return (
@@ -45,17 +57,22 @@ function homepagebuyer() {
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
-                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>XYZ</span></h3>
-                                        <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p>
-                                        <p className='mb-0 fs-14 text-muted'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name}</span></h3>
+                                        {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
+                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description}</p>
                                     </div>
-                                    <Image
-                                        src="/assets/images/apollo.png"
+                                {userData?.Company_Logo && userData?.Company_Logo !=="" ?
+                                   <Image
+                                        src={userData?.Company_Logo}
                                         className="border object-fit-cover rounded flex-shrink-0"
                                         alt="logo"
                                         width={120}
                                         height={120}
                                     />
+                                : 
+                                <h6>{(userData?.Company_Name && userData?.Company_Name ! =="") ? userData?.Company_Name?.slice(0,2) : userData?.Email && userData?.Email !== "" ? userData?.Email?.slice(0,2) : "NA" }</h6>
+                                
+                                }
                                 </div>
                             </div>
                         </div>
@@ -149,7 +166,9 @@ function homepagebuyer() {
                                              activeCampaigns?.campaigns?.length !== 0 ?   activeCampaigns?.campaigns?.map((campaign: any, index: number) => {
                                                 if(index < 6){
                                                     return (
-                                                        <tr key={index}>
+                                                        <tr key={index} onClick={()=>{
+                                                            router.push(`/buyerdashboard?id=${campaign?._id}`);
+                                                        }}>
                                                             <td className='text-start'>
                                                                 {/* <div className="d-flex align-items-center">
                                                                  <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />

@@ -163,8 +163,8 @@ function OffcanvasCreateCompaign(props: any) {
             setDto(obj)
         }
         else {
-            const obj = Newmapper()
-            setDto(obj)
+             Newmapper()
+            
         }
 
 
@@ -187,6 +187,7 @@ function OffcanvasCreateCompaign(props: any) {
             "Email": data?.campaign?.user?.email,
             "Campaign_Id": data?.campaign?._id
         }
+        
         return obj
     }
 
@@ -203,6 +204,7 @@ function OffcanvasCreateCompaign(props: any) {
             "Campaign_Media": '',
             "Email": user?.email,
         }
+        setDto(obj)
         return obj
     }
 
@@ -217,7 +219,6 @@ function OffcanvasCreateCompaign(props: any) {
 
         setDto((prev: any) => {
             const updatedDto = { ...prev, [e.target.id]: e.target.value };
-            console.log(updatedDto, "Updated dto"); // Log the updated state here
             return updatedDto;
         });
 
@@ -226,8 +227,8 @@ function OffcanvasCreateCompaign(props: any) {
     const handleSubmit = (e: any) => {
 
         e.preventDefault();
-        data ? updateCampaign(dto, rendControl, setRendControl) :
-            createCampaign(dto, rendControl, setRendControl)
+        data ? updateCampaign(dto, rendControl, setRendControl,Newmapper) :
+            createCampaign(dto, rendControl, setRendControl,Newmapper)
     }
 
 
@@ -334,6 +335,8 @@ function OffcanvasCreateCompaign(props: any) {
                                                     setDto((prev: any) => {
                                                         return { ...prev, ["Is_Ongoing"]: true }
                                                     })
+                                                    dto?.Start_Date && delete dto?.Start_Date
+                                                    dto?.End_Date && delete dto?.End_Date
                                                 }}
                                                 type="button"
                                                 id='Is_Ongoing'
@@ -373,7 +376,7 @@ function OffcanvasCreateCompaign(props: any) {
                                                 selectsStart
                                                 startDate={startDate}
                                                 endDate={endDate}
-                                                placeholderText="Start date"
+                                                placeholderText={dto?.Start_Date ? dto?.Start_Date : "Start date"}
                                                 className="form-control"
                                                 dateFormat="MMM dd, yyyy"
                                             />
@@ -388,7 +391,7 @@ function OffcanvasCreateCompaign(props: any) {
                                                 startDate={startDate}
                                                 endDate={endDate}
                                                 minDate={startDate}
-                                                placeholderText="End date"
+                                                placeholderText={dto?.End_Date ? dto?.End_Date : "End date"}
                                                 className="form-control"
                                                 dateFormat="MMM dd, yyyy"
                                             />
@@ -467,7 +470,8 @@ function OffcanvasCreateCompaign(props: any) {
                 </div>
             </div>
             <div className="border-top d-flex gap-3 justify-content-end p-3">
-                <button className="btn btn-outline-info" style={{ width: '120px' }}>Discard</button>
+                <button className="btn btn-outline-info" style={{ width: '120px' }}  data-bs-dismiss="offcanvas"
+                    aria-label="Close" onClick={()=>Newmapper()}>Discard</button>
                 <button className="btn btn-info" style={{ width: '120px' }} onClick={handleSubmit}>{data ? "Update" : "Publish"}</button>
             </div>
         </div>

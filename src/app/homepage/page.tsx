@@ -16,6 +16,8 @@ import Calendar from "@/components/Calendar";
 import PostCalendar from "@/components/Calendar";
 import EditProfileModal from "@/components/EditProfileModal";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from 'next/navigation';
+
 function Homepage() {
     const { user, setUserProfile, userProfile } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
@@ -32,7 +34,7 @@ function Homepage() {
     }
 
 
-
+    const router = useRouter();
 
     return (
         <>
@@ -62,7 +64,7 @@ function Homepage() {
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
                                     <Image
-                                        src={userProfile?.Profile_Image}
+                                        src={userProfile?.Profile_Image || ''}
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
                                         width={40}
@@ -118,10 +120,13 @@ function Homepage() {
                                 </div>
                                 <div className="bg-campaigns">
                                     <div className="card-wrapper">
-                                      {campaigns?.Activated_Campaigns?.map((element:any, index:any)=>{
+                                      {campaigns && campaigns?.Activated_Campaigns && campaigns?.Activated_Campaigns?.length !== 0 ?  campaigns?.Activated_Campaigns?.map((element:any, index:any)=>{
+
                                         if(index < 5){
                                             return(
-                                                <div key={index} className="card mb-2 card-hover">
+                                                <div onClick={()=>{
+                                                    router.push(`/SubmitCampaigns?id=${element?._id}`);
+                                                }} key={index} className="card mb-2 card-hover">
                                                 <div className="card-body py-2 ps-2 pe-3">
                                                     <div className='d-flex gap-3 align-items-center'>
                                                         <Image
@@ -140,7 +145,12 @@ function Homepage() {
                                         }
                                        
                                       
-                                      })  }
+                                      })
+                                    :
+                                    <tr>
+                                        <td>No data found</td>
+                                    </tr>
+                                    }
                                        
                                     </div>
                                 </div>

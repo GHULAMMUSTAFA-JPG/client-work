@@ -98,7 +98,7 @@ function EditProfileModal(props: EditProfileModalProps) {
             formData.append("skills", JSON.stringify(arrayOfSkills));
         }
         if (editUserProfileDto?.profile_image) {
-            formData.append("profile_image", editUserProfileDto.profile_image);
+            formData.append("profile_image", editUserProfileDto?.profile_image);
         }
 
         user?.email && formData.append("email", user?.email);
@@ -192,9 +192,10 @@ function EditProfileModal(props: EditProfileModalProps) {
                                             <div className="border-dashed rounded-2 text-center bg-base size-box position-relative">
                                                 <input type="file" className="d-none" id="profileImage" accept="image/*" onChange={async(e:any)=>{
                                                    const result:any = await handleFileUpload(e)
+                                                   console.log(result)
                                                    if(result?.[0]){
                                                     setEditUserProfileDto((prev:any)=>{
-                                                     return{...prev,['profile_image'] : result[0]?.file_urls[0]}
+                                                     return{...prev,['profile_image'] : result[0]?.file_urls}
                                                     })
                                                    }
                                                    else{
@@ -204,7 +205,7 @@ function EditProfileModal(props: EditProfileModalProps) {
                                                 }}/>
                                                 <label htmlFor="profileImage" className="cursor-pointer">
                                                     <Image
-                                                        src={editUserProfileDto?.profile_image}
+                                                        src={editUserProfileDto?.profile_image || ''}
                                                         alt="Current profile"
                                                         width={100}
                                                         height={100}

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
+import { Suspense } from 'react';
 import TopCardBuyer from '@/components/TopCardBuyer';
 import CampaignOffcanvasBuyer from '@/components/campaignoffcanvasbuyer';
 import CampaignReviewModal from '@/components/campaignreviewmodal';
@@ -11,14 +12,16 @@ import CampaignOverview from '../CampaignReview/page';
 import { useAuth } from '@/contexts/AuthContext';
 import { getCampaignsList, getSelectedCampaignsDetails } from '@/@api';
 import CampaignTable from '@/components/CampaignTable';
+import { useSearchParams } from 'next/navigation';
 
-function buyerdashboard() {
+function Buyerdashboard() {
     const { user, setIsLoading } = useAuth()
     const [campaigns, setCampaigns] = useState(true)
     const [campaignList, setCampaignList] = useState<any[]>([])
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     const [selectedCampaignDetails, setSelectedCampaignDetails] = useState<any>()
     const [rendControl, setRendControl] = useState<boolean>(false)
+    const searchParams = useSearchParams();
     useEffect(() => {
         getCampaignsList(user?.email, setCampaignList,setIsLoading)
     }, [rendControl])
@@ -26,6 +29,17 @@ function buyerdashboard() {
     useEffect(()=>{
         selectedCampaign &&  getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails, setIsLoading)
     },[selectedCampaign, rendControl])
+
+
+   useEffect(()=>{
+       const id = searchParams.get('id');
+      if(id){
+
+          getSelectedCampaignsDetails(id,setSelectedCampaignDetails, setIsLoading)
+           setCampaigns(false)
+      }  
+   },[searchParams])
+
 
     return (
         <>
@@ -44,4 +58,12 @@ function buyerdashboard() {
         </>
     )
 }
-export default buyerdashboard
+
+
+export default function AuthPageWrapper() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <Buyerdashboard />
+        </Suspense>
+    );
+}

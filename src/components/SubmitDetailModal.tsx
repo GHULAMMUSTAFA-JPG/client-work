@@ -75,7 +75,7 @@ function SubmitDetailModal(props: any) {
                                             <div className="d-flex align-items-center gap-2 mb-3">
                                                 <div className="rounded-circle">
                                                     <Image
-                                                        src={campaignData?.campaign?.Creator_Profile_Picture}
+                                                        src={campaignData?.campaign?.Creator_Profile_Picture || ''}
                                                         className="rounded-circle"
                                                         alt="Creator avatar"
                                                         width={40}
