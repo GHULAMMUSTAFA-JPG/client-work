@@ -118,7 +118,7 @@ function Homepage() {
                                 </div>
                                 <div className="bg-campaigns">
                                     <div className="card-wrapper">
-                                      {campaigns?.Activated_Campaigns?.map((element:any, index:any)=>{
+                                      {campaigns && campaigns?.Activated_Campaigns && campaigns?.Activated_Campaigns?.length !== 0 ?  campaigns?.Activated_Campaigns?.map((element:any, index:any)=>{
                                         if(index < 5){
                                             return(
                                                 <div key={index} className="card mb-2 card-hover">
@@ -140,7 +140,12 @@ function Homepage() {
                                         }
                                        
                                       
-                                      })  }
+                                      })
+                                    :
+                                    <tr>
+                                        <td>No data found</td>
+                                    </tr>
+                                    }
                                        
                                     </div>
                                 </div>
