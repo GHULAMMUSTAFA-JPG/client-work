@@ -29,8 +29,8 @@ function Homepage() {
     }, [user])
 
     const fetchData = async () => {
-        const response = await fetch_dashboard_data()
-        setUsers(response.data?.users)
+        const response:any = await fetch_dashboard_data()
+        setUsers(response?.data?.users)
     }
 
 
