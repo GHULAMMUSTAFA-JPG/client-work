@@ -80,8 +80,8 @@ function Homepage() {
                                             <p className='mb-0 fs-12 text-warning'>@{userProfile?.Profile_URL || "No information"}</p>
                                             <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
                                             <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">{userProfile?.No_of_Followers} </span> followers</p>
-                                            <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
-                                            <p className='mb-0 fs-12 text-warning'>Post Activity <span className="text-dark fw-medium">Daily</span></p>
+                                            {/* <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div> */}
+                                            {/* <p className='mb-0 fs-12 text-warning'>Post Activity <span className="text-dark fw-medium">Daily</span></p> */}
                                         </div>
                                     </div>
                                 </div>

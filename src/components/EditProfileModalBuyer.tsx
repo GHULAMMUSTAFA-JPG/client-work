@@ -16,7 +16,7 @@ interface EditProfileModalProps {
     user: any
 }
 let arrayOfSkills: any[]
-function EditProfileModal(props: EditProfileModalProps) {
+function EditProfileModalBuyer(props: EditProfileModalProps) {
     const { rendControl, setRendControl } = useAuth()
     const { userProfile, user } = props
 
@@ -146,36 +146,47 @@ function EditProfileModal(props: EditProfileModalProps) {
                                     <div className="col-md-6">
                                         {/* Left Column */}
                                         <div className="mb-3">
-                                            <label className="form-label">Full Name</label>
+                                            <label className="form-label">First Name</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 value={editUserProfileDto?.name}
                                                 id="name"
-                                                placeholder="Enter your full name"
+                                                placeholder="John"
                                                 onChange={addValues}
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <label className="form-label">LinkedIn Username</label>
+                                            <label className="form-label">Last Name</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={editUserProfileDto?.name}
+                                                id="name"
+                                                placeholder="Doe"
+                                                onChange={addValues}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label className="form-label">Company Name</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 value={editUserProfileDto?.profile_url}
                                                 id="profile_url"
-                                                placeholder="Enter your Headline"
+                                                placeholder="Synnc"
                                                 onChange={addValues}
 
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <label className="form-label">Current Company</label>
+                                            <label className="form-label">Website</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 value={editUserProfileDto?.current_company}
                                                 id="current_company"
-                                                placeholder="Which company are you currently working for?"
+                                                placeholder="https://www.example.com"
                                                 onChange={addValues}
 
                                             />
@@ -197,7 +208,7 @@ function EditProfileModal(props: EditProfileModalProps) {
                                     <div className="col-md-6">
                                         {/* Right Column */}
                                         <div className="mb-3">
-                                            <label className="form-label">Profile Picture</label>
+                                            <label className="form-label">Company Logo</label>
                                             <div className="d-flex align-items-center gap-2 mb-2">
                                                 <small className="text-muted">1:1 Ratio</small>
                                                 <div className="vr"></div>
@@ -228,36 +239,6 @@ function EditProfileModal(props: EditProfileModalProps) {
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className="mb-3">
-                                            <label className="form-label">Skills & Expertise</label>
-                                            <div className="input-group mb-3">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Add a new skill"
-                                                    value={newSkill}
-                                                    onChange={(e: any) => {
-                                                        setNewSkill(e.target.value)
-                                                    }}
-                                                />
-                                                <button className="btn btn-info" type="button" onClick={() => {
-                                                    addSkill()
-                                                }}>Add</button>
-                                            </div>
-                                            <div className="d-flex gap-2 flex-wrap mb-2">
-                                                {editUserProfileDto?.skills?.map((skill: string, index: number) => {
-                                                    return (
-                                                        <span key={index} className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">
-                                                            {skill}
-                                                            <i className="bi bi-x ms-1 cursor" onClick={() => {
-                                                                deleteSkill(index)
-                                                            }}></i>
-                                                        </span>
-                                                    )
-                                                })}
-
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -273,4 +254,4 @@ function EditProfileModal(props: EditProfileModalProps) {
     );
 }
 
-export default EditProfileModal
+export default EditProfileModalBuyer
