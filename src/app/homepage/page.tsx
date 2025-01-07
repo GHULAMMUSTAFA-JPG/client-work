@@ -16,6 +16,8 @@ import Calendar from "@/components/Calendar";
 import PostCalendar from "@/components/Calendar";
 import EditProfileModal from "@/components/EditProfileModal";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from 'next/navigation';
+
 function Homepage() {
     const { user, setUserProfile, userProfile } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
@@ -32,7 +34,7 @@ function Homepage() {
     }
 
 
-
+    const router = useRouter();
 
     return (
         <>
@@ -119,9 +121,12 @@ function Homepage() {
                                 <div className="bg-campaigns">
                                     <div className="card-wrapper">
                                       {campaigns && campaigns?.Activated_Campaigns && campaigns?.Activated_Campaigns?.length !== 0 ?  campaigns?.Activated_Campaigns?.map((element:any, index:any)=>{
+
                                         if(index < 5){
                                             return(
-                                                <div key={index} className="card mb-2 card-hover">
+                                                <div onClick={()=>{
+                                                    router.push(`/SubmitCampaigns?id=${element?._id}`);
+                                                }} key={index} className="card mb-2 card-hover">
                                                 <div className="card-body py-2 ps-2 pe-3">
                                                     <div className='d-flex gap-3 align-items-center'>
                                                         <Image

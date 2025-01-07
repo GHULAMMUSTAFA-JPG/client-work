@@ -87,9 +87,7 @@ const AuthPage = () => {
 
         if (!values.company_website) {
             errors.company_website = 'Company website is required';
-        } else if (!/^https?:\/\/.*/.test(values.company_website)) {
-            errors.company_website = 'Website must start with http:// or https://';
-        }
+        } 
 
         if (!values.password) {
             errors.password = 'Password is required';

@@ -15,12 +15,14 @@ import VerticalBarChart from "@/components/verticalbarchart";
 import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 import PostCalendar from "@/components/Calendar";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from 'next/navigation';
+
 function homepagebuyer() {
     const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [userData, setUserData] = useState<any>()
     const [activeCampaigns, setActiveCampaigns] = useState<any>()
-    // const router = useRouter()
+    const router = useRouter()
     useEffect(() => {
 
         fetchData()
@@ -164,7 +166,9 @@ function homepagebuyer() {
                                              activeCampaigns?.campaigns?.length !== 0 ?   activeCampaigns?.campaigns?.map((campaign: any, index: number) => {
                                                 if(index < 6){
                                                     return (
-                                                        <tr key={index}>
+                                                        <tr key={index} onClick={()=>{
+                                                            router.push(`/SubmitCampaigns?id=${campaign?._id}`);
+                                                        }}>
                                                             <td className='text-start'>
                                                                 {/* <div className="d-flex align-items-center">
                                                                  <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />

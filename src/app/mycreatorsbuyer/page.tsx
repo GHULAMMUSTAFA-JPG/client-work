@@ -304,20 +304,20 @@ function mycreatorsbuyer() {
                                                                                             })
                                                                                         }
                                                                                                                                                                                 {
-                                                                                            // buyerList?.map((item: any, index: number) => {
-                                                                                            //     return (
-                                                                                            //         <li key={index} onClick={() => {
-                                                                                            //             addToCreatorList(item, user)
-                                                                                            //         }}>
-                                                                                            //             <a className="dropdown-item py-1 px-2">
-                                                                                            //                 {item?.List_Name}
-                                                                                            //                 {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+                                                                                            buyerList?.map((item: any, index: number) => {
+                                                                                                return (
+                                                                                                    <li key={index} onClick={() => {
+                                                                                                        addToCreatorList(item, user)
+                                                                                                    }}>
+                                                                                                        <a className="dropdown-item py-1 px-2">
+                                                                                                            {item?.List_Name}
+                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
 
-                                                                                            //             </a>
-                                                                                            //         </li>
+                                                                                                        </a>
+                                                                                                    </li>
 
-                                                                                            //     )
-                                                                                            // })
+                                                                                                )
+                                                                                            })
                                                                                         }
 
                                                                                     </div>

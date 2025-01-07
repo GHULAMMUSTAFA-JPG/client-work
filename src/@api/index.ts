@@ -67,7 +67,6 @@ export const fetchBuyerDiscoveryData = async (email: string, setData: any, setIs
         const response: any = await apiController.get(`/dashboard/buyers/discover_creators/${email}`)
         setIsLoading(false)
         setData(response?.data)
-        console.log(response?.data,"response data")
         return response
 
     } catch (error) {
