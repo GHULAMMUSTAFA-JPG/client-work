@@ -2,16 +2,16 @@ import axios from "axios";
 import { apiController } from "./baseUrl";
 import { toast } from "react-toastify";
 
-export const fetch_dashboard_data = (setIsLoading:any) => {
-    setIsLoading(true)
+export const fetch_dashboard_data = (setIsLoading?:any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response = apiController.get('dashboard/dashboard_data')
-    setIsLoading(false)
+        setIsLoading && setIsLoading(false)
 
         return response
         
     } catch (error) {
-    setIsLoading(false)
+        setIsLoading && setIsLoading(false)
 
         return error
     }

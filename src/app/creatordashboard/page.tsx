@@ -25,7 +25,7 @@ function CreatorDashboard() {
     }, [user])
 
     const fetchData = async () => {
-        const response = await fetch_dashboard_data()
+        const response:any = await fetch_dashboard_data(setIsLoading)
         setUsers(response.data?.users)
     }
     return (
