@@ -33,7 +33,6 @@ function Homepage() {
         setUsers(response?.data?.users)
     }
 
-
     const router = useRouter();
 
     return (
