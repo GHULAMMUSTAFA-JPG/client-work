@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchProfileData } from "@/@api";
+import { fetchBuyersData, fetchProfileData } from "@/@api";
 import Loader from "@/components/loader";
 
 export default function Header() {
@@ -23,7 +23,10 @@ export default function Header() {
 
     useEffect(() => {
    
-          user?.email && !user?.isBuyer  && fetchProfileData(user?.email, setUserProfile)
+          if(user?.email){
+            !user?.isBuyer  ? fetchProfileData(user?.email, setUserProfile) :   fetchBuyersData(setUserProfile, user?.email)
+          } 
+
     }, [user,rendControl])
 
     return (
@@ -67,7 +70,7 @@ export default function Header() {
                         <div className="dropdown ms-2">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
-                                   {userProfile?.Profile_Image ? <Image src={userProfile?.Profile_Image} alt="user" width={32} height={32} className="user-img" /> : <h6 className="text-uppercase mb-0">{userProfile?.Name ? userProfile?.Name?.slice(0,2) : user?.email ? user?.email?.slice(0,2) :  "NA" }</h6>}
+                                   {(userProfile?.Profile_Image || userProfile?.Company_Logo )? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <h6 className="text-uppercase mb-0">{userProfile?.Name ? userProfile?.Name?.slice(0,2) : user?.email ? user?.email?.slice(0,2) :  "NA" }</h6>}
                                     <p className="mb-0 ms-2">{userProfile?.Name}</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>

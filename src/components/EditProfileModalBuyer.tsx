@@ -1,6 +1,6 @@
 
 "use client"
-import { handleFileUpload, login, updateProfileInformation } from '@/@api';
+import { editProfileCall, handleFileUpload, login, updateProfileInformation } from '@/@api';
 import useForm from '@/hooks/useForm';
 import React, { useEffect, useState } from 'react'
 import Image from "next/image";
@@ -14,16 +14,17 @@ import { toast } from 'react-toastify';
 interface EditProfileModalProps {
     userProfile: any
     user: any
+    rendControl:boolean
+    setRendControl:any
 }
 let arrayOfSkills: any[]
 function EditProfileModalBuyer(props: EditProfileModalProps) {
-    const { rendControl, setRendControl } = useAuth()
-    const { userProfile, user } = props
+    const {  setIsLoading } = useAuth()
+    const { userProfile, user,rendControl,setRendControl } = props
 
     const [editUserProfileDto, setEditUserProfileDto] = useState<any>({})
     const [newSkill, setNewSkill] = useState<string>("")
     useEffect(() => {
-
         arrayOfSkills = userProfile?.Skills
         if (userProfile?.Email) {
             const object = mapper()
@@ -31,18 +32,18 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
         }
     }, [userProfile])
 
-
     const mapper = () => {
         const object =
         {
             "email": userProfile?.Email,
-            "name": userProfile?.Name,
-            "profile_url": userProfile?.Profile_URL,
-            "profile_image": userProfile?.Profile_Image,
-            "description": userProfile?.Description,
-            "skills": userProfile?.Skills,
-            "current_company": userProfile?.Current_Company
+            "first_name": userProfile?.First_Name,
+            "last_name" : userProfile?.Last_Name,
+            "company_name": userProfile?.Company_Name,
+            "company_description": userProfile?.Company_Description,
+            "company_logo": userProfile?.Company_Logo,
+            "company_website" : userProfile?.Company_Website
         }
+        console.log(object,"lopls")
         return object
     }
 
@@ -62,8 +63,6 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
             setEditUserProfileDto((prev: any) => {
                 return { ...prev, ["skills"]: arrayOfSkills }
             })
-
-
             setNewSkill('')
         }
     }
@@ -77,58 +76,10 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
 
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        const data = await convertDtoToFormData(event?.currentTarget)
-        // console.log(data,"here is daaata")
-        // const result = await updateProfileInformation(data)
-        // if (result) {
-        //     const closeButton: any = document.getElementById('close_modal_edit_profile')
-        //     closeButton && closeButton.click()
-        //     setRendControl(!rendControl)
-        // }
+     editProfileCall(setIsLoading,editUserProfileDto, setRendControl, rendControl)
     }
 
 
-    async function convertDtoToFormData(form: any) {
-
-
-        const formData = new FormData(); // Create a FormData object from the form
-
-        // Append the dynamic fields manually (since FormData doesn't capture data from state directly)
-        if (arrayOfSkills) {
-            formData.append("skills", JSON.stringify(arrayOfSkills));
-        }
-        if (editUserProfileDto?.profile_image) {
-            formData.append("profile_image", editUserProfileDto?.profile_image);
-        }
-
-        user?.email && formData.append("email", user?.email);
-        editUserProfileDto?.name && formData?.append('name', editUserProfileDto?.name)
-        editUserProfileDto?.profile_url && formData?.append('profile_url', editUserProfileDto?.profile_url)
-        editUserProfileDto?.description && formData?.append('description', editUserProfileDto?.description)
-        editUserProfileDto?.current_company && formData?.append('current_company', editUserProfileDto?.current_company)
-
-        // console.log("FormData as JSON:", formData);
-        const requestOptions = {
-            method: "PUT",
-            body: formData
-        };
-
-        fetch("https://synncapi.onrender.com/dashboard/creators/update_creator", requestOptions)
-            .then((response) => response.text())
-            .then((result) => {
-                const closeButton: any = document.getElementById('close_modal_edit_profile')
-                closeButton && closeButton.click()
-                setRendControl(!rendControl)
-                console.log(result)
-            })
-            .catch((error) => console.error(error));
-    }
-
-
-    useEffect(() => {
-        console.log(editUserProfileDto, arrayOfSkills, "hjkl")
-    }, [arrayOfSkills, editUserProfileDto])
 
 
     return (
@@ -139,7 +90,7 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                         <form onSubmit={submitHandler}>
                             <div className="modal-header px-4">
                                 <h1 className="modal-title fs-5" id="editProfileModalLabel">Edit Profile</h1>
-                                <button type="button" id="close_modal_edit_profile" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" id="close_modal_edit_pprofile" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <div className="row">
@@ -150,8 +101,8 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={editUserProfileDto?.name}
-                                                id="name"
+                                                value={editUserProfileDto?.first_name}
+                                                id="first_name"
                                                 placeholder="John"
                                                 onChange={addValues}
                                             />
@@ -161,8 +112,8 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={editUserProfileDto?.name}
-                                                id="name"
+                                                value={editUserProfileDto?.last_name}
+                                                id="last_name"
                                                 placeholder="Doe"
                                                 onChange={addValues}
                                             />
@@ -172,8 +123,8 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={editUserProfileDto?.profile_url}
-                                                id="profile_url"
+                                                value={editUserProfileDto?.company_name}
+                                                id="company_name"
                                                 placeholder="Synnc"
                                                 onChange={addValues}
 
@@ -184,11 +135,10 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={editUserProfileDto?.current_company}
-                                                id="current_company"
+                                                value={editUserProfileDto?.company_website}
+                                                id="company_website"
                                                 placeholder="https://www.example.com"
                                                 onChange={addValues}
-
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -196,8 +146,8 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                             <textarea
                                                 className="form-control"
                                                 rows={4}
-                                                id="description"
-                                                value={editUserProfileDto?.description}
+                                                id="company_description"
+                                                value={editUserProfileDto?.company_description}
                                                 placeholder="Enter your description"
                                                 onChange={addValues}
                                             ></textarea>
@@ -215,12 +165,12 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                                 <small className="text-muted">Max 10 MB</small>
                                             </div>
                                             <div className="border-dashed rounded-2 text-center bg-base size-box position-relative">
-                                                <input type="file" className="d-none" id="profileImage" accept="image/*" onChange={async (e: any) => {
-                                                    const result: any = await handleFileUpload(e)
-                                                    console.log(result)
+                                                <input type="file" className="d-none" id="company_logo" accept="image/*" onChange={async (e: any) => {
+                                                    const result: any = await handleFileUpload(e,setIsLoading )
+                                                  
                                                     if (result?.[0]) {
                                                         setEditUserProfileDto((prev: any) => {
-                                                            return { ...prev, ['profile_image']: result[0]?.file_urls }
+                                                            return { ...prev, ['company_logo']: result[0]?.file_urls }
                                                         })
                                                     }
                                                     else {
@@ -228,9 +178,9 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                                     }
 
                                                 }} />
-                                                <label htmlFor="profileImage" className="cursor-pointer">
+                                                <label htmlFor="company_logo" className="cursor-pointer">
                                                     <Image
-                                                        src={editUserProfileDto?.profile_image || ''}
+                                                        src={editUserProfileDto?.company_logo || ''}
                                                         alt="Current profile"
                                                         width={100}
                                                         height={100}

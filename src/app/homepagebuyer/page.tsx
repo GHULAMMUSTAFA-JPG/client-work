@@ -19,7 +19,8 @@ import { useRouter } from 'next/navigation';
 import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
 
 function homepagebuyer() {
-    const { user } = useAuth()
+    const { user, setIsLoading } = useAuth()
+    const [rendControl, setRendControl] = useState<boolean>(false)
     const [users, setUsers] = useState<any[]>([]);
     const [userData, setUserData] = useState<any>()
     const [activeCampaigns, setActiveCampaigns] = useState<any>()
@@ -28,20 +29,20 @@ function homepagebuyer() {
 
         fetchData()
 
-    }, [])
+    }, [rendControl])
 
 
     useEffect(() => {
         if (user?.email) {
 
-            fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
-            fetchBuyersData(setUserData, user?.email)
+            fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns, setIsLoading)
+            fetchBuyersData(setUserData, user?.email, setIsLoading)
         }
-    }, [user?.email])
+    }, [user?.email, rendControl])
 
 
     const fetchData = async () => {
-        const response = await fetch_dashboard_data()
+        const response: any = await fetch_dashboard_data(setIsLoading)
 
         setUsers(response.data?.users)
     }
@@ -287,7 +288,7 @@ function homepagebuyer() {
                     <CardsDashboardBuyer />
                 </div> */}
             </div>
-            <EditProfileModalBuyer user={user} userProfile={userData} />
+            <EditProfileModalBuyer user={user} userProfile={userData} setRendControl={setRendControl} rendControl={rendControl} />
         </>
     );
 }

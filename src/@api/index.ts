@@ -2,9 +2,19 @@ import axios from "axios";
 import { apiController } from "./baseUrl";
 import { toast } from "react-toastify";
 
-export const fetch_dashboard_data = () => {
-    const response = apiController.get('dashboard/dashboard_data')
-    return response
+export const fetch_dashboard_data = (setIsLoading:any) => {
+    setIsLoading(true)
+    try {
+        const response = apiController.get('dashboard/dashboard_data')
+    setIsLoading(false)
+
+        return response
+        
+    } catch (error) {
+    setIsLoading(false)
+
+        return error
+    }
 }
 
 
@@ -140,7 +150,7 @@ export const updateListName = async (dto: any, rendControl: boolean, setRendCont
     }
 }
 
-export const createListName = async (dto: any, rendControl: boolean, setRendControl: any, setListName?: any,setIsLoading?:any) => {
+export const createListName = async (dto: any, rendControl: boolean, setRendControl: any, setListName?: any, setIsLoading?: any) => {
     setIsLoading && setIsLoading(true)
 
     try {
@@ -528,6 +538,23 @@ export const fetchBuyersData = async (setData: any, email: string, setIsLoading?
         console.log(error)
         setIsLoading && setIsLoading(false)
         setData(null)
+        return error
+    }
+}
+
+
+export const editProfileCall = async (setIsLoading: any, dto: any,setRendControl:any, rendControl:boolean) => {
+    setIsLoading(true)
+    try {
+        const response = await apiController.put("/dashboard/buyers/update_buyer", dto)
+        setIsLoading(false)
+        const button = document?.getElementById('close_modal_edit_pprofile')
+        button && button?.click()
+        setRendControl(!rendControl)
+        return response
+    } catch (error) {
+        toast.warn('Error uploading data. Please try again later.')
+        setIsLoading(false)
         return error
     }
 }
