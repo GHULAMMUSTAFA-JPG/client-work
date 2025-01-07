@@ -63,9 +63,9 @@ function homepagebuyer() {
                                         <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description}</p>
                                     </div>
                                     <div>
-                                        <div className="d-flex gap-2 align-items-center cursor mb-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                            <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p>
-                                            <Icon icon="ri:edit-line" width="16" height="16" className='cursor ms-1' />
+                                        <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal" style={{ width: '25px', height: '25px' }}>
+                                            {/* <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p> */}
+                                            <Icon icon="mage:edit" width="20" height="20" className='cursor flex-shrink-0 text-dark' />
                                         </div>
                                         {userData?.Company_Logo && userData?.Company_Logo !== "" ?
                                             <Image
@@ -76,7 +76,7 @@ function homepagebuyer() {
                                                 height={120}
                                             />
                                             :
-                                            <div className="border object-fit-cover rounded d-flex align-items-center justify-content-center" style={{ width: '120px', height: '120px' }}>
+                                            <div className="discussion-subtle border object-fit-cover rounded d-flex align-items-center justify-content-center" style={{ width: '120px', height: '120px' }}>
                                                 <span className="fs-40 fw-medium text-uppercase"> {(userData?.Company_Name && userData?.Company_Name! == "") ? userData?.Company_Name?.slice(0, 2) : userData?.Email && userData?.Email !== "" ? userData?.Email?.slice(0, 2) : "NA"}</span>
                                             </div>
                                         }
