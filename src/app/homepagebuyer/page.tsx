@@ -16,6 +16,7 @@ import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 import PostCalendar from "@/components/Calendar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
+import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
 
 function homepagebuyer() {
     const { user } = useAuth()
@@ -31,7 +32,7 @@ function homepagebuyer() {
 
 
     useEffect(() => {
-        if(user?.email){
+        if (user?.email) {
 
             fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
             fetchBuyersData(setUserData, user?.email)
@@ -41,7 +42,7 @@ function homepagebuyer() {
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-       
+
         setUsers(response.data?.users)
     }
     return (
@@ -57,18 +58,25 @@ function homepagebuyer() {
                                         {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
                                         <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description}</p>
                                     </div>
-                                {userData?.Company_Logo && userData?.Company_Logo !=="" ?
-                                   <Image
-                                        src={userData?.Company_Logo}
-                                        className="border object-fit-cover rounded flex-shrink-0"
-                                        alt="logo"
-                                        width={120}
-                                        height={120}
-                                    />
-                                : 
-                                <h6>{(userData?.Company_Name && userData?.Company_Name ! =="") ? userData?.Company_Name?.slice(0,2) : userData?.Email && userData?.Email !== "" ? userData?.Email?.slice(0,2) : "NA" }</h6>
-                                
-                                }
+                                    <div>
+                                        <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal" style={{ width: '25px', height: '25px' }}>
+                                            {/* <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p> */}
+                                            <Icon icon="mage:edit" width="20" height="20" className='cursor flex-shrink-0 text-dark' />
+                                        </div>
+                                        {userData?.Company_Logo && userData?.Company_Logo !== "" ?
+                                            <Image
+                                                src={userData?.Company_Logo}
+                                                className="border object-fit-cover rounded flex-shrink-0"
+                                                alt="logo"
+                                                width={120}
+                                                height={120}
+                                            />
+                                            :
+                                            <div className="discussion-subtle border object-fit-cover rounded d-flex align-items-center justify-content-center" style={{ width: '120px', height: '120px' }}>
+                                                <span className="fs-40 fw-medium text-uppercase"> {(userData?.Company_Name && userData?.Company_Name! == "") ? userData?.Company_Name?.slice(0, 2) : userData?.Email && userData?.Email !== "" ? userData?.Email?.slice(0, 2) : "NA"}</span>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -159,47 +167,47 @@ function homepagebuyer() {
                                         </thead>
                                         <tbody>
                                             {
-                                             activeCampaigns?.campaigns?.length !== 0 ?   activeCampaigns?.campaigns?.map((campaign: any, index: number) => {
-                                                if(index < 6){
-                                                    return (
-                                                        <tr key={index} onClick={()=>{
-                                                            router.push(`/buyerdashboard?id=${campaign?._id}`);
-                                                        }}>
-                                                            <td className='text-start'>
-                                                                {/* <div className="d-flex align-items-center">
+                                                activeCampaigns?.campaigns?.length !== 0 ? activeCampaigns?.campaigns?.map((campaign: any, index: number) => {
+                                                    if (index < 6) {
+                                                        return (
+                                                            <tr key={index} onClick={() => {
+                                                                router.push(`/buyerdashboard?id=${campaign?._id}`);
+                                                            }}>
+                                                                <td className='text-start'>
+                                                                    {/* <div className="d-flex align-items-center">
                                                                  <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
                                                                   <div className="ms-2 text-start">
                                                                   <p className="mb-0">Billi Ellish</p>
                                                                       <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
                                                                     </div>
                                                                    </div> */}
-                                                                <a href='#' className='fw-medium text-dark fs-16'>{campaign?.Headline}</a>
-                                                                <div className='d-flex align-items-center mt-1'>
-                                                                    <p className='fs-12 text-warning mb-0'>{campaign?.Created_At}</p>
-                                                                    <div className="vr mx-2"></div>
-                                                                    <p className='fs-12 text-warning mb-0'>{campaign?.Time_Ago}</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-0">{campaign?.Creator_Insights?.Activated}</p>
-                                                            </td>
-                                                            <td>
-                                                                <p className="mb-0">{campaign?.Creator_Insights?.To_Contact}</p>
-                                                            </td>
-                                                            <td>
-                                                                <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                }
-                                                    
+                                                                    <a href='#' className='fw-medium text-dark fs-16'>{campaign?.Headline}</a>
+                                                                    <div className='d-flex align-items-center mt-1'>
+                                                                        <p className='fs-12 text-warning mb-0'>{campaign?.Created_At}</p>
+                                                                        <div className="vr mx-2"></div>
+                                                                        <p className='fs-12 text-warning mb-0'>{campaign?.Time_Ago}</p>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <p className="mb-0">{campaign?.Creator_Insights?.Activated}</p>
+                                                                </td>
+                                                                <td>
+                                                                    <p className="mb-0">{campaign?.Creator_Insights?.To_Contact}</p>
+                                                                </td>
+                                                                <td>
+                                                                    <Icon icon="ion:arrow-up-right-box-outline" width={24} height={24} className='text-warning cursor' />
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }
+
                                                 })
-                                                : 
-                                                <tr>
-                                                    <td colSpan={4} style={{textAlign:'center'}}>
-                                                        No data found
-                                                    </td>
-                                                </tr>                                            }
+                                                    :
+                                                    <tr>
+                                                        <td colSpan={4} style={{ textAlign: 'center' }}>
+                                                            No data found
+                                                        </td>
+                                                    </tr>}
 
 
                                         </tbody>
@@ -279,6 +287,7 @@ function homepagebuyer() {
                     <CardsDashboardBuyer />
                 </div> */}
             </div>
+            <EditProfileModalBuyer user={user} userProfile={userData} />
         </>
     );
 }
