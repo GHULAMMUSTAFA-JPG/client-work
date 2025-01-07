@@ -42,7 +42,7 @@ function mycreatorsbuyer() {
     }, [selectedId, rendControl])
 
     const fetchData = async () => {
-        const response = await fetch_dashboard_data()
+        const response:any = await fetch_dashboard_data()
         // console.log(response.data)
         setUsers(response.data?.users)
     }

@@ -7,12 +7,10 @@ export const fetch_dashboard_data = (setIsLoading?:any) => {
     try {
         const response = apiController.get('dashboard/dashboard_data')
         setIsLoading && setIsLoading(false)
-
         return response
         
     } catch (error) {
         setIsLoading && setIsLoading(false)
-
         return error
     }
 }
