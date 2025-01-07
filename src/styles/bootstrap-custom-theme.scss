@@ -405,6 +405,30 @@ body {
         color: $activated !important;
     }
 
+    .text-to-contact {
+        color: $to-contact !important;
+    }
+
+    .activated-subtle {
+        background-color: $activated-subtle !important;
+    }
+
+    .discussion-subtle {
+        background-color: $discussion-subtle !important;
+    }
+
+    .contacted-subtle {
+        background-color: $contacted-subtle !important;
+    }
+
+    .to-contact-subtle {
+        background-color: $to-contact-subtle !important;
+    }
+
+    .not-fit-subtle {
+        background-color: $not-fit-subtle !important;
+    }
+
     .text-gray {
         color: $gray !important;
     }

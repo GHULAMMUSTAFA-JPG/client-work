@@ -42,17 +42,17 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'Activated':
-                return 'text-primary';
+                return 'text-activated activated-subtle';
             case 'In_Discussion':
-                return 'text-discussion';
+                return 'text-discussion discussion-subtle';
             case 'Contacted':
-                return 'text-contacted';
+                return 'text-contacted contacted-subtle';
             case 'Not_Fit':
-                return 'text-danger';
+                return 'text-danger not-fit-subtle';
             case 'To_Contact':
-                return 'text-to-contact';
+                return 'text-to-contact to-contact-subtle';
             default:
-                return 'text-dark'; 
+                return 'text-dark base';     
         }
     };
     const [isOpen, setIsOpen] = useState(true); 
@@ -298,21 +298,21 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                             <td className="position-relative">
                                                                 <div className="dropdown">
                                                                     <span
-                                                                        className={`px-2 py-1 rounded rounded-pill bg-base dropdown-toggle ${getStatusColor(inner_object)}`}
+                                                                        className={`px-2 py-1 rounded rounded-pill dropdown-toggle ${getStatusColor(inner_object)}`}
                                                                         data-bs-toggle="dropdown"
                                                                         aria-expanded="false"
                                                                         role="button"
                                                                     >
                                                                         {inner_object =="In_Discussion" ?"In Discussion" : inner_object =="To_Contact" ? "To Contact" : inner_object =="Not_Fit" ? "Not Fit" : inner_object =="To_Contact" ? 'To Contact' : inner_object}
                                                                     </span>
-                                                                    <div className="dropdown">
+                                                                    {/* <div className="dropdown">
                                                                         <button
                                                                             className="btn "
                                                                             type="button"
                                                                             
                                                                         >
                                                                             {inner_object.Status}  
-                                                                        </button>
+                                                                        </button> */}
 
                                                                         {isOpen && ( 
                                                                             <ul className="dropdown-menu">
@@ -348,7 +348,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                                                 </li>
                                                                             </ul>
                                                                         )}
-                                                                    </div>
+                                                                    {/* </div> */}
                                                                 </div>
                                                             </td>
                                                             <td className='text-center'>
