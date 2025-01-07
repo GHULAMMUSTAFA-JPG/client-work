@@ -95,27 +95,27 @@ function SubmitCampaignModal(props: any) {
                                     </div>
 
                                     <input
-                                                    id="fileInput"
-                                                    type="file"
-                                                    className='d-none'
-                                                    multiple
-                                                    onChange={async (e) => {
+                                        id="fileInput"
+                                        type="file"
+                                        className='d-none'
+                                        multiple
+                                        onChange={async (e) => {
 
-                                                        const result: any = await handleFileUpload(e)
+                                            const result: any = await handleFileUpload(e)
 
-                                                        if (result?.length !== 0) {
-                                                            let array: any = []
-                                                            result?.map((url: any, index: number) => {
-                                                                array.push(url?.file_urls)
-                                                            })
-                                                            setDto((prev: any) => {
-                                                                return { ...prev, ["media_content"]: array }
-                                                            })
-                                                        }
-                                                        console.log(result, "result")
-                                                    }}
-                                                />
-                                    
+                                            if (result?.length !== 0) {
+                                                let array: any = []
+                                                result?.map((url: any, index: number) => {
+                                                    array.push(url?.file_urls)
+                                                })
+                                                setDto((prev: any) => {
+                                                    return { ...prev, ["media_content"]: array }
+                                                })
+                                            }
+                                            console.log(result, "result")
+                                        }}
+                                    />
+
                                     <div className='mb-5'>
                                         <label className='form-label'>Upload Files</label>
                                         {dto?.media_content.length === 0 ? (
@@ -150,28 +150,32 @@ function SubmitCampaignModal(props: any) {
                                                 <p className='text-muted small mt-2 mb-0 fs-10'>Supported formats: JPEG, PNG, PDF (Max 10MB)</p>
                                             </div>
                                         ) :
-                                        
 
-                                            dto?.media_content?.map((ele: any, index: number) => {
-                                                const fileName = ele.split('/').pop();
-                                                return (
-                                                    <div
-                                                        className='align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex flex-column justify-content-center mb-3 p-3 rounded-3 text-center upload-area'
-                                                        style={{ maxWidth: '150px' }}
-                                                        onClick={() => document.getElementById('fileInput')?.click()}
-                                                    >
-                                                        <Icon icon="mdi:file-document-outline" className='mb-2 text-muted' width={30} height={30} />
-                                                        <p className='mb-0 small text-truncate w-100'>{fileName}</p>
-                                                    </div>
-                                                )
-                                            })
-
+                                            <div className="d-flex gap-2 flex-wrap">
+                                                {dto?.media_content?.map((ele: any, index: number) => {
+                                                    const fileName = ele.split('/').pop();
+                                                    return (
+                                                        <div
+                                                            className='position-relative align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex flex-column justify-content-center p-3 rounded-3 text-center upload-area'
+                                                            style={{ maxWidth: '150px' }}
+                                                            onClick={() => document.getElementById('fileInput')?.click()}
+                                                        >
+                                                            <Icon icon="mdi:file-document-outline" className='mb-2 text-muted' width={30} height={30} />
+                                                            <p className='mb-0 small text-truncate w-100'>{fileName}</p>
+                                                            <div
+                                                                className='position-absolute top-0 end-0 m-1'>
+                                                                <Icon icon="mdi:close" width={16} height={16} onClick={() => removeFile(index)} className="text-warning" />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })}
+                                                <div className='cursor card-hover upload-area d-flex align-items-center justify-content-center border border-dotted border-2 rounded-3' style={{ width: '150px', height: '92px' }} onClick={() => document.getElementById('fileInput')?.click()}>
+                                                    <Icon icon="material-symbols:add" width={24} height={24} />
+                                                </div>
+                                            </div>
                                         }
-                                        {/* <div className='cursor card-hover upload-area d-flex align-items-center justify-content-center border border-dotted border-2 rounded-3' style={{ width: '150px', height: '92px' }} onClick={() => document.getElementById('fileInput')?.click()}>
-                                            <Icon icon="material-symbols:add" width={20} height={20} />
-                                        </div> */}
 
-                                        <div className='uploaded-files'>
+                                        {/* <div className='uploaded-files'>
                                             <div className='row g-3'>
                                                 {uploadedFiles?.map((file, index) => (
                                                     <div key={index} className='col-md-4 col-lg-3'>
@@ -203,7 +207,7 @@ function SubmitCampaignModal(props: any) {
                                                     </div>
                                                 ))}
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                 </form>
