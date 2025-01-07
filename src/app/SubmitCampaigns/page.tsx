@@ -127,7 +127,7 @@ const SubmitCampaigns = () => {
                                                 <div className="d-flex align-items-center gap-2 mb-2">
                                                     <div className="rounded-circle">
                                                         <Image
-                                                            src={data?.campaign?.Creator_Profile_Picture}
+                                                            src={data?.campaign?.Creator_Profile_Picture || ""}
                                                             className="rounded-circle"
                                                             alt="User avatar"
                                                             width={36}
