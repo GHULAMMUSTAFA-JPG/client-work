@@ -59,6 +59,11 @@ function SubmitCampaignModal(props: any) {
         })
     }
 
+
+    useEffect(()=>{
+        console.log(dto,"helos")
+    },[dto])
+
     return (
         <div className="modal fade" id="submitCampaignModal" tabIndex={-1} aria-labelledby="submitCampaignModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -109,10 +114,9 @@ function SubmitCampaignModal(props: any) {
                                                     array.push(url?.file_urls)
                                                 })
                                                 setDto((prev: any) => {
-                                                    return { ...prev, ["media_content"]: array }
+                                                    return { ...prev, ["media_content"]: [...array,...dto?.media_content] }
                                                 })
                                             }
-                                            console.log(result, "result")
                                         }}
                                     />
 
@@ -153,15 +157,26 @@ function SubmitCampaignModal(props: any) {
 
                                             <div className="d-flex gap-2 flex-wrap">
                                                 {dto?.media_content?.map((ele: any, index: number) => {
-                                                    const fileName = ele.split('/').pop();
+                                                  
                                                     return (
                                                         <div
                                                             className='position-relative align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex flex-column justify-content-center p-3 rounded-3 text-center upload-area'
                                                             style={{ maxWidth: '150px' }}
-                                                            onClick={() => document.getElementById('fileInput')?.click()}
+                                                            onClick={() => 
+                                                            {
+                                                                let array = dto?.media_content 
+                                                               const element =  array.indexOf(ele)
+                                                               if(element !== -1){
+                                                                array.splice(element,1)
+                                                               }
+                                                               setDto((prev:any)=>{
+                                                                return{...prev, ["media_content"] : array}
+                                                               })
+                                                            }
+                                                             }
                                                         >
                                                             <Icon icon="mdi:file-document-outline" className='mb-2 text-muted' width={30} height={30} />
-                                                            <p className='mb-0 small text-truncate w-100'>{fileName}</p>
+                                                            <p className='mb-0 small text-truncate w-100'>{ele}</p>
                                                             <div
                                                                 className='position-absolute top-0 end-0 m-1'>
                                                                 <Icon icon="mdi:close" width={16} height={16} onClick={() => removeFile(index)} className="text-warning" />
