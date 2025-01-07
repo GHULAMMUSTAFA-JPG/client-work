@@ -334,6 +334,8 @@ function OffcanvasCreateCompaign(props: any) {
                                                     setDto((prev: any) => {
                                                         return { ...prev, ["Is_Ongoing"]: true }
                                                     })
+                                                    dto?.Start_Date && delete dto?.Start_Date
+                                                    dto?.End_Date && delete dto?.End_Date
                                                 }}
                                                 type="button"
                                                 id='Is_Ongoing'
@@ -373,7 +375,7 @@ function OffcanvasCreateCompaign(props: any) {
                                                 selectsStart
                                                 startDate={startDate}
                                                 endDate={endDate}
-                                                placeholderText="Start date"
+                                                placeholderText={dto?.Start_Date ? dto?.Start_Date : "Start date"}
                                                 className="form-control"
                                                 dateFormat="MMM dd, yyyy"
                                             />
@@ -388,7 +390,7 @@ function OffcanvasCreateCompaign(props: any) {
                                                 startDate={startDate}
                                                 endDate={endDate}
                                                 minDate={startDate}
-                                                placeholderText="End date"
+                                                placeholderText={dto?.End_Date ? dto?.End_Date : "End date"}
                                                 className="form-control"
                                                 dateFormat="MMM dd, yyyy"
                                             />

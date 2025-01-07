@@ -67,6 +67,7 @@ export const fetchBuyerDiscoveryData = async (email: string, setData: any, setIs
         const response: any = await apiController.get(`/dashboard/buyers/discover_creators/${email}`)
         setIsLoading(false)
         setData(response?.data)
+        console.log(response?.data,"response data")
         return response
 
     } catch (error) {
@@ -104,15 +105,13 @@ export const getSpecificCreatorList = async (id: string, setData: any, setIsLoad
 
     try {
         const response: any = await apiController.get(`/dashboard/buyers/get_buyer_list_creators/${id}`)
-        setIsLoading(false)
-
         setData(response?.data)
+        setIsLoading(false)
         return response
     } catch (error) {
         setData([])
-        setIsLoading(false)
-
         console.log(error, "Error in get specific creator list api")
+        setIsLoading(false)
         return error
     }
 }
@@ -405,21 +404,20 @@ export const handleFileUpload = async (event: any) => {
     const maxImageSize = 10 * 1024 * 1024
     if (files && files.length > 0) {
         const fileUploadPromises: Promise<any>[] = [];
-        
+
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-
             // Check if the file is an image
             if (file.type.startsWith('image/')) {
-                
+
                 const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/heic'];
-                if(file.size > maxImageSize ){
-                        toast.warn('Image size cannot exceed 10mb')
+                if (file.size > maxImageSize) {
+                    toast.warn('Image size cannot exceed 10mb')
                 }
                 else if (allowedImageTypes.includes(file.type)) {
                     fileUploadPromises.push(uploadImage(file));
                 }
-                
+
                 else {
                     toast.warn('Invalid image file. Only JPEG, PNG, JPG, WEBP, HEIC are supported.');
                 }
@@ -453,3 +451,16 @@ export const handleFileUpload = async (event: any) => {
         }
     }
 };
+
+
+export const fetchBuyersData = async (setData: any, email: string) => {
+    try {
+        const response = await apiController.get(`/dashboard/buyers/get_buyer/${email}`)
+        setData(response?.data)
+        return response?.data
+    } catch (error) {
+        console.log(error)
+        setData(null)
+        return error
+    }
+}

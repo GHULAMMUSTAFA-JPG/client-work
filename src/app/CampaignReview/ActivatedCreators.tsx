@@ -22,6 +22,10 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
         campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
     }, [campaignData, rendControl])
 
+
+    useEffect(()=>{
+        console.log(selectedCreator,"selected Creator",campaignData)
+    },[selectedCreator, campaignData])
     return (
         <>
             <section className='dashboard activated-creators'>
@@ -62,7 +66,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                             </div>
                             <div className='oveflow-wrapper'>
                                 <div className='d-flex mb-3'>
-                                    {
+                                    { 
                                         campaignData?.Activated_Creators && campaignData?.Activated_Creators?.map((creator: any, index: number) => {
                                             return (
                                                 <div onClick={() => {
@@ -126,7 +130,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                 <button className={selectedFilter=="All" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
                                     setSelectedFilter('All')
                                 }}>
-                                    All (Recent) <span className="badge bg-white text-dark ms-1">{selectedCreator?.Posts?.length}</span>
+                                    All (Recent) <span className="badge bg-white text-dark ms-1">{selectedCreator?.Posts?.length || 0}</span>
                                 </button>
                                 {/* <button className='btn btn-outline-light text-dark btn-sm'>
                                     Required Posts <span className="badge bg-light text-dark ms-1">1</span>
@@ -134,24 +138,24 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                 <button className={selectedFilter=="Pending Approval" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
                                     setSelectedFilter('Pending Approval')
                                 }}>
-                                    Waiting Approvals <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.["Pending Approval"]}</span>
+                                    Waiting Approvals <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.["Pending Approval"] || 0}</span>
                                 </button>
                                 <button className={selectedFilter=="Approved" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
                                     setSelectedFilter('Approved')
                                 }}>
-                                    Approved Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Approved}</span>
+                                    Approved Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Approved || 0}</span>
                                 </button>
                                 <button className={selectedFilter=="Rejected" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
                                     setSelectedFilter('Rejected')
                                 }}>
-                                    Rejected Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Rejected}</span>
+                                    Rejected Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Rejected || 0}</span>
                                 </button>
                             </div>
                             <div className="row g-3">
 
                                            
                                 {
-                                    selectedCreator?.Posts?.map((post: any, index: number) => {
+                                ( selectedCreator?.Posts &&  selectedCreator?.Posts?.length !== 0) ?  selectedCreator?.Posts?.map((post: any, index: number) => {
                                         return (
                                             <div key={index} className='col-md-3' style={selectedFilter=="All" ? {display:'block'} : selectedFilter == post?.Status ? {display:'block'} : {display:'none'}}>
                                                 <div className="card">
@@ -192,6 +196,10 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                         )
 
                                     })
+                                    : 
+                                    <tr>
+                                        <td>No data found</td>
+                                    </tr>
                                 }
 
 

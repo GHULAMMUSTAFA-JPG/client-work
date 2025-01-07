@@ -27,7 +27,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                 total += dynamicObject[key].length;
             }
         }
-
+        console.log(total,"total")
         setTotalLenght(total);
     }
 
@@ -266,7 +266,8 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                     </thead>
                                     <tbody>
                                         {
-                                            (selectedTab == "All" && totalLenght !== 0 && selectedCampaignDetails || selectedCampaignDetails?.campaign?.Campaign_Progress?.[selectedTab]?.length !== 0) ?
+                                            ((selectedTab == "All" && totalLenght !== 0)  || (selectedCampaignDetails?.campaign?.Campaign_Progress?.[selectedTab]?.length !== 0)) ?
+
                                                 selectedCampaignDetails?.campaign?.Campaign_Progress && Object?.keys(selectedCampaignDetails?.campaign?.Campaign_Progress)?.map((inner_object: any) => (
                                                     selectedCampaignDetails?.campaign?.Campaign_Progress[inner_object]?.map((array_item: any, index: number) => (
                                                         <tr key={index} style={selectedTab == "All" ? { display: 'table-row' } : selectedTab == inner_object ? { display: 'table-row' } : { display: 'none' }}>
@@ -353,13 +354,12 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                     ))
                                                 ))
                                                 :
-
+                                                
                                                 <tr>
                                                     <td colSpan={3}>
                                                         <div style={{ textAlign: 'center' }}>No data found</div>
                                                     </td>
                                                 </tr>
-
                                         }
 
                                     </tbody>

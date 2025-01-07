@@ -1,6 +1,6 @@
 "use client";
 
-import { fetch_dashboard_data, fetchBuyerActiveCampaigns } from "@/@api";
+import { fetch_dashboard_data, fetchBuyerActiveCampaigns, fetchBuyersData } from "@/@api";
 import TopCardBuyer from "@/components/TopCardBuyer";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts/AuthContext";
 function homepagebuyer() {
     const { user } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
+    const [userData, setUserData] = useState<any>()
     const [activeCampaigns, setActiveCampaigns] = useState<any>()
     // const router = useRouter()
     useEffect(() => {
@@ -28,12 +29,21 @@ function homepagebuyer() {
 
 
     useEffect(() => {
-        fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
+        if(user?.email){
+
+            fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns)
+            fetchBuyersData(setUserData, user?.email)
+        }
     }, [user?.email])
+
+    useEffect(()=>{
+        console.log(userData,"userData =====")
+    },[userData])
+
 
     const fetchData = async () => {
         const response = await fetch_dashboard_data()
-        console.log(response.data)
+       
         setUsers(response.data?.users)
     }
     return (
@@ -45,17 +55,22 @@ function homepagebuyer() {
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
-                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>XYZ</span></h3>
-                                        <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p>
-                                        <p className='mb-0 fs-14 text-muted'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
+                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name}</span></h3>
+                                        {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
+                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description}</p>
                                     </div>
-                                    <Image
-                                        src="/assets/images/apollo.png"
+                                {userData?.Company_Logo && userData?.Company_Logo !=="" ?
+                                   <Image
+                                        src={userData?.Company_Logo}
                                         className="border object-fit-cover rounded flex-shrink-0"
                                         alt="logo"
                                         width={120}
                                         height={120}
                                     />
+                                : 
+                                <h6>{(userData?.Company_Name && userData?.Company_Name ! =="") ? userData?.Company_Name?.slice(0,2) : userData?.Email && userData?.Email !== "" ? userData?.Email?.slice(0,2) : "NA" }</h6>
+                                
+                                }
                                 </div>
                             </div>
                         </div>
