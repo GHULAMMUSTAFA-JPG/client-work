@@ -68,10 +68,10 @@
     .dropdown-menu {
         // display: none;
         padding: 0;
-        width: auto;
         left: auto !important;
         right: 0;
-        
+        max-width: 10rem;
+        min-width: 9rem;
     }
 
     // .dropdown-menu {
@@ -114,7 +114,7 @@
     }
 
     .dropdown-item {
-        padding: 6px;
+        padding: 6px 12px;
         font-size: 14px;
     }
 

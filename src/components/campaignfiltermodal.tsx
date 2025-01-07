@@ -11,8 +11,8 @@ import ProfileCard from '@/components/profilecard';
 
 
 
-function CampaignFilterModal(props:any) {
-    const {selectedCampaign} = props
+function CampaignFilterModal(props: any) {
+    const { selectedCampaign } = props
 
     return (
         <>
@@ -170,19 +170,21 @@ function CampaignFilterModal(props:any) {
                                     </div>
                                 </div>
                             </div> */}
-                            <div className='d-flex gap-3'>
+                            <div className='d-flex gap-3 justify-content-between'>
                                 <div>
                                     <p className='fw-medium mb-2 fs-18'>{selectedCampaign?.Headline}</p>
                                     <p className='text-warning'>{selectedCampaign?.Brief_Description}</p>
                                 </div>
-                                <Image
-                                    src={selectedCampaign?.Company_Logo}
-                                    className="border object-fit-cover rounded flex-shrink-0"
-                                    alt="logo"
-                                    width={110}
-                                    height={110}
-                                />
-                                <button type="button" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div className='d-flex gap-2'>
+                                    <Image
+                                        src={selectedCampaign?.Company_Logo}
+                                        className="border object-fit-cover rounded flex-shrink-0"
+                                        alt="logo"
+                                        width={110}
+                                        height={110}
+                                    />
+                                    <button type="button" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
                             </div>
                             <div className='d-flex gap-2 align-items-center mb-2'>
                                 <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />

@@ -74,10 +74,10 @@ export default function Header() {
                             </a>
 
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">
+                                {/* <li><a className="dropdown-item" href="#">
                                     Update Profile
                                 </a>
-                                </li>
+                                </li> */}
                                 <li><a className="dropdown-item" href="#" onClick={navigateToSignIn}>
                                     <form className="d-flex" role="search">
                                         {/* {(pathname !== '/' && pathname !== '/login') && ( */}

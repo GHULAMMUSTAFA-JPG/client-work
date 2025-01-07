@@ -435,29 +435,31 @@ function OffcanvasCreateCompaign(props: any) {
                                     <div className="vr"></div>
                                     <small className="text-muted">Max 10 MB</small>
                                 </div>
-                                <div
-                                    className="border-dashed rounded-2 text-center bg-base size-box"
-                                   >
-                                    <input
-                                        onChange={async (e: any) => {
-                                            const result:any = await handleFileUpload(e);
-                                            console.log(result,"result")
-                                          setDto((prev:any)=>{
-                                            return{...prev, ['Campaign_Media'] : result?.[0].file_urls}
-                                          }) 
-                                        }}
-                                        type="file"
-                                        className="d-none"
-                                        id="Campaign_Media"
-                                        accept="image/*"
-                                    />
-                                    <label htmlFor="Campaign_Media" className="cursor-pointer">
-                                        <Icon icon="ph:plus-bold" className="fs-4" />
-                                        {/* <div className="text-muted fs-14">Click or drag image to upload</div> */}
-                                    </label>
+                                <div className='d-flex gap-2'>
                                     {
-                                        dto?.Campaign_Media && <img src={dto?.Campaign_Media} width={100} height={100}/>
+                                        dto?.Campaign_Media && <img src={dto?.Campaign_Media} width={100} height={100} className='border object-fit-cover rounded flex-shrink-0'/>
                                     }
+                                    <div 
+                                        className="border-dashed rounded-2 text-center bg-base size-box cursor"
+                                        onClick={() => document.getElementById('Campaign_Media')?.click()}
+                                    >
+                                        <input
+                                            onChange={async (e: any) => {
+                                                const result: any = await handleFileUpload(e);
+                                                console.log(result, "result")
+                                                setDto((prev: any) => {
+                                                    return { ...prev, ['Campaign_Media']: result?.[0].file_urls }
+                                                })
+                                            }}
+                                            type="file"
+                                            className="d-none"
+                                            id="Campaign_Media"
+                                            accept="image/*"
+                                        />
+                                        <label className="cursor">
+                                            <Icon icon="ph:plus-bold" className="fs-4" />
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

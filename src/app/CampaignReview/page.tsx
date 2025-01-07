@@ -43,10 +43,16 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
         switch (status) {
             case 'Activated':
                 return 'text-primary';
-            case 'Not Fit':
+            case 'In_Discussion':
+                return 'text-discussion';
+            case 'Contacted':
+                return 'text-contacted';
+            case 'Not_Fit':
                 return 'text-danger';
+            case 'To_Contact':
+                return 'text-to-contact';
             default:
-                return 'text-dark';
+                return 'text-dark'; 
         }
     };
     const [isOpen, setIsOpen] = useState(true); 
@@ -292,7 +298,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                             <td className="position-relative">
                                                                 <div className="dropdown">
                                                                     <span
-                                                                        className={`px-2 py-1 rounded rounded-pill bg-base text-activated dropdown-toggle ${getStatusColor(inner_object)}`}
+                                                                        className={`px-2 py-1 rounded rounded-pill bg-base dropdown-toggle ${getStatusColor(inner_object)}`}
                                                                         data-bs-toggle="dropdown"
                                                                         aria-expanded="false"
                                                                         role="button"
@@ -311,31 +317,31 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                                         {isOpen && ( 
                                                                             <ul className="dropdown-menu">
                                                                                 <li
-                                                                                    className="dropdown-item cursor text-activated"
+                                                                                    className="dropdown-item cursor text-dark"
                                                                                     onClick={() => handleItemClick("Activated",array_item)}
                                                                                 >
                                                                                     Activated
                                                                                 </li>
                                                                                 <li
-                                                                                    className="dropdown-item cursor text-discussion"
+                                                                                    className="dropdown-item cursor text-dark"
                                                                                     onClick={() => handleItemClick("In_Discussion",array_item)}
                                                                                 >
                                                                                     In Discussion
                                                                                 </li>
                                                                                 <li
-                                                                                    className="dropdown-item cursor text-contacted"
+                                                                                    className="dropdown-item cursor text-dark"
                                                                                     onClick={() => handleItemClick("Contacted",array_item)}
                                                                                 >
                                                                                     Contacted
                                                                                 </li>
                                                                                 <li
-                                                                                    className="dropdown-item cursor text-danger"
+                                                                                    className="dropdown-item cursor text-dark"
                                                                                     onClick={() => handleItemClick("Not_Fit",array_item)}
                                                                                 >
                                                                                     Not Fit
                                                                                 </li>
                                                                                 <li
-                                                                                    className="dropdown-item cursor text-purple"
+                                                                                    className="dropdown-item cursor text-dark"
                                                                                     onClick={() => handleItemClick("To_Contact",array_item)}
                                                                                 >
                                                                                     To Contact

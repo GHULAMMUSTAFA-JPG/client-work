@@ -29,7 +29,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                     <div className='row'>
                         <div className='col-12'>
                             <div className='d-flex align-items-center justify-content-between my-3'>
-                                <a onClick={() => setShowActivatedCreators(false)} className='text-dark text-decoration-none d-flex align-items-center'>
+                                <a onClick={() => setShowActivatedCreators(false)} className='text-dark text-decoration-none d-flex align-items-center cursor'>
                                     <Icon icon="akar-icons:arrow-left" width={18} height={18} />
                                     <span className='ms-2' >Back to Campaign</span>
                                 </a>

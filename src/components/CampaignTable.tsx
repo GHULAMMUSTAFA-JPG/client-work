@@ -75,12 +75,12 @@ return(
                                                                         <p className='mb-0'>${camp?.Budget}</p>
                                                                     </td>
                                                                     <td className='text-center'>
-                                                                        <button className='bg-primary-subtle border-0 btn btn-outline-primary btn-sm px-3 rounded-pill'>{camp?.Is_Public ? "Public" : "Private"}</button>
+                                                                        <span className={`${camp?.Is_Public ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger'} border-0 btn btn-sm px-3 rounded-pill`}>{camp?.Is_Public ? "Public" : "Private"}</span>
                                                                     </td>
                                                                     <td className='text-center' >
                                                                      
-                                                                    <Icon  onClick={  ()=>{setSelectedCampaign(camp)}} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" icon="solar:pen-2-outline" width={22} height={22} className='cursor' />
-                                                                    <Icon  icon="material-symbols:delete-outline-rounded" width={22} height={22} className='cursor ms-2' onClick={()=>{
+                                                                    <Icon  onClick={  ()=>{setSelectedCampaign(camp)}} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" icon="mage:edit" width={24} height={24} className='cursor text-warning' />
+                                                                    <Icon  icon="fluent:delete-28-regular" width={24} height={24} className='cursor ms-3 text-warning' onClick={()=>{
                                                                         deleteCampaign(camp?._id, rendControl, setRendControl)
                                                                     }}/>
                                                                         
