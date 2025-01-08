@@ -17,7 +17,7 @@ import { useSearchParams } from 'next/navigation';
 
 const AuthPage = () => {
     const [userType, setUserType] = useState<'brand' | 'creator'>('creator');
-    const { loginUser,user, setIsLoading } = useAuth()
+    const { loginUser, user, setIsLoading } = useAuth()
     const [isLogin, setIsLogin] = useState(true);
     const [loader, setLoader] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
@@ -51,7 +51,7 @@ const AuthPage = () => {
     // const queryParams = new URLSearchParams(window.location.search);
     // const codess = queryParams.get('code');
 
-    
+
     // Form initial values and validation
     const initialValues = { email: '', password: '' };
     const [error, setError] = useState<string | null>(null);
@@ -87,7 +87,7 @@ const AuthPage = () => {
 
         if (!values.company_website) {
             errors.company_website = 'Company website is required';
-        } 
+        }
 
         if (!values.password) {
             errors.password = 'Password is required';
@@ -119,20 +119,33 @@ const AuthPage = () => {
 
     const handleAuth = async () => {
 
-        setLoader(true);
+       
         setError(null);
         try {
             if (isLogin) {
-                const response: any = await newLogin({
-                    email: values?.email,
-                    password: values?.password
-                });
-                setLoader(false);
-                if (response?.data) {
-                    loginUser(response?.data);
-                    // router.push('/dashboard');
+            
+                    if (values?.email == "" && values?.password == "") toast.warn("Email and password cannot be empty")
+                    else if (values?.email == "") toast.warn('Email cannot be empty')
+                    else if(values?.password == "") toast.warn('Password cannot be empty')
+                
+
+                
+                else {
+                    setLoader(true);
+                    const response: any = await newLogin({
+                        email: values?.email,
+                        password: values?.password
+                    });
+                    setLoader(false);
+                    if (response?.data) {
+                        loginUser(response?.data);
+                        // router.push('/dashboard');
+                    }
                 }
+
+
             } else {
+                setLoader(true);
                 const response = await fetch('https://synncapi.onrender.com/auth/buyer/signup', {
                     method: 'POST',
                     headers: {
@@ -157,7 +170,7 @@ const AuthPage = () => {
             setLoader(false);
 
             if (error.response?.status === 401) {
-                setError("Incorrect email or password. Please try again.");
+                // setError("Incorrect email or password. Please try again.");
             } else {
                 setError(error.response?.data?.message || `Failed to ${isLogin ? 'login' : 'create account'}. Please try again later.`);
             }
@@ -342,7 +355,7 @@ const AuthPage = () => {
 
                             {!isLogin && <div className="mb-3">
                                 <label htmlFor="company_website" className="form-label fs-14">
-                                    Company Website 
+                                    Company Website
                                 </label>
                                 <div className="input-group">
                                     <span className="input-group-text fs-14">https://</span>

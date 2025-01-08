@@ -36,7 +36,7 @@ export default function Header() {
                 <nav className="navbar bg-white">
                     <div className="container-fluid">
                         <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" />
-                        <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-none d-lg-block" />
+                        {/* <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-none d-lg-block" /> */}
                         {/* <h5 className='mb-0 ms-3'>{pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}</h5> */}
                         {/* <button
                             className="navbar-toggler bg-primary"

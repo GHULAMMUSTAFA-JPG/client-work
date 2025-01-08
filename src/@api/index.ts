@@ -245,7 +245,7 @@ export const updateCampaign = async (dto: any, rendControl: boolean, setRendCont
         Newmapper()
         return response
     } catch (error) {
-
+        toast.warn('Error in updating campaign. Please try again later')
         console.log(error, "Error in get campaign list api")
         return error
     }

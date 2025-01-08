@@ -34,7 +34,7 @@ apiController.interceptors.response.use(
     if (error.response) {
       console.log(error.response)
       // Display the error message from the backend in a toast notification
-      toast.error(error.response.data.message || "An error occurred");
+      toast.error(error.response.data.message || error?.response?.data?.detail || "An error occurred");
     } else {
       // Display a generic error message for other types of errors
       toast.error("An error occurred. Please try again later.");

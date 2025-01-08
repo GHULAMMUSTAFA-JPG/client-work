@@ -24,6 +24,7 @@ function homepagebuyer() {
     const [users, setUsers] = useState<any[]>([]);
     const [userData, setUserData] = useState<any>()
     const [activeCampaigns, setActiveCampaigns] = useState<any>()
+    const [viewRow, showViewRow] = useState<number>(6)
     const router = useRouter()
     useEffect(() => {
 
@@ -55,9 +56,9 @@ function homepagebuyer() {
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
-                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name}</span></h3>
+                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name && userData?.Company_Name?.slice(0,20) + "...."}</span></h3>
                                         {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
-                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description}</p>
+                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description && userData?.Company_Description?.slice(0,200)+ '....'}</p>
                                     </div>
                                     <div>
                                         <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal" style={{ width: '25px', height: '25px' }}>
@@ -152,15 +153,17 @@ function homepagebuyer() {
                             <div className="card-header p-3">
                                 <div className="d-flex align-items-center justify-content-between">
                                     <p className="mb-0 fw-medium fs-16">Campaigns</p>
-                                    <button className='btn btn-info btn-sm'>View All</button>
+                                  {activeCampaigns?.campaigns && activeCampaigns?.campaigns?.length > viewRow && <button className='btn btn-info btn-sm' onClick={()=>{
+                                        showViewRow(activeCampaigns?.campaigns?.length)
+                                    }}>View All</button>}
                                 </div>
                             </div>
                             <div className="card-body p-0">
                                 <div className="table-responsive campaign-listing-table">
                                     <table className="table align-middle text-center mb-0 table-hover">
                                         <thead>
-                                            <tr>
-                                                <th scope="col" className="text-start ps-4">Campaigns <span className='text-muted fs-12'>(7)</span></th>
+                                            <tr> 
+                                                <th scope="col" className="text-start ps-4">Campaigns <span className='text-muted fs-12'>({activeCampaigns?.campaigns?.length || 0})</span></th>
                                                 <th scope="col">Activated Creators</th>
                                                 <th scope="col">New Applications</th>
                                                 <th scope="col">Actions</th>
@@ -169,7 +172,7 @@ function homepagebuyer() {
                                         <tbody>
                                             {
                                                 activeCampaigns?.campaigns?.length !== 0 ? activeCampaigns?.campaigns?.map((campaign: any, index: number) => {
-                                                    if (index < 6) {
+                                                    if (index < viewRow) {
                                                         return (
                                                             <tr key={index} onClick={() => {
                                                                 router.push(`/buyerdashboard?id=${campaign?._id}`);
@@ -206,7 +209,7 @@ function homepagebuyer() {
                                                     :
                                                     <tr>
                                                         <td colSpan={4} style={{ textAlign: 'center' }}>
-                                                            No data found
+                                                            No Campaign Found
                                                         </td>
                                                     </tr>}
 

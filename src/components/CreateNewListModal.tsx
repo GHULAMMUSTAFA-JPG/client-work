@@ -10,6 +10,7 @@ import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
 import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'react-toastify';
 interface CreateNewListModalProps {
     data?: any
     rendControl: boolean
@@ -19,7 +20,7 @@ function CreateNewListModal(props: CreateNewListModalProps) {
     const { data, rendControl, setRendControl } = props
     const { user, setIsLoading } = useAuth()
     const [listName, setListName] = useState<string>('')
-
+    const [isValid, setIsValid] = useState<boolean>(true)
     const listItemAction = () => {
         if (data) {
             updateListName({
@@ -58,11 +59,17 @@ function CreateNewListModal(props: CreateNewListModalProps) {
                                     <label className="form-label">List Name</label>
                                     <input
                                         type="text"
-                                        className="form-control mb-2"
+                                        className={`form-control mb-2 `}
                                         placeholder="Enter list name"
                                         value={listName}
-                                        onChange={(e: any) => {
-                                            setListName(e.target.value)
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                            const value = e.target.value;
+                                            if (value.length <= 50) {
+                                                setListName(value);
+                                                setIsValid(true)
+                                            } else {
+                                                setIsValid(false)
+                                            }
                                         }}
                                     />
                                     {data ? "" : <div className="form-text">

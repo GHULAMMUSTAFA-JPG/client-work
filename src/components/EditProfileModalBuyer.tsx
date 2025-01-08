@@ -73,14 +73,10 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
         })
     }
 
-
     const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
      editProfileCall(setIsLoading,editUserProfileDto, setRendControl, rendControl)
     }
-
-
-
 
     return (
         <>

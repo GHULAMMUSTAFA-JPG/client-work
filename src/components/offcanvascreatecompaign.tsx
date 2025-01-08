@@ -150,7 +150,7 @@ function OffcanvasCreateCompaign(props: any) {
     };
 
     useEffect(() => {
-        console.log(user)
+    
         user?.email && setDto((prev: any) => {
             return { ...prev, ["Email"]: user?.email }
         })
@@ -216,11 +216,22 @@ function OffcanvasCreateCompaign(props: any) {
     }, [user])
 
     const updateDto = (e: any) => {
-
-        setDto((prev: any) => {
-            const updatedDto = { ...prev, [e.target.id]: e.target.value };
-            return updatedDto;
-        });
+   
+       
+        if(e.target.id == "Is_Public"){
+           
+            setDto((prev: any) => {
+                const updatedDto = { ...prev, [e.target.id]: e.target.value == "on" ? true : false };
+                return updatedDto;
+            });
+        }
+        else{
+            setDto((prev: any) => {
+                const updatedDto = { ...prev, [e.target.id]: e.target.value };
+                return updatedDto;
+            });
+        }
+       
 
     }
 
@@ -264,7 +275,7 @@ function OffcanvasCreateCompaign(props: any) {
                                     <div className="d-flex align-items-center gap-2 justify-content-between">
                                         <div className="form-text">Creators can see the info below and apply to partner</div>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" role="switch" checked={dto?.Is_Public} id="Is_Public" onChange={updateDto} />
+                                            <input className="form-check-input" type="checkbox" defaultChecked={dto?.Is_Public} role="switch"  id="Is_Public" onChange={updateDto} />
                                         </div>
                                     </div>
                                 </div>

@@ -175,7 +175,7 @@ function mycreatorsbuyer() {
                                                                             </button>
                                                                             <ul className="dropdown-menu p-0">
                                                                                 <div className="card">
-                                                                                    <div className="card-body p-0 scroll">
+                                                                                    <div className="card-body p-0 scroll" style={{cursor:'pointer'}}>
                                                                                         {
                                                                                             user?.Skills?.map((skill: string, index: number) => {
                                                                                                 return (
