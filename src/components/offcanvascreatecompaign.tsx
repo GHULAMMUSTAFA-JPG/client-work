@@ -116,6 +116,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from '@/contexts/AuthContext';
 import { createCampaign, handleFileUpload, updateCampaign } from '@/@api';
+import { toast } from 'react-toastify';
 interface createCampaignDto {
     "Is_Public": boolean,
     "Headline": string,
@@ -150,7 +151,7 @@ function OffcanvasCreateCompaign(props: any) {
     };
 
     useEffect(() => {
-    
+
         user?.email && setDto((prev: any) => {
             return { ...prev, ["Email"]: user?.email }
         })
@@ -163,8 +164,8 @@ function OffcanvasCreateCompaign(props: any) {
             setDto(obj)
         }
         else {
-             Newmapper()
-            
+            Newmapper()
+
         }
 
 
@@ -187,7 +188,7 @@ function OffcanvasCreateCompaign(props: any) {
             "Email": data?.campaign?.user?.email,
             "Campaign_Id": data?.campaign?._id
         }
-        
+
         return obj
     }
 
@@ -216,32 +217,86 @@ function OffcanvasCreateCompaign(props: any) {
     }, [user])
 
     const updateDto = (e: any) => {
-   
-       
-        if(e.target.id == "Is_Public"){
-           
+
+
+        if (e.target.id == "Is_Public") {
+
             setDto((prev: any) => {
                 const updatedDto = { ...prev, [e.target.id]: e.target.value == "on" ? true : false };
                 return updatedDto;
             });
         }
-        else{
+        else {
             setDto((prev: any) => {
                 const updatedDto = { ...prev, [e.target.id]: e.target.value };
                 return updatedDto;
             });
         }
-       
+
 
     }
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
 
         e.preventDefault();
-        data ? updateCampaign(dto, rendControl, setRendControl,Newmapper) :
-            createCampaign(dto, rendControl, setRendControl,Newmapper)
+        const result = await validate()
+        if(result){
+            data ? updateCampaign(dto, rendControl, setRendControl, Newmapper) :
+                createCampaign(dto, rendControl, setRendControl, Newmapper)
+
+        }
     }
 
+
+    const validate = async () => {
+        if (dto?.Headline == '' && !dto?.Headline) {
+            toast.warn('Campaign Name cannot be empty')
+            return false
+
+        }
+        else if (dto?.Budget == 0 && !dto?.Budget) {
+            toast.warn('Campaign budget cannot be less than 1')
+            return false
+
+        }
+        else if (dto?.Brief_Description == "") {
+            toast.warn('Campaign description cannot be empty')
+            return false
+        }
+       
+        else if (dto?.Campaign_Details == "" && !dto?.Campaign_Details) {
+            toast.warn('Campaign details cannot be empty')
+            return false
+
+        }
+         
+        else if (dto?.Target_Audience == '' && !dto?.Target_Audience) {
+            toast.warn('Target audience cannot be empty')
+            return false
+
+        }
+        else if (!dto?.Is_Ongoing) {
+            if (dto?.Start_Date == "" || !dto?.Start_Date) {
+                toast.warn('Start date cannot be empty')
+                return false
+
+            }
+            else if (dto?.End_Date == "" || !dto?.End_Date) {
+                toast.warn('End date cannot be empty')
+                return false
+            }
+            else if (dto?.Campaign_Required_Channels == "" || !dto?.Campaign_Required_Channels) {
+                toast.warn('Content channels cannot be empty')
+                return false
+            }
+            else {
+                return true
+
+            }
+        }
+
+
+    }
 
     return (
         <div
@@ -275,7 +330,7 @@ function OffcanvasCreateCompaign(props: any) {
                                     <div className="d-flex align-items-center gap-2 justify-content-between">
                                         <div className="form-text">Creators can see the info below and apply to partner</div>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" defaultChecked={dto?.Is_Public} role="switch"  id="Is_Public" onChange={updateDto} />
+                                            <input className="form-check-input" type="checkbox" defaultChecked={dto?.Is_Public} role="switch" id="Is_Public" onChange={updateDto} />
                                         </div>
                                     </div>
                                 </div>
@@ -451,15 +506,15 @@ function OffcanvasCreateCompaign(props: any) {
                                 </div>
                                 <div className='d-flex gap-2'>
                                     {
-                                        dto?.Campaign_Media && <img src={dto?.Campaign_Media} width={100} height={100} className='border object-fit-cover rounded flex-shrink-0'/>
+                                        dto?.Campaign_Media && <img src={dto?.Campaign_Media} width={100} height={100} className='border object-fit-cover rounded flex-shrink-0' />
                                     }
-                                    <div 
+                                    <div
                                         className="border-dashed rounded-2 text-center bg-base size-box cursor"
                                         onClick={() => document.getElementById('Campaign_Media')?.click()}
                                     >
                                         <input
                                             onChange={async (e: any) => {
-                                                const result: any = await handleFileUpload(e,setIsLoading);
+                                                const result: any = await handleFileUpload(e, setIsLoading);
                                                 setDto((prev: any) => {
                                                     return { ...prev, ['Campaign_Media']: result?.[0].file_urls }
                                                 })
@@ -480,8 +535,8 @@ function OffcanvasCreateCompaign(props: any) {
                 </div>
             </div>
             <div className="border-top d-flex gap-3 justify-content-end p-3">
-                <button className="btn btn-outline-info" style={{ width: '120px' }}  data-bs-dismiss="offcanvas"
-                    aria-label="Close" onClick={()=>Newmapper()}>Discard</button>
+                <button className="btn btn-outline-info" style={{ width: '120px' }} data-bs-dismiss="offcanvas"
+                    aria-label="Close" onClick={() => Newmapper()}>Discard</button>
                 <button className="btn btn-info" style={{ width: '120px' }} onClick={handleSubmit}>{data ? "Update" : "Publish"}</button>
             </div>
         </div>
