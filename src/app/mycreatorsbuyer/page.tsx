@@ -359,7 +359,7 @@ function mycreatorsbuyer() {
                                                             <div className='card'>
                                                                 <div className='card-body'>
                                                                     <div className="d-flex align-items-center justify-content-between mb-4">
-                                                                        <p className='mb-0 fw-medium'>{entry?.List_Name}</p>
+                                                                        <p className='mb-0 fw-medium'>{entry?.List_Name && entry?.List_Name?.length > 100  ? entry?.List_Name?.slice(0,100) + '...' : entry?.List_Name }</p>
                                                                         <div>
                                                                             <span data-bs-toggle="modal" data-bs-target="#createNewListModal" className="d-inline-flex align-items-center justify-content-center rounded-circle bg-info bg-opacity-10 p-2 me-2 cursor" title="Edit" onClick={() => {
                                                                                 actionFunction('edit', entry)

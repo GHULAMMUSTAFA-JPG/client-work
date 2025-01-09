@@ -16,10 +16,10 @@ import { useAuth } from '@/contexts/AuthContext';
 function DiscoverCreator() {
     const [searchText, setSearchText] = useState<string>('')
     const [campaignData, setCampaignData] = useState<any>()
-    const {setIsLoading} = useAuth()
+    const {setIsLoading, user} = useAuth()
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     useEffect(() => {
-       getDiscoverCampaigns(setCampaignData,setIsLoading) 
+       getDiscoverCampaigns(setCampaignData,setIsLoading, user?.email) 
     }, [])
 
     const searchCampaign  =() =>{
@@ -101,7 +101,8 @@ function DiscoverCreator() {
                                                         onClick={() => {
                                                             setSelectedCampaign(campaign)
                                                         }}
-                                                    >Apply</button>
+                                                        disabled={campaign?.Is_Applied}
+                                                    >{campaign?.Is_Applied ? "Applied" : "Apply"}</button>
                                                 </div>
                                             </div>
                                         </div>

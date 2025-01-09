@@ -6,8 +6,9 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import Image from 'next/image'
 import CreatorDetailModal from '@/components/CreatorDetailModal'
 import { getCampaignsActivatedCreators } from '@/@api'
-
+import { useAuth } from '@/contexts/AuthContext'
 function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) {
+    const {setIsLoading} = useAuth()
     const [campaignData, setCampaignData] = useState<any>({})
     const [selectedCreator, setSelectedCreator] = useState<any>()
     const [totalCount, setTotalCount] = useState<number>(0)
@@ -15,17 +16,13 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
     const [rendControl, setRendControl] = useState<boolean>(false)
     const [selectedFilter, setSelectedFilter] =  useState<"All" | "Approved" | "Pending Approval" | "Rejected">('All')
     useEffect(() => {
-        selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData)
+        selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData,setIsLoading)
     }, [selectedCampaign,rendControl])
 
     useEffect(() => {
         campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
     }, [campaignData, rendControl])
 
-
-    useEffect(()=>{
-        console.log(selectedCreator,"selected Creator",campaignData)
-    },[selectedCreator, campaignData])
     return (
         <>
             <section className='dashboard activated-creators'>

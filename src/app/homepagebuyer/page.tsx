@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
 
+
 function homepagebuyer() {
     const { user, setIsLoading } = useAuth()
     const [rendControl, setRendControl] = useState<boolean>(false)
@@ -32,7 +33,6 @@ function homepagebuyer() {
 
     }, [rendControl])
 
-
     useEffect(() => {
         if (user?.email) {
 
@@ -41,12 +41,11 @@ function homepagebuyer() {
         }
     }, [user?.email, rendControl])
 
-
     const fetchData = async () => {
         const response: any = await fetch_dashboard_data(setIsLoading)
-
         setUsers(response.data?.users)
     }
+
     return (
         <>
             <div className="container-fluid">

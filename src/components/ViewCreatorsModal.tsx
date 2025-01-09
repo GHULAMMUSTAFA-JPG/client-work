@@ -110,7 +110,7 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                                     <p className="mb-2">{user?.Average_Engagements?.toLocaleString()}</p>
                                                                     {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                 </td>
-                                                                <td>
+                                                                <td style={{cursor:'pointer'}}>
                                                                     <Icon icon="heroicons:trash" width={22} height={22} id={user?._id} className="text-danger" onClick={deleteCreator} />
                                                                 </td>
                                                                 {/* <td className="drop-down-table">

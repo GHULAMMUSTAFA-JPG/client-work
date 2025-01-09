@@ -2,13 +2,13 @@ import axios from "axios";
 import { apiController } from "./baseUrl";
 import { toast } from "react-toastify";
 
-export const fetch_dashboard_data = (setIsLoading?:any) => {
+export const fetch_dashboard_data = (setIsLoading?: any) => {
     setIsLoading && setIsLoading(true)
     try {
         const response = apiController.get('dashboard/dashboard_data')
         setIsLoading && setIsLoading(false)
         return response
-        
+
     } catch (error) {
         setIsLoading && setIsLoading(false)
         return error
@@ -264,13 +264,12 @@ export const deleteCampaign = async (id: string, rendControl: boolean, setRendCo
 }
 
 
-export const getDiscoverCampaigns = async (setData: any, setIsLoading: any) => {
+export const getDiscoverCampaigns = async (setData: any, setIsLoading: any, email: string) => {
     setIsLoading(true)
     try {
-        const response: any = await apiController.get(`/dashboard/campaigns/public_campaigns`)
+        const response: any = await apiController.get(`/dashboard/campaigns/public_campaigns?email=${email}`)
         setData(response?.data?.campaigns)
         setIsLoading(false)
-
         return response
     } catch (error) {
         setIsLoading(false)
@@ -317,12 +316,17 @@ export const getDiscoverCampaignsForFilters = async (filter: string, setData: an
 }
 
 
-export const getCampaignsActivatedCreators = async (filter: string, setData: any) => {
+export const getCampaignsActivatedCreators = async (filter: string, setData: any, setIsLoading?: any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/get_campaign_activated_creators/${filter}`)
         setData(response?.data?.campaign)
+        setIsLoading && setIsLoading(false)
+
         return response
     } catch (error) {
+        setIsLoading && setIsLoading(false)
+
         console.log(error, "Error in get campaign list api")
         return error
     }
@@ -541,7 +545,7 @@ export const fetchBuyersData = async (setData: any, email: string, setIsLoading?
 }
 
 
-export const editProfileCall = async (setIsLoading: any, dto: any,setRendControl:any, rendControl:boolean) => {
+export const editProfileCall = async (setIsLoading: any, dto: any, setRendControl: any, rendControl: boolean) => {
     setIsLoading(true)
     try {
         const response = await apiController.put("/dashboard/buyers/update_buyer", dto)
