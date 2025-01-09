@@ -11,6 +11,7 @@ import CampaignOffcanvas from '@/components/campaignoffcanvas';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
 import ApplyModal from '@/components/ApplyModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { defaultImagePath } from '@/components/constants';
 
 
 function DiscoverCreator() {
@@ -70,14 +71,14 @@ function DiscoverCreator() {
                                             <div className='card-body'>
                                                 <div className='d-flex gap-2 mb-4'>
                                                     <Image
-                                                        src={campaign?.Company_Logo}
+                                                        src={campaign?.Company_Logo || defaultImagePath}
                                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                                         alt="logo"
                                                         width={40}
                                                         height={40}
                                                     />
                                                     <div className='flex-grow-1'>
-                                                        <p className='fw-medium mb-0 fs-16'>{campaign?.Headline}</p>
+                                                        <p className='fw-medium mb-0 fs-16'>{campaign?.Headline?.slice(0,100)}</p>
                                                         <div className='d-flex align-items-center'>
                                                             <p className='mb-0 text-warning'>{campaign?.Company_Name}</p>
                                                             <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-3' />
@@ -87,11 +88,11 @@ function DiscoverCreator() {
                                                 </div>
                                                 <div className='d-flex gap-2 align-items-center mb-2'>
                                                     <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
-                                                    <p className='mb-0'>{campaign?.Target_Audience}</p>
+                                                    <p className='mb-0'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0,100) + "...": campaign?.Target_Audience}</p>
                                                 </div>
                                                 <div className='d-flex gap-2 align-items-center mb-3'>
                                                     <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
-                                                    <p className='mb-0'>{campaign?.Campaign_Required_Channels}</p>
+                                                    <p className='mb-0'>{campaign?.Campaign_Required_Channels?.length > 100 ? campaign?.Campaign_Required_Channels?.slice(0,100) + "...": campaign?.Campaign_Required_Channels}</p>
                                                 </div>
                                                 <div className='d-flex justify-content-end'>
                                                     <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {

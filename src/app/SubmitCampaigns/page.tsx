@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import SubmitDetailModal from '@/components/SubmitDetailModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { getCreatorsCampaignSubmissions } from '@/@api';
+import { defaultImagePath } from '@/components/constants';
 const SubmitCampaigns = () => {
     const { user, setIsLoading } = useAuth()
     const router = useRouter();
@@ -19,6 +20,7 @@ const SubmitCampaigns = () => {
     const [data, setData] = useState<any>()
     const [selectedPost, setSelectedPost] = useState<any>(null)
     const [length, setLength] = useState<any>(0)
+    const [selectedFilter, setSelectedFilter] = useState<'All' | 'Rejected' | 'Approved' | 'Pending Approval' >("All")
     const getSubmissionCampaigns = async (code: string) => {
         getCreatorsCampaignSubmissions({
             email: user?.email,
@@ -88,16 +90,24 @@ const SubmitCampaigns = () => {
                 <div className='container-fluid mt-3'>
                     <div className='d-flex justify-content-between align-items-center mb-3'>
                         <div className='d-flex gap-2'>
-                            <button className='btn btn-info btn-sm'>
+                            <button onClick={()=>{
+                                setSelectedFilter('All')
+                            }} className={selectedFilter == 'All' ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm'}>
                                 All (Recent) <span className="badge bg-white text-dark ms-1">{}</span>
                             </button>
-                            <button className='btn btn-outline-light text-dark btn-sm'>
-                                Waiting Approvals <span className="badge bg-light text-dark ms-1">{data?.campaign?.Posts_Stats?.['Pending Approval']}</span>
+                            <button onClick={()=>{
+                                setSelectedFilter('Pending Approval')
+                            }} className={selectedFilter == 'Pending Approval' ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm'}>
+                                Pending Approvals <span className="badge bg-light text-dark ms-1">{data?.campaign?.Posts_Stats?.['Pending Approval']}</span>
                             </button>
-                            <button className='btn btn-outline-light text-dark btn-sm'>
+                            <button onClick={()=>{
+                                setSelectedFilter('Approved')
+                            }} className={selectedFilter == 'Approved' ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm'}>
                                 Approved Posts <span className="badge bg-light text-dark ms-1">{data?.campaign?.Posts_Stats?.Approved}</span>
                             </button>
-                            <button className='btn btn-outline-light text-dark btn-sm'>
+                            <button onClick={()=>{
+                                setSelectedFilter('Rejected')
+                            }} className={selectedFilter == 'Rejected' ? 'btn btn-info btn-sm' : 'btn btn-outline-light text-dark btn-sm'}>
                                 Rejected Posts <span className="badge bg-light text-dark ms-1">{data?.campaign?.Posts_Stats?.Rejected}</span>
                             </button>
                         </div>
@@ -107,15 +117,14 @@ const SubmitCampaigns = () => {
                         {
                             data?.campaign.Posts?.map((element: any, index: number) => {
                                 return (
-                                    <div key={index} className='col-md-3'>
+                                    <div style={selectedFilter == 'All' ? {} : selectedFilter == element?.Status ? {} : {display:'none'}} key={index} className='col-md-3'>
                                         <div className="card">
                                             <div className="position-relative">
                                                 <span className={element?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0" : element?.Status=="Pending Approval" ? "position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle" : "position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle"}>
-
                                                     {element?.Status}
                                                 </span>
                                                 <Image
-                                                    src={element?.Media_Content[0]}
+                                                    src={element?.Media_Content[0] || defaultImagePath}
                                                     className="card-img-top"
                                                     alt="Campaign image"
                                                     width={500}
@@ -127,7 +136,7 @@ const SubmitCampaigns = () => {
                                                 <div className="d-flex align-items-center gap-2 mb-2">
                                                     <div className="rounded-circle">
                                                         <Image
-                                                            src={data?.campaign?.Creator_Profile_Picture || ""}
+                                                            src={data?.campaign?.Creator_Profile_Picture || defaultImagePath}
                                                             className="rounded-circle"
                                                             alt="User avatar"
                                                             width={36}
@@ -139,7 +148,7 @@ const SubmitCampaigns = () => {
                                                         <div className="text-muted small">{data?.campaign?.Time_Ago}</div>
                                                     </div>
                                                 </div>
-                                                <h5 className="card-title fs-16">{element?.Post_Title}</h5>
+                                                <h5 className="card-title fs-16">{element?.Post_Title?.length > 100 ? element?.Post_Title?.slice(0,100)+"..." : element?.Post_Title}</h5>
                                                 <a onClick={()=>{
                                                     setSelectedPost(element)
                                                 }} className="text-info text-decoration-none float-end cursor" data-bs-toggle="modal" data-bs-target="#submitDetailModal">View Details →</a>

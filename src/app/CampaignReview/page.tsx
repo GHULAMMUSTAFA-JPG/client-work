@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import ActivatedCreators from './ActivatedCreators'
 import {  changeCreatorStatus } from '@/@api'
+import { defaultImagePath } from '@/components/constants'
 function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, setRendControl }: any) {
     const [creatorStatus, setCreatorStatus] = useState({
         'Adam Biddlecombe': 'Activated',
@@ -280,7 +281,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                             <td className='w-75'>
                                                                 <div className='d-flex align-items-center'>
                                                                     <Image
-                                                                        src={array_item?.Profile_Image || ''}
+                                                                        src={array_item?.Profile_Image || defaultImagePath}
                                                                         className="rounded-circle"
                                                                         width={40}
                                                                         height={40}

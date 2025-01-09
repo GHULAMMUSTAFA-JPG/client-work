@@ -20,7 +20,6 @@ function SubmitCampaignModal(props: any) {
 
     const handleSubmitWork = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Work submitted');
     };
     const [dto, setDto] = useState<submitcampaignprops>({
         campaign_id: selectedCampaign?.campaign?._id,
@@ -29,6 +28,17 @@ function SubmitCampaignModal(props: any) {
         post_title: "",
         media_content: []
     })
+
+    const reset = () =>{
+        console.log("called")
+        setDto({
+            campaign_id: selectedCampaign?.campaign?._id,
+            email: "",
+            post_description: "",
+            post_title: "",
+            media_content: []
+        })
+    }
 
     useEffect(() => {
         user?.email && setDto((prev: any) => {
@@ -50,7 +60,7 @@ function SubmitCampaignModal(props: any) {
     const submitForm = async (e: any) => {
         e.preventDefault();
         const result = await addCampaignPostSubmission(dto, rendControl, setRendControl, setIsLoading)
-
+        reset()
     }
 
     const valueAdder = (e: any) => {
@@ -66,7 +76,7 @@ function SubmitCampaignModal(props: any) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="submitCampaignModalLabel">Submit Campaign</h5>
-                        <button type="button"  className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSubmissionModal"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeSubmissionModal"></button>
                     </div>
                     <div className="modal-body">
                         <div className="row">
@@ -79,6 +89,7 @@ function SubmitCampaignModal(props: any) {
                                             className='form-control'
                                             id="post_title"
                                             onChange={valueAdder}
+                                            value={dto?.post_title}
                                             placeholder='Enter the title of your submission'
                                             required
                                         />
@@ -89,6 +100,7 @@ function SubmitCampaignModal(props: any) {
                                             className='form-control'
                                             rows={4}
                                             id="post_description"
+                                            value={dto?.post_description}
                                             onChange={valueAdder}
                                             placeholder="Describe the work you've completed and any relevant details"
                                             required
@@ -102,7 +114,7 @@ function SubmitCampaignModal(props: any) {
                                         multiple
                                         onChange={async (e) => {
 
-                                            const result: any = await handleFileUpload(e,setIsLoading)
+                                            const result: any = await handleFileUpload(e, setIsLoading)
 
                                             if (result?.length !== 0) {
                                                 let array: any = []
@@ -110,8 +122,9 @@ function SubmitCampaignModal(props: any) {
                                                     array.push(url?.file_urls)
                                                 })
                                                 setDto((prev: any) => {
-                                                    return { ...prev, ["media_content"]: [...array,...dto?.media_content] }
+                                                    return { ...prev, ["media_content"]: [...array, ...dto?.media_content] }
                                                 })
+                                                e.target.value = ""; 
                                             }
                                         }}
                                     />
@@ -153,23 +166,22 @@ function SubmitCampaignModal(props: any) {
 
                                             <div className="d-flex gap-2 flex-wrap">
                                                 {dto?.media_content?.map((ele: any, index: number) => {
-                                                  
+
                                                     return (
                                                         <div
                                                             className='position-relative align-items-center bg-white border border-2 border-dotted card-hover cursor cursor-pointer d-flex flex-column justify-content-center p-3 rounded-3 text-center upload-area'
                                                             style={{ maxWidth: '150px' }}
-                                                            onClick={() => 
-                                                            {
-                                                                let array = dto?.media_content 
-                                                               const element =  array.indexOf(ele)
-                                                               if(element !== -1){
-                                                                array.splice(element,1)
-                                                               }
-                                                               setDto((prev:any)=>{
-                                                                return{...prev, ["media_content"] : array}
-                                                               })
+                                                            onClick={() => {
+                                                                let array = dto?.media_content
+                                                                const element = array.indexOf(ele)
+                                                                if (element !== -1) {
+                                                                    array.splice(element, 1)
+                                                                }
+                                                                setDto((prev: any) => {
+                                                                    return { ...prev, ["media_content"]: array }
+                                                                })
                                                             }
-                                                             }
+                                                            }
                                                         >
                                                             <Icon icon="mdi:file-document-outline" className='mb-2 text-muted' width={30} height={30} />
                                                             <p className='mb-0 small text-truncate w-100'>{ele}</p>

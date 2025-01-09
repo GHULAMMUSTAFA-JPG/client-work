@@ -326,7 +326,6 @@ export const getCampaignsActivatedCreators = async (filter: string, setData: any
         return response
     } catch (error) {
         setIsLoading && setIsLoading(false)
-
         console.log(error, "Error in get campaign list api")
         return error
     }
@@ -440,7 +439,7 @@ export const addCampaignPostSubmission = async (dto: any, rendControl: boolean, 
         closeButton && closeButton.click()
         setRendControl(!rendControl)
         setIsLoading(false)
-
+       
         return response
 
     } catch (error) {

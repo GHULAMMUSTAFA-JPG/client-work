@@ -17,6 +17,7 @@ import PostCalendar from "@/components/Calendar";
 import EditProfileModal from "@/components/EditProfileModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
+import { defaultImagePath } from "@/components/constants";
 
 function Homepage() {
     const { user, setUserProfile, userProfile, setIsLoading } = useAuth()
@@ -114,7 +115,9 @@ function Homepage() {
                             <div className="card-body">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <p className='mb-0 fs-16 fw-medium'>Activated Campaigns</p>
-                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor'>Campaigns</p>
+                                 <p className='mb-0 fs-12 fw-medium ms-auto cursor' onClick={()=>{
+                                    router.push('/campaigns')
+                                 }}>  Campaigns </p>
                                     <Icon icon="ri:arrow-right-line" width="16" height="16" className='cursor ms-1' />
                                 </div>
                                 <div className="bg-campaigns">
@@ -129,7 +132,7 @@ function Homepage() {
                                                 <div className="card-body py-2 ps-2 pe-3">
                                                     <div className='d-flex gap-3 align-items-center'>
                                                         <Image
-                                                            src={element?.Company_Logo}
+                                                            src={element?.Company_Logo || defaultImagePath}
                                                             className="border object-fit-cover rounded flex-shrink-0"
                                                             alt="logo"
                                                             width={32}

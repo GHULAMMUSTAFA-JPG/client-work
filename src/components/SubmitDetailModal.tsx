@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { changePostStatus } from '@/@api';
 import { useAuth } from '@/contexts/AuthContext';
+import { defaultImagePath } from './constants';
 
 function SubmitDetailModal(props: any) {
     const { rendControl, setRendControl, selectedPost, campaignData, selectedCreator } = props
@@ -75,7 +76,7 @@ function SubmitDetailModal(props: any) {
                                             <div className="d-flex align-items-center gap-2 mb-3">
                                                 <div className="rounded-circle">
                                                     <Image
-                                                        src={campaignData?.campaign?.Creator_Profile_Picture || ''}
+                                                        src={campaignData?.campaign?.Creator_Profile_Picture || defaultImagePath}
                                                         className="rounded-circle"
                                                         alt="Creator avatar"
                                                         width={40}
