@@ -161,4 +161,13 @@ body {
             display: none;
         }
     }
+    .applied-btn-container{
+        .btn:disabled, .btn.disabled, fieldset:disabled .btn {
+            color: var(--bs-btn-disabled-color);
+            pointer-events: none;
+            background-color: $dark;
+            border-color: $dark;
+            opacity: 1;
+        }
+    }
 }

@@ -67,8 +67,8 @@ function DiscoverCreator() {
                             campaignData?.map((campaign: any, index: number) => {
                                 return (
                                     <div key={index} className='col-md-4'>
-                                        <div className='card card-hover'>
-                                            <div className='card-body'>
+                                        <div className='card card-hover h-100'>
+                                            <div className='card-body d-flex flex-column'>
                                                 <div className='d-flex gap-2 mb-4'>
                                                     <Image
                                                         src={campaign?.Company_Logo || defaultImagePath}
@@ -86,15 +86,15 @@ function DiscoverCreator() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='d-flex gap-2 align-items-center mb-2'>
-                                                    <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                                <div className='d-flex gap-2 mb-2'>
+                                                    <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray flex-shrink-0 mt-1' />
                                                     <p className='mb-0'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0,100) + "...": campaign?.Target_Audience}</p>
                                                 </div>
-                                                <div className='d-flex gap-2 align-items-center mb-3'>
-                                                    <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
+                                                <div className='d-flex gap-2 mb-3'>
+                                                    <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray flex-shrink-0 mt-1' />
                                                     <p className='mb-0'>{campaign?.Campaign_Required_Channels?.length > 100 ? campaign?.Campaign_Required_Channels?.slice(0,100) + "...": campaign?.Campaign_Required_Channels}</p>
                                                 </div>
-                                                <div className='d-flex justify-content-end'>
+                                                <div className='d-flex justify-content-end applied-btn-container mt-auto'>
                                                     <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
                                                         setSelectedCampaign(campaign)
                                                     }}>Detail</button>
