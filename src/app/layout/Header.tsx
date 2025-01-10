@@ -75,7 +75,124 @@ export default function Header() {
                                 )} */}
                         {/* Register button if needed */}
                         {/* </form> */}
-                        <Icon icon="mingcute:notification-line" width={24} height={24} className="text-warning ms-auto" />
+                        <div className="dropdown ms-auto">
+                            <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <Icon icon="mingcute:notification-line" width={24} height={24} className="text-warning" />
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className='d-flex gap-2'>
+                                        <Image
+                                            src="/assets/images/user.jpg"
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={24}
+                                            height={24}
+                                        />
+                                        <div className='flex-grow-1'>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        </div>
+                                    </div>
+                                </a></li>
+                            </ul>
+                        </div>
                         <Icon icon="mdi:message-outline" width={21} height={21} className="ms-3 text-warning" />
                         <div className="dropdown ms-2">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">

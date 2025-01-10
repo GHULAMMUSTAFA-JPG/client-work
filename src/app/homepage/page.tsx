@@ -1,6 +1,6 @@
 "use client";
 
-import { fetch_dashboard_data,getCampaignsCreatorsOverview } from "@/@api";
+import { fetch_dashboard_data, getCampaignsCreatorsOverview } from "@/@api";
 import Topcard from "@/components/topcard";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -26,11 +26,11 @@ function Homepage() {
     // const router = useRouter()
     useEffect(() => {
         fetchData()
-        user?.email &&  getCampaignsCreatorsOverview(user?.email,setCampaigns,setIsLoading )
+        user?.email && getCampaignsCreatorsOverview(user?.email, setCampaigns, setIsLoading)
     }, [user])
 
     const fetchData = async () => {
-        const response:any = await fetch_dashboard_data()
+        const response: any = await fetch_dashboard_data()
         setUsers(response?.data?.users)
     }
 
@@ -93,21 +93,21 @@ function Homepage() {
                                     })}
 
                                 </div>
-                                <p className='mb-0 fs-12 text-warning'>{userProfile?.Description && userProfile?.Description?.length > 100 ? userProfile?.Description?.slice(0,100)+"..." : userProfile?.Description}</p>
+                                <p className='mb-0 fs-12 text-warning'>{userProfile?.Description && userProfile?.Description?.length > 100 ? userProfile?.Description?.slice(0, 100) + "..." : userProfile?.Description}</p>
 
                                 <div className="row my-3 text-center">
-                                    <div className="col-md-4 border-end">
+                                    <div className="col-md-4 border-end pe-4">
                                         <p className='mb-0 fs-14 p-height'>Average Engagaements per post</p>
                                         <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Engagements}</p>
                                     </div>
-                                    <div className="col-md-4 border-end pe-4">
+                                    <div className="col-md-4">
                                         <p className='mb-0 fs-14 p-height'>Average Impressions per post</p>
                                         <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Impressions}</p>
                                     </div>
-                                    <div className="col-md-4 pe-5">
+                                    {/* <div className="col-md-4 pe-5">
                                         <p className='mb-0 fs-14 p-height'>S-Score</p>
                                         <p className='mb-0 fs-20 fw-medium'>{userProfile?.['S-Score']}</p>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -115,45 +115,45 @@ function Homepage() {
                             <div className="card-body">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <p className='mb-0 fs-16 fw-medium'>Activated Campaigns</p>
-                                 <p className='mb-0 fs-12 fw-medium ms-auto cursor' onClick={()=>{
-                                    router.push('/campaigns')
-                                 }}>  Campaigns </p>
+                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor' onClick={() => {
+                                        router.push('/campaigns')
+                                    }}>  Campaigns </p>
                                     <Icon icon="ri:arrow-right-line" width="16" height="16" className='cursor ms-1' />
                                 </div>
                                 <div className="bg-campaigns">
                                     <div className="card-wrapper">
-                                      {campaigns && campaigns?.Activated_Campaigns && campaigns?.Activated_Campaigns?.length !== 0 ?  campaigns?.Activated_Campaigns?.map((element:any, index:any)=>{
+                                        {campaigns && campaigns?.Activated_Campaigns && campaigns?.Activated_Campaigns?.length !== 0 ? campaigns?.Activated_Campaigns?.map((element: any, index: any) => {
 
-                                        if(index < 5){
-                                            return(
-                                                <div onClick={()=>{
-                                                    router.push(`/SubmitCampaigns?id=${element?._id}`);
-                                                }} key={index} className="card mb-2 card-hover">
-                                                <div className="card-body py-2 ps-2 pe-3">
-                                                    <div className='d-flex gap-3 align-items-center'>
-                                                        <Image
-                                                            src={element?.Company_Logo || defaultImagePath}
-                                                            className="border object-fit-cover rounded flex-shrink-0"
-                                                            alt="logo"
-                                                            width={32}
-                                                            height={32}
-                                                        />
-                                                        <p className='mb-0 fw-medium'>{element?.Headline}</p>
-                                                        <p className='mb-0 fs-12 text-warning ms-auto'>{element?.Created_At} | {element?.Time_Ago}</p>
+                                            if (index < 5) {
+                                                return (
+                                                    <div onClick={() => {
+                                                        router.push(`/SubmitCampaigns?id=${element?._id}`);
+                                                    }} key={index} className="card mb-2 card-hover">
+                                                        <div className="card-body py-2 ps-2 pe-3">
+                                                            <div className='d-flex gap-3 align-items-center'>
+                                                                <Image
+                                                                    src={element?.Company_Logo || defaultImagePath}
+                                                                    className="border object-fit-cover rounded flex-shrink-0"
+                                                                    alt="logo"
+                                                                    width={32}
+                                                                    height={32}
+                                                                />
+                                                                <p className='mb-0 fw-medium'>{element?.Headline}</p>
+                                                                <p className='mb-0 fs-12 text-warning ms-auto'>{element?.Created_At} | {element?.Time_Ago}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            )
+                                                )
+                                            }
+
+
+                                        })
+                                            :
+                                            <tr>
+                                                <td>No data found</td>
+                                            </tr>
                                         }
-                                       
-                                      
-                                      })
-                                    :
-                                    <tr>
-                                        <td>No data found</td>
-                                    </tr>
-                                    }
-                                       
+
                                     </div>
                                 </div>
                             </div>
@@ -162,57 +162,86 @@ function Homepage() {
                     <div className="col-md-4">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
-                                <PostCalendar />
-                            </div>
-                        </div>
-                        <div className="card mb-3">
-                            <div className="card-body">
                                 <p className='mb-2 fs-16 fw-medium'>Notifications</p>
-                                <div className='d-flex gap-2 mb-3'>
+                                <div className='d-flex gap-2 mb-2'>
                                     <Image
                                         src="/assets/images/user.jpg"
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
-                                        width={40}
-                                        height={40}
+                                        width={24}
+                                        height={24}
                                     />
                                     <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning'>Your Content has been accepted</p>
+                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
                                     </div>
                                 </div>
-                                <hr className='my-3 text-warning' />
-                                <div className='d-flex gap-2 mb-3'>
+                                <hr className='my-2 text-warning' />
+                                <div className='d-flex gap-2 mb-2'>
                                     <Image
                                         src="/assets/images/user.jpg"
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
-                                        width={40}
-                                        height={40}
+                                        width={24}
+                                        height={24}
                                     />
                                     <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning'>Your Content has been accepted</p>
+                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
                                     </div>
                                 </div>
-                                <hr className='my-3 text-warning' />
+                                <hr className='my-2 text-warning' />
+                                <div className='d-flex gap-2 mb-2'>
+                                    <Image
+                                        src="/assets/images/user.jpg"
+                                        className="border object-fit-cover rounded-circle flex-shrink-0"
+                                        alt="logo"
+                                        width={24}
+                                        height={24}
+                                    />
+                                    <div className='flex-grow-1'>
+                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                    </div>
+                                </div>
+                                <hr className='my-2 text-warning' />
+                                <div className='d-flex gap-2 mb-2'>
+                                    <Image
+                                        src="/assets/images/user.jpg"
+                                        className="border object-fit-cover rounded-circle flex-shrink-0"
+                                        alt="logo"
+                                        width={24}
+                                        height={24}
+                                    />
+                                    <div className='flex-grow-1'>
+                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                    </div>
+                                </div>
+                                <hr className='my-2 text-warning' />
                                 <div className='d-flex gap-2'>
                                     <Image
                                         src="/assets/images/user.jpg"
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
-                                        width={40}
-                                        height={40}
+                                        width={24}
+                                        height={24}
                                     />
                                     <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning'>Your Content has been accepted</p>
+                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
+                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="card">
+                        <div className="card mb-3">
+                            <div className="card-body">
+                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
+                                <PostCalendar />
+                            </div>
+                        </div>
+
+                        {/* <div className="card">
                             <div className="card-body">
                                 <p className='mb-2 fs-16 fw-medium'>Payments</p>
                                 <div className='d-flex justify-content-between align-items-center mb-2'>
@@ -235,7 +264,7 @@ function Homepage() {
                                     <i className="bi bi-check-circle-fill text-primary ms-2"></i>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* <Topcard /> */}
