@@ -40,7 +40,7 @@ const Main = ({
         {isAuthenticated ? (
           <div className="d-flex">
             <Sidebar menuItems={menuItems} />
-            <div className="flex-grow-1">
+            <div className="flex-grow-1 overflow-auto">
               <Header />
               {/* <Loader /> */}
               <main className="main-content">{children}</main>

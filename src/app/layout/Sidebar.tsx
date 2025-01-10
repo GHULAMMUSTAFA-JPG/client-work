@@ -28,15 +28,6 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
             onMouseEnter={() => setIsExpanded(true)}
             onMouseLeave={() => setIsExpanded(false)}
           >
-            <a className="navbar-brand" href="#">
-              <Image
-                src="/assets/images/synnc-logo.svg"
-                alt="logo"
-                width={100}
-                height={30}
-                className="img-fluid p-3 ps-0"
-              />
-            </a>
             <ul className="nav">
               {menuItems.map((item, index) => (
                 <li key={index} className="nav-item">
