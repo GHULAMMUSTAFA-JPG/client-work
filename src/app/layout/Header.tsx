@@ -13,7 +13,7 @@ import { defaultImagePath } from "@/components/constants";
 export default function Header() {
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { user,logout, userProfile, setUserProfile,rendControl, isLoading } = useAuth()
+    const { user, logout, userProfile, setUserProfile, rendControl, isLoading } = useAuth()
 
     useEffect(() => {
         setUser(localStorage.getItem("user"))
@@ -23,20 +23,29 @@ export default function Header() {
     };
 
     useEffect(() => {
-   
-          if(user?.email){
-            !user?.isBuyer  ? fetchProfileData(user?.email, setUserProfile) :   fetchBuyersData(setUserProfile, user?.email)
-          } 
 
-    }, [user,rendControl])
+        if (user?.email) {
+            !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile) : fetchBuyersData(setUserProfile, user?.email)
+        }
+
+    }, [user, rendControl])
 
     return (
         <>
-        { isLoading && <Loader />}
+            {isLoading && <Loader />}
             <header className="navbar-section">
                 <nav className="navbar bg-white">
                     <div className="container-fluid">
                         <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" />
+                        <a className="navbar-brand" href="#">
+                            <Image
+                                src="/assets/images/synnc-logo.svg"
+                                alt="logo"
+                                width={80}
+                                height={30}
+                                className="img-fluid ps-3 ps-lg-0 mb-2 mb-lg-0"
+                            />
+                        </a>
                         {/* <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-none d-lg-block" /> */}
                         {/* <h5 className='mb-0 ms-3'>{pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}</h5> */}
                         {/* <button
@@ -71,7 +80,7 @@ export default function Header() {
                         <div className="dropdown ms-2">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
-                                   {(userProfile?.Profile_Image || userProfile?.Company_Logo )? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <img src={defaultImagePath} width={32} height={32} />}
+                                    {(userProfile?.Profile_Image || userProfile?.Company_Logo) ? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <img src={defaultImagePath} width={32} height={32} />}
                                     <p className="mb-0 ms-2">{userProfile?.Name}</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>

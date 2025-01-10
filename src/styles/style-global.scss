@@ -128,6 +128,15 @@ body {
         // width: auto;
     }
 
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // width: auto;
+    }
+
     .number-circle {
         height: 25px;
         width: 25px;
@@ -159,6 +168,19 @@ body {
 
         &::-webkit-scrollbar {
             display: none;
+        }
+    }
+
+    .applied-btn-container {
+
+        .btn:disabled,
+        .btn.disabled,
+        fieldset:disabled .btn {
+            color: var(--bs-btn-disabled-color);
+            pointer-events: none;
+            background-color: $dark;
+            border-color: $dark;
+            opacity: 1;
         }
     }
 }

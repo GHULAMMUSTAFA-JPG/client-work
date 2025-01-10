@@ -9,16 +9,16 @@ import { getCampaignsActivatedCreators } from '@/@api'
 import { useAuth } from '@/contexts/AuthContext'
 import { defaultImagePath } from '@/components/constants'
 function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) {
-    const {setIsLoading} = useAuth()
+    const { setIsLoading } = useAuth()
     const [campaignData, setCampaignData] = useState<any>({})
     const [selectedCreator, setSelectedCreator] = useState<any>()
     const [totalCount, setTotalCount] = useState<number>(0)
-    const [selectedPost,setSelectedPost] = useState<any>(null)
+    const [selectedPost, setSelectedPost] = useState<any>(null)
     const [rendControl, setRendControl] = useState<boolean>(false)
-    const [selectedFilter, setSelectedFilter] =  useState<"All" | "Approved" | "Pending Approval" | "Rejected">('All')
+    const [selectedFilter, setSelectedFilter] = useState<"All" | "Approved" | "Pending Approval" | "Rejected">('All')
     useEffect(() => {
-        selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData,setIsLoading)
-    }, [selectedCampaign,rendControl])
+        selectedCampaign?.campaign?._id && getCampaignsActivatedCreators(selectedCampaign?.campaign?._id, setCampaignData, setIsLoading)
+    }, [selectedCampaign, rendControl])
 
     useEffect(() => {
         campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
@@ -64,7 +64,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                             </div>
                             <div className='oveflow-wrapper'>
                                 <div className='d-flex mb-3'>
-                                    { 
+                                    {
                                         campaignData?.Activated_Creators && campaignData?.Activated_Creators?.map((creator: any, index: number) => {
                                             return (
                                                 <div onClick={() => {
@@ -125,7 +125,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                 </div>
                             </div>
                             <div className='d-flex gap-2 mb-3'>
-                                <button className={selectedFilter=="All" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                <button className={selectedFilter == "All" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={() => {
                                     setSelectedFilter('All')
                                 }}>
                                     All (Recent) <span className="badge bg-white text-dark ms-1">{selectedCreator?.Posts?.length || 0}</span>
@@ -133,17 +133,17 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                 {/* <button className='btn btn-outline-light text-dark btn-sm'>
                                     Required Posts <span className="badge bg-light text-dark ms-1">1</span>
                                 </button> */}
-                                <button className={selectedFilter=="Pending Approval" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                <button className={selectedFilter == "Pending Approval" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={() => {
                                     setSelectedFilter('Pending Approval')
                                 }}>
                                     Waiting Approvals <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.["Pending Approval"] || 0}</span>
                                 </button>
-                                <button className={selectedFilter=="Approved" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                <button className={selectedFilter == "Approved" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={() => {
                                     setSelectedFilter('Approved')
                                 }}>
                                     Approved Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Approved || 0}</span>
                                 </button>
-                                <button className={selectedFilter=="Rejected" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={()=>{
+                                <button className={selectedFilter == "Rejected" ? `btn btn-info btn-sm` : 'btn btn-outline-light text-dark btn-sm'} onClick={() => {
                                     setSelectedFilter('Rejected')
                                 }}>
                                     Rejected Posts <span className="badge bg-light text-dark ms-1">{selectedCreator?.Posts_Stats?.Rejected || 0}</span>
@@ -151,24 +151,50 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                             </div>
                             <div className="row g-3">
 
-                                           
+
                                 {
-                                ( selectedCreator?.Posts &&  selectedCreator?.Posts?.length !== 0) ?  selectedCreator?.Posts?.map((post: any, index: number) => {
+                                    (selectedCreator?.Posts && selectedCreator?.Posts?.length !== 0) ? selectedCreator?.Posts?.map((post: any, index: number) => {
                                         return (
-                                            <div key={index} className='col-md-3' style={selectedFilter=="All" ? {display:'block'} : selectedFilter == post?.Status ? {display:'block'} : {display:'none'}}>
-                                                <div className="card">
+                                            <div key={index} className='col-md-3' style={selectedFilter == "All" ? { display: 'block' } : selectedFilter == post?.Status ? { display: 'block' } : { display: 'none' }}>
+                                                <div className="card h-100">
                                                     <div className="position-relative">
-                                                        <span className={post?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0" : post?.Status=="Pending Approval" ? "position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle" : "position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle"}>
+                                                        <span className={post?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0" : post?.Status == "Pending Approval" ? "position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle" : "position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle"}>
                                                             {post?.Status}
                                                         </span>
-                                                        <img
-                                                            src={post?.Media_Content[0] || defaultImagePath}
-                                                            className="card-img-top"
-                                                            alt="Clothing on hangers"
-                                                            style={{ height: '130px', objectFit: 'cover' }}
-                                                        />
+                                                        {post?.Media_Content[0] ? (
+                                                            post?.Media_Content[0].toLowerCase().endsWith('.pdf') ? (
+                                                                <div className="bg-card-light d-flex align-items-center justify-content-center" style={{ height: '130px' }}>
+                                                                    <Icon
+                                                                        icon="mdi:file-document-outline"
+                                                                        width={30}
+                                                                        height={30}
+                                                                        className="text-dark"
+                                                                    />
+                                                                </div>
+                                                            ) : post?.Media_Content[0].toLowerCase().endsWith('.mp4') || post?.Media_Content[0].toLowerCase().endsWith('.mov') ? (
+                                                                <video
+                                                                    style={{ height: '130px', width: '100%', objectFit: 'cover' }}
+                                                                >
+                                                                    <source src={post?.Media_Content[0]} type={post?.Media_Content[0].toLowerCase().endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                                                                </video>
+                                                            ) : (
+                                                                <img
+                                                                    src={post?.Media_Content[0]}
+                                                                    className="card-img-top"
+                                                                    alt="Post media content"
+                                                                    style={{ height: '130px', objectFit: 'cover' }}
+                                                                />
+                                                            )
+                                                        ) : (
+                                                            <img
+                                                                src='https://cdn.synnc.us/creator/09d2eea2-9fa9-45b1-89ae-cfb0d8363b6b.png'
+                                                                className="card-img-top"
+                                                                alt="Default image"
+                                                                style={{ height: '130px', objectFit: 'cover' }}
+                                                            />
+                                                        )}
                                                     </div>
-                                                    <div className="card-body">
+                                                    <div className="card-body d-flex flex-column">
                                                         <div className="d-flex align-items-center gap-2 mb-2">
                                                             <div className="rounded-circle">
                                                                 <Image
@@ -184,8 +210,8 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                                 <div className="text-muted small">{post?.Submitted_At}</div>
                                                             </div>
                                                         </div>
-                                                        <h5 className="card-title fs-16">{post?.Post_Title} </h5>
-                                                        <a  className="text-info text-decoration-none float-end cursor" data-bs-toggle="modal" data-bs-target="#creatorDetailModal" onClick={()=>{
+                                                        <h5 className="card-title fs-14 line-clamp-3">{post?.Post_Title} </h5>
+                                                        <a className="text-info text-decoration-none text-end cursor mt-auto" data-bs-toggle="modal" data-bs-target="#creatorDetailModal" onClick={() => {
                                                             setSelectedPost(post)
                                                         }}>View Details →</a>
                                                     </div>
@@ -194,10 +220,10 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                         )
 
                                     })
-                                    : 
-                                    <tr>
-                                        <td>No data found</td>
-                                    </tr>
+                                        :
+                                        <tr>
+                                            <td>No data found</td>
+                                        </tr>
                                 }
 
 

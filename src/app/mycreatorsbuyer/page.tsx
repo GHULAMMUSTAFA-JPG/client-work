@@ -67,7 +67,7 @@ function mycreatorsbuyer() {
         <>
             <div className="container-fluid">
                 {/* <TopCardBuyer /> */}
-                <div className="row my-3">
+                <div className="row mb-3">
                     <div className="col-12">
                         {/* <div className="d-flex justify-content-between align-items-end"> */}
                         {/* <p className="mb-0 fw-medium fs-16">My Company</p> */}

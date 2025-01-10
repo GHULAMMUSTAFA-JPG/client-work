@@ -22,6 +22,7 @@ const AuthPage = () => {
     const [loader, setLoader] = useState(false);
     const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
     const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
+    const [showPassword, setShowPassword] = useState(false);
     const searchParams = useSearchParams();
     const codess = searchParams.get('code');
     const getToken = async (code: any) => {
@@ -379,17 +380,36 @@ const AuthPage = () => {
                                     Password
                                     {!isLogin}
                                 </label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder={isLogin ? "Enter your password" : "Create a password"}
-                                    className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                                    value={values.password || ''}
-                                    onChange={handleChange}
-                                />
-                                {errors.password && (
-                                    <div className="invalid-feedback">{errors.password}</div>
-                                )}
+                                <div className="position-relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        name="password"
+                                        placeholder={isLogin ? "Enter your password" : "Create a password"}
+                                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                                        value={values.password || ''}
+                                        onChange={handleChange}
+                                    />
+                                    {!showPassword ? (
+                                        <Icon 
+                                            icon="solar:eye-outline" 
+                                            width={20} 
+                                            height={20} 
+                                            className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
+                                            onClick={() => setShowPassword(true)}
+                                        />
+                                    ) : (
+                                        <Icon 
+                                            icon="mage:eye-off" 
+                                            width={20} 
+                                            height={20} 
+                                            className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
+                                            onClick={() => setShowPassword(false)}
+                                        />
+                                    )}
+                                    {errors.password && (
+                                        <div className="invalid-feedback">{errors.password}</div>
+                                    )}
+                                </div>
                             </div>
 
                             <button
