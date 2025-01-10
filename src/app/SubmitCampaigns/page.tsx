@@ -117,26 +117,50 @@ const SubmitCampaigns = () => {
                         {
                             data?.campaign.Posts?.map((element: any, index: number) => {
                                 return (
-                                    <div style={selectedFilter == 'All' ? {} : selectedFilter == element?.Status ? {} : {display:'none'}} key={index} className='col-md-3'>
-                                        <div className="card">
+                                    <div key={index} className='col-md-3' style={selectedFilter == "All" ? { display: 'block' } : selectedFilter == element?.Status ? { display: 'block' } : { display: 'none' }}>
+                                        <div className="card h-100">
                                             <div className="position-relative">
-                                                <span className={element?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0" : element?.Status=="Pending Approval" ? "position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle" : "position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle"}>
+                                                <span className={element?.Status == "Rejected" ? "badge bg-danger-subtle end-0 fw-medium m-2 p-2 position-absolute text-danger top-0" : element?.Status == "Pending Approval" ? "position-absolute top-0 end-0 m-2 badge text-yellow p-2 fw-medium bg-orange-subtle" : "position-absolute top-0 end-0 m-2 badge p-2 fw-medium text-primary bg-primary-subtle"}>
                                                     {element?.Status}
                                                 </span>
-                                                <Image
-                                                    src={element?.Media_Content[0] || defaultImagePath}
-                                                    className="card-img-top"
-                                                    alt="Campaign image"
-                                                    width={500}
-                                                    height={130}
-                                                    style={{ objectFit: 'cover' }}
-                                                />
+                                                {element?.Media_Content[0] ? (
+                                                    element?.Media_Content[0].toLowerCase().endsWith('.pdf') ? (
+                                                        <div className="bg-card-light d-flex align-items-center justify-content-center" style={{ height: '130px' }}>
+                                                            <Icon
+                                                                icon="mdi:file-document-outline"
+                                                                width={30}
+                                                                height={30}
+                                                                className="text-dark"
+                                                            />
+                                                        </div>
+                                                    ) : element?.Media_Content[0].toLowerCase().endsWith('.mp4') || element?.Media_Content[0].toLowerCase().endsWith('.mov') ? (
+                                                        <video
+                                                            style={{ height: '130px', width: '100%', objectFit: 'cover' }}
+                                                        >
+                                                            <source src={element?.Media_Content[0]} type={element?.Media_Content[0].toLowerCase().endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                                                        </video>
+                                                    ) : (
+                                                        <img
+                                                            src={element?.Media_Content[0]}
+                                                            className="card-img-top"
+                                                            alt="Post media content"
+                                                            style={{ height: '130px', objectFit: 'cover' }}
+                                                        />
+                                                    )
+                                                ) : (
+                                                    <img
+                                                        src='https://cdn.synnc.us/creator/09d2eea2-9fa9-45b1-89ae-cfb0d8363b6b.png'
+                                                        className="card-img-top"
+                                                        alt="Default image"
+                                                        style={{ height: '130px', objectFit: 'cover' }}
+                                                    />
+                                                )}
                                             </div>
-                                            <div className="card-body">
+                                            <div className="card-body d-flex flex-column">
                                                 <div className="d-flex align-items-center gap-2 mb-2">
                                                     <div className="rounded-circle">
                                                         <Image
-                                                            src={data?.campaign?.Creator_Profile_Picture || defaultImagePath}
+                                                            src={data?.campaign?.Creator_Profile_Picture || 'https://cdn.synnc.us/creator/7a06f497-8214-4cd8-b9a1-12cc3ffd1001.jpg'}
                                                             className="rounded-circle"
                                                             alt="User avatar"
                                                             width={36}
@@ -145,13 +169,13 @@ const SubmitCampaigns = () => {
                                                     </div>
                                                     <div>
                                                         <div className="fw-medium">{data?.campaign?.Creator_Name}</div>
-                                                        <div className="text-muted small">{data?.campaign?.Time_Ago}</div>
+                                                        <div className="text-muted small">{element?.Submitted_At}</div>
                                                     </div>
                                                 </div>
-                                                <h5 className="card-title fs-16">{element?.Post_Title?.length > 100 ? element?.Post_Title?.slice(0,100)+"..." : element?.Post_Title}</h5>
-                                                <a onClick={()=>{
+                                                <h5 className="card-title fs-14 line-clamp-3">{element?.Post_Title}</h5>
+                                                <a className="text-info text-decoration-none text-end cursor mt-auto" data-bs-toggle="modal" data-bs-target="#submitDetailModal" onClick={() => {
                                                     setSelectedPost(element)
-                                                }} className="text-info text-decoration-none float-end cursor" data-bs-toggle="modal" data-bs-target="#submitDetailModal">View Details →</a>
+                                                }}>View Details →</a>
                                             </div>
                                         </div>
                                     </div>

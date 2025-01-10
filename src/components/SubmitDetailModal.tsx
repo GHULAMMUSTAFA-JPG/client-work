@@ -37,36 +37,98 @@ function SubmitDetailModal(props: any) {
                             <div className="row">
                                 {/* Left side - Image Carousel */}
                                 <div className="col-md-7">
-                                    <div id="creatorImageCarousel" className="carousel slide" data-bs-ride="carousel">
-                                        <div className="carousel-indicators">
-                                            <button type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to="0" className="active bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-current="true" aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to="1" className="bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to="2" className="bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-label="Slide 3"></button>
-                                        </div>
-                                        <div className="carousel-inner">{
-                                            selectedPost?.Media_Content?.map((post: any, index: number) => {
-                                                return (
-                                                    <div key={index} className={`carousel-item active`}>
-                                                        <img src={post} className="d-block w-100" alt="News Letter" style={{ height: '400px', objectFit: 'cover' }} />
+                                    {selectedPost?.Media_Content?.length > 1 ? (
+                                        <div id="creatorImageCarousel" className="carousel slide" data-bs-ride="carousel">
+                                            <div className="carousel-indicators">
+                                                {selectedPost?.Media_Content?.map((_: string, index: number) => (
+                                                    <button
+                                                        key={index}
+                                                        type="button"
+                                                        data-bs-target="#creatorImageCarousel"
+                                                        data-bs-slide-to={index}
+                                                        className={`bg-info rounded-circle p-1 ${index === 0 ? 'active' : ''}`}
+                                                        style={{ width: '4px', height: '4px' }}
+                                                        aria-current={index === 0 ? "true" : undefined}
+                                                        aria-label={`Slide ${index + 1}`}
+                                                    ></button>
+                                                ))}
+                                            </div>
+                                            <div className="carousel-inner">
+                                                {selectedPost?.Media_Content?.map((media: string, index: number) => (
+                                                    <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                                                        {media.toLowerCase().endsWith('.pdf') ? (
+                                                            <div className="bg-card-light d-flex align-items-center justify-content-center" style={{ height: '400px' }}>
+                                                                <Icon
+                                                                    icon="mdi:file-document-outline"
+                                                                    width={30}
+                                                                    height={30}
+                                                                    className="text-dark"
+                                                                />
+                                                            </div>
+                                                        ) : media.toLowerCase().endsWith('.mp4') || media.toLowerCase().endsWith('.mov') ? (
+                                                            <video style={{ height: '400px', width: '100%', objectFit: 'cover' }}>
+                                                                <source src={media} type={media.toLowerCase().endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                                                            </video>
+                                                        ) : (
+                                                            <img
+                                                                src={media}
+                                                                className="d-block w-100"
+                                                                alt="Post media content"
+                                                                style={{ height: '400px', objectFit: 'cover' }}
+                                                            />
+                                                        )}
                                                     </div>
-                                                )
-                                            })}
-
-
+                                                ))}
+                                            </div>
+                                            <button className="carousel-control-prev" type="button" data-bs-target="#creatorImageCarousel" data-bs-slide="prev">
+                                                <div className="bg-info rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
+                                                    <Icon icon="material-symbols:arrow-back-ios-new-rounded" className="text-white" width={16} height={16} />
+                                                </div>
+                                                <span className="visually-hidden">Previous</span>
+                                            </button>
+                                            <button className="carousel-control-next" type="button" data-bs-target="#creatorImageCarousel" data-bs-slide="next">
+                                                <div className="bg-info rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
+                                                    <Icon icon="material-symbols:arrow-forward-ios-rounded" className="text-white" width={16} height={16} />
+                                                </div>
+                                                <span className="visually-hidden">Next</span>
+                                            </button>
                                         </div>
-                                        <button className="carousel-control-prev" type="button" data-bs-target="#creatorImageCarousel" data-bs-slide="prev">
-                                            <div className="bg-info rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
-                                                <Icon icon="material-symbols:arrow-back-ios-new-rounded" className="text-white" width={16} height={16} />
-                                            </div>
-                                            <span className="visually-hidden">Previous</span>
-                                        </button>
-                                        <button className="carousel-control-next" type="button" data-bs-target="#creatorImageCarousel" data-bs-slide="next">
-                                            <div className="bg-info rounded-circle d-flex align-items-center justify-content-center" style={{ width: '28px', height: '28px' }}>
-                                                <Icon icon="material-symbols:arrow-forward-ios-rounded" className="text-white" width={16} height={16} />
-                                            </div>
-                                            <span className="visually-hidden">Next</span>
-                                        </button>
-                                    </div>
+                                    ) : (
+                                        <>
+                                            {selectedPost?.Media_Content?.[0] ? (
+                                                <>
+                                                    {selectedPost.Media_Content[0].toLowerCase().endsWith('.pdf') ? (
+                                                        <div className="bg-card-light d-flex align-items-center justify-content-center" style={{ height: '400px' }}>
+                                                            <Icon
+                                                                icon="mdi:file-document-outline"
+                                                                width={30}
+                                                                height={30}
+                                                                className="text-dark"
+                                                            />
+                                                        </div>
+                                                    ) : selectedPost.Media_Content[0].toLowerCase().endsWith('.mp4') || selectedPost.Media_Content[0].toLowerCase().endsWith('.mov') ? (
+                                                        <video style={{ height: '400px', width: '100%', objectFit: 'cover' }}>
+                                                            <source src={selectedPost.Media_Content[0]} type={selectedPost.Media_Content[0].toLowerCase().endsWith('.mov') ? "video/quicktime" : "video/mp4"} />
+                                                        </video>
+                                                    ) : (
+                                                        <img
+                                                            src={selectedPost.Media_Content[0]}
+                                                            className="d-block w-100"
+                                                            alt="Post media content"
+                                                            style={{ height: '400px', objectFit: 'cover' }}
+                                                        />
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <img
+                                                    src='https://cdn.synnc.us/creator/09d2eea2-9fa9-45b1-89ae-cfb0d8363b6b.png'
+                                                    className="d-block w-100"
+                                                    alt="Default image"
+                                                    style={{ height: '400px', objectFit: 'cover' }}
+                                                />
+                                            )}
+                                        </>
+                                    )}
                                 </div>
 
                                 {/* Right side - Creator Details Card */}

@@ -176,9 +176,13 @@ function CreatorDetailModal(props: any) {
                             </div>
                         </div>
 
-                        {selectedPost?.Status == "Pending Approval" &&
-                            <div className='modal-footer gap-2'>
-                                {/* <div className="d-flex gap-2"> */}
+                        <div className='modal-footer gap-2 w-100'>
+                            <button className="btn btn-info btn-sm" data-bs-dismiss="modal">
+                                <Icon icon="mdi:download" className="me-1" width={16} height={16} />
+                                Download all attachments
+                            </button>
+                            {selectedPost?.Status == "Pending Approval" &&
+                                <div className='d-flex gap-3 ms-auto'>
                                     <button className="btn btn-outline-danger btn-sm" onClick={() => {
                                         actionFunction('Rejected')
                                     }}>
@@ -189,9 +193,9 @@ function CreatorDetailModal(props: any) {
                                     }}>
                                         Approve
                                     </button>
-                                {/* </div> */}
-                            </div>
-                        }
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
