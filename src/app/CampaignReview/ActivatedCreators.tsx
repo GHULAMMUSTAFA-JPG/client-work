@@ -7,6 +7,7 @@ import Image from 'next/image'
 import CreatorDetailModal from '@/components/CreatorDetailModal'
 import { getCampaignsActivatedCreators } from '@/@api'
 import { useAuth } from '@/contexts/AuthContext'
+import { defaultImagePath } from '@/components/constants'
 function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) {
     const { setIsLoading } = useAuth()
     const [campaignData, setCampaignData] = useState<any>({})
@@ -74,7 +75,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                         <div className='d-flex align-items-center mb-3'>
                                                             <div className='me-3'>
                                                                 <Image
-                                                                    src={creator?.Profile_Image || ''}
+                                                                    src={creator?.Profile_Image || defaultImagePath}
                                                                     className="rounded-circle"
                                                                     alt="User avatar"
                                                                     width={36}
@@ -197,7 +198,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                         <div className="d-flex align-items-center gap-2 mb-2">
                                                             <div className="rounded-circle">
                                                                 <Image
-                                                                    src={selectedCreator?.Profile_Image || 'https://cdn.synnc.us/creator/7a06f497-8214-4cd8-b9a1-12cc3ffd1001.jpg'}
+                                                                    src={selectedCreator?.Profile_Image || defaultImagePath}
                                                                     className="rounded-circle"
                                                                     alt="User avatar"
                                                                     width={36}

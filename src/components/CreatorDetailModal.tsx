@@ -168,7 +168,7 @@ function CreatorDetailModal(props: any) {
 
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1">Description</p>
-                                                <p className="mb-0">{selectedPost?.Description}</p>
+                                                <p className="mb-0">{selectedPost?.Description && selectedPost?.Description?.length > 200 ? selectedPost?.Description?.slice(0,200)+ "..." : selectedPost?.Description}</p>
                                             </div>
                                         </div>
                                     </div>

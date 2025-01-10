@@ -165,7 +165,7 @@ function SubmitDetailModal(props: any) {
 
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1">Description</p>
-                                                <p className="mb-0">{selectedPost?.Description}</p>
+                                                <p className="mb-0">{selectedPost?.Description?.length > 250 ? selectedPost?.Description?.slice(0,250)+ '....' :selectedPost?.Description}</p>
                                             </div>
                                         </div>
                                     </div>

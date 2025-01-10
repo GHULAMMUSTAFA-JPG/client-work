@@ -1,17 +1,26 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import Image from "next/image";
-
 interface SidebarProps {
   menuItems: { label: string; href: string; icon?: string }[];
 }
-
+ 
 const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
   const [isActive, setIsActive] = useState<number>(0);
   const [isExpanded, setIsExpanded] = useState(false);
+  
+  useEffect(()=>{
+      if(window){
+          if(window.location.pathname == "/campaigns"){
+            setIsActive(2)
+          }
+      }  
+
+  },[window.location.pathname])
+
 
   return (
     <>

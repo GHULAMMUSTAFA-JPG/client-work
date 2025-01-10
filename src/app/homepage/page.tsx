@@ -64,7 +64,7 @@ function Homepage() {
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
                                     <Image
-                                        src={userProfile?.Profile_Image || ''}
+                                        src={userProfile?.Profile_Image || defaultImagePath}
                                         className="border object-fit-cover rounded-circle flex-shrink-0"
                                         alt="logo"
                                         width={40}
@@ -93,7 +93,7 @@ function Homepage() {
                                     })}
 
                                 </div>
-                                <p className='mb-0 fs-12 text-warning'>{userProfile?.Description}</p>
+                                <p className='mb-0 fs-12 text-warning'>{userProfile?.Description && userProfile?.Description?.length > 100 ? userProfile?.Description?.slice(0,100)+"..." : userProfile?.Description}</p>
 
                                 <div className="row my-3 text-center">
                                     <div className="col-md-4 border-end">
