@@ -218,7 +218,6 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
                                                 </div>
                                             </div>
                                         )
-
                                     })
                                         :
                                         <tr>
