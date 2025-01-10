@@ -220,9 +220,8 @@ function OffcanvasCreateCompaign(props: any) {
 
 
         if (e.target.id == "Is_Public") {
-
             setDto((prev: any) => {
-                const updatedDto = { ...prev, [e.target.id]: e.target.value == "on" ? true : false };
+                const updatedDto = { ...prev, [e.target.id]: e.target.checked };
                 return updatedDto;
             });
         }
@@ -274,25 +273,26 @@ function OffcanvasCreateCompaign(props: any) {
             toast.warn('Target audience cannot be empty')
             return false
 
+        }else if (dto?.Campaign_Required_Channels == '' && !dto?.Campaign_Required_Channels) {
+            toast.warn('Campaign required channels cannot be empty')
+            return false
+
         }
         else if (!dto?.Is_Ongoing) {
             if (dto?.Start_Date == "" || !dto?.Start_Date) {
                 toast.warn('Start date cannot be empty')
                 return false
-
             }
             else if (dto?.End_Date == "" || !dto?.End_Date) {
                 toast.warn('End date cannot be empty')
                 return false
             }
-            else if (dto?.Campaign_Required_Channels == "" || !dto?.Campaign_Required_Channels) {
-                toast.warn('Content channels cannot be empty')
-                return false
-            }
-            else {
-                return true
+           
+        
+        }
+        else {
+            return true
 
-            }
         }
 
 
@@ -330,7 +330,7 @@ function OffcanvasCreateCompaign(props: any) {
                                     <div className="d-flex align-items-center gap-2 justify-content-between">
                                         <div className="form-text">Creators can see the info below and apply to partner</div>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" defaultChecked={dto?.Is_Public} role="switch" id="Is_Public" onChange={updateDto} />
+                                            <input className="form-check-input" type="checkbox" checked={dto?.Is_Public} role="switch" id="Is_Public" onChange={updateDto} />
                                         </div>
                                     </div>
                                 </div>

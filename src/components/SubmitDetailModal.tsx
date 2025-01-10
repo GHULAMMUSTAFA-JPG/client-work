@@ -39,10 +39,13 @@ function SubmitDetailModal(props: any) {
                                 <div className="col-md-7">
                                     <div id="creatorImageCarousel" className="carousel slide" data-bs-ride="carousel">
                                         <div className="carousel-indicators">
-                                            <button type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to="0" className="active bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-current="true" aria-label="Slide 1"></button>
-                                            <button type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to="1" className="bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-label="Slide 2"></button>
-                                            <button type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to="2" className="bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-label="Slide 3"></button>
-                                        </div>
+                                            { selectedPost?.Media_Content?.map((posts:any, index:number)=>{
+                                                return(
+                                                    <button key={index} type="button" data-bs-target="#creatorImageCarousel" data-bs-slide-to={index} className="active bg-info rounded-circle p-1" style={{ width: '4px', height: '4px' }} aria-current="true" aria-label={`Slide ${index}`}></button>
+                                           
+                                                )
+                                            })}
+                                                 </div>
                                         <div className="carousel-inner">{
                                             selectedPost?.Media_Content?.map((post: any, index: number) => {
                                                 return (
@@ -103,7 +106,7 @@ function SubmitDetailModal(props: any) {
 
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1">Description</p>
-                                                <p className="mb-0">{selectedPost?.Description}</p>
+                                                <p className="mb-0">{selectedPost?.Description?.length > 250 ? selectedPost?.Description?.slice(0,250)+ '....' :selectedPost?.Description}</p>
                                             </div>
                                         </div>
                                     </div>

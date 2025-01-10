@@ -22,7 +22,6 @@ const Main = ({
     // { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },  
   ];
 
-  
   const buyerMenuItems = [
     { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-house" },
     { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-people" },
