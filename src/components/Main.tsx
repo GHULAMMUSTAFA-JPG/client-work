@@ -20,6 +20,7 @@ const Main = ({
     { label: "Campaigns", href: "/campaigns", icon: "bi bi-briefcase" },
     { label: "My Company", href: "/creatordashboard", icon: "bi bi-building" },
     { label: "Inbox", href: "/inbox", icon: "bi bi-chat-dots" },
+    { label: "Profile", href: "/Profile", icon: "bi bi-person" },
 
     // { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart" },  
   ];
