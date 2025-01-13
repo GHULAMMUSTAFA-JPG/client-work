@@ -439,7 +439,7 @@ export const addCampaignPostSubmission = async (dto: any, rendControl: boolean, 
         closeButton && closeButton.click()
         setRendControl(!rendControl)
         setIsLoading(false)
-       
+
         return response
 
     } catch (error) {
@@ -557,5 +557,35 @@ export const editProfileCall = async (setIsLoading: any, dto: any, setRendContro
         toast.warn('Error uploading data. Please try again later.')
         setIsLoading(false)
         return error
+    }
+}
+
+export const conversationHistory = async (email: string, setData: any, pageNo: number, limit: number, setIsLoading: any) => {
+    setIsLoading(true)
+    try {
+        const response = await apiController.get(`/dashboard/get_all_conversations?email=${email}&page=${pageNo}&limit=${limit}`)
+        setData(response?.data)
+        setIsLoading(false)
+
+    } catch (error) {
+        setData(null)
+        console.log(error, "error while fetching conversation history")
+        setIsLoading(false)
+
+    }
+}
+
+export const getSpecificMessageHistory = async (id: any, setData: any, setIsLoading: any, pageNo: number, limit: number)=>{
+    setIsLoading(true)
+    try {
+        const response = await apiController.get(`/dashboard/get_conversation_messages?sender_id=${id?.Sender_ID}&conversation_id=${id?.Conversation_Id}&page=${pageNo}&limit=${limit}`)
+        // console.log(response?.data,"ee kha ")
+        setData(response?.data?.messages)
+        setIsLoading(false)
+
+    } catch (error) {
+        setData(null)
+        setIsLoading(false)
+
     }
 }

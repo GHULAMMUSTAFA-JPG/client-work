@@ -1,10 +1,116 @@
 "use client"
-import React from 'react';
+
 import Image from 'next/image';
 import { Icon } from '@iconify/react/dist/iconify.js';
-
-
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { conversationHistory, getSpecificMessageHistory } from '@/@api';
+import { defaultImagePath } from '@/components/constants';
+interface selectedIdProps {
+    Message_ID: null | string
+    Recipient_ID: null | string
+    Sender_ID: null | string
+    Conversation_Id: null | string
+    Profile_Image: null | string
+    Name: null | string
+}
 const Inbox = () => {
+    const [messages, setMessages] = useState<any>([]);
+    const [input, setInput] = useState<string>("");
+    const [socket, setSocket] = useState<WebSocket | null>(null);
+    const { userProfile, user, setIsLoading } = useAuth();
+    const [conversationsHistory, setConversationsHistory] = useState<any>()
+    const [pageNo, setPageNo] = useState<number>(1)
+    const [limit, setLimit] = useState<number>(15)
+    const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
+        Message_ID: null,
+        Recipient_ID: null,
+        Sender_ID: null,
+        Conversation_Id: null,
+        Profile_Image: null,
+        Name: null
+    })
+    const [chatLength, setChatLength] = useState<number>(1)
+    const [chatLimit, setChatLimit] = useState<number>(20)
+    useEffect(() => {
+        if (userProfile?._id) {
+            const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
+            ws.onopen = () => {
+                console.log("Connected to WebSocket server");
+            };
+
+            ws.onmessage = (event) => {
+                const message = event.data;
+                const response = JSON.parse(message);
+
+                if (response?.Message) {
+                    setMessages((prevMessages: any) => [
+                        ...prevMessages,
+                        {
+                            user: response?.Sender_ID !== userProfile?._id ? "receiver" : "sender",
+                            Message: response?.Message,
+                            Timestamp: response?.Timestamp,
+                        },
+                    ]);
+                } else {
+                    console.log("Invalid message format");
+                }
+            };
+
+            ws.onerror = (error) => {
+                console.error("WebSocket error:", error);
+            };
+
+            ws.onclose = () => {
+                console.log("WebSocket connection closed");
+            };
+
+            setSocket(ws);
+
+            return () => {
+                ws.close();
+            };
+        }
+    }, [userProfile]);
+
+    const sendMessage = () => {
+        const data: any = JSON.stringify({
+            recipient_id: selectedIds?.Recipient_ID || "678540613c584af2d32d4141",
+            message: input
+        })
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(data);
+            // let userdata = messages
+            // userdata?.push({
+            //     user: "sender",
+            //     Message: input,
+            //     Timestamp : new Date(),
+            //     Time_Ago : 'Just Now'
+            // })
+            // setMessages(userdata)
+            setInput("");
+        } else {
+            console.error("WebSocket is not connected");
+        }
+    };
+
+    const getConversationHistory = async () => {
+        if (user?.email) {
+
+            const response = await conversationHistory(user?.email, setConversationsHistory, pageNo, limit, setIsLoading)
+        }
+    }
+
+    useEffect(() => {
+        getConversationHistory()
+    }, [pageNo, limit])
+
+
+    useEffect(() => {
+        selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
+    }, [selectedIds])
+
+
     return (
         <div className="container-fluid chatbot-container">
             <div className="row bg-white">
@@ -27,62 +133,44 @@ const Inbox = () => {
 
                     {/* Conversation List */}
                     <div className="conversation-list">
-                        <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
-                            <Image
-                                src="/assets/images/user2.jpg"
-                                alt="Profile"
-                                width={40}
-                                height={40}
-                                className="rounded-circle me-2"
-                            />
-                            <div className="flex-grow-1">
-                                <h6 className="mb-0 fs-14">Sarah Yeary</h6>
-                                <small className="text-muted">Hey Awais, how are you?</small>
-                            </div>
-                            <small className="text-muted">1mo</small>
-                        </div>
-                        <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer">
-                            <Image
-                                src="/assets/images/user2.jpg"
-                                alt="Profile"
-                                width={40}
-                                height={40}
-                                className="rounded-circle me-2"
-                            />
-                            <div className="flex-grow-1">
-                                <h6 className="mb-0 fs-14">Sarah Yeary</h6>
-                                <small className="text-muted">Hey Awais, how are you?</small>
-                            </div>
-                            <small className="text-muted">1mo</small>
-                        </div>
-                        <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer">
-                            <Image
-                                src="/assets/images/user2.jpg"
-                                alt="Profile"
-                                width={40}
-                                height={40}
-                                className="rounded-circle me-2"
-                            />
-                            <div className="flex-grow-1">
-                                <h6 className="mb-0 fs-14">Sarah Yeary</h6>
-                                <small className="text-muted">Hey Awais, how are you?</small>
-                            </div>
-                            <small className="text-muted">1mo</small>
-                        </div>
-                        <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer">
-                            <Image
-                                src="/assets/images/user2.jpg"
-                                alt="Profile"
-                                width={40}
-                                height={40}
-                                className="rounded-circle me-2"
-                            />
-                            <div className="flex-grow-1">
-                                <h6 className="mb-0 fs-14">Sarah Yeary</h6>
-                                <small className="text-muted">Hey Awais, how are you?</small>
-                            </div>
-                            <small className="text-muted">1mo</small>
-                        </div>
+                        {
+                            conversationsHistory?.conversations && conversationsHistory?.conversations?.length !== 0 ?
+                                conversationsHistory?.conversations?.map((chat: any, index: number) => {
+                                    return (
+                                        <div onClick={() => {
+                                            setSelectedIds({
+                                                Recipient_ID: chat?.Last_Message?.Recipient_ID,
+                                                Message_ID: chat?.Last_Message?.Message_ID,
+                                                Conversation_Id: chat?._id,
+                                                Sender_ID: userProfile?._id,
+                                                Name: chat?.Name,
+                                                Profile_Image: chat?.Profile_Image
+                                            })
+                                        }} key={index} className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
+                                            <Image
+                                                src={chat?.Profile_Image || defaultImagePath}
+                                                alt="Profile"
+                                                width={40}
+                                                height={40}
+                                                className="rounded-circle me-2"
+                                            />
+                                            <div className="flex-grow-1">
+                                                <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
+                                                <small className="text-muted">{chat?.Last_Message?.Message}</small>
+                                            </div>
+                                            <small className="text-muted">{chat?.Last_Message?.Time_Ago}</small>
+                                        </div>
+                                    )
+
+                                })
+
+                                :
+                                <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
+                                    No Conservation found
+                                </div>
+                        }
+
+
                     </div>
                 </div>
 
@@ -93,61 +181,47 @@ const Inbox = () => {
                         <div className="card-header bg-white p-3">
                             <div className="d-flex align-items-center">
                                 <Image
-                                    src="/assets/images/user2.jpg"
+                                    src={selectedIds?.Profile_Image || defaultImagePath}
                                     alt="Profile"
                                     width={40}
                                     height={40}
                                     className="rounded-circle me-2"
                                 />
                                 <div>
-                                    <h6 className="mb-0 fs-14">Sarah Yeary</h6>
+                                    <h6 className="mb-0 fs-14">{selectedIds?.Name || "Anonymous"}</h6>
                                 </div>
                             </div>
                         </div>
 
                         {/* Card Body - Messages Area */}
                         <div className="card-body p-4">
-                            <div className="row">
-                                {/* Received Message */}
-                                <div className="col-auto mb-4 mx-width-70">
-                                    <div className="activated-subtle rounded-3 p-3">
-                                        <p className='fs-13 mb-0'>We accepted your application for the campaign New Generative AI Product!</p>
-                                    </div>
-                                    <small className="text-muted text-end d-block mt-1">1 month ago</small>
-                                </div>
 
-                                {/* Sent Message */}
-                                <div className="col-auto ms-auto mb-4 mx-width-70">
+                            {/* Received Message */}
+                            {
+                                messages?.map((msg: any, index: number) => {
+                                    return (
+                                        <div className="row" key={index} >
+                                            {
+                                                msg?.user !== "sender" ?
+                                                    <div className="col-auto mb-4 mx-width-70">
+                                                        <div className="activated-subtle rounded-3 p-3">
+                                                            <p className='fs-13 mb-0'>{msg?.Message}</p>
+                                                        </div>
+                                                        <small className="text-muted text-end d-block mt-1">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
+                                                    </div> :
+                                                    <div className="col-auto ms-auto mb-4 mx-width-70">
 
-                                    <div className="bg-circle-2 text-white rounded-3 p-3 ms-auto">
-                                        <p className='fs-13 mb-0'>Hey Awais, how are you? Are you guys looking to do some sponsored posts?</p>
-                                    </div>
+                                                        <div className="bg-circle-2 text-white rounded-3 p-3 ms-auto">
+                                                            <p className='fs-13 mb-0'>{msg?.Message}</p>
+                                                        </div>
 
-                                    <small className="text-muted text-end d-block mt-1">1 month ago</small>
-                                </div>
-                                <div className="col-auto ms-auto mb-4 mx-width-70">
-
-                                    <div className="bg-circle-2 text-white rounded-3 p-3 ms-auto">
-                                        <p className='fs-13 mb-0'>Hey Awais, how are you? Are you guys looking to do some sponsored posts? Hey Awais, how are you? Are you guys looking to do some sponsored posts?</p>
-                                    </div>
-
-                                    <small className="text-muted text-end d-block mt-1">1 month ago</small>
-                                </div>
-                                <div className="col-auto mb-4 mx-width-70">
-                                    <div className="activated-subtle rounded-3 p-3">
-                                        <p className='fs-13 mb-0'>We accepted your application for the campaign New Generative AI Product! We accepted your application for the campaign New Generative AI Product!</p>
-                                    </div>
-                                    <small className="text-muted text-end d-block mt-1">1 month ago</small>
-                                </div>
-                                <div className="col-auto ms-auto mb-4 mx-width-70">
-
-                                    <div className="bg-circle-2 text-white rounded-3 p-3">
-                                        <p className='fs-13 mb-0'>Hey Awais, how are you? Are you guys looking to do some sponsored posts?</p>
-                                    </div>
-
-                                    <small className="text-muted text-end d-block mt-1">1 month ago</small>
-                                </div>
-                            </div>
+                                                        <small className="text-muted text-end d-block mt-1">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
+                                                    </div>
+                                            }
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
 
                         {/* Card Footer - Message Input */}
@@ -156,8 +230,16 @@ const Inbox = () => {
                                 <textarea
                                     className="form-control border-0 bg-form"
                                     placeholder="Type your message here..."
+                                    onChange={(e: any) => {
+                                        setInput(e.target.value)
+                                    }}
+                                    value={input}
+                                    id="textareaId"
+                                    onKeyDown={(e: any) => {
+                                        e.key == "Enter" && sendMessage()
+                                    }}
                                 />
-                                <button className="btn btn-link">
+                                <button className="btn btn-link" onClick={sendMessage}>
                                     <Icon icon="mynaui:send" width="24" height="24" />
                                 </button>
                             </div>
