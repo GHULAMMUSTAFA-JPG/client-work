@@ -79,16 +79,16 @@ export default function Header() {
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <Icon icon="mingcute:notification-line" width={24} height={24} className="text-warning" />
                             </a>
-                            <ul className="dropdown-menu">
+                            <ul className="dropdown-menu pt-0">
+                                <li className="activated-subtle dropdown-header py-2 mb-2 sticky-top d-flex justify-content-between">
+                                    <span className="text-dark">Notifications</span>
+                                    {/* <a href="#" className="text-muted fs-12 text-decoration-none">View All</a> */}
+                                </li>
                                 <li><a className="dropdown-item" href="#">
                                     <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
+                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                            <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />
+                                        </div>
                                         <div className='flex-grow-1'>
                                             <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
                                             <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
@@ -98,93 +98,57 @@ export default function Header() {
                                 <hr className='my-2 text-warning' />
                                 <li><a className="dropdown-item" href="#">
                                     <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
+                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                            <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />
+                                        </div>
                                         <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Rejected</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been rejected</p>
                                         </div>
                                     </div>
                                 </a></li>
                                 <hr className='my-2 text-warning' />
                                 <li><a className="dropdown-item" href="#">
                                     <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
+                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                            <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />
+                                        </div>
                                         <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Applied</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been applied</p>
                                         </div>
                                     </div>
                                 </a></li>
                                 <hr className='my-2 text-warning' />
                                 <li><a className="dropdown-item" href="#">
                                     <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
+                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                            <Icon icon="teenyicons:send-up-solid" width="16" height="16" className="text-primary" />
+                                        </div>
                                         <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Submitted</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been submitted</p>
                                         </div>
                                     </div>
                                 </a></li>
                                 <hr className='my-2 text-warning' />
                                 <li><a className="dropdown-item" href="#">
                                     <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
+                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                            <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />
+                                        </div>
                                         <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                            <p className='mb-0 fw-medium fs-12'>Campaign Rejected</p>
+                                            <p className='mb-0 fs-10 text-warning'>Your Content has been rejected</p>
                                         </div>
                                     </div>
                                 </a></li>
                                 <hr className='my-2 text-warning' />
                                 <li><a className="dropdown-item" href="#">
                                     <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
+                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                            <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />
                                         </div>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <Image
-                                            src="/assets/images/user.jpg"
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={24}
-                                            height={24}
-                                        />
                                         <div className='flex-grow-1'>
                                             <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
                                             <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
@@ -193,8 +157,136 @@ export default function Header() {
                                 </a></li>
                             </ul>
                         </div>
-                        <Icon icon="mdi:message-outline" width={21} height={21} className="ms-3 text-warning" />
-                        <div className="dropdown ms-2">
+                        <div className="dropdown">
+                            <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <Icon icon="mdi:message-outline" width={21} height={21} className="text-warning" />
+                            </a>
+                            <ul className="dropdown-menu pt-0">
+                                <li className="activated-subtle dropdown-header mb-2 py-2 sticky-top d-flex justify-content-between">
+                                    <span className="text-dark">Messages</span>
+                                    <a href="#" className="text-muted fs-12 text-decoration-none">View All</a>
+                                </li>
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                                <hr className='my-2 text-warning' />
+                                <li><a className="dropdown-item" href="#">
+                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                        <Image
+                                            src="/assets/images/user2.jpg"
+                                            alt="Profile"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-circle me-2"
+                                        />
+                                        <div className="flex-grow-1">
+                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
+                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
+                                        </div>
+                                        <small className="text-muted fs-10">1mo</small>
+                                    </div>
+                                </a></li>
+                            </ul>
+                        </div>
+                        <div className="dropdown">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
                                     {(userProfile?.Profile_Image || userProfile?.Company_Logo) ? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <img src={defaultImagePath} width={32} height={32} />}
@@ -203,7 +295,7 @@ export default function Header() {
                                 </div>
                             </a>
 
-                            <ul className="dropdown-menu">
+                            <ul className="dropdown-menu sign-out-menu">
                                 {/* <li><a className="dropdown-item" href="#">
                                     Update Profile
                                 </a>

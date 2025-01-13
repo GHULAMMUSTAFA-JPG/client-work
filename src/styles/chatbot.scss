@@ -1,0 +1,40 @@
+.chatbot-container {
+    .card-body {
+        height: calc(100vh - 271px);
+        overflow-y: auto;
+    }
+
+    .conversation-list {
+        height: calc(100vh - 210px);
+        overflow-y: auto;
+    }
+
+    textarea {
+        resize: none;
+        padding: 1rem;
+        font-size: 13px;
+    }
+
+    input {
+        padding: 8px 4px;
+    }
+
+    .hover-bg-light:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .min-width-0 {
+        min-width: 0;
+    }
+
+    .mx-width-70 {
+        max-width: 70%;
+    }
+    .active {
+        background-color: $activated-subtle;
+    }
+}

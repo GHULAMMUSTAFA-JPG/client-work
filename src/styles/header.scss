@@ -6,4 +6,20 @@
         max-height: 325px;
         overflow: auto;
     }
+
+    .bg-circle-notification {
+        background-color: $activated-subtle;
+        min-width: 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sign-out-menu {
+        background-color: $base;
+        width: 100%;
+    }
 }

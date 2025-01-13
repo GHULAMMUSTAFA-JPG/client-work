@@ -33,6 +33,10 @@ body {
         font-size: 12px;
     }
 
+    .fs-13 {
+        font-size: 13px;
+    }
+
     .fs-14 {
         font-size: 14px;
     }
@@ -237,6 +241,11 @@ body {
 
     .btn-primary {
         color: $white;
+    }
+
+    .btn-link {
+        background-color: $activated-subtle;
+        padding: 10px 20px;
     }
 
     .btn-outline-info {
@@ -449,13 +458,17 @@ body {
         background-color: $bg-card-light !important;
     }
 
+    .bg-form {
+        background-color: $form !important;
+    }
+
     // .bg-circle1 {
     //     background-color: $circle1 !important;
     // }
 
-    // .bg-circle2 {
-    //     background-color: $circle2 !important;
-    // }
+    .bg-circle-2 {
+        background-color: $circle2 !important;
+    }
 
     // .bg-circle3 {
     //     background-color: $circle3 !important;
