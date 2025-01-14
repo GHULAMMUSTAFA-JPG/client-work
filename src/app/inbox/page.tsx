@@ -35,7 +35,6 @@ const Inbox = () => {
     const [chatLimit, setChatLimit] = useState<number>(20)
       const searchParams = useSearchParams();
     useEffect(() => {
-        console.log(userProfile,"userprofile")
         if (userProfile?._id) {
             const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
             ws.onopen = () => {
@@ -45,12 +44,12 @@ const Inbox = () => {
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
-
+                console.log(response,"msg aagaya")
                 if (response?.Message) {
                     setMessages((prevMessages: any) => [
                         ...prevMessages,
                         {
-                            user: response?.Sender_ID !== userProfile?._id ? "receiver" : "sender",
+                            user: response?.Sender_ID && response?.Sender_ID !== userProfile?._id ? "receiver" : "sender",
                             Message: response?.Message,
                             Timestamp: response?.Timestamp,
                         },
