@@ -23,31 +23,31 @@ function Buyerdashboard() {
     const [rendControl, setRendControl] = useState<boolean>(false)
     const searchParams = useSearchParams();
     useEffect(() => {
-        getCampaignsList(user?.email, setCampaignList,setIsLoading)
+        getCampaignsList(user?.email, setCampaignList, setIsLoading)
     }, [rendControl])
 
-    useEffect(()=>{
-        selectedCampaign &&  getSelectedCampaignsDetails(selectedCampaign?._id,setSelectedCampaignDetails, setIsLoading)
-    },[selectedCampaign, rendControl])
+    useEffect(() => {
+        selectedCampaign && getSelectedCampaignsDetails(selectedCampaign?._id, setSelectedCampaignDetails, setIsLoading)
+    }, [selectedCampaign, rendControl])
 
 
-   useEffect(()=>{
-       const id = searchParams.get('id');
-      if(id){
+    useEffect(() => {
+        const id = searchParams.get('id');
+        if (id) {
 
-          getSelectedCampaignsDetails(id,setSelectedCampaignDetails, setIsLoading)
-           setCampaigns(false)
-      }  
-   },[searchParams])
+            getSelectedCampaignsDetails(id, setSelectedCampaignDetails, setIsLoading)
+            setCampaigns(false)
+            
+        }
+    }, [searchParams])
 
 
     return (
         <>
             {
                 campaigns ?
-                 <CampaignTable rendControl={rendControl} setRendControl={setRendControl} campaignList={campaignList} setCampaigns={setCampaigns} setSelectedCampaign={setSelectedCampaign} setSelectedCampaignDetails={setSelectedCampaignDetails} />
+                    <CampaignTable rendControl={rendControl} setRendControl={setRendControl} campaignList={campaignList} setCampaigns={setCampaigns} setSelectedCampaign={setSelectedCampaign} setSelectedCampaignDetails={setSelectedCampaignDetails} />
                     :
-
                     <div>
                         <CampaignOverview setRendControl={setRendControl} rendControl={rendControl} setCampaigns={setCampaigns} selectedCampaignDetails={selectedCampaignDetails} />
                     </div>
