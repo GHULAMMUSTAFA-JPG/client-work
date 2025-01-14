@@ -34,7 +34,17 @@
     .mx-width-70 {
         max-width: 70%;
     }
+
     .active {
         background-color: $activated-subtle;
+    }
+
+    .empty-conversation {
+        .card-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 271px);
+        }
     }
 }
