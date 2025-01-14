@@ -6,15 +6,16 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
-import { fetchBuyersData, fetchProfileData } from "@/@api";
+import { conversationHistory, fetchBuyersData, fetchProfileData } from "@/@api";
 import Loader from "@/components/loader";
 import { defaultImagePath } from "@/components/constants";
 
 export default function Header() {
+    const router = useRouter()
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { user, logout, userProfile, setUserProfile, rendControl, isLoading } = useAuth()
-
+    const { user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading } = useAuth()
+    const [conversationList, setConversationList] = useState<any>()
     useEffect(() => {
         setUser(localStorage.getItem("user"))
     }, [])
@@ -25,10 +26,19 @@ export default function Header() {
     useEffect(() => {
 
         if (user?.email) {
+            getHistoryOfUser();
             !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile) : fetchBuyersData(setUserProfile, user?.email)
         }
 
     }, [user, rendControl])
+
+
+    const getHistoryOfUser = async () => {
+        const response = await conversationHistory(user?.email, setConversationList, 1, 6, setIsLoading)
+    }
+
+
+
 
     return (
         <>
@@ -164,126 +174,43 @@ export default function Header() {
                             <ul className="dropdown-menu pt-0">
                                 <li className="activated-subtle dropdown-header mb-2 py-2 sticky-top d-flex justify-content-between">
                                     <span className="text-dark">Messages</span>
-                                    <a href="#" className="text-muted fs-12 text-decoration-none">View All</a>
+                                    <a href="#" className="text-muted fs-12 text-decoration-none" onClick={() => {
+                                        router.push('/inbox')
+                                    }}>View All</a>
                                 </li>
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                        <Image
-                                            src="/assets/images/user2.jpg"
-                                            alt="Profile"
-                                            width={32}
-                                            height={32}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-0 fs-12">Sarah Yeary</h6>
-                                            <small className="text-muted fs-10">Hey Awais, how are you?</small>
-                                        </div>
-                                        <small className="text-muted fs-10">1mo</small>
-                                    </div>
-                                </a></li>
+                                {
+                                    conversationList?.conversations?.map((conversation: any, index: number) => {
+                                        console.log(conversation, "conversationconversation")
+                                        return (
+                                            <div key={index}>
+                                                <li onClick={() => {
+                                                    router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
+                                                }}>
+                                                    <a className="dropdown-item" >
+                                                        <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                                            <Image
+                                                                src={conversation?.Profile_Image || defaultImagePath}
+                                                                alt="Profile"
+                                                                width={32}
+                                                                height={32}
+                                                                className="rounded-circle me-2"
+                                                            />
+                                                            <div className="flex-grow-1">
+                                                                <h6 className="mb-0 fs-12">{conversation?.Name}</h6>
+                                                                <small className="text-muted fs-10">{conversation?.Last_Message?.Message}</small>
+                                                            </div>
+                                                            <small className="text-muted fs-10">{conversation?.Last_Message?.Time_Ago}</small>
+                                                        </div>
+                                                    </a></li>
+                                                <hr className='my-2 text-warning' />
+
+                                            </div>
+                                        )
+                                    })
+                                }
+
+
+
                             </ul>
                         </div>
                         <div className="dropdown">

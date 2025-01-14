@@ -40,12 +40,12 @@ const Inbox = () => {
             ws.onopen = () => {
                 console.log("Connected to WebSocket server");
             };
-
+            
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
-                console.log(response,"msg aagaya")
-                if (response?.Message) {
+                console.log(response,"response on message")
+                if (response?.Message && response?.Conversation_ID == selectedIds?.Conversation_Id ) {
                     setMessages((prevMessages: any) => [
                         ...prevMessages,
                         {
@@ -54,6 +54,7 @@ const Inbox = () => {
                             Timestamp: response?.Timestamp,
                         },
                     ]);
+                    getConversationHistory()
                 } else {
                     console.log("Invalid message format");
                 }
@@ -77,7 +78,7 @@ const Inbox = () => {
 
     const sendMessage = () => {
         const data: any = JSON.stringify({
-            recipient_id: selectedIds?.Recipient_ID || "678540613c584af2d32d4141",
+            recipient_id: selectedIds?.Recipient_ID ,
             message: input
         })
         if (socket && socket.readyState === WebSocket.OPEN) {
@@ -107,8 +108,6 @@ const Inbox = () => {
         getConversationHistory()
     }, [pageNo, limit])
 
-
-
     useEffect(() => {
         selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
     }, [selectedIds])
@@ -119,12 +118,18 @@ const Inbox = () => {
                 setSelectedIds((prev:any)=>{
                     return{...prev, ['Recipient_ID'] : id}
                 })
+
+                setTimeout(() => {
+                    const clickButton = document?.getElementById(id)
+                    clickButton && clickButton.click()
+                    
+                }, 1500);
                 fetchProfileDataByIds(id,setSelectedIds)
             }
-           
         }, [searchParams])
 
-        
+
+
 
     return (
         <div className="container-fluid chatbot-container">
@@ -151,8 +156,9 @@ const Inbox = () => {
                         {
                             conversationsHistory?.conversations && conversationsHistory?.conversations?.length !== 0 ?
                                 conversationsHistory?.conversations?.map((chat: any, index: number) => {
+                              
                                     return (
-                                        <div onClick={() => {
+                                        <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
                                             setSelectedIds({
                                                 Recipient_ID: chat?.Last_Message?.Recipient_ID,
                                                 Message_ID: chat?.Last_Message?.Message_ID,
@@ -161,7 +167,7 @@ const Inbox = () => {
                                                 Name: chat?.Name,
                                                 Profile_Image: chat?.Profile_Image
                                             })
-                                        }} key={index} className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
+                                        }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ==chat?.Last_Message?.Recipient_ID ? "active" :"" }`}>
                                             <Image
                                                 src={chat?.Profile_Image || defaultImagePath}
                                                 alt="Profile"

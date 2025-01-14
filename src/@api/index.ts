@@ -581,16 +581,16 @@ export const editProfileCall = async (setIsLoading: any, dto: any, setRendContro
 }
 
 export const conversationHistory = async (email: string, setData: any, pageNo: number, limit: number, setIsLoading: any) => {
-    setIsLoading(true)
+    // setIsLoading(true)
     try {
         const response = await apiController.get(`/dashboard/get_all_conversations?email=${email}&page=${pageNo}&limit=${limit}`)
         setData(response?.data)
-        setIsLoading(false)
+        // setIsLoading(false)
 
     } catch (error) {
         setData(null)
         console.log(error, "error while fetching conversation history")
-        setIsLoading(false)
+        // setIsLoading(false)
 
     }
 }
