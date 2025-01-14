@@ -33,19 +33,19 @@ const Inbox = () => {
     })
     const [chatLength, setChatLength] = useState<number>(1)
     const [chatLimit, setChatLimit] = useState<number>(20)
-      const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
     useEffect(() => {
         if (userProfile?._id) {
             const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
             ws.onopen = () => {
                 console.log("Connected to WebSocket server");
             };
-            
+
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
-                console.log(response,"response on message")
-                if (response?.Message && response?.Conversation_ID == selectedIds?.Conversation_Id ) {
+                console.log(response, "response on message")
+                if (response?.Message && response?.Conversation_ID == selectedIds?.Conversation_Id) {
                     setMessages((prevMessages: any) => [
                         ...prevMessages,
                         {
@@ -78,7 +78,7 @@ const Inbox = () => {
 
     const sendMessage = () => {
         const data: any = JSON.stringify({
-            recipient_id: selectedIds?.Recipient_ID ,
+            recipient_id: selectedIds?.Recipient_ID,
             message: input
         })
         if (socket && socket.readyState === WebSocket.OPEN) {
@@ -112,21 +112,21 @@ const Inbox = () => {
         selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
     }, [selectedIds])
 
-       useEffect(() => {
-            const id = searchParams.get('id');
-            if (id) {
-                setSelectedIds((prev:any)=>{
-                    return{...prev, ['Recipient_ID'] : id}
-                })
+    useEffect(() => {
+        const id = searchParams.get('id');
+        if (id) {
+            setSelectedIds((prev: any) => {
+                return { ...prev, ['Recipient_ID']: id }
+            })
 
-                setTimeout(() => {
-                    const clickButton = document?.getElementById(id)
-                    clickButton && clickButton.click()
-                    
-                }, 1500);
-                fetchProfileDataByIds(id,setSelectedIds)
-            }
-        }, [searchParams])
+            setTimeout(() => {
+                const clickButton = document?.getElementById(id)
+                clickButton && clickButton.click()
+
+            }, 1500);
+            fetchProfileDataByIds(id, setSelectedIds)
+        }
+    }, [searchParams])
 
 
 
@@ -156,7 +156,7 @@ const Inbox = () => {
                         {
                             conversationsHistory?.conversations && conversationsHistory?.conversations?.length !== 0 ?
                                 conversationsHistory?.conversations?.map((chat: any, index: number) => {
-                              
+
                                     return (
                                         <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
                                             setSelectedIds({
@@ -167,7 +167,7 @@ const Inbox = () => {
                                                 Name: chat?.Name,
                                                 Profile_Image: chat?.Profile_Image
                                             })
-                                        }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ==chat?.Last_Message?.Recipient_ID ? "active" :"" }`}>
+                                        }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID == chat?.Last_Message?.Recipient_ID ? "active" : ""}`}>
                                             <Image
                                                 src={chat?.Profile_Image || defaultImagePath}
                                                 alt="Profile"
@@ -228,7 +228,7 @@ const Inbox = () => {
                                                         <div className="activated-subtle rounded-3 p-3">
                                                             <p className='fs-13 mb-0'>{msg?.Message}</p>
                                                         </div>
-                                                        <small className="text-muted text-end d-block mt-1">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
+                                                        <small className="text-muted d-block mt-1 ms-2">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
                                                     </div> :
                                                     <div className="col-auto ms-auto mb-4 mx-width-70">
 
@@ -236,7 +236,7 @@ const Inbox = () => {
                                                             <p className='fs-13 mb-0'>{msg?.Message}</p>
                                                         </div>
 
-                                                        <small className="text-muted text-end d-block mt-1">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
+                                                        <small className="text-muted text-end d-block mt-1 ms-2">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
                                                     </div>
                                             }
                                         </div>
@@ -264,6 +264,11 @@ const Inbox = () => {
                                     <Icon icon="mynaui:send" width="24" height="24" />
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                    <div className='card h-100 border-0 empty-conversation'>
+                        <div className='card-body'>
+                            <p className='mb-0 text-warning'>Select a conversation to start chatting</p>
                         </div>
                     </div>
                 </div>
