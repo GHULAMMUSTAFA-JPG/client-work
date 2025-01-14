@@ -19,11 +19,11 @@ function ApplyModal(props: any) {
             campaign_id: selectedCampaign?._id,
             creator_email: user?.email
         },
-        setIsLoading)
+            setIsLoading)
     }
     return (
         <>
-            <div className="modal fade" id="applyModal" tabIndex={-1} aria-labelledby="applyModalLabel" aria-hidden="true">
+            <div className="modal fade applied-btn-container" id="applyModal" tabIndex={-1} aria-labelledby="applyModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                     <div className="modal-content">
                         {/* <div className="modal-header">
@@ -194,13 +194,13 @@ function ApplyModal(props: any) {
                                 </div>
                             </div>
                             <div className='d-flex gap-2 align-items-center mb-2'>
-                                <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                                <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
                                 <p className='mb-0'>{selectedCampaign?.Target_Audience}</p>
                             </div>
-                            <div className='d-flex gap-2 align-items-center mb-3'>
+                            {/* <div className='d-flex gap-2 align-items-center mb-3'>
                                 <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
                                 <p className='mb-0'>{selectedCampaign?.Campaign_Required_Channels}</p>
-                            </div>
+                            </div> */}
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
                             <p className='text-warning mb-0'>{selectedCampaign?.Campaign_Details}</p>
                             {/* <hr className='text-warning'/>
@@ -212,8 +212,7 @@ function ApplyModal(props: any) {
                                     placeholder="Send a message about your interest in collaborating with our brand."
                                 ></textarea>
                             </div> */}
-                            <button onClick={applyCreatorProgram} className='btn btn-info w-100 mt-4'>Apply</button>
-
+                            <button className={`btn ${selectedCampaign?.Is_Applied ? 'btn-dark' : 'btn-info'} w-100 mt-4`} onClick={applyCreatorProgram} disabled={selectedCampaign?.Is_Applied}>{selectedCampaign?.Is_Applied ? "Applied" : "Apply"}</button>
                         </div>
                         {/* <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
