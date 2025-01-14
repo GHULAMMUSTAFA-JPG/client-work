@@ -16,6 +16,8 @@ export default function Header() {
     const [users, setUser] = useState<any>()
     const { user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading } = useAuth()
     const [conversationList, setConversationList] = useState<any>()
+    const [Notifications, setNotifications] = useState<any>()
+    const [socket, setSocket] = useState<any>()
     useEffect(() => {
         setUser(localStorage.getItem("user"))
     }, [])
@@ -32,12 +34,61 @@ export default function Header() {
 
     }, [user, rendControl])
 
+    useEffect(() => {
+        if (userProfile?._id) {
+            const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
+            setSocket(ws)
+            ws.onopen = () => {
+
+                console.log("Connected to WebSocket server");
+                const data: any = {
+                    "notification": true,
+                    "recipient_id": userProfile?._id
+                }
+                ws.send(JSON.stringify(data))
+            };
+
+            ws.onmessage = (event) => {
+                const message = event.data;
+                const response = JSON.parse(message);
+                console.log(response, "response on message")
+                if (response?.notifications) {
+                    setNotifications(response)
+                }
+
+            };
+
+            ws.onerror = (error) => {
+                console.error("WebSocket error:", error);
+            };
+
+            ws.onclose = () => {
+                console.log("WebSocket connection closed");
+            };
+
+            setSocket(ws);
+
+            return () => {
+                ws.close();
+            };
+        }
+    }, [userProfile]);
 
     const getHistoryOfUser = async () => {
         const response = await conversationHistory(user?.email, setConversationList, 1, 6, setIsLoading)
     }
 
 
+    // useEffect(()=>{
+    //     if(userProfile?._id && socket && socket.readyState === WebSocket.OPEN){
+    //       const data =  {
+    //             "notification": true,
+    //             "recipient_id": userProfile?._id
+    //         }
+    //         console.log(data,"data")
+    //         socket.send(data)
+    //     }
+    // },[socket,userProfile])
 
 
     return (
@@ -94,77 +145,38 @@ export default function Header() {
                                     <span className="text-dark">Notifications</span>
                                     {/* <a href="#" className="text-muted fs-12 text-decoration-none">View All</a> */}
                                 </li>
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                            <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />
+                                {
+                                    Notifications?.notifications && Notifications?.notifications?.length !== 0 ? Notifications?.notifications?.map((notify: any, index: number) => {
+                                        return (
+                                            <div key={index}>
+                                                <li><a className="dropdown-item">
+                                                    <div className='d-flex gap-2'>
+                                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                                            {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="teenyicons:send-up-solid" width="16" height="16" className="text-primary" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+
+                                                        </div>
+                                                        <div className='flex-grow-1'>
+                                                            <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
+                                                            <p className='mb-0 fs-10 text-warning'>{notify?.Message}</p>
+                                                        </div>
+                                                    </div>
+                                                </a></li>
+
+                                                <hr className='my-2 text-warning' />
+                                            </div>
+                                        )
+
+                                    })
+                                        :
+                                        <div className=" mb-2 mt-2 text-center" >
+                                            <small >No new Notifications </small>
                                         </div>
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                            <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />
-                                        </div>
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Rejected</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been rejected</p>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                            <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />
-                                        </div>
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Applied</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been applied</p>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                            <Icon icon="teenyicons:send-up-solid" width="16" height="16" className="text-primary" />
-                                        </div>
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Submitted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been submitted</p>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                            <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />
-                                        </div>
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Rejected</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been rejected</p>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <hr className='my-2 text-warning' />
-                                <li><a className="dropdown-item" href="#">
-                                    <div className='d-flex gap-2'>
-                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                            <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />
-                                        </div>
-                                        <div className='flex-grow-1'>
-                                            <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                            <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                        </div>
-                                    </div>
-                                </a></li>
+                                }
+
                             </ul>
                         </div>
                         <div className="dropdown">
@@ -180,7 +192,6 @@ export default function Header() {
                                 </li>
                                 {
                                     conversationList?.conversations?.map((conversation: any, index: number) => {
-                                        console.log(conversation, "conversationconversation")
                                         return (
                                             <div key={index}>
                                                 <li onClick={() => {
