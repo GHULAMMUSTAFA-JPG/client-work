@@ -38,7 +38,8 @@ export default function ProfilePage() {
                                 <div className="d-flex align-items-center gap-2 mb-1">
                                     <h5 className="mb-0">Josh Aharonoff</h5>
                                     <img src="https://flagcdn.com/24x18/us.png" width={18} height={14} className="mx-1"></img>
-                                    <a href="https://www.linkedin.com/in/joshaharonoff" target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={18} height={18} className='text-info' /></a>
+                                    <a href="https://www.linkedin.com/in/joshaharonoff" target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
+                                    <button className='activated-subtle border btn-sm ms-1 px-2 py-1 rounded-pill text-info'>Finance, Accounting, Startups, HR</button>
                                 </div>
                                 <div className="d-flex gap-2 align-items-center">
                                     <p className='mb-0 fs-12 text-warning'>@joshaharonoff</p>
@@ -63,9 +64,6 @@ export default function ProfilePage() {
                                     <button className="btn btn-dark">
                                         DM for Custom Collaborations
                                     </button>
-                                    {/* <Link href="#" className="btn btn-outline-dark">
-                                        Visit My Website
-                                    </Link> */}
                                 </div>
 
                                 {/* Stats Section */}
@@ -81,16 +79,16 @@ export default function ProfilePage() {
                                     <div className="col-md-4">
                                         <div className="card h-100">
                                             <div className="card-body">
-                                                <p className="text-muted">Audience Interests</p>
-                                                <h5>Finance, Accounting, Startups, HR</h5>
+                                                <p className="text-muted">Average Impressions per post</p>
+                                                <h5>100k</h5>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-4">
                                         <div className="card h-100">
                                             <div className="card-body">
-                                                <p className="text-muted">Awards</p>
-                                                <h5>CPA, Microsoft MVP</h5>
+                                                <p className="text-muted">Average Engagements per post</p>
+                                                <h5>100k</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -98,9 +96,8 @@ export default function ProfilePage() {
                             </div>
                         </div>
                     </div>
-                    <div className='profile-container mb-4'>
-
-                        {/* LinkedIn Section */}
+                    {/* LinkedIn Section */}
+                    {/* <div className='profile-container mb-4'>
                         <div>
                             <div className="d-flex align-items-center gap-2">
                                 <Icon icon="logos:linkedin-icon" width="24" height="24" />
@@ -132,9 +129,7 @@ export default function ProfilePage() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Collaboration Section */}
-                    </div>
+                    </div> */}
                     <div className='profile-container'>
                         {/* Collaboration Section */}
                         <div>
@@ -151,7 +146,7 @@ export default function ProfilePage() {
                                                 the benefits of your company offerings. Negotiable retainer fee.
                                             </p>
                                         </div>
-                                        <button className="btn btn-dark flex-shrink-0 ms-5">Book Now</button>
+                                        <button className="btn btn-dark flex-shrink-0 ms-5 btn-sm">Book Now</button>
                                     </div>
                                 </div>
 
@@ -165,7 +160,7 @@ export default function ProfilePage() {
                                                 upcoming event.
                                             </p>
                                         </div>
-                                        <button className="btn btn-dark flex-shrink-0 ms-5">Book Now</button>
+                                        <button className="btn btn-dark flex-shrink-0 ms-5 btn-sm">Book Now</button>
                                     </div>
                                 </div>
 
@@ -179,7 +174,7 @@ export default function ProfilePage() {
                                                 content.
                                             </p>
                                         </div>
-                                        <button className="btn btn-dark flex-shrink-0 ms-5">Book Now</button>
+                                        <button className="btn btn-dark flex-shrink-0 ms-5 btn-sm">Book Now</button>
                                     </div>
                                 </div>
                             </div>

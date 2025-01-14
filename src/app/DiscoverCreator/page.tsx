@@ -98,8 +98,8 @@ function DiscoverCreator() {
                                                         >Learn more</button>
                                                     </div>
                                                 </div>
-                                                <div className='d-flex gap-2 mb-2'>
-                                                    <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray flex-shrink-0 mt-1' />
+                                                <div className='d-flex gap-2 mb-2 align-items-center'>
+                                                    <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
                                                     <p className='mb-0'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0, 100) + "..." : campaign?.Target_Audience}</p>
                                                 </div>
                                                 {/* <div className='d-flex gap-2 mb-3'>

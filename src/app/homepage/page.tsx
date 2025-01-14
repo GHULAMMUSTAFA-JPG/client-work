@@ -97,6 +97,10 @@ function Homepage() {
 
                                 <div className="row my-3 text-center">
                                     <div className="col-md-4 border-end pe-4">
+                                        <p className='mb-0 fs-14 p-height'>Followers</p>
+                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.No_of_Followers} </p>
+                                    </div>
+                                    <div className="col-md-4 border-end pe-4">
                                         <p className='mb-0 fs-14 p-height'>Average Engagaements per post</p>
                                         <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Engagements}</p>
                                     </div>
