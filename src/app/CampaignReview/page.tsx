@@ -7,6 +7,7 @@ import { useState } from 'react'
 import ActivatedCreators from './ActivatedCreators'
 import {  changeCreatorStatus } from '@/@api'
 import { defaultImagePath } from '@/components/constants'
+import { useRouter } from 'next/navigation'
 function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, setRendControl }: any) {
     const [creatorStatus, setCreatorStatus] = useState({
         'Adam Biddlecombe': 'Activated',
@@ -19,6 +20,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
             [creatorName]: newStatus
         }));
     };
+    const router = useRouter()
     const [totalLenght, setTotalLenght] = useState<number>(0)
     const [selectedStatus, setSelectedStatus] = useState<string>('')
     function getTotalElements(dynamicObject: any) {
@@ -28,7 +30,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                 total += dynamicObject[key].length;
             }
         }
-        console.log(total,"total")
+       
         setTotalLenght(total);
     }
 
@@ -37,7 +39,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
 
     useEffect(() => {
         selectedCampaignDetails?.campaign && getTotalElements(selectedCampaignDetails?.campaign?.Campaign_Progress)
-
+        console.log(selectedCampaignDetails,"caliber")
     }, [selectedCampaignDetails])
 
     const getStatusColor = (status: string) => {
@@ -354,7 +356,9 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                                 </div>
                                                             </td>
                                                             <td className='text-center'>
-                                                                <Icon icon="material-symbols:chat-outline" width={22} height={22} className='cursor text-warning text-center' />
+                                                                <Icon icon="material-symbols:chat-outline" width={22} height={22} className='cursor text-warning text-center' onClick={()=>{
+                                                                    router.push(`/inbox?id=${array_item?._id}`)
+                                                                }} />
                                                             </td>
                                                         </tr>
 

@@ -27,16 +27,36 @@ export const newLogin = (body: any) => {
     const response = apiController.post('auth/buyer/login', body)
     return response
 }
-export const fetchProfileData = async (email: string, setUserData: any) => {
+export const fetchProfileData = async (email: any, setUserData: any) => {
 
     try {
-        const response = await apiController.get(`dashboard/creators/creator_data/${email}`)
-
+        const response = await apiController.post(`dashboard/creators/creator_data`,{
+            email :email,
+        } )
         setUserData(response?.data)
         // return response
     } catch (error) {
         console.log(error)
         setUserData({})
+        // return null
+    }
+}
+
+
+
+export const fetchProfileDataByIds = async (id: string, setUserData: any) => {
+
+    try {
+        const response = await apiController.post(`dashboard/creators/creator_data`,{
+            id :id,
+        } )
+     setUserData((prev:any)=>{
+        return{...prev , ["Name"] : response?.data?.Name , ["Profile_Image"] : response?.data?.Profile_Image}
+     })
+        // return response
+    } catch (error) {
+        console.log(error)
+        
         // return null
     }
 }

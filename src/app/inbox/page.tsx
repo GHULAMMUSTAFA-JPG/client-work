@@ -2,10 +2,11 @@
 
 import Image from 'next/image';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { conversationHistory, getSpecificMessageHistory } from '@/@api';
+import { conversationHistory, fetchProfileData, fetchProfileDataByIds, getSpecificMessageHistory } from '@/@api';
 import { defaultImagePath } from '@/components/constants';
+import { useSearchParams } from 'next/navigation';
 interface selectedIdProps {
     Message_ID: null | string
     Recipient_ID: null | string
@@ -32,7 +33,9 @@ const Inbox = () => {
     })
     const [chatLength, setChatLength] = useState<number>(1)
     const [chatLimit, setChatLimit] = useState<number>(20)
+      const searchParams = useSearchParams();
     useEffect(() => {
+        console.log(userProfile,"userprofile")
         if (userProfile?._id) {
             const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
             ws.onopen = () => {
@@ -106,10 +109,23 @@ const Inbox = () => {
     }, [pageNo, limit])
 
 
+
     useEffect(() => {
         selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
     }, [selectedIds])
 
+       useEffect(() => {
+            const id = searchParams.get('id');
+            if (id) {
+                setSelectedIds((prev:any)=>{
+                    return{...prev, ['Recipient_ID'] : id}
+                })
+                fetchProfileDataByIds(id,setSelectedIds)
+            }
+           
+        }, [searchParams])
+
+        
 
     return (
         <div className="container-fluid chatbot-container">
@@ -251,4 +267,10 @@ const Inbox = () => {
     );
 };
 
-export default Inbox;
+export default function AuthPageWrapper() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <Inbox />
+        </Suspense>
+    );
+}
