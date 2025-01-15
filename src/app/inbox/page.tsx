@@ -14,13 +14,13 @@ interface selectedIdProps {
     Conversation_Id: null | string
     Profile_Image: null | string
     Name: null | string
-    index:null |number
+    index: null | number
 }
 const Inbox = () => {
     const [messages, setMessages] = useState<any>([]);
     const [input, setInput] = useState<string>("");
     const { userProfile, user, setIsLoading, conversations, sockets } = useAuth();
-    const [conversationsHistory, setConversationsHistory] = useState<any>()
+    const [selectedMessage, setSelectedMessage] = useState<any>()
     const [pageNo, setPageNo] = useState<number>(1)
     const [limit, setLimit] = useState<number>(15)
     const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
@@ -30,7 +30,7 @@ const Inbox = () => {
         Conversation_Id: null,
         Profile_Image: null,
         Name: null,
-        index : null
+        index: null
     })
     const [chatLength, setChatLength] = useState<number>(1)
     const [chatLimit, setChatLimit] = useState<number>(20)
@@ -57,15 +57,27 @@ const Inbox = () => {
         }
     };
 
-    const getConversationHistory = async () => {
-        if (user?.email) {
-            const response = await conversationHistory(user?.email, setConversationsHistory, pageNo, limit, setIsLoading)
-        }
-    }
+    // const getConversationHistory = async () => {
+    //     if (user?.email) {
+    //         const response = await conversationHistory(user?.email, setConversationsHistory, pageNo, limit, setIsLoading)
+    //     }
+    // }
 
     useEffect(() => {
-        getConversationHistory()
-    }, [pageNo, limit])
+        console.log(selectedIds,"selectedIds" , conversations,"conversations", selectedMessage,'lopos')
+        if (selectedIds?.Conversation_Id && conversations?.conversations) {
+            if (conversations?.conversations.some((obj: any) => obj._id === selectedIds?.Conversation_Id)) {
+                const matchedObject = conversations.conversations.find((obj: any) => obj._id === selectedIds?.Conversation_Id);
+                if (matchedObject) {
+                    setSelectedMessage(matchedObject);
+                }
+            }
+            else {
+                console.log("No match found.");
+            }
+        }
+
+    }, [conversations, selectedIds])
 
     // useEffect(() => {
     //     // selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
@@ -121,7 +133,7 @@ const Inbox = () => {
                                                 Sender_ID: userProfile?._id,
                                                 Name: chat?.Name,
                                                 Profile_Image: chat?.Profile_Image,
-                                                index :index
+                                                index: index
                                             })
                                         }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID == chat?.Last_Message?.Recipient_ID ? "active" : ""}`}>
                                             <Image
@@ -178,8 +190,8 @@ const Inbox = () => {
 
                                     {/* Received Message */}
                                     {
-                                     selectedIds?.index !==null &&  conversations?.conversations?.[selectedIds?.index]?.messages?.map((msg: any, index: number) => {
-                                     
+                                        selectedIds?.index !== null && selectedMessage?.messages?.map((msg: any, index: number) => {
+
                                             return (
                                                 <div className="row" key={index} >
                                                     {

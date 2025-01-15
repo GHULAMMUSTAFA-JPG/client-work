@@ -30,16 +30,11 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                 total += dynamicObject[key].length;
             }
         }
-       
         setTotalLenght(total);
     }
 
-
-
-
     useEffect(() => {
         selectedCampaignDetails?.campaign && getTotalElements(selectedCampaignDetails?.campaign?.Campaign_Progress)
-        console.log(selectedCampaignDetails,"caliber")
     }, [selectedCampaignDetails])
 
     const getStatusColor = (status: string) => {
@@ -58,6 +53,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                 return 'text-dark base';     
         }
     };
+
     const [isOpen, setIsOpen] = useState(true); 
 
     const handleItemClick = (status: any,array_item:any) => {
@@ -70,7 +66,9 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
         setSelectedStatus(status);
         // setIsOpen(false); 
     };
+
     const [selectedTab, setSelectedTab] = useState<"All" | "Applicants" | "Activated" | "In_Discussion" | "Contacted" | "To_Connect" | "Not_Fit">("All")
+
     return (
         <>
             {showActivatedCreators ? (
