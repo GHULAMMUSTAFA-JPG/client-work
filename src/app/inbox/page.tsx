@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { conversationHistory, fetchProfileData, fetchProfileDataByIds, getSpecificMessageHistory } from '@/@api';
 import { defaultImagePath } from '@/components/constants';
@@ -23,6 +23,13 @@ const Inbox = () => {
     const [selectedMessage, setSelectedMessage] = useState<any>()
     const [pageNo, setPageNo] = useState<number>(1)
     const [limit, setLimit] = useState<number>(15)
+    const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+    const scrollToBottom = () => {
+        endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [selectedMessage]); 
     const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
         Message_ID: null,
         Recipient_ID: null,
@@ -215,6 +222,7 @@ const Inbox = () => {
                                             )
                                         })
                                     }
+                                     <div ref={endOfMessagesRef}></div>
                                 </div>
 
                                 {/* Card Footer - Message Input */}
