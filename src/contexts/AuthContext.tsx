@@ -11,7 +11,14 @@ interface AuthContextType {
   rendControl:boolean;
   setRendControl:any;
   isLoading:boolean;
-  setIsLoading:any
+  setIsLoading:any;
+  setNotifications:any;
+  notifications:any;
+  conversations:any;
+  setConversations:any;
+  setSockets:any;
+  sockets:any
+
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,8 +36,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<any>()
+  const [sockets, setSockets] = useState<any>()
   const [rendControl, setRendControl] =  useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [notifications, setNotifications] = useState<any>()
+  const [conversations, setConversations] = useState<any>()
   // Check authentication on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -60,7 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{setIsLoading, isLoading, isAuthenticated, user,setRendControl,rendControl, loginUser, logout,setUserProfile, userProfile }}>
+    <AuthContext.Provider value={{sockets, setSockets ,conversations,setConversations, notifications, setNotifications,setIsLoading, isLoading, isAuthenticated, user,setRendControl,rendControl, loginUser, logout,setUserProfile, userProfile }}>
       {children}
     </AuthContext.Provider>
   );

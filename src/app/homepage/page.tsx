@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { defaultImagePath } from "@/components/constants";
 
 function Homepage() {
-    const { user, setUserProfile, userProfile, setIsLoading } = useAuth()
+    const { user, setUserProfile, userProfile, setIsLoading, notifications } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [campaigns, setCampaigns] = useState<any>()
     // const router = useRouter()
@@ -167,75 +167,32 @@ function Homepage() {
                         <div className="card mb-3">
                             <div className="card-body">
                                 <p className='mb-2 fs-16 fw-medium'>Notifications</p>
-                                <div className='d-flex gap-2 mb-2'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                    </div>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex gap-2 mb-2'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                    </div>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex gap-2 mb-2'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                    </div>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex gap-2 mb-2'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                    </div>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex gap-2'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium fs-12'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-10 text-warning'>Your Content has been accepted</p>
-                                    </div>
-                                </div>
+
+                                {
+                                    notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
+                                        return (
+                                            <div key={index}>
+                                                <div className='d-flex gap-2 mb-2'>
+                                                {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="teenyicons:send-up-solid" width="16" height="16" className="text-primary" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                    <div className='flex-grow-1'>
+                                                        <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
+                                                        <p className='mb-0 fs-10 text-warning'>{notify?.Message}</p>
+                                                    </div>
+                                                </div>
+                                                <hr className='my-2 text-warning' />
+                                            </div>
+                                        )
+                                    })
+                                        :
+                                        <div className=" mb-2 mt-2 text-center" >
+                                            <small >No new Notifications </small>
+                                        </div>
+                                }
+
                             </div>
                         </div>
                         <div className="card mb-3">

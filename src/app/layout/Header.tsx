@@ -14,9 +14,9 @@ export default function Header() {
     const router = useRouter()
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading } = useAuth()
+    const {setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations } = useAuth()
     const [conversationList, setConversationList] = useState<any>()
-    const [Notifications, setNotifications] = useState<any>()
+    
     const [socket, setSocket] = useState<any>()
     useEffect(() => {
         setUser(localStorage.getItem("user"))
@@ -28,7 +28,7 @@ export default function Header() {
     useEffect(() => {
 
         if (user?.email) {
-            getHistoryOfUser();
+            // getHistoryOfUser();
             !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile) : fetchBuyersData(setUserProfile, user?.email)
         }
 
@@ -38,24 +38,31 @@ export default function Header() {
         if (userProfile?._id) {
             const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
             setSocket(ws)
+            setSockets(ws)
             ws.onopen = () => {
-
-                console.log("Connected to WebSocket server");
                 const data: any = {
                     "notification": true,
                     "recipient_id": userProfile?._id
                 }
                 ws.send(JSON.stringify(data))
+                if (user?.email) {
+                    const dtoForHistory: any = {
+                        "email": user?.email
+                    }
+                    ws.send(JSON.stringify(dtoForHistory))
+                }
             };
 
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
-                console.log(response, "response on message")
                 if (response?.notifications) {
                     setNotifications(response)
                 }
-
+                else if (response?.conversations) {
+                    setConversationList(response)
+                    setConversations(response)
+                }
             };
 
             ws.onerror = (error) => {
@@ -74,21 +81,18 @@ export default function Header() {
         }
     }, [userProfile]);
 
-    const getHistoryOfUser = async () => {
-        const response = await conversationHistory(user?.email, setConversationList, 1, 6, setIsLoading)
-    }
+    // const getHistoryOfUser = async () => {
+    //     const response = await conversationHistory(user?.email, setConversationList, 1, 6, setIsLoading)
+    // }
 
-
-    // useEffect(()=>{
-    //     if(userProfile?._id && socket && socket.readyState === WebSocket.OPEN){
-    //       const data =  {
-    //             "notification": true,
-    //             "recipient_id": userProfile?._id
+    // useEffect(() => {
+    //     if (user?.email && socket && socket.readyState === WebSocket.OPEN) {
+    //         const dtoForHistory: any = {
+    //             "email": user?.email
     //         }
-    //         console.log(data,"data")
-    //         socket.send(data)
+    //         socket.send(JSON.stringify(dtoForHistory))
     //     }
-    // },[socket,userProfile])
+    // }, [socket, user])
 
 
     return (
@@ -146,7 +150,7 @@ export default function Header() {
                                     {/* <a href="#" className="text-muted fs-12 text-decoration-none">View All</a> */}
                                 </li>
                                 {
-                                    Notifications?.notifications && Notifications?.notifications?.length !== 0 ? Notifications?.notifications?.map((notify: any, index: number) => {
+                                    notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
                                         return (
                                             <div key={index}>
                                                 <li><a className="dropdown-item">
@@ -169,7 +173,6 @@ export default function Header() {
                                                 <hr className='my-2 text-warning' />
                                             </div>
                                         )
-
                                     })
                                         :
                                         <div className=" mb-2 mt-2 text-center" >
