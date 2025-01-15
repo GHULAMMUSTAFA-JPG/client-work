@@ -67,9 +67,9 @@ const Inbox = () => {
         getConversationHistory()
     }, [pageNo, limit])
 
-    useEffect(() => {
-        selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
-    }, [selectedIds])
+    // useEffect(() => {
+    //     // selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
+    // }, [selectedIds])
 
     useEffect(() => {
         const id = searchParams.get('id');
@@ -81,7 +81,6 @@ const Inbox = () => {
             setTimeout(() => {
                 const clickButton = document?.getElementById(id)
                 clickButton && clickButton.click()
-
             }, 1500);
             fetchProfileDataByIds(id, setSelectedIds)
         }
@@ -155,7 +154,7 @@ const Inbox = () => {
                 {/* Chat Area */}
                 <div className="col-md-8 col-lg-9 p-0">
                     {
-                        selectedIds?.Conversation_Id ?
+                        selectedIds?.Conversation_Id || selectedIds?.Recipient_ID ?
 
                             <div className="card h-100 border-0">
                                 {/* Card Header */}
@@ -179,7 +178,8 @@ const Inbox = () => {
 
                                     {/* Received Message */}
                                     {
-                                     selectedIds?.index &&  conversations?.conversations?.[selectedIds?.index]?.messages?.map((msg: any, index: number) => {
+                                     selectedIds?.index !==null &&  conversations?.conversations?.[selectedIds?.index]?.messages?.map((msg: any, index: number) => {
+                                     
                                             return (
                                                 <div className="row" key={index} >
                                                     {

@@ -26,12 +26,10 @@ export default function Header() {
     };
 
     useEffect(() => {
-
         if (user?.email) {
             // getHistoryOfUser();
             !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile) : fetchBuyersData(setUserProfile, user?.email)
         }
-
     }, [user, rendControl])
 
     useEffect(() => {
@@ -56,6 +54,7 @@ export default function Header() {
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
+                console.log(response,"ws response")
                 if (response?.notifications) {
                     setNotifications(response)
                 }
