@@ -7,17 +7,17 @@ interface AuthContextType {
   loginUser: (userData: any) => void;
   logout: () => void;
   setUserProfile: any;
-  userProfile:any;
-  rendControl:boolean;
-  setRendControl:any;
-  isLoading:boolean;
-  setIsLoading:any;
-  setNotifications:any;
-  notifications:any;
-  conversations:any;
-  setConversations:any;
-  setSockets:any;
-  sockets:any
+  userProfile: any;
+  rendControl: boolean;
+  setRendControl: any;
+  isLoading: boolean;
+  setIsLoading: any;
+  setNotifications: any;
+  notifications: any;
+  conversations: any;
+  setConversations: any;
+  setSockets: any;
+  sockets: any
 
 }
 
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<any>()
   const [sockets, setSockets] = useState<any>()
-  const [rendControl, setRendControl] =  useState<boolean>(false)
+  const [rendControl, setRendControl] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [notifications, setNotifications] = useState<any>()
   const [conversations, setConversations] = useState<any>()
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("user", JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
-    if(userData.isBuyer)
+    if (userData.isBuyer)
       router.push("/homepagebuyer");
 
     else
@@ -66,14 +66,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("user");
     setIsAuthenticated(false);
     setUser(null);
+    if (sockets.readyState === WebSocket.OPEN) {
+      sockets.close(1000, "");
+    }
     router.push("/login");
-      if (sockets.readyState === WebSocket.OPEN) {
-          sockets.close(1000, "Client closing the connection.");
-      }
   };
 
   return (
-    <AuthContext.Provider value={{sockets, setSockets ,conversations,setConversations, notifications, setNotifications,setIsLoading, isLoading, isAuthenticated, user,setRendControl,rendControl, loginUser, logout,setUserProfile, userProfile }}>
+    <AuthContext.Provider value={{ sockets, setSockets, conversations, setConversations, notifications, setNotifications, setIsLoading, isLoading, isAuthenticated, user, setRendControl, rendControl, loginUser, logout, setUserProfile, userProfile }}>
       {children}
     </AuthContext.Provider>
   );
