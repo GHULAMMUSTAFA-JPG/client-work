@@ -67,6 +67,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(false);
     setUser(null);
     router.push("/login");
+      if (sockets.readyState === WebSocket.OPEN) {
+          sockets.close(1000, "Client closing the connection.");
+      }
   };
 
   return (

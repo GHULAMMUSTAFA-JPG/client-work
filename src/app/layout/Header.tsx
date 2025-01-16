@@ -14,9 +14,9 @@ export default function Header() {
     const router = useRouter()
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const {setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations } = useAuth()
+    const { setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations } = useAuth()
     const [conversationList, setConversationList] = useState<any>()
-    
+    const [newNotification, setNewNotification] = useState<boolean>(false)
     const [socket, setSocket] = useState<any>()
     useEffect(() => {
         setUser(localStorage.getItem("user"))
@@ -54,9 +54,12 @@ export default function Header() {
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
-                console.log(response,"ws response")
+                console.log(response, "response from sockets")
                 if (response?.notifications) {
                     setNotifications(response)
+                    const not = response?.notifications.notifications || []
+                    const hasUnseen = not.some((notification: any) => notification.isSeen === false);
+                    setNewNotification(hasUnseen)
                 }
                 else if (response?.conversations) {
                     setConversationList(response)
@@ -93,6 +96,16 @@ export default function Header() {
     //     }
     // }, [socket, user])
 
+
+    const readNotification = async () => {
+        const data = {
+            "notification_is_seen": true,
+            "recipient_id": userProfile?._id
+        }
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(data))
+        }
+    }
 
     return (
         <>
@@ -140,8 +153,14 @@ export default function Header() {
                         {/* Register button if needed */}
                         {/* </form> */}
                         <div className="dropdown ms-auto">
-                            <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={readNotification}>
                                 <Icon icon="mingcute:notification-line" width={24} height={24} className="text-warning" />
+                                {
+                                newNotification && (
+                                    <span style={{fontSize:'20px'}} className="asterisk position-absolute top-20 start-10 translate-middle text-danger">
+                                        *
+                                    </span>
+                                )}
                             </a>
                             <ul className="dropdown-menu pt-0">
                                 <li className="activated-subtle dropdown-header py-2 mb-2 sticky-top d-flex justify-content-between">

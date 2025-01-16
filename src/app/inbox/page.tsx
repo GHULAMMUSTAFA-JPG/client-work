@@ -48,6 +48,7 @@ const Inbox = () => {
             recipient_id: selectedIds?.Recipient_ID,
             message: input
         })
+        console.log(data,"dto to send")
         if (sockets && sockets.readyState === WebSocket.OPEN) {
             sockets.send(data);
             // let userdata = messages
@@ -71,7 +72,6 @@ const Inbox = () => {
     // }
 
     useEffect(() => {
-        console.log(selectedIds,"selectedIds" , conversations,"conversations", selectedMessage,'lopos')
         if (selectedIds?.Conversation_Id && conversations?.conversations) {
             if (conversations?.conversations.some((obj: any) => obj._id === selectedIds?.Conversation_Id)) {
                 const matchedObject = conversations.conversations.find((obj: any) => obj._id === selectedIds?.Conversation_Id);
