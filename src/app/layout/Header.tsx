@@ -171,7 +171,7 @@ export default function Header() {
                                     notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
                                         return (
                                             <div key={index}>
-                                                <li><a className="dropdown-item">
+                                                <li><a className="dropdown-item" style={notify?.Is_Seen ?  {}: {backgroundColor:"#F0F5FF"}} >
                                                     <div className='d-flex gap-2'>
                                                         <div className="rounded-circle flex-shrink-0 bg-circle-notification">
                                                             {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />}
