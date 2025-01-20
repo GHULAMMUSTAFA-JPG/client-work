@@ -218,7 +218,13 @@ body {
     }
 
     .dropdown-item {
-        font-size: 14px
+        font-size: 14px;
+        white-space: normal;
+        padding: 1rem;
+
+        &:hover {
+            background-color: $hover;
+        }
     }
 
     .dropdown-toggle::after {

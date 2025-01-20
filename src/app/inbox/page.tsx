@@ -29,7 +29,7 @@ const Inbox = () => {
     };
     useEffect(() => {
         scrollToBottom();
-    }, [selectedMessage]); 
+    }, [selectedMessage]);
     const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
         Message_ID: null,
         Recipient_ID: null,
@@ -48,7 +48,7 @@ const Inbox = () => {
             recipient_id: selectedIds?.Recipient_ID,
             message: input
         })
-        console.log(data,"dto to send")
+        console.log(data, "dto to send")
         if (sockets && sockets.readyState === WebSocket.OPEN) {
             sockets.send(data);
             // let userdata = messages
@@ -148,13 +148,18 @@ const Inbox = () => {
                                                 alt="Profile"
                                                 width={40}
                                                 height={40}
-                                                className="rounded-circle me-2"
+                                                className="rounded-circle me-2 flex-shrink-0"
                                             />
                                             <div className="flex-grow-1">
                                                 <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                                                <small className="text-muted">{chat?.Last_Message?.Message}</small>
+                                                <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message}</small>
                                             </div>
-                                            <small className="text-muted">{chat?.Last_Message?.Time_Ago}</small>
+                                            <div className='flex-shrink-0'>
+                                                <div className="number-circle ms-auto">
+                                                    <span className='fs-10'>1</span>
+                                                </div>
+                                                <small className="text-muted flex-shrink-0 ms-2 fs-10">{chat?.Last_Message?.Time_Ago}</small>
+                                            </div>
                                         </div>
                                     )
 
@@ -222,7 +227,7 @@ const Inbox = () => {
                                             )
                                         })
                                     }
-                                     <div ref={endOfMessagesRef}></div>
+                                    <div ref={endOfMessagesRef}></div>
                                 </div>
 
                                 {/* Card Footer - Message Input */}

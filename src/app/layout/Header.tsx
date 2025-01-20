@@ -155,40 +155,40 @@ export default function Header() {
                         <div className="dropdown ms-auto">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={readNotification}>
                                 <Icon icon="mingcute:notification-line" width={24} height={24} className="text-warning" />
-                                {
-                                newNotification && (
-                                    <span style={{fontSize:'20px'}} className="asterisk position-absolute top-20 start-10 translate-middle text-danger">
-                                        *
-                                    </span>
-                                )}
+                                {/* {
+                                    newNotification && ( */}
+                                <span className="position-circle-notification">
+                                    <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>
+                                </span>
+                                {/* )} */}
                             </a>
-                            <ul className="dropdown-menu pt-0">
-                                <li className="activated-subtle dropdown-header py-2 mb-2 sticky-top d-flex justify-content-between">
+                            <ul className="dropdown-menu p-0">
+                                <li className="activated-subtle dropdown-header sticky-top d-flex justify-content-between">
                                     <span className="text-dark">Notifications</span>
                                     {/* <a href="#" className="text-muted fs-12 text-decoration-none">View All</a> */}
                                 </li>
                                 {
                                     notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
                                         return (
-                                            <div key={index}>
-                                                <li><a className="dropdown-item" style={notify?.Is_Seen ?  {}: {backgroundColor:"#F0F5FF"}} >
+                                            <div key={index} style={notify?.Is_Seen ? {} : { backgroundColor: "#F0F5FF" }}>
+                                                <li><a className="dropdown-item" >
                                                     <div className='d-flex gap-2'>
                                                         <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                                            {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="teenyicons:send-up-solid" width="16" height="16" className="text-primary" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                            {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
+                                                            {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
                                                             {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
 
                                                         </div>
                                                         <div className='flex-grow-1'>
                                                             <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
-                                                            <p className='mb-0 fs-10 text-warning'>{notify?.Message}</p>
+                                                            <p className='mb-0 fs-10 text-warning line-clamp-1'>{notify?.Message}</p>
                                                         </div>
                                                     </div>
                                                 </a></li>
 
-                                                <hr className='my-2 text-warning' />
+                                                <hr className='m-0 text-warning' />
                                             </div>
                                         )
                                     })
@@ -202,10 +202,13 @@ export default function Header() {
                         </div>
                         <div className="dropdown">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <Icon icon="mdi:message-outline" width={21} height={21} className="text-warning" />
+                                <Icon icon="uil:envelope" width={25} height={25} className="text-warning" />
+                                <span className="position-circle-message">
+                                    <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>
+                                </span>
                             </a>
-                            <ul className="dropdown-menu pt-0">
-                                <li className="activated-subtle dropdown-header mb-2 py-2 sticky-top d-flex justify-content-between">
+                            <ul className="dropdown-menu p-0">
+                                <li className="activated-subtle dropdown-header sticky-top d-flex justify-content-between">
                                     <span className="text-dark">Messages</span>
                                     <a href="#" className="text-muted fs-12 text-decoration-none" onClick={() => {
                                         router.push('/inbox')
@@ -225,16 +228,16 @@ export default function Header() {
                                                                 alt="Profile"
                                                                 width={32}
                                                                 height={32}
-                                                                className="rounded-circle me-2"
+                                                                className="rounded-circle me-2 flex-shrink-0"
                                                             />
                                                             <div className="flex-grow-1">
                                                                 <h6 className="mb-0 fs-12">{conversation?.Name}</h6>
-                                                                <small className="text-muted fs-10">{conversation?.Last_Message?.Message}</small>
+                                                                <small className="text-muted fs-10 line-clamp-1">{conversation?.Last_Message?.Message}</small>
                                                             </div>
-                                                            <small className="text-muted fs-10">{conversation?.Last_Message?.Time_Ago}</small>
+                                                            <small className="text-muted fs-10 flex-shrink-0 ms-2">{conversation?.Last_Message?.Time_Ago}</small>
                                                         </div>
                                                     </a></li>
-                                                <hr className='my-2 text-warning' />
+                                                <hr className='m-0 text-warning' />
 
                                             </div>
                                         )
@@ -249,12 +252,12 @@ export default function Header() {
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
                                     {(userProfile?.Profile_Image || userProfile?.Company_Logo) ? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <img src={defaultImagePath} width={32} height={32} />}
-                                    <p className="mb-0 ms-2">{userProfile?.Name}</p>
+                                    <p className="mb-0 ms-2">{userProfile?.Name || userProfile?.Company_Name}</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>
                             </a>
 
-                            <ul className="dropdown-menu sign-out-menu">
+                            <ul className="dropdown-menu sign-out-menu p-0">
                                 {/* <li><a className="dropdown-item" href="#">
                                     Update Profile
                                 </a>

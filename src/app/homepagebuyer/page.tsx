@@ -239,9 +239,9 @@ function homepagebuyer() {
                                     />
                                     <div className='flex-grow-1'>
                                         <p className='mb-0 fw-medium'>Campaign Created</p>
-                                        <p className='mb-0 fs-12 text-warning'>Your Campaign has been Created Successfully</p>
+                                        <p className='mb-0 fs-12 text-warning line-clamp-1'>Your Campaign has been Created Successfully</p>
                                     </div>
-                                    <p className='mb-0 fs-12 text-muted ms-auto'>8 Days ago</p>
+                                    <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>8 Days ago</p>
                                 </div>
                                 <hr className='my-3 text-warning' />
                                 <div className='d-flex gap-2 mb-3'>
@@ -254,9 +254,9 @@ function homepagebuyer() {
                                     />
                                     <div className='flex-grow-1'>
                                         <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning'>Your Content has been accepted</p>
+                                        <p className='mb-0 fs-12 text-warning line-clamp-1'>Your Content has been accepted</p>
                                     </div>
-                                    <p className='mb-0 fs-12 text-muted ms-auto'>8 Days ago</p>
+                                    <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>8 Days ago</p>
                                 </div>
                                 <hr className='my-3 text-warning' />
                                 <div className='d-flex gap-2'>
@@ -269,9 +269,9 @@ function homepagebuyer() {
                                     />
                                     <div className='flex-grow-1'>
                                         <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning'>Your Content has been accepted</p>
+                                        <p className='mb-0 fs-12 text-warning line-clamp-1'>Your Content has been accepted</p>
                                     </div>
-                                    <p className='mb-0 fs-12 text-muted ms-auto'>8 Days ago</p>
+                                    <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>8 Days ago</p>
                                 </div>
                             </div>
                         </div>

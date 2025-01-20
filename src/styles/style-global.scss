@@ -140,14 +140,15 @@ body {
     }
 
     .number-circle {
-        height: 25px;
-        width: 25px;
-        min-width: 25px;
+        height: 20px;
+        width: 20px;
+        min-width: 20px;
         border-radius: 50%;
-        background-color: $success;
+        background-color: $circle3;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: $white;
     }
 
     .charts-select {
@@ -174,6 +175,7 @@ body {
     }
 
     .applied-btn-container {
+
         .btn:disabled,
         .btn.disabled,
         fieldset:disabled .btn {
@@ -184,5 +186,10 @@ body {
             opacity: 1;
         }
     }
-    
+
+    .card-body .notification-list:last-child {
+        hr {
+            display: none;
+        }
+    }
 }

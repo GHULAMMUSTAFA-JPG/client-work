@@ -171,16 +171,19 @@ function Homepage() {
                                 {
                                     notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
                                         return (
-                                            <div key={index}>
-                                                <div className='d-flex gap-2 mb-2'>
-                                                {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="line-md:check-all" width="20" height="20" className="text-primary" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="teenyicons:send-up-solid" width="16" height="16" className="text-primary" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                            <div key={index} className="notification-list">
+                                                <div className='d-flex gap-3'>
+                                                    <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+
+                                                        {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                    </div>
                                                     <div className='flex-grow-1'>
                                                         <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
-                                                        <p className='mb-0 fs-10 text-warning'>{notify?.Message}</p>
+                                                        <p className='mb-0 fs-10 text-warning line-clamp-1'>{notify?.Message}</p>
                                                     </div>
                                                 </div>
                                                 <hr className='my-2 text-warning' />
