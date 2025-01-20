@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
-import { conversationHistory, fetchBuyersData, fetchProfileData } from "@/@api";
+import { conversationHistory, countNumberOfUnreadMessages, fetchBuyersData, fetchProfileData } from "@/@api";
 import Loader from "@/components/loader";
 import { defaultImagePath } from "@/components/constants";
 
@@ -19,7 +19,7 @@ export default function Header() {
     const [newNotification, setNewNotification] = useState<boolean>(false)
     const [socket, setSocket] = useState<any>()
     const [newMessage, setNewMessage] = useState<boolean>(false)
-
+    const [totalUnreadMessage, setTotalUnreadMessage] = useState<number>(0)
     useEffect(() => {
         setUser(localStorage.getItem("user"))
     }, [])
@@ -34,6 +34,7 @@ export default function Header() {
             !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile) : fetchBuyersData(setUserProfile, user?.email)
         }
     }, [user, rendControl])
+
 
     useEffect(() => {
         if (userProfile?._id) {
@@ -58,6 +59,7 @@ export default function Header() {
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
+                
                 console.log(response, "response from sockets")
                 if (response?.notifications) {
                     setNotifications(response)
@@ -66,12 +68,12 @@ export default function Header() {
                     setNewNotification(hasUnseen)
                 }
                 else if (response?.conversations) {
+                    countNumberOfUnreadMessages(response?.conversations,setTotalUnreadMessage)
                     response?.conversations?.map((messages: any, index: number) => {
                         const not = messages?.messages || []
                         const hasUnseen = not.some((message: any) => message.isSeen === false);
                         setNewMessage(hasUnseen)
                     })
-
                     setConversationList(response)
                     setConversations(response)
                 }
@@ -118,10 +120,11 @@ export default function Header() {
     }
 
 
-    const readMessage = async () => {
+    const readMessage = async (conversation:any) => {
+        console.log(conversation,"conversation")
         const data = {
-            "conversation_id": '',
-            "sender_id": ''
+            "conversation_id": conversation?._id,
+            "sender_id": userProfile?._id
         }
         if (socket.readyState === WebSocket.OPEN) {
             socket.send(JSON.stringify(data))
@@ -229,7 +232,7 @@ export default function Header() {
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <Icon icon="uil:envelope" width={25} height={25} className="text-warning" />
                                 <span className="position-circle-message">
-                                    {newMessage && <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>}
+                                    {totalUnreadMessage !==0 && <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}>{totalUnreadMessage}</div>}
                                 </span>
                             </a>
                             <ul className="dropdown-menu p-0">
@@ -244,9 +247,9 @@ export default function Header() {
                                         return (
                                             <div key={index}>
                                                 <li onClick={async () => {
-                                                    const response = await readMessage()
+                                                    const response = await readMessage(conversation)
                                                     if (response) {
-                                                        router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
+                                                        // router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
                                                     }
                                                     else {
 

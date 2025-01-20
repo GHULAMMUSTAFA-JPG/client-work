@@ -623,3 +623,17 @@ export const downloadAllMedia = async (mediaFiles: any[], setIsLoading: any) => 
         return null
     }
 }
+
+
+export const countNumberOfUnreadMessages = async (conversationObject:any, setTotalUnreadMessage:any) =>{
+    let totalCount = 0;
+
+    conversationObject.forEach((conversation:any) => {
+        if (conversation.messages && Array.isArray(conversation.messages)) {
+            totalCount += conversation.messages.filter((message:any) => message.Is_Seen === false).length;
+        }
+    });
+
+    setTotalUnreadMessage(totalCount)
+    console.log(totalCount,"totalCount")
+}

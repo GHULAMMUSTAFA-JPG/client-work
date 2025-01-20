@@ -65,7 +65,7 @@ const Inbox = () => {
                 // setMessages(userdata)
                 setInput("");
             } else {
-                // connectSever()
+                connectSever()
                 console.error("WebSocket is not connected");
             }
         }
@@ -130,6 +130,11 @@ const Inbox = () => {
             fetchProfileDataByIds(id, setSelectedIds)
         }
     }, [searchParams])
+
+    useEffect(()=>{
+        console.log(selectedIds,"selectedids are here")
+    },[selectedIds])
+
 
     return (
         <div className="container-fluid chatbot-container">
