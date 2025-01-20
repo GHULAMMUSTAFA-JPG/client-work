@@ -20,7 +20,7 @@ import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
 
 
 function homepagebuyer() {
-    const { user, setIsLoading } = useAuth()
+    const { user, setIsLoading, notifications } = useAuth()
     const [rendControl, setRendControl] = useState<boolean>(false)
     const [users, setUsers] = useState<any[]>([]);
     const [userData, setUserData] = useState<any>()
@@ -55,9 +55,9 @@ function homepagebuyer() {
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
-                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name && userData?.Company_Name?.slice(0,20) + "...."}</span></h3>
+                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name && userData?.Company_Name?.slice(0, 20) + "...."}</span></h3>
                                         {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
-                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description && userData?.Company_Description?.slice(0,200)+ '....'}</p>
+                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description && userData?.Company_Description?.slice(0, 200) + '....'}</p>
                                     </div>
                                     <div>
                                         <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal" style={{ width: '25px', height: '25px' }}>
@@ -152,7 +152,7 @@ function homepagebuyer() {
                             <div className="card-header p-3">
                                 <div className="d-flex align-items-center justify-content-between">
                                     <p className="mb-0 fw-medium fs-16">Campaigns</p>
-                                  {activeCampaigns?.campaigns && activeCampaigns?.campaigns?.length > viewRow && <button className='btn btn-info btn-sm' onClick={()=>{
+                                    {activeCampaigns?.campaigns && activeCampaigns?.campaigns?.length > viewRow && <button className='btn btn-info btn-sm' onClick={() => {
                                         showViewRow(activeCampaigns?.campaigns?.length)
                                     }}>View All</button>}
                                 </div>
@@ -161,7 +161,7 @@ function homepagebuyer() {
                                 <div className="table-responsive campaign-listing-table">
                                     <table className="table align-middle text-center mb-0 table-hover">
                                         <thead>
-                                            <tr> 
+                                            <tr>
                                                 <th scope="col" className="text-start ps-4">Campaigns <span className='text-muted fs-12'>({activeCampaigns?.campaigns?.length || 0})</span></th>
                                                 <th scope="col">Activated Creators</th>
                                                 <th scope="col">New Applications</th>
@@ -228,51 +228,36 @@ function homepagebuyer() {
                         </div>
                         <div className="card mb-3">
                             <div className="card-body">
-                                <p className='mb-2 fs-16 fw-medium'>Activity Feed</p>
-                                <div className='d-flex gap-2 mb-3'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={40}
-                                        height={40}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium'>Campaign Created</p>
-                                        <p className='mb-0 fs-12 text-warning line-clamp-1'>Your Campaign has been Created Successfully</p>
-                                    </div>
-                                    <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>8 Days ago</p>
-                                </div>
-                                <hr className='my-3 text-warning' />
-                                <div className='d-flex gap-2 mb-3'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={40}
-                                        height={40}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning line-clamp-1'>Your Content has been accepted</p>
-                                    </div>
-                                    <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>8 Days ago</p>
-                                </div>
-                                <hr className='my-3 text-warning' />
-                                <div className='d-flex gap-2'>
-                                    <Image
-                                        src="/assets/images/user.jpg"
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={40}
-                                        height={40}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <p className='mb-0 fw-medium'>Campaign Accepted</p>
-                                        <p className='mb-0 fs-12 text-warning line-clamp-1'>Your Content has been accepted</p>
-                                    </div>
-                                    <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>8 Days ago</p>
-                                </div>
+                                <p className='mb-2 fs-16 fw-medium'>Notifications</p>
+                                {
+                                    notifications?.notifications?.map((notify: any, index: number) => {
+                                        if (index < 4) {
+                                            return (
+                                                <div key={index}>
+                                                    <div className='d-flex gap-2 mb-3'>
+                                                        {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                        {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+
+                                                        <div className='flex-grow-1'>
+                                                            <p className='mb-0 fw-medium'>{notify?.Title}</p>
+                                                            <p className='mb-0 fs-12 text-warning line-clamp-1'>{notify?.Message}</p>
+                                                        </div>
+                                                        <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>{notify?.Time_Ago}</p>
+                                                    </div>
+                                                    <hr className='my-3 text-warning' />
+                                                </div>
+                                            )
+                                        }
+
+
+
+                                    })
+                                }
+
+
                             </div>
                         </div>
                     </div>

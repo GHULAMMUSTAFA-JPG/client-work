@@ -43,7 +43,6 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
             "company_logo": userProfile?.Company_Logo,
             "company_website" : userProfile?.Company_Website
         }
-        console.log(object,"lopls")
         return object
     }
 

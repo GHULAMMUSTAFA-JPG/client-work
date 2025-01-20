@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { conversationHistory, fetchProfileData, fetchProfileDataByIds, getSpecificMessageHistory } from '@/@api';
 import { defaultImagePath } from '@/components/constants';
 import { useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
 interface selectedIdProps {
     Message_ID: null | string
     Recipient_ID: null | string
@@ -19,7 +20,7 @@ interface selectedIdProps {
 const Inbox = () => {
     const [messages, setMessages] = useState<any>([]);
     const [input, setInput] = useState<string>("");
-    const { userProfile, user, setIsLoading, conversations, sockets } = useAuth();
+    const { userProfile, user, setIsLoading, conversations, sockets, setSockets } = useAuth();
     const [selectedMessage, setSelectedMessage] = useState<any>()
     const [pageNo, setPageNo] = useState<number>(1)
     const [limit, setLimit] = useState<number>(15)
@@ -44,26 +45,51 @@ const Inbox = () => {
     const searchParams = useSearchParams();
 
     const sendMessage = () => {
-        const data: any = JSON.stringify({
-            recipient_id: selectedIds?.Recipient_ID,
-            message: input
-        })
-        console.log(data, "dto to send")
-        if (sockets && sockets.readyState === WebSocket.OPEN) {
-            sockets.send(data);
-            // let userdata = messages
-            // userdata?.push({
-            //     user: "sender",
-            //     Message: input,
-            //     Timestamp : new Date(),
-            //     Time_Ago : 'Just Now'
-            // })
-            // setMessages(userdata)
-            setInput("");
-        } else {
-            console.error("WebSocket is not connected");
+        if (input == "" || !input) {
+            toast.warn('Message cannot be empty')
         }
+        else {
+            const data: any = JSON.stringify({
+                recipient_id: selectedIds?.Recipient_ID,
+                message: input
+            })
+            if (sockets && sockets.readyState === WebSocket.OPEN) {
+                sockets.send(data);
+                // let userdata = messages
+                // userdata?.push({
+                //     user: "sender",
+                //     Message: input,
+                //     Timestamp : new Date(),
+                //     Time_Ago : 'Just Now'
+                // })
+                // setMessages(userdata)
+                setInput("");
+            } else {
+                // connectSever()
+                console.error("WebSocket is not connected");
+            }
+        }
+
     };
+
+    const connectSever = async () => {
+        const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
+        setSockets(ws)
+        ws.onopen = () => {
+            const data: any = {
+                "notification": true,
+                "recipient_id": userProfile?._id
+            }
+            console.log('Sockets are working')
+            ws.send(JSON.stringify(data))
+            if (user?.email) {
+                const dtoForHistory: any = {
+                    "email": user?.email
+                }
+                ws.send(JSON.stringify(dtoForHistory))
+            }
+        }
+    }
 
     // const getConversationHistory = async () => {
     //     if (user?.email) {

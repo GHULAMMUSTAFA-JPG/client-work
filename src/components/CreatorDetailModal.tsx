@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { changePostStatus } from '@/@api';
+import { changePostStatus, downloadAllMedia } from '@/@api';
 import { useAuth } from '@/contexts/AuthContext';
 
 function CreatorDetailModal(props: any) {
@@ -177,7 +177,31 @@ function CreatorDetailModal(props: any) {
                         </div>
 
                         <div className='modal-footer gap-2 w-100'>
-                            <button className="btn btn-info btn-sm" data-bs-dismiss="modal">
+                            <button 
+                            className="btn btn-info btn-sm" 
+                            // data-bs-dismiss="modal" 
+                            onClick={async()=>{
+                                const result:any = await downloadAllMedia(selectedPost?.Media_Content,setIsLoading)
+                                setIsLoading(false)
+                                if(result){
+                                    
+                                    const blob = new Blob([result], { type: 'application/octet-stream' }); // Adjust MIME type if needed
+                                    const url = URL.createObjectURL(blob);
+                                  
+                                    // Create a link element
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = 'synccAppMediaFile.zip'; // Set the default file name and extension
+                                    document.body.appendChild(a); // Append to the body
+                                  
+                                    // Trigger the download
+                                    a.click();
+                                  
+                                    // Clean up
+                                    document.body.removeChild(a);
+                                    URL.revokeObjectURL(url);
+                                }
+                            }}>
                                 <Icon icon="mdi:download" className="me-1" width={16} height={16} />
                                 Download all attachments
                             </button>

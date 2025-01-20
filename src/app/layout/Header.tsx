@@ -18,9 +18,12 @@ export default function Header() {
     const [conversationList, setConversationList] = useState<any>()
     const [newNotification, setNewNotification] = useState<boolean>(false)
     const [socket, setSocket] = useState<any>()
+    const [newMessage, setNewMessage] = useState<boolean>(false)
+
     useEffect(() => {
         setUser(localStorage.getItem("user"))
     }, [])
+
     const navigateToSignIn = () => {
         logout()
     };
@@ -42,6 +45,7 @@ export default function Header() {
                     "notification": true,
                     "recipient_id": userProfile?._id
                 }
+                console.log('Sockets are working')
                 ws.send(JSON.stringify(data))
                 if (user?.email) {
                     const dtoForHistory: any = {
@@ -62,6 +66,12 @@ export default function Header() {
                     setNewNotification(hasUnseen)
                 }
                 else if (response?.conversations) {
+                    response?.conversations?.map((messages: any, index: number) => {
+                        const not = messages?.messages || []
+                        const hasUnseen = not.some((message: any) => message.isSeen === false);
+                        setNewMessage(hasUnseen)
+                    })
+
                     setConversationList(response)
                     setConversations(response)
                 }
@@ -107,6 +117,21 @@ export default function Header() {
         }
     }
 
+
+    const readMessage = async () => {
+        const data = {
+            "conversation_id": '',
+            "sender_id": ''
+        }
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(data))
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
     return (
         <>
             {isLoading && <Loader />}
@@ -114,7 +139,7 @@ export default function Header() {
                 <nav className="navbar bg-white">
                     <div className="container-fluid">
                         <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" />
-                        <a className="navbar-brand" href="#">
+                        <a className="navbar-brand">
                             <Image
                                 src="/assets/images/synnc-logo.svg"
                                 alt="logo"
@@ -155,12 +180,12 @@ export default function Header() {
                         <div className="dropdown ms-auto">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={readNotification}>
                                 <Icon icon="mingcute:notification-line" width={24} height={24} className="text-warning" />
-                                {/* {
-                                    newNotification && ( */}
-                                <span className="position-circle-notification">
-                                    <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>
-                                </span>
-                                {/* )} */}
+                                {
+                                    newNotification &&
+                                    <span className="position-circle-notification">
+                                        <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>
+                                    </span>
+                                }
                             </a>
                             <ul className="dropdown-menu p-0">
                                 <li className="activated-subtle dropdown-header sticky-top d-flex justify-content-between">
@@ -204,13 +229,13 @@ export default function Header() {
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <Icon icon="uil:envelope" width={25} height={25} className="text-warning" />
                                 <span className="position-circle-message">
-                                    <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>
+                                    {newMessage && <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>}
                                 </span>
                             </a>
                             <ul className="dropdown-menu p-0">
                                 <li className="activated-subtle dropdown-header sticky-top d-flex justify-content-between">
                                     <span className="text-dark">Messages</span>
-                                    <a href="#" className="text-muted fs-12 text-decoration-none" onClick={() => {
+                                    <a className="text-muted fs-12 text-decoration-none" onClick={() => {
                                         router.push('/inbox')
                                     }}>View All</a>
                                 </li>
@@ -218,8 +243,14 @@ export default function Header() {
                                     conversationList?.conversations?.map((conversation: any, index: number) => {
                                         return (
                                             <div key={index}>
-                                                <li onClick={() => {
-                                                    router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
+                                                <li onClick={async () => {
+                                                    const response = await readMessage()
+                                                    if (response) {
+                                                        router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
+                                                    }
+                                                    else {
+
+                                                    }
                                                 }}>
                                                     <a className="dropdown-item" >
                                                         <div className="d-flex align-items-center hover-bg-light cursor-pointer">
@@ -243,16 +274,13 @@ export default function Header() {
                                         )
                                     })
                                 }
-
-
-
                             </ul>
                         </div>
                         <div className="dropdown">
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
                                     {(userProfile?.Profile_Image || userProfile?.Company_Logo) ? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <img src={defaultImagePath} width={32} height={32} />}
-                                    <p className="mb-0 ms-2">{userProfile?.Name || userProfile?.Company_Name}</p>
+                                    <p className="mb-0 ms-2">{userProfile?.Company_Name  || userProfile?.Name }</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>
                             </a>

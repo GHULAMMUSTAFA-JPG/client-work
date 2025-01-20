@@ -239,6 +239,7 @@ function OffcanvasCreateCompaign(props: any) {
 
         e.preventDefault();
         const result = await validate()
+        console.log(result,"here i am")
         if(result){
             data ? updateCampaign(dto, rendControl, setRendControl, Newmapper) :
                 createCampaign(dto, rendControl, setRendControl, Newmapper)
@@ -273,7 +274,8 @@ function OffcanvasCreateCompaign(props: any) {
             toast.warn('Target audience cannot be empty')
             return false
 
-        }else if (dto?.Campaign_Required_Channels == '' && !dto?.Campaign_Required_Channels) {
+        }
+        else if (dto?.Campaign_Required_Channels == '' && !dto?.Campaign_Required_Channels) {
             toast.warn('Campaign required channels cannot be empty')
             return false
 
@@ -286,6 +288,9 @@ function OffcanvasCreateCompaign(props: any) {
             else if (dto?.End_Date == "" || !dto?.End_Date) {
                 toast.warn('End date cannot be empty')
                 return false
+            }
+            else{
+                return true
             }
            
         

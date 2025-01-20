@@ -30,9 +30,9 @@ export const newLogin = (body: any) => {
 export const fetchProfileData = async (email: any, setUserData: any) => {
 
     try {
-        const response = await apiController.post(`dashboard/creators/creator_data`,{
-            email :email,
-        } )
+        const response = await apiController.post(`dashboard/creators/creator_data`, {
+            email: email,
+        })
         setUserData(response?.data)
         // return response
     } catch (error) {
@@ -47,16 +47,16 @@ export const fetchProfileData = async (email: any, setUserData: any) => {
 export const fetchProfileDataByIds = async (id: string, setUserData: any) => {
 
     try {
-        const response = await apiController.post(`dashboard/creators/creator_data`,{
-            id :id,
-        } )
-     setUserData((prev:any)=>{
-        return{...prev , ["Name"] : response?.data?.Name , ["Profile_Image"] : response?.data?.Profile_Image}
-     })
+        const response = await apiController.post(`dashboard/creators/creator_data`, {
+            id: id,
+        })
+        setUserData((prev: any) => {
+            return { ...prev, ["Name"]: response?.data?.Name, ["Profile_Image"]: response?.data?.Profile_Image }
+        })
         // return response
     } catch (error) {
         console.log(error)
-        
+
         // return null
     }
 }
@@ -595,7 +595,7 @@ export const conversationHistory = async (email: string, setData: any, pageNo: n
     }
 }
 
-export const getSpecificMessageHistory = async (id: any, setData: any, setIsLoading: any, pageNo: number, limit: number)=>{
+export const getSpecificMessageHistory = async (id: any, setData: any, setIsLoading: any, pageNo: number, limit: number) => {
     setIsLoading(true)
     try {
         const response = await apiController.get(`/dashboard/get_conversation_messages?sender_id=${id?.Sender_ID}&conversation_id=${id?.Conversation_Id}&page=${pageNo}&limit=${limit}`)
@@ -607,5 +607,19 @@ export const getSpecificMessageHistory = async (id: any, setData: any, setIsLoad
         setData(null)
         setIsLoading(false)
 
+    }
+}
+
+
+export const downloadAllMedia = async (mediaFiles: any[], setIsLoading: any) => {
+    setIsLoading(true)
+    try {
+        const response = await apiController.post('/dashboard/download_files', { file_urls: mediaFiles })
+        setIsLoading(false)
+        return response?.data
+    
+    } catch (error) {
+        setIsLoading(false)
+        return null
     }
 }
