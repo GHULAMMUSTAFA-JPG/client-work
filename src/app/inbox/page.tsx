@@ -44,7 +44,7 @@ const Inbox = () => {
     const [chatLimit, setChatLimit] = useState<number>(20)
     const searchParams = useSearchParams();
 
-    const sendMessage = () => {
+    const sendMessage = async() => {
         if (input == "" || !input) {
             toast.warn('Message cannot be empty')
         }
@@ -65,7 +65,8 @@ const Inbox = () => {
                 // setMessages(userdata)
                 setInput("");
             } else {
-                connectSever()
+               await connectSever()
+                sockets.send(data);
                 console.error("WebSocket is not connected");
             }
         }
