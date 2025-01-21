@@ -79,9 +79,13 @@ export const fetchCompanyData = async (email: string, setCompanyData: any, setIs
     }
 }
 
-export const updateProfileInformation = async (dto: any) => {
+export const updateProfileInformation = async (dto: any, setIsLoading:any, rendControl:boolean, setRendControl:any) => {
     try {
-        const response = apiController.put(`/dashboard/creators/update_creator`, dto)
+        const response = await apiController.put(`/dashboard/creators/update_creator`, dto)
+        setIsLoading(false)
+        const closeButton: any = document.getElementById('close_modal_edit_profile')
+        closeButton && closeButton.click()
+        setRendControl(!rendControl)
         return response
     } catch (error) {
         console.log(error)
@@ -614,7 +618,10 @@ export const getSpecificMessageHistory = async (id: any, setData: any, setIsLoad
 export const downloadAllMedia = async (mediaFiles: any[], setIsLoading: any) => {
     setIsLoading(true)
     try {
-        const response = await apiController.post('/dashboard/download_files', { file_urls: mediaFiles })
+        const response = await apiController.post('/dashboard/download_files', { file_urls: mediaFiles },{headers: {
+            'Accept': 'application/zip',
+            "Content-Disposition": "attachment"
+          }})
         setIsLoading(false)
         return response?.data
     

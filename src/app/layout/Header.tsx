@@ -14,7 +14,7 @@ export default function Header() {
     const router = useRouter()
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations } = useAuth()
+    const { restartSocket, setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations } = useAuth()
     const [conversationList, setConversationList] = useState<any>()
     const [newNotification, setNewNotification] = useState<boolean>(false)
     const [socket, setSocket] = useState<any>()
@@ -59,25 +59,26 @@ export default function Header() {
             ws.onmessage = (event) => {
                 const message = event.data;
                 const response = JSON.parse(message);
-                
+
                 console.log(response, "response from sockets")
                 if (response?.notifications) {
+                    console.log(response?.notifications, "response?.notifications")
                     setNotifications(response)
-                    const not = response?.notifications.notifications || []
+                    const not = response?.notifications || []
                     const hasUnseen = not.some((notification: any) => notification.isSeen === false);
                     setNewNotification(hasUnseen)
                 }
                 else if (response?.conversations) {
-                    countNumberOfUnreadMessages(response?.conversations,setTotalUnreadMessage)
+                    countNumberOfUnreadMessages(response?.conversations, setTotalUnreadMessage)
                     response?.conversations?.map((messages: any, index: number) => {
                         const not = messages?.messages || []
-                        const hasUnseen = not.some((message: any) => message.isSeen === false);
+                        const hasUnseen = not.some((message: any) => message.isSeen === false && message?.Sender_ID == userProfile?._id);
                         setNewMessage(hasUnseen)
                     })
                     setConversationList(response)
                     setConversations(response)
                 }
-            };
+            }
 
             ws.onerror = (error) => {
                 console.error("WebSocket error:", error);
@@ -93,7 +94,7 @@ export default function Header() {
                 ws.close();
             };
         }
-    }, [userProfile]);
+    }, [userProfile, restartSocket]);
 
     // const getHistoryOfUser = async () => {
     //     const response = await conversationHistory(user?.email, setConversationList, 1, 6, setIsLoading)
@@ -120,8 +121,8 @@ export default function Header() {
     }
 
 
-    const readMessage = async (conversation:any) => {
-        console.log(conversation,"conversation")
+    const readMessage = async (conversation: any) => {
+
         const data = {
             "conversation_id": conversation?._id,
             "sender_id": userProfile?._id
@@ -232,7 +233,7 @@ export default function Header() {
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <Icon icon="uil:envelope" width={25} height={25} className="text-warning" />
                                 <span className="position-circle-message">
-                                    {totalUnreadMessage !==0 && <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}>{totalUnreadMessage}</div>}
+                                    {newMessage && <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>}
                                 </span>
                             </a>
                             <ul className="dropdown-menu p-0">
@@ -249,10 +250,9 @@ export default function Header() {
                                                 <li onClick={async () => {
                                                     const response = await readMessage(conversation)
                                                     if (response) {
-                                                        // router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
+                                                        router.push(`/inbox?id=${conversation?.Last_Message?.Recipient_ID}`)
                                                     }
                                                     else {
-
                                                     }
                                                 }}>
                                                     <a className="dropdown-item" >
@@ -283,7 +283,7 @@ export default function Header() {
                             <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div className="d-flex align-items-center">
                                     {(userProfile?.Profile_Image || userProfile?.Company_Logo) ? <Image src={userProfile?.Profile_Image || userProfile?.Company_Logo} alt="user" width={32} height={32} className="user-img" /> : <img src={defaultImagePath} width={32} height={32} />}
-                                    <p className="mb-0 ms-2">{userProfile?.Company_Name  || userProfile?.Name }</p>
+                                    <p className="mb-0 ms-2">{userProfile?.Company_Name || userProfile?.Name}</p>
                                     <Icon icon="prime:chevron-down" className="ms-2" width={20} height={20} />
                                 </div>
                             </a>

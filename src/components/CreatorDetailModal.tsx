@@ -184,22 +184,22 @@ function CreatorDetailModal(props: any) {
                                 const result:any = await downloadAllMedia(selectedPost?.Media_Content,setIsLoading)
                                 setIsLoading(false)
                                 if(result){
+                                  
+
+                                        // Create a Blob from the binary data
+                                        const blob = new Blob([result], { type: 'application/zip' });
+                                        const url = URL.createObjectURL(blob);
                                     
-                                    const blob = new Blob([result], { type: 'application/octet-stream' }); // Adjust MIME type if needed
-                                    const url = URL.createObjectURL(blob);
-                                  
-                                    // Create a link element
-                                    const a = document.createElement('a');
-                                    a.href = url;
-                                    a.download = 'synccAppMediaFile.zip'; // Set the default file name and extension
-                                    document.body.appendChild(a); // Append to the body
-                                  
-                                    // Trigger the download
-                                    a.click();
-                                  
-                                    // Clean up
-                                    document.body.removeChild(a);
-                                    URL.revokeObjectURL(url);
+                                        // Create a link to trigger the download
+                                        const a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = 'synccAppMediaFile.zip'; // File name
+                                        document.body.appendChild(a);
+                                        a.click();
+                                    
+                                        // Clean up resources
+                                        document.body.removeChild(a);
+                                        URL.revokeObjectURL(url);
                                 }
                             }}>
                                 <Icon icon="mdi:download" className="me-1" width={16} height={16} />

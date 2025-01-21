@@ -20,7 +20,7 @@ interface selectedIdProps {
 const Inbox = () => {
     const [messages, setMessages] = useState<any>([]);
     const [input, setInput] = useState<string>("");
-    const { userProfile, user, setIsLoading, conversations, sockets, setSockets } = useAuth();
+    const { userProfile, user, setIsLoading, conversations, sockets, setSockets, restartSockets } = useAuth();
     const [selectedMessage, setSelectedMessage] = useState<any>()
     const [pageNo, setPageNo] = useState<number>(1)
     const [limit, setLimit] = useState<number>(15)
@@ -44,7 +44,7 @@ const Inbox = () => {
     const [chatLimit, setChatLimit] = useState<number>(20)
     const searchParams = useSearchParams();
 
-    const sendMessage = async() => {
+    const sendMessage = async () => {
         if (input == "" || !input) {
             toast.warn('Message cannot be empty')
         }
@@ -65,12 +65,9 @@ const Inbox = () => {
                 // setMessages(userdata)
                 setInput("");
             } else {
-               await connectSever()
-                sockets.send(data);
-                console.error("WebSocket is not connected");
+                restartSockets()
             }
         }
-
     };
 
     const connectSever = async () => {
@@ -132,9 +129,9 @@ const Inbox = () => {
         }
     }, [searchParams])
 
-    useEffect(()=>{
-        console.log(selectedIds,"selectedids are here")
-    },[selectedIds])
+    useEffect(() => {
+        console.log(selectedIds, "selectedids are here")
+    }, [selectedIds])
 
 
     return (

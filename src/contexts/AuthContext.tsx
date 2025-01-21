@@ -6,6 +6,7 @@ interface AuthContextType {
   user: any; // This could be a user object or a token
   loginUser: (userData: any) => void;
   logout: () => void;
+  restartSockets: () => void;
   setUserProfile: any;
   userProfile: any;
   rendControl: boolean;
@@ -17,7 +18,8 @@ interface AuthContextType {
   conversations: any;
   setConversations: any;
   setSockets: any;
-  sockets: any
+  sockets: any;
+  restartSocket: boolean
 
 }
 
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [notifications, setNotifications] = useState<any>()
   const [conversations, setConversations] = useState<any>()
+  const [restartSocket, setRestartSocket] = useState<boolean>(false)
   // Check authentication on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -62,6 +65,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   };
 
+  const restartSockets = async() =>{
+    setRestartSocket(!restartSocket)
+  }
   const logout = () => {
     localStorage.removeItem("user");
     setIsAuthenticated(false);
@@ -73,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ sockets, setSockets, conversations, setConversations, notifications, setNotifications, setIsLoading, isLoading, isAuthenticated, user, setRendControl, rendControl, loginUser, logout, setUserProfile, userProfile }}>
+    <AuthContext.Provider value={{restartSocket,restartSockets, sockets, setSockets, conversations, setConversations, notifications, setNotifications, setIsLoading, isLoading, isAuthenticated, user, setRendControl, rendControl, loginUser, logout, setUserProfile, userProfile }}>
       {children}
     </AuthContext.Provider>
   );

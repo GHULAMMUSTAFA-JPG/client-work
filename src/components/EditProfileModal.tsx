@@ -114,17 +114,7 @@ function EditProfileModal(props: EditProfileModalProps) {
             method: "PUT",
             body: formData
         };
-
-        fetch("https://synncapi.onrender.com/dashboard/creators/update_creator", requestOptions)
-            .then((response) => response.text())
-            .then((result) =>{
-                setIsLoading(false)
-                const closeButton: any = document.getElementById('close_modal_edit_profile')
-                closeButton && closeButton.click()
-                setRendControl(!rendControl)
-                console.log(result)
-            })
-            .catch((error) => console.error(error));
+        updateProfileInformation(editUserProfileDto,setIsLoading,rendControl,setRendControl)
     }
 
     return (
