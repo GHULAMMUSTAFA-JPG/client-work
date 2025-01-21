@@ -509,7 +509,7 @@ export const handleFileUpload = async (event: any, setIsLoading?: any) => {
             // Check if the file is an image
             if (file.type.startsWith('image/')) {
 
-                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/heic'];
+                const allowedImageTypes = ['image/jpeg', 'image/gif','image/png', 'image/jpg', 'image/webp', 'image/heic'];
                 if (file.size > maxImageSize) {
                     toast.warn('Image size cannot exceed 10mb')
                 }

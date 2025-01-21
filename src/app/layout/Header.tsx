@@ -70,11 +70,15 @@ export default function Header() {
                 }
                 else if (response?.conversations) {
                     countNumberOfUnreadMessages(response?.conversations, setTotalUnreadMessage)
-                    response?.conversations?.map((messages: any, index: number) => {
-                        const not = messages?.messages || []
-                        const hasUnseen = not.some((message: any) => message.Is_Seen == false && message?.Recipient_ID == userProfile?._id);
-                        setNewMessage(hasUnseen)
-                    })
+                    // response?.conversations?.map((messages: any, index: number) => {
+                    //     const checkNewMessage = messages?.conversation_new_messages !== 0
+                    //     console.log(messages,"checkNewMessage",checkNewMessage)
+                    //       checkNewMessage &&  setNewMessage(checkNewMessage)
+                    // })
+                    const hasNewMessage = response?.conversations?.some(
+                        (messages: any) => messages?.conversation_new_messages !== 0
+                    );
+                    setNewMessage(hasNewMessage)
                     setConversationList(response)
                     setConversations(response)
                 }

@@ -129,18 +129,15 @@ const Inbox = () => {
         }
     }, [searchParams])
 
-    useEffect(() => {
-        console.log(selectedIds, "selectedids are here")
-    }, [selectedIds])
 
 
-    const readMessage = async(conversation:any) =>{
-       
+    const readMessage = async (conversation: any) => {
+
         const data = {
             "conversation_id": conversation?._id,
             "sender_id": userProfile?._id
         }
-        console.log(sockets,"here i am", data)
+        console.log(sockets, "here i am", data)
         if (sockets.readyState === WebSocket.OPEN) {
             sockets.send(JSON.stringify(data))
             return true
@@ -178,7 +175,7 @@ const Inbox = () => {
 
                                     return (
                                         <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
-                                            chat?.conversation_new_messages !== 0 &&  readMessage(chat)
+                                            chat?.conversation_new_messages !== 0 && readMessage(chat)
                                             setSelectedIds({
                                                 Recipient_ID: chat?.Last_Message?.Recipient_ID,
                                                 Message_ID: chat?.Last_Message?.Message_ID,
@@ -198,26 +195,22 @@ const Inbox = () => {
                                             />
                                             <div className="flex-grow-1">
                                                 <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                                                <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message?.length< 10 ?  chat?.Last_Message?.Message :chat?.Last_Message?.Message?.slice(0,10) + "..."}</small>
+                                                <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message?.length < 10 ? chat?.Last_Message?.Message : chat?.Last_Message?.Message?.slice(0, 10) + "..."}</small>
                                             </div>
                                             <div className='flex-shrink-0'>
-                                               { chat?.conversation_new_messages !== 0 && <div className="number-circle ms-auto">
-                                                   <span className='fs-10'>{chat?.conversation_new_messages}</span>
+                                                {chat?.conversation_new_messages !== 0 && selectedIds.Conversation_Id !== chat?._id && <div className="number-circle ms-auto">
+                                                    <span className='fs-10'>{chat?.conversation_new_messages}</span>
                                                 </div>}
                                                 <small className="text-muted flex-shrink-0 ms-2 fs-10">{chat?.Last_Message?.Time_Ago}</small>
                                             </div>
                                         </div>
                                     )
-
                                 })
-
                                 :
                                 <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
                                     No Conservation found
                                 </div>
                         }
-
-
                     </div>
                 </div>
 
