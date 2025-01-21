@@ -198,7 +198,7 @@ const Inbox = () => {
                                             />
                                             <div className="flex-grow-1">
                                                 <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                                                <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message}</small>
+                                                <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message?.slice(0,10) + "..."}</small>
                                             </div>
                                             <div className='flex-shrink-0'>
                                                { chat?.conversation_new_messages !== 0 && <div className="number-circle ms-auto">
