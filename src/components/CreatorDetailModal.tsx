@@ -183,16 +183,27 @@ function CreatorDetailModal(props: any) {
                                 className="btn btn-info btn-sm"
                                 // data-bs-dismiss="modal" 
                                 onClick={async () => {
-                                    axios.post('https://synncapi.onrender.com/dashboard/download_files', {file_urls : selectedPost?.Media_Content}, { responseType: 'blob' })
-                                        .then((blob:any) => {
-                                            const url = window.URL.createObjectURL(blob.data);
-                                            const a = document.createElement('a');
-                                            a.href = url;
-                                            a.download = "synnc_post_submission_file.zip"
-                                            document.body.appendChild(a);
-                                            a.click();
-                                            window.URL.revokeObjectURL(url);
-                                            toast.success('File downloaded Successfully')
+                                    setIsLoading(true)
+                                    axios.post('https://synncapi.onrender.com/dashboard/download_files', { file_urls: selectedPost?.Media_Content }, { responseType: 'blob' })
+                                        .then((blob: any) => {
+                                            try {
+                                                const url = window.URL.createObjectURL(blob.data);
+                                                const a = document.createElement('a');
+                                                a.href = url;
+                                                a.download = "synnc_post_submission_file.zip"
+                                                document.body.appendChild(a);
+                                                a.click();
+                                                window.URL.revokeObjectURL(url);
+                                                toast.success('File downloaded Successfully')
+                                                const button: any = document.getElementById('close_modal_creator_detail')
+                                                button && button.click()
+                                            } catch (error) {
+                                                console.log(error)
+                                                toast.warn('Error downloading file. Please try again later')
+                                            }
+                                            finally {
+                                                setIsLoading(false)
+                                            }
                                         })
                                 }}>
                                 <Icon icon="mdi:download" className="me-1" width={16} height={16} />
