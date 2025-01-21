@@ -72,7 +72,7 @@ export default function Header() {
                     countNumberOfUnreadMessages(response?.conversations, setTotalUnreadMessage)
                     response?.conversations?.map((messages: any, index: number) => {
                         const not = messages?.messages || []
-                        const hasUnseen = not.some((message: any) => message.isSeen === false && message?.Sender_ID == userProfile?._id);
+                        const hasUnseen = not.some((message: any) => message.Is_Seen == false && message?.Recipient_ID == userProfile?._id);
                         setNewMessage(hasUnseen)
                     })
                     setConversationList(response)
@@ -257,6 +257,7 @@ export default function Header() {
                                                 }}>
                                                     <a className="dropdown-item" >
                                                         <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                                            
                                                             <Image
                                                                 src={conversation?.Profile_Image || defaultImagePath}
                                                                 alt="Profile"
@@ -264,11 +265,22 @@ export default function Header() {
                                                                 height={32}
                                                                 className="rounded-circle me-2 flex-shrink-0"
                                                             />
+                                                            
                                                             <div className="flex-grow-1">
+                                                                
                                                                 <h6 className="mb-0 fs-12">{conversation?.Name}</h6>
                                                                 <small className="text-muted fs-10 line-clamp-1">{conversation?.Last_Message?.Message}</small>
+                                                                
                                                             </div>
-                                                            <small className="text-muted fs-10 flex-shrink-0 ms-2">{conversation?.Last_Message?.Time_Ago}</small>
+                                                            <div  style={{textAlign:'center', alignContent:'center'}}>
+                                                            {
+                                                                conversation?.conversation_new_messages !== 0 && <div className="number-circle ms-auto">
+                                                                    <span className='fs-10'>{conversation?.conversation_new_messages}</span>
+                                                                </div>
+                                                                }
+                                                                <small className="text-muted fs-10 flex-shrink-0 ms-2">{conversation?.Last_Message?.Time_Ago}</small>
+                                                            </div>
+                                                           
                                                         </div>
                                                     </a></li>
                                                 <hr className='m-0 text-warning' />

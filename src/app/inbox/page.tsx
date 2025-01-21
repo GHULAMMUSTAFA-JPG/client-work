@@ -134,6 +134,22 @@ const Inbox = () => {
     }, [selectedIds])
 
 
+    const readMessage = async(conversation:any) =>{
+       
+        const data = {
+            "conversation_id": conversation?._id,
+            "sender_id": userProfile?._id
+        }
+        console.log(sockets,"here i am", data)
+        if (sockets.readyState === WebSocket.OPEN) {
+            sockets.send(JSON.stringify(data))
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
     return (
         <div className="container-fluid chatbot-container">
             <div className="row bg-white">
@@ -162,6 +178,7 @@ const Inbox = () => {
 
                                     return (
                                         <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
+                                            chat?.conversation_new_messages !== 0 &&  readMessage(chat)
                                             setSelectedIds({
                                                 Recipient_ID: chat?.Last_Message?.Recipient_ID,
                                                 Message_ID: chat?.Last_Message?.Message_ID,
@@ -184,9 +201,9 @@ const Inbox = () => {
                                                 <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message}</small>
                                             </div>
                                             <div className='flex-shrink-0'>
-                                                <div className="number-circle ms-auto">
-                                                    <span className='fs-10'>1</span>
-                                                </div>
+                                               { chat?.conversation_new_messages !== 0 && <div className="number-circle ms-auto">
+                                                   <span className='fs-10'>{chat?.conversation_new_messages}</span>
+                                                </div>}
                                                 <small className="text-muted flex-shrink-0 ms-2 fs-10">{chat?.Last_Message?.Time_Ago}</small>
                                             </div>
                                         </div>
