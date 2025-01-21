@@ -642,5 +642,4 @@ export const countNumberOfUnreadMessages = async (conversationObject:any, setTot
     });
 
     setTotalUnreadMessage(totalCount)
-    console.log(totalCount,"totalCount")
 }

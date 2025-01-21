@@ -65,7 +65,7 @@ export default function Header() {
                     console.log(response?.notifications, "response?.notifications")
                     setNotifications(response)
                     const not = response?.notifications || []
-                    const hasUnseen = not.some((notification: any) => notification.isSeen === false);
+                    const hasUnseen = not.some((notification: any) => notification.Is_Seen === false);
                     setNewNotification(hasUnseen)
                 }
                 else if (response?.conversations) {
@@ -116,7 +116,9 @@ export default function Header() {
             "recipient_id": userProfile?._id
         }
         if (socket.readyState === WebSocket.OPEN) {
+           setTimeout(() => {
             socket.send(JSON.stringify(data))
+           }, 2000); 
         }
     }
 

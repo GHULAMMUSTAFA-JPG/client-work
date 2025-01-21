@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { changePostStatus, downloadAllMedia } from '@/@api';
 import { useAuth } from '@/contexts/AuthContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function CreatorDetailModal(props: any) {
     const { rendControl, setRendControl, selectedPost, campaignData, selectedCreator } = props
@@ -168,7 +170,7 @@ function CreatorDetailModal(props: any) {
 
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1">Description</p>
-                                                <p className="mb-0">{selectedPost?.Description && selectedPost?.Description?.length > 200 ? selectedPost?.Description?.slice(0,200)+ "..." : selectedPost?.Description}</p>
+                                                <p className="mb-0">{selectedPost?.Description && selectedPost?.Description?.length > 200 ? selectedPost?.Description?.slice(0, 200) + "..." : selectedPost?.Description}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -177,31 +179,22 @@ function CreatorDetailModal(props: any) {
                         </div>
 
                         <div className='modal-footer gap-2 w-100'>
-                            <button 
-                            className="btn btn-info btn-sm" 
-                            // data-bs-dismiss="modal" 
-                            onClick={async()=>{
-                                const result:any = await downloadAllMedia(selectedPost?.Media_Content,setIsLoading)
-                                setIsLoading(false)
-                                if(result){
-                                  
-
-                                        // Create a Blob from the binary data
-                                        const blob = new Blob([result], { type: 'application/zip' });
-                                        const url = URL.createObjectURL(blob);
-                                    
-                                        // Create a link to trigger the download
-                                        const a = document.createElement('a');
-                                        a.href = url;
-                                        a.download = 'synccAppMediaFile.zip'; // File name
-                                        document.body.appendChild(a);
-                                        a.click();
-                                    
-                                        // Clean up resources
-                                        document.body.removeChild(a);
-                                        URL.revokeObjectURL(url);
-                                }
-                            }}>
+                            <button
+                                className="btn btn-info btn-sm"
+                                // data-bs-dismiss="modal" 
+                                onClick={async () => {
+                                    axios.post('https://synncapi.onrender.com/dashboard/download_files', {file_urls : selectedPost?.Media_Content}, { responseType: 'blob' })
+                                        .then((blob:any) => {
+                                            const url = window.URL.createObjectURL(blob.data);
+                                            const a = document.createElement('a');
+                                            a.href = url;
+                                            a.download = "synnc_post_submission_file.zip"
+                                            document.body.appendChild(a);
+                                            a.click();
+                                            window.URL.revokeObjectURL(url);
+                                            toast.success('File downloaded Successfully')
+                                        })
+                                }}>
                                 <Icon icon="mdi:download" className="me-1" width={16} height={16} />
                                 Download all attachments
                             </button>
