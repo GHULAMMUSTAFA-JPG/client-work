@@ -118,10 +118,9 @@ export default function Header() {
         if (socket.readyState === WebSocket.OPEN) {
            setTimeout(() => {
             socket.send(JSON.stringify(data))
-           }, 2000); 
+           }, 5000); 
         }
     }
-
 
     const readMessage = async (conversation: any) => {
 
