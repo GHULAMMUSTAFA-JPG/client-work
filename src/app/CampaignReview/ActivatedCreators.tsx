@@ -21,7 +21,7 @@ function ActivatedCreators({ setShowActivatedCreators, selectedCampaign }: any) 
     }, [selectedCampaign, rendControl])
 
     useEffect(() => {
-        campaignData?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
+        campaignData?._id && !selectedCreator?._id && setSelectedCreator(campaignData?.Activated_Creators?.[0])
     }, [campaignData, rendControl])
 
     return (

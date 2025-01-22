@@ -236,57 +236,70 @@ function OffcanvasCreateCompaign(props: any) {
     }
 
     const handleSubmit = async (e: any) => {
-
+        setIsLoading(true)
         e.preventDefault();
         const result = await validate()
-        console.log(result,"here i am")
         if(result){
-            data ? updateCampaign(dto, rendControl, setRendControl, Newmapper) :
-                createCampaign(dto, rendControl, setRendControl, Newmapper)
+            data ? updateCampaign(dto, rendControl, setRendControl, Newmapper, setIsLoading) :
+                createCampaign(dto, rendControl, setRendControl, Newmapper,setIsLoading)
 
         }
     }
 
-
     const validate = async () => {
         if (dto?.Headline == '' && !dto?.Headline) {
             toast.warn('Campaign Name cannot be empty')
+            setIsLoading(false)
+
             return false
 
         }
         else if (dto?.Budget == 0 && !dto?.Budget) {
             toast.warn('Campaign budget cannot be less than 1')
+            setIsLoading(false)
+
             return false
 
         }
         else if (dto?.Brief_Description == "") {
             toast.warn('Campaign description cannot be empty')
+            setIsLoading(false)
+
             return false
         }
        
         else if (dto?.Campaign_Details == "" && !dto?.Campaign_Details) {
             toast.warn('Campaign details cannot be empty')
+            setIsLoading(false)
+
             return false
 
         }
          
         else if (dto?.Target_Audience == '' && !dto?.Target_Audience) {
             toast.warn('Target audience cannot be empty')
+            setIsLoading(false)
+
             return false
 
         }
         else if (dto?.Campaign_Required_Channels == '' && !dto?.Campaign_Required_Channels) {
             toast.warn('Campaign required channels cannot be empty')
+            setIsLoading(false)
+
             return false
 
         }
         else if (!dto?.Is_Ongoing) {
             if (dto?.Start_Date == "" || !dto?.Start_Date) {
                 toast.warn('Start date cannot be empty')
+                setIsLoading(false)
                 return false
             }
             else if (dto?.End_Date == "" || !dto?.End_Date) {
                 toast.warn('End date cannot be empty')
+                setIsLoading(false)
+
                 return false
             }
             else{
@@ -457,7 +470,7 @@ function OffcanvasCreateCompaign(props: any) {
                                                 onChange={(date) => setDto((prev: any) => {
                                                     return { ...prev, ["End_Date"]: date }
                                                 })}
-                                                selectsEnd
+                                                
                                                 id='End_Date'
                                                 startDate={startDate}
                                                 endDate={endDate}

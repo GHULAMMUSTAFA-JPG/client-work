@@ -246,31 +246,37 @@ export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any
 }
 
 
-export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any) => {
+export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any,setIsLoading?:any) => {
     try {
         const response: any = await apiController.post(`/dashboard/campaigns/create_campaign`, dto)
         setRendControl(!rendControl)
         const buttonClose: any = document.getElementById('createCampaignOffcanvasModal')
         buttonClose && buttonClose.click()
+        setIsLoading(false)
         Newmapper()
         return response
     } catch (error) {
         console.log(error, "Error in get campaign list api")
+        setIsLoading && setIsLoading(false)
         return error
     }
 }
 
-export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any) => {
+export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any,setIsLoading?:any) => {
     try {
         const response: any = await apiController.put(`/dashboard/campaigns/update_campaign`, dto)
         setRendControl(!rendControl)
         const buttonClose: any = document.getElementById('createCampaignOffcanvasModal')
         buttonClose && buttonClose.click()
+        setIsLoading(false)
+
         Newmapper()
         return response
     } catch (error) {
         toast.warn('Error in updating campaign. Please try again later')
         console.log(error, "Error in get campaign list api")
+        setIsLoading(false)
+
         return error
     }
 }
@@ -346,7 +352,6 @@ export const getCampaignsActivatedCreators = async (filter: string, setData: any
         const response: any = await apiController.get(`/dashboard/campaigns/get_campaign_activated_creators/${filter}`)
         setData(response?.data?.campaign)
         setIsLoading && setIsLoading(false)
-
         return response
     } catch (error) {
         setIsLoading && setIsLoading(false)
@@ -367,7 +372,6 @@ export const changePostStatus = async (dto: any, setIsLoading: any, setRendContr
         return response
     } catch (error) {
         setIsLoading(false)
-
         console.log(error, "Error in get campaign list api")
         return error
     }

@@ -120,9 +120,9 @@ export default function Header() {
             "recipient_id": userProfile?._id
         }
         if (socket.readyState === WebSocket.OPEN) {
-           setTimeout(() => {
-            socket.send(JSON.stringify(data))
-           }, 5000); 
+            setTimeout(() => {
+                socket.send(JSON.stringify(data))
+            }, 5000);
         }
     }
 
@@ -205,22 +205,24 @@ export default function Header() {
                                     notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
                                         return (
                                             <div key={index} style={notify?.Is_Seen ? {} : { backgroundColor: "#F0F5FF" }}>
-                                                <li><a className="dropdown-item" >
-                                                    <div className='d-flex gap-2'>
-                                                        <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                                                            {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
-                                                            {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                <li>
+                                                    <a className="dropdown-item" >
+                                                        <div className='d-flex gap-2'>
+                                                            <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                                                                {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
+                                                                {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                                {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
+                                                                {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
+                                                                {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
 
+                                                            </div>
+                                                            <div className='flex-grow-1'>
+                                                                <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
+                                                                <p className='mb-0 fs-10 text-warning line-clamp-2'>{notify?.Message}</p>
+                                                            </div>
                                                         </div>
-                                                        <div className='flex-grow-1'>
-                                                            <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
-                                                            <p className='mb-0 fs-10 text-warning line-clamp-1'>{notify?.Message}</p>
-                                                        </div>
-                                                    </div>
-                                                </a></li>
+                                                    </a>
+                                                </li>
 
                                                 <hr className='m-0 text-warning' />
                                             </div>
@@ -244,7 +246,7 @@ export default function Header() {
                             <ul className="dropdown-menu p-0">
                                 <li className="activated-subtle dropdown-header sticky-top d-flex justify-content-between">
                                     <span className="text-dark">Messages</span>
-                                    <a className="text-muted fs-12 text-decoration-none" onClick={() => {
+                                    <a className="text-muted fs-12 text-decoration-none" style={{cursor: 'pointer'}}  onClick={() => {
                                         router.push('/inbox')
                                     }}>View All</a>
                                 </li>
@@ -259,10 +261,12 @@ export default function Header() {
                                                     }
                                                     else {
                                                     }
-                                                }}>
-                                                    <a className="dropdown-item" >
+                                                }}
+                                                style={{cursor:'pointer'}}
+                                                >
+                                                    <a className="dropdown-item" style={{color:'inherit'}} >
                                                         <div className="d-flex align-items-center hover-bg-light cursor-pointer">
-                                                            
+
                                                             <Image
                                                                 src={conversation?.Profile_Image || defaultImagePath}
                                                                 alt="Profile"
@@ -270,22 +274,22 @@ export default function Header() {
                                                                 height={32}
                                                                 className="rounded-circle me-2 flex-shrink-0"
                                                             />
-                                                            
+
                                                             <div className="flex-grow-1">
-                                                                
-                                                                <h6 className="mb-0 fs-12">{conversation?.Name}</h6>
+
+                                                                <h6 className="mb-0 fs-12">{conversation?.Name} </h6>
                                                                 <small className="text-muted fs-10 line-clamp-1">{conversation?.Last_Message?.Message}</small>
-                                                                
+
                                                             </div>
-                                                            <div  style={{textAlign:'center', alignContent:'center'}}>
-                                                            {
-                                                                conversation?.conversation_new_messages !== 0 && <div className="number-circle ms-auto">
-                                                                    <span className='fs-10'>{conversation?.conversation_new_messages}</span>
-                                                                </div>
+                                                            <div style={{ textAlign: 'center', alignContent: 'center' }}>
+                                                                {
+                                                                    conversation?.conversation_new_messages !== 0 && <div className="number-circle ms-auto">
+                                                                        <span className='fs-10'>{conversation?.conversation_new_messages}</span>
+                                                                    </div>
                                                                 }
                                                                 <small className="text-muted fs-10 flex-shrink-0 ms-2">{conversation?.Last_Message?.Time_Ago}</small>
                                                             </div>
-                                                           
+
                                                         </div>
                                                     </a></li>
                                                 <hr className='m-0 text-warning' />

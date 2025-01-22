@@ -12,6 +12,7 @@ import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
 import { apiController } from '@/@api/baseUrl';
+import { defaultImagePath } from './constants';
 interface ViewCreatorsModalProps {
     data: any
     rendControl: boolean
@@ -73,7 +74,7 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                             <tr key={user?._id}>
                                                                 <td className="text-start ps-4">
                                                                     <div className="d-flex align-items-center">
-                                                                        <Image src={user?.Profile_Image || ''} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
+                                                                        <Image src={user?.Profile_Image || defaultImagePath} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
                                                                         <span className="ms-2 text-truncate">{user?.Name}</span>
                                                                     </div>
                                                                 </td>

@@ -55,7 +55,7 @@ function homepagebuyer() {
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
-                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name && userData?.Company_Name?.slice(0, 20) + "...."}</span></h3>
+                                        <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name && userData?.Company_Name?.slice(0, 30) + "...."}</span></h3>
                                         {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
                                         <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description && userData?.Company_Description?.slice(0, 200) + '....'}</p>
                                     </div>

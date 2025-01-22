@@ -45,10 +45,7 @@ const Inbox = () => {
     const searchParams = useSearchParams();
 
     const sendMessage = async () => {
-        if (input == "" || !input) {
-            toast.warn('Message cannot be empty')
-        }
-        else {
+       
             const data: any = JSON.stringify({
                 recipient_id: selectedIds?.Recipient_ID,
                 message: input
@@ -65,9 +62,10 @@ const Inbox = () => {
                 // setMessages(userdata)
                 setInput("");
             } else {
+                toast.warn('Error while connecting. Please check your connection and try again')
                 restartSockets()
             }
-        }
+        
     };
 
     const connectSever = async () => {
@@ -185,6 +183,7 @@ const Inbox = () => {
                                                 Profile_Image: chat?.Profile_Image,
                                                 index: index
                                             })
+                                            setInput('')
                                         }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID == chat?.Last_Message?.Recipient_ID ? "active" : ""}`}>
                                             <Image
                                                 src={chat?.Profile_Image || defaultImagePath}
@@ -241,7 +240,7 @@ const Inbox = () => {
 
                                     {/* Received Message */}
                                     {
-                                        selectedIds?.index !== null && selectedMessage?.messages?.map((msg: any, index: number) => {
+                                        selectedIds?.Recipient_ID !== null && selectedMessage?.messages?.map((msg: any, index: number) => {
 
                                             return (
                                                 <div className="row" key={index} >
@@ -256,7 +255,14 @@ const Inbox = () => {
                                                             <div className="col-auto ms-auto mb-4 mx-width-70">
 
                                                                 <div className="bg-circle-2 text-white rounded-3 p-3 ms-auto">
-                                                                    <p className='fs-13 mb-0'>{msg?.Message}</p>
+                                                                    <p className="fs-13 mb-0">
+                                                                        {msg?.Message?.split("\n").map((line: string, index: number) => (
+                                                                            <React.Fragment key={index}>
+                                                                                {line}
+                                                                                <br />
+                                                                            </React.Fragment>
+                                                                        ))}
+                                                                    </p>
                                                                 </div>
 
                                                                 <small className="text-muted text-end d-block mt-1 ms-2">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
@@ -276,12 +282,16 @@ const Inbox = () => {
                                             className="form-control border-0 bg-form"
                                             placeholder="Type your message here..."
                                             onChange={(e: any) => {
-                                                setInput(e.target.value)
+                                                setInput(e.target.value);
                                             }}
                                             value={input}
                                             id="textareaId"
                                             onKeyDown={(e: any) => {
-                                                e.key == "Enter" && sendMessage()
+                                                if (e.key == "Enter") {
+                                                    e.preventDefault();
+                                                    input == "" || input?.trim() == "" ? toast.warn('Cannot send empty message') : sendMessage()
+                                                }
+
                                             }}
                                         />
                                         <button className="btn btn-link" onClick={sendMessage}>

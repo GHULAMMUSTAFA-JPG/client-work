@@ -60,7 +60,11 @@ function SubmitCampaignModal(props: any) {
     const submitForm = async (e: any) => {
         e.preventDefault();
         const result = await addCampaignPostSubmission(dto, rendControl, setRendControl, setIsLoading)
-        reset()
+        // reset()
+        setDto((prev:any)=>{
+            return{...prev,['post_description']: "" ,  ['post_title']: "" , ['media_content'] : []}
+        })
+
     }
 
     const valueAdder = (e: any) => {
