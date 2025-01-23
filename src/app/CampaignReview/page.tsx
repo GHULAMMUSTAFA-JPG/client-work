@@ -88,7 +88,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                     <div>
                                         <div className='d-flex align-items-center gap-3 mb-1'>
                                             <h5 className='mb-0'>{selectedCampaignDetails?.campaign?.Headline}</h5>
-                                            <button className='bg-primary-subtle border-0 btn btn-outline-primary btn-sm py-1 px-2 rounded-pill'>{selectedCampaignDetails?.campaign?.Is_Public ? "Public" : "Private"}</button>
+                                            <button className={`${selectedCampaignDetails?.campaign?.Is_Public ? 'bg-primary-subtle text-primary' : 'bg-danger-subtle text-danger'} border-0 btn btn-sm px-3 rounded-pill`}>{selectedCampaignDetails?.campaign?.Is_Public ? "Public" : "Private"}</button>
                                         </div>
                                         <div className='d-flex align-items-center'>
                                             <p className='fs-12 text-warning mb-0'>{selectedCampaignDetails?.campaign?.Created_At}</p>

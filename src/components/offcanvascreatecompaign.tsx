@@ -532,10 +532,14 @@ function OffcanvasCreateCompaign(props: any) {
                                     >
                                         <input
                                             onChange={async (e: any) => {
-                                                const result: any = await handleFileUpload(e, setIsLoading);
-                                                setDto((prev: any) => {
-                                                    return { ...prev, ['Campaign_Media']: result?.[0].file_urls }
-                                                })
+                                                const file =e.target.files 
+                                                if(file[0]){
+                                                    const result: any = await handleFileUpload(e, setIsLoading);
+                                                    setDto((prev: any) => {
+                                                        return { ...prev, ['Campaign_Media']: result?.[0].file_urls }
+                                                    })
+                                                }
+                                             
                                             }}
                                             type="file"
                                             className="d-none"

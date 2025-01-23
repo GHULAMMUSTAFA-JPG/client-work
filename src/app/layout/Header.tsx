@@ -237,7 +237,9 @@ export default function Header() {
                             </ul>
                         </div>
                         <div className="dropdown">
-                            <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a className="btn bg-transparent dropdown-toggle border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" onClick={()=>{
+                                setNewMessage(false)
+                            }}>
                                 <Icon icon="uil:envelope" width={25} height={25} className="text-warning" />
                                 <span className="position-circle-message">
                                     {newMessage && <div style={{ height: '10px', width: '10px', borderRadius: '50%', backgroundColor: 'red' }}></div>}

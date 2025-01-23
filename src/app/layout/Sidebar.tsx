@@ -4,18 +4,27 @@ import Link from 'next/link';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import Image from "next/image";
+import { useAuth } from '@/contexts/AuthContext';
 interface SidebarProps {
   menuItems: { label: string; href: string; icon?: string }[];
 }
  
 const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
+  const {user} = useAuth()
   const [isActive, setIsActive] = useState<number>(0);
   const [isExpanded, setIsExpanded] = useState(false);
   
   useEffect(()=>{
       if(window){
+        
           if(window.location.pathname == "/campaigns"){
             setIsActive(2)
+          }
+          else if(window.location.pathname=="/SubmitCampaigns" || window.location.pathname == "/buyerdashboard"){
+            setIsActive(2)
+          }
+          else if(window.location.pathname=="/inbox"){
+            user?.isBuyer ?   setIsActive(3) : setIsActive(4)
           }
       }  
 

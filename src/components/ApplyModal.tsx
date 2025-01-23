@@ -9,6 +9,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
 import { useAuth } from '@/contexts/AuthContext';
+import { defaultImagePath } from './constants';
 
 function ApplyModal(props: any) {
     const { user, setIsLoading } = useAuth()
@@ -184,7 +185,7 @@ function ApplyModal(props: any) {
                                 </div>
                                 <div className='d-flex gap-2'>
                                     <Image
-                                        src={selectedCampaign?.Company_Logo}
+                                        src={selectedCampaign?.Company_Logo || defaultImagePath}
                                         className="border object-fit-cover rounded flex-shrink-0"
                                         alt="logo"
                                         width={110}

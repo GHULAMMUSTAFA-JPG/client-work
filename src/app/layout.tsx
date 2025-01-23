@@ -31,8 +31,18 @@ function RootLayout({
     }
   }, []);
 
-  const [showTip, setShowTip] = useState(true);
+  const [showTip, setShowTip] = useState(false);
 
+  useEffect(()=>{
+   const user =  localStorage.getItem("user")
+   if(user){
+    setShowTip(false)
+   }
+   else{
+    setShowTip(true)
+   }
+
+  })
   return (  
     <html lang="en">
       <Head>
