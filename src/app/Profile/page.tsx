@@ -267,14 +267,14 @@ export default function ProfilePage() {
                         {/* First edit section */}
                         <div className={`profile-container mb-3 ${activeSection === 'about' ? '' : 'd-none'}`}>
                             <div className="d-flex justify-content-between mb-3 pt-2">
-                                <h6 className="mb-0">Edit Section</h6>
+                                <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
                                     <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
                                     <button className="btn btn-dark btn-sm ms-3">Save</button>
                                 </div>
                             </div>
 
-                            <div className='pb-2'>
+                            <div className='pb-2 '>
                                 <h6 className="mb-3">About me</h6>
 
                                 <div className="mb-4">
@@ -320,6 +320,29 @@ export default function ProfilePage() {
                                         value={editDetails.name}
                                         onChange={changeHandler}
                                         id="name"
+                                        placeholder='John Doe'
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="mb-2">Linkedin Username*</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.profile_url}
+                                        onChange={changeHandler}
+                                        id="profile_url"
+                                        placeholder='john-doe'
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="mb-2">Current Company*</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.current_company}
+                                        onChange={changeHandler}
+                                        id="current_company"
+                                        placeholder='Synnc'
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -330,6 +353,7 @@ export default function ProfilePage() {
                                         value={editDetails.audience_interest}
                                         onChange={changeHandler}
                                         id="audience_interest"
+                                        placeholder='Finance, Accounting, Startups, HR'
                                     />
                                 </div>
 
@@ -342,7 +366,7 @@ export default function ProfilePage() {
                                         value={editDetails.description}
                                         onChange={changeHandler}
                                         id="description"
-                                        placeholder="Welcome to my storefront! I use this to collaborate with great brands and other creators..."
+                                        placeholder="Welcome to my profile! I use this to collaborate with great brands and other creators..."
                                     />
                                 </div>
                             </div>
@@ -351,7 +375,7 @@ export default function ProfilePage() {
                         {/* Second edit section */}
                         <div className={`profile-container ${activeSection === 'collaboration' ? '' : 'd-none'}`}>
                             <div className="d-flex justify-content-between mb-3 pt-2">
-                                <h6 className="mb-0">Edit Section</h6>
+                                <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
                                     <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
                                     <button className="btn btn-dark btn-sm ms-3">Save</button>
@@ -359,7 +383,7 @@ export default function ProfilePage() {
                             </div>
 
                             {/* Content Section */}
-                            <div className='pb-2'>
+                            <div className='pb-2 main-box'>
                                 <h6 className="mb-1">Let's Collaborate</h6>
                                 <p className='text-muted'>Add your collaboration packages here</p>
                                 {/* Stats Section */}
@@ -409,7 +433,7 @@ export default function ProfilePage() {
                                     <button className="btn btn-outline-dark w-100">+ Add Card</button>
                                 </div>
 
-                                <button className="btn btn-outline-danger w-100">Delete Block</button>
+                                <button className="btn btn-outline-danger w-100 mt-auto">Delete Block</button>
                             </div>
                         </div>
                     </div>

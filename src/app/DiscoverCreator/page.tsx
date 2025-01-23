@@ -91,7 +91,7 @@ function DiscoverCreator() {
                                                             }}
                                                             disabled={campaign?.Is_Applied}
                                                         >{campaign?.Is_Applied ? "Applied" : "Apply"}</button> */}
-                                                        <button className='btn btn-dark ms-2 btn-sm' data-bs-toggle="modal" data-bs-target="#applyModal"
+                                                        <button className='btn btn-dark ms-2 btn-sm w-s' data-bs-toggle="modal" data-bs-target="#applyModal"
                                                             onClick={() => {
                                                                 setSelectedCampaign(campaign)
                                                             }} 

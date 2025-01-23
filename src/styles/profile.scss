@@ -8,7 +8,10 @@
         height: 200px;
     }
 }
-
+.main-box{display: flex;
+flex-direction: column;
+height: calc(100vh - 150px);}
+.w-s{white-space: nowrap;}
 .profile-sidebar-wraper {
     position: fixed;
     padding-top: 70px;
@@ -21,5 +24,6 @@
     .profile-container {
         border-radius: 0;
         width: 430px;
+        height: 100%;
     }
 }
