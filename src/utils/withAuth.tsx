@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 
 // HOC that provides authentication state to wrapped component
 const withAuth = <P extends {}>(WrappedComponent: ComponentType<P & { isAuthenticated: boolean }>) => {
- 
+
   const AuthenticatedComponent = (props: P) => {
     const router = useRouter()
     const pathname = usePathname()
@@ -17,28 +17,27 @@ const withAuth = <P extends {}>(WrappedComponent: ComponentType<P & { isAuthenti
     // Here, we check if the user is authenticated and return a loading state
 
     useEffect(() => {
-      if (typeof window !== "undefined") {
-        if (!isAuthenticated ) {
-          if(pathname == "/login"){
 
+      if (typeof window !== "undefined") {
+        const currentpath = window.location.pathname
+        console.log(currentpath, "currentpath")
+        if (!isAuthenticated) {
+          if (pathname == "/login") {
           }
-          else{
-            router.push("/login"); 
+          else {
+            router.push("/login");
           }
         }
-        
-    
+
         else {
           if (!user.isBuyer)
-            router.push("/homepage")
+            currentpath == "/login" ? router.push("/homepage") : router.push(currentpath)
           else {
-            router.push("/homepagebuyer")
+            currentpath == "/login" ? router.push("/homepagebuyer") : router.push(currentpath)
           }
         }
       }
     }, [isAuthenticated])
-
-
     return <WrappedComponent {...props} isAuthenticated={isAuthenticated} user={user} />;
   };
 

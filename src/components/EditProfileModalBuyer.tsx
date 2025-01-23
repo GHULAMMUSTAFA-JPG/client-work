@@ -11,6 +11,7 @@ import ProfileCard from '@/components/profilecard';
 import CampaignFilterModal from '@/components/campaignfiltermodal';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { defaultImagePath } from './constants';
 interface EditProfileModalProps {
     userProfile: any
     user: any
@@ -175,7 +176,7 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
                                                 }} />
                                                 <label htmlFor="company_logo" className="cursor-pointer">
                                                     <Image
-                                                        src={editUserProfileDto?.company_logo || ''}
+                                                        src={editUserProfileDto?.company_logo || defaultImagePath}
                                                         alt="Current profile"
                                                         width={100}
                                                         height={100}

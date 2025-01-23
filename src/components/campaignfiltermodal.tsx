@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import TopCard from '@/components/topcard';
 import ProfileCard from '@/components/profilecard';
+import { defaultImagePath } from './constants';
 
 
 
@@ -177,7 +178,7 @@ function CampaignFilterModal(props: any) {
                                 </div>
                                 <div className='d-flex gap-2'>
                                     <Image
-                                        src={selectedCampaign?.Company_Logo}
+                                        src={selectedCampaign?.Company_Logo || defaultImagePath}
                                         className="border object-fit-cover rounded flex-shrink-0"
                                         alt="logo"
                                         width={110}

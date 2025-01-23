@@ -27,6 +27,7 @@ const Inbox = () => {
     const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
     const scrollToBottom = () => {
         endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+        readMessage(selectedIds)
     };
     useEffect(() => {
         scrollToBottom();
@@ -61,6 +62,14 @@ const Inbox = () => {
                 // })
                 // setMessages(userdata)
                 setInput("");
+                console.log(selectedIds)
+                    if(!selectedIds?.Message_ID && selectedIds?.Recipient_ID){
+                        setTimeout(() => {
+                            const newone = selectedIds?.Recipient_ID || ''
+                            const clickButton = document?.getElementById(newone)
+                            clickButton && clickButton.click()
+                        }, 2000);
+                    }
             } else {
                 toast.warn('Error while connecting. Please check your connection and try again')
                 restartSockets()
@@ -113,6 +122,7 @@ const Inbox = () => {
     // }, [selectedIds])
 
     useEffect(() => {
+
         const id = searchParams.get('id');
         if (id) {
             setSelectedIds((prev: any) => {
@@ -123,19 +133,15 @@ const Inbox = () => {
                 const clickButton = document?.getElementById(id)
                 clickButton && clickButton.click()
             }, 1500);
-            fetchProfileDataByIds(id, setSelectedIds)
+            user?.isBuyer && fetchProfileDataByIds(id, setSelectedIds)
         }
     }, [searchParams])
 
-
-
     const readMessage = async (conversation: any) => {
-
         const data = {
             "conversation_id": conversation?._id,
             "sender_id": userProfile?._id
         }
-        console.log(sockets, "here i am", data)
         if (sockets.readyState === WebSocket.OPEN) {
             sockets.send(JSON.stringify(data))
             return true
