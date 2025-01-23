@@ -8,3 +8,18 @@
         height: 200px;
     }
 }
+
+.profile-sidebar-wraper {
+    position: fixed;
+    padding-top: 70px;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    overflow: auto;
+    z-index: 1;
+
+    .profile-container {
+        border-radius: 0;
+        width: 430px;
+    }
+}

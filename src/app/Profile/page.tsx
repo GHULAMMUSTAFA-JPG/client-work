@@ -74,6 +74,11 @@ export default function ProfilePage() {
 
     })
 
+    // Add new state for active section
+    const [activeSection, setActiveSection] = useState<'about' | 'collaboration' | null>('about');
+
+    // Add new state for sidebar visibility
+    const [showSidebar, setShowSidebar] = useState(true);
 
     useEffect(() => {
         let collabPack: any = []
@@ -119,11 +124,25 @@ export default function ProfilePage() {
         updateProfileInformation(editDetails, setIsLoading, rendControl, setRendControl)
     }
 
+    // Add click handlers for the profile containers
+    const handleSectionClick = (section: 'about' | 'collaboration') => {
+        setActiveSection(section);
+        setShowSidebar(true);
+    };
+
+    // Add handler for cancel button
+    const handleCancel = () => {
+        setShowSidebar(false);
+    };
+
     return (
         <div className="container">
-            <div className='row'>
-                <div className='col-md-8'>
-                    <div className='profile-container mb-4 pb-3'>
+            <div className='row mt-3'>
+                <div className='col-md-8 mx-auto'>
+                    {/* First profile container - Add onClick */}
+                    <div className='profile-container mb-4 pb-3' 
+                         onClick={() => handleSectionClick('about')} 
+                         style={{ cursor: 'pointer' }}>
                         {/* Banner Image */}
                         <div className="position-relative">
                             <Image
@@ -204,41 +223,11 @@ export default function ProfilePage() {
                             </div>
                         </div>
                     </div>
-                    {/* LinkedIn Section */}
-                    {/* <div className='profile-container mb-4'>
-                        <div>
-                            <div className="d-flex align-items-center gap-2">
-                                <Icon icon="logos:linkedin-icon" width="24" height="24" />
-                                <h5 className="mb-0">Josh Aharonoff's LinkedIn</h5>
-                                <svg className="ms-1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-                            <p className="text-muted mt-2">LinkedIn is my largest platform with 400k+ followers and counting.</p>
 
-                            <div className="row mt-3">
-                                <div className="col-md-6">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <p className="text-muted mb-1">Followers</p>
-                                            <h5 className="mb-0">408k</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <p className="text-muted mb-1">Audience</p>
-                                            <h5 className="mb-0">Finance, Accounting, Startups, HR</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
-                    <div className='profile-container'>
+                    {/* Second profile container - Add onClick */}
+                    <div className='profile-container'
+                         onClick={() => handleSectionClick('collaboration')}
+                         style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
                         <div>
                             <h5>Let's Collaborate</h5>
@@ -273,144 +262,155 @@ export default function ProfilePage() {
                         </div>
                     </div>
                 </div>
-                <div className='col-md-4'>
-                    <div className="profile-container mb-3">
-                        <div className="d-flex justify-content-between mb-3 pt-2">
-                            <h6 className="mb-0">Edit Section</h6>
-                            <div>
-                                <button className="bg-white border btn btn-sm">Cancel</button>
-                                <button className="btn btn-dark btn-sm ms-3">Save</button>
-                            </div>
-                        </div>
-
-                        <div className='pb-2'>
-                            <h6 className="mb-3">About me</h6>
-
-                            <div className="mb-4">
-                                <label className="mb-2">Banner image</label>
-                                <div className="position-relative">
-                                    <Image
-                                        src={editDetails.banner_image || defaultImagePath}
-                                        alt="Banner"
-                                        width={500}
-                                        height={100}
-                                        className="w-100 rounded-3 mb-2"
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                    <div className="d-flex align-items-center gap-2">
-                                        <span className="text-muted">Choose a photo</span>
-                                        <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
-                                    </div>
+                <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
+                    <div className='profile-sidebar-wraper'>
+                        {/* First edit section */}
+                        <div className={`profile-container mb-3 ${activeSection === 'about' ? '' : 'd-none'}`}>
+                            <div className="d-flex justify-content-between mb-3 pt-2">
+                                <h6 className="mb-0">Edit Section</h6>
+                                <div>
+                                    <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
+                                    <button className="btn btn-dark btn-sm ms-3">Save</button>
                                 </div>
                             </div>
 
-                            <div className="mb-4">
-                                <label className="mb-2">Profile photo</label>
-                                <div className="position-relative">
-                                    <Image
-                                        src={editDetails.profile_image || defaultImagePath}
-                                        alt="Profile"
-                                        width={80}
-                                        height={80}
-                                        className="rounded-circle mb-2"
-                                    />
-                                    <div className="d-flex align-items-center gap-2">
-                                        <span className="text-muted">Choose a photo</span>
-                                        <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                            <div className='pb-2'>
+                                <h6 className="mb-3">About me</h6>
+
+                                <div className="mb-4">
+                                    <label className="mb-2">Banner image</label>
+                                    <div className="position-relative">
+                                        <Image
+                                            src={editDetails.banner_image || defaultImagePath}
+                                            alt="Banner"
+                                            width={500}
+                                            height={100}
+                                            className="w-100 rounded-3 mb-2"
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                        <div className="d-flex align-items-center gap-2">
+                                            <span className="text-muted">Choose a photo</span>
+                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="mb-2">Profile photo</label>
+                                    <div className="position-relative">
+                                        <Image
+                                            src={editDetails.profile_image || defaultImagePath}
+                                            alt="Profile"
+                                            width={80}
+                                            height={80}
+                                            className="rounded-circle mb-2"
+                                        />
+                                        <div className="d-flex align-items-center gap-2">
+                                            <span className="text-muted">Choose a photo</span>
+                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="mb-2">Name*</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.name}
+                                        onChange={changeHandler}
+                                        id="name"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="mb-2">Audience Interest*</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.audience_interest}
+                                        onChange={changeHandler}
+                                        id="audience_interest"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="mb-2">Description of you*</label>
+                                    <small className="d-block text-muted mb-2">Welcome brands and introduce yourself</small>
+                                    <textarea
+                                        className="form-control"
+                                        rows={10}
+                                        value={editDetails.description}
+                                        onChange={changeHandler}
+                                        id="description"
+                                        placeholder="Welcome to my storefront! I use this to collaborate with great brands and other creators..."
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Second edit section */}
+                        <div className={`profile-container ${activeSection === 'collaboration' ? '' : 'd-none'}`}>
+                            <div className="d-flex justify-content-between mb-3 pt-2">
+                                <h6 className="mb-0">Edit Section</h6>
+                                <div>
+                                    <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
+                                    <button className="btn btn-dark btn-sm ms-3">Save</button>
                                 </div>
                             </div>
 
-                            <div className="mb-4">
-                                <label className="mb-2">Name*</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={editDetails.name}
-                                    onChange={changeHandler}
-                                    id="name"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="mb-2">Audience Interest*</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    value={editDetails.audience_interest}
-                                    onChange={changeHandler}
-                                    id="audience_interest"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="mb-2">Description of you*</label>
-                                <small className="d-block text-muted mb-2">Welcome brands and introduce yourself</small>
-                                <textarea
-                                    className="form-control"
-                                    rows={10}
-                                    value={editDetails.description}
-                                    onChange={changeHandler}
-                                    id="description"
-                                    placeholder="Welcome to my storefront! I use this to collaborate with great brands and other creators..."
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="profile-container">
-                        <div className="d-flex justify-content-between mb-3 pt-2">
-                            <h6 className="mb-0">Edit Section</h6>
-                            <div>
-                                <button className="bg-white border btn btn-sm">Cancel</button>
-                                <button className="btn btn-dark btn-sm ms-3">Save</button>
-                            </div>
-                        </div>
-
-                        {/* Content Section */}
-                        <div className='pb-2'>
-                            <h6 className="mb-1">Let's Collaborate</h6>
-                            <p className='text-muted'>Add your collaboration packages here</p>
-                            {/* Stats Section */}
-                            <div className="mb-4">
-                                <div className="card">
-                                    {/* <div className="card-header bg-white">
+                            {/* Content Section */}
+                            <div className='pb-2'>
+                                <h6 className="mb-1">Let's Collaborate</h6>
+                                <p className='text-muted'>Add your collaboration packages here</p>
+                                {/* Stats Section */}
+                                <div className="mb-4">
+                                    <div className="card mb-3">
+                                        {/* <div className="card-header bg-white">
                                         <h6 className="mb-0">Package</h6>
                                     </div> */}
-                                    <div className="card-body">
-                                        {/* Card 1 */}
-                                        <div className="mb-3">
-                                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                                <h6 className="mb-0">Card 1</h6>
-                                                <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        <div className="card-body">
+                                            {/* Card 1 */}
+                                            <div>
+                                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                                    <h6 className="mb-0">Card 1</h6>
+                                                    <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                                </div>
+
+                                                {/* Title */}
+                                                <div className="mb-3">
+                                                    <label className="mb-2">Title</label>
+                                                    <input type="text" className="form-control" placeholder="1x Sponsored Post" />
+                                                </div>
+
+
+
+                                                {/* Description */}
+                                                <div className="mb-3">
+                                                    <label className="mb-2">Description</label>
+                                                    <textarea
+                                                        className="form-control"
+                                                        rows={5}
+                                                        onChange={changeHandler}
+                                                        id="description"
+                                                        placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
+                                                    />
+                                                </div>
+
+                                                {/* Price */}
+                                                <div>
+                                                    <label className="mb-2">Price</label>
+                                                    <input type="text" className="form-control" placeholder="$ 100" />
+                                                </div>
+
                                             </div>
-
-                                            {/* Title */}
-                                            <div className="mb-3">
-                                                <label className="mb-2">Title</label>
-                                                <input type="text" className="form-control" placeholder="1x Sponsored Post" />
-                                            </div>
-
-
-                                            {/* Description */}
-                                            <div className="mb-3">
-                                                <label className="mb-2">Description</label>
-                                                <textarea
-                                                    className="form-control"
-                                                    rows={5}
-                                                    onChange={changeHandler}
-                                                    id="description"
-                                                    placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
-                                                />
-                                            </div>
-
 
                                         </div>
-
-                                        <button className="btn btn-outline-secondary w-100">+ Card</button>
                                     </div>
+                                    <button className="btn btn-outline-dark w-100">+ Add Card</button>
                                 </div>
-                            </div>
 
-                            <button className="btn btn-outline-danger w-100">Delete Block</button>
+                                <button className="btn btn-outline-danger w-100">Delete Block</button>
+                            </div>
                         </div>
                     </div>
                 </div>

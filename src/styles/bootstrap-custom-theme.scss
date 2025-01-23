@@ -106,6 +106,10 @@ body {
         }
     }
 
+    textarea {
+        resize: none;
+    }
+
     .table>thead {
         vertical-align: middle;
     }
