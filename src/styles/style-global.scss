@@ -140,6 +140,15 @@ body {
         // width: auto;
     }
 
+
+.truncate {
+    width: 10px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
     .number-circle {
         height: 20px;
         width: 20px;
