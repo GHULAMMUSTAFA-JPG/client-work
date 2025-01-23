@@ -280,7 +280,7 @@ export default function Header() {
                                                             <div className="flex-grow-1">
 
                                                                 <h6 className="mb-0 fs-12">{conversation?.Name} </h6>
-                                                                <small className="text-muted fs-10 line-clamp-1">{conversation?.Last_Message?.Message}</small>
+                                                                <small className="text-muted fs-10">{conversation?.Last_Message?.Message?.length < 26 ? conversation?.Last_Message?.Message : conversation?.Last_Message?.Message?.slice(0, 25) + "..."}</small>
 
                                                             </div>
                                                             <div style={{ textAlign: 'center', alignContent: 'center' }}>
@@ -289,7 +289,7 @@ export default function Header() {
                                                                         <span className='fs-10'>{conversation?.conversation_new_messages}</span>
                                                                     </div>
                                                                 }
-                                                                <small className="text-muted fs-10 flex-shrink-0 ms-2">{conversation?.Last_Message?.Time_Ago}</small>
+                                                                <small className="text-muted fs-10 flex-shrink-0 ms-2 w-s">{conversation?.Last_Message?.Time_Ago}</small>
                                                             </div>
 
                                                         </div>
