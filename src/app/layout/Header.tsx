@@ -31,7 +31,7 @@ export default function Header() {
     useEffect(() => {
         if (user?.email) {
             // getHistoryOfUser();
-            !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile) : fetchBuyersData(setUserProfile, user?.email)
+            !user?.isBuyer ? fetchProfileData(user?.email, setUserProfile, setIsLoading) : fetchBuyersData(setUserProfile, user?.email, setIsLoading)
         }
     }, [user, rendControl])
 

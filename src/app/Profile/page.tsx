@@ -5,8 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { defaultImagePath } from '@/components/constants';
-import { useEffect, useState } from 'react';
-import { updateProfileInformation } from '@/@api';
+import { useEffect, useRef, useState } from 'react';
+import { handleFileUpload, updateProfileInformation } from '@/@api';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 interface editDtoProps {
     "email": string,
     "name": string,
@@ -34,8 +36,17 @@ interface editFieldProps {
     "audience_interest": boolean,
     "collaboration_packages": boolean
 }
+
+interface cardDetailsDto {
+    "package_name": string,
+    "package_description": string,
+    "package_price": number | null
+}
 export default function ProfilePage() {
     const { user, userProfile, setIsLoading, rendControl, setRendControl } = useAuth()
+    const fileInputRef: any = useRef(null);
+    const fileInputRef1: any = useRef(null);
+    const [preview, setPreview] = useState<boolean>(true)
     const [editDetails, setEditDetails] = useState<editDtoProps>(
         {
             "email": "",
@@ -71,14 +82,21 @@ export default function ProfilePage() {
         "current_company": false,
         "audience_interest": false,
         "collaboration_packages": false
-
     })
 
     // Add new state for active section
     const [activeSection, setActiveSection] = useState<'about' | 'collaboration' | null>('about');
-
+    const [cardDetails, setCardDetails] = useState<any[]>()
     // Add new state for sidebar visibility
     const [showSidebar, setShowSidebar] = useState(true);
+
+    const handleClick = () => {
+        fileInputRef && fileInputRef.current.click();
+    };
+
+    const handleClick1 = () => {
+        fileInputRef1 && fileInputRef1.current.click();
+    };
 
     useEffect(() => {
         let collabPack: any = []
@@ -105,14 +123,11 @@ export default function ProfilePage() {
 
     }, [userProfile])
 
-
     const changeHandler = async (e: any) => {
         setEditDetails((prev: any) => {
             return { ...prev, [e.target.id]: e.target.value }
         })
-
     }
-
 
     const editFieldHandler = async (e: any) => {
         setEditField((prev: any) => {
@@ -135,14 +150,83 @@ export default function ProfilePage() {
         setShowSidebar(false);
     };
 
+    const submitHandler = async () => {
+        setIsLoading(true)
+        try {
+            const response = await axios.put("https://synncapi.onrender.com/dashboard/creators/update_creator", editDetails)
+            toast.success('Profile updated successfully')
+            setRendControl(!rendControl)
+        } catch (error) {
+            toast.warn('Error while updating the data. Please try again later')
+            console.log(error, "error")
+        }
+        finally {
+            setIsLoading(false)
+        }
+    }
+
+    const fileHandler = async (e: any, id: string) => {
+        const file = e.target.files
+        const filePath: any = await handleFileUpload(e, setIsLoading)
+        if (filePath[0]?.file_urls) {
+            setEditDetails((prev: any) => {
+                return { ...prev, [id]: filePath[0]?.file_urls }
+            })
+        }
+    }
+
+    const valueAdder = (e: any, index:number) => {
+    
+        cardDetails &&   ( cardDetails[index][e.target.id] =  e.target.value )
+       
+    }
+
+    const mapperFunction = (array: any) => {
+        let mappedArray: any = []
+        array?.map((element: any, index: number) => {
+            const singleObject = {
+                package_name: element?.Package_Name,
+                package_description: element?.Package_Description,
+                package_price: element?.Package_Price
+            }
+            mappedArray.push(singleObject)
+        })
+        return mappedArray
+    }
+
+    const deleteSection = (index: number) => {
+        setPreview(false)
+        const array = cardDetails
+        array?.splice(index, 1)
+        setCardDetails(array)
+        setTimeout(() => {
+            setPreview(true)
+        }, 100);
+    }
+
+
+    const submitCardDetails = async (e:any) => {
+        setIsLoading(true)
+        e.preventDefault();
+            const reslt = cardDetails
+        editDetails.collaboration_packages = reslt
+   
+        setTimeout(() => {
+            submitHandler()
+        }, 600);
+       
+    }
+
+
+
     return (
         <div className="container">
             <div className='row mt-3'>
                 <div className='col-md-8 mx-auto'>
                     {/* First profile container - Add onClick */}
-                    <div className='profile-container mb-4 pb-3' 
-                         onClick={() => handleSectionClick('about')} 
-                         style={{ cursor: 'pointer' }}>
+                    <div className='profile-container mb-4 pb-3'
+                        onClick={() => handleSectionClick('about')}
+                        style={{ cursor: 'pointer' }}>
                         {/* Banner Image */}
                         <div className="position-relative">
                             <Image
@@ -169,7 +253,7 @@ export default function ProfilePage() {
                             {/* Profile Info */}
                             <div className="mt-2">
                                 <div className="d-flex align-items-center gap-2 mb-1">
-                                    {editField?.name ? <input type='text' value={editDetails?.name} id='name' onChange={changeHandler} /> : <h5 id='name' onClick={editFieldHandler} className="mb-0">{userProfile?.Name}</h5>}
+                                    <h5 id='name' onClick={editFieldHandler} className="mb-0">{userProfile?.Name}</h5>
                                     <img src={`https://flagcdn.com/24x18/${userProfile?.Country_Code || "us"}.png`} width={18} height={14} className="mx-1"></img>
                                     <a href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
                                     {<button className='activated-subtle border btn-sm ms-1 px-2 py-1 rounded-pill text-info'>{userProfile?.Audience_Interest}</button>}
@@ -226,8 +310,8 @@ export default function ProfilePage() {
 
                     {/* Second profile container - Add onClick */}
                     <div className='profile-container'
-                         onClick={() => handleSectionClick('collaboration')}
-                         style={{ cursor: 'pointer' }}>
+                        onClick={() => handleSectionClick('collaboration')}
+                        style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
                         <div>
                             <h5>Let's Collaborate</h5>
@@ -237,7 +321,10 @@ export default function ProfilePage() {
                                 {
                                     userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
                                         return (
-                                            <div className="card mb-3" key={index}>
+                                            <div className="card mb-3" key={index} onClick={async () => {
+                                                const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
+                                                setCardDetails(mapper)
+                                            }}>
                                                 <div className="card-body d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <h6>{ele?.Package_Name}</h6>
@@ -270,7 +357,7 @@ export default function ProfilePage() {
                                 <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
                                     <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
-                                    <button className="btn btn-dark btn-sm ms-3">Save</button>
+                                    <button className="btn btn-dark btn-sm ms-3" onClick={submitHandler}>Save</button>
                                 </div>
                             </div>
 
@@ -288,9 +375,12 @@ export default function ProfilePage() {
                                             className="w-100 rounded-3 mb-2"
                                             style={{ objectFit: 'cover' }}
                                         />
-                                        <div className="d-flex align-items-center gap-2">
+                                        <div className="d-flex align-items-center gap-2" onClick={handleClick} style={{ cursor: 'pointer' }}>
                                             <span className="text-muted">Choose a photo</span>
                                             <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                            <input type="file" ref={fileInputRef} onChange={(e: any) => {
+                                                fileHandler(e, 'banner_image')
+                                            }} style={{ display: 'none' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -305,9 +395,12 @@ export default function ProfilePage() {
                                             height={80}
                                             className="rounded-circle mb-2"
                                         />
-                                        <div className="d-flex align-items-center gap-2">
+                                        <div className="d-flex align-items-center gap-2" onClick={handleClick1} style={{ cursor: 'pointer' }}>
                                             <span className="text-muted">Choose a photo</span>
                                             <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                            <input type="file" ref={fileInputRef1} onChange={(e: any) => {
+                                                fileHandler(e, 'profile_image')
+                                            }} style={{ display: 'none' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -378,7 +471,7 @@ export default function ProfilePage() {
                                 <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
                                     <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
-                                    <button className="btn btn-dark btn-sm ms-3">Save</button>
+                                    <button className="btn btn-dark btn-sm ms-3" onClick={submitCardDetails}>Save</button>
                                 </div>
                             </div>
 
@@ -392,48 +485,76 @@ export default function ProfilePage() {
                                         {/* <div className="card-header bg-white">
                                         <h6 className="mb-0">Package</h6>
                                     </div> */}
-                                        <div className="card-body">
-                                            {/* Card 1 */}
-                                            <div>
-                                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                                    <h6 className="mb-0">Card 1</h6>
-                                                    <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
-                                                </div>
 
-                                                {/* Title */}
-                                                <div className="mb-3">
-                                                    <label className="mb-2">Title</label>
-                                                    <input type="text" className="form-control" placeholder="1x Sponsored Post" />
-                                                </div>
+                                        {/* Card 1 */}
+                                        {
+                                            preview && cardDetails && cardDetails?.length !==0 && cardDetails?.map((ele: any, index: number) => {
+                                                return (
+                                                    <div className="card-body" key={index}>
+                                                        <div >
+                                                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                                                <h6 className="mb-0">Card {index + 1}</h6>
+                                                                <Icon icon="material-symbols:delete-outline" className="cursor-pointer" onClick={() => deleteSection(index)} />
+                                                            </div>
+
+                                                            {/* Title */}
+                                                            <div className="mb-3">
+                                                                <label className="mb-2">Title</label>
+                                                                <input id="package_name" defaultValue={ele.package_name} onChange={(e)=>valueAdder(e , index)} type="text" className="form-control" placeholder="1x Sponsored Post" />
+                                                            </div>
+
+                                                            {/* Description */}
+                                                            <div className="mb-3">
+                                                                <label className="mb-2">Description</label>
+                                                                <textarea
+                                                                    className="form-control"
+                                                                    rows={5}
+                                                                    defaultValue={ele?.package_description}
+                                                                    onChange={(e)=>valueAdder(e,index)}
+                                                                    id="package_description"
+                                                                    placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
+                                                                />
+                                                            </div>
+
+                                                            {/* Price */}
+                                                            <div>
+                                                                <label className="mb-2">Price</label>
+                                                                <input id="package_price" defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e)=>valueAdder(e, index)} className="form-control" placeholder="$ 100" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
 
 
-
-                                                {/* Description */}
-                                                <div className="mb-3">
-                                                    <label className="mb-2">Description</label>
-                                                    <textarea
-                                                        className="form-control"
-                                                        rows={5}
-                                                        onChange={changeHandler}
-                                                        id="description"
-                                                        placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
-                                                    />
-                                                </div>
-
-                                                {/* Price */}
-                                                <div>
-                                                    <label className="mb-2">Price</label>
-                                                    <input type="text" className="form-control" placeholder="$ 100" />
-                                                </div>
-
-                                            </div>
-
-                                        </div>
                                     </div>
-                                    <button className="btn btn-outline-dark w-100">+ Add Card</button>
+                                    <button className="btn btn-outline-dark w-100" onClick={() => {
+                                        setPreview(false)
+                                        const newEntry = {
+
+                                            package_name: "",
+                                            package_description: "",
+                                            package_price: 0
+
+                                        }
+                                        const newArray: any = cardDetails
+                                        newArray?.push(newEntry)
+                                        setCardDetails(newArray)
+                                        setTimeout(() => {
+                                            setPreview(true)
+                                        }, 100);
+                                    }}>+ Add Card</button>
                                 </div>
 
-                                <button className="btn btn-outline-danger w-100 mt-auto">Delete Block</button>
+                                <button className="btn btn-outline-danger w-100 mt-auto" onClick={() => {
+                                    setPreview(false)
+
+                                    setCardDetails([])
+                                    setTimeout(() => {
+                                        setPreview(true)
+                                    }, 100);
+                                }}>Delete Block</button>
                             </div>
                         </div>
                     </div>

@@ -27,8 +27,8 @@ export const newLogin = (body: any) => {
     const response = apiController.post('auth/buyer/login', body)
     return response
 }
-export const fetchProfileData = async (email: any, setUserData: any) => {
-
+export const fetchProfileData = async (email: any, setUserData: any, setIsLoading?:any) => {
+    setIsLoading && setIsLoading(true)
     try {
         const response = await apiController.post(`dashboard/creators/creator_data`, {
             email: email,
@@ -39,6 +39,9 @@ export const fetchProfileData = async (email: any, setUserData: any) => {
         console.log(error)
         setUserData({})
         // return null
+    }
+    finally{
+        setIsLoading &&  setIsLoading(false)
     }
 }
 

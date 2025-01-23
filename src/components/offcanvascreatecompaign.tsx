@@ -454,9 +454,14 @@ function OffcanvasCreateCompaign(props: any) {
                                             <DatePicker
                                                 id="Start_Date"
                                                 selected={startDate}
-                                                onChange={(date) => setDto((prev: any) => {
+                                                onChange={(date:any) => {setDto((prev: any) => {
                                                     return { ...prev, ["Start_Date"]: date }
-                                                })}
+                                                    
+                                                })
+                                                console.log(date, new Date("2025-01-30T19:00:00.000Z"),"bla bla" , new Date("2025-01-24T19:00:00.000Z") )
+                                            
+                                            }
+                                            }
                                                 selectsStart
                                                 startDate={startDate}
                                                 endDate={endDate}
