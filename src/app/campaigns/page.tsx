@@ -70,7 +70,8 @@ function Campaigns() {
                                                                                     <p className='fs-12 text-warning mb-0'>{campaign?.Time_Ago}</p>
                                                                                 </div>
                                                                             </div>
-                                                                           
+                                                                            <Icon icon="mdi:linkedin" width={18} height={18} className='text-info ms-auto' />
+                                                                            <Icon icon="mdi:web" width={18} height={18} className='text-warning ms-1' />
                                                                         </div>
                                                                         <div className='d-flex gap-2 mb-4 align-items-center'>
                                                                             <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />

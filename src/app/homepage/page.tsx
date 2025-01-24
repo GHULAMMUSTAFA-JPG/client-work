@@ -18,6 +18,7 @@ import EditProfileModal from "@/components/EditProfileModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import { defaultImagePath } from "@/components/constants";
+import { Tooltip } from '@mui/material';
 
 function Homepage() {
     const { user, setUserProfile, userProfile, setIsLoading, notifications } = useAuth()
@@ -57,9 +58,13 @@ function Homepage() {
                             <div className="card-body">
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <p className='mb-0 fs-16 fw-medium'>Profile</p>
-                                    <div className="d-flex gap-2 align-items-center cursor" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                        <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p>
-                                        <Icon icon="ri:edit-line" width="16" height="16" className='cursor ms-1' />
+                                    <div className="d-flex gap-2 align-items-center cursor">
+                                        <Tooltip title="Share Profile" arrow placement="top" className="">
+                                            <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' />
+                                        </Tooltip>
+                                        <Tooltip title="Edit Profile" arrow placement="top">
+                                            <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' onClick={() => router.push('/Profile')} />
+                                        </Tooltip>
                                     </div>
                                 </div>
                                 <div className='d-flex gap-2 mb-3'>
