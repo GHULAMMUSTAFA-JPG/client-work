@@ -24,32 +24,33 @@ const Inbox = () => {
     useEffect(() => {
         scrollToBottom();
     }, [selectedMessage]);
-   
+    const [searchText, setSearchText] = useState<string | null>(null)
     const [chatLength, setChatLength] = useState<number>(1)
     const [chatLimit, setChatLimit] = useState<number>(20)
     const searchParams = useSearchParams();
+    const [preview, setPreview] = useState<boolean>(true)
 
     const sendMessage = async () => {
-       
-            const data: any = JSON.stringify({
-                recipient_id: selectedIds?.Recipient_ID,
-                message: input
-            })
-            if (sockets && sockets.readyState === WebSocket.OPEN) {
-                sockets.send(data);
-                setInput("");
-                    if(!selectedIds?.Message_ID && selectedIds?.Recipient_ID){
-                        setTimeout(() => {
-                            const newone = selectedIds?.Recipient_ID || ''
-                            const clickButton = document?.getElementById(newone)
-                            clickButton && clickButton.click()
-                        }, 2000);
-                    }
-            } else {
-                toast.warn('Error while connecting. Please check your connection and try again')
-                restartSockets()
+
+        const data: any = JSON.stringify({
+            recipient_id: selectedIds?.Recipient_ID,
+            message: input
+        })
+        if (sockets && sockets.readyState === WebSocket.OPEN) {
+            sockets.send(data);
+            setInput("");
+            if (!selectedIds?.Message_ID && selectedIds?.Recipient_ID) {
+                setTimeout(() => {
+                    const newone = selectedIds?.Recipient_ID || ''
+                    const clickButton = document?.getElementById(newone)
+                    clickButton && clickButton.click()
+                }, 2000);
             }
-        
+        } else {
+            toast.warn('Error while connecting. Please check your connection and try again')
+            restartSockets()
+        }
+
     };
 
     // const getConversationHistory = async () => {
@@ -123,49 +124,62 @@ const Inbox = () => {
                             <span className="input-group-text bg-form border-0">
                                 <Icon icon="iconamoon:search" className="text-warning" width="18" height="18" />
                             </span>
-                            <input type="text" className="form-control border-0 bg-form" placeholder="Search..." />
+                            <input type="text" className="form-control border-0 bg-form" placeholder="Search..." onChange={(e: any) => {
+                                setSearchText(e.target.value)
+                            }}
+
+                                onKeyDown={(e: any) => {
+                                    if (e.key == "Enter") {
+                                        setPreview(false)
+                                        setTimeout(() => {
+                                            setPreview(true)
+                                        }, 100);
+                                    }
+                                }}
+                            />
                         </div>
                     </div>
 
                     {/* Conversation List */}
                     <div className="conversation-list">
                         {
-                            conversations?.conversations && conversations?.conversations?.length !== 0 ?
+                            preview && conversations?.conversations && conversations?.conversations?.length !== 0 ?
                                 conversations?.conversations?.map((chat: any, index: number) => {
-
-                                    return (
-                                        <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
-                                            chat?.conversation_new_messages !== 0 && readMessage(chat)
-                                            setSelectedIds({
-                                                Recipient_ID: chat?.Last_Message?.Recipient_ID,
-                                                Message_ID: chat?.Last_Message?.Message_ID,
-                                                Conversation_Id: chat?._id,
-                                                Sender_ID: userProfile?._id,
-                                                Name: chat?.Name,
-                                                Profile_Image: chat?.Profile_Image,
-                                                index: index
-                                            })
-                                            setInput('')
-                                        }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID == chat?.Last_Message?.Recipient_ID ? "active" : ""}`}>
-                                            <Image
-                                                src={chat?.Profile_Image || defaultImagePath}
-                                                alt="Profile"
-                                                width={40}
-                                                height={40}
-                                                className="rounded-circle me-2 flex-shrink-0"
-                                            />
-                                            <div className="flex-grow-1">
-                                                <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                                                <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message?.length < 26 ? chat?.Last_Message?.Message : chat?.Last_Message?.Message?.slice(0, 25) + "..."}</small>
+                                    if (!searchText || chat?.Name?.toLowerCase().startsWith(searchText.toLowerCase())) {
+                                        return (
+                                            <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
+                                                chat?.conversation_new_messages !== 0 && readMessage(chat)
+                                                setSelectedIds({
+                                                    Recipient_ID: chat?.Last_Message?.Recipient_ID,
+                                                    Message_ID: chat?.Last_Message?.Message_ID,
+                                                    Conversation_Id: chat?._id,
+                                                    Sender_ID: userProfile?._id,
+                                                    Name: chat?.Name,
+                                                    Profile_Image: chat?.Profile_Image,
+                                                    index: index
+                                                })
+                                                setInput('')
+                                            }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID == chat?.Last_Message?.Recipient_ID ? "active" : ""}`}>
+                                                <Image
+                                                    src={chat?.Profile_Image || defaultImagePath}
+                                                    alt="Profile"
+                                                    width={40}
+                                                    height={40}
+                                                    className="rounded-circle me-2 flex-shrink-0"
+                                                />
+                                                <div className="flex-grow-1">
+                                                    <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
+                                                    <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message?.length < 26 ? chat?.Last_Message?.Message : chat?.Last_Message?.Message?.slice(0, 25) + "..."}</small>
+                                                </div>
+                                                <div className='flex-shrink-0'>
+                                                    {chat?.conversation_new_messages !== 0 && selectedIds.Conversation_Id !== chat?._id && <div className="number-circle ms-auto">
+                                                        <span className='fs-10'>{chat?.conversation_new_messages}</span>
+                                                    </div>}
+                                                    <small className="text-muted flex-shrink-0 ms-2 fs-10">{chat?.Last_Message?.Time_Ago}</small>
+                                                </div>
                                             </div>
-                                            <div className='flex-shrink-0'>
-                                                {chat?.conversation_new_messages !== 0 && selectedIds.Conversation_Id !== chat?._id && <div className="number-circle ms-auto">
-                                                    <span className='fs-10'>{chat?.conversation_new_messages}</span>
-                                                </div>}
-                                                <small className="text-muted flex-shrink-0 ms-2 fs-10">{chat?.Last_Message?.Time_Ago}</small>
-                                            </div>
-                                        </div>
-                                    )
+                                        )
+                                    }
                                 })
                                 :
                                 <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
