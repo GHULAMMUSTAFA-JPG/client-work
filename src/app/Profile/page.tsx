@@ -218,7 +218,6 @@ export default function ProfilePage() {
     }
 
 
-
     return (
         <div className="container">
             <div className='row mt-3'>
@@ -351,7 +350,11 @@ export default function ProfilePage() {
 
                     {/* Second profile container - Add onClick */}
                     <div className={`profile-container ${!(userProfile?.Collaboration_Packages?.length > 0) ? 'empty-container' : ''}`}
-                        onClick={() => handleSectionClick('collaboration')}
+                        onClick={async () => {
+                            handleSectionClick('collaboration')
+                            const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
+                            setCardDetails(mapper)
+                        }}
                         style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
                         <div>
@@ -363,10 +366,7 @@ export default function ProfilePage() {
                                     userProfile?.Collaboration_Packages?.length > 0 ? (
                                         userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
                                             return (
-                                                <div className="card mb-3" key={index} onClick={async () => {
-                                                    const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
-                                                    setCardDetails(mapper)
-                                                }}>
+                                                <div className="card mb-3" key={index} >
                                                     <div className="card-body d-flex justify-content-between align-items-center">
                                                         <div>
                                                             <h6>{ele?.Package_Name}</h6>
