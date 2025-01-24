@@ -175,10 +175,10 @@ export default function ProfilePage() {
         }
     }
 
-    const valueAdder = (e: any, index:number) => {
-    
-        cardDetails &&   ( cardDetails[index][e.target.id] =  e.target.value )
-       
+    const valueAdder = (e: any, index: number) => {
+
+        cardDetails && (cardDetails[index][e.target.id] = e.target.value)
+
     }
 
     const mapperFunction = (array: any) => {
@@ -205,16 +205,16 @@ export default function ProfilePage() {
     }
 
 
-    const submitCardDetails = async (e:any) => {
+    const submitCardDetails = async (e: any) => {
         setIsLoading(true)
         e.preventDefault();
-            const reslt = cardDetails
+        const reslt = cardDetails
         editDetails.collaboration_packages = reslt
-   
+
         setTimeout(() => {
             submitHandler()
         }, 600);
-       
+
     }
 
 
@@ -309,14 +309,12 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Second profile container - Add onClick */}
-                    <div className='profile-container'
+                    {/* <div className='profile-container'
                         onClick={() => handleSectionClick('collaboration')}
                         style={{ cursor: 'pointer' }}>
-                        {/* Collaboration Section */}
                         <div>
                             <h5>Let's Collaborate</h5>
 
-                            {/* Collaboration Cards */}
                             <div className="mt-4">
                                 {
                                     userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
@@ -341,6 +339,83 @@ export default function ProfilePage() {
                                         )
 
                                     })
+                                }
+
+
+
+                            </div>
+                        </div>
+                    </div> */}
+
+
+
+                    {/* Second profile container - Add onClick */}
+                    <div className={`profile-container ${!(userProfile?.Collaboration_Packages?.length > 0) ? 'empty-container' : ''}`}
+                        onClick={() => handleSectionClick('collaboration')}
+                        style={{ cursor: 'pointer' }}>
+                        {/* Collaboration Section */}
+                        <div>
+                            <h5>Let's Collaborate</h5>
+
+                            {/* Collaboration Cards */}
+                            <div className="mt-4">
+                                {
+                                    userProfile?.Collaboration_Packages?.length > 0 ? (
+                                        userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
+                                            return (
+                                                <div className="card mb-3" key={index} onClick={async () => {
+                                                    const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
+                                                    setCardDetails(mapper)
+                                                }}>
+                                                    <div className="card-body d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6>{ele?.Package_Name}</h6>
+                                                            <p className="text-muted mb-0">
+                                                                {ele?.Package_Description}
+                                                            </p>
+                                                        </div>
+                                                        <div className='ms-5 text-end'>
+                                                            <h6 className='text-muted'>${ele?.Package_Price}</h6>
+                                                            <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm">Book Now</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+
+                                        })
+                                    ) : (
+                                        <>
+
+                                            <div className="card mb-3">
+                                                <div className="card-body d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6>1x Sponsored Post</h6>
+                                                        <p className="text-muted mb-0">
+                                                            I’ll create a LinkedIn post to educate my audience on the benefits of your company’s offerings, or for anything else you’re interested in promoting, like an upcoming event.
+                                                        </p>
+                                                    </div>
+                                                    <div className='ms-5 text-end'>
+                                                        <h6 className='text-muted mb-5'>$ 900</h6>
+                                                        <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">Book Now</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="card mb-3">
+                                                <div className="card-body d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6>3x Sponsored Post Series (Most Popular • 20% Discount)</h6>
+                                                        <p className="text-muted mb-0">
+                                                            I’ll create a series of posts to educate my audience on a specific topic, mentioning your brand throughout and how you can help.
+                                                        </p>
+                                                    </div>
+                                                    <div className='ms-5 text-end'>
+                                                        <h6 className='text-muted mb-5'>$ 2100</h6>
+                                                        <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">Book Now</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
                                 }
 
 
@@ -488,7 +563,7 @@ export default function ProfilePage() {
 
                                         {/* Card 1 */}
                                         {
-                                            preview && cardDetails && cardDetails?.length !==0 && cardDetails?.map((ele: any, index: number) => {
+                                            preview && cardDetails && cardDetails?.length !== 0 && cardDetails?.map((ele: any, index: number) => {
                                                 return (
                                                     <div className="card-body" key={index}>
                                                         <div >
@@ -500,7 +575,7 @@ export default function ProfilePage() {
                                                             {/* Title */}
                                                             <div className="mb-3">
                                                                 <label className="mb-2">Title</label>
-                                                                <input id="package_name" defaultValue={ele.package_name} onChange={(e)=>valueAdder(e , index)} type="text" className="form-control" placeholder="1x Sponsored Post" />
+                                                                <input id="package_name" defaultValue={ele.package_name} onChange={(e) => valueAdder(e, index)} type="text" className="form-control" placeholder="1x Sponsored Post" />
                                                             </div>
 
                                                             {/* Description */}
@@ -510,7 +585,7 @@ export default function ProfilePage() {
                                                                     className="form-control"
                                                                     rows={5}
                                                                     defaultValue={ele?.package_description}
-                                                                    onChange={(e)=>valueAdder(e,index)}
+                                                                    onChange={(e) => valueAdder(e, index)}
                                                                     id="package_description"
                                                                     placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
                                                                 />
@@ -519,7 +594,7 @@ export default function ProfilePage() {
                                                             {/* Price */}
                                                             <div>
                                                                 <label className="mb-2">Price</label>
-                                                                <input id="package_price" defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e)=>valueAdder(e, index)} className="form-control" placeholder="$ 100" />
+                                                                <input id="package_price" defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e) => valueAdder(e, index)} className="form-control" placeholder="$ 100" />
                                                             </div>
                                                         </div>
                                                     </div>

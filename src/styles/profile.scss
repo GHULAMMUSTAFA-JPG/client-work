@@ -8,17 +8,28 @@
         height: 200px;
     }
 }
+
+.empty-container {
+    border: 2px dashed $light;
+}
+
 .truncate {
     width: 250px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+}
 
-.main-box{display: flex;
-flex-direction: column;
-height: calc(100vh - 150px);}
-.w-s{white-space: nowrap;}
+.main-box {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 150px);
+}
+
+.w-s {
+    white-space: nowrap;
+}
+
 .profile-sidebar-wraper {
     position: fixed;
     padding-top: 70px;
