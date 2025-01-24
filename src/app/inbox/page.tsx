@@ -8,19 +8,11 @@ import { conversationHistory, fetchProfileData, fetchProfileDataByIds, getSpecif
 import { defaultImagePath } from '@/components/constants';
 import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
-interface selectedIdProps {
-    Message_ID: null | string
-    Recipient_ID: null | string
-    Sender_ID: null | string
-    Conversation_Id: null | string
-    Profile_Image: null | string
-    Name: null | string
-    index: null | number
-}
+
 const Inbox = () => {
     const [messages, setMessages] = useState<any>([]);
     const [input, setInput] = useState<string>("");
-    const { userProfile, user, setIsLoading, conversations, sockets, setSockets, restartSockets } = useAuth();
+    const { userProfile, user, setIsLoading, conversations, sockets, setSockets, restartSockets, setSelectedIds, selectedIds } = useAuth();
     const [selectedMessage, setSelectedMessage] = useState<any>()
     const [pageNo, setPageNo] = useState<number>(1)
     const [limit, setLimit] = useState<number>(15)
@@ -32,15 +24,7 @@ const Inbox = () => {
     useEffect(() => {
         scrollToBottom();
     }, [selectedMessage]);
-    const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
-        Message_ID: null,
-        Recipient_ID: null,
-        Sender_ID: null,
-        Conversation_Id: null,
-        Profile_Image: null,
-        Name: null,
-        index: null
-    })
+   
     const [chatLength, setChatLength] = useState<number>(1)
     const [chatLimit, setChatLimit] = useState<number>(20)
     const searchParams = useSearchParams();
@@ -53,16 +37,7 @@ const Inbox = () => {
             })
             if (sockets && sockets.readyState === WebSocket.OPEN) {
                 sockets.send(data);
-                // let userdata = messages
-                // userdata?.push({
-                //     user: "sender",
-                //     Message: input,
-                //     Timestamp : new Date(),
-                //     Time_Ago : 'Just Now'
-                // })
-                // setMessages(userdata)
                 setInput("");
-                console.log(selectedIds)
                     if(!selectedIds?.Message_ID && selectedIds?.Recipient_ID){
                         setTimeout(() => {
                             const newone = selectedIds?.Recipient_ID || ''
@@ -76,25 +51,6 @@ const Inbox = () => {
             }
         
     };
-
-    const connectSever = async () => {
-        const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
-        setSockets(ws)
-        ws.onopen = () => {
-            const data: any = {
-                "notification": true,
-                "recipient_id": userProfile?._id
-            }
-            console.log('Sockets are working')
-            ws.send(JSON.stringify(data))
-            if (user?.email) {
-                const dtoForHistory: any = {
-                    "email": user?.email
-                }
-                ws.send(JSON.stringify(dtoForHistory))
-            }
-        }
-    }
 
     // const getConversationHistory = async () => {
     //     if (user?.email) {

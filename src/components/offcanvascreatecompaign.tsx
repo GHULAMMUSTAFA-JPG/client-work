@@ -159,20 +159,18 @@ function OffcanvasCreateCompaign(props: any) {
 
     useEffect(() => {
         if (data) {
-
             const obj = mapper()
             setDto(obj)
         }
         else {
             Newmapper()
-
         }
-
-
     }, [data])
 
 
     const mapper = () => {
+    const startdate = new Date(data?.campaign?.Start_Date).toISOString().split('T')[0];
+    const endDate = new Date(data?.campaign?.End_Date).toISOString().split('T')[0];
         const obj = {
             "Is_Public": data?.campaign?.Is_Public,
             "Headline": data?.campaign?.Headline,
@@ -180,15 +178,14 @@ function OffcanvasCreateCompaign(props: any) {
             "Brief_Description": data?.campaign?.Brief_Description,
             "Campaign_Details": data?.campaign?.Campaign_Details,
             "Is_Ongoing": data?.campaign?.Is_Ongoing,
-            "Start_Date": data?.campaign?.Start_Date,
-            "End_Date": data?.campaign?.End_Date,
+            "Start_Date": startdate,
+            "End_Date": endDate,
             "Target_Audience": data?.campaign?.Target_Audience,
             "Campaign_Required_Channels": data?.campaign?.Campaign_Required_Channels,
             "Campaign_Media": data?.campaign?.Campaign_Media,
             "Email": data?.campaign?.user?.email,
             "Campaign_Id": data?.campaign?._id
         }
-
         return obj
     }
 
@@ -209,7 +206,6 @@ function OffcanvasCreateCompaign(props: any) {
         return obj
     }
 
-
     useEffect(() => {
         user?.email && setDto((prev: any) => {
             return { ...prev, ["Email"]: user?.email }
@@ -217,8 +213,6 @@ function OffcanvasCreateCompaign(props: any) {
     }, [user])
 
     const updateDto = (e: any) => {
-
-
         if (e.target.id == "Is_Public") {
             setDto((prev: any) => {
                 const updatedDto = { ...prev, [e.target.id]: e.target.checked };
@@ -231,18 +225,15 @@ function OffcanvasCreateCompaign(props: any) {
                 return updatedDto;
             });
         }
-
-
     }
 
     const handleSubmit = async (e: any) => {
         setIsLoading(true)
         e.preventDefault();
         const result = await validate()
-        if(result){
+        if (result) {
             data ? updateCampaign(dto, rendControl, setRendControl, Newmapper, setIsLoading) :
-                createCampaign(dto, rendControl, setRendControl, Newmapper,setIsLoading)
-
+                createCampaign(dto, rendControl, setRendControl, Newmapper, setIsLoading)
         }
     }
 
@@ -250,45 +241,34 @@ function OffcanvasCreateCompaign(props: any) {
         if (dto?.Headline == '' && !dto?.Headline) {
             toast.warn('Campaign Name cannot be empty')
             setIsLoading(false)
-
             return false
-
         }
         else if (dto?.Budget == 0 && !dto?.Budget) {
             toast.warn('Campaign budget cannot be less than 1')
             setIsLoading(false)
-
             return false
-
         }
         else if (dto?.Brief_Description == "") {
             toast.warn('Campaign description cannot be empty')
             setIsLoading(false)
-
             return false
         }
-       
+
         else if (dto?.Campaign_Details == "" && !dto?.Campaign_Details) {
             toast.warn('Campaign details cannot be empty')
             setIsLoading(false)
-
             return false
-
         }
-         
+
         else if (dto?.Target_Audience == '' && !dto?.Target_Audience) {
             toast.warn('Target audience cannot be empty')
             setIsLoading(false)
-
             return false
-
         }
         else if (dto?.Campaign_Required_Channels == '' && !dto?.Campaign_Required_Channels) {
             toast.warn('Campaign required channels cannot be empty')
             setIsLoading(false)
-
             return false
-
         }
         else if (!dto?.Is_Ongoing) {
             if (dto?.Start_Date == "" || !dto?.Start_Date) {
@@ -299,21 +279,15 @@ function OffcanvasCreateCompaign(props: any) {
             else if (dto?.End_Date == "" || !dto?.End_Date) {
                 toast.warn('End date cannot be empty')
                 setIsLoading(false)
-
                 return false
             }
-            else{
+            else {
                 return true
             }
-           
-        
         }
         else {
             return true
-
         }
-
-
     }
 
     return (
@@ -451,46 +425,35 @@ function OffcanvasCreateCompaign(props: any) {
 
                                     {activeTab === 'dateRange' && (
                                         <div className="input-group">
-                                            <DatePicker
+                                            <input type="date"
                                                 id="Start_Date"
-                                                selected={startDate}
-                                                onChange={(date:any) => {setDto((prev: any) => {
-                                                    return { ...prev, ["Start_Date"]: date }
-                                                    
-                                                })
-                                                console.log(date, new Date("2025-01-30T19:00:00.000Z"),"bla bla" , new Date("2025-01-24T19:00:00.000Z") )
-                                            
-                                            }
-                                            }
-                                                selectsStart
-                                                startDate={startDate}
-                                                endDate={endDate}
-                                                placeholderText={dto?.Start_Date ? dto?.Start_Date : "Start date"}
+                                                value={dto?.Start_Date}
+                                                onChange={(e: any) => {
+                                                    console.log(e.target.value, "opose")
+                                                    setDto((prev: any) => {
+                                                        return { ...prev, ["Start_Date"]: e.target.value }
+                                                    })
+                                                }
+                                                }
                                                 className="form-control"
-                                                dateFormat="MMM dd, yyyy"
                                             />
                                             <span className="input-group-text">→</span>
-                                            <DatePicker
-                                                selected={endDate}
-                                                onChange={(date) => setDto((prev: any) => {
-                                                    return { ...prev, ["End_Date"]: date }
+                                            <input
+                                                type='date'
+                                                value={dto?.End_Date}
+                                                onChange={(e: any) => setDto((prev: any) => {
+                                                    return { ...prev, ["End_Date"]: e.target.value }
                                                 })}
-                                                
                                                 id='End_Date'
-                                                startDate={startDate}
-                                                endDate={endDate}
-                                                minDate={startDate}
-                                                placeholderText={dto?.End_Date ? dto?.End_Date : "End date"}
                                                 className="form-control"
-                                                dateFormat="MMM dd, yyyy"
                                             />
-                                            <button
+                                            {/* <button
                                                 className="btn btn-outline-secondary"
                                                 type="button"
                                                 onClick={handleCalendarClick}
                                             >
                                                 <Icon icon="solar:calendar-linear" />
-                                            </button>
+                                            </button> */}
                                         </div>
                                     )}
                                 </div>
@@ -537,14 +500,14 @@ function OffcanvasCreateCompaign(props: any) {
                                     >
                                         <input
                                             onChange={async (e: any) => {
-                                                const file =e.target.files 
-                                                if(file[0]){
+                                                const file = e.target.files
+                                                if (file[0]) {
                                                     const result: any = await handleFileUpload(e, setIsLoading);
                                                     setDto((prev: any) => {
                                                         return { ...prev, ['Campaign_Media']: result?.[0].file_urls }
                                                     })
                                                 }
-                                             
+
                                             }}
                                             type="file"
                                             className="d-none"

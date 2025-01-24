@@ -210,13 +210,10 @@ export default function ProfilePage() {
         e.preventDefault();
             const reslt = cardDetails
         editDetails.collaboration_packages = reslt
-   
         setTimeout(() => {
             submitHandler()
-        }, 600);
-       
+        }, 600);  
     }
-
 
 
     return (

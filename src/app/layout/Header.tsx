@@ -14,7 +14,7 @@ export default function Header() {
     const router = useRouter()
     const pathname = usePathname(); // Initialize pathname without condition
     const [users, setUser] = useState<any>()
-    const { restartSocket, setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations } = useAuth()
+    const { restartSocket, setSockets, user, logout, userProfile, setUserProfile, rendControl, isLoading, setIsLoading, notifications, setNotifications, setConversations ,selectedIds } = useAuth()
     const [conversationList, setConversationList] = useState<any>()
     const [newNotification, setNewNotification] = useState<boolean>(false)
     const [socket, setSocket] = useState<any>()
@@ -60,12 +60,12 @@ export default function Header() {
                 const message = event.data;
                 const response = JSON.parse(message);
 
-                console.log(response, "response from sockets")
+                console.log(response, "response from sockets", selectedIds)
                 if (response?.notifications) {
                     console.log(response?.notifications, "response?.notifications")
                     setNotifications(response)
                     const not = response?.notifications || []
-                    const hasUnseen = not.some((notification: any) => notification.Is_Seen === false);
+                    const hasUnseen = not.some((notification: any) => notification.Is_Seen === false );
                     setNewNotification(hasUnseen)
                 }
                 else if (response?.conversations) {
@@ -76,7 +76,7 @@ export default function Header() {
                     //       checkNewMessage &&  setNewMessage(checkNewMessage)
                     // })
                     const hasNewMessage = response?.conversations?.some(
-                        (messages: any) => messages?.conversation_new_messages !== 0
+                        (messages: any) => messages?.conversation_new_messages !== 0 && selectedIds?.Conversation_Id !== messages?._id
                     );
                     setNewMessage(hasNewMessage)
                     setConversationList(response)
