@@ -174,43 +174,52 @@ function mycreatorsbuyer() {
                                                                             <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                 <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
                                                                             </button>
-                                                                            <ul className="dropdown-menu p-0">
-                                                                                <div className="card">
-                                                                                    <div className="card-body p-0 scroll" style={{cursor:'pointer'}}>
-                                                                                        {
-                                                                                            user?.Skills?.map((skill: string, index: number) => {
-                                                                                                return (
-                                                                                                    <li key={index}><a className="dropdown-item p-1" href="#"><span className="ms-1">{skill}</span></a></li>
-
-                                                                                                )
-                                                                                            })
-                                                                                        }
-                                                                                        {
-                                                                                            buyerList?.map((item: any, index: number) => {
-                                                                                                return (
-                                                                                                    <li key={index} onClick={() => {
-                                                                                                        addToCreatorList(item, user)
-                                                                                                    }}>
-                                                                                                        <a className="dropdown-item py-1 px-2">
-                                                                                                            {item?.List_Name}
-                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                                        </a>
-                                                                                                    </li>
-
-                                                                                                )
-                                                                                            })
-                                                                                        }
-
+                                                                            <ul className="dropdown-menu p-2" style={{width: "400px", maxHeight: "300px", overflowY: "auto"}}>
+                                                                                <div className="mb-3">
+                                                                                    <p className="text-muted mb-2 fw-medium">Campaigns</p>
+                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
+                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
+                                                                                            New AI Product
+                                                                                        </span>
+                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
                                                                                     </div>
-                                                                                    <div className="card-footer p-0 bg-transparent">
-                                                                                        <li >
-                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
-                                                                                                <Icon icon="ri:add-fill" className="me-1" />New List
-                                                                                                {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
+                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
+                                                                                            General Application: Join our Creator Program
+                                                                                        </span>
+                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
+                                                                                    </div>
+                                                                                   
+                                                                                </div>
 
-                                                                                            </a>
-                                                                                        </li>
+                                                                                <div>
+                                                                                    <p className="text-muted mb-2 fw-medium">Lists</p>
+                                                                                    {buyerList?.map((item: any, index: number) => (
+                                                                                        <div key={index} className="d-flex justify-content-between align-items-center mb-2 ms-2">
+                                                                                            <span className="d-flex align-items-center fs-12 text-truncate">
+                                                                                                <Icon icon="tabler:list" className="me-2" />
+                                                                                                {item?.List_Name}
+                                                                                            </span>
+                                                                                            <button 
+                                                                                                className="btn btn-sm btn-outline-secondary"
+                                                                                                onClick={() => addToCreatorList(item, user)}
+                                                                                            >
+                                                                                                Add
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                    
+                                                                                    <div className="border-top mt-2 pt-2">
+                                                                                        <a 
+                                                                                            className="dropdown-item p-1 d-flex align-items-center" 
+                                                                                            data-bs-toggle="modal" 
+                                                                                            data-bs-target="#createNewListModal"
+                                                                                        >
+                                                                                            <Icon icon="ri:add-fill" className="me-2" />
+                                                                                            Create New List
+                                                                                        </a>
                                                                                     </div>
                                                                                 </div>
                                                                             </ul>
@@ -292,45 +301,52 @@ function mycreatorsbuyer() {
                                                                             <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                 <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
                                                                             </button>
-                                                                            <ul className="dropdown-menu p-0">
-                                                                                <div className="card">
-                                                                                    <div className="card-body p-0 scroll">
-                                                                                        {
-                                                                                            user?.Skills?.map((skill: string, index: number) => {
-                                                                                                return (
-                                                                                                    <li key={index} onClick={() => {
-
-                                                                                                    }}><a className="dropdown-item py-1 px-2"><span className="ms-1">{skill}</span></a></li>
-                                                                                                )
-                                                                                            })
-                                                                                        }
-                                                                                                                                                                                {
-                                                                                            buyerList?.map((item: any, index: number) => {
-                                                                                                return (
-                                                                                                    <li key={index} onClick={() => {
-                                                                                                        addToCreatorList(item, user)
-                                                                                                    }}>
-                                                                                                        <a className="dropdown-item py-1 px-2">
-                                                                                                            {item?.List_Name}
-                                                                                                            {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
-
-                                                                                                        </a>
-                                                                                                    </li>
-
-                                                                                                )
-                                                                                            })
-                                                                                        }
-
+                                                                            <ul className="dropdown-menu p-2" style={{width: "400px", maxHeight: "300px", overflowY: "auto"}}>
+                                                                                <div className="mb-3">
+                                                                                    <p className="text-muted mb-2 fw-medium">Campaigns</p>
+                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
+                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
+                                                                                            New AI Product
+                                                                                        </span>
+                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
                                                                                     </div>
-                                                                                    <div className="card-footer p-0">
-                                                                                        <li >
-                                                                                            <a className="dropdown-item p-1" data-bs-toggle="modal" data-bs-target="#createNewListModal">
-                                                                                                <Icon icon="ri:add-fill" className="me-1" />New List
-                                                                                                {/* <button type="button" className="btn bg-transparent btn-sm w-100 text-dark d-flex align-items-center border-0"> </button> */}
+                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
+                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
+                                                                                            General Application: Join our Creator Program
+                                                                                        </span>
+                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
+                                                                                    </div>
+                                                                                   
+                                                                                </div>
 
-                                                                                            </a>
-                                                                                        </li>
-
+                                                                                <div>
+                                                                                    <p className="text-muted mb-2 fw-medium">Lists</p>
+                                                                                    {buyerList?.map((item: any, index: number) => (
+                                                                                        <div key={index} className="d-flex justify-content-between align-items-center mb-2 ms-2">
+                                                                                            <span className="d-flex align-items-center fs-12 text-truncate">
+                                                                                                <Icon icon="tabler:list" className="me-2" />
+                                                                                                {item?.List_Name}
+                                                                                            </span>
+                                                                                            <button 
+                                                                                                className="btn btn-sm btn-outline-secondary"
+                                                                                                onClick={() => addToCreatorList(item, user)}
+                                                                                            >
+                                                                                                Add
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                    
+                                                                                    <div className="border-top mt-2 pt-2">
+                                                                                        <a 
+                                                                                            className="dropdown-item p-1 d-flex align-items-center" 
+                                                                                            data-bs-toggle="modal" 
+                                                                                            data-bs-target="#createNewListModal"
+                                                                                        >
+                                                                                            <Icon icon="ri:add-fill" className="me-2" />
+                                                                                            Create New List
+                                                                                        </a>
                                                                                     </div>
                                                                                 </div>
                                                                             </ul>

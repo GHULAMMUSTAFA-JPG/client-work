@@ -205,7 +205,7 @@ function CampaignOverview({ setCampaigns, selectedCampaignDetails, rendControl, 
                                                 <Icon icon="mdi:account-check" width={20} height={20} className="text-white" />
                                             </div>
                                         </div>
-                                        <p className='mb-2 text-muted'>Activated Creators</p>
+                                        <p className='mb-2 text-muted'>Campaign Creators</p>
                                         <div className='d-flex align-items-center'>
                                             <h4 className='mb-0 me-2 fs-20'>{selectedCampaignDetails?.campaign?.Creator_Insights?.Activated}</h4>
                                             <p className='mb-0 fs-12 ms-auto fw-medium'>Review</p>

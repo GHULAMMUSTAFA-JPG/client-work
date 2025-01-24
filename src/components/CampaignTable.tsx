@@ -15,7 +15,7 @@ return(
                         <p className='fs-18 fw-medium mb-0'>Campaigns</p>
                         <button className='btn btn-info btn-sm' data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" onClick={()=>{
                             setSelectedCampaignDetails(null)
-                        }}>Create new campaign</button>
+                        }}> <Icon icon="ci:add-plus" width="18" height="18" className="text-white " /> Create New Campaign</button>
                     </div>
 
                     {/* <hr /> */}
