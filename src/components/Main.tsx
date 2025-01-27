@@ -30,6 +30,7 @@ const Main = ({
     { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-people" },
     { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-briefcase" },
     { label: "Inbox", href: "/inbox", icon: "bi bi-chat-dots" },
+    { label: "Company Page", href: "/companypage", icon: "bi bi-buildings" },
 
     // { label: "Active Compaigns", href: "/active-campaigns", icon: "bi bi-briefcase-fill" },
     // { label: "Analytics", href: "/analyticsbuyer", icon: "bi bi-bar-chart" },
