@@ -160,6 +160,8 @@ function OffcanvasCreateCompaign(props: any) {
     useEffect(() => {
         if (data) {
             const obj = mapper()
+            console.log(data)
+            data?.campaign?.Is_Ongoing == true ? setActiveTab("ongoing") : setActiveTab("dateRange")
             setDto(obj)
         }
         else {
@@ -236,6 +238,10 @@ function OffcanvasCreateCompaign(props: any) {
                 createCampaign(dto, rendControl, setRendControl, Newmapper, setIsLoading)
         }
     }
+
+
+    
+
 
     const validate = async () => {
         if (dto?.Headline == '' && !dto?.Headline) {

@@ -79,7 +79,8 @@ return(
                                                                     </td>
                                                                     <td className='text-center' >
                                                                      
-                                                                    <Icon  onClick={  ()=>{setSelectedCampaign(camp)}} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" icon="mage:edit" width={24} height={24} className='cursor text-warning' />
+                                                                    <Icon  onClick={  ()=>{
+                                                                            setSelectedCampaign(camp)}} data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" icon="mage:edit" width={24} height={24} className='cursor text-warning' />
                                                                     <Icon  icon="fluent:delete-28-regular" width={24} height={24} className='cursor ms-3 text-warning' onClick={()=>{
                                                                         deleteCampaign(camp?._id, rendControl, setRendControl)
                                                                     }}/>
