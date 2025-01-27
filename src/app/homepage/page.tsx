@@ -24,6 +24,7 @@ function Homepage() {
     const { user, setUserProfile, userProfile, setIsLoading, notifications } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [campaigns, setCampaigns] = useState<any>()
+    const [linkCopied, setLinkCopied] = useState<boolean>(false)
     // const router = useRouter()
     useEffect(() => {
         fetchData()
@@ -33,6 +34,23 @@ function Homepage() {
     const fetchData = async () => {
         const response: any = await fetch_dashboard_data()
         setUsers(response?.data?.users)
+    }
+
+
+    const shareProfile = () => {
+
+        try {
+            const path = window.location.origin + "/profile-view/" + userProfile?._id
+            navigator.clipboard.writeText(path);
+            setLinkCopied(true)
+            setTimeout(() => {
+                setLinkCopied(false)
+            }, 5000);
+        } catch (error) {
+
+        }
+
+
     }
 
     const router = useRouter();
@@ -59,8 +77,8 @@ function Homepage() {
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <p className='mb-0 fs-16 fw-medium'>Profile</p>
                                     <div className="d-flex gap-2 align-items-center cursor">
-                                        <Tooltip title="Share Profile" arrow placement="top" className="">
-                                            <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' />
+                                        <Tooltip title={linkCopied ? "Link Copied" : "Share Profile"} arrow placement="top" className="">
+                                            <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' onClick={() => { shareProfile() }} />
                                         </Tooltip>
                                         <Tooltip title="Edit Profile" arrow placement="top">
                                             <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' onClick={() => router.push('/Profile')} />

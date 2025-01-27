@@ -35,7 +35,6 @@ export default function Header() {
         }
     }, [user, rendControl])
 
-
     useEffect(() => {
         if (userProfile?._id) {
             const ws = new WebSocket(`wss://synncapi.onrender.com/ws/message/${userProfile._id}`);
