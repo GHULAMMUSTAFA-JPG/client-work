@@ -27,7 +27,7 @@ export const newLogin = (body: any) => {
     const response = apiController.post('auth/buyer/login', body)
     return response
 }
-export const fetchProfileData = async (email: any, setUserData: any, setIsLoading?:any) => {
+export const fetchProfileData = async (email: any, setUserData: any, setIsLoading?: any) => {
     setIsLoading && setIsLoading(true)
     try {
         const response = await apiController.post(`dashboard/creators/creator_data`, {
@@ -40,8 +40,8 @@ export const fetchProfileData = async (email: any, setUserData: any, setIsLoadin
         setUserData({})
         // return null
     }
-    finally{
-        setIsLoading &&  setIsLoading(false)
+    finally {
+        setIsLoading && setIsLoading(false)
     }
 }
 
@@ -82,7 +82,7 @@ export const fetchCompanyData = async (email: string, setCompanyData: any, setIs
     }
 }
 
-export const updateProfileInformation = async (dto: any, setIsLoading:any, rendControl:boolean, setRendControl:any) => {
+export const updateProfileInformation = async (dto: any, setIsLoading: any, rendControl: boolean, setRendControl: any) => {
     try {
         const response = await apiController.put(`/dashboard/creators/update_creator`, dto)
         setIsLoading(false)
@@ -204,7 +204,7 @@ export const deleteListItem = async (id: any, rendControl: boolean, setRendContr
     }
 }
 
-export const addCreatorInList = async (dto: any, rendControl: boolean, setRendControl: any) => {
+export const addCreatorInList: any = async (dto: any, rendControl: boolean, setRendControl: any) => {
     try {
         const response: any = await apiController.post("/dashboard/buyers/add_creator_to_list", dto)
         setRendControl(!rendControl)
@@ -249,7 +249,7 @@ export const getSelectedCampaignsDetails = async (campaign_id: any, setData: any
 }
 
 
-export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any,setIsLoading?:any) => {
+export const createCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any, setIsLoading?: any) => {
     try {
         const response: any = await apiController.post(`/dashboard/campaigns/create_campaign`, dto)
         setRendControl(!rendControl)
@@ -265,7 +265,7 @@ export const createCampaign = async (dto: any, rendControl: boolean, setRendCont
     }
 }
 
-export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any,setIsLoading?:any) => {
+export const updateCampaign = async (dto: any, rendControl: boolean, setRendControl: any, Newmapper: any, setIsLoading?: any) => {
     try {
         const response: any = await apiController.put(`/dashboard/campaigns/update_campaign`, dto)
         setRendControl(!rendControl)
@@ -297,11 +297,20 @@ export const deleteCampaign = async (id: string, rendControl: boolean, setRendCo
 }
 
 
-export const getDiscoverCampaigns = async (setData: any, setIsLoading: any, email: string) => {
+export const getDiscoverCampaigns = async (setData: any, setIsLoading: any, email: string, limit: number, page: number) => {
     setIsLoading(true)
     try {
-        const response: any = await apiController.get(`/dashboard/campaigns/public_campaigns?email=${email}`)
-        setData(response?.data?.campaigns)
+        const response: any = await apiController.get(`/dashboard/campaigns/public_campaigns?email=${email}&page=${page}&limit=${limit}`)
+        if (page == 1) {
+            setData(response?.data)
+        }
+        else {
+            setData((prevData: any) => ({
+                campaigns: [...prevData.campaigns, ...response?.data?.campaigns],
+                pagination: response?.data?.pagination,
+            }));
+        }
+
         setIsLoading(false)
         return response
     } catch (error) {
@@ -516,7 +525,7 @@ export const handleFileUpload = async (event: any, setIsLoading?: any) => {
             // Check if the file is an image
             if (file.type.startsWith('image/')) {
 
-                const allowedImageTypes = ['image/jpeg', 'image/gif','image/png', 'image/jpg', 'image/webp', 'image/heic'];
+                const allowedImageTypes = ['image/jpeg', 'image/gif', 'image/png', 'image/jpg', 'image/webp', 'image/heic'];
                 if (file.size > maxImageSize) {
                     toast.warn('Image size cannot exceed 10mb')
                 }
@@ -625,13 +634,15 @@ export const getSpecificMessageHistory = async (id: any, setData: any, setIsLoad
 export const downloadAllMedia = async (mediaFiles: any[], setIsLoading: any) => {
     setIsLoading(true)
     try {
-        const response = await apiController.post('/dashboard/download_files', { file_urls: mediaFiles },{headers: {
-            'Accept': 'application/zip',
-            "Content-Disposition": "attachment"
-          }})
+        const response = await apiController.post('/dashboard/download_files', { file_urls: mediaFiles }, {
+            headers: {
+                'Accept': 'application/zip',
+                "Content-Disposition": "attachment"
+            }
+        })
         setIsLoading(false)
         return response?.data
-    
+
     } catch (error) {
         setIsLoading(false)
         return null
@@ -639,14 +650,50 @@ export const downloadAllMedia = async (mediaFiles: any[], setIsLoading: any) => 
 }
 
 
-export const countNumberOfUnreadMessages = async (conversationObject:any, setTotalUnreadMessage:any) =>{
+export const countNumberOfUnreadMessages = async (conversationObject: any, setTotalUnreadMessage: any) => {
     let totalCount = 0;
 
-    conversationObject.forEach((conversation:any) => {
+    conversationObject.forEach((conversation: any) => {
         if (conversation.messages && Array.isArray(conversation.messages)) {
-            totalCount += conversation.messages.filter((message:any) => message.Is_Seen === false).length;
+            totalCount += conversation.messages.filter((message: any) => message.Is_Seen === false).length;
         }
     });
 
     setTotalUnreadMessage(totalCount)
 }
+
+
+export const getCreatorDetailsById = async (id: string, setData: any, setIsLoading: any) => {
+    setIsLoading(true)
+
+    try {
+        const response = await apiController.post('/dashboard/creators/creator_data', { id })
+        setData(response?.data)
+    } catch (
+    error: any
+    ) {
+        return null
+    }
+    finally {
+        setIsLoading(false)
+    }
+}
+
+
+export const inviteCreatorCall = async (dto: any, setIsLoading: any) => {
+    setIsLoading(true)
+
+    try {
+        const response = await apiController.post('/dashboard/campaigns/invite_creator', dto)
+        return response?.data
+    } catch (
+    error: any
+    ) {
+        return null
+    }
+    finally {
+        setIsLoading(false)
+    }
+}
+
+

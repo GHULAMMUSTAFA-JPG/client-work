@@ -18,10 +18,12 @@ function DiscoverCreator() {
     const [searchText, setSearchText] = useState<string>('')
     const [campaignData, setCampaignData] = useState<any>()
     const { setIsLoading, user } = useAuth()
+    const [pageNo, setPageNo] = useState<number>(1)
+    const [limit, setLimit] = useState<number>(30)
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     useEffect(() => {
-        getDiscoverCampaigns(setCampaignData, setIsLoading, user?.email)
-    }, [])
+      user?.email &&  getDiscoverCampaigns(setCampaignData, setIsLoading, user?.email,limit,pageNo)
+    }, [user?.email, pageNo])
 
     const searchCampaign = () => {
         getDiscoverCampaignsForSearch(searchText, setCampaignData, setIsLoading)
@@ -64,7 +66,7 @@ function DiscoverCreator() {
                     </div>
                     <div className='row g-2 mb-3'>
                         {
-                            campaignData?.map((campaign: any, index: number) => {
+                            campaignData?.campaigns?.map((campaign: any, index: number) => {
                                 return (
                                     <div key={index} className='col-md-4'>
                                         <div className='card card-hover h-100'>
@@ -112,12 +114,12 @@ function DiscoverCreator() {
                                 )
                             })
                         }
-
-
                     </div>
-                    <div className='d-flex justify-content-center mt-4'>
-                        <button className='btn btn-dark ms-2  w-s '>Load more</button>
-                    </div>
+                  {campaignData?.pagination?.Total_Pages > pageNo  && <div className='d-flex justify-content-center mt-4'>
+                        <button onClick={()=>{
+                            setPageNo(pageNo + 1)
+                        }} className='btn btn-dark ms-2  w-s '>Load more</button>
+                    </div>}
 
                 </div>
             </section >

@@ -255,7 +255,7 @@ export default function ProfilePage() {
                                     <h5 id='name' onClick={editFieldHandler} className="mb-0">{userProfile?.Name}</h5>
                                     <img src={`https://flagcdn.com/24x18/${userProfile?.Country_Code || "us"}.png`} width={18} height={14} className="mx-1"></img>
                                     <a href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
-                                    {<button className='activated-subtle border btn-sm ms-1 px-2 py-1 rounded-pill text-info'>{userProfile?.Audience_Interest}</button>}
+                                    {userProfile?.Audience_Interest !== "" && <button className='activated-subtle border btn-sm ms-1 px-2 py-1 rounded-pill text-info'>{userProfile?.Audience_Interest}</button>}
                                 </div>
                                 <div className="d-flex gap-2 align-items-center">
                                     <p className='mb-0 fs-12 text-warning'>@{userProfile?.Profile_URL}</p>
@@ -270,11 +270,11 @@ export default function ProfilePage() {
                                 </div>
 
                                 {/* Action Buttons */}
-                                <div className="mt-4 d-flex gap-3">
+                               {user?.isBuyer && <div className="mt-4 d-flex gap-3">
                                     <button className="btn btn-dark" onClick={updateProfile} >
                                         DM for Custom Collaborations
                                     </button>
-                                </div>
+                                </div>}
 
                                 {/* Stats Section */}
                                 <div className="row mt-4 g-4">

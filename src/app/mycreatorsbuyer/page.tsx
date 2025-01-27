@@ -1,6 +1,6 @@
 "use client";
 
-import { addCreatorInList, deleteListItem, fetch_dashboard_data, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList } from "@/@api";
+import { addCreatorInList, deleteListItem, fetch_dashboard_data, fetchBuyerActiveCampaigns, fetchBuyerDiscoveryData, getSavedList, getSpecificCreatorList, inviteCreatorCall } from "@/@api";
 import CreateNewListModal from "@/components/CreateNewListModal";
 import TopCardBuyer from "@/components/TopCardBuyer";
 import ViewCreatorsModal from "@/components/ViewCreatorsModal";
@@ -14,33 +14,43 @@ import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 
 function mycreatorsbuyer() {
-    const { user, setIsLoading } = useAuth()
+    const { user, setIsLoading, userProfile } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [buyersDetails, setBuyerDetails] = useState<any>()
     const [buyerList, setBuyerList] = useState<any>()
     const [selectedId, setSelectedId] = useState<string>('')
     const [selectedIdCreators, setSelectedIdCreators] = useState<any>()
     const [selectedList, setSelectedList] = useState<any>()
+    const[activeCampaigns, setActiveCampaign] = useState<any>()
     const [rendControl, setRendControl] = useState<boolean>(false)
+    const [rendControls, setRendControls] = useState<boolean>(false)
     // const router = useRouter()
     useEffect(() => {
         fetchData()
-
+      
     }, [])
 
+    const fetchActiveCampaign = async ()=>{
+        fetchBuyerActiveCampaigns(user?.email,setActiveCampaign,setIsLoading)
+    } 
+   
     useEffect(() => {
         if(user?.email){
             fetchBuyerDiscoveryData(user?.email, setBuyerDetails, setIsLoading)
             getSavedList(user?.email, setBuyerList, setIsLoading)
+            fetchActiveCampaign()
         }
     }, [user?.email,rendControl])
-
-
-
 
     useEffect(() => {
         selectedId !== "" && getSpecificCreatorList(selectedId, setSelectedIdCreators, setIsLoading)
     }, [selectedId, rendControl])
+
+
+    useEffect(()=>{
+        console.log(activeCampaigns,"activeCampaigns")
+    },[activeCampaigns])
+
 
     const fetchData = async () => {
         const response:any = await fetch_dashboard_data()
@@ -64,6 +74,17 @@ function mycreatorsbuyer() {
             deleteListItem(list, rendControl, setRendControl)
         }
     }
+
+    const inviteCreator = async (selectedCampaign:any,user:any) =>{
+    const response =    await inviteCreatorCall({
+        "campaign_id": selectedCampaign?._id,
+        "creator_id": user?._id
+      },setIsLoading
+      )
+       console.log(response)
+    }
+
+
     return (
         <>
             <div className="container-fluid">
@@ -177,20 +198,22 @@ function mycreatorsbuyer() {
                                                                             <ul className="dropdown-menu p-2" style={{width: "400px", maxHeight: "300px", overflowY: "auto"}}>
                                                                                 <div className="mb-3">
                                                                                     <p className="text-muted mb-2 fw-medium">Campaigns</p>
-                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
-                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
-                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
-                                                                                            New AI Product
-                                                                                        </span>
-                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
-                                                                                    </div>
-                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
-                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
-                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
-                                                                                            General Application: Join our Creator Program
-                                                                                        </span>
-                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
-                                                                                    </div>
+                                                                                    {
+                                                                                        activeCampaigns?.campaigns?.map((campaingElement:any, indexNum:number)=>{
+                                                                                            return(
+                                                                                                <div key={indexNum} className="d-flex align-items-center mb-2 ms-2">
+                                                                                                <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                                    <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
+                                                                                                  {campaingElement?.Headline}
+                                                                                                </span>
+                                                                                                <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0" onClick={()=>{
+                                                                                                    inviteCreator(campaingElement,user)
+                                                                                                }}>Add</button>
+                                                                                            </div>
+                                                                                            )
+                                                                                        })
+                                                                                    }
+                                                                               
                                                                                    
                                                                                 </div>
 
@@ -304,20 +327,21 @@ function mycreatorsbuyer() {
                                                                             <ul className="dropdown-menu p-2" style={{width: "400px", maxHeight: "300px", overflowY: "auto"}}>
                                                                                 <div className="mb-3">
                                                                                     <p className="text-muted mb-2 fw-medium">Campaigns</p>
-                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
-                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
-                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
-                                                                                            New AI Product
-                                                                                        </span>
-                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
-                                                                                    </div>
-                                                                                    <div className="d-flex align-items-center mb-2 ms-2">
-                                                                                        <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
-                                                                                            <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
-                                                                                            General Application: Join our Creator Program
-                                                                                        </span>
-                                                                                        <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0">Add</button>
-                                                                                    </div>
+                                                                                    {
+                                                                                        activeCampaigns?.campaigns?.map((campaingElement:any, indexNum:number)=>{
+                                                                                            return(
+                                                                                                <div key={indexNum} className="d-flex align-items-center mb-2 ms-2">
+                                                                                                <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                                    <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
+                                                                                                  {campaingElement?.Headline}
+                                                                                                </span>
+                                                                                                <button className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0" onClick={()=>{
+                                                                                                    inviteCreator(campaingElement,user)
+                                                                                                }}>Add</button>
+                                                                                            </div>
+                                                                                            )
+                                                                                        })
+                                                                                    }
                                                                                    
                                                                                 </div>
 
