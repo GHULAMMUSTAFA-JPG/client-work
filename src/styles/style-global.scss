@@ -139,7 +139,32 @@ body {
         text-overflow: ellipsis;
         // width: auto;
     }
+    .line-clamp-4 {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // width: auto;
+    }
+    .line-clamp-5 {
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // width: auto;
+    }
+    .line-clamp-6 {
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // width: auto;
+    }
 
+.welcom-card-height{min-height: 260px; max-height: 260px;}
 
 .truncate {
     width: 10px !important;

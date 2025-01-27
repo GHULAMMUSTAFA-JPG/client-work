@@ -194,7 +194,7 @@ function ApplyModal(props: any) {
                                     <button type="button" id="applyCampaignCloseModalButton" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
-                            <div className='d-flex gap-2 align-items-center mb-2'>
+                            <div className='d-flex gap-2 align-items-center mb-3'>
                                 <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
                                 <p className='mb-0'>{selectedCampaign?.Target_Audience}</p>
                             </div>

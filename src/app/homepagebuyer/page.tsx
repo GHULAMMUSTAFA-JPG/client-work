@@ -17,6 +17,7 @@ import PostCalendar from "@/components/Calendar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
+import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 
 
 function homepagebuyer() {
@@ -50,19 +51,19 @@ function homepagebuyer() {
         <>
             <div className="container-fluid">
                 <div className="row mt-3">
-                    <div className="col-md-7">
-                        <div className="card h-100">
+                    <div className="col-md-8">
+                        <div className="card welcom-card-height" >
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
                                         <h3 className='fw-medium'>Welcome Back, <span className='fw-bold'>{userData?.Company_Name && userData?.Company_Name?.slice(0, 30) + "...."}</span></h3>
                                         {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
-                                        <p className='mb-0 fs-14 text-muted'>{userData?.Company_Description && userData?.Company_Description?.slice(0, 200) + '....'}</p>
+                                        <p className='mb-0 fs-14 text-muted line-clamp-5'>{userData?.Company_Description}</p>
                                     </div>
                                     <div>
                                         <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal" style={{ width: '25px', height: '25px' }}>
                                             {/* <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p> */}
-                                            <Icon icon="mage:edit" width="20" height="20" className='cursor flex-shrink-0 text-dark' />
+                                            <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' />
                                         </div>
                                         {userData?.Company_Logo && userData?.Company_Logo !== "" ?
                                             <Image
@@ -82,68 +83,16 @@ function homepagebuyer() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-5">
-                        <div className="card h-100">
-                            <div className="card-body py-2">
-                                <ul className="nav nav-underline mb-3 border-bottom" id="myTab" role="tablist">
-                                    <li className="nav-item" role="presentation">
-                                        <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Weekly</button>
-                                    </li>
-                                    <li className="nav-item" role="presentation">
-                                        <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Monthly</button>
-                                    </li>
-                                    {/* <li className="nav-item" role="presentation">
-                                    <button className="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings-tab-pane" type="button" role="tab" aria-controls="settings-tab-pane" aria-selected="false">Draft Campaigns</button>
-                                </li> */}
-                                    <li className='nav-item' role="presentation">
-                                        <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Quarterly</button>
-                                    </li>
-                                </ul>
-                                {/* <hr className="" /> */}
-                                <div className='row'>
-                                    <div className='col-12'>
-                                        <div className="tab-content " id="myTabContent">
-                                            <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex={0}>
-                                                <div className="row mb-3 mt-2 text-center">
-                                                    <div className="col-md-6 border-end">
-                                                        <p className='mb-2 fs-16'>Posts Analytics</p>
-                                                        <p className='mb-0 fs-20 fw-medium'>30</p>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <p className='mb-2 fs-16'>Impressions Analytics</p>
-                                                        <p className='mb-0 fs-20 fw-medium'>40k</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabIndex={0}>
-                                                <div className="row mb-3 mt-2 text-center">
-                                                    <div className="col-md-6 border-end">
-                                                        <p className='mb-2 fs-16'>Posts Analytics</p>
-                                                        <p className='mb-0 fs-20 fw-medium'>50</p>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <p className='mb-2 fs-16'>Impressions Analytics</p>
-                                                        <p className='mb-0 fs-20 fw-medium'>80k</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabIndex={0}>
-                                                <div className="row mb-3 mt-2 text-center">
-                                                    <div className="col-md-6 border-end">
-                                                        <p className='mb-2 fs-16'>Posts Analytics</p>
-                                                        <p className='mb-0 fs-20 fw-medium'>70</p>
-                                                    </div>
-                                                    <div className="col-md-6">
-                                                        <p className='mb-2 fs-16'>Impressions Analytics</p>
-                                                        <p className='mb-0 fs-20 fw-medium'>120k</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+                    <div className="col-md-4">
+                        <div className="card mb-3">
+                            <div className="card-body">
+                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
+                                <PostCalendar />
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div className="row mt-3">
@@ -152,9 +101,13 @@ function homepagebuyer() {
                             <div className="card-header p-3">
                                 <div className="d-flex align-items-center justify-content-between">
                                     <p className="mb-0 fw-medium fs-16">Campaigns</p>
-                                    {activeCampaigns?.campaigns && activeCampaigns?.campaigns?.length > viewRow && <button className='btn btn-info btn-sm' onClick={() => {
-                                        showViewRow(activeCampaigns?.campaigns?.length)
-                                    }}>View All</button>}
+
+                                    <button
+                                        className='btn btn-info btn-sm'
+                                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" >
+                                        <Icon icon="ci:add-plus" width="18" height="18" className="text-white" />
+                                        Create New Campaign
+                                    </button>
                                 </div>
                             </div>
                             <div className="card-body p-0">
@@ -163,7 +116,7 @@ function homepagebuyer() {
                                         <thead>
                                             <tr>
                                                 <th scope="col" className="text-start ps-4">Campaigns <span className='text-muted fs-12'>({activeCampaigns?.campaigns?.length || 0})</span></th>
-                                                <th scope="col">Activated Creators</th>
+                                                <th scope="col">Campaign Creators</th>
                                                 <th scope="col">New Applications</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
@@ -219,22 +172,17 @@ function homepagebuyer() {
                             </div>
                         </div>
                     </div>
+
                     <div className="col-md-4">
                         <div className="card mb-3">
                             <div className="card-body">
-                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
-                                <PostCalendar />
-                            </div>
-                        </div>
-                        <div className="card mb-3">
-                            <div className="card-body">
-                                <p className='mb-2 fs-16 fw-medium'>Notifications</p>
+                                <p className='mb-3 fs-16 fw-medium'>Notifications</p>
                                 {
                                     notifications?.notifications?.map((notify: any, index: number) => {
-                                        if (index < 4) {
+                                        if (index < 5) {
                                             return (
-                                                <div key={index}>
-                                                    <div className='d-flex gap-2 mb-3'>
+                                                <div key={index} className="notification-list">
+                                                    <div className='d-flex gap-2 mb-3 '>
                                                         {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
                                                         {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
                                                         {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
@@ -247,19 +195,19 @@ function homepagebuyer() {
                                                         </div>
                                                         <p className='mb-0 fs-12 text-muted ms-auto flex-shrink-0'>{notify?.Time_Ago}</p>
                                                     </div>
-                                                    <hr className='my-3 text-warning' />
+                                                    {
+                                                        <hr className='my-3 text-warning' />
+                                                    }
                                                 </div>
                                             )
                                         }
-
-
-
                                     })
                                 }
 
 
                             </div>
                         </div>
+
                     </div>
                 </div>
                 {/* <TopCardBuyer /> */}
@@ -276,8 +224,12 @@ function homepagebuyer() {
                 </div> */}
             </div>
             <EditProfileModalBuyer user={user} userProfile={userData} setRendControl={setRendControl} rendControl={rendControl} />
+            <OffcanvasCreateCompaign/>
         </>
     );
+
+    
 }
+
 
 export default homepagebuyer

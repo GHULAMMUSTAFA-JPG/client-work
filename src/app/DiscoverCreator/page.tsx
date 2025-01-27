@@ -115,6 +115,10 @@ function DiscoverCreator() {
 
 
                     </div>
+                    <div className='d-flex justify-content-center mt-4'>
+                        <button className='btn btn-dark ms-2  w-s '>Load more</button>
+                    </div>
+
                 </div>
             </section >
             <CampaignOffcanvas />

@@ -187,14 +187,11 @@ function CampaignFilterModal(props: any) {
                                     <button type="button" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
-                            <div className='d-flex gap-2 align-items-center mb-2'>
-                                <Icon icon="icon-park-outline:search" width={14} height={14} className='text-gray' />
+                            <div className='d-flex gap-2 align-items-center mb-3'>
+                            <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
                                 <p className='mb-0'>{selectedCampaign?.Target_Audience}</p>
                             </div>
-                            <div className='d-flex gap-2 align-items-center mb-3'>
-                                <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
-                                <p className='mb-0'>{selectedCampaign?.Campaign_Required_Channels}</p>
-                            </div>
+                            
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
                             <p className='text-warning mb-0'>{selectedCampaign?.Campaign_Details}</p>
                         </div>
