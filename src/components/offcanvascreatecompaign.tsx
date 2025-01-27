@@ -160,7 +160,6 @@ function OffcanvasCreateCompaign(props: any) {
     useEffect(() => {
         if (data) {
             const obj = mapper()
-            console.log(data)
             data?.campaign?.Is_Ongoing == true ? setActiveTab("ongoing") : setActiveTab("dateRange")
             setDto(obj)
         }
@@ -168,7 +167,6 @@ function OffcanvasCreateCompaign(props: any) {
             Newmapper()
         }
     }, [data])
-
 
     const mapper = () => {
     const startdate = new Date(data?.campaign?.Start_Date).toISOString().split('T')[0];
