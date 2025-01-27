@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { handleFileUpload, updateProfileInformation } from '@/@api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 interface editDtoProps {
     "email": string,
     "name": string,
@@ -42,6 +43,12 @@ interface cardDetailsDto {
     "package_description": string,
     "package_price": number | null
 }
+
+interface CategoryOption {
+    value: string;
+    label: string;
+}
+
 export default function companypage() {
     const { user, userProfile, setIsLoading, rendControl, setRendControl } = useAuth()
     const fileInputRef: any = useRef(null);
@@ -89,6 +96,33 @@ export default function companypage() {
     const [cardDetails, setCardDetails] = useState<any[]>()
     // Add new state for sidebar visibility
     const [showSidebar, setShowSidebar] = useState(true);
+
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const categoryOptions: CategoryOption[] = [
+        { value: 'Sales', label: 'Sales' },
+        { value: 'CRM', label: 'CRM' },
+        { value: 'Conversation Intelligence', label: 'Conversation Intelligence' },
+        { value: 'Customer Revenue Optimization', label: 'Customer Revenue Optimization' },
+        { value: 'Sales Analytics', label: 'Sales Analytics' },
+        { value: 'Sales Acceleration', label: 'Sales Acceleration' },
+        { value: 'Sales Intelligence', label: 'Sales Intelligence' },
+        { value: 'Marketing', label: ' Marketing' },
+        { value: 'Customer Data', label: 'Customer Data' },
+        { value: 'Email Marketing', label: 'Email Marketing' },
+        { value: 'Marketing Analytics', label: 'Marketing Analytics' },
+        { value: 'Marketing Automation', label: 'Marketing Automation' },
+        { value: 'Product Analytics', label: 'Product Analytics' },
+        { value: 'Consulting', label: 'Consulting' },
+        { value: 'Operations Consulting', label: 'Operations Consulting' },
+        { value: 'Management', label: 'Management Consulting' },
+        { value: 'Project Management', label: 'Project Management Consulting' },
+        { value: 'Customer Service', label: 'Customer Service Consulting' },
+        { value: 'Customer Success', label: 'Customer Success Consulting' },
+        { value: 'Customer Service Automation', label: 'Customer Service Automation' },
+        { value: 'Experience Management', label: 'Experience Management' }
+    ];
 
     const handleClick = () => {
         fileInputRef && fileInputRef.current.click();
@@ -217,6 +251,28 @@ export default function companypage() {
 
     }
 
+    const handleCategorySelect = (value: string) => {
+        setSelectedCategories(prev => {
+            if (prev.includes(value)) {
+                return prev.filter(category => category !== value);
+            }
+            if (prev.length >= 5) {
+                return prev;
+            }
+            return [...prev, value];
+        });
+    };
+
+    // Add these handler functions
+    const handleRemoveCategory = (categoryToRemove: string, e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent dropdown from opening when removing items
+        setSelectedCategories(prev => prev.filter(category => category !== categoryToRemove));
+    };
+
+    const handleClearAllCategories = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent dropdown from opening when clearing
+        setSelectedCategories([]);
+    };
 
     return (
         <div className="container">
@@ -253,7 +309,7 @@ export default function companypage() {
                             <div className="mt-2">
                                 <div className="d-flex justify-content-between align-items-center gap-2 mb-1">
                                     <div className=''> <h5 id='name' onClick={editFieldHandler} className="mb-0">Profile Name</h5>
-                                        
+
                                     </div>
                                     <div className='d-flex align-items-center gap-2'>
                                         <a><i className="bi bi-globe" style={{ width: "19px", height: "19px" }}></i></a>
@@ -268,7 +324,7 @@ export default function companypage() {
                                 {/* <p className="mt-2">👋 Welcome to my partnership storefront!</p> */}
 
                                 <div className="mt-3">
-                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>
                                 </div>
 
                                 {/* Action Buttons */}
@@ -276,37 +332,40 @@ export default function companypage() {
 
                                     <div className='d-flex flex-column div-size' style={{ minWidth: '200px' }}>
                                         <label><b>Location</b></label>
-                                        <span>-</span>
+                                        <span className='text-muted mt-2'>-</span>
                                     </div>
-                                    <div className='d-flex flex-column'  style={{ minWidth: '200px' }}>
+                                    <div className='d-flex flex-column' style={{ minWidth: '200px' }}>
                                         <label><b>Employees(est)</b></label>
-                                        <span> 100</span>
+                                        <span className='text-muted mt-2'> 100</span>
                                     </div>
-                                    <div className='d-flex flex-column'  style={{ minWidth: '200px' }}>
-                                        <label><b>Size</b></label>
-                                        <button type="button" className="bg-info-subtle text-info border-0 btn btn-sm px-3 rounded-pill w-50">Medium</button>
+
+                                    <div className='d-flex flex-column' style={{ minWidth: '200px' }}>
+                                        <div className=''>
+                                            <label className='d-block' ><b>Size</b></label>
+                                            <button type="button" className="bg-info-subtle text-info border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Medium</button>
+                                        </div>
                                     </div>
-                                  
+
 
                                 </div>
 
-                                <div className="mt-4 d-flex  profile-second-section">    
+                                <div className="mt-4 d-flex  profile-second-section">
 
-                                    <div className='d-flex flex-column'  style={{ minWidth: '200px' }}>
+                                    <div className='d-flex flex-column' style={{ minWidth: '288px' }}>
                                         <label><b>Categories</b></label>
-                                        <span> -</span>
+                                        <span className='text-muted mt-2'> -</span>
                                     </div>
                                     <div className='d-flex flex-column offset-1 ms-2' style={{ minWidth: '200px' }}>
                                         <label><b>Year Founded</b></label>
-                                        <span> -</span>
+                                        <span className='text-muted mt-2'> -</span>
                                     </div>
-                                   
+
 
                                 </div>
 
                                 {/* Stats Section */}
-                                
-                               
+
+
                             </div>
                         </div>
                     </div>
@@ -350,10 +409,11 @@ export default function companypage() {
                         </div>
                     </div> */}
 
+                    <label className='d-block mb-3'>Campaigns</label>
 
 
                     {/* Second profile container - Add onClick */}
-                    <div className={`profile-container ${!(userProfile?.Collaboration_Packages?.length > 0) ? 'empty-container' : ''}`}
+                    <div className={`profile-container ${!(userProfile?.Collaboration_Packages?.length > 0) ? '' : ''}`}
                         onClick={async () => {
                             handleSectionClick('collaboration')
                             const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
@@ -362,76 +422,34 @@ export default function companypage() {
                         style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
                         <div>
-                            <h5>Let's Collaborate</h5>
+                            <div className='d-flex justify-content-between mb-2'>
+                            <label className='d-block mt-2'><b>Bigg</b></label>
+                            <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
+                            </div>
+                            
+
+                            <p className='text-muted'>I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event.</p>
+
+                            <div className='d-flex gap-2 mb-2 align-items-center'>
+                                <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
+                                <p className='mb-0'>AI Creators, LLM Developers, Content Creators</p>
+                               
+                            </div>
+                            <div className='d-flex gap-2 justify-content-end'>
+                                <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
+                                <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
+                                <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
+                            </div>
 
                             {/* Collaboration Cards */}
-                            <div className="mt-4">
-                                {
-                                    userProfile?.Collaboration_Packages?.length > 0 ? (
-                                        userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
-                                            return (
-                                                <div className="card mb-3" key={index} >
-                                                    <div className="card-body d-flex justify-content-between align-items-center">
-                                                        <div>
-                                                            <h6>{ele?.Package_Name}</h6>
-                                                            <p className="text-muted mb-0">
-                                                                {ele?.Package_Description}
-                                                            </p>
-                                                        </div>
-                                                        <div className='ms-5 text-end'>
-                                                            <h6 className='text-muted'>${ele?.Package_Price}</h6>
-                                                            <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm">Book Now</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            )
 
-                                        })
-                                    ) : (
-                                        <>
-
-                                            <div className="card mb-3">
-                                                <div className="card-body d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6>1x Sponsored Post</h6>
-                                                        <p className="text-muted mb-0">
-                                                            I’ll create a LinkedIn post to educate my audience on the benefits of your company’s offerings, or for anything else you’re interested in promoting, like an upcoming event.
-                                                        </p>
-                                                    </div>
-                                                    <div className='ms-5 text-end'>
-                                                        <h6 className='text-muted mb-5'>$ 900</h6>
-                                                        <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">Book Now</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="card mb-3">
-                                                <div className="card-body d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6>3x Sponsored Post Series (Most Popular • 20% Discount)</h6>
-                                                        <p className="text-muted mb-0">
-                                                            I’ll create a series of posts to educate my audience on a specific topic, mentioning your brand throughout and how you can help.
-                                                        </p>
-                                                    </div>
-                                                    <div className='ms-5 text-end'>
-                                                        <h6 className='text-muted mb-5'>$ 2100</h6>
-                                                        <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">Book Now</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </>
-                                    )
-                                }
-
-
-
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
                     <div className='profile-sidebar-wraper'>
                         {/* First edit section */}
-                        <div className={`profile-container mb-3 ${activeSection === 'about' ? '' : 'd-none'}`}>
+                        <div className={`profile-container h-auto ${activeSection === 'about' ? '' : 'd-none'}`}>
                             <div className="d-flex justify-content-between mb-3 pt-2">
                                 <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
@@ -441,7 +459,7 @@ export default function companypage() {
                             </div>
 
                             <div className='pb-2 '>
-                                <h6 className="mb-3">About me</h6>
+                                <h6 className="mb-3">About Company</h6>
 
                                 <div className="mb-4">
                                     <label className="mb-2">Banner image</label>
@@ -465,7 +483,7 @@ export default function companypage() {
                                 </div>
 
                                 <div className="mb-4">
-                                    <label className="mb-2">Profile photo</label>
+                                    <label className="mb-2">Company Logo</label>
                                     <div className="position-relative">
                                         <Image
                                             src={editDetails.profile_image || defaultImagePath}
@@ -485,62 +503,126 @@ export default function companypage() {
                                 </div>
 
                                 <div className="mb-4">
-                                    <label className="mb-2">Name*</label>
+                                    <label className="mb-2">Company Name*</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={editDetails.name}
                                         onChange={changeHandler}
                                         id="name"
-                                        placeholder='John Doe'
+                                        placeholder='Synnc'
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label className="mb-2">Linkedin Username*</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={editDetails.profile_url}
+                                    <label className="mb-2">Description</label>
+                                    <textarea 
+                                        className="form-control" 
+                                        placeholder="Synnc is a platform that connects brands with creators to help them grow their business."
+                                        value={editDetails.description}
                                         onChange={changeHandler}
-                                        id="profile_url"
-                                        placeholder='john-doe'
-                                    />
+                                        id="description"
+                                        rows={4}
+                                    ></textarea>
                                 </div>
                                 <div className="mb-4">
-                                    <label className="mb-2">Current Company*</label>
+                                    <label className="mb-2">Location</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={editDetails.current_company}
                                         onChange={changeHandler}
                                         id="current_company"
-                                        placeholder='Synnc'
+                                        placeholder='United States'
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label className="mb-2">Audience Interest*</label>
+                                    <label className="mb-2">Employees(est)</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         value={editDetails.audience_interest}
                                         onChange={changeHandler}
                                         id="audience_interest"
-                                        placeholder='Finance, Accounting, Startups, HR'
+                                        placeholder='100'
                                     />
+                                </div>
+                                <div className='mb-4'>
+                                    <label className="mb-2">Size</label>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        value={editDetails.name}
+                                        onChange={changeHandler}
+                                        id="name"
+                                    >
+                                        <option value="" className="small text-muted">Select size</option>
+                                        <option value="Small" className="small">Small</option>
+                                        <option value="Medium" className="small">Medium</option>
+                                        <option value="Large" className="small">Large</option>
+                                    </select>
                                 </div>
 
-                                <div>
-                                    <label className="mb-2">Description of you*</label>
-                                    <small className="d-block text-muted mb-2">Welcome brands and introduce yourself</small>
-                                    <textarea
-                                        className="form-control"
-                                        rows={10}
-                                        value={editDetails.description}
-                                        onChange={changeHandler}
-                                        id="description"
-                                        placeholder="Welcome to my profile! I use this to collaborate with great brands and other creators..."
-                                    />
+                                <div className='mb-4 '>
+                                    <label className="mb-2 mt-3">Categories</label>
+                                    <div className="position-relative">
+                                        <div
+                                            className="form-control d-flex flex-wrap gap-2 min-height-auto cursor-pointer"
+                                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                        >
+                                            {selectedCategories.length > 0 ? (
+                                                <>
+                                                    {selectedCategories.map(category => (
+                                                        <span
+                                                            key={category}
+                                                            className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
+                                                        >
+                                                            {category}
+                                                            <Icon
+                                                                icon="mdi:close"
+                                                                className="cursor-pointer"
+                                                                width={16}
+                                                                height={16}
+                                                                onClick={(e) => handleRemoveCategory(category, e)}
+                                                            />
+                                                        </span>
+                                                    ))}
+                                                    {selectedCategories.length > 1 && (
+                                                        <span
+                                                            className="text-muted ms-2 cursor-pointer"
+                                                            onClick={handleClearAllCategories}
+                                                        >
+                                                            Clear all
+                                                        </span>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <span className="text-muted">Select up to 5 categories</span>
+                                            )}
+                                        </div>
+
+                                        {isDropdownOpen && (
+                                            <div className="position-absolute bottom-100 start-0 w-100 mb-1 bg-white border rounded-3 shadow-sm z-3" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                                {categoryOptions.map(option => (
+                                                    <div
+                                                        key={option.value}
+                                                        className={`px-3 py-2 cursor-pointer hover-bg-light ${selectedCategories.includes(option.value) ? 'bg-light' : ''
+                                                            }`}
+                                                        onClick={() => handleCategorySelect(option.value)}
+                                                    >
+                                                        {option.label}
+                                                        {selectedCategories.includes(option.value) && (
+                                                            <Icon icon="mdi:check" className="float-end" />
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                    {selectedCategories.length >= 5 && (
+                                        <small className="text-muted">Maximum 5 categories can be selected</small>
+                                    )}
                                 </div>
+
+
                             </div>
                         </div>
 
