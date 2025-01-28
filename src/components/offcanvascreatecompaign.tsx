@@ -168,9 +168,31 @@ function OffcanvasCreateCompaign(props: any) {
         }
     }, [data])
 
+
+    function formatDate(inputDate:any) {
+        const months:any = {
+          Jan: "01",
+          Feb: "02",
+          Mar: "03",
+          Apr: "04",
+          May: "05",
+          Jun: "06",
+          Jul: "07",
+          Aug: "08",
+          Sep: "09",
+          Oct: "10",
+          Nov: "11",
+          Dec: "12"
+        };
+      
+        const [month, day, year]:any = inputDate.replace(".", "").split(" ");
+
+        const data  = `${year}-${months[month]}-${day.padStart(2, "0")}`
+          return data?.slice(0,data?.length-1);
+      }
+
     const mapper = () => {
-    const startdate = new Date(data?.campaign?.Start_Date).toISOString().split('T')[0];
-    const endDate = new Date(data?.campaign?.End_Date).toISOString().split('T')[0];
+        
         const obj = {
             "Is_Public": data?.campaign?.Is_Public,
             "Headline": data?.campaign?.Headline,
@@ -178,14 +200,15 @@ function OffcanvasCreateCompaign(props: any) {
             "Brief_Description": data?.campaign?.Brief_Description,
             "Campaign_Details": data?.campaign?.Campaign_Details,
             "Is_Ongoing": data?.campaign?.Is_Ongoing,
-            "Start_Date": startdate,
-            "End_Date": endDate,
+            "Start_Date": data?.campaign?.Is_Ongoing ? '' : formatDate(data?.campaign?.Start_Date),
+            "End_Date": data?.campaign?.Is_Ongoing ? '' : formatDate(data?.campaign?.End_Date),
             "Target_Audience": data?.campaign?.Target_Audience,
             "Campaign_Required_Channels": data?.campaign?.Campaign_Required_Channels,
             "Campaign_Media": data?.campaign?.Campaign_Media,
             "Email": data?.campaign?.user?.email,
             "Campaign_Id": data?.campaign?._id
         }
+        console.log(obj,"after data")
         return obj
     }
 
@@ -433,7 +456,6 @@ function OffcanvasCreateCompaign(props: any) {
                                                 id="Start_Date"
                                                 value={dto?.Start_Date}
                                                 onChange={(e: any) => {
-                                                    console.log(e.target.value, "opose")
                                                     setDto((prev: any) => {
                                                         return { ...prev, ["Start_Date"]: e.target.value }
                                                     })

@@ -327,13 +327,12 @@ export const getDiscoverCampaignsForSearch = async (searchText: string, setData:
 
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/search_campaign?headline=${searchText}`)
-        setData(response?.data?.campaigns)
+        setData(response?.data)
         setIsLoading(false)
 
         return response
     } catch (error) {
         setIsLoading(false)
-
         console.log(error, "Error in get campaign list api")
         return error
     }
@@ -345,9 +344,8 @@ export const getDiscoverCampaignsForFilters = async (filter: string, setData: an
 
     try {
         const response: any = await apiController.get(`/dashboard/campaigns/filter_campaigns?${filter}=true`)
-        setData(response?.data?.campaigns)
+        setData(response?.data)
         setIsLoading(false)
-
         return response
     } catch (error) {
         console.log(error, "Error in get campaign list api")
