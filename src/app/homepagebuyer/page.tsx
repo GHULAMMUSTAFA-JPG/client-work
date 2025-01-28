@@ -18,6 +18,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from 'next/navigation';
 import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
 import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
+import { Tooltip } from "@mui/material";
 
 
 function homepagebuyer() {
@@ -52,7 +53,7 @@ function homepagebuyer() {
             <div className="container-fluid">
                 <div className="row mt-3">
                     <div className="col-md-8">
-                        <div className="card welcom-card-height" >
+                        <div className="card welcom-card-height mb-3" >
                             <div className="card-body">
                                 <div className='d-flex align-items-center justify-content-between gap-5'>
                                     <div>
@@ -61,9 +62,15 @@ function homepagebuyer() {
                                         <p className='mb-0 fs-14 text-muted line-clamp-5'>{userData?.Company_Description}</p>
                                     </div>
                                     <div>
-                                        <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal" style={{ width: '25px', height: '25px' }}>
-                                            {/* <p className='mb-0 fs-12 fw-medium ms-auto'>Edit Profile</p> */}
-                                            <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' />
+                                        <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" style={{ width: '25px', height: '25px' }}>
+                                            <div className="d-flex gap-2 align-items-center cursor">
+                                                <Tooltip title="Share Profile" arrow placement="top" className="">
+                                                    <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' />
+                                                </Tooltip>
+                                                <Tooltip title="Edit Profile" arrow placement="top">
+                                                    <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' onClick={() => router.push('/companypage')} />
+                                                </Tooltip>
+                                            </div>
                                         </div>
                                         {userData?.Company_Logo && userData?.Company_Logo !== "" ?
                                             <Image
@@ -82,21 +89,6 @@ function homepagebuyer() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div className="col-md-4">
-                        <div className="card mb-3">
-                            <div className="card-body">
-                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
-                                <PostCalendar />
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div className="row mt-3">
-                    <div className="col-md-8">
                         <div className="card card-with-table">
                             <div className="card-header p-3">
                                 <div className="d-flex align-items-center justify-content-between">
@@ -173,6 +165,7 @@ function homepagebuyer() {
                         </div>
                     </div>
 
+
                     <div className="col-md-4">
                         <div className="card mb-3">
                             <div className="card-body">
@@ -208,8 +201,16 @@ function homepagebuyer() {
                             </div>
                         </div>
 
+                        <div className="card mb-3">
+                            <div className="card-body">
+                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
+                                <PostCalendar />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
                 {/* <TopCardBuyer /> */}
                 {/* <div className="row graphs g-3">
                     <div className="col-md-6">
@@ -224,11 +225,11 @@ function homepagebuyer() {
                 </div> */}
             </div>
             <EditProfileModalBuyer user={user} userProfile={userData} setRendControl={setRendControl} rendControl={rendControl} />
-            <OffcanvasCreateCompaign/>
+            <OffcanvasCreateCompaign />
         </>
     );
 
-    
+
 }
 
 
