@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { addCampaignPostSubmission, handleFileUpload } from "@/@api";
+import { toast } from 'react-toastify';
 interface submitcampaignprops {
 
     "campaign_id": string,
@@ -59,11 +60,17 @@ function SubmitCampaignModal(props: any) {
 
     const submitForm = async (e: any) => {
         e.preventDefault();
-        const result = await addCampaignPostSubmission(dto, rendControl, setRendControl, setIsLoading)
-        // reset()
-        setDto((prev:any)=>{
-            return{...prev,['post_description']: "" ,  ['post_title']: "" , ['media_content'] : []}
-        })
+        if(dto.post_description =="" || dto?.post_title ==""){
+            toast.warn(dto?.post_title =="" ? "Title cannot be empty" : "Description cannot be empty")
+        }
+        else{
+            const result = await addCampaignPostSubmission(dto, rendControl, setRendControl, setIsLoading)
+            // reset()
+            setDto((prev:any)=>{
+                return{...prev,['post_description']: "" ,  ['post_title']: "" , ['media_content'] : []}
+            })
+        }
+        
 
     }
 

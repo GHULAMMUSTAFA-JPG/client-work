@@ -20,6 +20,7 @@ interface EditProfileModalProps {
 }
 let arrayOfSkills: any[]
 function EditProfileModalBuyer(props: EditProfileModalProps) {
+        
     const {  setIsLoading } = useAuth()
     const { userProfile, user,rendControl,setRendControl } = props
 
@@ -27,7 +28,7 @@ function EditProfileModalBuyer(props: EditProfileModalProps) {
     const [newSkill, setNewSkill] = useState<string>("")
     useEffect(() => {
         arrayOfSkills = userProfile?.Skills
-        if (userProfile?.Email) {
+        if (userProfile?._id) {
             const object = mapper()
             setEditUserProfileDto(object)
         }
