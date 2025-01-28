@@ -694,4 +694,16 @@ export const inviteCreatorCall = async (dto: any, setIsLoading: any) => {
     }
 }
 
-
+export const getCompanyPageData = async (email: string, setData: any, setIsLoading: any) => {
+    setIsLoading(true)
+    try {
+        const response = await apiController.get(`/dashboard/buyers/get_buyer/${email}`)
+        setData(response?.data)
+    } catch (error) {
+        console.log(error)
+        setData(null)
+    }
+    finally {
+        setIsLoading(false)
+    }
+}

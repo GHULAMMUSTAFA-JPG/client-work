@@ -6,23 +6,27 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { defaultImagePath } from '@/components/constants';
 import { useEffect, useRef, useState } from 'react';
-import { handleFileUpload, updateProfileInformation } from '@/@api';
+import { getCompanyPageData, handleFileUpload, updateProfileInformation } from '@/@api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { useRouter } from 'next/navigation';
 interface editDtoProps {
     "email": string,
-    "name": string,
-    "profile_url": string,
-    "profile_image": string,
-    "banner_image": string,
-    "description": string,
-    "skills": [
+    "first_name": string,
+    "last_name": string,
+    "company_logo": string,
+    "company_banner": string,
+    "company_name": string,
+    "company_description": string,
+    "company_website": string,
+    "company_linkedin": string,
+    "location": string,
+    "no_of_employees": number,
+    "size": string,
+    "categories": [
         string
     ],
-    "current_company": string,
-    "audience_interest": string,
-    "collaboration_packages": any
+    "year_founded": number
 }
 
 interface editFieldProps {
@@ -50,30 +54,29 @@ interface CategoryOption {
 }
 
 export default function companypage() {
-    const { user, userProfile, setIsLoading, rendControl, setRendControl } = useAuth()
+    const { user, setIsLoading, rendControl, setRendControl } = useAuth()
     const fileInputRef: any = useRef(null);
     const fileInputRef1: any = useRef(null);
+    const router = useRouter()
     const [preview, setPreview] = useState<boolean>(true)
     const [editDetails, setEditDetails] = useState<editDtoProps>(
         {
             "email": "",
-            "name": "",
-            "profile_url": "",
-            "profile_image": "",
-            "banner_image": "",
-            "description": "",
-            "skills": [
-                ""
+            "first_name": "",
+            "last_name": "",
+            "company_logo": "",
+            "company_banner": "",
+            "company_name": "",
+            "company_description": "",
+            "company_website": '',
+            "company_linkedin": '',
+            "location": '',
+            "no_of_employees": 0,
+            "size": '',
+            "categories": [
+                ''
             ],
-            "current_company": "",
-            "audience_interest": "",
-            "collaboration_packages": [
-                {
-                    "package_name": "",
-                    "package_description": "",
-                    "package_price": 0
-                }
-            ]
+            "year_founded": 0
         }
     )
 
@@ -99,7 +102,7 @@ export default function companypage() {
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+    const [userProfile, setUserData] = useState<any>()
     const categoryOptions: CategoryOption[] = [
         { value: 'Sales', label: 'Sales' },
         { value: 'CRM', label: 'CRM' },
@@ -143,16 +146,20 @@ export default function companypage() {
             collabPack?.push(entry)
         })
         userProfile?._id && setEditDetails({
-            "email": userProfile?.Email,
-            "name": userProfile?.Name,
-            "profile_url": userProfile?.Profile_URL,
-            "profile_image": userProfile?.Profile_Image,
-            "banner_image": userProfile?.Banner_Image,
-            "description": userProfile?.Description,
-            "skills": userProfile?.Skills,
-            "current_company": userProfile?.Current_Company,
-            "audience_interest": userProfile?.Audience_Interest,
-            "collaboration_packages": collabPack
+            "email": user?.email,
+            "first_name": "",
+            "last_name": "",
+            "company_logo": userProfile?.Company_Logo,
+            "company_banner": userProfile?.Company_Banner !== "" ? userProfile?.Company_Banner : defaultImagePath,
+            "company_name": userProfile?.Company_Name,
+            "company_description": userProfile?.Company_Description,
+            "company_website": userProfile?.Company_Website,
+            "company_linkedin": userProfile?.Company_Linkedin,
+            "location": userProfile?.Location,
+            "no_of_employees": userProfile?.No_of_Employees && userProfile?.No_of_Employees !== "" ? userProfile?.No_of_Employees : 0,
+            "size": userProfile?.Size && userProfile?.Size !== "" ? userProfile?.Size : 0,
+            "categories": userProfile?.Categories,
+            "year_founded": userProfile?.Year_Founded
         })
 
     }, [userProfile])
@@ -228,28 +235,19 @@ export default function companypage() {
         return mappedArray
     }
 
-    const deleteSection = (index: number) => {
-        setPreview(false)
-        const array = cardDetails
-        array?.splice(index, 1)
-        setCardDetails(array)
-        setTimeout(() => {
-            setPreview(true)
-        }, 100);
-    }
 
 
-    const submitCardDetails = async (e: any) => {
-        setIsLoading(true)
-        e.preventDefault();
-        const reslt = cardDetails
-        editDetails.collaboration_packages = reslt
+    // const submitCardDetails = async (e: any) => {
+    //     setIsLoading(true)
+    //     e.preventDefault();
+    //     const reslt = cardDetails
+    //     editDetails.collaboration_packages = reslt
 
-        setTimeout(() => {
-            submitHandler()
-        }, 600);
+    //     setTimeout(() => {
+    //         submitHandler()
+    //     }, 600);
 
-    }
+    // }
 
     const handleCategorySelect = (value: string) => {
         setSelectedCategories(prev => {
@@ -274,6 +272,11 @@ export default function companypage() {
         setSelectedCategories([]);
     };
 
+
+    useEffect(() => {
+        user?.email && getCompanyPageData(user?.email, setUserData, setIsLoading)
+    }, [user])
+
     return (
         <div className="container">
             <div className='row mt-3'>
@@ -285,7 +288,7 @@ export default function companypage() {
                         {/* Banner Image */}
                         <div className="position-relative">
                             <Image
-                                src={userProfile?.Banner_Image || defaultImagePath}
+                                src={userProfile?.Company_Banner !== "" ? userProfile?.Company_Banner : defaultImagePath}
                                 alt="Profile Banner"
                                 className="object-fit-cover rounded-3 w-100 cover-img"
                                 width={1000}
@@ -298,7 +301,7 @@ export default function companypage() {
                             {/* Profile Image */}
                             <div className="position-relative" style={{ marginTop: '-75px' }}>
                                 <Image
-                                    src={userProfile?.Profile_Image || defaultImagePath}
+                                    src={userProfile?.Company_Logo !== "" ? userProfile?.Company_Logo : defaultImagePath}
                                     alt="Profile Picture"
                                     width={150}
                                     height={150}
@@ -308,41 +311,37 @@ export default function companypage() {
                             {/* Profile Info */}
                             <div className="mt-2">
                                 <div className="d-flex justify-content-between align-items-center gap-2 mb-1">
-                                    <div className=''> <h5 id='name' onClick={editFieldHandler} className="mb-0">Synnc Platform</h5>
+                                    <div className=''> <h5 id='name' className="mb-0">{userProfile?.Company_Name}</h5>
 
                                     </div>
                                     <div className='d-flex align-items-center gap-2'>
-                                        <a><i className="bi bi-globe" style={{ width: "19px", height: "19px" }}></i></a>
-                                        <a href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
+                                        <a href={userProfile?.Company_Website}><i className="bi bi-globe" style={{ width: "19px", height: "19px" }}></i></a>
+                                        <a href={`https://www.linkedin.com/in/${userProfile?.Company_Name}`} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
 
                                     </div>
-
-
                                 </div>
-
 
                                 {/* <p className="mt-2">👋 Welcome to my partnership storefront!</p> */}
 
                                 <div className="mt-3">
-                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>
-                                </div>
+                                    <p>{userProfile?.Company_Description}</p>  </div>
 
                                 {/* Action Buttons */}
                                 <div className="mt-4 d-flex justify-content-between profile-second-section">
 
                                     <div className='d-flex flex-column div-size' style={{ minWidth: '200px' }}>
                                         <label><b>Location</b></label>
-                                        <span className='text-muted mt-2'>Islamabad</span>
+                                        <span className='text-muted mt-2'>{userProfile?.Location}</span>
                                     </div>
                                     <div className='d-flex flex-column' style={{ minWidth: '200px' }}>
                                         <label><b>Employees(est)</b></label>
-                                        <span className='text-muted mt-2'> 100</span>
+                                        <span className='text-muted mt-2'> {userProfile?.No_of_Employees || 0}</span>
                                     </div>
 
                                     <div className='d-flex flex-column' style={{ minWidth: '200px' }}>
                                         <div className=''>
                                             <label className='d-block' ><b>Size</b></label>
-                                            <button type="button" className="bg-info-subtle text-info border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Medium</button>
+                                            <button type="button" className="bg-info-subtle text-info border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">{userProfile?.Size || "Small"}</button>
                                         </div>
                                     </div>
 
@@ -351,26 +350,27 @@ export default function companypage() {
 
                                 <div className="mt-4 d-flex justify-content-between profile-second-section">
 
-                                <div className='d-flex flex-wrap gap-2 justify-content-start' style={{ minWidth: '200px', maxWidth: '200px' }}>
+                                    <div className='d-flex flex-wrap gap-2 justify-content-start' style={{ minWidth: '200px', maxWidth: '200px' }}>
                                         <div className=''>
                                             <label className='d-block' ><b>Categories</b></label>
-                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">LLM</button>
-                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">Information Technology</button>
-                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">Information Technology</button>
-                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">LLM</button>
-                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">Information Technology</button>
-                                           
+                                            {
+                                                userProfile?.Categories?.map((category: any, index: number) => {
+                                                    <button key={index} type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">{category}</button>
+
+                                                })
+                                            }
+
                                         </div>
                                     </div>
 
-                                    
-                                    
+
+
                                     <div className='d-flex flex-column ms-4 ' style={{ minWidth: '200px' }}>
                                         <label><b>Year Founded</b></label>
-                                        <span className='text-muted mt-2'>1995</span>
+                                        <span className='text-muted mt-2'>{userProfile?.Year_Founded}</span>
                                     </div>
                                     <div className='d-flex flex-column ms-4' style={{ minWidth: '200px' }}>
-                                       
+
                                     </div>
 
 
@@ -436,17 +436,17 @@ export default function companypage() {
                         {/* Collaboration Section */}
                         <div>
                             <div className='d-flex justify-content-between mb-2'>
-                            <label className='d-block mt-2'><b>Bigg</b></label>
-                            <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
+                                <label className='d-block mt-2'><b>Bigg</b></label>
+                                <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
                             </div>
-                            
+
 
                             <p className='text-muted'>I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event.</p>
 
                             <div className='d-flex gap-2 mb-2 align-items-center'>
                                 <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
                                 <p className='mb-0'>AI Creators, LLM Developers, Content Creators</p>
-                               
+
                             </div>
                             <div className='d-flex gap-2 justify-content-end'>
                                 <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
@@ -479,7 +479,7 @@ export default function companypage() {
                                     <label className="mb-2">Banner image</label>
                                     <div className="position-relative">
                                         <Image
-                                            src={editDetails.banner_image || defaultImagePath}
+                                            src={editDetails?.company_banner !== "" ? editDetails?.company_banner : defaultImagePath}
                                             alt="Banner"
                                             width={500}
                                             height={100}
@@ -490,7 +490,7 @@ export default function companypage() {
                                             <span className="text-muted">Choose a photo</span>
                                             <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
                                             <input type="file" ref={fileInputRef} onChange={(e: any) => {
-                                                fileHandler(e, 'banner_image')
+                                                fileHandler(e, 'company_banner')
                                             }} style={{ display: 'none' }} />
                                         </div>
                                     </div>
@@ -500,7 +500,7 @@ export default function companypage() {
                                     <label className="mb-2">Company Logo</label>
                                     <div className="position-relative">
                                         <Image
-                                            src={editDetails.profile_image || defaultImagePath}
+                                            src={editDetails.company_logo !== "" ? editDetails?.company_logo : defaultImagePath}
                                             alt="Profile"
                                             width={80}
                                             height={80}
@@ -510,7 +510,7 @@ export default function companypage() {
                                             <span className="text-muted">Choose a photo</span>
                                             <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
                                             <input type="file" ref={fileInputRef1} onChange={(e: any) => {
-                                                fileHandler(e, 'profile_image')
+                                                fileHandler(e, 'company_logo')
                                             }} style={{ display: 'none' }} />
                                         </div>
                                     </div>
@@ -521,20 +521,20 @@ export default function companypage() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        value={editDetails.name}
+                                        value={editDetails.company_name}
                                         onChange={changeHandler}
-                                        id="name"
+                                        id="Company_Name"
                                         placeholder='Synnc'
                                     />
                                 </div>
                                 <div className="mb-4">
                                     <label className="mb-2">Description</label>
-                                    <textarea 
-                                        className="form-control" 
+                                    <textarea
+                                        className="form-control"
                                         placeholder="Synnc is a platform that connects brands with creators to help them grow their business."
-                                        value={editDetails.description}
+                                        value={editDetails.company_description}
                                         onChange={changeHandler}
-                                        id="description"
+                                        id="company_description"
                                         rows={4}
                                     ></textarea>
                                 </div>
@@ -543,20 +543,20 @@ export default function companypage() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        value={editDetails.current_company}
+                                        value={editDetails.location}
                                         onChange={changeHandler}
-                                        id="current_company"
+                                        id="location"
                                         placeholder='United States'
                                     />
                                 </div>
                                 <div className="mb-4">
                                     <label className="mb-2">Employees(est)</label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control"
-                                        value={editDetails.audience_interest}
+                                        value={editDetails.no_of_employees}
                                         onChange={changeHandler}
-                                        id="audience_interest"
+                                        id="no_of_employees"
                                         placeholder='100'
                                     />
                                 </div>
@@ -564,11 +564,11 @@ export default function companypage() {
                                     <label className="mb-2">Size</label>
                                     <select
                                         className="form-select form-select-sm"
-                                        value={editDetails.name}
+                                        value={editDetails.size}
                                         onChange={changeHandler}
-                                        id="name"
+                                        id="size"
                                     >
-                                        <option value="" className="small text-muted">Select size</option>
+                                        <option disabled selected value="" className="small text-muted">Select size</option>
                                         <option value="Small" className="small">Small</option>
                                         <option value="Medium" className="small">Medium</option>
                                         <option value="Large" className="small">Large</option>
@@ -646,7 +646,7 @@ export default function companypage() {
                                 <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
                                     <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
-                                    <button className="btn btn-dark btn-sm ms-3" onClick={submitCardDetails}>Save</button>
+                                    <button className="btn btn-dark btn-sm ms-3" >Save</button>
                                 </div>
                             </div>
 
@@ -669,7 +669,7 @@ export default function companypage() {
                                                         <div >
                                                             <div className="d-flex justify-content-between align-items-center mb-2">
                                                                 <h6 className="mb-0">Card {index + 1}</h6>
-                                                                <Icon icon="material-symbols:delete-outline" className="cursor-pointer" onClick={() => deleteSection(index)} />
+                                                                <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
                                                             </div>
 
                                                             {/* Title */}
