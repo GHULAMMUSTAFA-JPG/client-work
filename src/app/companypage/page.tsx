@@ -308,7 +308,7 @@ export default function companypage() {
                             {/* Profile Info */}
                             <div className="mt-2">
                                 <div className="d-flex justify-content-between align-items-center gap-2 mb-1">
-                                    <div className=''> <h5 id='name' onClick={editFieldHandler} className="mb-0">Profile Name</h5>
+                                    <div className=''> <h5 id='name' onClick={editFieldHandler} className="mb-0">Synnc Platform</h5>
 
                                     </div>
                                     <div className='d-flex align-items-center gap-2'>
@@ -332,7 +332,7 @@ export default function companypage() {
 
                                     <div className='d-flex flex-column div-size' style={{ minWidth: '200px' }}>
                                         <label><b>Location</b></label>
-                                        <span className='text-muted mt-2'>-</span>
+                                        <span className='text-muted mt-2'>Islamabad</span>
                                     </div>
                                     <div className='d-flex flex-column' style={{ minWidth: '200px' }}>
                                         <label><b>Employees(est)</b></label>
@@ -349,15 +349,28 @@ export default function companypage() {
 
                                 </div>
 
-                                <div className="mt-4 d-flex  profile-second-section">
+                                <div className="mt-4 d-flex justify-content-between profile-second-section">
 
-                                    <div className='d-flex flex-column' style={{ minWidth: '288px' }}>
-                                        <label><b>Categories</b></label>
-                                        <span className='text-muted mt-2'> -</span>
+                                <div className='d-flex flex-wrap gap-2 justify-content-start' style={{ minWidth: '200px', maxWidth: '200px' }}>
+                                        <div className=''>
+                                            <label className='d-block' ><b>Categories</b></label>
+                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">LLM</button>
+                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">Information Technology</button>
+                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">Information Technology</button>
+                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">LLM</button>
+                                            <button type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">Information Technology</button>
+                                           
+                                        </div>
                                     </div>
-                                    <div className='d-flex flex-column offset-1 ms-2' style={{ minWidth: '200px' }}>
+
+                                    
+                                    
+                                    <div className='d-flex flex-column ms-4 ' style={{ minWidth: '200px' }}>
                                         <label><b>Year Founded</b></label>
-                                        <span className='text-muted mt-2'> -</span>
+                                        <span className='text-muted mt-2'>1995</span>
+                                    </div>
+                                    <div className='d-flex flex-column ms-4' style={{ minWidth: '200px' }}>
+                                       
                                     </div>
 
 
@@ -439,6 +452,7 @@ export default function companypage() {
                                 <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
                                 <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
                                 <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
+                                <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
                             </div>
 
                             {/* Collaboration Cards */}
