@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { defaultImagePath } from '@/components/constants';
 import { useEffect, useRef, useState } from 'react';
-import { getCompanyPageData, handleFileUpload, updateProfileInformation } from '@/@api';
+import { getCompanyActiveBuyersData, getCompanyPageData, handleFileUpload, updateProfileInformation } from '@/@api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
@@ -58,6 +58,7 @@ export default function companypage() {
     const fileInputRef: any = useRef(null);
     const fileInputRef1: any = useRef(null);
     const router = useRouter()
+    const [page, setPage] = useState<number>(1)
     const [preview, setPreview] = useState<boolean>(true)
     const [editDetails, setEditDetails] = useState<editDtoProps>(
         {
@@ -99,10 +100,11 @@ export default function companypage() {
     const [cardDetails, setCardDetails] = useState<any[]>()
     // Add new state for sidebar visibility
     const [showSidebar, setShowSidebar] = useState(true);
-
+    const [campaignData, setCampaignData] = useState<any>()
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [userProfile, setUserData] = useState<any>()
+    const dropdownRef:any = useRef(null);
     const categoryOptions: CategoryOption[] = [
         { value: 'Sales', label: 'Sales' },
         { value: 'CRM', label: 'CRM' },
@@ -159,7 +161,7 @@ export default function companypage() {
             "no_of_employees": userProfile?.No_of_Employees && userProfile?.No_of_Employees !== "" ? userProfile?.No_of_Employees : 0,
             "size": userProfile?.Size && userProfile?.Size !== "" ? userProfile?.Size : 0,
             "categories": userProfile?.Categories,
-            "year_founded": userProfile?.Year_Founded
+            "year_founded": userProfile?.Year_Founded =="" ? 1995 : userProfile?.Year_Founded
         })
 
     }, [userProfile])
@@ -194,7 +196,7 @@ export default function companypage() {
     const submitHandler = async () => {
         setIsLoading(true)
         try {
-            const response = await axios.put("https://synncapi.onrender.com/dashboard/creators/update_creator", editDetails)
+            const response = await axios.put("https://synncapi.onrender.com/dashboard/buyers/update_buyer", editDetails)
             toast.success('Profile updated successfully')
             setRendControl(!rendControl)
         } catch (error) {
@@ -261,21 +263,43 @@ export default function companypage() {
         });
     };
 
-    // Add these handler functions
     const handleRemoveCategory = (categoryToRemove: string, e: React.MouseEvent) => {
-        e.stopPropagation(); // Prevent dropdown from opening when removing items
+        e.stopPropagation(); 
         setSelectedCategories(prev => prev.filter(category => category !== categoryToRemove));
     };
 
     const handleClearAllCategories = (e: React.MouseEvent) => {
-        e.stopPropagation(); // Prevent dropdown from opening when clearing
+        e.stopPropagation(); 
         setSelectedCategories([]);
     };
 
+    useEffect(() => {
+        function handleClickOutside(event:any) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        }
 
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
     useEffect(() => {
         user?.email && getCompanyPageData(user?.email, setUserData, setIsLoading)
-    }, [user])
+       
+    }, [user, rendControl])
+
+    useEffect(()=>{
+        user?.email && getCompanyActiveBuyersData(user?.email, setCampaignData, setIsLoading, page, campaignData)
+    },[user,rendControl, page])
+
+    useEffect(()=>{
+        const cat = selectedCategories
+        setEditDetails((prev:any)=>{
+            return{...prev , ['categories']: cat}
+        })
+    },[selectedCategories])
 
     return (
         <div className="container">
@@ -355,7 +379,10 @@ export default function companypage() {
                                             <label className='d-block' ><b>Categories</b></label>
                                             {
                                                 userProfile?.Categories?.map((category: any, index: number) => {
-                                                    <button key={index} type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">{category}</button>
+                                                    return(
+
+                                                        <button key={index} type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">{category}</button>
+                                                    )
 
                                                 })
                                             }
@@ -426,38 +453,41 @@ export default function companypage() {
 
 
                     {/* Second profile container - Add onClick */}
-                    <div className={`profile-container ${!(userProfile?.Collaboration_Packages?.length > 0) ? '' : ''}`}
-                        onClick={async () => {
-                            handleSectionClick('collaboration')
-                            const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
-                            setCardDetails(mapper)
-                        }}
+                    <div className={`profile-container`}
+                     
                         style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
-                        <div>
-                            <div className='d-flex justify-content-between mb-2'>
-                                <label className='d-block mt-2'><b>Bigg</b></label>
-                                <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
-                            </div>
-
-
-                            <p className='text-muted'>I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event.</p>
-
-                            <div className='d-flex gap-2 mb-2 align-items-center'>
-                                <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                <p className='mb-0'>AI Creators, LLM Developers, Content Creators</p>
-
-                            </div>
-                            <div className='d-flex gap-2 justify-content-end'>
-                                <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
-                                <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
-                                <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
-                                <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
-                            </div>
-
-                            {/* Collaboration Cards */}
-
-                        </div>
+                        {
+                            campaignData?.campaigns?.map((campaign:any, index:number)=>{
+                                
+                                return(
+                                    <div key={index}>
+                                    <div className='d-flex justify-content-between mb-2'>
+                                        <label className='d-block mt-2'><b>{campaign?.Headline}</b></label>
+                                        <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
+                                    </div>
+        
+                                    <p className='text-muted'>{campaign?.Brief_Description}</p>
+        
+                                    <div className='d-flex gap-2 mb-2 align-items-center'>
+                                        <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
+                                        <p className='mb-0'>{campaign?.Target_Audience}</p>
+        
+                                    </div>
+                                    <div className='d-flex gap-2 justify-content-end'>
+                                        <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
+                                        <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
+                                        <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
+                                        <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
+                                    </div>
+        
+                                    {/* Collaboration Cards */}
+        
+                                </div>
+                                )
+                            })
+                        }
+                    <button onClick={()=>{setPage(page+1)}}>Load more</button>
                     </div>
                 </div>
                 <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
@@ -523,7 +553,7 @@ export default function companypage() {
                                         className="form-control"
                                         value={editDetails.company_name}
                                         onChange={changeHandler}
-                                        id="Company_Name"
+                                        id="company_name"
                                         placeholder='Synnc'
                                     />
                                 </div>
@@ -555,9 +585,22 @@ export default function companypage() {
                                         type="number"
                                         className="form-control"
                                         value={editDetails.no_of_employees}
+                                        min={0}
                                         onChange={changeHandler}
                                         id="no_of_employees"
-                                        placeholder='100'
+                                        placeholder='e.g 100'
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="mb-2">Year founded(est)</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.year_founded}
+                                        
+                                        onChange={changeHandler}
+                                        id="year_founded"
+                                        placeholder='e.g 1996'
                                     />
                                 </div>
                                 <div className='mb-4'>
@@ -575,10 +618,11 @@ export default function companypage() {
                                     </select>
                                 </div>
 
-                                <div className='mb-4 '>
+                                <div className='mb-4 '  ref={dropdownRef}>
                                     <label className="mb-2 mt-3">Categories</label>
                                     <div className="position-relative">
                                         <div
+                                       
                                             className="form-control d-flex flex-wrap gap-2 min-height-auto cursor-pointer"
                                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                         >
