@@ -569,7 +569,7 @@ export const handleFileUpload = async (event: any, setIsLoading?: any) => {
 export const fetchBuyersData = async (setData: any, email: string, setIsLoading?: any) => {
     setIsLoading && setIsLoading(true)
     try {
-        const response = await apiController.get(`/dashboard/buyers/get_buyer/${email}`)
+        const response = await apiController.get(`/dashboard/buyers/get_buyer?email=${email}`)
         setData(response?.data)
         setIsLoading && setIsLoading(false)
         return response?.data
@@ -694,10 +694,10 @@ export const inviteCreatorCall = async (dto: any, setIsLoading: any) => {
     }
 }
 
-export const getCompanyPageData = async (email: string, setData: any, setIsLoading: any) => {
+export const getCompanyPageData = async (email: string, setData: any, setIsLoading:any) => {
     setIsLoading(true)
     try {
-        const response = await apiController.get(`/dashboard/buyers/get_buyer/${email}`)
+        const response = await apiController.get(`/dashboard/buyers/get_buyer?email=${email}`)
         setData(response?.data)
     } catch (error) {
         console.log(error)
@@ -707,6 +707,21 @@ export const getCompanyPageData = async (email: string, setData: any, setIsLoadi
         setIsLoading(false)
     }
 }
+
+export const getCompanyPageDataByID = async (id: string, setData: any, setIsLoading:any) => {
+    setIsLoading(true)
+    try {
+        const response = await apiController.get(`/dashboard/buyers/get_buyer?id=${id}`)
+        setData(response?.data)
+    } catch (error) {
+        console.log(error)
+        setData(null)
+    }
+    finally {
+        setIsLoading(false)
+    }
+}
+
 
 export const getCompanyActiveBuyersData = async (email: string, setData: any, setIsLoading: any,page:number, data:any) => {
     setIsLoading(true)

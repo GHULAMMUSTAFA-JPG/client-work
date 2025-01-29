@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { defaultImagePath } from '@/components/constants';
 import { useEffect, useRef, useState } from 'react';
-import { getCompanyActiveBuyersData, getCompanyPageData, handleFileUpload, updateProfileInformation } from '@/@api';
+import { getCompanyActiveBuyersData, getCompanyPageData, getCompanyPageDataByID, handleFileUpload, updateProfileInformation } from '@/@api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
@@ -53,7 +53,8 @@ interface CategoryOption {
     label: string;
 }
 
-export default function companypage() {
+export default function companypage({ params }:any) {
+    const { id } = params;
     const { user, setIsLoading, rendControl, setRendControl } = useAuth()
     const fileInputRef: any = useRef(null);
     const fileInputRef1: any = useRef(null);
@@ -286,7 +287,7 @@ export default function companypage() {
         };
     }, []);
     useEffect(() => {
-        user?.email && getCompanyPageData(user?.email, setUserData, setIsLoading)
+        id && getCompanyPageDataByID(id, setUserData, setIsLoading)
 
     }, [user, rendControl])
 
@@ -475,13 +476,15 @@ export default function companypage() {
 
                                         </div>
 
-                                        <div className='d-flex gap-2 justify-content-end'>
+                                        {/* <div className='d-flex gap-2 justify-content-end'>
                                             <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
                                             <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
                                             <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
                                             <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
-                                        </div>
+                                        </div> */}
+
                                         {/* Collaboration Cards */}
+
                                     </div>
                                 )
                             })
@@ -493,318 +496,9 @@ export default function companypage() {
                         )}
                     </div>
 
+
                 </div>
-                <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
-                    <div className='profile-sidebar-wraper'>
-                        {/* First edit section */}
-                        <div className={`profile-container h-auto ${activeSection === 'about' ? '' : 'd-none'}`}>
-                            <div className="d-flex justify-content-between mb-3 pt-2">
-                                <h6 className="mb-0 ">Edit Section</h6>
-                                <div>
-                                    <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
-                                    <button className="btn btn-dark btn-sm ms-3" onClick={submitHandler}>Save</button>
-                                </div>
-                            </div>
-
-                            <div className='pb-2 '>
-                                <h6 className="mb-3">About Company</h6>
-
-                                <div className="mb-4">
-                                    <label className="mb-2">Banner image</label>
-                                    <div className="position-relative">
-                                        <Image
-                                            src={editDetails?.company_banner !== "" ? editDetails?.company_banner : defaultImagePath}
-                                            alt="Banner"
-                                            width={500}
-                                            height={100}
-                                            className="w-100 rounded-3 mb-2"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                        <div className="d-flex align-items-center gap-2" onClick={handleClick} style={{ cursor: 'pointer' }}>
-                                            <span className="text-muted">Choose a photo</span>
-                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
-                                            <input type="file" ref={fileInputRef} onChange={(e: any) => {
-                                                fileHandler(e, 'company_banner')
-                                            }} style={{ display: 'none' }} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mb-4">
-                                    <label className="mb-2">Company Logo</label>
-                                    <div className="position-relative">
-                                        <Image
-                                            src={editDetails.company_logo !== "" ? editDetails?.company_logo : defaultImagePath}
-                                            alt="Profile"
-                                            width={80}
-                                            height={80}
-                                            className="rounded-circle mb-2"
-                                        />
-                                        <div className="d-flex align-items-center gap-2" onClick={handleClick1} style={{ cursor: 'pointer' }}>
-                                            <span className="text-muted">Choose a photo</span>
-                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
-                                            <input type="file" ref={fileInputRef1} onChange={(e: any) => {
-                                                fileHandler(e, 'company_logo')
-                                            }} style={{ display: 'none' }} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mb-4">
-                                    <label className="mb-2">Company Name*</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={editDetails.company_name}
-                                        onChange={changeHandler}
-                                        id="company_name"
-                                        placeholder='Synnc'
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="mb-2">Description</label>
-                                    <textarea
-                                        className="form-control"
-                                        placeholder="Synnc is a platform that connects brands with creators to help them grow their business."
-                                        value={editDetails.company_description}
-                                        onChange={changeHandler}
-                                        id="company_description"
-                                        rows={4}
-                                    ></textarea>
-                                </div>
-                                <div className="mb-4">
-                                    <label className="mb-2">Company Website</label>
-                                    <input
-                                        type="url"
-                                        className="form-control"
-                                        value={editDetails.company_website}
-                                        onChange={changeHandler}
-                                        id="company_website"
-                                        placeholder='https://www.synnc.com'
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="mb-2">Company Linkedin</label>
-                                    <input
-                                        type='url'
-                                        className="form-control"
-                                        value={editDetails.company_linkedin}
-                                        onChange={changeHandler}
-                                        id="company_linkedin"
-                                        placeholder='https://www.linkedin.com/company/synnc'
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="mb-2">Location</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={editDetails.location}
-                                        onChange={changeHandler}
-                                        id="location"
-                                        placeholder='United States'
-                                    />
-
-                                </div>
-                                <div className="mb-4">
-                                    <label className="mb-2">Employees(est)</label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        value={editDetails.no_of_employees}
-                                        min={0}
-                                        onChange={changeHandler}
-                                        id="no_of_employees"
-                                        placeholder='e.g 100'
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="mb-2">Year founded(est)</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={editDetails.year_founded}
-
-                                        onChange={changeHandler}
-                                        id="year_founded"
-                                        placeholder='e.g 1996'
-                                    />
-                                </div>
-                                <div className='mb-4'>
-                                    <label className="mb-2">Size</label>
-                                    <select
-                                        className="form-select form-select-sm"
-                                        value={editDetails.size}
-                                        onChange={changeHandler}
-                                        id="size"
-                                    >
-                                        <option disabled selected value="" className="small text-muted">Select size</option>
-                                        <option value="Small" className="small">Small</option>
-                                        <option value="Medium" className="small">Medium</option>
-                                        <option value="Large" className="small">Large</option>
-                                    </select>
-                                </div>
-
-                                <div className='mb-4 ' ref={dropdownRef}>
-                                    <label className="mb-2 mt-3">Categories</label>
-                                    <div className="position-relative">
-                                        <div
-
-                                            className="form-control d-flex flex-wrap gap-2 min-height-auto cursor-pointer"
-                                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                        >
-                                            {selectedCategories.length > 0 ? (
-                                                <>
-                                                    {selectedCategories.map(category => (
-                                                        <span
-                                                            key={category}
-                                                            className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
-                                                        >
-                                                            {category}
-                                                            <Icon
-                                                                icon="mdi:close"
-                                                                className="cursor-pointer"
-                                                                width={16}
-                                                                height={16}
-                                                                onClick={(e) => handleRemoveCategory(category, e)}
-                                                            />
-                                                        </span>
-                                                    ))}
-                                                    {selectedCategories.length > 1 && (
-                                                        <span
-                                                            className="text-muted ms-2 cursor-pointer"
-                                                            onClick={handleClearAllCategories}
-                                                        >
-                                                            Clear all
-                                                        </span>
-                                                    )}
-                                                </>
-                                            ) : (
-                                                <span className="text-muted">Select up to 5 categories</span>
-                                            )}
-                                        </div>
-
-                                        {isDropdownOpen && (
-                                            <div className="position-absolute bottom-100 start-0 w-100 mb-1 bg-white border rounded-3 shadow-sm z-3" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                                {categoryOptions.map(option => (
-                                                    <div
-                                                        key={option.value}
-                                                        className={`px-3 py-2 cursor-pointer hover-bg-light ${selectedCategories.includes(option.value) ? 'bg-light' : ''
-                                                            }`}
-                                                        onClick={() => handleCategorySelect(option.value)}
-                                                    >
-                                                        {option.label}
-                                                        {selectedCategories.includes(option.value) && (
-                                                            <Icon icon="mdi:check" className="float-end" />
-                                                        )}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                    {selectedCategories.length >= 5 && (
-                                        <small className="text-muted">Maximum 5 categories can be selected</small>
-                                    )}
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        {/* Second edit section */}
-                        <div className={`profile-container ${activeSection === 'collaboration' ? '' : 'd-none'}`}>
-                            <div className="d-flex justify-content-between mb-3 pt-2">
-                                <h6 className="mb-0 ">Edit Section</h6>
-                                <div>
-                                    <button className="bg-white border btn btn-sm" onClick={handleCancel}>Cancel</button>
-                                    <button className="btn btn-dark btn-sm ms-3" >Save</button>
-                                </div>
-                            </div>
-
-                            {/* Content Section */}
-                            <div className='pb-2 main-box'>
-                                <h6 className="mb-1">Let's Collaborate</h6>
-                                <p className='text-muted'>Add your collaboration packages here</p>
-                                {/* Stats Section */}
-                                <div className="mb-4">
-                                    <div className="card mb-3">
-                                        {/* <div className="card-header bg-white">
-                                        <h6 className="mb-0">Package</h6>
-                                    </div> */}
-
-                                        {/* Card 1 */}
-                                        {
-                                            preview && cardDetails && cardDetails?.length !== 0 && cardDetails?.map((ele: any, index: number) => {
-                                                return (
-                                                    <div className="card-body" key={index}>
-                                                        <div >
-                                                            <div className="d-flex justify-content-between align-items-center mb-2">
-                                                                <h6 className="mb-0">Card {index + 1}</h6>
-                                                                <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
-                                                            </div>
-
-                                                            {/* Title */}
-                                                            <div className="mb-3">
-                                                                <label className="mb-2">Title</label>
-                                                                <input id="package_name" defaultValue={ele.package_name} onChange={(e) => valueAdder(e, index)} type="text" className="form-control" placeholder="1x Sponsored Post" />
-                                                            </div>
-
-                                                            {/* Description */}
-                                                            <div className="mb-3">
-                                                                <label className="mb-2">Description</label>
-                                                                <textarea
-                                                                    className="form-control"
-                                                                    rows={5}
-                                                                    defaultValue={ele?.package_description}
-                                                                    onChange={(e) => valueAdder(e, index)}
-                                                                    id="package_description"
-                                                                    placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
-                                                                />
-                                                            </div>
-
-                                                            {/* Price */}
-                                                            <div>
-                                                                <label className="mb-2">Price</label>
-                                                                <input id="package_price" defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e) => valueAdder(e, index)} className="form-control" placeholder="$ 100" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-
-
-                                    </div>
-                                    <button className="btn btn-outline-dark w-100" onClick={() => {
-                                        setPreview(false)
-                                        const newEntry = {
-
-                                            package_name: "",
-                                            package_description: "",
-                                            package_price: 0
-
-                                        }
-                                        const newArray: any = cardDetails
-                                        newArray?.push(newEntry)
-                                        setCardDetails(newArray)
-                                        setTimeout(() => {
-                                            setPreview(true)
-                                        }, 100);
-                                    }}>+ Add Card</button>
-                                </div>
-
-                                <button className="btn btn-outline-danger w-100 mt-auto" onClick={() => {
-                                    setPreview(false)
-
-                                    setCardDetails([])
-                                    setTimeout(() => {
-                                        setPreview(true)
-                                    }, 100);
-                                }}>Delete Block</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+         
             </div>
         </div>
     );

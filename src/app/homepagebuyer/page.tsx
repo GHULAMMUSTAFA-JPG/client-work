@@ -22,12 +22,14 @@ import { Tooltip } from "@mui/material";
 
 
 function homepagebuyer() {
-    const { user, setIsLoading, notifications } = useAuth()
+    const { user, setIsLoading, notifications, userProfile } = useAuth()
     const [rendControl, setRendControl] = useState<boolean>(false)
     const [users, setUsers] = useState<any[]>([]);
     const [userData, setUserData] = useState<any>()
     const [activeCampaigns, setActiveCampaigns] = useState<any>()
     const [viewRow, showViewRow] = useState<number>(6)
+    const [linkCopied, setLinkCopied] = useState<boolean>(false)
+
     const router = useRouter()
     useEffect(() => {
 
@@ -48,6 +50,23 @@ function homepagebuyer() {
         setUsers(response.data?.users)
     }
 
+
+    const shareProfile = () => {
+        console.log(userProfile, user)
+        try {
+            const path = window.location.origin + "/company-view/" + userProfile?._id
+            navigator.clipboard.writeText(path);
+            setLinkCopied(true)
+            setTimeout(() => {
+                setLinkCopied(false)
+            }, 5000);
+        } catch (error) {
+
+        }
+
+
+    }
+
     return (
         <>
             <div className="container-fluid">
@@ -64,8 +83,8 @@ function homepagebuyer() {
                                     <div>
                                         <div className="align-items-center cursor d-flex gap-2 justify-content-end mb-3 ms-auto rounded text-white" style={{ width: '25px', height: '25px' }}>
                                             <div className="d-flex gap-2 align-items-center cursor">
-                                                <Tooltip title="Share Profile" arrow placement="top" className="">
-                                                    <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' />
+                                            <Tooltip title={linkCopied ? "Link Copied" : "Share Profile"} arrow placement="top" className="">
+                                            <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' onClick={() => { shareProfile() }} />
                                                 </Tooltip>
                                                 <Tooltip title="Edit Profile" arrow placement="top">
                                                     <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' onClick={() => router.push('/companypage')} />
