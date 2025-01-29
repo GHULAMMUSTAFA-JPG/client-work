@@ -104,7 +104,7 @@ export default function companypage() {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [userProfile, setUserData] = useState<any>()
-    const dropdownRef:any = useRef(null);
+    const dropdownRef: any = useRef(null);
     const categoryOptions: CategoryOption[] = [
         { value: 'Sales', label: 'Sales' },
         { value: 'CRM', label: 'CRM' },
@@ -161,7 +161,7 @@ export default function companypage() {
             "no_of_employees": userProfile?.No_of_Employees && userProfile?.No_of_Employees !== "" ? userProfile?.No_of_Employees : 0,
             "size": userProfile?.Size && userProfile?.Size !== "" ? userProfile?.Size : 0,
             "categories": userProfile?.Categories,
-            "year_founded": userProfile?.Year_Founded =="" ? 1995 : userProfile?.Year_Founded
+            "year_founded": userProfile?.Year_Founded == "" ? 1995 : userProfile?.Year_Founded
         })
 
     }, [userProfile])
@@ -264,17 +264,17 @@ export default function companypage() {
     };
 
     const handleRemoveCategory = (categoryToRemove: string, e: React.MouseEvent) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         setSelectedCategories(prev => prev.filter(category => category !== categoryToRemove));
     };
 
     const handleClearAllCategories = (e: React.MouseEvent) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         setSelectedCategories([]);
     };
 
     useEffect(() => {
-        function handleClickOutside(event:any) {
+        function handleClickOutside(event: any) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setIsDropdownOpen(false);
             }
@@ -287,19 +287,19 @@ export default function companypage() {
     }, []);
     useEffect(() => {
         user?.email && getCompanyPageData(user?.email, setUserData, setIsLoading)
-       
+
     }, [user, rendControl])
 
-    useEffect(()=>{
+    useEffect(() => {
         user?.email && getCompanyActiveBuyersData(user?.email, setCampaignData, setIsLoading, page, campaignData)
-    },[user,rendControl, page])
+    }, [user, rendControl, page])
 
-    useEffect(()=>{
+    useEffect(() => {
         const cat = selectedCategories
-        setEditDetails((prev:any)=>{
-            return{...prev , ['categories']: cat}
+        setEditDetails((prev: any) => {
+            return { ...prev, ['categories']: cat }
         })
-    },[selectedCategories])
+    }, [selectedCategories])
 
     return (
         <div className="container">
@@ -340,7 +340,7 @@ export default function companypage() {
                                     </div>
                                     <div className='d-flex align-items-center gap-2'>
                                         <a href={userProfile?.Company_Website}><i className="bi bi-globe" style={{ width: "19px", height: "19px" }}></i></a>
-                                        <a href={`https://www.linkedin.com/in/${userProfile?.Company_Name}`} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
+                                        <a href={userProfile?.Company_Linkedin} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={19} height={19} className='text-info' /></a>
 
                                     </div>
                                 </div>
@@ -379,7 +379,7 @@ export default function companypage() {
                                             <label className='d-block' ><b>Categories</b></label>
                                             {
                                                 userProfile?.Categories?.map((category: any, index: number) => {
-                                                    return(
+                                                    return (
 
                                                         <button key={index} type="button" className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1">{category}</button>
                                                     )
@@ -453,42 +453,49 @@ export default function companypage() {
 
 
                     {/* Second profile container - Add onClick */}
-                    <div className={`profile-container`}
-                     
+                    <div className={``}
+
                         style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
                         {
-                            campaignData?.campaigns?.map((campaign:any, index:number)=>{
-                                
-                                return(
-                                    <div key={index}>
-                                    <div className='d-flex justify-content-between mb-2'>
-                                        <label className='d-block mt-2'><b>{campaign?.Headline}</b></label>
-                                        <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
+                            campaignData?.campaigns?.map((campaign: any, index: number) => {
+
+                                return (
+                                    <div key={index} className='mb-3 profile-container'>
+                                        <div className='d-flex justify-content-between mb-2'>
+                                            <label className='d-block mt-2'><b>{campaign?.Headline}</b></label>
+                                            <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">Public</button>
+                                        </div>
+
+                                        <p className='text-muted'>{campaign?.Brief_Description}</p>
+
+                                        <div className='d-flex gap-2 mb-2 align-items-center'>
+                                            <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
+                                            <p className='mb-0'>{campaign?.Target_Audience}</p>
+
+                                        </div>
+
+                                        <div className='d-flex gap-2 justify-content-end'>
+                                            <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
+                                            <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
+                                            <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
+                                            <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
+                                        </div>
+
+                                        {/* Collaboration Cards */}
+
                                     </div>
-        
-                                    <p className='text-muted'>{campaign?.Brief_Description}</p>
-        
-                                    <div className='d-flex gap-2 mb-2 align-items-center'>
-                                        <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                        <p className='mb-0'>{campaign?.Target_Audience}</p>
-        
-                                    </div>
-                                    <div className='d-flex gap-2 justify-content-end'>
-                                        <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
-                                        <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
-                                        <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
-                                        <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
-                                    </div>
-        
-                                    {/* Collaboration Cards */}
-        
-                                </div>
                                 )
                             })
                         }
-                    <button onClick={()=>{setPage(page+1)}}>Load more</button>
+                        {campaignData?.pagination?.Total_Pages !== page && (
+                            <div className='d-flex justify-content-center'>
+                                <button className="btn btn-dark flex-shrink-0 btn-sm" onClick={() => { setPage(page + 1) }}>Load more</button>
+                            </div>
+                        )}
                     </div>
+
+
                 </div>
                 <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
                     <div className='profile-sidebar-wraper'>
@@ -569,6 +576,28 @@ export default function companypage() {
                                     ></textarea>
                                 </div>
                                 <div className="mb-4">
+                                    <label className="mb-2">Company Website</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.company_website}
+                                        onChange={changeHandler}
+                                        id="company_website"
+                                        placeholder='https://www.synnc.com'
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="mb-2">Company Linkedin</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={editDetails.company_linkedin}
+                                        onChange={changeHandler}
+                                        id="company_linkedin"
+                                        placeholder='https://www.linkedin.com/company/synnc'
+                                    />
+                                </div>
+                                <div className="mb-4">
                                     <label className="mb-2">Location</label>
                                     <input
                                         type="text"
@@ -578,6 +607,7 @@ export default function companypage() {
                                         id="location"
                                         placeholder='United States'
                                     />
+                                
                                 </div>
                                 <div className="mb-4">
                                     <label className="mb-2">Employees(est)</label>
@@ -597,7 +627,7 @@ export default function companypage() {
                                         type="text"
                                         className="form-control"
                                         value={editDetails.year_founded}
-                                        
+
                                         onChange={changeHandler}
                                         id="year_founded"
                                         placeholder='e.g 1996'
@@ -618,11 +648,11 @@ export default function companypage() {
                                     </select>
                                 </div>
 
-                                <div className='mb-4 '  ref={dropdownRef}>
+                                <div className='mb-4 ' ref={dropdownRef}>
                                     <label className="mb-2 mt-3">Categories</label>
                                     <div className="position-relative">
                                         <div
-                                       
+
                                             className="form-control d-flex flex-wrap gap-2 min-height-auto cursor-pointer"
                                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                         >

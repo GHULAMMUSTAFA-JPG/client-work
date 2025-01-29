@@ -711,7 +711,7 @@ export const getCompanyPageData = async (email: string, setData: any, setIsLoadi
 export const getCompanyActiveBuyersData = async (email: string, setData: any, setIsLoading: any,page:number, data:any) => {
     setIsLoading(true)
     try {
-        const response = await apiController.get(`/dashboard/campaigns/get_buyer_active_campaigns/${email}?page=${page}&limit=2`)
+        const response = await apiController.get(`/dashboard/campaigns/get_buyer_active_campaigns/${email}?page=${page}&limit=5`)
 
       page ==1 ?  setData(response?.data  ) :  
       setData((prevData: any) => ({
