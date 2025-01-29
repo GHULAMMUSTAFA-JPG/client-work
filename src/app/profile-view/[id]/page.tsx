@@ -149,7 +149,23 @@ export default function Index ({ params }:any) {
             </div>
             : 
             <div style={isLoading ? {display:'none'} : {display:'block'}} >
-               No data found for given id
+
+            <div className="container">
+                <div className="row mt-3">
+                    <div className="col-md-8 mx-auto text-center">
+                        <div className="profile-container mb-4 pb-3">
+                            <div className="p-4">
+                                <Icon icon="mdi:store-off" className="text-muted mb-3" width={48} height={48} />
+                                <h5 className="mb-2">Profile not found</h5>
+                                <p className="text-muted mb-0">
+                                    If you were given this link by a creator, please reach out to the creator and let them know.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             </div>
 }
         </div>
