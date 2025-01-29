@@ -292,7 +292,7 @@ export default function companypage({ params }:any) {
     }, [user, rendControl])
 
     useEffect(() => {
-        user?.email && getCompanyActiveBuyersData(user?.email, setCampaignData, setIsLoading, page, campaignData)
+        id && getCompanyActiveBuyersData(id, setCampaignData, setIsLoading, page, campaignData)
     }, [user, rendControl, page])
 
     useEffect(() => {
