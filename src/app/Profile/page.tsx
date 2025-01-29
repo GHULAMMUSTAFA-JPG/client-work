@@ -8,6 +8,7 @@ import { defaultImagePath } from '@/components/constants';
 import { useEffect, useRef, useState } from 'react';
 import { handleFileUpload, updateProfileInformation } from '@/@api';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 interface editDtoProps {
     "email": string,
@@ -43,10 +44,11 @@ interface cardDetailsDto {
     "package_price": number | null
 }
 export default function ProfilePage() {
-    const { user, userProfile, setIsLoading, rendControl, setRendControl } = useAuth()
+    const { user, userProfile, setIsLoading, rendControl, setRendControl, setIsActive } = useAuth()
     const fileInputRef: any = useRef(null);
     const fileInputRef1: any = useRef(null);
     const [preview, setPreview] = useState<boolean>(true)
+    const router = useRouter()
     const [editDetails, setEditDetails] = useState<editDtoProps>(
         {
             "email": "",
@@ -98,7 +100,13 @@ export default function ProfilePage() {
         fileInputRef1 && fileInputRef1.current.click();
     };
 
+
+    useEffect(()=>{
+        setIsActive(5)
+    },[])
+
     useEffect(() => {
+
         let collabPack: any = []
         userProfile?.Collaboration_Packages?.map((element: any) => {
             const entry = {
@@ -167,12 +175,19 @@ export default function ProfilePage() {
 
     const fileHandler = async (e: any, id: string) => {
         const file = e.target.files
-        const filePath: any = await handleFileUpload(e, setIsLoading)
-        if (filePath[0]?.file_urls) {
-            setEditDetails((prev: any) => {
-                return { ...prev, [id]: filePath[0]?.file_urls }
-            })
+        console.log(file?.[0]?.type,"hello")
+        if(file?.[0]?.type == "image/png" ||file?.[0]?.type=="image/jpeg"  ){
+            const filePath: any = await handleFileUpload(e, setIsLoading)
+            if (filePath[0]?.file_urls) {
+                setEditDetails((prev: any) => {
+                    return { ...prev, [id]: filePath[0]?.file_urls }
+                })
+            }
         }
+        else{
+            toast.warn('Only png and jpeg extensions are allowed')
+        }
+      
     }
 
     const valueAdder = (e: any, index: number) => {
@@ -206,6 +221,12 @@ export default function ProfilePage() {
 
 
     const submitCardDetails = async (e: any) => {
+       
+       const check =  cardDetails?.some((entry)=>entry.package_name=="")
+      if(check){
+        toast.warn('Title cannot be empty')
+      }
+      else{
         setIsLoading(true)
         e.preventDefault();
         const reslt = cardDetails
@@ -214,6 +235,8 @@ export default function ProfilePage() {
         setTimeout(() => {
             submitHandler()
         }, 600);
+      }
+       
 
     }
 
@@ -270,8 +293,12 @@ export default function ProfilePage() {
                                 </div>
 
                                 {/* Action Buttons */}
-                               {user?.isBuyer && <div className="mt-4 d-flex gap-3">
-                                    <button className="btn btn-dark" onClick={updateProfile} >
+                                {user?.isBuyer && <div className="mt-4 d-flex gap-3">
+                                    <button className="btn btn-dark" onClick={
+                                        ()=>{
+                                            router.push(`/inbox?id=${userProfile?._id}`)
+                                        }
+                                    } >
                                         DM for Custom Collaborations
                                     </button>
                                 </div>}
@@ -450,9 +477,13 @@ export default function ProfilePage() {
                                             className="w-100 rounded-3 mb-2"
                                             style={{ objectFit: 'cover' }}
                                         />
-                                        <div className="d-flex align-items-center gap-2" onClick={handleClick} style={{ cursor: 'pointer' }}>
-                                            <span className="text-muted">Choose a photo</span>
-                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        <div className="d-flex align-items-center gap-2" style={{ cursor: 'pointer' }}>
+                                            <span className="text-muted" onClick={handleClick}>Choose a photo</span>
+                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" onClick={() => {
+                                                setEditDetails((prev: any) => {
+                                                    return { ...prev, ["banner_image"]: null }
+                                                })
+                                            }} />
                                             <input type="file" ref={fileInputRef} onChange={(e: any) => {
                                                 fileHandler(e, 'banner_image')
                                             }} style={{ display: 'none' }} />
@@ -470,9 +501,13 @@ export default function ProfilePage() {
                                             height={80}
                                             className="rounded-circle mb-2"
                                         />
-                                        <div className="d-flex align-items-center gap-2" onClick={handleClick1} style={{ cursor: 'pointer' }}>
-                                            <span className="text-muted">Choose a photo</span>
-                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        <div className="d-flex align-items-center gap-2" style={{ cursor: 'pointer' }}>
+                                            <span onClick={handleClick1} className="text-muted">Choose a photo</span>
+                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" onClick={() => {
+                                                setEditDetails((prev: any) => {
+                                                    return { ...prev, ["profile_image"]: null }
+                                                })
+                                            }} />
                                             <input type="file" ref={fileInputRef1} onChange={(e: any) => {
                                                 fileHandler(e, 'profile_image')
                                             }} style={{ display: 'none' }} />
@@ -574,8 +609,8 @@ export default function ProfilePage() {
 
                                                             {/* Title */}
                                                             <div className="mb-3">
-                                                                <label className="mb-2">Title</label>
-                                                                <input id="package_name" defaultValue={ele.package_name} onChange={(e) => valueAdder(e, index)} type="text" className="form-control" placeholder="1x Sponsored Post" />
+                                                                <label className="mb-2">Title *</label>
+                                                                <input id="package_name" required={true} defaultValue={ele.package_name} onChange={(e) => valueAdder(e, index)} type="text" className="form-control" placeholder="1x Sponsored Post" />
                                                             </div>
 
                                                             {/* Description */}
@@ -594,7 +629,9 @@ export default function ProfilePage() {
                                                             {/* Price */}
                                                             <div>
                                                                 <label className="mb-2">Price</label>
-                                                                <input id="package_price" defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e) => valueAdder(e, index)} className="form-control" placeholder="$ 100" />
+                                                                <input id="package_price" min='0' defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e) =>{
+                                                                    
+                                                                    valueAdder(e, index)}} className="form-control" placeholder="$ 100" />
                                                             </div>
                                                         </div>
                                                     </div>

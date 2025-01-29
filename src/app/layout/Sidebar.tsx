@@ -10,13 +10,11 @@ interface SidebarProps {
 }
  
 const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
-  const {user} = useAuth()
-  const [isActive, setIsActive] = useState<number>(0);
+  const {user, isActive, setIsActive} = useAuth()
   const [isExpanded, setIsExpanded] = useState(false);
   
   useEffect(()=>{
       if(window){
-        
           if(window.location.pathname == "/campaigns"){
             setIsActive(2)
           }
@@ -26,6 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
           else if(window.location.pathname=="/inbox"){
             user?.isBuyer ?   setIsActive(3) : setIsActive(4)
           }
+         
       }  
 
   },[window.location.pathname])

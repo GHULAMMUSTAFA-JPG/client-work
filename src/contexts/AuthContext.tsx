@@ -20,8 +20,10 @@ interface AuthContextType {
   setSockets: any;
   sockets: any;
   restartSocket: boolean;
-  selectedIds:any;
-  setSelectedIds:any
+  selectedIds: any;
+  setSelectedIds: any;
+  isActive: number;
+  setIsActive: any
 }
 
 interface selectedIdProps {
@@ -55,15 +57,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [notifications, setNotifications] = useState<any>()
   const [conversations, setConversations] = useState<any>()
   const [restartSocket, setRestartSocket] = useState<boolean>(false)
-    const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
-          Message_ID: null,
-          Recipient_ID: null,
-          Sender_ID: null,
-          Conversation_Id: null,
-          Profile_Image: null,
-          Name: null,
-          index: null
-      })
+  const [isActive, setIsActive] = useState<number>(0);
+  const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
+    Message_ID: null,
+    Recipient_ID: null,
+    Sender_ID: null,
+    Conversation_Id: null,
+    Profile_Image: null,
+    Name: null,
+    index: null
+  })
   // Check authentication on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -85,7 +88,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   };
 
-  const restartSockets = async() =>{
+  const restartSockets = async () => {
     setRestartSocket(!restartSocket)
   }
   const logout = () => {
@@ -99,7 +102,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{selectedIds, setSelectedIds,restartSocket,restartSockets, sockets, setSockets, conversations, setConversations, notifications, setNotifications, setIsLoading, isLoading, isAuthenticated, user, setRendControl, rendControl, loginUser, logout, setUserProfile, userProfile }}>
+    <AuthContext.Provider value={{ isActive, setIsActive, selectedIds, setSelectedIds, restartSocket, restartSockets, sockets, setSockets, conversations, setConversations, notifications, setNotifications, setIsLoading, isLoading, isAuthenticated, user, setRendControl, rendControl, loginUser, logout, setUserProfile, userProfile }}>
       {children}
     </AuthContext.Provider>
   );
