@@ -707,3 +707,22 @@ export const getCompanyPageData = async (email: string, setData: any, setIsLoadi
         setIsLoading(false)
     }
 }
+
+export const getCompanyActiveBuyersData = async (email: string, setData: any, setIsLoading: any,page:number, data:any) => {
+    setIsLoading(true)
+    try {
+        const response = await apiController.get(`/dashboard/campaigns/get_buyer_active_campaigns/${email}?page=${page}&limit=2`)
+
+      page ==1 ?  setData(response?.data  ) :  
+      setData((prevData: any) => ({
+        campaigns: [...prevData.campaigns, ...response?.data?.campaigns],
+        pagination: response?.data?.pagination,
+    }));
+    } catch (error) {
+        console.log(error)
+        setData(null)
+    }
+    finally {
+        setIsLoading(false)
+    }
+}
