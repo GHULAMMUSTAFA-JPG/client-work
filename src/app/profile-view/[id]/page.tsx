@@ -20,7 +20,7 @@ export default function Index({ params }: any) {
     return (
         <div className="container">
             {userProfile ?
-                <div className='row mt-3'>
+                <div className='row mt-3 006'>
                     <div className='col-md-8 mx-auto'>
                         {/* First profile container - Add onClick */}
                         <div className='profile-container mb-4 pb-3'
@@ -151,7 +151,7 @@ export default function Index({ params }: any) {
                 <div style={isLoading ? { display: 'none' } : { display: 'block' }} >
 
                     <div className="container">
-                        <div className="row mt-3">
+                        <div className="row mt-3 007">
                             <div className="col-md-8 mx-auto text-center">
                                 <div className="profile-container mb-4 pb-3">
                                     <div className="p-4">

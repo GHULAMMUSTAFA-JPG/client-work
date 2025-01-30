@@ -70,7 +70,7 @@ function homepagebuyer() {
     return (
         <>
             <div className="container-fluid">
-                <div className="row mt-3">
+                <div className="row mt-3 004">
                     <div className="col-md-8">
                         <div className="card welcom-card-height mb-3" >
                             <div className="card-body">

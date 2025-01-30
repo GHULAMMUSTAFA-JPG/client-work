@@ -481,7 +481,9 @@ export default function companypage() {
                                             <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
                                             <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
                                         </div>
+
                                         {/* Collaboration Cards */}
+
                                     </div>
                                 )
                             })
@@ -492,6 +494,7 @@ export default function companypage() {
                             </div>
                         )}
                     </div>
+
 
                 </div>
                 <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
@@ -575,7 +578,7 @@ export default function companypage() {
                                 <div className="mb-4">
                                     <label className="mb-2">Company Website</label>
                                     <input
-                                        type="url"
+                                        type="text"
                                         className="form-control"
                                         value={editDetails.company_website}
                                         onChange={changeHandler}
@@ -586,7 +589,7 @@ export default function companypage() {
                                 <div className="mb-4">
                                     <label className="mb-2">Company Linkedin</label>
                                     <input
-                                        type='url'
+                                        type="text"
                                         className="form-control"
                                         value={editDetails.company_linkedin}
                                         onChange={changeHandler}
@@ -604,7 +607,7 @@ export default function companypage() {
                                         id="location"
                                         placeholder='United States'
                                     />
-
+                                
                                 </div>
                                 <div className="mb-4">
                                     <label className="mb-2">Employees(est)</label>

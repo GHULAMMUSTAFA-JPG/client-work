@@ -131,6 +131,16 @@ body {
         // width: auto;
     }
 
+    .line-break {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 245px;
+        // width: auto;
+    }
+
     .line-clamp-3 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -247,3 +257,5 @@ body {
 .z-3 {
     z-index: 3;
 }
+
+

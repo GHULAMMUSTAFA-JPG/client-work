@@ -243,7 +243,7 @@ export default function ProfilePage() {
 
     return (
         <div className="container">
-            <div className='row mt-3'>
+            <div className='row mt-3 006'>
                 <div className='col-md-8 mx-auto'>
                     {/* First profile container - Add onClick */}
                     <div className='profile-container mb-4 pb-3'
@@ -451,10 +451,10 @@ export default function ProfilePage() {
                         </div>
                     </div>
                 </div>
-                <div className={`col-md-4 ${showSidebar ? '' : 'd-none'}`}>
+                <div className={`col col-md-4 ${showSidebar ? '' : 'd-none'}`}>
                     <div className='profile-sidebar-wraper'>
                         {/* First edit section */}
-                        <div className={`profile-container mb-3 ${activeSection === 'about' ? '' : 'd-none'}`}>
+                        <div className={`profile-container mb-3 d-none d-md-block d-lg-block ${activeSection === 'about' ? '' : 'd-none'}`}>
                             <div className="d-flex justify-content-between mb-3 pt-2">
                                 <h6 className="mb-0 ">Edit Section</h6>
                                 <div>
@@ -559,8 +559,9 @@ export default function ProfilePage() {
                                         placeholder='Finance, Accounting, Startups, HR'
                                     />
                                 </div>
+                                
 
-                                <div>
+                                <div className="mb-4 bg-white">
                                     <label className="mb-2">Description of you*</label>
                                     <small className="d-block text-muted mb-2">Welcome brands and introduce yourself</small>
                                     <textarea

@@ -70,7 +70,7 @@ function Homepage() {
                         </div>
                     </div>
                 </div> */}
-                <div className="row mt-3">
+                <div className="row mt-3 003">
                     <div className="col-md-8">
                         <div className="card mb-3">
                             <div className="card-body">

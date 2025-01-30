@@ -19,7 +19,7 @@ export default function Index ({ params }:any) {
 
     return (
         <div className="container">
-            <div className='row mt-3'>
+            <div className='row mt-3 005'>
                 <div className='col-md-8 mx-auto'>
                     {/* First profile container - Add onClick */}
                     <div className='profile-container mb-4 pb-3'
