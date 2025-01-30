@@ -17,11 +17,12 @@ import { defaultImagePath } from '@/components/constants';
 function DiscoverCreator() {
     const [searchText, setSearchText] = useState<string>('')
     const [campaignData, setCampaignData] = useState<any>()
-    const { setIsLoading, user } = useAuth()
+    const { setIsLoading, user, setIsActive } = useAuth()
     const [pageNo, setPageNo] = useState<number>(1)
     const [limit, setLimit] = useState<number>(30)
     const [selectedCampaign, setSelectedCampaign] = useState<any>(null)
     useEffect(() => {
+        setIsActive(1)
         user?.email && getDiscoverCampaigns(setCampaignData, setIsLoading, user?.email, limit, pageNo)
     }, [user?.email, pageNo])
 

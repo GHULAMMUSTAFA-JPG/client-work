@@ -21,12 +21,13 @@ import { defaultImagePath } from "@/components/constants";
 import { Tooltip } from '@mui/material';
 
 function Homepage() {
-    const { user, setUserProfile, userProfile, setIsLoading, notifications } = useAuth()
+    const { user, setUserProfile, userProfile, setIsLoading, notifications, setIsActive } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [campaigns, setCampaigns] = useState<any>()
     const [linkCopied, setLinkCopied] = useState<boolean>(false)
     // const router = useRouter()
     useEffect(() => {
+        setIsActive(0)
         fetchData()
         user?.email && getCampaignsCreatorsOverview(user?.email, setCampaigns, setIsLoading)
     }, [user])

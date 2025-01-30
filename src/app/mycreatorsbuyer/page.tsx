@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 
 function mycreatorsbuyer() {
-    const { user, setIsLoading, userProfile } = useAuth()
+    const { user, setIsLoading, userProfile, setIsActive } = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [buyersDetails, setBuyerDetails] = useState<any>()
     const [buyerList, setBuyerList] = useState<any>()
@@ -27,7 +27,7 @@ function mycreatorsbuyer() {
     // const router = useRouter()
     useEffect(() => {
         fetchData()
-      
+        setIsActive(1)
     }, [])
 
     const fetchActiveCampaign = async ()=>{

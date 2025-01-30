@@ -24,7 +24,7 @@ const withAuth = <P extends {}>(WrappedComponent: ComponentType<P & { isAuthenti
         if (!isAuthenticated) {
           if (pathname == "/login") {
           }
-          else if(pathname.startsWith("/profile-view/")){
+          else if(pathname.startsWith("/profile-view/") || pathname.startsWith("/company-view/")){
             
           }
           else {

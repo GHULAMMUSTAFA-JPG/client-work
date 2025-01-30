@@ -12,12 +12,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 // import { useRouter } from "next/navigation";
 function CreatorDashboard() {   
-    const {user, setIsLoading} = useAuth()
+    const {user, setIsLoading, setIsActive} = useAuth()
     const [users, setUsers] = useState<any[]>([]);
     const [companyData, setCompanyData] = useState<any>([])
     // const router = useRouter()
     useEffect(() => {
-
+        setIsActive(3)
         fetchData()
       
     }, [])

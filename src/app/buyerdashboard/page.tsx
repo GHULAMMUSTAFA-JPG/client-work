@@ -22,25 +22,22 @@ function Buyerdashboard() {
     const [selectedCampaignDetails, setSelectedCampaignDetails] = useState<any>()
     const [rendControl, setRendControl] = useState<boolean>(false)
     const searchParams = useSearchParams();
+
     useEffect(() => {
         getCampaignsList(user?.email, setCampaignList, setIsLoading)
     }, [rendControl])
 
     useEffect(() => {
         selectedCampaign && getSelectedCampaignsDetails(selectedCampaign?._id, setSelectedCampaignDetails, setIsLoading)
-    }, [selectedCampaign, rendControl])
-
+    }, [selectedCampaign])
 
     useEffect(() => {
         const id = searchParams.get('id');
         if (id) {
-
             getSelectedCampaignsDetails(id, setSelectedCampaignDetails, setIsLoading)
             setCampaigns(false)
-            
         }
     }, [searchParams])
-
 
     return (
         <>

@@ -54,7 +54,7 @@ interface CategoryOption {
 }
 
 export default function companypage() {
-    const { user, setIsLoading, rendControl, setRendControl } = useAuth()
+    const { user, setIsLoading, rendControl, setRendControl, setIsActive } = useAuth()
     const fileInputRef: any = useRef(null);
     const fileInputRef1: any = useRef(null);
     const router = useRouter()
@@ -163,7 +163,9 @@ export default function companypage() {
             "categories": userProfile?.Categories,
             "year_founded": userProfile?.Year_Founded == "" ? 1995 : userProfile?.Year_Founded
         })
-
+       
+        
+        userProfile?.Categories && setSelectedCategories(userProfile?.Categories)
     }, [userProfile])
 
     const changeHandler = async (e: any) => {
@@ -208,7 +210,7 @@ export default function companypage() {
         }
     }
 
-    const fileHandler = async (e: any, id: string) => {
+    const fileHandler: any = async (e: any, id: string) => {
         const file = e.target.files
         const filePath: any = await handleFileUpload(e, setIsLoading)
         if (filePath[0]?.file_urls) {
@@ -287,7 +289,7 @@ export default function companypage() {
     }, []);
     useEffect(() => {
         user?.email && getCompanyPageData(user?.email, setUserData, setIsLoading)
-
+        user?.isBuyer ? setIsActive(4) : undefined
     }, [user, rendControl])
 
     useEffect(() => {
@@ -523,9 +525,13 @@ export default function companypage() {
                                             className="w-100 rounded-3 mb-2"
                                             style={{ objectFit: 'cover' }}
                                         />
-                                        <div className="d-flex align-items-center gap-2" onClick={handleClick} style={{ cursor: 'pointer' }}>
-                                            <span className="text-muted">Choose a photo</span>
-                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        <div className="d-flex align-items-center gap-2" style={{ cursor: 'pointer' }}>
+                                            <span onClick={handleClick} className="text-muted">Choose a photo</span>
+                                            <Icon onClick={() => {
+                                                setEditDetails((prev: any) => {
+                                                    return { ...prev, ["company_banner"]: '' }
+                                                })
+                                            }} icon="material-symbols:delete-outline" className="cursor-pointer" />
                                             <input type="file" ref={fileInputRef} onChange={(e: any) => {
                                                 fileHandler(e, 'company_banner')
                                             }} style={{ display: 'none' }} />
@@ -543,9 +549,13 @@ export default function companypage() {
                                             height={80}
                                             className="rounded-circle mb-2"
                                         />
-                                        <div className="d-flex align-items-center gap-2" onClick={handleClick1} style={{ cursor: 'pointer' }}>
-                                            <span className="text-muted">Choose a photo</span>
-                                            <Icon icon="material-symbols:delete-outline" className="cursor-pointer" />
+                                        <div className="d-flex align-items-center gap-2" style={{ cursor: 'pointer' }}>
+                                            <span onClick={handleClick1} className="text-muted">Choose a photo</span>
+                                            <Icon onClick={() => {
+                                                setEditDetails((prev: any) => {
+                                                    return { ...prev, ['company_logo']: '' }
+                                                })
+                                            }} icon="material-symbols:delete-outline" className="cursor-pointer" />
                                             <input type="file" ref={fileInputRef1} onChange={(e: any) => {
                                                 fileHandler(e, 'company_logo')
                                             }} style={{ display: 'none' }} />
@@ -607,7 +617,7 @@ export default function companypage() {
                                         id="location"
                                         placeholder='United States'
                                     />
-                                
+
                                 </div>
                                 <div className="mb-4">
                                     <label className="mb-2">Employees(est)</label>

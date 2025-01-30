@@ -476,12 +476,12 @@ export default function companypage({ params }:any) {
 
                                         </div>
 
-                                        {/* <div className='d-flex gap-2 justify-content-end'>
+                                        <div className='d-flex gap-2 justify-content-end'>
                                             <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button>
                                             <button className="btn btn-dark flex-shrink-0 btn-sm">Edit</button>
                                             <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
                                             <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button>
-                                        </div> */}
+                                        </div>
 
                                         {/* Collaboration Cards */}
 

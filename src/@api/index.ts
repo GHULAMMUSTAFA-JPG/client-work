@@ -289,6 +289,7 @@ export const deleteCampaign = async (id: string, rendControl: boolean, setRendCo
     try {
         const response: any = await apiController.delete(`/dashboard/campaigns/delete_campaign/${id}`)
         setRendControl(!rendControl)
+        
         return response
     } catch (error) {
         console.log(error, "Error in get campaign list api")
