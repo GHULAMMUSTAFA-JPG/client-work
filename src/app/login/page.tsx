@@ -120,19 +120,20 @@ const AuthPage = () => {
 
     const handleAuth = async () => {
 
-       
+
         setError(null);
         try {
             if (isLogin) {
-            
-                    if (values?.email == "" && values?.password == "") toast.warn("Email and password cannot be empty")
-                    else if (values?.email == "") toast.warn('Email cannot be empty')
-                    else if(values?.password == "") toast.warn('Password cannot be empty')
-                
 
-                
+                if (values?.email == "" && values?.password == "") toast.warn("Email and password cannot be empty")
+                else if (values?.email == "") toast.warn('Email cannot be empty')
+                else if (values?.password == "") toast.warn('Password cannot be empty')
+
+
+
                 else {
-                    setLoader(true);
+                    setIsLoading(true);
+                    setLoader(true)
                     const response: any = await newLogin({
                         email: values?.email,
                         password: values?.password
@@ -142,28 +143,63 @@ const AuthPage = () => {
                         loginUser(response?.data);
                         // router.push('/dashboard');
                     }
+                    else{
+                        setIsLoading(false)
+                    }
                 }
 
 
             } else {
-                setLoader(true);
-                const response = await fetch('https://synncapi.onrender.com/auth/buyer/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ ...values, userType }),
-                });
+                if (values.first_name == "" || !values.first_name) {
+                    toast.warn("First name cannot be empty")
+                }
+                else if (values?.last_name == "" || !values?.last_name) {
+                    toast.warn("Last name cannot be empty")
+                }
+                else if (values?.company_name == "" || !values?.company_name) {
+                    toast.warn("Company name cannot be empty")
+                }
+                else if (values?.email == "") {
+                    toast.warn("Email cannot be empty")
 
-                const data = await response.json();
-                if (data?.detail) {
-                    toast.warn(data?.detail)
+                }
+                else if (values?.company_website == "") {
+                    toast.warn("Company website cannot be empty")
+
+                }
+                else if (values?.password == "") {
+                    toast.warn("Password name cannot be empty")
+                }
+                else if (values?.first_name?.trim() === "") {
+                    toast.warn('Empty spaces are not allowed in name')
+                }
+                else if (values?.last_name?.trim() === "") {
+                    toast.warn('Empty spaces are not allowed in name')
+                }
+                else if (values?.company_name?.trim() === "") {
+                    toast.warn('Empty spaces are not allowed in Company name')
                 }
                 else {
-                    toast.success(data?.message)
-                    setIsLogin(true)
+                    setLoader(true);
+                    const response = await fetch('https://synncapi.onrender.com/auth/buyer/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ ...values, userType }),
+                    });
+
+                    const data = await response.json();
+                    if (data?.detail) {
+                        toast.warn(data?.detail)
+                    }
+                    else {
+                        toast.success(data?.message)
+                        setIsLogin(true)
+                    }
+                    setLoader(false);
                 }
-                setLoader(false);
+
 
             }
         } catch (error: any) {
@@ -283,7 +319,11 @@ const AuthPage = () => {
                         )}
 
                         {userType !== 'creator' && <form onSubmit={(e) => {
+                            e.preventDefault()
+
+
                             handleSubmit(e, handleAuth)
+
                         }}>
 
                             {!isLogin && <>
@@ -390,18 +430,18 @@ const AuthPage = () => {
                                         onChange={handleChange}
                                     />
                                     {!showPassword ? (
-                                        <Icon 
-                                            icon="solar:eye-outline" 
-                                            width={20} 
-                                            height={20} 
+                                        <Icon
+                                            icon="solar:eye-outline"
+                                            width={20}
+                                            height={20}
                                             className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
                                             onClick={() => setShowPassword(true)}
                                         />
                                     ) : (
-                                        <Icon 
-                                            icon="mage:eye-off" 
-                                            width={20} 
-                                            height={20} 
+                                        <Icon
+                                            icon="mage:eye-off"
+                                            width={20}
+                                            height={20}
                                             className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
                                             onClick={() => setShowPassword(false)}
                                         />

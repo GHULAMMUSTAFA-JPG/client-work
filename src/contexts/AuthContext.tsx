@@ -77,15 +77,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const loginUser = (userData: any) => {
+    setIsLoading(true)
     localStorage.setItem("user", JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
     if (userData.isBuyer)
+    {
       router.push("/homepagebuyer");
-
+      setIsLoading(false)
+    }
+    
     else
+    {
       router.push("/homepage")
-
+      setIsLoading(false)
+    }
   };
 
   const restartSockets = async () => {
