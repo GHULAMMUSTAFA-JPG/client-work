@@ -399,7 +399,7 @@ export default function ProfilePage() {
                                                 <div className="card mb-3" key={index} >
                                                     <div className="card-body d-flex justify-content-between align-items-center">
                                                         <div>
-                                                            <h6 className='line-break-650'>{ele?.Package_Name}</h6>      
+                                                            <h6 className='line-break-650 line-clamp-2'>{ele?.Package_Name}</h6>      
                                                             <p className="text-muted mb-0 line-break-650">
                                                                 {ele?.Package_Description}
                                                             </p>
