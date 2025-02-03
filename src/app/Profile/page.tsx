@@ -385,7 +385,10 @@ export default function ProfilePage() {
                         style={{ cursor: 'pointer' }}>
                         {/* Collaboration Section */}
                         <div>
+                            <div className='d-flex justify-content-between align-items-center'>
                             <h5>Let's Collaborate</h5>
+                            {userProfile?.Collaboration_Packages?.length < 1 && <Icon icon="mdi:plus" width="24" height="24" className=' text-muted' />}
+                            </div>
 
                             {/* Collaboration Cards */}
                             <div className="mt-4">
@@ -396,8 +399,8 @@ export default function ProfilePage() {
                                                 <div className="card mb-3" key={index} >
                                                     <div className="card-body d-flex justify-content-between align-items-center">
                                                         <div>
-                                                            <h6>{ele?.Package_Name}</h6>
-                                                            <p className="text-muted mb-0">
+                                                            <h6 className='line-break-650'>{ele?.Package_Name}</h6>      
+                                                            <p className="text-muted mb-0 line-break-650">
                                                                 {ele?.Package_Description}
                                                             </p>
                                                         </div>
@@ -454,7 +457,7 @@ export default function ProfilePage() {
                 <div className={`col col-md-4 ${showSidebar ? '' : 'd-none'}`}>
                     <div className='profile-sidebar-wraper'>
                         {/* First edit section */}
-                        <div className={`profile-container mb-3 d-none d-md-block d-lg-block ${activeSection === 'about' ? '' : 'd-none'}`}>
+                        <div className={`profile-container ${activeSection === 'about' ? 'd-none d-md-block d-lg-block' : 'd-none'}`}>
                             <div className="d-flex justify-content-between mb-3 pt-2">
                                 <h6 className="mb-0 ">Edit Section</h6>
                                 <div>

@@ -195,9 +195,9 @@ function mycreatorsbuyer() {
                                                                             <button className="btn btn-info btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                                 <Icon icon="material-symbols:add" /> <span className="fs-12">ADD TO</span>
                                                                             </button>
-                                                                            <ul className="dropdown-menu p-2" style={{width: "400px", maxHeight: "300px", overflowY: "auto"}}>
+                                                                            <ul className="dropdown-menu p-2 dropdown-menu-end position-fixed" style={{width: "400px", maxHeight: "300px", overflowY: "auto", top: "20%", left: "50%", transform: "translateX(-50%)"}}>
                                                                                 <div className="mb-3">
-                                                                                    <p className="text-muted mb-2 fw-medium">Campaigns</p>
+                                                                                    <p className="text-muted mb-2 fw-medium ">Campaigns</p>
                                                                                     {
                                                                                         activeCampaigns?.campaigns?.map((campaingElement:any, indexNum:number)=>{
                                                                                             return(
@@ -221,8 +221,8 @@ function mycreatorsbuyer() {
                                                                                     <p className="text-muted mb-2 fw-medium">Lists</p>
                                                                                     {buyerList?.map((item: any, index: number) => (
                                                                                         <div key={index} className="d-flex justify-content-between align-items-center mb-2 ms-2">
-                                                                                            <span className="d-flex align-items-center fs-12 text-truncate">
-                                                                                                <Icon icon="tabler:list" className="me-2" />
+                                                                                            <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                                <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
                                                                                                 {item?.List_Name}
                                                                                             </span>
                                                                                             <button 
@@ -349,8 +349,8 @@ function mycreatorsbuyer() {
                                                                                     <p className="text-muted mb-2 fw-medium">Lists</p>
                                                                                     {buyerList?.map((item: any, index: number) => (
                                                                                         <div key={index} className="d-flex justify-content-between align-items-center mb-2 ms-2">
-                                                                                            <span className="d-flex align-items-center fs-12 text-truncate">
-                                                                                                <Icon icon="tabler:list" className="me-2" />
+                                                                                            <span className="d-flex align-items-center fs-12 text-truncate" style={{maxWidth: "300px"}}>
+                                                                                                <Icon icon="tabler:target" className="me-2 flex-shrink-0" />
                                                                                                 {item?.List_Name}
                                                                                             </span>
                                                                                             <button 

@@ -141,6 +141,14 @@ body {
         // width: auto;
     }
 
+    .line-break-650 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        max-width: 650px;
+        // width: auto;
+    }
+
     .line-clamp-3 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
