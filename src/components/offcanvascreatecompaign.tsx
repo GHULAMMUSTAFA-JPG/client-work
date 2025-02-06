@@ -1,4 +1,3 @@
-
 // "use client"
 // import { login } from '@/@api';
 // import useForm from '@/hooks/useForm';
@@ -110,13 +109,77 @@
 // ... existing imports ...
 
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAuth } from '@/contexts/AuthContext';
 import { createCampaign, handleFileUpload, updateCampaign } from '@/@api';
 import { toast } from 'react-toastify';
+
+const AVAILABLE_SKILLS = [
+    "AI/Analytics",
+    "Blog",
+    "Career Coaching",
+    "Creator Tools",
+    "CRM",
+    "Collaboration & Productivity",
+    "Content Creation",
+    "Customer Service",
+    "Customer Success",
+    "Cybersecurity",
+    "Data",
+    "Design",
+    "E-commerce",
+    "Enterprise",
+    "Finance",
+    "HR",
+    "IT & Software Development",
+    "Management & Leadership",
+    "Marketing",
+    "Project Management",
+    "Product Management",
+    "Research",
+    "Security",
+    "Service Businesses",
+    "Sales",
+    "Solopreneurship",
+    "Tech",
+    "Venture Capital",
+    "Writing",
+    "Supply Chain & Logistics",
+    "International Trade",
+    "Business Intelligence",
+    "Change Management",
+    "Mergers & Acquisitions",
+    "Risk Management",
+    "Sustainable Business Practices",
+    "Digital Transformation",
+    "Business Law & Compliance",
+    "Operations Management",
+    "Quality Assurance",
+    "Business Process Outsourcing",
+    "Innovation Management",
+    "Corporate Social Responsibility",
+    "Employee Experience",
+    "Training & Development",
+    "Business Strategy",
+    "Franchising",
+    "Real Estate Investment",
+    "Business Consulting",
+    "Healthcare Management",
+    "Nonprofit Management",
+    "Agricultural Business",
+    "Hospitality Management",
+    "Educational Technology",
+    "Sports Management",
+    "Entertainment Business",
+    "Retail Management",
+    "Manufacturing",
+    "Business Analytics",
+    "Intellectual Property Management",
+];
+
 interface createCampaignDto {
     "Is_Public": boolean,
     "Headline": string,
@@ -140,6 +203,9 @@ function OffcanvasCreateCompaign(props: any) {
     const [startDate, setStartDate] = useState<any>(undefined);
     const [endDate, setEndDate] = useState<any>(undefined);
     const [dto, setDto] = useState<createCampaignDto>()
+    const dropdownRef: any = useRef(null);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
     const { user, setIsLoading } = useAuth()
     // Function to handle calendar icon click
@@ -151,7 +217,6 @@ function OffcanvasCreateCompaign(props: any) {
     };
 
     useEffect(() => {
-
         user?.email && setDto((prev: any) => {
             return { ...prev, ["Email"]: user?.email }
         })
@@ -168,6 +233,18 @@ function OffcanvasCreateCompaign(props: any) {
         }
     }, [data])
 
+    useEffect(() => {
+        function handleClickOutside(event: any) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     function formatDate(inputDate: any) {
         console.log(inputDate)
@@ -206,8 +283,8 @@ function OffcanvasCreateCompaign(props: any) {
             "Brief_Description": data?.campaign?.Brief_Description,
             "Campaign_Details": data?.campaign?.Campaign_Details,
             "Is_Ongoing": data?.campaign?.Is_Ongoing,
-            "Start_Date": data?.campaign?.Is_Ongoing ? '' : data?.campaign?.Start_Date ? formatDate(data?.campaign?.Start_Date): "",
-            "End_Date": data?.campaign?.Is_Ongoing ? '' : data?.campaign?.End_Date ? formatDate(data?.campaign?.End_Date) :'',
+            "Start_Date": data?.campaign?.Is_Ongoing ? '' : data?.campaign?.Start_Date ? formatDate(data?.campaign?.Start_Date) : "",
+            "End_Date": data?.campaign?.Is_Ongoing ? '' : data?.campaign?.End_Date ? formatDate(data?.campaign?.End_Date) : '',
             "Target_Audience": data?.campaign?.Target_Audience,
             "Campaign_Required_Channels": data?.campaign?.Campaign_Required_Channels,
             "Campaign_Media": data?.campaign?.Campaign_Media,
@@ -226,7 +303,7 @@ function OffcanvasCreateCompaign(props: any) {
             "Campaign_Details": '',
             "Is_Ongoing": true,
             "Start_Date": '',
-            "End_Date" : '' ,
+            "End_Date": '',
             "Target_Audience": '',
             "Campaign_Required_Channels": '',
             "Campaign_Media": '',
@@ -319,6 +396,17 @@ function OffcanvasCreateCompaign(props: any) {
             return true
         }
     }
+
+    const handleSkillSelect = (skill: string) => {
+        if (!selectedSkills.includes(skill)) {
+            setSelectedSkills([...selectedSkills, skill]);
+        }
+    };
+
+    const handleRemoveSkill = (skillToRemove: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSelectedSkills(selectedSkills.filter(skill => skill !== skillToRemove));
+    };
 
     return (
         <div
@@ -488,16 +576,93 @@ function OffcanvasCreateCompaign(props: any) {
                                 </div>
                             </div>
 
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                                 <label className="form-label">What type of creators and target audience? *</label>
-                                <input
-                                    type="text"
+                                <select
                                     onChange={updateDto}
-                                    className="form-control"
+                                    className="form-select"
                                     value={dto?.Target_Audience ? dto?.Target_Audience : ""}
-                                    placeholder="AI creators with founders and enterprise employee audiences"
                                     id='Target_Audience'
-                                />
+                                >
+                                    <option value="">Select an option</option>
+                                    <option value="AI creators with founders and enterprise employee audiences">AI creators with founders and enterprise employee audiences</option>
+                                </select>
+                            </div> */}
+
+                            <div className='mb-4 ' ref={dropdownRef}>
+                                <label className="mb-2 mt-3">What type of creators and target audience? *</label>
+                                <div className="position-relative">
+                                    <div
+
+                                        className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
+                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    >
+                                        {selectedSkills.length > 0 ? (
+                                            <>
+                                                {selectedSkills.map(skill => (
+                                                    <span
+                                                        key={skill}
+                                                        className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
+                                                    >
+                                                        {skill}
+                                                        <Icon
+                                                            icon="mdi:close"
+                                                            className="cursor-pointer"
+                                                            width={16}
+                                                            height={16}
+                                                            onClick={(e) => handleRemoveSkill(skill, e)}
+                                                        />
+                                                    </span>
+                                                ))}
+                                                {selectedSkills.length > 1 && (
+                                                    <span
+                                                        className="text-muted ms-2 cursor-pointer"
+                                                        onClick={() => setSelectedSkills([])}
+                                                    >
+                                                        Clear all
+                                                    </span>
+                                                )}
+                                            </>
+                                        ) : (
+                                            <span className="text-muted">Select up to 5 categories</span>
+                                        )}
+                                    </div>
+
+                                    {isDropdownOpen && (
+                                        <div
+                                            className="position-absolute start-0 w-100 mt-1 bg-white border rounded-3 shadow-sm"
+                                            style={{
+                                                maxHeight: '200px',
+                                                overflowY: 'auto',
+                                                top: 'calc(100% + 5px)',
+                                                zIndex: 1050,
+                                                position: 'fixed',
+                                                width: 'inherit'
+                                            }}
+                                        >
+                                            {AVAILABLE_SKILLS.map(skill => (
+                                                <div
+                                                    key={skill}
+                                                    className={`px-3 py-2 cursor-pointer hover-bg-light ${selectedSkills.includes(skill) ? 'bg-light' : ''
+                                                        }`}
+                                                    onClick={() => {
+                                                        if (selectedSkills.length < 5) {
+                                                            handleSkillSelect(skill);
+                                                        }
+                                                    }}
+                                                >
+                                                    {skill}
+                                                    {selectedSkills.includes(skill) && (
+                                                        <Icon icon="mdi:check" className="float-end" />
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                {selectedSkills.length >= 5 && (
+                                    <small className="text-muted">Maximum 5 categories can be selected</small>
+                                )}
                             </div>
 
                             <div className="mb-3">
@@ -521,7 +686,16 @@ function OffcanvasCreateCompaign(props: any) {
                                 </div>
                                 <div className='d-flex gap-2'>
                                     {
-                                        dto?.Campaign_Media && <img src={dto?.Campaign_Media} width={100} height={100} className='border object-fit-cover rounded flex-shrink-0' />
+                                        dto?.Campaign_Media && (
+                                            <>
+                                                <div className='position-relative'>
+                                                    <img src={dto?.Campaign_Media} width={100} height={100} className='border object-fit-cover rounded flex-shrink-0' />
+                                                    <Icon icon="mdi:close-circle" className="position-absolute cross-icon cursor" width={20} height={20} onClick={() => setDto((prev: any) => {
+                                                        return { ...prev, ['Campaign_Media']: '' }
+                                                    })} />
+                                                </div>
+                                            </>
+                                        )
                                     }
                                     <div
                                         className="border-dashed rounded-2 text-center bg-base size-box cursor"
