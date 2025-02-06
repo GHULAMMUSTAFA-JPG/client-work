@@ -398,17 +398,25 @@ export default function ProfilePage() {
                                             return (
                                                 <div className="card mb-3" key={index} >
                                                     <div className="card-body d-flex justify-content-between align-items-center">
-                                                        <div>
-                                                            <h6 className='line-break-650 line-clamp-2'>{ele?.Package_Name}</h6>      
-                                                            <p className="text-muted mb-0 line-break-650">
+
+                                                        
+                                                        <div className='d-flex justify-content-between'>
+                                                        <h6 className='line-break-650 '>{ele?.Package_Name}</h6>
+                                                        <div className='ms-5 text-end'>
+                                                            <h6 className='text-muted w-s'>${ele?.Package_Price}</h6>
+                                                            <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm w-s">Book Now</button>
+                                                        </div>
+                                                            <div/>
+                                                                 
+                                                           
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <p className="text-muted mb-3 ms-3 line-break-769">
                                                                 {ele?.Package_Description}
                                                             </p>
-                                                        </div>
-                                                        <div className='ms-5 text-end'>
-                                                            <h6 className='text-muted'>${ele?.Package_Price}</h6>
-                                                            <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm">Book Now</button>
-                                                        </div>
-                                                    </div>
+
+
                                                 </div>
                                             )
 
