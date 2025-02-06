@@ -273,7 +273,7 @@ const AuthPage = () => {
         <div className="min-vh-100 d-flex align-items-center justify-content-center login-container py-5">
             <div className="position-absolute top-0 start-0 p-3">
                 <Image
-                    src="/assets/images/synnc-logo.svg"
+                    src="/assets/images/synnc-logo-new.png"
                     alt="Synnc"
                     width={120}
                     height={40}

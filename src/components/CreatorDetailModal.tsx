@@ -159,18 +159,22 @@ function CreatorDetailModal(props: any) {
                                             </div> */}
 
                                             <div className="mb-3">
-                                                <p className="text-muted mb-1 fs-12">Status</p>
+                                                <p className="text-muted mb-1">Status</p>
                                                 <span className={selectedPost?.Status == "Rejected" ? "badge bg-danger-subtle fw-medium p-2 text-danger" : selectedPost?.Status == "Pending Approval" ? "badge text-yellow p-2 fw-medium bg-orange-subtle" : "badge p-2 fw-medium text-primary bg-primary-subtle"}>{selectedPost?.Status}</span>
                                             </div>
 
                                             <div className="mb-3">
-                                                <p className="text-muted mb-1 fs-12">Submission Date</p>
+                                                <p className="text-muted mb-1">Submission Date</p>
                                                 <p className="mb-0 fw-medium">{selectedPost?.Submitted_At}</p>
                                             </div>
 
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1">Description</p>
                                                 <p className="mb-0">{selectedPost?.Description && selectedPost?.Description?.length > 200 ? selectedPost?.Description?.slice(0, 200) + "..." : selectedPost?.Description}</p>
+                                            </div>
+                                            <div className="mb-3">
+                                                <p className="text-muted mb-1">Feedback</p>
+                                                <textarea className="form-control" rows={5} placeholder='Write your feedback here'></textarea>
                                             </div>
                                         </div>
                                     </div>

@@ -165,8 +165,14 @@ function SubmitDetailModal(props: any) {
 
                                             <div className="mb-3">
                                                 <p className="text-muted mb-1">Description</p>
-                                                <p className="mb-0">{selectedPost?.Description?.length > 250 ? selectedPost?.Description?.slice(0,250)+ '....' :selectedPost?.Description}</p>
+                                                <p className="mb-0">{selectedPost?.Description?.length > 250 ? selectedPost?.Description?.slice(0, 250) + '....' : selectedPost?.Description}</p>
                                             </div>
+                                            {selectedPost.Status != "Pending Approval" &&
+                                            <div className="mb-3">
+                                                <p className="text-muted mb-1">Feedback</p>
+                                                <p className="mb-0">{selectedPost?.Feedback}</p>
+                                            </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>

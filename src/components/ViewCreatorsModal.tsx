@@ -58,27 +58,27 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" className="text-start ps-4">Creators</th>
-                                                            <th scope="col">Social Platform</th>
+                                                            {/* <th scope="col">Social Platform</th> */}
                                                             <th scope="col">Company</th>
                                                             <th scope="col">Followers</th>
                                                             <th scope="col">Impressions</th>
-                                                            <th scope="col">Average Impressions</th>
+                                                            {/* <th scope="col">Average Impressions</th> */}
                                                             <th scope="col">Engagements</th>
-                                                            <th scope="col">Average Engagements</th>
+                                                            {/* <th scope="col">Average Engagements</th> */}
                                                             <th scope="col">Actions</th>
                                                             {/* <th scope="col">Social Media Value</th> */}
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         {data?.List_Creators?.length !== 0 ? data?.List_Creators?.map((user: any) => (
-                                                            <tr key={user?._id}>
+                                                            <tr key={user?._id} className="cursor hover-bg-light">
                                                                 <td className="text-start ps-4">
                                                                     <div className="d-flex align-items-center">
                                                                         <Image src={user?.Profile_Image || defaultImagePath} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
                                                                         <span className="ms-2 text-truncate">{user?.Name}</span>
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                {/* <td>
                                                                     <div className="d-flex align-items-center justify-content-center mb-2">
                                                                         <span className="ms-2">@{user?.Profile_URL}</span>
                                                                     </div>
@@ -87,7 +87,7 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
 
                                                                         <span className="ms-2 text-truncate"> {user?.Username}</span>
                                                                     </div>
-                                                                </td>
+                                                                </td> */}
                                                                 <td>
                                                                     <p className="mb-2">{user?.Current_Company}</p>
                                                                 </td>
@@ -100,16 +100,8 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                                     {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
                                                                 </td>
                                                                 <td>
-                                                                    <p className="mb-2">{user?.Average_Impressions}</p>
-                                                                    {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                                </td>
-                                                                <td>
                                                                     {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                     <p className="mb-2">{user?.No_of_Engagements?.toLocaleString()}</p>
-                                                                </td>
-                                                                <td>
-                                                                    <p className="mb-2">{user?.Average_Engagements?.toLocaleString()}</p>
-                                                                    {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
                                                                 </td>
                                                                 <td style={{cursor:'pointer'}}>
                                                                     <Icon icon="heroicons:trash" width={22} height={22} id={user?._id} className="text-danger" onClick={deleteCreator} />

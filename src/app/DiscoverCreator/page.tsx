@@ -107,7 +107,7 @@ function DiscoverCreator() {
                             width={40}
                             height={40}
                           />
-                          <p className="fw-medium mb-0 fs-16 line-break">
+                          <p className="fw-medium mb-0 fs-16 line-clamp-1">
                             {campaign?.Headline?.slice(0, 100)}
                           </p>
                         </div>
@@ -151,7 +151,7 @@ function DiscoverCreator() {
                           height="18"
                           className="text-gray flex-shrink-0"
                         />
-                        <p className="mb-0">
+                        <p className="mb-0 line-clamp-1">
                           {campaign?.Target_Audience?.length > 100
                             ? campaign?.Target_Audience?.slice(0, 100) + "..."
                             : campaign?.Target_Audience}
@@ -159,7 +159,7 @@ function DiscoverCreator() {
                       </div>
                       <div className="learnmore-btn d-flex justify-content-end">
                         <button
-                          className="btn btn-dark ms-2 btn-sm w-s"
+                          className="btn btn-dark ms-2 btn-sm w-s mt-2"
                           data-bs-toggle="modal"
                           data-bs-target="#applyModal"
                           onClick={() => {

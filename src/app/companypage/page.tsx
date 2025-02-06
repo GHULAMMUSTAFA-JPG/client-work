@@ -865,7 +865,7 @@ export default function companypage() {
                   <label className="mb-2 mt-3">Categories</label>
                   <div className="position-relative">
                     <div
-                      className="form-control d-flex flex-wrap gap-2 min-height-auto cursor-pointer"
+                      className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     >
                       {selectedCategories.length > 0 ? (

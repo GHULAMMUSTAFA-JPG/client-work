@@ -149,7 +149,7 @@ export default function Header() {
                         <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive" />
                         <a className="navbar-brand">
                             <Image
-                                src="/assets/images/synnc-logo.svg"
+                                src="/assets/images/synnc-logo-new.png"
                                 alt="logo"
                                 width={80}
                                 height={30}
@@ -266,7 +266,7 @@ export default function Header() {
                                                 style={{cursor:'pointer'}}
                                                 >
                                                     <a className="dropdown-item" style={{color:'inherit'}} >
-                                                        <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                                        <div className="d-flex align-items-center cursor-pointer">
 
                                                             <Image
                                                                 src={conversation?.Profile_Image || defaultImagePath}
