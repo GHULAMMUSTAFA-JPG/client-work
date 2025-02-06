@@ -101,9 +101,9 @@ export default function ProfilePage() {
     };
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setIsActive(5)
-    },[])
+    }, [])
 
     useEffect(() => {
 
@@ -175,8 +175,8 @@ export default function ProfilePage() {
 
     const fileHandler = async (e: any, id: string) => {
         const file = e.target.files
-        console.log(file?.[0]?.type,"hello")
-        if(file?.[0]?.type == "image/png" ||file?.[0]?.type=="image/jpeg"  ){
+        console.log(file?.[0]?.type, "hello")
+        if (file?.[0]?.type == "image/png" || file?.[0]?.type == "image/jpeg") {
             const filePath: any = await handleFileUpload(e, setIsLoading)
             if (filePath[0]?.file_urls) {
                 setEditDetails((prev: any) => {
@@ -184,10 +184,10 @@ export default function ProfilePage() {
                 })
             }
         }
-        else{
+        else {
             toast.warn('Only png and jpeg extensions are allowed')
         }
-      
+
     }
 
     const valueAdder = (e: any, index: number) => {
@@ -221,22 +221,22 @@ export default function ProfilePage() {
 
 
     const submitCardDetails = async (e: any) => {
-       
-       const check =  cardDetails?.some((entry)=>entry.package_name=="")
-      if(check){
-        toast.warn('Title cannot be empty')
-      }
-      else{
-        setIsLoading(true)
-        e.preventDefault();
-        const reslt = cardDetails
-        editDetails.collaboration_packages = reslt
 
-        setTimeout(() => {
-            submitHandler()
-        }, 600);
-      }
-       
+        const check = cardDetails?.some((entry) => entry.package_name == "")
+        if (check) {
+            toast.warn('Title cannot be empty')
+        }
+        else {
+            setIsLoading(true)
+            e.preventDefault();
+            const reslt = cardDetails
+            editDetails.collaboration_packages = reslt
+
+            setTimeout(() => {
+                submitHandler()
+            }, 600);
+        }
+
 
     }
 
@@ -295,7 +295,7 @@ export default function ProfilePage() {
                                 {/* Action Buttons */}
                                 {user?.isBuyer && <div className="mt-4 d-flex gap-3">
                                     <button className="btn btn-dark" onClick={
-                                        ()=>{
+                                        () => {
                                             router.push(`/inbox?id=${userProfile?._id}`)
                                         }
                                     } >
@@ -386,8 +386,8 @@ export default function ProfilePage() {
                         {/* Collaboration Section */}
                         <div>
                             <div className='d-flex justify-content-between align-items-center'>
-                            <h5>Let's Collaborate</h5>
-                            {userProfile?.Collaboration_Packages?.length < 1 && <Icon icon="mdi:plus" width="24" height="24" className=' text-muted' />}
+                                <h5>Let's Collaborate</h5>
+                                {userProfile?.Collaboration_Packages?.length < 1 && <Icon icon="mdi:plus" width="24" height="24" className=' text-muted' />}
                             </div>
 
                             {/* Collaboration Cards */}
@@ -397,26 +397,18 @@ export default function ProfilePage() {
                                         userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
                                             return (
                                                 <div className="card mb-3" key={index} >
-                                                    <div className="card-body d-flex justify-content-between align-items-center">
-
-                                                        
-                                                        <div className='d-flex justify-content-between'>
-                                                        <h6 className='line-break-650 '>{ele?.Package_Name}</h6>
-                                                        <div className='ms-5 text-end'>
-                                                            <h6 className='text-muted w-s'>${ele?.Package_Price}</h6>
-                                                            <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm w-s">Book Now</button>
+                                                    <div className="card-body">
+                                                        <div className='d-flex justify-content-between align-items-start mb-3'>
+                                                            <h6 className='mb-0 line-clamp-2'>{ele?.Package_Name}</h6>
+                                                            <div className='ms-5 text-end flex-shrink-0'>
+                                                                <h6 className='text-muted'>${ele?.Package_Price}</h6>
+                                                                <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm w-s">Book Now</button>
+                                                            </div>
                                                         </div>
-                                                            <div/>
-                                                                 
-                                                           
-                                                        </div>
-                                                       
+                                                        <p className="text-muted">
+                                                            {ele?.Package_Description}
+                                                        </p>
                                                     </div>
-                                                    <p className="text-muted mb-3 ms-3 line-break-769">
-                                                                {ele?.Package_Description}
-                                                            </p>
-
-
                                                 </div>
                                             )
 
@@ -570,7 +562,7 @@ export default function ProfilePage() {
                                         placeholder='Finance, Accounting, Startups, HR'
                                     />
                                 </div>
-                                
+
 
                                 <div className="mb-4 bg-white">
                                     <label className="mb-2">Description of you*</label>
@@ -641,9 +633,10 @@ export default function ProfilePage() {
                                                             {/* Price */}
                                                             <div>
                                                                 <label className="mb-2">Price</label>
-                                                                <input id="package_price" min='0' defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e) =>{
-                                                                    
-                                                                    valueAdder(e, index)}} className="form-control" placeholder="$ 100" />
+                                                                <input id="package_price" min='0' defaultValue={ele?.package_price ? ele?.package_price : 0} type="number" onChange={(e) => {
+
+                                                                    valueAdder(e, index)
+                                                                }} className="form-control" placeholder="$ 100" />
                                                             </div>
                                                         </div>
                                                     </div>
