@@ -71,7 +71,7 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                                     </thead>
                                                     <tbody>
                                                         {data?.List_Creators?.length !== 0 ? data?.List_Creators?.map((user: any) => (
-                                                            <tr key={user?._id}>
+                                                            <tr key={user?._id} className="cursor hover-bg-light">
                                                                 <td className="text-start ps-4">
                                                                     <div className="d-flex align-items-center">
                                                                         <Image src={user?.Profile_Image || defaultImagePath} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
