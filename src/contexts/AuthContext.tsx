@@ -23,17 +23,17 @@ interface AuthContextType {
   selectedIds: any;
   setSelectedIds: any;
   isActive: number;
-  setIsActive: any
+  setIsActive: any;
 }
 
 interface selectedIdProps {
-  Message_ID: null | string
-  Recipient_ID: null | string
-  Sender_ID: null | string
-  Conversation_Id: null | string
-  Profile_Image: null | string
-  Name: null | string
-  index: null | number
+  Message_ID: null | string;
+  Recipient_ID: null | string;
+  Sender_ID: null | string;
+  Conversation_Id: null | string;
+  Profile_Image: null | string;
+  Name: null | string;
+  index: null | number;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,13 +50,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
-  const [userProfile, setUserProfile] = useState<any>()
-  const [sockets, setSockets] = useState<any>()
-  const [rendControl, setRendControl] = useState<boolean>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [notifications, setNotifications] = useState<any>()
-  const [conversations, setConversations] = useState<any>()
-  const [restartSocket, setRestartSocket] = useState<boolean>(false)
+  const [userProfile, setUserProfile] = useState<any>();
+  const [sockets, setSockets] = useState<any>();
+  const [rendControl, setRendControl] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [notifications, setNotifications] = useState<any>();
+  const [conversations, setConversations] = useState<any>();
+  const [restartSocket, setRestartSocket] = useState<boolean>(false);
   const [isActive, setIsActive] = useState<number>(0);
   const [selectedIds, setSelectedIds] = useState<selectedIdProps>({
     Message_ID: null,
@@ -65,8 +65,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     Conversation_Id: null,
     Profile_Image: null,
     Name: null,
-    index: null
-  })
+    index: null,
+  });
   // Check authentication on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -77,28 +77,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const loginUser = (userData: any) => {
-    setIsLoading(true)
+    setIsLoading(true);
     localStorage.setItem("user", JSON.stringify(userData));
     setIsAuthenticated(true);
     setUser(userData);
-    if (userData.isBuyer)
-    {
+    if (userData.isBuyer) {
       router.push("/homepagebuyer");
-      setIsLoading(false)
-    }
-    
-    else
-    {
-      router.push("/homepage")
-      setIsLoading(false)
+      setIsLoading(false);
+    } else {
+      router.push("/homepage");
+      setIsLoading(false);
     }
   };
 
   const restartSockets = async () => {
-    setRestartSocket(!restartSocket)
-  }
+    setRestartSocket(!restartSocket);
+  };
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("buyer");
     setIsAuthenticated(false);
     setUser(null);
     if (sockets.readyState === WebSocket.OPEN) {
@@ -108,7 +105,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isActive, setIsActive, selectedIds, setSelectedIds, restartSocket, restartSockets, sockets, setSockets, conversations, setConversations, notifications, setNotifications, setIsLoading, isLoading, isAuthenticated, user, setRendControl, rendControl, loginUser, logout, setUserProfile, userProfile }}>
+    <AuthContext.Provider
+      value={{
+        isActive,
+        setIsActive,
+        selectedIds,
+        setSelectedIds,
+        restartSocket,
+        restartSockets,
+        sockets,
+        setSockets,
+        conversations,
+        setConversations,
+        notifications,
+        setNotifications,
+        setIsLoading,
+        isLoading,
+        isAuthenticated,
+        user,
+        setRendControl,
+        rendControl,
+        loginUser,
+        logout,
+        setUserProfile,
+        userProfile,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
