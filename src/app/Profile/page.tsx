@@ -421,7 +421,7 @@ export default function ProfilePage() {
                                                     <div>
                                                         <h6>1x Sponsored Post</h6>
                                                         <p className="text-muted mb-0">
-                                                            I’ll create a LinkedIn post to educate my audience on the benefits of your company’s offerings, or for anything else you’re interested in promoting, like an upcoming event.
+                                                            I will create a LinkedIn post to educate my audience on the benefits of your company’s offerings, or for anything else you’re interested in promoting, like an upcoming event.
                                                         </p>
                                                     </div>
                                                     <div className='ms-5 text-end'>
@@ -435,7 +435,7 @@ export default function ProfilePage() {
                                                     <div>
                                                         <h6>3x Sponsored Post Series (Most Popular • 20% Discount)</h6>
                                                         <p className="text-muted mb-0">
-                                                            I’ll create a series of posts to educate my audience on a specific topic, mentioning your brand throughout and how you can help.
+                                                            I will ll create a series of posts to educate my audience on a specific topic, mentioning your brand throughout and how you can help.
                                                         </p>
                                                     </div>
                                                     <div className='ms-5 text-end'>
