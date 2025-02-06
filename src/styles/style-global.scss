@@ -271,6 +271,11 @@ body {
             display: none;
         }
     }
+
+    .is-invalid+svg {
+        right: 1rem !important;
+        top: 34% !important;
+    }
 }
 
 .size-btn {

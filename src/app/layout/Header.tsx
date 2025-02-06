@@ -266,7 +266,7 @@ export default function Header() {
                                                 style={{cursor:'pointer'}}
                                                 >
                                                     <a className="dropdown-item" style={{color:'inherit'}} >
-                                                        <div className="d-flex align-items-center hover-bg-light cursor-pointer">
+                                                        <div className="d-flex align-items-center cursor-pointer">
 
                                                             <Image
                                                                 src={conversation?.Profile_Image || defaultImagePath}
