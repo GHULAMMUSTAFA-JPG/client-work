@@ -151,11 +151,13 @@ function DiscoverCreator() {
                           height="18"
                           className="text-gray flex-shrink-0"
                         />
-                        <p className="mb-0 line-clamp-1">
-                          {campaign?.Target_Audience?.length > 100
-                            ? campaign?.Target_Audience?.slice(0, 100) + "..."
-                            : campaign?.Target_Audience}
-                        </p>
+                        {campaign?.Target_Audience?.map((item: any) => {
+                          return (
+                            // <p className="mb-0 line-clamp-1">
+                            <span className="text-gray">{item}, </span>
+                            // </p>
+                          );
+                        })}
                       </div>
                       <div className="learnmore-btn d-flex justify-content-end">
                         <button

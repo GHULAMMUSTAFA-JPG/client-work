@@ -219,7 +219,18 @@ function ApplyModal(props: any) {
                   height="18"
                   className="text-gray flex-shrink-0"
                 />
-                <p className="mb-0">{selectedCampaign?.Target_Audience}</p>
+                {selectedCampaign?.Target_Audience.map(
+                  (item: any, index: number) => (
+                    <p key={index} className="mb-0">
+                      {item}
+
+                      {index < selectedCampaign?.Target_Audience.length - 1 &&
+                        ","}
+                    </p>
+                  )
+                )}
+
+                {/* <p className="mb-0">{selectedCampaign?.Target_Audience}</p> */}
               </div>
               {/* <div className='d-flex gap-2 align-items-center mb-3'>
                                 <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
