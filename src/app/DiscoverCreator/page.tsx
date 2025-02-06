@@ -81,7 +81,7 @@ function DiscoverCreator() {
                                                             width={40}
                                                             height={40}
                                                         />
-                                                        <p className='fw-medium mb-0 fs-16 line-break'>{campaign?.Headline?.slice(0, 100)}</p>
+                                                        <p className='fw-medium mb-0 fs-16 line-clamp-1'>{campaign?.Headline?.slice(0, 100)}</p>
                                                     </div>
 
                                                     <div className='d-flex justify-content-between'>
@@ -99,7 +99,7 @@ function DiscoverCreator() {
                                                             }}
                                                             disabled={campaign?.Is_Applied}
                                                         >{campaign?.Is_Applied ? "Applied" : "Apply"}</button> */}
-                                                           
+
                                                         </div>
 
                                                         {/* <p className='mb-0 text-warning'>{campaign?.Company_Name}</p> */}
@@ -108,15 +108,15 @@ function DiscoverCreator() {
                                                 </div>
                                                 <div className='d-flex gap-2 mb-2 align-items-center'>
                                                     <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                                    <p className='mb-0'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0, 100) + "..." : campaign?.Target_Audience}</p>
+                                                    <p className='mb-0 line-clamp-1'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0, 100) + "..." : campaign?.Target_Audience}</p>
                                                 </div>
                                                 <div className='learnmore-btn d-flex justify-content-end'>
-                                                                <button className='btn btn-dark ms-2 btn-sm w-s' data-bs-toggle="modal" data-bs-target="#applyModal"
-                                                                    onClick={() => {
-                                                                        setSelectedCampaign(campaign)
-                                                                    }}
-                                                                >Learn more</button>
-                                                            </div>
+                                                    <button className='btn btn-dark ms-2 btn-sm w-s mt-2' data-bs-toggle="modal" data-bs-target="#applyModal"
+                                                        onClick={() => {
+                                                            setSelectedCampaign(campaign)
+                                                        }}
+                                                    >Learn more</button>
+                                                </div>
                                                 {/* <div className='d-flex gap-2 mb-3'>
                                                     <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray flex-shrink-0 mt-1' />
                                                     <p className='mb-0'>{campaign?.Campaign_Required_Channels?.length > 100 ? campaign?.Campaign_Required_Channels?.slice(0,100) + "...": campaign?.Campaign_Required_Channels}</p>
@@ -133,7 +133,6 @@ function DiscoverCreator() {
                             setPageNo(pageNo + 1)
                         }} className='btn btn-dark ms-2  w-s '>Load more</button>
                     </div>}
-
                 </div>
             </section >
             <CampaignOffcanvas />

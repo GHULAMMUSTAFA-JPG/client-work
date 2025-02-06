@@ -145,9 +145,20 @@ body {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
-        max-width: 650px;
+        max-width: 650px !important;
+        
         // width: auto;
     }
+
+    .line-break-769 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        max-width: 769px !important;
+       
+        // width: auto;
+    }
+
 
     .line-clamp-3 {
         display: -webkit-box;
