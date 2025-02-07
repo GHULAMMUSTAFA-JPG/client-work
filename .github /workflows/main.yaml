@@ -3,14 +3,14 @@ name: Build
 on:
   push:
     branches:
-      - linkedin_data_fetch 
+      - main
 
 env:
   REGISTRY_NAME: synccacr
   CLUSTER_NAME: synnc-dev-k8
   CLUSTER_RESOURCE_GROUP: synnc-dev-k8
-  IMAGE: synnc-api
-  NAMESPACE: synnc-api
+  IMAGE: synnc-ui
+  NAMESPACE: synnc-ui
 
 jobs:
   setup-build-publish-deploy:
