@@ -94,7 +94,7 @@ export default function Index({ params }: any) {
                     ></div>
                     <p className="mb-0 fs-12 text-warning">
                       <span className="text-dark fw-medium">
-                        {userProfile?.No_of_Followers || 0}+
+                        {userProfile?.No_of_Followers || 0}
                       </span>{" "}
                       followers
                     </p>

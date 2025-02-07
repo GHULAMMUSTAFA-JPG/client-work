@@ -405,7 +405,7 @@ export default function companypage() {
                         style={{ width: "19px", height: "19px" }}
                       ></i>
                     </a>
-                    <a href={userProfile?.Company_Linkedin} target="_blank">
+                    <a href={`https://${userProfile?.Company_Linkedin}`} target="_blank">
                       <Icon
                         style={{ cursor: "pointer" }}
                         icon="mdi:linkedin"
