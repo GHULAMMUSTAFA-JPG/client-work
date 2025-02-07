@@ -552,7 +552,12 @@ function OffcanvasCreateCompaign(props: any) {
                         onClick={() => {
                           setActiveTab("ongoing");
                           setDto((prev: any) => {
-                            return { ...prev, ["Is_Ongoing"]: true };
+                            return {
+                              ...prev,
+                              ["Is_Ongoing"]: true,
+                              ["Start_Date"]: null,
+                              ["End_Date"]: null,
+                            };
                           });
                           dto?.Start_Date && delete dto?.Start_Date;
                           dto?.End_Date && delete dto?.End_Date;

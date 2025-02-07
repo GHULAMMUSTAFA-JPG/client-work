@@ -94,6 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setRestartSocket(!restartSocket);
   };
   const logout = () => {
+    router.push("/login");
     localStorage.removeItem("user");
     localStorage.removeItem("buyer");
     setIsAuthenticated(false);
@@ -101,7 +102,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (sockets.readyState === WebSocket.OPEN) {
       sockets.close(1000, "");
     }
-    router.push("/login");
   };
 
   return (
