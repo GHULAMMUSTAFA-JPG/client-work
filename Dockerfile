@@ -5,7 +5,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 # Copy package.json and package-lock.json for efficient caching
-COPY package.json package-lock.json ./
+COPY package.json  ./
 
 # Install dependencies
 RUN npm install --frozen-lockfile
