@@ -225,6 +225,10 @@ function OffcanvasCreateCompaign(props: any) {
         ? setActiveTab("ongoing")
         : setActiveTab("dateRange");
       setDto(obj);
+      // Set selected skills from Target_Audience when updating campaign
+      if (data?.campaign?.Target_Audience) {
+        setSelectedSkills(data.campaign.Target_Audience);
+      }
     } else {
       Newmapper();
     }
@@ -312,6 +316,7 @@ function OffcanvasCreateCompaign(props: any) {
       Email: user?.email,
     };
     setDto(obj);
+    setSelectedSkills([]); // Reset selected skills for new campaign
     return obj;
   };
 
