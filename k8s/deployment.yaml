@@ -1,0 +1,57 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: syncc-ui
+spec:
+    selector:
+        matchLabels:
+            app: synnc-ui
+    replicas: 2
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxUnavailable: 0
+            maxSurge: 1
+    revisionHistoryLimit: 5
+    template:
+        metadata:
+            name: synnc-ui
+            labels:
+                app: synnc-ui
+        spec:
+            nodeSelector:
+                agentpool: litepreprod
+            containers:
+                - name: synnc-ui
+                  image: synccacr.azurecr.io/synnc-ui:latest
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 3000
+                  resources:
+                      requests:
+                          cpu: 500m
+                          memory: 1000Mi
+                      limits:
+                          cpu: 500m
+                          memory: 1000Mi
+               #   livenessProbe:
+               #     httpGet:
+               #       path: /
+               #       port: 80
+                      #scheme: HTTPS
+               #     initialDelaySeconds: 90
+               #     timeoutSeconds: 90
+               #     periodSeconds: 90
+               #     successThreshold: 1
+               #     failureThreshold: 3
+               #   readinessProbe:
+               #     httpGet:
+               #       path: /
+               #       port: 80
+               #     initialDelaySeconds: 90
+               #     timeoutSeconds: 90
+               #     periodSeconds: 90
+               #     successThreshold: 1
+               #     failureThreshold: 3
+                    
