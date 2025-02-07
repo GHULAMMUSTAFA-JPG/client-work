@@ -221,12 +221,12 @@ function homepagebuyer() {
                                   </td>
                                   <td>
                                     <p className="mb-0">
-                                      {campaign?.Creator_Insights?.Activated}
+                                      {campaign?.Creator_Insights?.Approved}
                                     </p>
                                   </td>
                                   <td>
                                     <p className="mb-0">
-                                      {campaign?.Creator_Insights?.To_Contact}
+                                      {campaign?.Creator_Insights?.Applied}
                                     </p>
                                   </td>
                                   <td>

@@ -189,7 +189,7 @@ function CampaignFilterModal(props: any) {
                             </div>
                             <div className='d-flex gap-2 align-items-center mb-3'>
                             <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                <p className='mb-0'>{selectedCampaign?.Target_Audience}</p>
+                                <p className='mb-0'>{selectedCampaign?.Target_Audience?.join(' , ')}</p>
                             </div>
                             
                             <p className='mb-2 fw-medium fs-16'>Campaign Details</p>

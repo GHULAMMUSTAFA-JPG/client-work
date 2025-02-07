@@ -75,7 +75,7 @@ function Campaigns() {
                                                                         </div>
                                                                         <div className='d-flex gap-2 mb-4 align-items-center'>
                                                                             <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                                                            <p className='mb-0'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0, 100) + "..." : campaign?.Target_Audience}</p>
+                                                                            <p className='mb-0'>{campaign?.Target_Audience?.join(' , ')}</p>
                                                                         </div>
                                                                         <div className='d-flex gap-3 justify-content-end'>
                                                                             <button className='btn btn-outline-dark' id={(campaign?._id)} onClick={handleRowClick}>Manage Submissions</button>
@@ -120,7 +120,7 @@ function Campaigns() {
                                                                         </div>
                                                                         <div className='d-flex gap-2 mb-4 align-items-center'>
                                                                             <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                                                            <p className='mb-0'>{campaign?.Target_Audience?.length > 100 ? campaign?.Target_Audience?.slice(0, 100) + "..." : campaign?.Target_Audience}</p>
+                                                                            <p className='mb-0'>{campaign?.Target_Audience?.join(' , ')}</p>
                                                                         </div>
                                                                         <div className='d-flex gap-3 justify-content-end'>
                                                                             <button className='btn btn-dark' key={index} onClick={() => {

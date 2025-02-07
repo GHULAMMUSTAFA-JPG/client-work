@@ -579,7 +579,7 @@ export default function companypage() {
                       height="18"
                       className="text-gray flex-shrink-0"
                     />
-                    <p className="mb-0">{campaign?.Target_Audience}</p>
+                    <p className="mb-0">{campaign?.Target_Audience?.join(' , ')}</p>
                   </div>
 
                   <div className="d-flex gap-2 justify-content-end">
@@ -595,7 +595,7 @@ export default function companypage() {
                       onClick={() => {
                         setCompaignId(campaign?._id);
                       }}
-                      className="btn btn-dark text-white  flex-shrink-0 btn-sm btn btn-outline-dark fs-12 btn-sm ms-3"
+                      className="btn btn-dark text-white  flex-shrink-0 btn-sm btn btn-outline-dark fs-12 btn-sm"
                       data-bs-toggle="offcanvas"
                       data-bs-target="#offcanvasRight2"
                       aria-controls="offcanvasRight2"

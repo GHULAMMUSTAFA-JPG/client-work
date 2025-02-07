@@ -565,7 +565,7 @@ export default function companypage({ params }: any) {
                       height="18"
                       className="text-gray flex-shrink-0"
                     />
-                    <p className="mb-0">{campaign?.Target_Audience}</p>
+                    <p className="mb-0">{campaign?.Target_Audience?.join(' , ')}</p>
                   </div>
 
                   <div className="d-flex gap-2 justify-content-end">

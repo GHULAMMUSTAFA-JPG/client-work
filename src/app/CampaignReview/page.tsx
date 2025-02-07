@@ -255,7 +255,7 @@ function CampaignOverview({
                       <h4 className="mb-0 me-2 fs-20">
                         {
                           selectedCampaignDetails?.campaign?.Creator_Insights?.[
-                            "To_Contact"
+                            "Applied"
                           ]
                         }
                       </h4>
