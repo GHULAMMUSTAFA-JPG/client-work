@@ -121,12 +121,13 @@ export const updateProfileInformation = async (
 export const fetchBuyerDiscoveryData = async (
   email: string,
   setData: any,
-  setIsLoading: any
+  setIsLoading: any,
+  query: string
 ) => {
   setIsLoading(true);
   try {
     const response: any = await apiController.get(
-      `/dashboard/buyers/discover_creators/${email}`
+      `/dashboard/buyers/discover_creators/${email}?query=${query}`
     );
     setIsLoading(false);
     setData(response?.data);
@@ -559,7 +560,11 @@ export const getCampaignsCreatorsOverview = async (
   }
 };
 
-export const applyCampaign = async (dto: any, setIsLoading?: any) => {
+export const applyCampaign = async (
+  dto: any,
+  setDescription: any,
+  setIsLoading?: any
+) => {
   setIsLoading && setIsLoading(true);
   try {
     const response: any = await apiController.post(
@@ -571,6 +576,7 @@ export const applyCampaign = async (dto: any, setIsLoading?: any) => {
       "applyCampaignCloseModalButton"
     );
     result && result?.click();
+    setDescription("");
     return response;
   } catch (error) {
     setIsLoading && setIsLoading(false);

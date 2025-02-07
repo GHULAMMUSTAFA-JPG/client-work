@@ -34,8 +34,10 @@ function mycreatorsbuyer() {
   const [activeCampaigns, setActiveCampaign] = useState<any>();
   const [rendControl, setRendControl] = useState<boolean>(false);
   const [rendControls, setRendControls] = useState<boolean>(false);
+  const [query, setquery] = useState<string>("");
   const router = useRouter();
   // const router = useRouter()
+  console.log("buyersDetails", buyersDetails);
   useEffect(() => {
     fetchData();
     setIsActive(1);
@@ -47,9 +49,26 @@ function mycreatorsbuyer() {
 
   useEffect(() => {
     if (user?.email) {
-      fetchBuyerDiscoveryData(user?.email, setBuyerDetails, setIsLoading);
+      // fetchBuyerDiscoveryData(user?.email, setBuyerDetails, setIsLoading);
       getSavedList(user?.email, setBuyerList, setIsLoading);
       fetchActiveCampaign();
+    }
+  }, [user?.email, rendControl]);
+
+  useEffect(() => {
+    if (query == "") {
+      setRendControl(!rendControl);
+    }
+  }, [query]);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetchBuyerDiscoveryData(
+        user?.email,
+        setBuyerDetails,
+        setIsLoading,
+        query
+      );
     }
   }, [user?.email, rendControl]);
 
@@ -93,7 +112,11 @@ function mycreatorsbuyer() {
     );
     console.log(response);
   };
-
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      setRendControl(!rendControl);
+    }
+  };
   return (
     <>
       <div className="container-fluid">
@@ -159,8 +182,11 @@ function mycreatorsbuyer() {
                 <input
                   type="text"
                   className="form-control custom-input"
+                  onChange={(e) => setquery(e.target.value)}
+                  value={query}
                   id="exampleFormControlInput1"
                   placeholder="Search"
+                  onKeyPress={handleKeyPress} //
                 />
                 <Icon
                   icon="ph:magnifying-glass"
@@ -210,7 +236,11 @@ function mycreatorsbuyer() {
                                       className="cursor hover-bg-light"
                                       onClick={(e) => {
                                         // Don't navigate if clicking the dropdown
-                                        if ((e.target as HTMLElement).closest('.drop-down-table')) {
+                                        if (
+                                          (e.target as HTMLElement).closest(
+                                            ".drop-down-table"
+                                          )
+                                        ) {
                                           return;
                                         }
                                         window.open(
