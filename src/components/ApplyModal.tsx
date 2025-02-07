@@ -11,36 +11,36 @@ import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "./constants";
 
 function ApplyModal(props: any) {
-  const { user, setIsLoading } = useAuth();
-  const { selectedCampaign, disable } = props;
-  console.log("selectedCampaign", selectedCampaign);
-  const applyCreatorProgram = (e: any) => {
-    e.preventDefault();
-    applyCampaign(
-      {
-        campaign_id: selectedCampaign?._id,
-        creator_email: user?.email,
-      },
-      setIsLoading
-    );
-  };
-  return (
-    <>
-      <div
-        className="modal fade applied-btn-container"
-        id="applyModal"
-        tabIndex={-1}
-        aria-labelledby="applyModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-          <div className="modal-content">
-            {/* <div className="modal-header">
+    const { user, setIsLoading } = useAuth();
+    const { selectedCampaign, disable } = props;
+    console.log("selectedCampaign", selectedCampaign);
+    const applyCreatorProgram = (e: any) => {
+        e.preventDefault();
+        applyCampaign(
+            {
+                campaign_id: selectedCampaign?._id,
+                creator_email: user?.email,
+            },
+            setIsLoading
+        );
+    };
+    return (
+        <>
+            <div
+                className="modal fade applied-btn-container"
+                id="applyModal"
+                tabIndex={-1}
+                aria-labelledby="applyModalLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                    <div className="modal-content">
+                        {/* <div className="modal-header">
                             <h1 className="modal-title fs-5" id="exampleModalLabel">Campaign Details</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div> */}
-            <div className="modal-body p-4">
-              {/* <div className="accordion accordion-flush" id="accordionFlushExample">
+                        <div className="modal-body p-4">
+                            {/* <div className="accordion accordion-flush" id="accordionFlushExample">
                                 <div className="accordion-item mb-0">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
@@ -186,50 +186,50 @@ function ApplyModal(props: any) {
                                     </div>
                                 </div>
                             </div> */}
-              <div className="d-flex gap-3 justify-content-between">
-                <div>
-                  <p className="fw-medium mb-2 fs-18">
-                    {selectedCampaign?.Headline}
-                  </p>
-                  <p className="text-warning">
-                    {selectedCampaign?.Brief_Description}
-                  </p>
-                </div>
-                <div className="d-flex gap-2">
-                  <Image
-                    src={selectedCampaign?.Company_Logo || defaultImagePath}
-                    className="border object-fit-cover rounded flex-shrink-0"
-                    alt="logo"
-                    width={110}
-                    height={110}
-                  />
-                  <button
-                    type="button"
-                    id="applyCampaignCloseModalButton"
-                    className="btn-close ms-2"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-              </div>
-              <div className="d-flex gap-2 align-items-center mb-3">
-                <Icon
-                  icon="solar:eye-broken"
-                  width="18"
-                  height="18"
-                  className="text-gray flex-shrink-0"
-                />
-                <p className="mb-0">{selectedCampaign?.Target_Audience?.join(' , ')}</p>
-              </div>
-              {/* <div className='d-flex gap-2 align-items-center mb-3'>
+                            <div className="d-flex gap-3 justify-content-between">
+                                <div>
+                                    <p className="fw-medium mb-2 fs-18">
+                                        {selectedCampaign?.Headline}
+                                    </p>
+                                    <p className="text-warning">
+                                        {selectedCampaign?.Brief_Description}
+                                    </p>
+                                </div>
+                                <div className="d-flex gap-2">
+                                    <Image
+                                        src={selectedCampaign?.Company_Logo || defaultImagePath}
+                                        className="border object-fit-cover rounded flex-shrink-0"
+                                        alt="logo"
+                                        width={110}
+                                        height={110}
+                                    />
+                                    <button
+                                        type="button"
+                                        id="applyCampaignCloseModalButton"
+                                        className="btn-close ms-2"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                            </div>
+                            <div className="d-flex gap-2 align-items-center mb-3">
+                                <Icon
+                                    icon="solar:eye-broken"
+                                    width="18"
+                                    height="18"
+                                    className="text-gray flex-shrink-0"
+                                />
+                                <p className="mb-0">{selectedCampaign?.Target_Audience?.join(' , ')}</p>
+                            </div>
+                            {/* <div className='d-flex gap-2 align-items-center mb-3'>
                                 <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray' />
                                 <p className='mb-0'>{selectedCampaign?.Campaign_Required_Channels}</p>
                             </div> */}
-              <p className="mb-2 fw-medium fs-16">Campaign Details</p>
-              <p className="text-warning mb-0">
-                {selectedCampaign?.Campaign_Details}
-              </p>
-              {/* <hr className='text-warning'/>
+                            <p className="mb-2 fw-medium fs-16">Campaign Details</p>
+                            <p className="text-warning mb-0">
+                                {selectedCampaign?.Campaign_Details}
+                            </p>
+                            {/* <hr className='text-warning'/>
                             <div className="mb-3">
                                 <label className="mb-2 fw-medium fs-16">Send a message to Apply</label>
                                 <textarea
@@ -239,25 +239,56 @@ function ApplyModal(props: any) {
                                 ></textarea>
                             </div> */}
 
-              <button
-                className={`btn ${
-                  selectedCampaign?.Is_Applied ? "btn-dark" : "btn-info"
-                } w-100 mt-4`}
-                onClick={applyCreatorProgram}
-                disabled={selectedCampaign?.Is_Applied || disable}
-              >
-                {selectedCampaign?.Is_Applied ? "Applied" : "Apply"}
-              </button>
-            </div>
-            {/* <div className="modal-footer">
+                            <div className=" fw-medium mt-3 fs-16">
+
+                                <p className=" mb-2">Send a Message to Apply</p>
+
+                                <div className="overflow-hiden" style={{ maxHeight: "200px" }}>
+                                    <textarea 
+                                        className="form-control p-2"
+                                        placeholder="Describe the type of collaboration you're interested in and share details on pricing to help brands make a quick decision."
+                                        id="floatingTextarea2" 
+                                        style={{ minHeight: "80px", height: "auto", resize: "none" }}
+                                        onChange={(e) => {
+                                            e.target.style.height = 'auto';
+                                            e.target.style.height = e.target.scrollHeight + 'px';
+                                        }}
+                                    ></textarea>
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                className={`btn ${selectedCampaign?.Is_Applied ? "btn-dark" : "btn-info"
+                                    } w-100 mt-4`}
+                                onClick={applyCreatorProgram}
+                                disabled={selectedCampaign?.Is_Applied || disable}
+                            >
+                                {selectedCampaign?.Is_Applied ? "Applied" : "Apply"}
+                            </button>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        {/* <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary">Apply filters</button>
                         </div> */}
-          </div>
-        </div>
-      </div>
-    </>
-  );
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default ApplyModal;

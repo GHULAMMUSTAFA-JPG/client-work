@@ -552,7 +552,7 @@ export default function companypage({ params }: any) {
                 <div key={index} className="mb-3 profile-container">
                   <div className="d-flex justify-content-between mb-2">
                     <label className="d-block mt-2">
-                      <b>{campaign?.Headline}</b>
+                      <b className="line-clamp-1">{campaign?.Headline}</b>
                     </label>
                     <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">
                       Public
