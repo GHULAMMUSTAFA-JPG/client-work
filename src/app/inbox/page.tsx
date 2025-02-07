@@ -183,7 +183,7 @@ const Inbox = () => {
                                 })
                                 :
                                 <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
-                                    No Conservation found
+                                    No Conversation found
                                 </div>
                         }
                     </div>
