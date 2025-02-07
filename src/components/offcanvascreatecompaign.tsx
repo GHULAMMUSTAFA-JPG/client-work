@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const AVAILABLE_SKILLS = [
   "AI/Analytics",
-  "Blog",
+  "Blog", 
   "Career Coaching",
   "Creator Tools",
   "CRM",
@@ -76,8 +76,8 @@ interface createCampaignDto {
   Brief_Description: string;
   Campaign_Details: string;
   Is_Ongoing: boolean;
-  Start_Date?: string;
-  End_Date?: string;
+  Start_Date?: string | null;
+  End_Date?: string | null;
   Target_Audience: string[];
   Campaign_Required_Channels: string;
   Campaign_Media: string;
@@ -175,15 +175,15 @@ function OffcanvasCreateCompaign(props: any) {
       Campaign_Details: data?.campaign?.Campaign_Details,
       Is_Ongoing: data?.campaign?.Is_Ongoing,
       Start_Date: data?.campaign?.Is_Ongoing
-        ? ""
+        ? null
         : data?.campaign?.Start_Date
         ? formatDate(data?.campaign?.Start_Date)
-        : "",
+        : null,
       End_Date: data?.campaign?.Is_Ongoing
-        ? ""
+        ? null
         : data?.campaign?.End_Date
         ? formatDate(data?.campaign?.End_Date)
-        : "",
+        : null,
       Target_Audience: data?.campaign?.Target_Audience,
       Campaign_Required_Channels: data?.campaign?.Campaign_Required_Channels,
       Campaign_Media: data?.campaign?.Campaign_Media,
@@ -201,8 +201,8 @@ function OffcanvasCreateCompaign(props: any) {
       Brief_Description: "",
       Campaign_Details: "",
       Is_Ongoing: true,
-      Start_Date: "",
-      End_Date: "",
+      Start_Date: null,
+      End_Date: null,
       Target_Audience: [],
       Campaign_Required_Channels: "",
       Campaign_Media: "",
@@ -444,16 +444,12 @@ function OffcanvasCreateCompaign(props: any) {
                         }`}
                         onClick={() => {
                           setActiveTab("ongoing");
-                          setDto((prev: any) => {
-                            return {
-                              ...prev,
-                              ["Is_Ongoing"]: true,
-                              ["Start_Date"]: null,
-                              ["End_Date"]: null,
-                            };
-                          });
-                          dto?.Start_Date && delete dto?.Start_Date;
-                          dto?.End_Date && delete dto?.End_Date;
+                          setDto((prev: any) => ({
+                            ...prev,
+                            Is_Ongoing: true,
+                            Start_Date: null,
+                            End_Date: null
+                          }));
                         }}
                         type="button"
                         id="Is_Ongoing"
@@ -472,9 +468,10 @@ function OffcanvasCreateCompaign(props: any) {
                           activeTab === "dateRange" ? "active text-white" : ""
                         }`}
                         onClick={() => {
-                          setDto((prev: any) => {
-                            return { ...prev, ["Is_Ongoing"]: false };
-                          });
+                          setDto((prev: any) => ({
+                            ...prev,
+                            Is_Ongoing: false
+                          }));
                           setActiveTab("dateRange");
                         }}
                         type="button"
@@ -496,22 +493,26 @@ function OffcanvasCreateCompaign(props: any) {
                       <input
                         type="date"
                         id="Start_Date"
-                        value={dto?.Start_Date}
+                        value={dto?.Start_Date || ''}
                         onChange={(e: any) => {
-                          setDto((prev: any) => {
-                            return { ...prev, ["Start_Date"]: e.target.value };
-                          });
+                          setDto((prev: any) => ({
+                            ...prev,
+                            Start_Date: e.target.value,
+                            Is_Ongoing: false
+                          }));
                         }}
                         className="form-control"
                       />
                       <span className="input-group-text">→</span>
                       <input
                         type="date"
-                        value={dto?.End_Date}
+                        value={dto?.End_Date || ''}
                         onChange={(e: any) =>
-                          setDto((prev: any) => {
-                            return { ...prev, ["End_Date"]: e.target.value };
-                          })
+                          setDto((prev: any) => ({
+                            ...prev,
+                            End_Date: e.target.value,
+                            Is_Ongoing: false
+                          }))
                         }
                         id="End_Date"
                         className="form-control"
