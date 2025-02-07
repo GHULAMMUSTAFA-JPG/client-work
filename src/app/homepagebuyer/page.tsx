@@ -268,12 +268,14 @@ function homepagebuyer() {
                           <div className="d-flex gap-2 mb-3 ">
                             {notify?.Notification_Icon_Type ==
                               "new_campaign_application" && (
-                              <Icon
-                                icon="ci:add-plus"
-                                width="22"
-                                height="22"
-                                className="text-info"
-                              />
+                              <div style={{width: "22px", height: "22px"}}>
+                                <Icon
+                                  icon="ci:add-plus"
+                                  width="22" 
+                                  height="22"
+                                  className="text-info"
+                                />
+                              </div>
                             )}
                             {notify?.Notification_Icon_Type ==
                               "campaign_application_accepted" && (
@@ -312,7 +314,7 @@ function homepagebuyer() {
                               />
                             )}
 
-                            <div className="flex-grow-1">
+                            <div className="flex-grow-1 ">
                               <p className="mb-0 fw-medium">{notify?.Title}</p>
                               <p className="mb-0 fs-12 text-warning line-clamp-1">
                                 {notify?.Message}

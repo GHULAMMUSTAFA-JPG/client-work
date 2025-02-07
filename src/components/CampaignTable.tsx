@@ -51,7 +51,7 @@ const CampaignTable = (props: any) => {
                       tabIndex={0}
                     >
                       <div className="card listing-card">
-                        <div className="card-body">
+                        <div className="card-body table-responsive">
                           <table className="table align-middle table-hover mb-0">
                             <thead>
                               <tr>
@@ -143,7 +143,7 @@ const CampaignTable = (props: any) => {
                                                     ?.In_Discussion
                                                 }
                                               </p>
-                                              <p className="fs-12 text-warning mb-0">
+                                              <p className="fs-12 text-warning mb-0 w-s">
                                                 In Discussion
                                               </p>
                                             </div>
@@ -167,7 +167,7 @@ const CampaignTable = (props: any) => {
                                               : "Private"}
                                           </span>
                                         </td>
-                                        <td className="text-center">
+                                        <td className="text-center w-s">
                                           <Icon
                                             onClick={() => {
                                               setSelectedCampaign(camp);

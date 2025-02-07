@@ -309,7 +309,7 @@ export default function ProfilePage() {
                                         <div className="card h-100">
                                             <div className="card-body">
                                                 <p className="text-muted">Total Followers</p>
-                                                <h5>{userProfile?.No_of_Followers}+</h5>
+                                                <h5>{userProfile?.No_of_Followers}</h5>
                                             </div>
                                         </div>
                                     </div>
