@@ -45,5 +45,4 @@ yarn-error.log*
 next-env.d.ts
 package-lock.json
 
-main.yaml
-Dockerfile
+/.github/workflows/main.yml
