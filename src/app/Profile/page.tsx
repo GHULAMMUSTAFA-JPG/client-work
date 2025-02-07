@@ -626,7 +626,7 @@ export default function ProfilePage() {
                                                                     defaultValue={ele?.package_description}
                                                                     onChange={(e) => valueAdder(e, index)}
                                                                     id="package_description"
-                                                                    placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
+                                                                    placeholder="I will create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
                                                                 />
                                                             </div>
 
