@@ -140,6 +140,29 @@ export default function Header() {
         }
     }
 
+    const handlePlanUpgrade = async () => {
+        try {
+            // Close WebSocket connection before redirecting
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.close();
+            }
+            
+            const response = await fetch(`https://synncapi.onrender.com/payments/create-customer-portal?user_id=${userProfile?._id}`, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json'
+                }
+            });
+            
+            const url = await response.json();
+            if (url) {
+                window.location.href = url;
+            }
+        } catch (error) {
+            console.error('Error creating portal session:', error);
+        }
+    };
+
     return (
         <>
             {isLoading && <Loader />}
@@ -311,22 +334,19 @@ export default function Header() {
                             </a>
 
                             <ul className="dropdown-menu sign-out-menu p-0">
-                                {/* <li><a className="dropdown-item" href="#">
-                                    Update Profile
-                                </a>
-                                </li> */}
-                                <li><a className="dropdown-item" href="#" onClick={navigateToSignIn}>
-                                    <form className="d-flex" role="search">
-                                        {/* {(pathname !== '/' && pathname !== '/login') && ( */}
-                                        <p
-                                            className="mb-0"
-                                        >
-                                            Sign Out
-                                        </p>
-
-                                    </form>
-
-                                </a>
+                                {user?.isBuyer && (
+                                    <li>
+                                        <a className="dropdown-item" href="#" onClick={handlePlanUpgrade}>
+                                            Plan Upgrade
+                                        </a>
+                                    </li>
+                                )}
+                                <li>
+                                    <a className="dropdown-item" href="#" onClick={navigateToSignIn}>
+                                        <form className="d-flex" role="search">
+                                            <p className="mb-0">Sign Out</p>
+                                        </form>
+                                    </a>
                                 </li>
                             </ul>
                         </div>

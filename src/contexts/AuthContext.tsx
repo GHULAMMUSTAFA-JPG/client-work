@@ -94,14 +94,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setRestartSocket(!restartSocket);
   };
   const logout = () => {
-    router.push("/login");
     localStorage.removeItem("user");
-    localStorage.removeItem("buyer");
     setIsAuthenticated(false);
     setUser(null);
-    if (sockets.readyState === WebSocket.OPEN) {
+    
+    // Safely close socket if it exists
+    if (sockets && sockets.readyState === WebSocket.OPEN) {
       sockets.close(1000, "");
     }
+    
+    // Reset all states
+    setUserProfile(null);
+    setSockets(null);
+    setNotifications(null);
+    setConversations(null);
+    setSelectedIds({
+      Message_ID: null,
+      Recipient_ID: null,
+      Sender_ID: null,
+      Conversation_Id: null,
+      Profile_Image: null,
+      Name: null,
+      index: null,
+    });
+    
+    router.push('/');
   };
 
   return (

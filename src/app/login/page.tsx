@@ -140,8 +140,28 @@ const AuthPage = () => {
                     });
                     setLoader(false);
                     if (response?.data) {
-                        loginUser(response?.data);
-                        // router.push('/dashboard');
+                        // Store subscription status in localStorage along with other user data
+                        const userData = {
+                            ...response.data,
+                            subscription_status: response.data.subscription_status
+                        };
+                        loginUser(userData);
+                        
+                        // Check if user is a buyer and handle subscription
+                        if (response.data.isBuyer) {
+                            console.log('Subscription status:', response.data.subscription_status);
+                            if (!response.data.subscription_status?.has_active_subscription && 
+                                response.data.subscription_status?.requires_payment) {
+                                router.push('/stripe');
+                            } else {
+                                toast.success("Login successful");
+                                router.push('/homepagebuyer');
+                            }
+                        } else {
+                            // Handle creator login
+                            toast.success("Login successful");
+                            router.push('/homepage');
+                        }
                     }
                     else{
                         setIsLoading(false)
@@ -194,8 +214,10 @@ const AuthPage = () => {
                         toast.warn(data?.detail)
                     }
                     else {
-                        toast.success(data?.message)
-                        setIsLogin(true)
+                     
+                       
+                        loginUser(data);
+                        router.push('/stripe');
                     }
                     setLoader(false);
                 }

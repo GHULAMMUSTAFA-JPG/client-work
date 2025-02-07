@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify';
 import Header from "@/app/layout/Header"
 import Footer from "@/app/layout/Footer"
@@ -8,11 +8,30 @@ import Sidebar from '@/app/layout/Sidebar';
 import withAuth from '@/utils/withAuth';
 import Loader from './loader';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter, usePathname } from 'next/navigation';
 
 const Main = ({
   children, isAuthenticated, user
 }: any) => {
+  const router = useRouter();
+  const pathname = usePathname();
 
+  useEffect(() => {
+    console.log('Auth status:', isAuthenticated);
+    console.log('User data:', user);
+    console.log('Current path:', pathname);
+    
+    if (isAuthenticated && user?.isBuyer) {
+      // Only redirect to stripe if user is trying to access protected pages
+      if (pathname !== '/stripe' && pathname !== '/thankyou') {
+        if (!user.subscription_status?.has_active_subscription && 
+            user.subscription_status?.requires_payment) {
+          console.log('Redirecting to stripe...');
+          router.push('/stripe');
+        }
+      }
+    }
+  }, [isAuthenticated, user, router, pathname]);
 
   const creatorMenuItems = [
     { label: "Dashboard", href: "/homepage", icon: "bi bi-house" },
@@ -40,23 +59,27 @@ const Main = ({
   const menuItems =
     !user?.isBuyer ? creatorMenuItems : buyerMenuItems;
 
-    return (
-      <>
-        {isAuthenticated ? (
-          <div className="d-flex">
-            <Sidebar menuItems={menuItems} />
-            <div className="flex-grow-1 overflow-auto">
-              <Header />
-              {/* <Loader /> */}
-              <main className="main-content">{children}</main>
-              <Footer />
-            </div>
+  // Pages where we don't want to show sidebar and header
+  const excludedPaths = ['/', '/stripe', '/login'];
+  const shouldShowLayout = !excludedPaths.includes(pathname);
+
+  return (
+    <>
+      {isAuthenticated && shouldShowLayout ? (
+        <div className="d-flex">
+          <Sidebar menuItems={menuItems} />
+          <div className="flex-grow-1 overflow-auto">
+            <Header />
+            {/* <Loader /> */}
+            <main className="main-content">{children}</main>
+            <Footer />
           </div>
-        ) : (
-          <main>{children}</main>
-        )}
-      </>
-    );
-  };
+        </div>
+      ) : (
+        <main>{children}</main>
+      )}
+    </>
+  );
+};
 
 export default withAuth(Main);
