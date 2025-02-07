@@ -516,7 +516,8 @@ export const changePostStatus = async (
   dto: any,
   setIsLoading: any,
   setRendControl: any,
-  rendControl: boolean
+  rendControl: boolean,
+  setFeedback?: any
 ) => {
   setIsLoading(true);
   try {
@@ -528,6 +529,7 @@ export const changePostStatus = async (
     const button = document.getElementById("close_modal_creator_detail");
     button && button?.click();
     setRendControl(!rendControl);
+    setFeedback && setFeedback("");
     return response;
   } catch (error) {
     setIsLoading(false);

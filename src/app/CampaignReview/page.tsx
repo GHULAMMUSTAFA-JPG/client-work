@@ -116,10 +116,11 @@ function CampaignOverview({
                         {selectedCampaignDetails?.campaign?.Headline}
                       </h5>
                       <button
-                        className={`${selectedCampaignDetails?.campaign?.Is_Public
+                        className={`${
+                          selectedCampaignDetails?.campaign?.Is_Public
                             ? "bg-primary-subtle text-primary"
                             : "bg-danger-subtle text-danger"
-                          } border-0 btn btn-sm px-3 rounded-pill`}
+                        } border-0 btn btn-sm px-3 rounded-pill`}
                       >
                         {selectedCampaignDetails?.campaign?.Is_Public
                           ? "Public"
@@ -254,7 +255,7 @@ function CampaignOverview({
                       <h4 className="mb-0 me-2 fs-20">
                         {
                           selectedCampaignDetails?.campaign?.Creator_Insights?.[
-                          "Applied"
+                            "Applied"
                           ]
                         }
                       </h4>
@@ -340,8 +341,9 @@ function CampaignOverview({
                 >
                   All (Recent){" "}
                   <span
-                    className={`badge ${selectedTab == "All" ? "bg-white" : "bg-light"
-                      } text-dark ms-1`}
+                    className={`badge ${
+                      selectedTab == "All" ? "bg-white" : "bg-light"
+                    } text-dark ms-1`}
                   >
                     {totalLenght}
                   </span>
@@ -366,15 +368,16 @@ function CampaignOverview({
                           {inner_object == "In_Discussion"
                             ? "In Discussion"
                             : inner_object == "To_Contact"
-                              ? "To Contact"
-                              : inner_object == "Not_Fit"
-                                ? "Not Fit"
-                                : inner_object}{" "}
+                            ? "To Contact"
+                            : inner_object == "Not_Fit"
+                            ? "Not Fit"
+                            : inner_object}{" "}
                           <span
-                            className={`badge ${selectedTab == inner_object
+                            className={`badge ${
+                              selectedTab == inner_object
                                 ? "bg-white"
                                 : "bg-light"
-                              } text-dark ms-1`}
+                            } text-dark ms-1`}
                           >
                             {
                               selectedCampaignDetails?.campaign
@@ -397,18 +400,16 @@ function CampaignOverview({
                   <thead>
                     <tr>
                       <th>Creator</th>
-                      <th>
-                        Status
-                      </th>
+                      <th>Status</th>
                       <th className="text-center w-s">Actions</th>
                       {/* <th>Actions</th> */}
                     </tr>
                   </thead>
                   <tbody>
                     {(selectedTab == "All" && totalLenght !== 0) ||
-                      selectedCampaignDetails?.campaign?.Campaign_Progress?.[
-                        selectedTab
-                      ]?.length !== 0 ? (
+                    selectedCampaignDetails?.campaign?.Campaign_Progress?.[
+                      selectedTab
+                    ]?.length !== 0 ? (
                       selectedCampaignDetails?.campaign?.Campaign_Progress &&
                       Object?.keys(
                         selectedCampaignDetails?.campaign?.Campaign_Progress
@@ -422,8 +423,8 @@ function CampaignOverview({
                               selectedTab == "All"
                                 ? { display: "table-row" }
                                 : selectedTab == inner_object
-                                  ? { display: "table-row" }
-                                  : { display: "none" }
+                                ? { display: "table-row" }
+                                : { display: "none" }
                             }
                           >
                             <td className="w-75">
@@ -466,12 +467,12 @@ function CampaignOverview({
                                   {inner_object == "In_Discussion"
                                     ? "In Discussion"
                                     : inner_object == "To_Contact"
-                                      ? "To Contact"
-                                      : inner_object == "Not_Fit"
-                                        ? "Not Fit"
-                                        : inner_object == "To_Contact"
-                                          ? "To Contact"
-                                          : inner_object}
+                                    ? "To Contact"
+                                    : inner_object == "Not_Fit"
+                                    ? "Not Fit"
+                                    : inner_object == "To_Contact"
+                                    ? "To Contact"
+                                    : inner_object}
                                 </span>
                                 {/* <div className="dropdown">
                                                                         <button
@@ -491,10 +492,16 @@ function CampaignOverview({
                                       }
                                       style={{
                                         borderRadius: "4px",
-                                        transition: "border-radius 0.2s"
+                                        transition: "border-radius 0.2s",
                                       }}
-                                      onMouseEnter={(e) => e.currentTarget.style.borderRadius = "8px"}
-                                      onMouseLeave={(e) => e.currentTarget.style.borderRadius = "4px"}
+                                      onMouseEnter={(e) =>
+                                        (e.currentTarget.style.borderRadius =
+                                          "8px")
+                                      }
+                                      onMouseLeave={(e) =>
+                                        (e.currentTarget.style.borderRadius =
+                                          "4px")
+                                      }
                                     >
                                       Approve
                                     </li>
@@ -520,10 +527,16 @@ function CampaignOverview({
                                       }
                                       style={{
                                         borderRadius: "4px",
-                                        transition: "border-radius 0.2s"
+                                        transition: "border-radius 0.2s",
                                       }}
-                                      onMouseEnter={(e) => e.currentTarget.style.borderRadius = "8px"}
-                                      onMouseLeave={(e) => e.currentTarget.style.borderRadius = "4px"}
+                                      onMouseEnter={(e) =>
+                                        (e.currentTarget.style.borderRadius =
+                                          "8px")
+                                      }
+                                      onMouseLeave={(e) =>
+                                        (e.currentTarget.style.borderRadius =
+                                          "4px")
+                                      }
                                     >
                                       In Discusssion
                                     </li>
@@ -534,10 +547,16 @@ function CampaignOverview({
                                       }
                                       style={{
                                         borderRadius: "4px",
-                                        transition: "border-radius 0.2s"
+                                        transition: "border-radius 0.2s",
                                       }}
-                                      onMouseEnter={(e) => e.currentTarget.style.borderRadius = "8px"}
-                                      onMouseLeave={(e) => e.currentTarget.style.borderRadius = "4px"}
+                                      onMouseEnter={(e) =>
+                                        (e.currentTarget.style.borderRadius =
+                                          "8px")
+                                      }
+                                      onMouseLeave={(e) =>
+                                        (e.currentTarget.style.borderRadius =
+                                          "4px")
+                                      }
                                     >
                                       Not Fit
                                     </li>
