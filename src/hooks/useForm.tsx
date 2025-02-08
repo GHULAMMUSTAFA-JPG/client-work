@@ -14,7 +14,6 @@ const useForm = ({ initialValues, validate }: UseFormProps) => {
         const { name, value } = event.target;
         
         setValues({ ...values, [name]: value });
-
         if (validate) {
             const validationErrors = validate({ ...values, [name]: value });
             setErrors(validationErrors);
