@@ -487,7 +487,7 @@ const AuthPage = () => {
 
                             <div className="text-center mb-4 d-flex justify-content-center align-items-center gap-3">
                                 <span className="text-muted small fs-14">
-                                    {isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
+                                    {isLogin ? "Need an account as a Brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                 </span>
                                 <span
                                     onClick={toggleAuthMode}
@@ -529,7 +529,7 @@ const AuthPage = () => {
                                 </button>
                                 <div className="text-center mb-4 d-flex justify-content-center align-items-center gap-3">
                                     <span className="text-muted small fs-14">
-                                        {isLogin ? "Need an account as a brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
+                                        {isLogin ? "Need an account as a Brand? " : (isLogin ? "Don't have an account? " : "Have an account? ")}
                                     </span>
                                     <span
                                         onClick={toggleAuthMode}
