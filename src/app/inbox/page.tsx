@@ -1,298 +1,266 @@
-"use client"
+"use client";
 
-import Image from 'next/image';
-import { Icon } from '@iconify/react/dist/iconify.js';
+import Image from "next/image";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { conversationHistory, fetchProfileData, fetchProfileDataByIds, getSpecificMessageHistory } from '@/@api';
-import { defaultImagePath } from '@/components/constants';
-import { useSearchParams } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { fetchProfileDataByIds } from "@/@api";
+import { defaultImagePath } from "@/components/constants";
+import { toast } from "react-toastify";
+import { useSearchParams, useRouter } from "next/navigation";
 
-const Inbox = () => {
-    const [messages, setMessages] = useState<any>([]);
-    const [input, setInput] = useState<string>("");
-    const { userProfile, user, setIsLoading, conversations, sockets, setSockets, restartSockets, setSelectedIds, selectedIds } = useAuth();
-    const [selectedMessage, setSelectedMessage] = useState<any>()
-    const [pageNo, setPageNo] = useState<number>(1)
-    const [limit, setLimit] = useState<number>(15)
-    const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
-    const scrollToBottom = () => {
-        endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
-        readMessage(selectedIds)
-    };
-    useEffect(() => {
-        scrollToBottom();
-    }, [selectedMessage]);
-    const [searchText, setSearchText] = useState<string | null>(null)
-    const [chatLength, setChatLength] = useState<number>(1)
-    const [chatLimit, setChatLimit] = useState<number>(20)
-    const searchParams = useSearchParams();
-    const [preview, setPreview] = useState<boolean>(true)
+const EmptyMessagesGuide = () => {
+  const router = useRouter();
 
-    const sendMessage = async () => {
-
-        const data: any = JSON.stringify({
-            recipient_id: selectedIds?.Recipient_ID,
-            message: input
-        })
-        if (sockets && sockets.readyState === WebSocket.OPEN) {
-            sockets.send(data);
-            setInput("");
-            if (!selectedIds?.Message_ID && selectedIds?.Recipient_ID) {
-                setTimeout(() => {
-                    const newone = selectedIds?.Recipient_ID || ''
-                    const clickButton = document?.getElementById(newone)
-                    clickButton && clickButton.click()
-                }, 2000);
-            }
-        } else {
-            toast.warn('Error while connecting. Please check your connection and try again')
-            restartSockets()
-        }
-
-    };
-
-    // const getConversationHistory = async () => {
-    //     if (user?.email) {
-    //         const response = await conversationHistory(user?.email, setConversationsHistory, pageNo, limit, setIsLoading)
-    //     }
-    // }
-
-    useEffect(() => {
-        if (selectedIds?.Conversation_Id && conversations?.conversations) {
-            if (conversations?.conversations.some((obj: any) => obj._id === selectedIds?.Conversation_Id)) {
-                const matchedObject = conversations.conversations.find((obj: any) => obj._id === selectedIds?.Conversation_Id);
-                if (matchedObject) {
-                    setSelectedMessage(matchedObject);
-                }
-            }
-            else {
-                console.log("No match found.");
-            }
-        }
-
-    }, [conversations, selectedIds])
-
-    // useEffect(() => {
-    //     // selectedIds?.Message_ID && getSpecificMessageHistory(selectedIds, setMessages, setIsLoading, chatLength, chatLimit)
-    // }, [selectedIds])
-
-    useEffect(() => {
-
-        const id = searchParams.get('id');
-        if (id) {
-            setSelectedIds((prev: any) => {
-                return { ...prev, ['Recipient_ID']: id }
-            })
-
-            setTimeout(() => {
-                const clickButton = document?.getElementById(id)
-                clickButton && clickButton.click()
-            }, 1500);
-            user?.isBuyer && fetchProfileDataByIds(id, setSelectedIds)
-        }
-    }, [searchParams])
-
-    const readMessage = async (conversation: any) => {
-        const data = {
-            "conversation_id": conversation?._id,
-            "sender_id": userProfile?._id
-        }
-        if (sockets.readyState === WebSocket.OPEN) {
-            sockets.send(JSON.stringify(data))
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
-    return (
-        <div className="container-fluid chatbot-container">
-            <div className="row bg-white">
-                {/* Left Sidebar */}
-                <div className="col-md-4 col-lg-3 border-end p-0">
-                    {/* Header */}
-                    <div className="p-3 border-bottom">
-                        <h5 className="mb-0">Conversations</h5>
-                    </div>
-
-                    {/* Search Bar */}
-                    <div className="p-3 border-bottom">
-                        <div className="input-group">
-                            <span className="input-group-text bg-form border-0">
-                                <Icon icon="iconamoon:search" className="text-warning" width="18" height="18" />
-                            </span>
-                            <input type="text" className="form-control border-0 bg-form" placeholder="Search..." onChange={(e: any) => {
-                                setSearchText(e.target.value)
-                            }}
-
-                                onKeyDown={(e: any) => {
-                                    if (e.key == "Enter") {
-                                        setPreview(false)
-                                        setTimeout(() => {
-                                            setPreview(true)
-                                        }, 100);
-                                    }
-                                }}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Conversation List */}
-                    <div className="conversation-list">
-                        {
-                            preview && conversations?.conversations && conversations?.conversations?.length !== 0 ?
-                                conversations?.conversations?.map((chat: any, index: number) => {
-                                    if (!searchText || chat?.Name?.toLowerCase().startsWith(searchText.toLowerCase())) {
-                                        return (
-                                            <div id={chat?.Last_Message?.Recipient_ID} onClick={() => {
-                                                chat?.conversation_new_messages !== 0 && readMessage(chat)
-                                                setSelectedIds({
-                                                    Recipient_ID: chat?.Last_Message?.Recipient_ID,
-                                                    Message_ID: chat?.Last_Message?.Message_ID,
-                                                    Conversation_Id: chat?._id,
-                                                    Sender_ID: userProfile?._id,
-                                                    Name: chat?.Name,
-                                                    Profile_Image: chat?.Profile_Image,
-                                                    index: index
-                                                })
-                                                setInput('')
-                                            }} key={index} className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID == chat?.Last_Message?.Recipient_ID ? "active" : ""}`}>
-                                                <Image
-                                                    src={chat?.Profile_Image || defaultImagePath}
-                                                    alt="Profile"
-                                                    width={40}
-                                                    height={40}
-                                                    className="rounded-circle me-2 flex-shrink-0"
-                                                />
-                                                <div className="flex-grow-1">
-                                                    <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                                                    <small className="text-muted line-clamp-1">{chat?.Last_Message?.Message?.length < 26 ? chat?.Last_Message?.Message : chat?.Last_Message?.Message?.slice(0, 25) + "..."}</small>
-                                                </div>
-                                                <div className='flex-shrink-0'>
-                                                    {chat?.conversation_new_messages !== 0 && selectedIds.Conversation_Id !== chat?._id && <div className="number-circle ms-auto">
-                                                        <span className='fs-10'>{chat?.conversation_new_messages}</span>
-                                                    </div>}
-                                                    <small className="text-muted flex-shrink-0 ms-2 fs-10">{chat?.Last_Message?.Time_Ago}</small>
-                                                </div>
-                                            </div>
-                                        )
-                                    }
-                                })
-                                :
-                                <div className="d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer active">
-                                    No Conversation found
-                                </div>
-                        }
-                    </div>
-                </div>
-
-                {/* Chat Area */}
-                <div className="col-md-8 col-lg-9 p-0">
-                    {
-                        selectedIds?.Conversation_Id || selectedIds?.Recipient_ID ?
-
-                            <div className="card h-100 border-0">
-                                {/* Card Header */}
-                                <div className="card-header bg-white p-3">
-                                    <div className="d-flex align-items-center">
-                                        <Image
-                                            src={selectedIds?.Profile_Image || defaultImagePath}
-                                            alt="Profile"
-                                            width={40}
-                                            height={40}
-                                            className="rounded-circle me-2"
-                                        />
-                                        <div>
-                                            <h6 className="mb-0 fs-14">{selectedIds?.Name || "Anonymous"}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Card Body - Messages Area */}
-                                <div className="card-body p-4">
-
-                                    {/* Received Message */}
-                                    {
-                                        selectedIds?.Recipient_ID !== null && selectedMessage?.messages?.map((msg: any, index: number) => {
-
-                                            return (
-                                                <div className="row" key={index} >
-                                                    {
-                                                        msg?.user !== "sender" ?
-                                                            <div className="col-auto mb-4 mx-width-70">
-                                                                <div className="activated-subtle rounded-3 p-3">
-                                                                    <p className='fs-13 mb-0'>{msg?.Message}</p>
-                                                                </div>
-                                                                <small className="text-muted d-block mt-1 ms-2">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
-                                                            </div> :
-                                                            <div className="col-auto ms-auto mb-4 mx-width-70">
-
-                                                                <div className="bg-circle-2 text-white rounded-3 p-3 ms-auto">
-                                                                    <p className="fs-13 mb-0">
-                                                                        {msg?.Message?.split("\n").map((line: string, index: number) => (
-                                                                            <React.Fragment key={index}>
-                                                                                {line}
-                                                                                <br />
-                                                                            </React.Fragment>
-                                                                        ))}
-                                                                    </p>
-                                                                </div>
-
-                                                                <small className="text-muted text-end d-block mt-1 ms-2">{msg?.Time_Ago ? msg?.Time_Ago : ""}</small>
-                                                            </div>
-                                                    }
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <div ref={endOfMessagesRef}></div>
-                                </div>
-
-                                {/* Card Footer - Message Input */}
-                                <div className="card-footer bg-white p-3">
-                                    <div className="input-group">
-                                        <textarea
-                                            className="form-control border-0 bg-form"
-                                            placeholder="Type your message here..."
-                                            onChange={(e: any) => {
-                                                setInput(e.target.value);
-                                            }}
-                                            value={input}
-                                            id="textareaId"
-                                            onKeyDown={(e: any) => {
-                                                if (e.key == "Enter") {
-                                                    e.preventDefault();
-                                                    input == "" || input?.trim() == "" ? toast.warn('Cannot send empty message') : sendMessage()
-                                                }
-
-                                            }}
-                                        />
-                                        <button className="btn btn-link" onClick={sendMessage}>
-                                            <Icon icon="mynaui:send" width="24" height="24" />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            :
-                            <div className='card h-100 border-0 empty-conversation'>
-                                <div className='card-body'>
-                                    <p className='mb-0 text-warning'>Select a conversation to start chatting</p>
-                                </div>
-                            </div>
-                    }
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="d-flex flex-column justify-content-center align-items-center text-center h-100">
+      {/* Icon */}
+      <div className="mb-3">
+        <i
+          className="bi bi-chat-dots-fill"
+          style={{ fontSize: "4rem", color: "#16a085" }}
+        ></i>
+      </div>
+      <h3 className="text-dark fw-bold">No Messages Yet</h3>
+      <p className="text-muted small">
+        This is where you’ll communicate with brands about campaigns.
+      </p>
+      <p className="text-muted small">
+        Once you apply for a campaign, brands will contact you here.
+      </p>
+      <button
+        className="btn btn-primary mt-3"
+        style={{ backgroundColor: "#16a085", borderColor: "#16a085" }}
+        onClick={() => router.push("/campaigns/discover")}
+      >
+        Explore Campaigns
+      </button>
+    </div>
+  );
 };
 
-export default function AuthPageWrapper() {
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <Inbox />
-        </Suspense>
-    );
+const CampaignUpdateMessage = ({ status }: { status: string }) => (
+  <div className="alert alert-warning py-2 small">
+    Campaign Status Updated: {status}
+  </div>
+);
+
+const Inbox = () => {
+  const [messages, setMessages] = useState<any>([]);
+  const [input, setInput] = useState<string>("");
+  const {
+    userProfile,
+    conversations,
+    sockets,
+    setSelectedIds,
+    selectedIds,
+    restartSockets,
+  } = useAuth();
+  const [searchText, setSearchText] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (id) {
+      setSelectedIds((prev: any) => ({
+        ...prev,
+        Recipient_ID: id,
+      }));
+      setTimeout(() => {
+        const clickButton = document?.getElementById(id);
+        clickButton && clickButton.click();
+      }, 1500);
+      fetchProfileDataByIds(id, setSelectedIds);
+    }
+  }, [searchParams]);
+
+  const sendMessage = async () => {
+    const data = JSON.stringify({
+      recipient_id: selectedIds?.Recipient_ID,
+      message: input,
+    });
+    if (sockets && sockets.readyState === WebSocket.OPEN) {
+      sockets.send(data);
+      setInput("");
+    } else {
+      toast.warn(
+        "Error while connecting. Please check your connection and try again"
+      );
+      restartSockets();
+    }
+  };
+
+  const readMessage = async (conversation: any) => {
+    const data = {
+      conversation_id: conversation?._id,
+      sender_id: userProfile?._id,
+    };
+    if (sockets.readyState === WebSocket.OPEN) {
+      sockets.send(JSON.stringify(data));
+    }
+  };
+
+  return (
+    <div className="container-fluid chatbot-container">
+      <div className="row bg-white">
+        {/* Left Sidebar */}
+        <div className="col-md-4 col-lg-3 border-end p-0">
+          {/* Header */}
+          <div className="p-3 border-bottom">
+            <h5 className="mb-0">Messages</h5>
+          </div>
+
+          {/* Search Bar */}
+          <div className="p-3 border-bottom">
+            <div className="input-group">
+              <span className="input-group-text bg-form border-0">
+                <Icon
+                  icon="iconamoon:search"
+                  className="text-warning"
+                  width="18"
+                  height="18"
+                />
+              </span>
+              <input
+                type="text"
+                className="form-control border-0 bg-form"
+                placeholder="Search..."
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Conversation List */}
+          <div className="conversation-list">
+            {conversations?.conversations?.length === 0 ? (
+              <EmptyMessagesGuide />
+            ) : (
+              conversations?.conversations?.map((chat: any, index: number) => (
+                <div
+                  id={chat?.Last_Message?.Recipient_ID}
+                  onClick={() => {
+                    readMessage(chat);
+                    setSelectedIds({
+                      Recipient_ID: chat?.Last_Message?.Recipient_ID,
+                      Message_ID: chat?.Last_Message?.Message_ID,
+                      Conversation_Id: chat?._id,
+                      Sender_ID: userProfile?._id,
+                      Name: chat?.Name,
+                      Profile_Image: chat?.Profile_Image,
+                    });
+                  }}
+                  key={index}
+                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
+                    selectedIds?.Recipient_ID ===
+                    chat?.Last_Message?.Recipient_ID
+                      ? "active"
+                      : ""
+                  }`}
+                >
+                  <Image
+                    src={chat?.Profile_Image || defaultImagePath}
+                    alt="Profile"
+                    width={40}
+                    height={40}
+                    className="rounded-circle me-2 flex-shrink-0"
+                  />
+                  <div className="flex-grow-1">
+                    <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
+                    <small className="text-muted line-clamp-1">
+                      {chat?.Last_Message?.Message}
+                    </small>
+                  </div>
+                  {chat?.conversation_new_messages > 0 && (
+                    <span className="badge bg-danger ms-2">
+                      {chat?.conversation_new_messages}
+                    </span>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Chat Area */}
+        <div className="col-md-8 col-lg-9 p-0">
+          {selectedIds?.Conversation_Id ? (
+            <div className="card h-100 border-0">
+              {/* Card Header */}
+              <div className="card-header bg-white p-3">
+                <div className="d-flex align-items-center justify-between">
+                  <Image
+                    src={selectedIds?.Profile_Image || defaultImagePath}
+                    alt="Profile"
+                    width={40}
+                    height={40}
+                    className="rounded-circle me-2"
+                  />
+                  <h6 className="mb-0 fs-14">{selectedIds?.Name}</h6>
+                  <button
+                    className="btn btn-link text-primary"
+                    onClick={() =>
+                      toast.info("View Campaign - Feature Coming Soon!")
+                    }
+                  >
+                    View Campaign
+                  </button>
+                </div>
+              </div>
+
+              {/* Messages */}
+              <div className="card-body p-4">
+                {messages.map((msg: any, index: number) => (
+                  <div key={index} className="mb-3">
+                    <div
+                      className={`p-3 rounded ${
+                        msg.user !== "sender"
+                          ? "bg-light"
+                          : "bg-primary text-white"
+                      }`}
+                    >
+                      {msg.message}
+                    </div>
+                    <small className="text-muted">{msg.timeAgo}</small>
+                  </div>
+                ))}
+                <div ref={endOfMessagesRef}></div>
+              </div>
+
+              {/* Message Input */}
+              <div className="card-footer bg-white p-3">
+                <div className="input-group">
+                  <textarea
+                    className="form-control border-0 bg-form"
+                    placeholder="Type your message..."
+                    onChange={(e) => setInput(e.target.value)}
+                    value={input}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        sendMessage();
+                      }
+                    }}
+                  />
+                  <button className="btn btn-primary" onClick={sendMessage}>
+                    <Icon icon="mynaui:send" width={24} height={24} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <EmptyMessagesGuide />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function InboxWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Inbox />
+    </Suspense>
+  );
 }

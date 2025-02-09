@@ -2,7 +2,6 @@
 
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
-import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 import { useEffect, useRef, useState } from "react";
@@ -172,7 +171,7 @@ export default function ProfilePage() {
       };
       console.log("updateddetails", updateddetails);
       const response = await axios.put(
-        "https://synncapi.onrender.com/dashboard/creators/update_creator",
+        "process.env.NEXT_PUBLIC_APP_URLdashboard/creators/update_creator",
         updateddetails
       );
       toast.success("Profile updated successfully");

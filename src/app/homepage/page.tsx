@@ -1,65 +1,76 @@
 "use client";
 
 import { fetch_dashboard_data, getCampaignsCreatorsOverview } from "@/@api";
-import Topcard from "@/components/topcard";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-import ChartsDashboard from "@/components/chartsdashboard";
-import BarsDashboard from "@/components/barsdasboard";
-import ProgressDashboard from "@/components/progressdashboard";
-import VerticalBarChart from "@/components/verticalbarchart";
-import Calendar from "@/components/Calendar";
 import PostCalendar from "@/components/Calendar";
 import EditProfileModal from "@/components/EditProfileModal";
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { defaultImagePath } from "@/components/constants";
-import { Tooltip } from '@mui/material';
+import { Tooltip } from "@mui/material";
+import WelcomeBanner from "@/components/WelcomeBanner";
+import HowItWorks from "@/components/HowItWorks";
 
 function Homepage() {
-    const { user, setUserProfile, userProfile, setIsLoading, notifications, setIsActive } = useAuth()
-    const [users, setUsers] = useState<any[]>([]);
-    const [campaigns, setCampaigns] = useState<any>()
-    const [linkCopied, setLinkCopied] = useState<boolean>(false)
-    // const router = useRouter()
-    useEffect(() => {
-        setIsActive(0)
-        fetchData()
-        user?.email && getCampaignsCreatorsOverview(user?.email, setCampaigns, setIsLoading)
-    }, [user])
+  const { user, userProfile, setIsLoading, notifications, setIsActive } =
+    useAuth();
+  const [users, setUsers] = useState<any[]>([]);
+  const [campaigns, setCampaigns] = useState<any>();
+  const [linkCopied, setLinkCopied] = useState<boolean>(false);
+  const howItWorksSteeps = [
+    {
+      title: "Discover Campaigns",
+      description: "Find brand campaigns that fit your niche.",
+      icon: "bi bi-search",
+    },
+    {
+      title: "Apply & Get Hired",
+      description: "Submit your application and collaborate with brands.",
+      icon: "bi bi-person-check",
+    },
+    {
+      title: "Create & Get Paid",
+      description: "Deliver high-quality content and receive payment securely.",
+      icon: "bi bi-currency-dollar",
+    },
+  ];
+  // const router = useRouter()
+  useEffect(() => {
+    setIsActive(0);
+    fetchData();
+    user?.email &&
+      getCampaignsCreatorsOverview(user?.email, setCampaigns, setIsLoading);
+  }, [user]);
 
-    const fetchData = async () => {
-        const response: any = await fetch_dashboard_data()
-        setUsers(response?.data?.users)
-    }
+  const fetchData = async () => {
+    const response: any = await fetch_dashboard_data();
+    setUsers(response?.data?.users);
+  };
 
+  const shareProfile = () => {
+    try {
+      const path = window.location.origin + "/profile-view/" + userProfile?._id;
+      navigator.clipboard.writeText(path);
+      setLinkCopied(true);
+      setTimeout(() => {
+        setLinkCopied(false);
+      }, 5000);
+    } catch (error) {}
+  };
 
-    const shareProfile = () => {
+  const router = useRouter();
+  const hasActiveCampaigns =
+    campaigns &&
+    campaigns?.Activated_Campaigns &&
+    campaigns?.Activated_Campaigns?.length !== 0;
 
-        try {
-            const path = window.location.origin + "/profile-view/" + userProfile?._id
-            navigator.clipboard.writeText(path);
-            setLinkCopied(true)
-            setTimeout(() => {
-                setLinkCopied(false)
-            }, 5000);
-        } catch (error) {
-
-        }
-
-
-    }
-
-    const router = useRouter();
-
-    return (
-        <>
-            <div className="container-fluid">
-                {/* <div className="row mb-3 mt-3">
+  return (
+    <>
+      <div className="container-fluid">
+        {/* <div className="row mb-3 mt-3">
                     <div className="col-md-4 ms-auto">
                         <div className="card bg-primary-subtle">
                             <div className="card-body p-4">
@@ -71,165 +82,312 @@ function Homepage() {
                         </div>
                     </div>
                 </div> */}
-                <div className="row mt-3 003">
-                    <div className="col-md-8">
-                        <div className="card mb-3">
-                            <div className="card-body">
-                                <div className="d-flex justify-content-between align-items-center mb-3">
-                                    <p className='mb-0 fs-16 fw-medium'>Profile</p>
-                                    <div className="d-flex gap-2 align-items-center cursor">
-                                        <Tooltip title={linkCopied ? "Link Copied" : "Share Profile"} arrow placement="top" className="">
-                                            <Icon icon="iconamoon:share-1-thin" width="20" height="20" className='cursor flex-shrink-0 text-dark me-1' onClick={() => { shareProfile() }} />
-                                        </Tooltip>
-                                        <Tooltip title="Edit Profile" arrow placement="top">
-                                            <Icon icon="material-symbols-light:edit-square-outline-rounded" width="20" height="20" className='cursor flex-shrink-0 text-dark' onClick={() => router.push('/Profile')} />
-                                        </Tooltip>
-                                    </div>
-                                </div>
-                                <div className='d-flex gap-2 mb-3'>
-                                    <Image
-                                        src={userProfile?.Profile_Image || defaultImagePath}
-                                        className="border object-fit-cover rounded-circle flex-shrink-0"
-                                        alt="logo"
-                                        width={40}
-                                        height={40}
-                                    />
-                                    <div className='flex-grow-1'>
-                                        <div className='d-flex align-items-center'>
-                                            <p className='mb-0 fw-medium fs-16'>{userProfile?.Name}</p>
-                                            <img src={`https://flagcdn.com/24x18/${userProfile?.Country_Code || "us"}.png`} width={18} height={14} className="mx-2"></img>
-                                            <a href={userProfile?.Profile_URL ? `https://www.linkedin.com/in/${userProfile?.Profile_URL}` : "#"} target="_blank"><Icon style={{ cursor: "pointer" }} icon="mdi:linkedin" width={18} height={18} className='text-info' /></a>
-                                        </div>
-                                        <div className="d-flex gap-2 align-items-center">
-                                            <p className='mb-0 fs-12 text-warning'>@{userProfile?.Profile_URL || "No information"}</p>
-                                            <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div>
-                                            <p className='mb-0 fs-12 text-warning'><span className="text-dark fw-medium">{userProfile?.No_of_Followers} </span> followers</p>
-                                            {/* <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div> */}
-                                            {/* <p className='mb-0 fs-12 text-warning'>Post Activity <span className="text-dark fw-medium">Daily</span></p> */}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='d-flex gap-2 flex-wrap mb-3'>
-                                    {userProfile?.Skills?.map((element: any, index: number) => {
-                                        return (
-                                            <span key={index} className="badge bg-success text-secondary rounded-pill fw-light border border-transparent">{element}</span>
-                                        )
-                                    })}
+        <div className="row mt-3 003">
+          <div className="col-md-8">
+            <div className="card mb-3">
+              <div className="card-body">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <p className="mb-0 fs-16 fw-medium">Profile</p>
+                  <div className="d-flex gap-2 align-items-center cursor">
+                    <Tooltip
+                      title={linkCopied ? "Link Copied" : "Share Profile"}
+                      arrow
+                      placement="top"
+                      className=""
+                    >
+                      <Icon
+                        icon="iconamoon:share-1-thin"
+                        width="20"
+                        height="20"
+                        className="cursor flex-shrink-0 text-dark me-1"
+                        onClick={() => {
+                          shareProfile();
+                        }}
+                      />
+                    </Tooltip>
+                    <Tooltip title="Edit Profile" arrow placement="top">
+                      <Icon
+                        icon="material-symbols-light:edit-square-outline-rounded"
+                        width="20"
+                        height="20"
+                        className="cursor flex-shrink-0 text-dark"
+                        onClick={() => router.push("/Profile")}
+                      />
+                    </Tooltip>
+                  </div>
+                </div>
+                <div className="d-flex gap-2 mb-3">
+                  <Image
+                    src={userProfile?.Profile_Image || defaultImagePath}
+                    className="border object-fit-cover rounded-circle flex-shrink-0"
+                    alt="logo"
+                    width={40}
+                    height={40}
+                  />
+                  <div className="flex-grow-1">
+                    <div className="d-flex align-items-center">
+                      <p className="mb-0 fw-medium fs-16">
+                        {userProfile?.Name}
+                      </p>
+                      <img
+                        src={`https://flagcdn.com/24x18/${
+                          userProfile?.Country_Code || "us"
+                        }.png`}
+                        width={18}
+                        height={14}
+                        className="mx-2"
+                      ></img>
+                      <a
+                        href={
+                          userProfile?.Profile_URL
+                            ? `https://www.linkedin.com/in/${userProfile?.Profile_URL}`
+                            : "#"
+                        }
+                        target="_blank"
+                      >
+                        <Icon
+                          style={{ cursor: "pointer" }}
+                          icon="mdi:linkedin"
+                          width={18}
+                          height={18}
+                          className="text-info"
+                        />
+                      </a>
+                    </div>
+                    <div className="d-flex gap-2 align-items-center">
+                      <p className="mb-0 fs-12 text-warning">
+                        @{userProfile?.Profile_URL || "No information"}
+                      </p>
+                      <div
+                        className="bg-light rounded-circle d-inline-block"
+                        style={{ width: "6px", height: "6px" }}
+                      ></div>
+                      <p className="mb-0 fs-12 text-warning">
+                        <span className="text-dark fw-medium">
+                          {userProfile?.No_of_Followers}{" "}
+                        </span>{" "}
+                        followers
+                      </p>
+                      {/* <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div> */}
+                      {/* <p className='mb-0 fs-12 text-warning'>Post Activity <span className="text-dark fw-medium">Daily</span></p> */}
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex gap-2 flex-wrap mb-3">
+                  {userProfile?.Skills?.map((element: any, index: number) => {
+                    return (
+                      <span
+                        key={index}
+                        className="badge bg-success text-secondary rounded-pill fw-light border border-transparent"
+                      >
+                        {element}
+                      </span>
+                    );
+                  })}
+                </div>
+                <p className="mb-0 fs-12 text-warning">
+                  {userProfile?.Description &&
+                  userProfile?.Description?.length > 100
+                    ? userProfile?.Description?.slice(0, 100) + "..."
+                    : userProfile?.Description}
+                </p>
 
-                                </div>
-                                <p className='mb-0 fs-12 text-warning'>{userProfile?.Description && userProfile?.Description?.length > 100 ? userProfile?.Description?.slice(0, 100) + "..." : userProfile?.Description}</p>
-
-                                <div className="row my-3 text-center">
-                                    <div className="col-md-4 border-end pe-4">
-                                        <p className='mb-0 fs-14 p-height'>Followers</p>
-                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.No_of_Followers} </p>
-                                    </div>
-                                    <div className="col-md-4 border-end pe-4">
-                                        <p className='mb-0 fs-14 p-height'>Average Engagaements per post</p>
-                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Engagements}</p>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <p className='mb-0 fs-14 p-height'>Average Impressions per post</p>
-                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.Average_Impressions}</p>
-                                    </div>
-                                    {/* <div className="col-md-4 pe-5">
+                <div className="row my-3 text-center">
+                  <div className="col-md-4 border-end pe-4">
+                    <p className="mb-0 fs-14 p-height">Followers</p>
+                    <p className="mb-0 fs-20 fw-medium">
+                      {userProfile?.No_of_Followers}{" "}
+                    </p>
+                  </div>
+                  <div className="col-md-4 border-end pe-4">
+                    <p className="mb-0 fs-14 p-height">
+                      Average Engagaements per post
+                    </p>
+                    <p className="mb-0 fs-20 fw-medium">
+                      {userProfile?.Average_Engagements}
+                    </p>
+                  </div>
+                  <div className="col-md-4">
+                    <p className="mb-0 fs-14 p-height">
+                      Average Impressions per post
+                    </p>
+                    <p className="mb-0 fs-20 fw-medium">
+                      {userProfile?.Average_Impressions}
+                    </p>
+                  </div>
+                  {/* <div className="col-md-4 pe-5">
                                         <p className='mb-0 fs-14 p-height'>S-Score</p>
                                         <p className='mb-0 fs-20 fw-medium'>{userProfile?.['S-Score']}</p>
                                     </div> */}
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              {!hasActiveCampaigns && (
+                <WelcomeBanner
+                  title="Welcome to Synnc!"
+                  subtitle="Get started by exploring brand campaigns and applying for collaborations."
+                  cta={{
+                    text: "Find Campaigns",
+                    link: "/campaigns",
+                  }}
+                />
+              )}
+              {hasActiveCampaigns && (
+                <div className="card-body">
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <p className="mb-0 fs-16 fw-medium">Activated Campaigns</p>
+                    <p
+                      className="mb-0 fs-12 fw-medium ms-auto cursor"
+                      onClick={() => {
+                        router.push("/campaigns");
+                      }}
+                    >
+                      {" "}
+                      Campaigns{" "}
+                    </p>
+                    <Icon
+                      icon="ri:arrow-right-line"
+                      width="16"
+                      height="16"
+                      className="cursor ms-1"
+                    />
+                  </div>
+                  <div className="bg-campaigns">
+                    <div className="card-wrapper">
+                      {campaigns?.Activated_Campaigns?.map(
+                        (element: any, index: any) => {
+                          if (index < 5) {
+                            return (
+                              <div
+                                onClick={() => {
+                                  router.push(
+                                    `/SubmitCampaigns?id=${element?._id}`
+                                  );
+                                }}
+                                key={index}
+                                className="card mb-2 card-hover"
+                              >
+                                <div className="card-body py-2 ps-2 pe-3">
+                                  <div className="d-flex gap-3 align-items-center">
+                                    <Image
+                                      src={
+                                        element?.Company_Logo ||
+                                        defaultImagePath
+                                      }
+                                      className="border object-fit-cover rounded flex-shrink-0"
+                                      alt="logo"
+                                      width={32}
+                                      height={32}
+                                    />
+                                    <p className="mb-0 fw-medium">
+                                      {element?.Headline}
+                                    </p>
+                                    <p className="mb-0 fs-12 text-warning ms-auto">
+                                      {element?.Created_At} |{" "}
+                                      {element?.Time_Ago}
+                                    </p>
+                                  </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="d-flex justify-content-between align-items-center mb-3">
-                                    <p className='mb-0 fs-16 fw-medium'>Activated Campaigns</p>
-                                    <p className='mb-0 fs-12 fw-medium ms-auto cursor' onClick={() => {
-                                        router.push('/campaigns')
-                                    }}>  Campaigns </p>
-                                    <Icon icon="ri:arrow-right-line" width="16" height="16" className='cursor ms-1' />
-                                </div>
-                                <div className="bg-campaigns">
-                                    <div className="card-wrapper">
-                                        {campaigns && campaigns?.Activated_Campaigns && campaigns?.Activated_Campaigns?.length !== 0 ? campaigns?.Activated_Campaigns?.map((element: any, index: any) => {
-
-                                            if (index < 5) {
-                                                return (
-                                                    <div onClick={() => {
-                                                        router.push(`/SubmitCampaigns?id=${element?._id}`);
-                                                    }} key={index} className="card mb-2 card-hover">
-                                                        <div className="card-body py-2 ps-2 pe-3">
-                                                            <div className='d-flex gap-3 align-items-center'>
-                                                                <Image
-                                                                    src={element?.Company_Logo || defaultImagePath}
-                                                                    className="border object-fit-cover rounded flex-shrink-0"
-                                                                    alt="logo"
-                                                                    width={32}
-                                                                    height={32}
-                                                                />
-                                                                <p className='mb-0 fw-medium'>{element?.Headline}</p>
-                                                                <p className='mb-0 fs-12 text-warning ms-auto'>{element?.Created_At} | {element?.Time_Ago}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            }
-
-
-                                        })
-                                            :
-                                            <tr>
-                                                <td>No data found</td>
-                                            </tr>
-                                        }
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                              </div>
+                            );
+                          }
+                        }
+                      )}
                     </div>
-                    <div className="col-md-4">
-                        <div className="card mb-3">
-                            <div className="card-body">
-                                <p className='mb-2 fs-16 fw-medium'>Notifications</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card mb-3">
+              <div className="card-body">
+                <p className="mb-2 fs-16 fw-medium">Notifications</p>
 
-                                {
-                                    notifications?.notifications && notifications?.notifications?.length !== 0 ? notifications?.notifications?.map((notify: any, index: number) => {
-                                        return (
-                                            <div key={index} className="notification-list">
-                                                <div className='d-flex gap-3'>
-                                                    <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-
-                                                        {notify?.Notification_Icon_Type == "new_campaign_application" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
-                                                        {notify?.Notification_Icon_Type == "campaign_application_accepted" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
-                                                        {notify?.Notification_Icon_Type == "campaign_post_rejected" && <Icon icon="pepicons-pencil:exclamation" width="22" height="22" className="text-danger" />}
-                                                        {notify?.Notification_Icon_Type == "campaign_post_approved" && <Icon icon="mdi:tick" width="20" height="20" className="text-primary" />}
-                                                        {notify?.Notification_Icon_Type == "campaign_post_submission" && <Icon icon="ci:add-plus" width="22" height="22" className="text-info" />}
-                                                    </div>
-                                                    <div className='flex-grow-1'>
-                                                        <p className='mb-0 fw-medium fs-12'>{notify?.Title}</p>
-                                                        <p className='mb-0 fs-10 text-warning line-clamp-1'>{notify?.Message}</p>
-                                                    </div>
-                                                </div>
-                                                <hr className='my-2 text-warning' />
-                                            </div>
-                                        )
-                                    })
-                                        :
-                                        <div className=" mb-2 mt-2 text-center" >
-                                            <small >No new Notifications </small>
-                                        </div>
-                                }
-
+                {notifications?.notifications &&
+                notifications?.notifications?.length !== 0 ? (
+                  notifications?.notifications?.map(
+                    (notify: any, index: number) => {
+                      return (
+                        <div key={index} className="notification-list">
+                          <div className="d-flex gap-3">
+                            <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                              {notify?.Notification_Icon_Type ==
+                                "new_campaign_application" && (
+                                <Icon
+                                  icon="ci:add-plus"
+                                  width="22"
+                                  height="22"
+                                  className="text-info"
+                                />
+                              )}
+                              {notify?.Notification_Icon_Type ==
+                                "campaign_application_accepted" && (
+                                <Icon
+                                  icon="mdi:tick"
+                                  width="20"
+                                  height="20"
+                                  className="text-primary"
+                                />
+                              )}
+                              {notify?.Notification_Icon_Type ==
+                                "campaign_post_rejected" && (
+                                <Icon
+                                  icon="pepicons-pencil:exclamation"
+                                  width="22"
+                                  height="22"
+                                  className="text-danger"
+                                />
+                              )}
+                              {notify?.Notification_Icon_Type ==
+                                "campaign_post_approved" && (
+                                <Icon
+                                  icon="mdi:tick"
+                                  width="20"
+                                  height="20"
+                                  className="text-primary"
+                                />
+                              )}
+                              {notify?.Notification_Icon_Type ==
+                                "campaign_post_submission" && (
+                                <Icon
+                                  icon="ci:add-plus"
+                                  width="22"
+                                  height="22"
+                                  className="text-info"
+                                />
+                              )}
                             </div>
-                        </div>
-                        <div className="card mb-3">
-                            <div className="card-body">
-                                <p className='mb-0 fs-16 fw-medium'>Upcoming Posts</p>
-                                <PostCalendar />
+                            <div className="flex-grow-1">
+                              <p className="mb-0 fw-medium fs-12">
+                                {notify?.Title}
+                              </p>
+                              <p className="mb-0 fs-10 text-warning line-clamp-1">
+                                {notify?.Message}
+                              </p>
                             </div>
+                          </div>
+                          <hr className="my-2 text-warning" />
                         </div>
+                      );
+                    }
+                  )
+                ) : (
+                  <div className=" mb-2 mt-2 text-center">
+                    <small>No new Notifications </small>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="card mb-3">
+              <div className="card-body">
+                <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
+                <PostCalendar />
+              </div>
+            </div>
 
-                        {/* <div className="card">
+            {/* <div className="card">
                             <div className="card-body">
                                 <p className='mb-2 fs-16 fw-medium'>Payments</p>
                                 <div className='d-flex justify-content-between align-items-center mb-2'>
@@ -253,11 +411,12 @@ function Homepage() {
                                 </div>
                             </div>
                         </div> */}
-                    </div>
-                </div>
-                {/* <Topcard /> */}
+          </div>
+        </div>
+        {!hasActiveCampaigns && <HowItWorks steps={howItWorksSteeps} />}
+        {/* <Topcard /> */}
 
-                {/* <div className="row graphs g-3">
+        {/* <div className="row graphs g-3">
                     <div className="col-md-6">
                         <ChartsDashboard />
                     </div>
@@ -271,10 +430,11 @@ function Homepage() {
                         <ProgressDashboard />
                     </div>
                 </div> */}
-            </div>
-            <EditProfileModal user={user} userProfile={userProfile} />
-        </>
-    );
+      </div>
+
+      <EditProfileModal user={user} userProfile={userProfile} />
+    </>
+  );
 }
 
-export default withAuth(Homepage)
+export default withAuth(Homepage);
