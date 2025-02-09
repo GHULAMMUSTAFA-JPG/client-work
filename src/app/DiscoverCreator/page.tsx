@@ -25,6 +25,7 @@ function DiscoverCreator() {
   const [pageNo, setPageNo] = useState<number>(1);
   const [limit, setLimit] = useState<number>(30);
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
+
   useEffect(() => {
     setIsActive(1);
     user?.email &&
@@ -36,6 +37,7 @@ function DiscoverCreator() {
         pageNo
       );
   }, [user?.email, pageNo]);
+  console.log(campaignData);
 
   const searchCampaign = () => {
     getDiscoverCampaignsForSearch(searchText, setCampaignData, setIsLoading);
@@ -95,7 +97,15 @@ function DiscoverCreator() {
           <div className="row g-2 mb-3">
             {campaignData?.campaigns?.map((campaign: any, index: number) => {
               return (
-                <div key={index} className="col-lg-4 col-md-6">
+                <div
+                  key={index}
+                  className="col-lg-4 col-md-6"
+                  onClick={() => {
+                    setSelectedCampaign(campaign);
+                  }}
+                  data-bs-toggle="modal"
+                  data-bs-target="#applyModal"
+                >
                   <div className="card card-hover h-100">
                     <div className="card-body d-flex flex-column">
                       <div className="d-flex justify-content-between gap-2 mb-4 align-items-center">
@@ -151,7 +161,9 @@ function DiscoverCreator() {
                           height="18"
                           className="text-gray flex-shrink-0"
                         />
-                        <p className="mb-0 line-clamp-1">{campaign?.Target_Audience?.join(' , ')}</p>
+                        <p className="mb-0 line-clamp-1">
+                          {campaign?.Target_Audience?.join(" , ")}
+                        </p>
                       </div>
                       <div className="learnmore-btn d-flex justify-content-end">
                         <button

@@ -133,7 +133,7 @@ function Homepage() {
                         src={`https://flagcdn.com/24x18/${
                           userProfile?.Country_Code || "us"
                         }.png`}
-                        width={18}
+                        width={24}
                         height={14}
                         className="mx-2"
                       ></img>
@@ -148,8 +148,8 @@ function Homepage() {
                         <Icon
                           style={{ cursor: "pointer" }}
                           icon="mdi:linkedin"
-                          width={18}
-                          height={18}
+                          width={24}
+                          height={24}
                           className="text-info"
                         />
                       </a>
