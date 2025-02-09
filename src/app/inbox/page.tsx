@@ -10,12 +10,6 @@ import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
 import EmptyState from "@/components/EmptyState";
 
-const CampaignUpdateMessage = ({ status }: { status: string }) => (
-  <div className="alert alert-warning py-2 small">
-    Campaign Status Updated: {status}
-  </div>
-);
-
 const Inbox = () => {
   const [messages, setMessages] = useState<any>([]);
   const [input, setInput] = useState<string>("");

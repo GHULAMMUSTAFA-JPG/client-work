@@ -12,11 +12,10 @@ const WelcomeBanner: React.FC<WelcomeBannerProps> = ({
   cta,
 }) => (
   <div
-    className="card border-0 rounded-lg p-4"
+    className="card border-0 rounded-lg p-4 h-100"
     style={{ borderColor: "#16a085" }}
   >
     <div className="row align-items-center">
-      {/* Icon Section */}
       <div className="col-auto">
         <div
           className="d-flex justify-content-center align-items-center"

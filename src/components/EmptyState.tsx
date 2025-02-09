@@ -8,6 +8,7 @@ interface EmptyStateProps {
   buttonText?: string;
   buttonLink?: string;
   color?: string;
+  iconSize?: number;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({
@@ -18,13 +19,14 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   buttonText,
   buttonLink,
   color = "#16a085",
+  iconSize = 48,
 }) => {
   const router = useRouter();
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center text-center h-100">
       <div className="mb-3">
-        <i className={icon} style={{ fontSize: "4rem", color }}></i>
+        <i className={icon} style={{ fontSize: iconSize, color }}></i>
       </div>
       <h3 className="text-dark fw-bold">{title}</h3>
       <p className="text-muted small">{description}</p>

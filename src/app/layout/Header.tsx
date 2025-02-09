@@ -247,9 +247,7 @@ export default function Header() {
             {/* </form> */}
 
             <div className="dropdown ms-auto">
-              <FeedbackFish
-                projectId={process.env.NEXT_PUBLIC_FEEDBACK_FISH_ID || ""}
-              >
+              <FeedbackFish projectId={"0f9650767d04f4"}>
                 <button className="btn bg-transparent border-0 me-2">
                   <Icon
                     icon="mingcute:question-line"
