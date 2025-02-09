@@ -97,12 +97,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("user");
     setIsAuthenticated(false);
     setUser(null);
-    
+
     // Safely close socket if it exists
     if (sockets && sockets.readyState === WebSocket.OPEN) {
       sockets.close(1000, "");
     }
-    
+
     // Reset all states
     setUserProfile(null);
     setSockets(null);
@@ -117,8 +117,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       Name: null,
       index: null,
     });
-    
-    router.push('/');
+
+    router.push("/");
   };
 
   return (

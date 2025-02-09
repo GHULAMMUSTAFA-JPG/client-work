@@ -5,18 +5,10 @@ import {
   fetchBuyerActiveCampaigns,
   fetchBuyersData,
 } from "@/@api";
-import TopCardBuyer from "@/components/TopCardBuyer";
-import withAuth from "@/utils/withAuth";
+
 import { Icon } from "@iconify/react/dist/iconify.js";
-import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-import ChartsDashboard from "@/components/chartsdashboard";
-import BarsDashboard from "@/components/barsdasboard";
-import ProgressDashboardBuyer from "@/components/progressdashboardbuyer";
-import VerticalBarChart from "@/components/verticalbarchart";
-import CardsDashboardBuyer from "@/components/cardsdashboardbuyer";
 import PostCalendar from "@/components/Calendar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
@@ -268,10 +260,10 @@ function homepagebuyer() {
                           <div className="d-flex gap-2 mb-3 ">
                             {notify?.Notification_Icon_Type ==
                               "new_campaign_application" && (
-                              <div style={{width: "22px", height: "22px"}}>
+                              <div style={{ width: "22px", height: "22px" }}>
                                 <Icon
                                   icon="ci:add-plus"
-                                  width="22" 
+                                  width="22"
                                   height="22"
                                   className="text-info"
                                 />

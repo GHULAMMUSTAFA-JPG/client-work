@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import Image from "next/image";
 import { Suspense } from "react";
-import TopCardBuyer from "@/components/TopCardBuyer";
 import CampaignOffcanvasBuyer from "@/components/campaignoffcanvasbuyer";
 import CampaignReviewModal from "@/components/campaignreviewmodal";
 import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";

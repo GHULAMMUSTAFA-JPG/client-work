@@ -255,7 +255,7 @@ export default function ProfilePage() {
             {/* Banner Image */}
             <div className="position-relative">
               <Image
-                src={userProfile?.Banner_Image || defaultImagePath}
+                src="/assets/images/cover.png"
                 alt="Profile Banner"
                 className="object-fit-cover rounded-3 w-100 cover-img"
                 width={1000}
@@ -285,8 +285,8 @@ export default function ProfilePage() {
                     src={`https://flagcdn.com/24x18/${
                       userProfile?.Country_Code || "us"
                     }.png`}
-                    width={18}
-                    height={14}
+                    width={24}
+                    height={18}
                     className="mx-1"
                   ></img>
                   <a
@@ -296,8 +296,8 @@ export default function ProfilePage() {
                     <Icon
                       style={{ cursor: "pointer" }}
                       icon="mdi:linkedin"
-                      width={19}
-                      height={19}
+                      width={24}
+                      height={24}
                       className="text-info"
                     />
                   </a>

@@ -8,42 +8,7 @@ import { fetchProfileDataByIds } from "@/@api";
 import { defaultImagePath } from "@/components/constants";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
-
-const EmptyMessagesGuide = () => {
-  const router = useRouter();
-
-  return (
-    <div className="d-flex flex-column justify-content-center align-items-center text-center h-100">
-      {/* Icon */}
-      <div className="mb-3">
-        <i
-          className="bi bi-chat-dots-fill"
-          style={{ fontSize: "4rem", color: "#16a085" }}
-        ></i>
-      </div>
-      <h3 className="text-dark fw-bold">No Messages Yet</h3>
-      <p className="text-muted small">
-        This is where you’ll communicate with brands about campaigns.
-      </p>
-      <p className="text-muted small">
-        Once you apply for a campaign, brands will contact you here.
-      </p>
-      <button
-        className="btn btn-primary mt-3"
-        style={{ backgroundColor: "#16a085", borderColor: "#16a085" }}
-        onClick={() => router.push("/campaigns/discover")}
-      >
-        Explore Campaigns
-      </button>
-    </div>
-  );
-};
-
-const CampaignUpdateMessage = ({ status }: { status: string }) => (
-  <div className="alert alert-warning py-2 small">
-    Campaign Status Updated: {status}
-  </div>
-);
+import EmptyState from "@/components/EmptyState";
 
 const Inbox = () => {
   const [messages, setMessages] = useState<any>([]);
@@ -134,7 +99,14 @@ const Inbox = () => {
           {/* Conversation List */}
           <div className="conversation-list">
             {conversations?.conversations?.length === 0 ? (
-              <EmptyMessagesGuide />
+              <EmptyState
+                icon="bi bi-chat-dots-fill"
+                title="No Messages Yet"
+                description="This is where you’ll communicate with brands about campaigns."
+                secondaryDescription="Once you apply for a campaign, brands will contact you here."
+                buttonText="Explore Campaigns"
+                buttonLink="/campaigns"
+              />
             ) : (
               conversations?.conversations?.map((chat: any, index: number) => (
                 <div
@@ -249,7 +221,14 @@ const Inbox = () => {
               </div>
             </div>
           ) : (
-            <EmptyMessagesGuide />
+            <EmptyState
+              icon="bi bi-chat-dots-fill"
+              title="No Messages Yet"
+              description="This is where you’ll communicate with brands about campaigns."
+              secondaryDescription="Once you apply for a campaign, brands will contact you here."
+              buttonText="Explore Campaigns"
+              buttonLink="/campaigns"
+            />
           )}
         </div>
       </div>
