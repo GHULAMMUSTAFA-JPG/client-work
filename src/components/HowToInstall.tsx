@@ -7,7 +7,7 @@ const HowToInstall = () => {
       <div className="accordion-item border rounded">
         <h2 className="accordion-header" id="headingInstall">
           <button
-            className="accordion-button collapsed d-flex  gap-2  py-0 fs-5 "
+            className="accordion-button collapsed d-flex  gap-2  py-0 fs-6 "
             style={{ background: "#fff" }}
             type="button"
             data-bs-toggle="collapse"
@@ -35,12 +35,16 @@ const HowToInstall = () => {
         >
           <div className="bg-white px-4 py-3 ">
             <ol className="custom-list">
-              <li>
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  Install the Chrome Extension
-                </a>{" "}
-                and pin it to your Chrome topbar. Ensure you’re logged into
-                LinkedIn already in this Chrome browser.
+              <li className="d-flex">
+                <p className="m-0 p-0">
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    Install the Chrome Extension
+                  </a>
+                  and pin it to your Chrome topbar. Ensure you’re logged into
+                  LinkedIn already in this Chrome browser.
+                </p>
+
+                <div></div>
               </li>
               <li>
                 Click on the Extension, and click the Go Track Posts button. It

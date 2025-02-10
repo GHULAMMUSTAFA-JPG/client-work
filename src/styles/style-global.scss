@@ -318,8 +318,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
   margin-right: 10px;
   background-color: #e9ecef;
   border-radius: 50%;
