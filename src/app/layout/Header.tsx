@@ -57,9 +57,7 @@ export default function Header() {
 
   useEffect(() => {
     if (userProfile?._id) {
-      const ws = new WebSocket(
-        `wss://synncapi.onrender.com/ws/message/${userProfile._id}`
-      );
+      const ws = new WebSocket(`/ws/message/${userProfile._id}`);
       setSocket(ws);
       setSockets(ws);
       ws.onopen = () => {

@@ -347,7 +347,10 @@ function CreatorDetailModal(props: any) {
                   setIsLoading(true);
                   axios
                     .post(
-                      "https://synncapi.onrender.com/dashboard/download_files",
+                      `${process.env.NEXT_PUBLIC_API_UR}/
+                        dashboard /
+                        download_files
+                     `,
                       { file_urls: selectedPost?.Media_Content },
                       { responseType: "blob" }
                     )
