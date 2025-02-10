@@ -1,10 +1,11 @@
 import EmptyState from "@/components/EmptyState";
+import HowToInstall from "@/components/HowToInstall";
 import React from "react";
 
 const AnalyticsPage = () => {
   return (
     <div className="container-fluid my-5">
-      <div className="d-flex justify-content-between  mb-3">
+      <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
           <h1 className="h4 mb-0">Analytics</h1>
           <span className="text-danger">● Status: Needs Connection</span>
@@ -27,7 +28,7 @@ const AnalyticsPage = () => {
             </thead>
             <tbody>
               <tr>
-                <td className="text-center py-5" colSpan={100}>
+                <td className="text-center py-5" colSpan={3}>
                   <EmptyState
                     icon="bi bi-bar-chart-line"
                     title="No Analytics Data Available"
