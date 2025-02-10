@@ -7,7 +7,7 @@ const HowToInstall = () => {
       <div className="accordion-item border rounded">
         <h2 className="accordion-header" id="headingInstall">
           <button
-            className="accordion-button collapsed d-flex  gap-2  h-25"
+            className="accordion-button collapsed d-flex  gap-2  py-0 fs-5 "
             style={{ background: "#fff" }}
             type="button"
             data-bs-toggle="collapse"
@@ -21,7 +21,7 @@ const HowToInstall = () => {
               height={28}
               alt="chrome"
             />
-            <p className="mt-2">
+            <p className="mt-3">
               How to Install and Use Limelight’s Chrome Extension to Share Post
               Analytics with Brands
             </p>
