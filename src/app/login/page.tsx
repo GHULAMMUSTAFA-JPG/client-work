@@ -187,7 +187,7 @@ const AuthPage = () => {
         } else {
           setLoader(true);
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/buyer/signup`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/buyer/signup`,
             {
               method: "POST",
               headers: {
