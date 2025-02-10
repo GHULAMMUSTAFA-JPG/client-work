@@ -160,7 +160,7 @@ const AuthPage = () => {
 
               router.push("/homepage");
             }
-            toast.success("Login successful");
+            // toast.success("Login successful");
           } else {
             setIsLoading(false);
           }
