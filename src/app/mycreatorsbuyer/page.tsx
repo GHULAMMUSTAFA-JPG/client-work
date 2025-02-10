@@ -251,7 +251,7 @@ function mycreatorsbuyer() {
                                     >
                                       <td className="text-start ps-4">
                                         <div className="d-flex align-items-center">
-                                          <Image
+                                          <img
                                             src={
                                               user?.Profile_Image ||
                                               defaultImagePath
