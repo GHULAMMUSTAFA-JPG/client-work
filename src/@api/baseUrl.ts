@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const isServer = typeof window === "undefined";
 
 export const apiController = axios.create({
-  baseURL: isServer ? process.env.API_URL : process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "https://app.synnc.us/",//isServer ? process.env.API_URL : process.env.NEXT_PUBLIC_API_URL,
   timeout: 600000,
 });
 
