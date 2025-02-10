@@ -9,6 +9,7 @@ import { handleFileUpload, updateProfileInformation } from "@/@api";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Link from "next/link";
 interface editDtoProps {
   email: string;
   name: string;
@@ -266,7 +267,10 @@ export default function ProfilePage() {
             {/* Profile Section */}
             <div className="p-3">
               {/* Profile Image */}
-              <div className="position-relative" style={{ marginTop: "-75px" }}>
+              <div
+                className="position-relative d-flex align-items-center justify-content-between"
+                style={{ marginTop: "-75px" }}
+              >
                 <Image
                   src={userProfile?.Profile_Image || defaultImagePath}
                   alt="Profile Picture"
@@ -274,6 +278,16 @@ export default function ProfilePage() {
                   height={150}
                   className="rounded-circle border border-4 border-white"
                 />
+
+                <Link
+                  href="https://chrome.google.com/webstore/category/extensions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1 mt-4"
+                >
+                  <Icon icon="mdi:download" width={18} height={18} />
+                  <span>Download Extension</span>
+                </Link>
               </div>
               {/* Profile Info */}
               <div className="mt-2">
@@ -281,14 +295,7 @@ export default function ProfilePage() {
                   <h5 id="name" onClick={editFieldHandler} className="mb-0">
                     {userProfile?.Name}
                   </h5>
-                  <img
-                    src={`https://flagcdn.com/24x18/${
-                      userProfile?.Country_Code || "us"
-                    }.png`}
-                    width={24}
-                    height={18}
-                    className="mx-1"
-                  ></img>
+
                   <a
                     href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
                     target="_blank"

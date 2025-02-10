@@ -13,6 +13,8 @@ import { defaultImagePath } from "@/components/constants";
 import { Tooltip } from "@mui/material";
 import WelcomeBanner from "@/components/WelcomeBanner";
 import HowItWorks from "@/components/HowItWorks";
+import EmptyState from "@/components/EmptyState";
+import Link from "next/link";
 
 function Homepage() {
   const { user, userProfile, setIsLoading, notifications, setIsActive } =
@@ -70,51 +72,51 @@ function Homepage() {
   return (
     <>
       <div className="container-fluid">
-        {/* <div className="row mb-3 mt-3">
-                    <div className="col-md-4 ms-auto">
-                        <div className="card bg-primary-subtle">
-                            <div className="card-body p-4">
-                                <div className="d-flex align-items-center gap-3">
-                                    <Icon icon="ph:lightbulb" width={32} height={32} className='text-primary' />
-                                    <p className="mb-0 fw-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
         <div className="row mt-3 003">
           <div className="col-md-8">
-            <div className="card mb-3">
+            <div className="card mb-3 ">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">Profile</p>
-                  <div className="d-flex gap-2 align-items-center cursor">
-                    <Tooltip
-                      title={linkCopied ? "Link Copied" : "Share Profile"}
-                      arrow
-                      placement="top"
-                      className=""
-                    >
-                      <Icon
-                        icon="iconamoon:share-1-thin"
-                        width="20"
-                        height="20"
-                        className="cursor flex-shrink-0 text-dark me-1"
-                        onClick={() => {
-                          shareProfile();
-                        }}
-                      />
-                    </Tooltip>
-                    <Tooltip title="Edit Profile" arrow placement="top">
-                      <Icon
-                        icon="material-symbols-light:edit-square-outline-rounded"
-                        width="20"
-                        height="20"
-                        className="cursor flex-shrink-0 text-dark"
-                        onClick={() => router.push("/Profile")}
-                      />
-                    </Tooltip>
+                  <div className="d-flex align-items-center mb-3 gap-3">
+                    <p className="mb-0 fs-16 fw-medium">Profile</p>
+
+                    <div className="d-flex gap-2 align-items-center cursor">
+                      <Tooltip
+                        title={linkCopied ? "Link Copied" : "Share Profile"}
+                        arrow
+                        placement="top"
+                        className=""
+                      >
+                        <Icon
+                          icon="iconamoon:share-1-thin"
+                          width="20"
+                          height="20"
+                          className="cursor flex-shrink-0 text-dark me-1"
+                          onClick={() => {
+                            shareProfile();
+                          }}
+                        />
+                      </Tooltip>
+                      <Tooltip title="Edit Profile" arrow placement="top">
+                        <Icon
+                          icon="material-symbols-light:edit-square-outline-rounded"
+                          width="20"
+                          height="20"
+                          className="cursor flex-shrink-0 text-dark"
+                          onClick={() => router.push("/Profile")}
+                        />
+                      </Tooltip>
+                    </div>
                   </div>
+                  <Link
+                    href="https://chrome.google.com/webstore/category/extensions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1"
+                  >
+                    <Icon icon="mdi:download" width={18} height={18} />
+                    <span>Download Extension</span>
+                  </Link>
                 </div>
                 <div className="d-flex gap-2 mb-3">
                   <Image
@@ -136,8 +138,8 @@ function Homepage() {
                         width={24}
                         height={14}
                         className="mx-2"
-                      ></img>
-                      <a
+                      />
+                      <Link
                         href={
                           userProfile?.Profile_URL
                             ? `https://www.linkedin.com/in/${userProfile?.Profile_URL}`
@@ -152,9 +154,10 @@ function Homepage() {
                           height={24}
                           className="text-info"
                         />
-                      </a>
+                      </Link>
                     </div>
-                    <div className="d-flex gap-2 align-items-center">
+
+                    <div className="d-flex gap-2 align-items-center mt-2">
                       <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
                       </p>
@@ -165,14 +168,13 @@ function Homepage() {
                       <p className="mb-0 fs-12 text-warning">
                         <span className="text-dark fw-medium">
                           {userProfile?.No_of_Followers}{" "}
-                        </span>{" "}
+                        </span>
                         followers
                       </p>
-                      {/* <div className="bg-light rounded-circle d-inline-block" style={{ width: '6px', height: '6px' }}></div> */}
-                      {/* <p className='mb-0 fs-12 text-warning'>Post Activity <span className="text-dark fw-medium">Daily</span></p> */}
                     </div>
                   </div>
                 </div>
+
                 <div className="d-flex gap-2 flex-wrap mb-3">
                   {userProfile?.Skills?.map((element: any, index: number) => {
                     return (
@@ -222,16 +224,18 @@ function Homepage() {
                 </div>
               </div>
             </div>
-            <div className="card">
+            <div className="card h-10">
               {!hasActiveCampaigns && (
-                <WelcomeBanner
-                  title="Welcome to Synnc!"
-                  subtitle="Get started by exploring brand campaigns and applying for collaborations."
-                  cta={{
-                    text: "Find Campaigns",
-                    link: "/campaigns",
-                  }}
-                />
+                <div className="card-body d-flex flex-column justify-content-center min-h-100">
+                  <WelcomeBanner
+                    title="Welcome to Synnc!"
+                    subtitle="Get started by exploring brand campaigns and applying for collaborations."
+                    cta={{
+                      text: "Find Campaigns",
+                      link: "/campaigns",
+                    }}
+                  />
+                </div>
               )}
               {hasActiveCampaigns && (
                 <div className="card-body">
@@ -374,9 +378,12 @@ function Homepage() {
                     }
                   )
                 ) : (
-                  <div className=" mb-2 mt-2 text-center">
-                    <small>No new Notifications </small>
-                  </div>
+                  <EmptyState
+                    icon="bi bi-bell-slash"
+                    title="No New Notifications"
+                    description="You're all caught up! No new notifications at the moment."
+                    iconSize={32}
+                  />
                 )}
               </div>
             </div>
