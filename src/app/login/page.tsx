@@ -27,7 +27,7 @@ const AuthPage = () => {
     const codess = searchParams.get('code');
     const getToken = async (code: any) => {
         // setIsLoading(true)
-        const response = await apiController.get(`https://ap1.synnc.us/linkedin/portal_generate_oauth_token?code=${code}`)
+        const response = await apiController.get(`https://api.synnc.us/linkedin/portal_generate_oauth_token?code=${code}`)
 
         if (response.status == 200) {
             setIsLoading(false)
