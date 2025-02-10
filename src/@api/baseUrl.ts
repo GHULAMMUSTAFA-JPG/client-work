@@ -1,8 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const isServer = typeof window === "undefined";
+
 export const apiController = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: isServer ? process.env.API_URL : process.env.NEXT_PUBLIC_API_URL,
   timeout: 600000,
 });
 
