@@ -5,6 +5,7 @@ import React from "react";
 const AnalyticsPage = () => {
   return (
     <div className="container-fluid my-5">
+      <HowToInstall />
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
           <h1 className="h4 mb-0">Analytics</h1>
