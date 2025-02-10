@@ -55,7 +55,7 @@ function ApplyModal({ selectedCampaign, disable }: any) {
             </div>
 
             <div className="modal-body p-4">
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
                 <div className="d-flex align-items-center gap-3  p-3  ">
                   <Image
                     src={selectedCampaign?.Company_Logo || defaultImagePath}
@@ -98,7 +98,7 @@ function ApplyModal({ selectedCampaign, disable }: any) {
                     </div>
                   </div>
                 </div>
-                <div className="d-flex justify-content-between align-items-center  gap-4 ">
+                <div className="d-flex justify-content-between align-items-center  gap-4 flex-wrap">
                   <h5 className="m-0 text-bold">
                     $ {selectedCampaign?.Budget.toLocaleString()}
                   </h5>
