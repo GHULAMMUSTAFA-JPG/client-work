@@ -27,7 +27,7 @@ const AuthPage = () => {
     const codess = searchParams.get('code');
     const getToken = async (code: any) => {
         // setIsLoading(true)
-        const response = await apiController.get(`https://synncapi.onrender.com/linkedin/portal_generate_oauth_token?code=${code}`)
+        const response = await apiController.get(`https://ap1.synnc.us/linkedin/portal_generate_oauth_token?code=${code}`)
 
         if (response.status == 200) {
             setIsLoading(false)
@@ -283,7 +283,7 @@ const AuthPage = () => {
         // }).catch(error => {
         //     console.error('Error:', error.response ? error.response.data : error.message);
         // });
-        const redirectUri = 'https://synncportal.vercel.app/login';
+        const redirectUri = 'https://app.synnc.us/login';
         const clientId = '86kqbx17og1eeb';
         const state = 'foobar';
         const scope = 'email%20openid%20profile';
