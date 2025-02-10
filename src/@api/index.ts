@@ -563,6 +563,7 @@ export const getCampaignsCreatorsOverview = async (
 export const applyCampaign = async (
   dto: any,
   setDescription: any,
+  setShowModal: any,
   setIsLoading?: any
 ) => {
   setIsLoading && setIsLoading(true);
@@ -577,6 +578,7 @@ export const applyCampaign = async (
     );
     result && result?.click();
     setDescription("");
+    setShowModal(false);
     return response;
   } catch (error) {
     setIsLoading && setIsLoading(false);

@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "./constants";
 import { toast } from "react-toastify";
 
-function ApplyModal({ selectedCampaign, disable }: any) {
+function ApplyModal({ selectedCampaign, disable, setShowModal }: any) {
   const { user, setIsLoading } = useAuth();
   const [description, setDescription] = useState("");
 
@@ -28,7 +28,8 @@ function ApplyModal({ selectedCampaign, disable }: any) {
         message: description,
       },
       setDescription,
-      setIsLoading
+      setIsLoading,
+      setShowModal
     );
   };
   return (

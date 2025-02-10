@@ -171,7 +171,7 @@ export default function Header() {
       }
 
       const response = await fetch(
-        `process.env.NEXT_PUBLIC_APP_URLpayments/create-customer-portal?user_id=${userProfile?._id}`,
+        `process.env.NEXT_PUBLIC_API_URL/payments/create-customer-portal?user_id=${userProfile?._id}`,
         {
           method: "GET",
           headers: {

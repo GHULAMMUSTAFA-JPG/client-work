@@ -21,6 +21,7 @@ import { defaultImagePath } from "@/components/constants";
 function DiscoverCreator() {
   const [searchText, setSearchText] = useState<string>("");
   const [campaignData, setCampaignData] = useState<any>();
+  const [showModal, setShowModal] = useState(false);
   const { setIsLoading, user, setIsActive } = useAuth();
   const [pageNo, setPageNo] = useState<number>(1);
   const [limit, setLimit] = useState<number>(30);
@@ -110,7 +111,7 @@ function DiscoverCreator() {
                     <div className="card-body d-flex flex-column">
                       <div className="d-flex justify-content-between gap-2 mb-4 align-items-center">
                         <div className="d-flex gap-2 align-items-center">
-                          <img
+                          <Image
                             src={campaign?.Company_Logo || defaultImagePath}
                             className="border object-fit-cover rounded-circle flex-shrink-0"
                             alt="logo"
@@ -172,6 +173,7 @@ function DiscoverCreator() {
                           data-bs-target="#applyModal"
                           onClick={() => {
                             setSelectedCampaign(campaign);
+                            setShowModal(true);
                           }}
                         >
                           Learn more
@@ -203,7 +205,12 @@ function DiscoverCreator() {
       </section>
       <CampaignOffcanvas />
       <CampaignFilterModal selectedCampaign={selectedCampaign} />
-      <ApplyModal selectedCampaign={selectedCampaign} />
+      {/* {showModal && ( */}
+      <ApplyModal
+        selectedCampaign={selectedCampaign}
+        setShowModal={setShowModal}
+      />
+      {/* )} */}
     </>
   );
 }

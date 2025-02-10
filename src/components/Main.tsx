@@ -33,6 +33,20 @@ const Main = ({ children, isAuthenticated, user }: any) => {
     }
   }, [isAuthenticated, user, router, pathname]);
 
+  // useEffect(() => {
+  //   if(isAuthenticated && user?.isBuyer){
+  //     if(pathname=="/DiscoverCreator" || pathname=="/homepage" || pathname=="/campaigns" || pathname=="/creatordashboard" || pathname=="Profile"){
+  //       router.push("/")
+  //     }
+  //   }
+  //   else if(isAuthenticated && user.isBuyer==false){
+  //     if (pathname=="/homepagebuyer" || pathname="/mycreatorsbuyer" || pathname=="/buyerdashboard" ||pathname=="/companypage"){
+  //       router.push("/")
+  //     }
+  //   }
+
+  // }, [])
+
   const creatorMenuItems = [
     { label: "Dashboard", href: "/homepage", icon: "bi bi-house-door" },
     {
