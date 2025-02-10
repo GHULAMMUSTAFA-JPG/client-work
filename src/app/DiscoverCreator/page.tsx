@@ -111,7 +111,7 @@ function DiscoverCreator() {
                     <div className="card-body d-flex flex-column">
                       <div className="d-flex justify-content-between gap-2 mb-4 align-items-center">
                         <div className="d-flex gap-2 align-items-center">
-                          <Image
+                          <img
                             src={campaign?.Company_Logo || defaultImagePath}
                             className="border object-fit-cover rounded-circle flex-shrink-0"
                             alt="logo"

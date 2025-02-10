@@ -172,7 +172,7 @@ export default function ProfilePage() {
       };
       console.log("updateddetails", updateddetails);
       const response = await axios.put(
-        "process.env.NEXT_PUBLIC_API_URL/dashboard/creators/update_creator",
+        "process.env.API_URL/dashboard/creators/update_creator",
         updateddetails
       );
       toast.success("Profile updated successfully");

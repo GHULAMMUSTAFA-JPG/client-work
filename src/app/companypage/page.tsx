@@ -238,13 +238,31 @@ export default function companypage() {
     }
   };
 
+  // const fileHandler: any = async (e: any, id: string) => {
+  //   const file = e.target.files;
+  //   const filePath: any = await handleFileUpload(e, setIsLoading);
+  //   if (filePath[0]?.file_urls) {
+  //     setEditDetails((prev: any) => {
+  //       return { ...prev, [id]: filePath[0]?.file_urls };
+  //     });
+  //   }
+  // };
+
   const fileHandler: any = async (e: any, id: string) => {
-    const file = e.target.files;
-    const filePath: any = await handleFileUpload(e, setIsLoading);
-    if (filePath[0]?.file_urls) {
-      setEditDetails((prev: any) => {
-        return { ...prev, [id]: filePath[0]?.file_urls };
-      });
+    const file = e.target.files[0]; // Access the first selected file
+    if (file) {
+      // Check if the file type is an image (JPG, PNG, or JPEG)
+      const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (validImageTypes.includes(file.type)) {
+        const filePath: any = await handleFileUpload(e, setIsLoading);
+        if (filePath[0]?.file_urls) {
+          setEditDetails((prev: any) => {
+            return { ...prev, [id]: filePath[0]?.file_urls };
+          });
+        }
+      } else {
+        toast.error("Please upload a valid image file (JPEG, PNG, JPG).");
+      }
     }
   };
 
