@@ -153,14 +153,14 @@ const AuthPage = () => {
               ) {
                 router.push("/stripe");
               } else {
-                toast.success("Login successful");
                 router.push("/homepagebuyer");
               }
             } else {
               // Handle creator login
-              toast.success("Login successful");
+
               router.push("/homepage");
             }
+            toast.success("Login successful");
           } else {
             setIsLoading(false);
           }

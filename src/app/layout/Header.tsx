@@ -57,7 +57,9 @@ export default function Header() {
 
   useEffect(() => {
     if (userProfile?._id) {
-      const ws = new WebSocket(`/ws/message/${userProfile._id}`);
+      const ws = new WebSocket(
+        `${process.env.NEXT_PUBLIC_SOCKET_URL}/ws/message/${userProfile._id}`
+      );
       setSocket(ws);
       setSockets(ws);
       ws.onopen = () => {
