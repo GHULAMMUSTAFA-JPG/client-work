@@ -221,7 +221,7 @@ export default function companypage({ params }: any) {
     setIsLoading(true);
     try {
       const response = await axios.put(
-        "https://synncapi.onrender.com/dashboard/buyers/update_buyer",
+        `${process.env.NEXT_PUBLIC_API_UR}/dashboard/buyers/update_buyer`,
         editDetails
       );
       toast.success("Profile updated successfully");
@@ -391,8 +391,8 @@ export default function companypage({ params }: any) {
                         style={{ width: "19px", height: "19px" }}
                       ></i>
                     </a>
-                    <a 
-                      href={`https://${userProfile?.Company_Linkedin}`} 
+                    <a
+                      href={`https://${userProfile?.Company_Linkedin}`}
                       target="_blank"
                     >
                       <Icon
@@ -568,7 +568,9 @@ export default function companypage({ params }: any) {
                       height="18"
                       className="text-gray flex-shrink-0"
                     />
-                    <p className="mb-0">{campaign?.Target_Audience?.join(' , ')}</p>
+                    <p className="mb-0">
+                      {campaign?.Target_Audience?.join(" , ")}
+                    </p>
                   </div>
 
                   <div className="d-flex gap-2 justify-content-end">

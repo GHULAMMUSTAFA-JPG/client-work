@@ -1,22 +1,24 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function ChatApp() {
-    const {userProfile} = useAuth()
+  const { userProfile } = useAuth();
   const [messages, setMessages] = useState<any>([]);
   const [input, setInput] = useState<any>("");
 
-  useEffect(()=>{
-    console.log(userProfile,"userProfile")
-  },[userProfile])
-  const socket = io(`ws://synncapi.onrender.com/ws/message/${userProfile?._id}`);
+  useEffect(() => {
+    console.log(userProfile, "userProfile");
+  }, [userProfile]);
+  const socket = io(
+    `${process.env.NEXT_PUBLIC_SOCKET_URL}/ws/message/${userProfile?._id}`
+  );
 
   useEffect(() => {
-    socket.on("message", (message:any) => {
-      setMessages((prevMessages:any) => [...prevMessages, message]);
+    socket.on("message", (message: any) => {
+      setMessages((prevMessages: any) => [...prevMessages, message]);
     });
 
     return () => {
@@ -33,7 +35,7 @@ export default function ChatApp() {
     <div>
       <h1>Real-Time Chat App</h1>
       <div>
-        {messages.map((msg:string, index:number) => (
+        {messages.map((msg: string, index: number) => (
           <p key={index}>{msg}</p>
         ))}
       </div>
