@@ -1,4 +1,3 @@
-
 "use client";
 
 import { fetch_dashboard_data, fetchCompanyData } from "@/@api";
@@ -11,34 +10,33 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 // import { useRouter } from "next/navigation";
-function CreatorDashboard() {   
-    const {user, setIsLoading, setIsActive} = useAuth()
-    const [users, setUsers] = useState<any[]>([]);
-    const [companyData, setCompanyData] = useState<any>([])
-    // const router = useRouter()
-    useEffect(() => {
-        setIsActive(3)
-        fetchData()
-      
-    }, [])
-    useEffect(() => {
-       user?.email && fetchCompanyData(user?.email,setCompanyData,setIsLoading)
-    }, [user])
+function CreatorDashboard() {
+  const { user, setIsLoading, setIsActive } = useAuth();
+  const [users, setUsers] = useState<any[]>([]);
+  const [companyData, setCompanyData] = useState<any>([]);
+  // const router = useRouter()
+  useEffect(() => {
+    setIsActive(3);
+    fetchData();
+  }, []);
+  useEffect(() => {
+    user?.email && fetchCompanyData(user?.email, setCompanyData, setIsLoading);
+  }, [user]);
 
-    const fetchData = async () => {
-        const response:any = await fetch_dashboard_data(setIsLoading)
-        setUsers(response.data?.users)
-    }
-    return (
-        <>
-            <div className="container-fluid">
-                {/* <Topcard /> */}
-                <div className="row my-3">
-                    <div className="col-12">
-                        <div className="d-flex justify-content-between align-items-end mb-3">
-                            <p className="mb-0 fw-medium fs-16">My Company Creators</p>
-                            {/* <button className="btn btn-primary btn-sm ms-auto">Add Campaign</button> */}
-                            {/* <div className="dropdown ms-3">
+  const fetchData = async () => {
+    const response: any = await fetch_dashboard_data(setIsLoading);
+    setUsers(response.data?.users);
+  };
+  return (
+    <>
+      <div className="container-fluid">
+        {/* <Topcard /> */}
+        <div className="row my-3">
+          <div className="col-12">
+            <div className="d-flex justify-content-between align-items-end mb-3">
+              <p className="mb-0 fw-medium fs-16">My Company Creators</p>
+              {/* <button className="btn btn-primary btn-sm ms-auto">Add Campaign</button> */}
+              {/* <div className="dropdown ms-3">
                                 <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Export
                                 </button>
@@ -50,70 +48,97 @@ function CreatorDashboard() {
                                     <li><a className="dropdown-item" href="#">Export as docs</a></li>
                                 </ul>
                             </div> */}
-                        </div>
-                        {/* <hr className="" /> */}
-                        <div className="card">
-                            <div className="card-body p-0">
-                                <div className="table-responsive">
-                                    <table className="table align-middle text-center mb-0 table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" className="text-start ps-4">Creators</th>
-                                                <th scope="col">Social Platform</th>
-                                                <th scope="col">Followers</th>
-                                                <th scope="col">Impressions</th>
-                                                <th scope="col">Average Impressions</th>
-                                                <th scope="col">Engagements</th>
-                                                <th scope="col">Average Engagements</th>
-                                                {/* <th scope="col">Social Media Value</th> */}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {Array.isArray(companyData?.creators) && companyData?.creators?.map((user: any) => (
-                                                <tr key={user?._id}>
-                                                    <td className="text-start ps-4">
-                                                        <div className="d-flex align-items-center">
-                                                            <Image src={user?.Profile_Image || defaultImagePath} alt={user?.Name} width={30} height={30} className="user-img img-fluid" />
-                                                            <span className="ms-2 text-truncate">{user?.Name}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div className="d-flex align-items-center justify-content-center mb-2">
-                                                            <span className="ms-2">@{user?.Profile_URL}</span>
-                                                        </div>
-                                                        <div className="d-flex align-items-center justify-content-center">
-                                                            <Icon icon="mdi:linkedin" width={22} height={22} className="text-info"/>
+            </div>
+            {/* <hr className="" /> */}
+            <div className="card">
+              <div className="card-body p-0">
+                <div className="table-responsive">
+                  <table className="table align-middle text-center mb-0 table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col" className="text-start ps-4">
+                          Creators
+                        </th>
+                        <th scope="col">Social Platform</th>
+                        <th scope="col">Followers</th>
+                        <th scope="col">Impressions</th>
+                        <th scope="col">Average Impressions</th>
+                        <th scope="col">Engagements</th>
+                        <th scope="col">Average Engagements</th>
+                        {/* <th scope="col">Social Media Value</th> */}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Array.isArray(companyData?.creators) &&
+                        companyData?.creators?.map((user: any) => (
+                          <tr key={user?._id}>
+                            <td className="text-start ps-4">
+                              <div className="d-flex align-items-center">
+                                <img
+                                  src={user?.Profile_Image || defaultImagePath}
+                                  alt={user?.Name}
+                                  width={30}
+                                  height={30}
+                                  className="user-img img-fluid"
+                                />
+                                <span className="ms-2 text-truncate">
+                                  {user?.Name}
+                                </span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="d-flex align-items-center justify-content-center mb-2">
+                                <span className="ms-2">
+                                  @{user?.Profile_URL}
+                                </span>
+                              </div>
+                              <div className="d-flex align-items-center justify-content-center">
+                                <Icon
+                                  icon="mdi:linkedin"
+                                  width={22}
+                                  height={22}
+                                  className="text-info"
+                                />
 
-                                                            <span className="ms-2 text-truncate"> {user?.Username}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p className="mb-2">{user?.No_of_Followers?.toLocaleString()}</p>
-                                                        {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
-                                                    </td>
-                                                    <td>
-                                                        <p className="mb-2">{user?.No_of_Impressions}</p>
-                                                        {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                    </td>
-                                                    <td>
-                                                        <p className="mb-2">{user?.Average_Impressions}</p>
-                                                        {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
-                                                    </td>
-                                                    <td>
-                                                        {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                        <p className="mb-0">{user?.No_of_Engagements}</p>
-                                                    </td>
-                                                    <td>
-                                                        <p className="mb-2">{user?.Average_Engagements}</p>
-                                                        {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
-                                                    </td>
-                                                    {/* <td>
+                                <span className="ms-2 text-truncate">
+                                  {" "}
+                                  {user?.Username}
+                                </span>
+                              </div>
+                            </td>
+                            <td>
+                              <p className="mb-2">
+                                {user?.No_of_Followers?.toLocaleString()}
+                              </p>
+                              {/* <p className="mb-0">{user.No_of_Followers.toLocaleString()}</p> */}
+                            </td>
+                            <td>
+                              <p className="mb-2">{user?.No_of_Impressions}</p>
+                              {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
+                            </td>
+                            <td>
+                              <p className="mb-2">
+                                {user?.Average_Impressions}
+                              </p>
+                              {/* <p className="mb-0">{user.No_of_Engagements.toLocaleString()}</p> */}
+                            </td>
+                            <td>
+                              {/* <p className="mb-2">{user.No_of_Impressions.toLocaleString()}</p> */}
+                              <p className="mb-0">{user?.No_of_Engagements}</p>
+                            </td>
+                            <td>
+                              <p className="mb-2">
+                                {user?.Average_Engagements}
+                              </p>
+                              {/* <p className="mb-0">{user.No_of_Impressions.toLocaleString()}</p> */}
+                            </td>
+                            {/* <td>
                                                         <p className="mb-2">-</p> Replace with dynamic value if available
                                                         <p className="mb-0">$1.4k</p> Replace with dynamic value if available
                                                     </td> */}
-                                                </tr>
-                                            ))}
-                                            {/* <tr>
+                          </tr>
+                        ))}
+                      {/* <tr>
                                                 <td>
                                                     <div className="d-flex align-items-center justify-content-center">
                                                         <Image src="/assets/images/user.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
@@ -357,16 +382,16 @@ function CreatorDashboard() {
                                                     <p className="mb-0">$1.4k</p>
                                                 </td>
                                             </tr> */}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
             </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default (CreatorDashboard)
+export default CreatorDashboard;

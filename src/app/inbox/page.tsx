@@ -130,7 +130,7 @@ const Inbox = () => {
                       : ""
                   }`}
                 >
-                  <Image
+                  <img
                     src={chat?.Profile_Image || defaultImagePath}
                     alt="Profile"
                     width={40}
@@ -161,7 +161,7 @@ const Inbox = () => {
               {/* Card Header */}
               <div className="card-header bg-white p-3">
                 <div className="d-flex align-items-center justify-between">
-                  <Image
+                  <img
                     src={selectedIds?.Profile_Image || defaultImagePath}
                     alt="Profile"
                     width={40}

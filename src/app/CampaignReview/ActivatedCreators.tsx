@@ -120,7 +120,7 @@ function ActivatedCreators({
                               {/* Header with avatar and name */}
                               <div className="d-flex align-items-center mb-3">
                                 <div className="me-3">
-                                  <Image
+                                  <img
                                     src={
                                       creator?.Profile_Image || defaultImagePath
                                     }
@@ -364,7 +364,7 @@ function ActivatedCreators({
                           <div className="card-body d-flex flex-column">
                             <div className="d-flex align-items-center gap-2 mb-2">
                               <div className="rounded-circle">
-                                <Image
+                                <img
                                   src={
                                     selectedCreator?.Profile_Image ||
                                     defaultImagePath

@@ -28,7 +28,7 @@ export default function Index({ params }: any) {
             >
               {/* Banner Image */}
               <div className="position-relative">
-                <Image
+                <img
                   src={userProfile?.Banner_Image || defaultImagePath}
                   alt="Profile Banner"
                   className="object-fit-cover rounded-3 w-100 cover-img"
@@ -44,7 +44,7 @@ export default function Index({ params }: any) {
                   className="position-relative"
                   style={{ marginTop: "-75px" }}
                 >
-                  <Image
+                  <img
                     src={userProfile?.Profile_Image || defaultImagePath}
                     alt="Profile Picture"
                     width={150}

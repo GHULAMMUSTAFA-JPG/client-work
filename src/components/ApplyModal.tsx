@@ -57,7 +57,7 @@ function ApplyModal({ selectedCampaign, disable }: any) {
             <div className="modal-body p-4">
               <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
                 <div className="d-flex align-items-center gap-3  p-3  ">
-                  <Image
+                  <img
                     src={selectedCampaign?.Company_Logo || defaultImagePath}
                     className="border rounded-circle"
                     alt="logo"

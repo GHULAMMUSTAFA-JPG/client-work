@@ -149,7 +149,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -265,7 +265,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -381,7 +381,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -507,7 +507,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -623,7 +623,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -739,7 +739,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -865,7 +865,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -981,7 +981,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -1097,7 +1097,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -1223,7 +1223,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -1339,7 +1339,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"
@@ -1455,7 +1455,7 @@ function CampaignReviewModal() {
                               <div className="campaign-post">
                                 <div className="d-flex">
                                   <div className="dashboard-img-circle me-3">
-                                    <Image
+                                    <img
                                       src="/assets/images/user1.jpg"
                                       className="img-fluid rounded-circle"
                                       alt="logo"

@@ -255,7 +255,7 @@ export default function ProfilePage() {
           >
             {/* Banner Image */}
             <div className="position-relative">
-              <Image
+              <img
                 src="/assets/images/cover.png"
                 alt="Profile Banner"
                 className="object-fit-cover rounded-3 w-100 cover-img"
@@ -271,7 +271,7 @@ export default function ProfilePage() {
                 className="position-relative d-flex align-items-center justify-content-between"
                 style={{ marginTop: "-75px" }}
               >
-                <Image
+                <img
                   src={userProfile?.Profile_Image || defaultImagePath}
                   alt="Profile Picture"
                   width={150}
@@ -568,7 +568,7 @@ export default function ProfilePage() {
                 <div className="mb-4">
                   <label className="mb-2">Banner image</label>
                   <div className="position-relative">
-                    <Image
+                    <img
                       src={editDetails.banner_image || defaultImagePath}
                       alt="Banner"
                       width={500}
@@ -607,7 +607,7 @@ export default function ProfilePage() {
                 <div className="mb-4">
                   <label className="mb-2">Profile photo</label>
                   <div className="position-relative">
-                    <Image
+                    <img
                       src={editDetails.profile_image || defaultImagePath}
                       alt="Profile"
                       width={80}

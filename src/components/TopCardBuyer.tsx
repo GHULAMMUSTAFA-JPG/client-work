@@ -1,19 +1,15 @@
-
-"use client"
-import { login } from '@/@api';
-import useForm from '@/hooks/useForm';
-import React, { useState } from 'react'
+"use client";
+import { login } from "@/@api";
+import useForm from "@/hooks/useForm";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-
-
 function TopCardBuyer() {
-
-    return (
-        <>
-            {/* <div className="row my-3">
+  return (
+    <>
+      {/* <div className="row my-3">
                 <div className="col-12">
                     <div className="card">
                         <div className="card-body p-4">
@@ -70,58 +66,94 @@ function TopCardBuyer() {
                 </div>
             </div> */}
 
-            <div className='row my-3'>
-                <div className="col-12">
-                    <div className="card">
-                        <div className="card-body ">
-                            <div className="row align-items-center">
-                                <div className="col-sm-6 col-md-6 col-xl-2">
-                                    {/* <p className="mb-2 fw-medium fs-12">Campaign Creators</p> */}
-                                    <div className="hero-circle mx-xl-auto mx-md-0">
-                                        {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
-                                        <Image src="/assets/images/user.jpg" className="img-fluid rounded-circle" alt="logo" width={90} height={90} />
-
-                                    </div>
-
-                                </div>
-                                <div className="col-sm-6 col-md-6 col-xl-3">
-                                    <p className="mb-2 fw-medium">Campaigns</p>
-                                    <div className="d-flex align-items-center">
-                                        <Icon icon="bi:briefcase" width={32} height={32} className='' />
-                                        <div className="ms-2">
-                                            {/* <p className="mb-0 fs-12"><span className="fs-14 fw-medium text-dark me-1">50.1</span></p> */}
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">10</span>Published</p>
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">4</span>Active</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-6 col-md-6 col-xl-4">
-                                    <p className="mb-2 fw-medium">Spending Summary</p>
-                                    <div className="d-flex align-items-center">
-                                        <Icon icon="solar:dollar-broken" width={32} height={32} className='' />
-                                        <div className="ms-2">
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">$ 90k</span>Total Spent</p>
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">$ 10k</span>Average Spent per Campaign</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-6 col-md-6 col-xl-3">
-                                    <p className="mb-2 fw-medium">Feedback Overview</p>
-                                    <div className="d-flex align-items-center">
-                                        <Icon icon="material-symbols-light:reviews-outline" width={34} height={34} className='' />
-                                        <div className="ms-2">
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">120</span>Total Reviews</p>
-                                            <p className="mb-0 text-warning fs-12 d-flex align-items-center"><span className="fs-14 fw-medium  me-1">4.7</span>Ratings</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div className="row my-3">
+        <div className="col-12">
+          <div className="card">
+            <div className="card-body ">
+              <div className="row align-items-center">
+                <div className="col-sm-6 col-md-6 col-xl-2">
+                  {/* <p className="mb-2 fw-medium fs-12">Campaign Creators</p> */}
+                  <div className="hero-circle mx-xl-auto mx-md-0">
+                    {/* <img src="../assets/images/user1.jpg" className="img-fluid rounded-circle" alt="logo" /> */}
+                    <img
+                      src="/assets/images/user.jpg"
+                      className="img-fluid rounded-circle"
+                      alt="logo"
+                      width={90}
+                      height={90}
+                    />
+                  </div>
                 </div>
+                <div className="col-sm-6 col-md-6 col-xl-3">
+                  <p className="mb-2 fw-medium">Campaigns</p>
+                  <div className="d-flex align-items-center">
+                    <Icon
+                      icon="bi:briefcase"
+                      width={32}
+                      height={32}
+                      className=""
+                    />
+                    <div className="ms-2">
+                      {/* <p className="mb-0 fs-12"><span className="fs-14 fw-medium text-dark me-1">50.1</span></p> */}
+                      <p className="mb-0 text-warning fs-12 d-flex align-items-center">
+                        <span className="fs-14 fw-medium  me-1">10</span>
+                        Published
+                      </p>
+                      <p className="mb-0 text-warning fs-12 d-flex align-items-center">
+                        <span className="fs-14 fw-medium  me-1">4</span>Active
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-sm-6 col-md-6 col-xl-4">
+                  <p className="mb-2 fw-medium">Spending Summary</p>
+                  <div className="d-flex align-items-center">
+                    <Icon
+                      icon="solar:dollar-broken"
+                      width={32}
+                      height={32}
+                      className=""
+                    />
+                    <div className="ms-2">
+                      <p className="mb-0 text-warning fs-12 d-flex align-items-center">
+                        <span className="fs-14 fw-medium  me-1">$ 90k</span>
+                        Total Spent
+                      </p>
+                      <p className="mb-0 text-warning fs-12 d-flex align-items-center">
+                        <span className="fs-14 fw-medium  me-1">$ 10k</span>
+                        Average Spent per Campaign
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-sm-6 col-md-6 col-xl-3">
+                  <p className="mb-2 fw-medium">Feedback Overview</p>
+                  <div className="d-flex align-items-center">
+                    <Icon
+                      icon="material-symbols-light:reviews-outline"
+                      width={34}
+                      height={34}
+                      className=""
+                    />
+                    <div className="ms-2">
+                      <p className="mb-0 text-warning fs-12 d-flex align-items-center">
+                        <span className="fs-14 fw-medium  me-1">120</span>Total
+                        Reviews
+                      </p>
+                      <p className="mb-0 text-warning fs-12 d-flex align-items-center">
+                        <span className="fs-14 fw-medium  me-1">4.7</span>
+                        Ratings
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default TopCardBuyer
+export default TopCardBuyer;

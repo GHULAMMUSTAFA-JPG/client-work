@@ -429,7 +429,7 @@ function CampaignOverview({
                           >
                             <td className="w-75">
                               <div className="d-flex align-items-center">
-                                <Image
+                                <img
                                   src={
                                     array_item?.Profile_Image ||
                                     defaultImagePath
@@ -438,7 +438,7 @@ function CampaignOverview({
                                   width={40}
                                   height={40}
                                   alt="User avatar"
-                                  priority
+                                  // priority
                                 />
                                 <div className="ms-3">
                                   <div>{array_item?.Name}</div>

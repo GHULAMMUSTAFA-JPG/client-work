@@ -346,7 +346,7 @@ export default function companypage({ params }: any) {
           >
             {/* Banner Image */}
             <div className="position-relative">
-              <Image
+              <img
                 src={
                   userProfile?.Company_Banner !== ""
                     ? userProfile?.Company_Banner
@@ -363,7 +363,7 @@ export default function companypage({ params }: any) {
             <div className="p-3">
               {/* Profile Image */}
               <div className="position-relative" style={{ marginTop: "-75px" }}>
-                <Image
+                <img
                   src={
                     userProfile?.Company_Logo !== ""
                       ? userProfile?.Company_Logo

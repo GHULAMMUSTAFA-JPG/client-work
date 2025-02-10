@@ -91,7 +91,7 @@ function Campaigns() {
                                   <div className="card card-hover h-100">
                                     <div className="card-body d-flex flex-column">
                                       <div className="d-flex gap-2 mb-4">
-                                        <Image
+                                        <img
                                           src={
                                             campaign?.Company_Logo ||
                                             defaultImagePath
@@ -197,7 +197,7 @@ function Campaigns() {
                                   <div className="card card-hover h-100">
                                     <div className="card-body d-flex flex-column">
                                       <div className="d-flex gap-2 mb-4">
-                                        <Image
+                                        <img
                                           src={
                                             campaign?.Company_Logo ||
                                             defaultImagePath

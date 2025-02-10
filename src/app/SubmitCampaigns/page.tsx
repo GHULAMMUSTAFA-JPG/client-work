@@ -266,7 +266,7 @@ const SubmitCampaigns = () => {
                     <div className="card-body d-flex flex-column">
                       <div className="d-flex align-items-center gap-2 mb-2">
                         <div className="rounded-circle">
-                          <Image
+                          <img
                             src={
                               data?.campaign?.Creator_Profile_Picture ||
                               "https://cdn.synnc.us/creator/7a06f497-8214-4cd8-b9a1-12cc3ffd1001.jpg"

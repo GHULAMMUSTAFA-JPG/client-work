@@ -119,7 +119,7 @@ function Homepage() {
                   </Link>
                 </div>
                 <div className="d-flex gap-2 mb-3">
-                  <Image
+                  <img
                     src={userProfile?.Profile_Image || defaultImagePath}
                     className="border object-fit-cover rounded-circle flex-shrink-0"
                     alt="logo"
@@ -274,7 +274,7 @@ function Homepage() {
                               >
                                 <div className="card-body py-2 ps-2 pe-3">
                                   <div className="d-flex gap-3 align-items-center">
-                                    <Image
+                                    <img
                                       src={
                                         element?.Company_Logo ||
                                         defaultImagePath

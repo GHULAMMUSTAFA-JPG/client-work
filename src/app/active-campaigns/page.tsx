@@ -533,7 +533,7 @@ const page = () => {
                           <div className="card-body">
                             <div className="d-flex align-items-center mb-2">
                               <div className="active-compaign-circle me-2">
-                                <Image
+                                <img
                                   src="/assets/images/user1.jpg"
                                   className="img-fluid rounded-circle"
                                   alt="logo"
@@ -619,7 +619,7 @@ const page = () => {
                           <div className="card-body">
                             <div className="d-flex align-items-center mb-2">
                               <div className="active-compaign-circle me-2">
-                                <Image
+                                <img
                                   src="/assets/images/user1.jpg"
                                   className="img-fluid rounded-circle"
                                   alt="logo"
@@ -705,7 +705,7 @@ const page = () => {
                           <div className="card-body">
                             <div className="d-flex align-items-center mb-2">
                               <div className="active-compaign-circle me-2">
-                                <Image
+                                <img
                                   src="/assets/images/user1.jpg"
                                   className="img-fluid rounded-circle"
                                   alt="logo"
@@ -791,7 +791,7 @@ const page = () => {
                           <div className="card-body">
                             <div className="d-flex align-items-center mb-2">
                               <div className="active-compaign-circle me-2">
-                                <Image
+                                <img
                                   src="/assets/images/user1.jpg"
                                   className="img-fluid rounded-circle"
                                   alt="logo"
@@ -958,7 +958,7 @@ const page = () => {
                                           Waiting Approval
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user3.jpg"
                                             alt="logo"
                                             width={100}
@@ -986,7 +986,7 @@ const page = () => {
                                           Waiting Approval
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user3.jpg"
                                             alt="logo"
                                             width={100}
@@ -1014,7 +1014,7 @@ const page = () => {
                                           Waiting Approval
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user3.jpg"
                                             alt="logo"
                                             width={100}
@@ -1042,7 +1042,7 @@ const page = () => {
                                           Waiting Approval
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user3.jpg"
                                             alt="logo"
                                             width={100}
@@ -1081,7 +1081,7 @@ const page = () => {
                                           Approved
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user2.jpg"
                                             alt="logo"
                                             width={100}
@@ -1109,7 +1109,7 @@ const page = () => {
                                           Approved
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user2.jpg"
                                             alt="logo"
                                             width={100}
@@ -1137,7 +1137,7 @@ const page = () => {
                                           Approved
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user2.jpg"
                                             alt="logo"
                                             width={100}
@@ -1165,7 +1165,7 @@ const page = () => {
                                           Approved
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user2.jpg"
                                             alt="logo"
                                             width={100}
@@ -1203,7 +1203,7 @@ const page = () => {
                                           Rejected Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user.jpg"
                                             alt="logo"
                                             width={100}
@@ -1231,7 +1231,7 @@ const page = () => {
                                           Rejected Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user.jpg"
                                             alt="logo"
                                             width={100}
@@ -1259,7 +1259,7 @@ const page = () => {
                                           Rejected Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user.jpg"
                                             alt="logo"
                                             width={100}
@@ -1287,7 +1287,7 @@ const page = () => {
                                           Rejected Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user.jpg"
                                             alt="logo"
                                             width={100}
@@ -1325,7 +1325,7 @@ const page = () => {
                                           Required Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user1.jpg"
                                             alt="logo"
                                             width={100}
@@ -1353,7 +1353,7 @@ const page = () => {
                                           Required Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user1.jpg"
                                             alt="logo"
                                             width={100}
@@ -1381,7 +1381,7 @@ const page = () => {
                                           Required Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user1.jpg"
                                             alt="logo"
                                             width={100}
@@ -1409,7 +1409,7 @@ const page = () => {
                                           Required Post
                                         </span>
                                         <div className="card">
-                                          <Image
+                                          <img
                                             src="/assets/images/user1.jpg"
                                             alt="logo"
                                             width={100}

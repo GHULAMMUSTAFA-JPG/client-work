@@ -360,7 +360,7 @@ export default function companypage() {
           >
             {/* Banner Image */}
             <div className="position-relative">
-              <Image
+              <img
                 src={
                   userProfile?.Company_Banner !== ""
                     ? userProfile?.Company_Banner
@@ -377,7 +377,7 @@ export default function companypage() {
             <div className="p-3">
               {/* Profile Image */}
               <div className="position-relative" style={{ marginTop: "-75px" }}>
-                <Image
+                <img
                   src={
                     userProfile?.Company_Logo !== ""
                       ? userProfile?.Company_Logo
@@ -678,7 +678,7 @@ export default function companypage() {
                 <div className="mb-4">
                   <label className="mb-2">Banner image</label>
                   <div className="position-relative">
-                    <Image
+                    <img
                       src={
                         editDetails?.company_banner !== ""
                           ? editDetails?.company_banner
@@ -721,7 +721,7 @@ export default function companypage() {
                 <div className="mb-4">
                   <label className="mb-2">Company Logo</label>
                   <div className="position-relative">
-                    <Image
+                    <img
                       src={
                         editDetails.company_logo !== ""
                           ? editDetails?.company_logo

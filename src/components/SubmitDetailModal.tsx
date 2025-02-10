@@ -240,7 +240,7 @@ function SubmitDetailModal(props: any) {
                     <div className="card-body">
                       <div className="d-flex align-items-center gap-2 mb-3">
                         <div className="rounded-circle">
-                          <Image
+                          <img
                             src={
                               campaignData?.campaign?.Creator_Profile_Picture ||
                               defaultImagePath

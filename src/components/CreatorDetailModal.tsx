@@ -259,7 +259,7 @@ function CreatorDetailModal(props: any) {
                     <div className="card-body">
                       <div className="d-flex align-items-center gap-2 mb-3">
                         <div className="rounded-circle">
-                          <Image
+                          <img
                             src={
                               selectedCreator?.Profile_Image ||
                               "https://cdn.synnc.us/creator/7a06f497-8214-4cd8-b9a1-12cc3ffd1001.jpg"

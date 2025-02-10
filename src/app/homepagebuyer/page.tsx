@@ -109,7 +109,7 @@ function homepagebuyer() {
                       </div>
                     </div>
                     {userData?.Company_Logo && userData?.Company_Logo !== "" ? (
-                      <Image
+                      <img
                         src={userData?.Company_Logo}
                         className="border object-fit-cover rounded flex-shrink-0"
                         alt="logo"

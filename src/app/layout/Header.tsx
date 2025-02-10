@@ -206,7 +206,7 @@ export default function Header() {
               aria-controls="offcanvasResponsive"
             />
             <a className="navbar-brand">
-              <Image
+              <img
                 src="/assets/images/synnc-logo-new.png"
                 alt="logo"
                 width={80}
@@ -440,7 +440,7 @@ export default function Header() {
                             style={{ color: "inherit" }}
                           >
                             <div className="d-flex align-items-center cursor-pointer">
-                              <Image
+                              <img
                                 src={
                                   conversation?.Profile_Image ||
                                   defaultImagePath
@@ -503,7 +503,7 @@ export default function Header() {
               >
                 <div className="d-flex align-items-center">
                   {userProfile?.Profile_Image || userProfile?.Company_Logo ? (
-                    <Image
+                    <img
                       src={
                         userProfile?.Profile_Image || userProfile?.Company_Logo
                       }

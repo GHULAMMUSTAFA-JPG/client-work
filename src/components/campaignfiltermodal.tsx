@@ -1,31 +1,34 @@
-
-"use client"
-import { login } from '@/@api';
-import useForm from '@/hooks/useForm';
-import React, { useState } from 'react'
+"use client";
+import { login } from "@/@api";
+import useForm from "@/hooks/useForm";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import TopCard from '@/components/topcard';
-import ProfileCard from '@/components/profilecard';
-import { defaultImagePath } from './constants';
-
-
+import TopCard from "@/components/topcard";
+import ProfileCard from "@/components/profilecard";
+import { defaultImagePath } from "./constants";
 
 function CampaignFilterModal(props: any) {
-    const { selectedCampaign } = props
+  const { selectedCampaign } = props;
 
-    return (
-        <>
-            <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                    <div className="modal-content">
-                        {/* <div className="modal-header">
+  return (
+    <>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex={-1}
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+          <div className="modal-content">
+            {/* <div className="modal-header">
                             <h1 className="modal-title fs-5" id="exampleModalLabel">Campaign Details</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div> */}
-                        <div className="modal-body p-4">
-                            {/* <div className="accordion accordion-flush" id="accordionFlushExample">
+            <div className="modal-body p-4">
+              {/* <div className="accordion accordion-flush" id="accordionFlushExample">
                                 <div className="accordion-item mb-0">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
@@ -171,39 +174,57 @@ function CampaignFilterModal(props: any) {
                                     </div>
                                 </div>
                             </div> */}
-                            <div className='d-flex gap-3 justify-content-between'>
-                                <div>
-                                    <p className='fw-medium mb-2 fs-18'>{selectedCampaign?.Headline}</p>
-                                    <p className='text-warning'>{selectedCampaign?.Brief_Description}</p>
-                                </div>
-                                <div className='d-flex gap-2'>
-                                    <Image
-                                        src={selectedCampaign?.Company_Logo || defaultImagePath}
-                                        className="border object-fit-cover rounded flex-shrink-0"
-                                        alt="logo"
-                                        width={110}
-                                        height={110}
-                                    />
-                                    <button type="button" className="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                            </div>
-                            <div className='d-flex gap-2 align-items-center mb-3'>
-                            <Icon icon="solar:eye-broken" width="18" height="18" className='text-gray flex-shrink-0' />
-                                <p className='mb-0'>{selectedCampaign?.Target_Audience?.join(' , ')}</p>
-                            </div>
-                            
-                            <p className='mb-2 fw-medium fs-16'>Campaign Details</p>
-                            <p className='text-warning mb-0'>{selectedCampaign?.Campaign_Details}</p>
-                        </div>
-                        {/* <div className="modal-footer">
+              <div className="d-flex gap-3 justify-content-between">
+                <div>
+                  <p className="fw-medium mb-2 fs-18">
+                    {selectedCampaign?.Headline}
+                  </p>
+                  <p className="text-warning">
+                    {selectedCampaign?.Brief_Description}
+                  </p>
+                </div>
+                <div className="d-flex gap-2">
+                  <img
+                    src={selectedCampaign?.Company_Logo || defaultImagePath}
+                    className="border object-fit-cover rounded flex-shrink-0"
+                    alt="logo"
+                    width={110}
+                    height={110}
+                  />
+                  <button
+                    type="button"
+                    className="btn-close ms-2"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <div className="d-flex gap-2 align-items-center mb-3">
+                <Icon
+                  icon="solar:eye-broken"
+                  width="18"
+                  height="18"
+                  className="text-gray flex-shrink-0"
+                />
+                <p className="mb-0">
+                  {selectedCampaign?.Target_Audience?.join(" , ")}
+                </p>
+              </div>
+
+              <p className="mb-2 fw-medium fs-16">Campaign Details</p>
+              <p className="text-warning mb-0">
+                {selectedCampaign?.Campaign_Details}
+              </p>
+            </div>
+            {/* <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary">Apply filters</button>
                         </div> */}
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default CampaignFilterModal
+export default CampaignFilterModal;
