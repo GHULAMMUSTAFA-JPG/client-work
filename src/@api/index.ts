@@ -689,7 +689,7 @@ const uploadImage = async (file: any, setIsLoading?: any) => {
     formData.append("file_request", file);
 
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_UR}/dashboard/upload_files`,
+      `${process.env.NEXT_PUBLIC_API_URL}/dashboard/upload_files`,
       formData,
       {
         headers: {

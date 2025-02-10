@@ -347,7 +347,7 @@ function CreatorDetailModal(props: any) {
                   setIsLoading(true);
                   axios
                     .post(
-                      `${process.env.NEXT_PUBLIC_API_UR}/
+                      `${process.env.NEXT_PUBLIC_API_URL}/
                         dashboard /
                         download_files
                      `,

@@ -221,7 +221,7 @@ export default function companypage({ params }: any) {
     setIsLoading(true);
     try {
       const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_UR}/dashboard/buyers/update_buyer`,
+        `${process.env.NEXT_PUBLIC_API_URL}/dashboard/buyers/update_buyer`,
         editDetails
       );
       toast.success("Profile updated successfully");
