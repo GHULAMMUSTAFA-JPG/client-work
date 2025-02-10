@@ -270,7 +270,7 @@ const AuthPage = () => {
     // }).catch(error => {
     //     console.error('Error:', error.response ? error.response.data : error.message);
     // });
-    const redirectUri = "https://synncportal.vercel.app/login";
+    const redirectUri = "https://app.synnc.us/login";
     const clientId = "86kqbx17og1eeb";
     const state = "foobar";
     const scope = "email%20openid%20profile";

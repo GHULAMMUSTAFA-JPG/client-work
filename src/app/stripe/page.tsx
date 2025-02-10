@@ -49,8 +49,8 @@ export default function StripePricing() {
         </div>
       </div>
 
-      <div className="row justify-content-center">
-        <div className="col-12 col-lg-10">
+      <div className="pricingbox">
+
           {/* Stripe Pricing Table */}
           <div
             dangerouslySetInnerHTML={{
@@ -61,7 +61,7 @@ export default function StripePricing() {
             }}
           />
         </div>
-      </div>
+
 
       {/* FAQ Section */}
       <div className="row justify-content-center mt-5 pt-5">
