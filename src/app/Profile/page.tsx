@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import HowToInstall from "@/components/HowToInstall";
 interface editDtoProps {
   email: string;
   name: string;
@@ -248,6 +249,8 @@ export default function ProfilePage() {
       <div className="row mt-3 006">
         <div className="col-md-8 mx-auto">
           {/* First profile container - Add onClick */}
+          <HowToInstall />
+
           <div
             className="profile-container mb-4 pb-3"
             onClick={() => handleSectionClick("about")}
@@ -536,7 +539,6 @@ export default function ProfilePage() {
         </div>
         <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
           <div className="profile-sidebar-wraper">
-            {/* First edit section */}
             <div
               className={`profile-container ${
                 activeSection === "about"
