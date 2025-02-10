@@ -15,6 +15,7 @@ import WelcomeBanner from "@/components/WelcomeBanner";
 import HowItWorks from "@/components/HowItWorks";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
+import HowToInstall from "@/components/HowToInstall";
 
 function Homepage() {
   const { user, userProfile, setIsLoading, notifications, setIsActive } =
@@ -73,6 +74,8 @@ function Homepage() {
     <>
       <div className="container-fluid">
         <div className="row mt-3 003">
+          <HowToInstall />
+
           <div className="col-md-8">
             <div className="card mb-3 ">
               <div className="card-body">
