@@ -21,7 +21,6 @@ import { defaultImagePath } from "@/components/constants";
 function DiscoverCreator() {
   const [searchText, setSearchText] = useState<string>("");
   const [campaignData, setCampaignData] = useState<any>();
-  const [showModal, setShowModal] = useState(false);
   const { setIsLoading, user, setIsActive } = useAuth();
   const [pageNo, setPageNo] = useState<number>(1);
   const [limit, setLimit] = useState<number>(30);
@@ -173,7 +172,6 @@ function DiscoverCreator() {
                           data-bs-target="#applyModal"
                           onClick={() => {
                             setSelectedCampaign(campaign);
-                            setShowModal(true);
                           }}
                         >
                           Learn more
@@ -205,12 +203,7 @@ function DiscoverCreator() {
       </section>
       <CampaignOffcanvas />
       <CampaignFilterModal selectedCampaign={selectedCampaign} />
-      {/* {showModal && ( */}
-      <ApplyModal
-        selectedCampaign={selectedCampaign}
-        setShowModal={setShowModal}
-      />
-      {/* )} */}
+      <ApplyModal selectedCampaign={selectedCampaign} />
     </>
   );
 }

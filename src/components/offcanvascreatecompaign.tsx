@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const AVAILABLE_SKILLS = [
   "AI/Analytics",
-  "Blog", 
+  "Blog",
   "Career Coaching",
   "Creator Tools",
   "CRM",
@@ -195,7 +195,7 @@ function OffcanvasCreateCompaign(props: any) {
 
   const Newmapper = () => {
     const obj = {
-      Is_Public: dto?.Is_Public ? true : false,
+      Is_Public: false,
       Headline: "",
       Budget: 0,
       Brief_Description: "",
@@ -448,7 +448,7 @@ function OffcanvasCreateCompaign(props: any) {
                             ...prev,
                             Is_Ongoing: true,
                             Start_Date: null,
-                            End_Date: null
+                            End_Date: null,
                           }));
                         }}
                         type="button"
@@ -470,7 +470,7 @@ function OffcanvasCreateCompaign(props: any) {
                         onClick={() => {
                           setDto((prev: any) => ({
                             ...prev,
-                            Is_Ongoing: false
+                            Is_Ongoing: false,
                           }));
                           setActiveTab("dateRange");
                         }}
@@ -490,40 +490,82 @@ function OffcanvasCreateCompaign(props: any) {
 
                   {activeTab === "dateRange" && (
                     <div className="input-group">
-                      <input
+                      {/* <input
                         type="date"
                         id="Start_Date"
-                        value={dto?.Start_Date || ''}
+                        value={dto?.Start_Date || ""}
                         onChange={(e: any) => {
                           setDto((prev: any) => ({
                             ...prev,
                             Start_Date: e.target.value,
-                            Is_Ongoing: false
+                            Is_Ongoing: false,
                           }));
+                        }}
+                        className="form-control"
+                      /> */}
+                      <input
+                        type="date"
+                        id="Start_Date"
+                        value={dto?.Start_Date || ""}
+                        onChange={(e: any) => {
+                          const startDate = e.target.value;
+                          setDto((prev: any) => ({
+                            ...prev,
+                            Start_Date: startDate,
+                            Is_Ongoing: false,
+                          }));
+                          // Ensure that if end date is set, it is greater than the start date
+                          if (
+                            dto?.End_Date &&
+                            new Date(startDate) > new Date(dto.End_Date)
+                          ) {
+                            setDto((prev: any) => ({
+                              ...prev,
+                              End_Date: "", // Clear end date if it's invalid
+                            }));
+                          }
                         }}
                         className="form-control"
                       />
                       <span className="input-group-text">→</span>
-                      <input
+                      {/* <input
                         type="date"
-                        value={dto?.End_Date || ''}
+                        value={dto?.End_Date || ""}
                         onChange={(e: any) =>
                           setDto((prev: any) => ({
                             ...prev,
                             End_Date: e.target.value,
-                            Is_Ongoing: false
+                            Is_Ongoing: false,
                           }))
                         }
                         id="End_Date"
                         className="form-control"
+                      /> */}
+                      <input
+                        type="date"
+                        value={dto?.End_Date || ""}
+                        onChange={(e: any) => {
+                          const endDate = e.target.value;
+                          // Ensure the Start_Date and End_Date are both valid before comparing
+                          if (dto?.Start_Date && endDate) {
+                            // Check if end date is greater than the start date
+                            if (new Date(endDate) <= new Date(dto.Start_Date)) {
+                              // Optionally, show a message or set an error state
+                              toast.warn(
+                                "End date must be greater than the start date!"
+                              );
+                              return;
+                            }
+                          }
+                          setDto((prev: any) => ({
+                            ...prev,
+                            End_Date: endDate,
+                            Is_Ongoing: false,
+                          }));
+                        }}
+                        id="End_Date"
+                        className="form-control"
                       />
-                      {/* <button
-                                                className="btn btn-outline-secondary"
-                                                type="button"
-                                                onClick={handleCalendarClick}
-                                            >
-                                                <Icon icon="solar:calendar-linear" />
-                                            </button> */}
                     </div>
                   )}
                 </div>
@@ -677,16 +719,30 @@ function OffcanvasCreateCompaign(props: any) {
                       onChange={async (e: any) => {
                         const file = e.target.files;
                         if (file[0]) {
-                          const result: any = await handleFileUpload(
-                            e,
-                            setIsLoading
-                          );
-                          setDto((prev: any) => {
-                            return {
-                              ...prev,
-                              ["Campaign_Media"]: result?.[0].file_urls,
-                            };
-                          });
+                          const selectedFile = file[0];
+
+                          // Check if the file type is jpg, jpeg, or png
+                          const allowedTypes = [
+                            "image/jpeg",
+                            "image/png",
+                            "image/jpg",
+                          ];
+                          if (allowedTypes.includes(selectedFile.type)) {
+                            const result: any = await handleFileUpload(
+                              e,
+                              setIsLoading
+                            );
+                            setDto((prev: any) => {
+                              return {
+                                ...prev,
+                                ["Campaign_Media"]: result?.[0].file_urls,
+                              };
+                            });
+                          } else {
+                            toast.error(
+                              "Only jpg, jpeg, and png files are allowed."
+                            );
+                          }
                         }
                       }}
                       type="file"

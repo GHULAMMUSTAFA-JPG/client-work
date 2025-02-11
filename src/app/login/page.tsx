@@ -121,6 +121,7 @@ const AuthPage = () => {
     setError(null);
     try {
       if (isLogin) {
+        console.log("if");
         if (values?.email == "" && values?.password == "")
           toast.warn("Email and password cannot be empty");
         else if (values?.email == "") toast.warn("Email cannot be empty");
@@ -166,6 +167,7 @@ const AuthPage = () => {
           }
         }
       } else {
+        console.log("else");
         if (values.first_name == "" || !values.first_name) {
           toast.warn("First name cannot be empty");
         } else if (values?.last_name == "" || !values?.last_name) {

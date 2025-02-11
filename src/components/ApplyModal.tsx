@@ -1,13 +1,13 @@
 "use client";
 import { applyCampaign } from "@/@api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "./constants";
 import { toast } from "react-toastify";
 
-function ApplyModal({ selectedCampaign, disable, setShowModal }: any) {
+function ApplyModal({ selectedCampaign, disable }: any) {
   const { user, setIsLoading } = useAuth();
   const [description, setDescription] = useState("");
 
@@ -28,8 +28,7 @@ function ApplyModal({ selectedCampaign, disable, setShowModal }: any) {
         message: description,
       },
       setDescription,
-      setIsLoading,
-      setShowModal
+      setIsLoading
     );
   };
   return (
@@ -49,6 +48,7 @@ function ApplyModal({ selectedCampaign, disable, setShowModal }: any) {
               </h5>
               <button
                 type="button"
+                id="closeButton"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"

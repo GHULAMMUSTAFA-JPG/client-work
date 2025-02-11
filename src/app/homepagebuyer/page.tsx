@@ -353,7 +353,10 @@ function homepagebuyer() {
         setRendControl={setRendControl}
         rendControl={rendControl}
       />
-      <OffcanvasCreateCompaign />
+      <OffcanvasCreateCompaign
+        setRendControl={setRendControl}
+        rendControl={rendControl}
+      />
     </>
   );
 }

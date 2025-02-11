@@ -285,6 +285,7 @@ export const getCampaignsList = async (
 ) => {
   setIsLoading(true);
   try {
+    if (email == null) return;
     const response: any = await apiController.get(
       `/dashboard/campaigns/get_buyer_campaigns/${email}`
     );
@@ -332,6 +333,7 @@ export const createCampaign = async (
 ) => {
   try {
     console.log("selectedSkills", selectedSkills);
+    console.log("setRendControl", setRendControl);
     if (!selectedSkills) {
       toast.warn("Please select Target Audience");
       return;
@@ -349,6 +351,7 @@ export const createCampaign = async (
     const buttonClose: any = document.getElementById(
       "createCampaignOffcanvasModal"
     );
+    console.log("buttonClose", buttonClose);
     buttonClose && buttonClose.click();
     setIsLoading(false);
     Newmapper();
@@ -563,7 +566,6 @@ export const getCampaignsCreatorsOverview = async (
 export const applyCampaign = async (
   dto: any,
   setDescription: any,
-  setShowModal: any,
   setIsLoading?: any
 ) => {
   setIsLoading && setIsLoading(true);
@@ -572,13 +574,11 @@ export const applyCampaign = async (
       `/dashboard/campaigns/apply_campaign`,
       dto
     );
+    // setRendControl(!rendControl);
+    const buttonClose: any = document.getElementById("closeButton");
+    buttonClose && buttonClose.click();
     setIsLoading && setIsLoading(false);
-    const result: any = document.getElementById(
-      "applyCampaignCloseModalButton"
-    );
-    result && result?.click();
     setDescription("");
-    setShowModal(false);
     return response;
   } catch (error) {
     setIsLoading && setIsLoading(false);

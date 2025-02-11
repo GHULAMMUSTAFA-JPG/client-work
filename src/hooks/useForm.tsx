@@ -1,34 +1,37 @@
 // useForm.ts
-import { useState } from 'react';
+import { useState } from "react";
 
 interface UseFormProps {
-    initialValues: Record<string, any>;
-    validate?: (values: Record<string, any>) => Record<string, string>;
+  initialValues: Record<string, any>;
+  validate?: (values: Record<string, any>) => Record<string, string>;
 }
 
 const useForm = ({ initialValues, validate }: UseFormProps) => {
-    const [values, setValues] = useState(initialValues);
-    const [errors, setErrors] = useState<Record<string, string>>({});
+  const [values, setValues] = useState(initialValues);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        
-        setValues({ ...values, [name]: value });
-        if (validate) {
-            const validationErrors = validate({ ...values, [name]: value });
-            setErrors(validationErrors);
-        }
-       
-    };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>, callback: () => void) => {
-        event.preventDefault();
-        if (!validate || Object.keys(errors).length === 0) {
-              callback();
-        }
-    };
+    setValues({ ...values, [name]: value });
+    if (validate) {
+      const validationErrors = validate({ ...values, [name]: value });
+      setErrors(validationErrors);
+    }
+  };
 
-    return { values, errors, handleChange, handleSubmit };
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>,
+    callback: () => void
+  ) => {
+    event.preventDefault();
+    if (!validate || Object.keys(errors).length === 0) {
+      console.log("callback", callback);
+      callback();
+    }
+  };
+
+  return { values, errors, handleChange, handleSubmit };
 };
 
 export default useForm;
