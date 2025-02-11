@@ -30,7 +30,6 @@ const AuthPage = () => {
     const response = await apiController.get(
       `${process.env.NEXT_PUBLIC_API_URL}/linkedin/portal_generate_oauth_token?code=${code}`
     );
-
     if (response.status == 200) {
       setIsLoading(false);
       const profileData = response?.data?.profile_data;
@@ -42,6 +41,13 @@ const AuthPage = () => {
         Profile_Image: profileData?.Profile_Image || "",
         uuid: profileData?._id,
       };
+      if (
+        response?.data?.profile_data.subscription_status.requires_payment ==
+        true
+      ) {
+        router.push("/stripe");
+        return;
+      }
       loginUser(data);
       router.push("/dashboard");
     } else {
