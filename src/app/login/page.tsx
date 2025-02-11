@@ -207,9 +207,11 @@ const AuthPage = () => {
           );
 
           const data = await response.json();
+          console.log("data", data);
           if (data?.detail) {
             toast.warn(data?.detail);
           } else {
+            localStorage.setItem("id", data?.data._id);
             // loginUser(data);
             router.push("/stripe");
           }
