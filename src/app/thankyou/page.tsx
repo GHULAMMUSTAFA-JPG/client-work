@@ -52,13 +52,13 @@ const ThankYouContent = () => {
       };
 
       // Store updated user data
-      loginUser(updatedUser);
+      // loginUser(updatedUser);
       localStorage.setItem("checkoutSession", checkoutSession);
       console.log("Updated user data:", updatedUser);
 
       // No automatic redirect - let user choose where to go
     }
-  }, [checkoutSession, loginUser, user]);
+  }, []);
 
   // If no checkout session, show error or redirect
   if (!checkoutSession) {
