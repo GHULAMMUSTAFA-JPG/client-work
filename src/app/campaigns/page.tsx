@@ -10,6 +10,7 @@ import { defaultImagePath } from "@/components/constants";
 
 import { useAuth } from "@/contexts/AuthContext";
 import EmptyState from "@/components/EmptyState";
+import { withAuthRole } from "@/utils/withAuthRole";
 function Campaigns() {
   const router = useRouter();
   const [campaigns, setCampaigns] = useState<any>();
@@ -291,5 +292,7 @@ function Campaigns() {
     </>
   );
 }
-
-export default Campaigns;
+export default withAuthRole({
+  Component: Campaigns,
+  allowedRoles: ["creator"],
+});

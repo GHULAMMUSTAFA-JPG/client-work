@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 import ApplyModal from "@/components/ApplyModal";
+import { withAuthRole } from "@/utils/withAuthRole";
 interface editDtoProps {
   email: string;
   first_name: string;
@@ -59,7 +60,7 @@ interface CategoryOption {
   label: string;
 }
 
-export default function companypage() {
+function companypage() {
   const { user, setIsLoading, rendControl, setRendControl, setIsActive } =
     useAuth();
   const fileInputRef: any = useRef(null);
@@ -335,6 +336,8 @@ export default function companypage() {
     };
   }, []);
   useEffect(() => {
+    console.log("companypagedata");
+
     user?.email && getCompanyPageData(user?.email, setUserData, setIsLoading);
     user?.isBuyer ? setIsActive(4) : undefined;
   }, [user, rendControl]);
@@ -1094,3 +1097,7 @@ export default function companypage() {
     </div>
   );
 }
+export default withAuthRole({
+  Component: companypage,
+  allowedRoles: ["buyer"],
+});

@@ -121,7 +121,6 @@ const AuthPage = () => {
     setError(null);
     try {
       if (isLogin) {
-        console.log("if");
         if (values?.email == "" && values?.password == "")
           toast.warn("Email and password cannot be empty");
         else if (values?.email == "") toast.warn("Email cannot be empty");
@@ -133,8 +132,11 @@ const AuthPage = () => {
             email: values?.email,
             password: values?.password,
           });
+          console.log("loginresponse", response);
           setLoader(false);
-          if (response?.data) {
+          if (response.data.subscription_status.requires_payment == true) {
+            router.push("/stripe");
+          } else if (response?.data) {
             // Store subscription status in localStorage along with other user data
             const userData = {
               ...response.data,
@@ -167,7 +169,6 @@ const AuthPage = () => {
           }
         }
       } else {
-        console.log("else");
         if (values.first_name == "" || !values.first_name) {
           toast.warn("First name cannot be empty");
         } else if (values?.last_name == "" || !values?.last_name) {
@@ -203,7 +204,7 @@ const AuthPage = () => {
           if (data?.detail) {
             toast.warn(data?.detail);
           } else {
-            loginUser(data);
+            // loginUser(data);
             router.push("/stripe");
           }
           setLoader(false);

@@ -17,6 +17,7 @@ import CampaignFilterModal from "@/components/campaignfiltermodal";
 import ApplyModal from "@/components/ApplyModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
+import { withAuthRole } from "@/utils/withAuthRole";
 
 function DiscoverCreator() {
   const [searchText, setSearchText] = useState<string>("");
@@ -207,5 +208,7 @@ function DiscoverCreator() {
     </>
   );
 }
-
-export default DiscoverCreator;
+export default withAuthRole({
+  Component: DiscoverCreator,
+  allowedRoles: ["creator"],
+});

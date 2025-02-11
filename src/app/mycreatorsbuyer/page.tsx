@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 import { useRouter } from "next/navigation";
+import { withAuthRole } from "@/utils/withAuthRole";
 
 function mycreatorsbuyer() {
   const { user, setIsLoading, userProfile, setIsActive } = useAuth();
@@ -649,5 +650,7 @@ function mycreatorsbuyer() {
     </>
   );
 }
-
-export default mycreatorsbuyer;
+export default withAuthRole({
+  Component: mycreatorsbuyer,
+  allowedRoles: ["buyer"],
+});

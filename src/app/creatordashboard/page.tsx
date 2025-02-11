@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
+import { withAuthRole } from "@/utils/withAuthRole";
 // import { useRouter } from "next/navigation";
 function CreatorDashboard() {
   const { user, setIsLoading, setIsActive } = useAuth();
@@ -393,5 +394,7 @@ function CreatorDashboard() {
     </>
   );
 }
-
-export default CreatorDashboard;
+export default withAuthRole({
+  Component: CreatorDashboard,
+  allowedRoles: ["creator"],
+});

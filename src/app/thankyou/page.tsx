@@ -39,24 +39,26 @@ const ThankYouContent = () => {
   const searchParams = useSearchParams();
   const checkoutSession = searchParams.get("checkoutsession");
 
-  // useEffect(() => {
-  //   if (checkoutSession) {
-  //     const updatedUser = {
-  //       ...user,
-  //       stripe_customer_id: checkoutSession,
-  //       subscription_status: {
-  //         has_active_subscription: true,
-  //         requires_payment: false
-  //       }
-  //     };
+  useEffect(() => {
+    if (checkoutSession) {
+      // Update user data with active subscription
+      const updatedUser = {
+        ...user,
+        stripe_customer_id: checkoutSession,
+        subscription_status: {
+          has_active_subscription: true,
+          requires_payment: false,
+        },
+      };
 
-  //     // Store updated user data
-  //     loginUser(updatedUser);
-  //     localStorage.setItem('checkoutSession', checkoutSession);
-  //     console.log('Updated user data:', updatedUser);
+      // Store updated user data
+      loginUser(updatedUser);
+      localStorage.setItem("checkoutSession", checkoutSession);
+      console.log("Updated user data:", updatedUser);
 
-  //   }
-  // }, [checkoutSession, loginUser, user]);
+      // No automatic redirect - let user choose where to go
+    }
+  }, [checkoutSession, loginUser, user]);
 
   // If no checkout session, show error or redirect
   if (!checkoutSession) {

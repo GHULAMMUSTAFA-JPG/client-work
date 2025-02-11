@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
+import { withAuthRole } from "@/utils/withAuthRole";
 interface editDtoProps {
   email: string;
   name: string;
@@ -42,7 +43,7 @@ interface cardDetailsDto {
   package_description: string;
   package_price: number | null;
 }
-export default function ProfilePage() {
+function ProfilePage() {
   const {
     user,
     userProfile,
@@ -851,3 +852,7 @@ export default function ProfilePage() {
     </div>
   );
 }
+export default withAuthRole({
+  Component: ProfilePage,
+  allowedRoles: ["creator"],
+});

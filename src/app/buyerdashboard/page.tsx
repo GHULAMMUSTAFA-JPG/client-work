@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { getCampaignsList, getSelectedCampaignsDetails } from "@/@api";
 import CampaignTable from "@/components/CampaignTable";
 import { useSearchParams } from "next/navigation";
+import { withAuthRole } from "@/utils/withAuthRole";
 
 function Buyerdashboard() {
   const { user, setIsLoading } = useAuth();
@@ -73,10 +74,14 @@ function Buyerdashboard() {
   );
 }
 
-export default function AuthPageWrapper() {
+function AuthPageWrapper() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Buyerdashboard />
     </Suspense>
   );
 }
+export default withAuthRole({
+  Component: AuthPageWrapper,
+  allowedRoles: ["buyer"],
+});

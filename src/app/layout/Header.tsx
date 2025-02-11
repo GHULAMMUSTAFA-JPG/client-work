@@ -48,6 +48,8 @@ export default function Header() {
 
   useEffect(() => {
     if (user?.email) {
+      console.log("fetchbuyerdatasecond");
+
       // getHistoryOfUser();
       !user?.isBuyer
         ? fetchProfileData(user?.email, setUserProfile, setIsLoading)

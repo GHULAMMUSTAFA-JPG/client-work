@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import EditProfileModalBuyer from "@/components/EditProfileModalBuyer";
 import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 import { Tooltip } from "@mui/material";
+import { withAuthRole } from "@/utils/withAuthRole";
 
 function homepagebuyer() {
   const { user, setIsLoading, notifications, userProfile } = useAuth();
@@ -32,10 +33,15 @@ function homepagebuyer() {
 
   useEffect(() => {
     if (user?.email) {
+      console.log("fetchbuterdatafirst");
       fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns, setIsLoading);
       fetchBuyersData(setUserData, user?.email, setIsLoading);
     }
   }, [user?.email, rendControl]);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+  }, []);
 
   const fetchData = async () => {
     const response: any = await fetch_dashboard_data(setIsLoading);
@@ -360,5 +366,7 @@ function homepagebuyer() {
     </>
   );
 }
-
-export default homepagebuyer;
+export default withAuthRole({
+  Component: homepagebuyer,
+  allowedRoles: ["buyer"],
+});

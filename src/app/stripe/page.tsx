@@ -26,12 +26,13 @@ export default function StripePricing() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = localStorage.getItem("user");
+        // const user = localStorage.getItem("user");
 
-        const userObject = user ? JSON.parse(user) : null;
-
-        const id = userObject?._id;
-
+        // const userObject = user ? JSON.parse(user) : null;
+        // console.log("userObject", userObject);
+        // const id = userObject?._id;
+        const id = localStorage.getItem("id");
+        console.log("id", id);
         if (id) {
           const response = await apiController.get(
             `payments/create-customer-session?user_id=${id}`
