@@ -52,7 +52,7 @@ const ThankYouContent = () => {
       };
 
       // Store updated user data
-      // loginUser(updatedUser);
+      loginUser(updatedUser);
       localStorage.setItem("checkoutSession", checkoutSession);
       console.log("Updated user data:", updatedUser);
 
