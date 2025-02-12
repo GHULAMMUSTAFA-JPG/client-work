@@ -142,6 +142,8 @@ const AuthPage = () => {
           console.log("loginresponse", response);
           setLoader(false);
           if (response.data.subscription_status.requires_payment == true) {
+            localStorage.setItem("id", response.data._id);
+            localStorage.setItem("checkoutisbuyer", response?.data.isBuyer);
             router.push("/stripe");
           } else if (response?.data) {
             // Store subscription status in localStorage along with other user data
@@ -212,7 +214,9 @@ const AuthPage = () => {
           if (data?.detail) {
             toast.warn(data?.detail);
           } else {
+            console.log("isbuyer from email", data);
             localStorage.setItem("id", data?.data._id);
+            localStorage.setItem("checkoutisbuyer", data?.data.isBuyer);
             // loginUser(data);
             router.push("/stripe");
           }

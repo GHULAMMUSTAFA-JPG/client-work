@@ -42,7 +42,7 @@ const ThankYouContent = () => {
   useEffect(() => {
     if (checkoutSession) {
       console.log("inside checkout session");
-
+      const isbuyercheck = localStorage.getItem("checkoutisbuyer");
       // Update user data with active subscription
       // const updatedUser = {
       //   ...user,
@@ -52,9 +52,9 @@ const ThankYouContent = () => {
       //     requires_payment: false,
       //   },
       // };
-      if (user.isBuyer == true) {
+      if (isbuyercheck) {
         router.push("/homepagebuyer");
-      } else if (user.isBuyer == false) {
+      } else if (!isbuyercheck) {
         router.push("/homepage");
       } else {
         console.log("dksjd");
