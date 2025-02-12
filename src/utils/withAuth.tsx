@@ -38,7 +38,7 @@ const withAuth = <P extends {}>(
               ? router.push("/homepage")
               : router.push(currentpath);
           else {
-            currentpath == "/login"
+            currentpath.includes("/login")
               ? router.push("/homepagebuyer")
               : router.push(currentpath);
           }
