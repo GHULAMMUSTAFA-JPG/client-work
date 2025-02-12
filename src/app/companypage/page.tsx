@@ -181,7 +181,9 @@ function companypage() {
             ? userProfile?.No_of_Employees
             : 0,
         size:
-          userProfile?.Size && userProfile?.Size !== "" ? userProfile?.Size : 0,
+          userProfile?.Size && userProfile?.Size !== ""
+            ? userProfile?.Size
+            : "Small",
         categories: userProfile?.Categories,
         year_founded:
           userProfile?.Year_Founded == "" ? 1995 : userProfile?.Year_Founded,
