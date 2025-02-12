@@ -17,7 +17,8 @@ import { useSearchParams } from "next/navigation";
 
 const AuthPage = () => {
   const [userType, setUserType] = useState<"brand" | "creator">("creator");
-  const { loginUser, user, setIsLoading, setIsAuthenticated } = useAuth();
+  const { loginUser, user, setIsLoading, setIsAuthenticated, setUser } =
+    useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [loader, setLoader] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
@@ -214,13 +215,17 @@ const AuthPage = () => {
           if (data?.detail) {
             toast.warn(data?.detail);
           } else {
-            console.log("isbuyer from email", data);
             localStorage.setItem("id", data?.data._id);
             localStorage.setItem("checkoutisbuyer", data?.data.isBuyer);
-            localStorage.setItem(
-              "user",
-              JSON.stringify(data?.session_response)
-            );
+            console.log("isbuyer from email", data);
+            const userData = data?.data.session_response;
+            console.log("userData", userData);
+            localStorage.setItem("user", JSON.stringify(userData));
+            setUser(userData);
+            // localStorage.setItem(
+            //   "user",
+            //   JSON.stringify(data?.session_response)
+            // );
             setIsAuthenticated(true);
             // loginUser(data);
             router.push("/stripe");

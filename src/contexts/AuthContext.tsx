@@ -25,6 +25,7 @@ interface AuthContextType {
   isActive: number;
   setIsActive: any;
   setIsAuthenticated: any;
+  setUser: any;
 }
 
 interface selectedIdProps {
@@ -72,6 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
+      console.log("storedUser", storedUser);
       setIsAuthenticated(true);
       setUser(JSON.parse(storedUser)); // Load user data from localStorage
     }
@@ -151,6 +153,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserProfile,
         userProfile,
         setIsAuthenticated,
+        setUser,
       }}
     >
       {children}
