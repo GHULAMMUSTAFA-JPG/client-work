@@ -17,7 +17,7 @@ import { useSearchParams } from "next/navigation";
 
 const AuthPage = () => {
   const [userType, setUserType] = useState<"brand" | "creator">("creator");
-  const { loginUser, user, setIsLoading } = useAuth();
+  const { loginUser, user, setIsLoading, setIsAuthenticated } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [loader, setLoader] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
@@ -217,6 +217,11 @@ const AuthPage = () => {
             console.log("isbuyer from email", data);
             localStorage.setItem("id", data?.data._id);
             localStorage.setItem("checkoutisbuyer", data?.data.isBuyer);
+            localStorage.setItem(
+              "user",
+              JSON.stringify(data?.session_response)
+            );
+            setIsAuthenticated(true);
             // loginUser(data);
             router.push("/stripe");
           }

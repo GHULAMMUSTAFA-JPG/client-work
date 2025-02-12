@@ -24,6 +24,7 @@ interface AuthContextType {
   setSelectedIds: any;
   isActive: number;
   setIsActive: any;
+  setIsAuthenticated: any;
 }
 
 interface selectedIdProps {
@@ -149,6 +150,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         logout,
         setUserProfile,
         userProfile,
+        setIsAuthenticated,
       }}
     >
       {children}
