@@ -20,7 +20,6 @@ const Main = ({ children, isAuthenticated, user }: any) => {
     console.log("Current path:", pathname);
 
     if (isAuthenticated && user?.isBuyer) {
-      // Only redirect to stripe if user is trying to access protected pages
       if (pathname !== "/stripe" && pathname !== "/thankyou") {
         if (
           !user.subscription_status?.has_active_subscription &&

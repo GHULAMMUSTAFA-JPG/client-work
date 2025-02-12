@@ -222,12 +222,35 @@ const ThankYouLoader = () => (
 // Main content component
 const ThankYouContent = () => {
   const router = useRouter();
-  const { user, loginUser } = useAuth();
+  const { user, loginUser, setUser } = useAuth();
   const searchParams = useSearchParams();
   const checkoutSession = searchParams.get("checkoutsession");
 
   useEffect(() => {
+    // Retrieve user from localStorage and parse it
+
+    // Checkout session logic
     if (checkoutSession) {
+      const updatedUserString = localStorage.getItem("user");
+
+      if (updatedUserString) {
+        const parsedUser = JSON.parse(updatedUserString);
+
+        // Create a new user object by spreading the previous user properties
+        // and updating the subscription status
+        const updatedUser = {
+          ...parsedUser,
+          subscription_status: {
+            ...parsedUser.subscription_status,
+            has_active_subscription: true,
+            requires_payment: false,
+          },
+        };
+
+        // Update state and localStorage with the new user object
+        setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+      }
       console.log("inside checkout session");
       const isBuyerCheck = localStorage.getItem("checkoutisbuyer");
 
@@ -238,9 +261,10 @@ const ThankYouContent = () => {
         router.push("/homepage");
       }
 
+      // Store the checkout session in localStorage
       localStorage.setItem("checkoutSession", checkoutSession);
     }
-  }, [checkoutSession, router]);
+  }, [checkoutSession]);
 
   // If no checkout session, show error or redirect
   if (!checkoutSession) {
