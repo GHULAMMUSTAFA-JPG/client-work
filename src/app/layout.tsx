@@ -53,7 +53,7 @@ function RootLayout({ children }: RootLayoutProps) {
         <ToastContainer />
 
         {/* Navigation Tip Alert */}
-        {showTip && (
+        {/* {showTip && (
           <div
             className="position-fixed bottom-0 end-0 p-3"
             style={{
@@ -112,7 +112,7 @@ function RootLayout({ children }: RootLayoutProps) {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </body>
     </html>
   );
