@@ -225,12 +225,13 @@ const ThankYouContent = () => {
   const { user, loginUser, setUser } = useAuth();
   const searchParams = useSearchParams();
   const checkoutSession = searchParams.get("checkoutsession");
-
+  console.log("checkoutSession", checkoutSession);
   useEffect(() => {
     // Retrieve user from localStorage and parse it
 
     // Checkout session logic
     if (checkoutSession) {
+      console.log("checkoutSessioninuseeffect if", checkoutSession);
       const updatedUserString = localStorage.getItem("user");
 
       if (updatedUserString) {
@@ -268,6 +269,7 @@ const ThankYouContent = () => {
 
   // If no checkout session, show error or redirect
   if (!checkoutSession) {
+    console.log("checkoutSessioninfalsecond", checkoutSession);
     return (
       <div className="container">
         <div className="card">
