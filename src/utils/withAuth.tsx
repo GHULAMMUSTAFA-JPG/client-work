@@ -34,7 +34,7 @@ const withAuth = <P extends {}>(
         } else {
           console.log("asdjagsduasda",user.isBuyer)
           if (!user.isBuyer)
-            currentpath.startsWith("/login")
+            currentpath.includes("/login")
               ? router.push("/homepage")
               : router.push(currentpath);
           else {
