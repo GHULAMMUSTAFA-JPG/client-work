@@ -41,20 +41,28 @@ const ThankYouContent = () => {
 
   useEffect(() => {
     if (checkoutSession) {
-      // Update user data with active subscription
-      const updatedUser = {
-        ...user,
-        stripe_customer_id: checkoutSession,
-        subscription_status: {
-          has_active_subscription: true,
-          requires_payment: false,
-        },
-      };
+      console.log("inside checkout session");
 
+      // Update user data with active subscription
+      // const updatedUser = {
+      //   ...user,
+      //   stripe_customer_id: checkoutSession,
+      //   subscription_status: {
+      //     has_active_subscription: true,
+      //     requires_payment: false,
+      //   },
+      // };
+      if (user.isBuyer == true) {
+        router.push("/homepagebuyer");
+      } else if (user.isBuyer == false) {
+        router.push("/homepage");
+      } else {
+        console.log("dksjd");
+      }
       // Store updated user data
       // loginUser(updatedUser);
       localStorage.setItem("checkoutSession", checkoutSession);
-      console.log("Updated user data:", updatedUser);
+      // console.log("Updated user data:", updatedUser);
 
       // No automatic redirect - let user choose where to go
     }
@@ -62,6 +70,8 @@ const ThankYouContent = () => {
 
   // If no checkout session, show error or redirect
   if (!checkoutSession) {
+    console.log("no checkout session");
+
     return (
       <div className="container">
         <div className="card">
