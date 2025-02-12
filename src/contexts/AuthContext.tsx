@@ -97,6 +97,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("id");
     localStorage.removeItem("checkoutSession");
+    localStorage.removeItem("checkoutisbuyer");
     setIsAuthenticated(false);
     setUser(null);
 
