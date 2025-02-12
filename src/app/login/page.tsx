@@ -34,6 +34,7 @@ const AuthPage = () => {
       setIsLoading(false);
       const profileData = response?.data?.profile_data;
       localStorage.setItem("token", response?.data?.oauth_token);
+      localStorage.setItem("id", profileData?._id);
       const data = {
         email: profileData?.Email,
         Is_Creator: profileData?.Is_Creator,
