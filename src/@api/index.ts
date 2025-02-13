@@ -998,22 +998,3 @@ export const getCompanyActiveBuyersData = async (
     setIsLoading(false);
   }
 };
-
-export const getBrandDiscoverList = async (email: string) => {
-  try {
-    const response = await apiController.post(
-      "/dashboard/creators/discover_brands",
-      {
-        email,
-        is_interested: false,
-        filters: {},
-        search_query: "string",
-        sort_by: "largest_first",
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    return null;
-  }
-};

@@ -3,12 +3,13 @@
 import Image from "next/image";
 import { Globe, Linkedin, Undo } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getBrandDiscoverList } from "@/@api";
 import { useAuth } from "@/contexts/AuthContext";
 import EmptyState from "../EmptyState";
+import Link from "next/link";
+import { getBrandDiscoverList, toggleBrandInterest } from "@/@api/brandApi";
 
 interface Brand {
-  id: number;
+  id: string;
   name: string;
   logo: string;
   linkedin?: string;
@@ -20,7 +21,7 @@ interface Brand {
 
 export default function BrandsTable() {
   const { user, rendControl } = useAuth();
-  const [interestedBrands, setInterestedBrands] = useState<number[]>([]);
+  const [interestedBrands, setInterestedBrands] = useState<string[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
 
   useEffect(() => {
@@ -36,12 +37,15 @@ export default function BrandsTable() {
     fetchBrands();
   }, [user?.email, rendControl]);
 
-  const toggleInterest = (brandId: number) => {
-    setInterestedBrands((prev) =>
-      prev.includes(brandId)
-        ? prev.filter((id) => id !== brandId)
-        : [...prev, brandId]
-    );
+  const handleToggleInterest = async (brandId: string) => {
+    const addInterest = !interestedBrands.includes(brandId);
+    const result = await toggleBrandInterest(user?.id, brandId, addInterest);
+
+    if (result) {
+      setInterestedBrands((prev) =>
+        addInterest ? [...prev, brandId] : prev.filter((id) => id !== brandId)
+      );
+    }
   };
 
   if (brands.length === 0) {
@@ -145,15 +149,20 @@ export default function BrandsTable() {
                 className="d-flex flex-column gap-2"
                 style={{ width: "140px" }}
               >
-                <button className="btn btn-primary btn-sm">
-                  View campaigns
-                </button>
+                <Link
+                  className="btn btn-primary btn-sm"
+                  href={`/creator-discover?brandId=${encodeURIComponent(
+                    brand.name
+                  )}`}
+                >
+                  View Campaigns
+                </Link>
                 {isInterested ? (
                   <div className="d-flex align-items-center justify-content-between">
                     <span className="text-muted small">Interested</span>
                     <button
                       className="btn btn-link btn-sm text-primary p-0"
-                      onClick={() => toggleInterest(brand.id)}
+                      onClick={() => handleToggleInterest(brand.id)}
                     >
                       <Undo
                         className="me-1"
@@ -165,7 +174,7 @@ export default function BrandsTable() {
                 ) : (
                   <button
                     className="btn btn-outline-secondary btn-sm"
-                    onClick={() => toggleInterest(brand.id)}
+                    onClick={() => handleToggleInterest(brand.id)}
                   >
                     I&apos;m Interested
                   </button>

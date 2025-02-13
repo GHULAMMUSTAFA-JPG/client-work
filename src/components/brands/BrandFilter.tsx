@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { brandRegions, brandsCategories, brandSizes } from "@/constant/brand";
