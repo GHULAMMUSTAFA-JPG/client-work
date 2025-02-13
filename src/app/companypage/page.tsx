@@ -377,9 +377,9 @@ function companypage() {
         <div className="col-md-8 mx-auto">
           {/* First profile container - Add onClick */}
           <div
-            className="profile-container mb-4 pb-3"
+            className="profile-container mb-4 pb-3 " 
             onClick={() => handleSectionClick("about")}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer" , borderRadius: "10px" , border: "0.5px solid grey "}}
           >
             {/* Banner Image */}
             <div className="position-relative">
@@ -393,6 +393,7 @@ function companypage() {
                 className="object-fit-cover rounded-3 w-100 cover-img"
                 width={1000}
                 height={1000}
+                style={{ borderRadius: "10px" , border: "0.5px solid grey "}}
               />
             </div>
 
@@ -409,7 +410,8 @@ function companypage() {
                   alt="Profile Picture"
                   width={150}
                   height={150}
-                  className="rounded-circle border border-4 border-white"
+                  className="rounded-circle border border-1 border-black "
+               
                 />
               </div>
               {/* Profile Info */}
@@ -586,7 +588,7 @@ function companypage() {
             {/* Collaboration Section */}
             {campaignData?.campaigns?.map((campaign: any, index: number) => {
               return (
-                <div key={index} className="mb-3 profile-container">
+                <div key={index} className="mb-3 profile-container" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
                   <div className="d-flex justify-content-between mb-2">
                     <label className="d-block mt-2">
                       <b className="line-clamp-1 me-3">{campaign?.Headline}</b>
@@ -671,7 +673,7 @@ function companypage() {
           </div>
         </div>
         <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
-          <div className="profile-sidebar-wraper">
+          <div className="profile-sidebar-wraper" style={{borderRadius: "10px" , border: "0.5px solid grey "}}>
             {/* First edit section */}
             <div
               className={`profile-container h-auto ${

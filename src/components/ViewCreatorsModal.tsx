@@ -14,14 +14,16 @@ interface ViewCreatorsModalProps {
   data: any;
   rendControl: boolean;
   setRendControl: any;
+  onCreatorClick: (creatorId: string) => void;
 }
 
 function ViewCreatorsModal(props: ViewCreatorsModalProps) {
-  const { data, rendControl, setRendControl } = props;
+  const { data, rendControl, setRendControl, onCreatorClick } = props;
   const [users, setUsers] = useState<any[]>([]);
 
 
   const deleteCreator = async (e: any) => {
+    e.stopPropagation(); // Prevent row click when deleting
     const response: any = await apiController.delete(
       "/dashboard/buyers/remove_creator_from_list",
       {
@@ -31,8 +33,7 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
         },
       }
     );
-    if (response?.error) {
-    } else {
+    if (!response?.error) {
       setRendControl(!rendControl);
     }
   };
@@ -87,6 +88,9 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                                 <tr
                                   key={user?._id}
                                   className="cursor hover-bg-light"
+                                  onClick={() => onCreatorClick(user?._id)}
+                                  data-bs-toggle="offcanvas"
+                                  data-bs-target="#creatorProfileDrawer"
                                 >
                                   <td className="text-start ps-4">
                                     <div className="d-flex align-items-center">
@@ -186,8 +190,8 @@ function ViewCreatorsModal(props: ViewCreatorsModalProps) {
                               ))
                             ) : (
                               <tr>
-                                <td colSpan={6}>
-                                  .............No data Found............
+                                <td colSpan={6} className="text-center">
+                                  No data Found
                                 </td>
                               </tr>
                             )}

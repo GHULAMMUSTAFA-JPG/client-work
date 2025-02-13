@@ -327,3 +327,19 @@ body {
   font-weight: bold;
   font-size: 14px;
 }
+.modal-backdrop {
+  z-index: 1050 !important;
+}
+
+.modal {
+  z-index: 1051 !important;
+}
+
+.offcanvas-backdrop {
+  z-index: 1052 !important;
+}
+
+.offcanvas.offcanvas-end {
+  z-index: 1053 !important;
+  width: 600px;
+}

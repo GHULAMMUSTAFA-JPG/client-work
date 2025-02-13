@@ -568,7 +568,7 @@ function mycreatorsbuyer() {
                         return (
                           <div key={index} className="col-md-4 col-xl-3">
                             <div className="card">
-                              <div className="card-body">
+                              <div className="card-body" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
                                 <div className="d-flex align-items-center justify-content-between mb-4">
                                   <p className="mb-0 fw-medium text-truncate">
                                     {entry?.List_Name &&
@@ -642,6 +642,7 @@ function mycreatorsbuyer() {
         data={selectedIdCreators}
         rendControl={rendControl}
         setRendControl={setRendControl}
+        onCreatorClick={(creatorId) => setSelectedCreatorId(creatorId)}
       />
       <CreatorProfileDrawer creatorId={selectedCreatorId} />
     </>
