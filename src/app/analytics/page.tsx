@@ -12,9 +12,9 @@ const AnalyticsPage = () => {
           <span className="text-danger">● Status: Needs Connection</span>
         </div>
         <button className="btn btn-outline-primary btn-sm">
-          <i className="bi bi-download me-2"></i>Install Limelight Chrome
+          <i className="bi bi-download me-2"></i>Install Synnc Chrome
           Extension
-        </button>
+              </button>
       </div>
 
       <div className="card border-0 shadow-sm">
