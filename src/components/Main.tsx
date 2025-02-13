@@ -62,7 +62,6 @@ const Main = ({ children, isAuthenticated, user }: any) => {
   ];
 
   const buyerMenuItems = [
-    { label: "Brands", href: "/discover-brands", icon: "bi bi-shop" },
     { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-house-door" },
     { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-people" },
     { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-megaphone" },
