@@ -46,6 +46,15 @@ const Inbox = () => {
       message: input,
     });
     if (sockets && sockets.readyState === WebSocket.OPEN) {
+      const newMessage = {
+        Message: input,
+        timeAgo: "Just now",
+        user: "sender",
+      };
+
+      // Update the messages state with the new message
+      setMessages((prevMessages: any) => [...prevMessages, newMessage]);
+
       sockets.send(data);
       setInput("");
     } else {
@@ -64,8 +73,9 @@ const Inbox = () => {
     if (sockets.readyState === WebSocket.OPEN) {
       sockets.send(JSON.stringify(data));
     }
+    setMessages(conversation.messages);
   };
-
+  console.log("conversations", conversations);
   return (
     <div className="container-fluid chatbot-container">
       <div className="row bg-white">
@@ -191,7 +201,7 @@ const Inbox = () => {
                           : "bg-primary text-white"
                       }`}
                     >
-                      {msg.message}
+                      {msg.Message}
                     </div>
                     <small className="text-muted">{msg.timeAgo}</small>
                   </div>

@@ -88,7 +88,6 @@ function ProfilePage() {
     collaboration_packages: false,
   });
 
-
   const [activeSection, setActiveSection] = useState<
     "about" | "collaboration" | null
   >("about");
@@ -100,7 +99,6 @@ function ProfilePage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  
   const AVAILABLE_SKILLS = [
     "AI creators with founders and enterprise employee audiences",
     "Finance professionals",
@@ -116,7 +114,7 @@ function ProfilePage() {
     "Data scientists",
     "Digital marketers",
     "Business consultants",
-    "Industry analysts"
+    "Industry analysts",
   ];
 
   const handleClick = () => {
@@ -177,13 +175,11 @@ function ProfilePage() {
     );
   };
 
-  
   const handleSectionClick = (section: "about" | "collaboration") => {
     setActiveSection(section);
     setShowSidebar(true);
   };
 
-  
   const handleCancel = () => {
     setShowSidebar(false);
   };
@@ -273,7 +269,7 @@ function ProfilePage() {
       setSelectedSkills([...selectedSkills, skill]);
       setEditDetails((prev: any) => ({
         ...prev,
-        audience_interest: [...selectedSkills, skill].join(", ")
+        audience_interest: [...selectedSkills, skill].join(", "),
       }));
     }
     setIsDropdownOpen(false);
@@ -281,14 +277,15 @@ function ProfilePage() {
 
   const handleRemoveSkill = (skillToRemove: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    const updatedSkills = selectedSkills.filter(skill => skill !== skillToRemove);
+    const updatedSkills = selectedSkills.filter(
+      (skill) => skill !== skillToRemove
+    );
     setSelectedSkills(updatedSkills);
     setEditDetails((prev: any) => ({
       ...prev,
-      audience_interest: updatedSkills.join(", ")
+      audience_interest: updatedSkills.join(", "),
     }));
   };
-
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -300,7 +297,6 @@ function ProfilePage() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
- 
   useEffect(() => {
     if (userProfile?.Audience_Interest) {
       const skills = userProfile.Audience_Interest.split(", ").filter(Boolean);
@@ -323,7 +319,7 @@ function ProfilePage() {
             {/* Banner Image */}
             <div className="position-relative">
               <img
-                src="/assets/images/cover.png"
+                src={userProfile?.Banner_Image || "/assets/images/cover.png"}
                 alt="Profile Banner"
                 className="object-fit-cover rounded-3 w-100 cover-img"
                 width={1000}
@@ -339,7 +335,7 @@ function ProfilePage() {
                 style={{ marginTop: "-75px" }}
               >
                 <img
-                  src={userProfile?.Banner_Image || defaultImagePath}
+                  src={userProfile?.Profile_Image || defaultImagePath}
                   alt="Profile Picture"
                   width={150}
                   height={150}
@@ -772,7 +768,7 @@ function ProfilePage() {
                                 setSelectedSkills([]);
                                 setEditDetails((prev: any) => ({
                                   ...prev,
-                                  audience_interest: ""
+                                  audience_interest: "",
                                 }));
                               }}
                             >
@@ -781,7 +777,9 @@ function ProfilePage() {
                           )}
                         </>
                       ) : (
-                        <span className="text-muted">Select up to 5 categories</span>
+                        <span className="text-muted">
+                          Select up to 5 categories
+                        </span>
                       )}
                     </div>
 
@@ -819,7 +817,9 @@ function ProfilePage() {
                     )}
                   </div>
                   {selectedSkills.length >= 5 && (
-                    <small className="text-muted">Maximum 5 categories can be selected</small>
+                    <small className="text-muted">
+                      Maximum 5 categories can be selected
+                    </small>
                   )}
                 </div>
 
@@ -840,7 +840,6 @@ function ProfilePage() {
               </div>
             </div>
 
-          
             <div
               className={`profile-container ${
                 activeSection === "collaboration" ? "" : "d-none"

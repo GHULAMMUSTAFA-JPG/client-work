@@ -32,7 +32,14 @@ function Buyerdashboard() {
         setSelectedCampaignDetails,
         setIsLoading
       );
-  }, [selectedCampaign]);
+  }, [selectedCampaign, rendControl]);
+  // useEffect(() => {
+  //   getSelectedCampaignsDetails(
+  //     selectedCampaign?._id,
+  //     setSelectedCampaignDetails,
+  //     setIsLoading
+  //   );
+  // }, [rendControl]);
 
   useEffect(() => {
     const id = searchParams.get("id");
