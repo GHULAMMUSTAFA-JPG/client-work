@@ -5,13 +5,9 @@ import {
   getDiscoverCampaignsForSearch,
   login,
 } from "@/@api";
-import useForm from "@/hooks/useForm";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import TopCard from "@/components/topcard";
-import ProfileCard from "@/components/profilecard";
 import CampaignOffcanvas from "@/components/campaignoffcanvas";
 import CampaignFilterModal from "@/components/campaignfiltermodal";
 import ApplyModal from "@/components/ApplyModal";
@@ -20,7 +16,9 @@ import { defaultImagePath } from "@/components/constants";
 import { withAuthRole } from "@/utils/withAuthRole";
 
 function DiscoverCreator() {
-  const [searchText, setSearchText] = useState<string>("");
+  const searchParams = useSearchParams();
+  const brandName = searchParams.get("brandName") || "";
+  const [searchText, setSearchText] = useState<string>(brandName);
   const [campaignData, setCampaignData] = useState<any>();
   const { setIsLoading, user, setIsActive } = useAuth();
   const [pageNo, setPageNo] = useState<number>(1);
@@ -29,16 +27,23 @@ function DiscoverCreator() {
 
   useEffect(() => {
     setIsActive(1);
-    user?.email &&
+    if (!brandName && user?.email) {
       getDiscoverCampaigns(
         setCampaignData,
         setIsLoading,
-        user?.email,
+        user.email,
         limit,
         pageNo
       );
-  }, [user?.email, pageNo]);
-  console.log(campaignData);
+    }
+  }, [user?.email, pageNo, brandName]);
+
+  useEffect(() => {
+    if (brandName) {
+      setSearchText(brandName);
+      getDiscoverCampaignsForSearch(brandName, setCampaignData, setIsLoading);
+    }
+  }, [brandName]);
 
   const searchCampaign = () => {
     getDiscoverCampaignsForSearch(searchText, setCampaignData, setIsLoading);
