@@ -53,6 +53,7 @@ const Main = ({ children, isAuthenticated, user }: any) => {
       href: "/DiscoverCreator",
       icon: "bi bi-globe-americas",
     },
+    { label: "Brands", href: "/discover-brands", icon: "bi bi-shop" },
     { label: "Campaigns", href: "/campaigns", icon: "bi bi-megaphone" },
     { label: "My Company", href: "/creatordashboard", icon: "bi bi-buildings" },
     { label: "Messages", href: "/inbox", icon: "bi bi-chat-left-text" },
@@ -61,6 +62,7 @@ const Main = ({ children, isAuthenticated, user }: any) => {
   ];
 
   const buyerMenuItems = [
+    { label: "Brands", href: "/discover-brands", icon: "bi bi-shop" },
     { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-house-door" },
     { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-people" },
     { label: "Campaigns", href: "/buyerdashboard", icon: "bi bi-megaphone" },
