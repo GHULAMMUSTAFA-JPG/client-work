@@ -53,7 +53,7 @@ const Main = ({ children, isAuthenticated, user }: any) => {
       href: "/DiscoverCreator",
       icon: "bi bi-globe-americas",
     },
-    { label: "Campaigns", href: "/campaigns", icon: "bi bi-megaphone" },
+    { label: "My Campaigns", href: "/campaigns", icon: "bi bi-megaphone" },
     { label: "My Company", href: "/creatordashboard", icon: "bi bi-buildings" },
     { label: "Messages", href: "/inbox", icon: "bi bi-chat-left-text" },
     { label: "Profile", href: "/Profile", icon: "bi bi-person-circle" },
