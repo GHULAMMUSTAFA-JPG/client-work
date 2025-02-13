@@ -21,6 +21,11 @@ function ApplyModal({ selectedCampaign, disable }: any) {
       toast.error("Message cannot be empty");
       return;
     }
+    const isloggedin = localStorage.getItem("user");
+    if (!isloggedin) {
+      toast.error("Please login to apply");
+      return;
+    }
     applyCampaign(
       {
         campaign_id: selectedCampaign?._id,

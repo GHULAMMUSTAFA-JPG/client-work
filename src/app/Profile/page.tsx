@@ -276,7 +276,7 @@ function ProfilePage() {
                 style={{ marginTop: "-75px" }}
               >
                 <img
-                  src={userProfile?.Profile_Image || defaultImagePath}
+                  src={userProfile?.Banner_Image || defaultImagePath}
                   alt="Profile Picture"
                   width={150}
                   height={150}

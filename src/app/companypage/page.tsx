@@ -655,18 +655,19 @@ function companypage() {
               setRendControl={setRendControl}
               rendControl={rendControl}
             />
-            {campaignData?.pagination?.Total_Pages !== page && (
-              <div className="d-flex justify-content-center">
-                <button
-                  className="btn btn-dark flex-shrink-0 btn-sm"
-                  onClick={() => {
-                    setPage(page + 1);
-                  }}
-                >
-                  Load more
-                </button>
-              </div>
-            )}
+            {campaignData?.campaigns?.length > 0 &&
+              campaignData?.pagination?.Total_Pages >= page && (
+                <div className="d-flex justify-content-center">
+                  <button
+                    className="btn btn-dark flex-shrink-0 btn-sm"
+                    onClick={() => {
+                      setPage(page + 1);
+                    }}
+                  >
+                    Load more
+                  </button>
+                </div>
+              )}
           </div>
         </div>
         <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
