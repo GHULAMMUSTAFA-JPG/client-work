@@ -29,7 +29,12 @@ const AuthPage = () => {
   const getToken = async (code: any) => {
     // setIsLoading(true)
     const response = await apiController.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/linkedin/portal_generate_oauth_token?code=${code}`
+      `${process.env.NEXT_PUBLIC_API_URL}/linkedin/portal_generate_oauth_token?code=${code}`,
+      {
+        headers: {
+          Origin: window.location.origin,
+        },
+      }
     );
     if (response.status == 200) {
       setIsLoading(false);
