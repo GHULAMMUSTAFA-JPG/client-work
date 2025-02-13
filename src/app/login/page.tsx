@@ -36,6 +36,7 @@ const AuthPage = () => {
         },
       }
     );
+    console.log("Origin", window.location.origin);
     if (response.status == 200) {
       setIsLoading(false);
       const profileData = response?.data?.profile_data;
@@ -301,7 +302,7 @@ const AuthPage = () => {
     // }).catch(error => {
     //     console.error('Error:', error.response ? error.response.data : error.message);
     // });
-    const redirectUri = "https://app.synnc.us/login";
+    const redirectUri = `${window.location.origin}/login`;
     const clientId = "86kqbx17og1eeb";
     const state = "foobar";
     const scope = "email%20openid%20profile";
