@@ -19,7 +19,7 @@ interface ViewCreatorsModalProps {
 function ViewCreatorsModal(props: ViewCreatorsModalProps) {
   const { data, rendControl, setRendControl } = props;
   const [users, setUsers] = useState<any[]>([]);
-  // const router = useRouter()
+
 
   const deleteCreator = async (e: any) => {
     const response: any = await apiController.delete(

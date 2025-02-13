@@ -88,13 +88,36 @@ function ProfilePage() {
     collaboration_packages: false,
   });
 
-  // Add new state for active section
+
   const [activeSection, setActiveSection] = useState<
     "about" | "collaboration" | null
   >("about");
   const [cardDetails, setCardDetails] = useState<any[]>();
-  // Add new state for sidebar visibility
+
   const [showSidebar, setShowSidebar] = useState(true);
+
+  const dropdownRef = useRef<any>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  
+  const AVAILABLE_SKILLS = [
+    "AI creators with founders and enterprise employee audiences",
+    "Finance professionals",
+    "Tech enthusiasts",
+    "Business leaders",
+    "Startup founders",
+    "Enterprise employees",
+    "Sales professionals",
+    "Marketing experts",
+    "HR professionals",
+    "Product managers",
+    "Software developers",
+    "Data scientists",
+    "Digital marketers",
+    "Business consultants",
+    "Industry analysts"
+  ];
 
   const handleClick = () => {
     fileInputRef && fileInputRef.current.click();
@@ -154,13 +177,13 @@ function ProfilePage() {
     );
   };
 
-  // Add click handlers for the profile containers
+  
   const handleSectionClick = (section: "about" | "collaboration") => {
     setActiveSection(section);
     setShowSidebar(true);
   };
 
-  // Add handler for cancel button
+  
   const handleCancel = () => {
     setShowSidebar(false);
   };
@@ -244,6 +267,46 @@ function ProfilePage() {
       }, 600);
     }
   };
+
+  const handleSkillSelect = (skill: string) => {
+    if (!selectedSkills.includes(skill)) {
+      setSelectedSkills([...selectedSkills, skill]);
+      setEditDetails((prev: any) => ({
+        ...prev,
+        audience_interest: [...selectedSkills, skill].join(", ")
+      }));
+    }
+    setIsDropdownOpen(false);
+  };
+
+  const handleRemoveSkill = (skillToRemove: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const updatedSkills = selectedSkills.filter(skill => skill !== skillToRemove);
+    setSelectedSkills(updatedSkills);
+    setEditDetails((prev: any) => ({
+      ...prev,
+      audience_interest: updatedSkills.join(", ")
+    }));
+  };
+
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+ 
+  useEffect(() => {
+    if (userProfile?.Audience_Interest) {
+      const skills = userProfile.Audience_Interest.split(", ").filter(Boolean);
+      setSelectedSkills(skills);
+    }
+  }, [userProfile]);
 
   return (
     <div className="container">
@@ -497,9 +560,9 @@ function ProfilePage() {
                         <div>
                           <h6>1x Sponsored Post</h6>
                           <p className="text-muted mb-0">
-                            I’ll create a LinkedIn post to educate my audience
-                            on the benefits of your company’s offerings, or for
-                            anything else you’re interested in promoting, like
+                            I'll create a LinkedIn post to educate my audience
+                            on the benefits of your company's offerings, or for
+                            anything else you're interested in promoting, like
                             an upcoming event.
                           </p>
                         </div>
@@ -519,7 +582,7 @@ function ProfilePage() {
                             Discount)
                           </h6>
                           <p className="text-muted mb-0">
-                            I’ll create a series of posts to educate my audience
+                            I'll create a series of posts to educate my audience
                             on a specific topic, mentioning your brand
                             throughout and how you can help.
                           </p>
@@ -678,16 +741,86 @@ function ProfilePage() {
                     placeholder="Synnc"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4" ref={dropdownRef}>
                   <label className="mb-2">Audience Interest*</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={editDetails.audience_interest}
-                    onChange={changeHandler}
-                    id="audience_interest"
-                    placeholder="Finance, Accounting, Startups, HR"
-                  />
+                  <div className="position-relative">
+                    <div
+                      className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    >
+                      {selectedSkills.length > 0 ? (
+                        <>
+                          {selectedSkills.map((skill) => (
+                            <span
+                              key={skill}
+                              className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
+                            >
+                              {skill}
+                              <Icon
+                                icon="mdi:close"
+                                className="cursor-pointer"
+                                width={16}
+                                height={16}
+                                onClick={(e) => handleRemoveSkill(skill, e)}
+                              />
+                            </span>
+                          ))}
+                          {selectedSkills.length > 1 && (
+                            <span
+                              className="text-muted ms-2 cursor-pointer"
+                              onClick={() => {
+                                setSelectedSkills([]);
+                                setEditDetails((prev: any) => ({
+                                  ...prev,
+                                  audience_interest: ""
+                                }));
+                              }}
+                            >
+                              Clear all
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-muted">Select up to 5 categories</span>
+                      )}
+                    </div>
+
+                    {isDropdownOpen && (
+                      <div
+                        className="position-absolute start-0 w-100 mt-1 bg-white border rounded-3 shadow-sm"
+                        style={{
+                          maxHeight: "200px",
+                          overflowY: "auto",
+                          top: "calc(100% + 5px)",
+                          zIndex: 1050,
+                          position: "fixed",
+                          width: "inherit",
+                        }}
+                      >
+                        {AVAILABLE_SKILLS.map((skill) => (
+                          <div
+                            key={skill}
+                            className={`px-3 py-2 cursor-pointer hover-bg-light ${
+                              selectedSkills.includes(skill) ? "bg-light" : ""
+                            }`}
+                            onClick={() => {
+                              if (selectedSkills.length < 5) {
+                                handleSkillSelect(skill);
+                              }
+                            }}
+                          >
+                            {skill}
+                            {selectedSkills.includes(skill) && (
+                              <Icon icon="mdi:check" className="float-end" />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {selectedSkills.length >= 5 && (
+                    <small className="text-muted">Maximum 5 categories can be selected</small>
+                  )}
                 </div>
 
                 <div className="mb-4 bg-white">
@@ -707,7 +840,7 @@ function ProfilePage() {
               </div>
             </div>
 
-            {/* Second edit section */}
+          
             <div
               className={`profile-container ${
                 activeSection === "collaboration" ? "" : "d-none"

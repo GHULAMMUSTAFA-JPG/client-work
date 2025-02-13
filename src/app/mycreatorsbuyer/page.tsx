@@ -23,6 +23,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 import { useRouter } from "next/navigation";
 import { withAuthRole } from "@/utils/withAuthRole";
+import CreatorProfileDrawer from "@/components/CreatorProfileDrawer";
 
 function mycreatorsbuyer() {
   const { user, setIsLoading, userProfile, setIsActive } = useAuth();
@@ -37,6 +38,7 @@ function mycreatorsbuyer() {
   const [rendControls, setRendControls] = useState<boolean>(false);
   const [query, setquery] = useState<string>("");
   const router = useRouter();
+  const [selectedCreatorId, setSelectedCreatorId] = useState<string>("");
   // const router = useRouter()
   console.log("buyersDetails", buyersDetails);
   useEffect(() => {
@@ -236,19 +238,13 @@ function mycreatorsbuyer() {
                                       key={user?._id}
                                       className="cursor hover-bg-light"
                                       onClick={(e) => {
-                                        // Don't navigate if clicking the dropdown
-                                        if (
-                                          (e.target as HTMLElement).closest(
-                                            ".drop-down-table"
-                                          )
-                                        ) {
+                                        if ((e.target as HTMLElement).closest(".drop-down-table")) {
                                           return;
                                         }
-                                        window.open(
-                                          `/profile-view/${user?._id}`,
-                                          "_blank"
-                                        );
+                                        setSelectedCreatorId(user?._id);
                                       }}
+                                      data-bs-toggle="offcanvas"
+                                      data-bs-target="#creatorProfileDrawer"
                                     >
                                       <td className="text-start ps-4">
                                         <div className="d-flex align-items-center">
@@ -647,6 +643,7 @@ function mycreatorsbuyer() {
         rendControl={rendControl}
         setRendControl={setRendControl}
       />
+      <CreatorProfileDrawer creatorId={selectedCreatorId} />
     </>
   );
 }
