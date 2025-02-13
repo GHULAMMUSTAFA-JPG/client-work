@@ -22,7 +22,7 @@ const HowToInstall = () => {
               alt="chrome"
             />
             <p className="mt-3">
-              How to Install and Use Limelight’s Chrome Extension to Share Post
+              How to Install and Use Syncc’s Chrome Extension to Share Post
               Analytics with Brands
             </p>
           </button>
@@ -40,10 +40,9 @@ const HowToInstall = () => {
                   <a href="#" target="_blank" rel="noopener noreferrer">
                     Install the Chrome Extension
                   </a>
-                  and pin it to your Chrome topbar. Ensure you’re logged into
+                   and pin it to your Chrome topbar. Ensure you’re logged into
                   LinkedIn already in this Chrome browser.
                 </p>
-
                 <div></div>
               </li>
               <li>
@@ -53,7 +52,7 @@ const HowToInstall = () => {
               </li>
               <li>
                 Click the Track Post button on any of your LinkedIn posts to
-                track them on Limelight. This will open the LinkedIn post in a
+                track them on Syncc. This will open the LinkedIn post in a
                 new page in your browser.
               </li>
               <li>

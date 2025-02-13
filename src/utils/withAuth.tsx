@@ -12,6 +12,7 @@ const withAuth = <P extends {}>(
   const AuthenticatedComponent = (props: P) => {
     const router = useRouter();
     const pathname = usePathname();
+
     const { isAuthenticated, user } = useAuth(); // Access auth state from context
 
     // Optionally, you could add logic for loading or redirecting the user
@@ -19,7 +20,7 @@ const withAuth = <P extends {}>(
 
     useEffect(() => {
       if (typeof window !== "undefined") {
-        const currentpath = window.location.pathname;
+        const currentpath = window.location.href;
         console.log(currentpath, "currentpath");
         if (!isAuthenticated) {
           if (pathname == "/login") {
@@ -31,12 +32,13 @@ const withAuth = <P extends {}>(
             router.push("/login");
           }
         } else {
+          console.log("asdjagsduasda",user.isBuyer)
           if (!user.isBuyer)
-            currentpath == "/login"
+            currentpath.includes("/login")
               ? router.push("/homepage")
               : router.push(currentpath);
           else {
-            currentpath == "/login"
+            currentpath.includes("/login")
               ? router.push("/homepagebuyer")
               : router.push(currentpath);
           }
