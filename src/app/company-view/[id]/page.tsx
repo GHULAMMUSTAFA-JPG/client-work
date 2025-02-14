@@ -18,6 +18,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import ApplyModal from "@/components/ApplyModal";
+import Loader from "@/components/loader";
 interface editDtoProps {
   email: string;
   first_name: string;
@@ -61,7 +62,8 @@ interface CategoryOption {
 
 export default function companypage({ params }: any) {
   const { id } = params;
-  const { user, setIsLoading, rendControl, setRendControl } = useAuth();
+  const { user, setIsLoading, rendControl, setRendControl, isLoading } =
+    useAuth();
   const fileInputRef: any = useRef(null);
   const fileInputRef1: any = useRef(null);
   const router = useRouter();
@@ -335,280 +337,237 @@ export default function companypage({ params }: any) {
   }, [selectedCategories]);
 
   return (
-    <div className="container">
-      <div className="row mt-3 ooo">
-        <div className="col-md-8 mx-auto">
-          {/* First profile container - Add onClick */}
-          <div
-            className="profile-container mb-4 pb-3"
-            onClick={() => handleSectionClick("about")}
-            style={{ cursor: "pointer" }}
-          >
-            {/* Banner Image */}
-            <div className="position-relative">
-              <img
-                src={
-                  userProfile?.Company_Banner !== ""
-                    ? userProfile?.Company_Banner
-                    : defaultImagePath
-                }
-                alt="Profile Banner"
-                className="object-fit-cover rounded-3 w-100 cover-img"
-                width={1000}
-                height={1000}
-              />
-            </div>
-
-            {/* Profile Section */}
-            <div className="p-3">
-              {/* Profile Image */}
-              <div className="position-relative" style={{ marginTop: "-75px" }}>
-                <img
-                  src={
-                    userProfile?.Company_Logo !== ""
-                      ? userProfile?.Company_Logo
-                      : defaultImagePath
-                  }
-                  alt="Profile Picture"
-                  width={150}
-                  height={150}
-                  className="rounded-circle border border-4 border-white"
-                />
-              </div>
-              {/* Profile Info */}
-              <div className="mt-2">
-                <div className="d-flex justify-content-between align-items-center gap-2 mb-1">
-                  <div className="">
-                    {" "}
-                    <h5 id="name" className="mb-0">
-                      {userProfile?.Company_Name}
-                    </h5>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <a href={userProfile?.Company_Website}>
-                      <i
-                        className="bi bi-globe"
-                        style={{ width: "19px", height: "19px" }}
-                      ></i>
-                    </a>
-                    <a
-                      href={`https://${userProfile?.Company_Linkedin}`}
-                      target="_blank"
-                    >
-                      <Icon
-                        style={{ cursor: "pointer" }}
-                        icon="mdi:linkedin"
-                        width={19}
-                        height={19}
-                        className="text-info"
-                      />
-                    </a>
-                  </div>
+    <>
+      {isLoading || !userProfile?._id ? (
+        <Loader />
+      ) : (
+        <div className="container">
+          <div className="row mt-3 ooo">
+            <div className="col-md-8 mx-auto">
+              <div
+                className="profile-container mb-4 pb-3"
+                onClick={() => handleSectionClick("about")}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="position-relative">
+                  <img
+                    src={
+                      userProfile?.Company_Banner !== ""
+                        ? userProfile?.Company_Banner
+                        : defaultImagePath
+                    }
+                    alt="Profile Banner"
+                    className="object-fit-cover rounded-3 w-100 cover-img"
+                    width={1000}
+                    height={1000}
+                  />
                 </div>
 
-                {/* <p className="mt-2">👋 Welcome to my partnership storefront!</p> */}
-
-                <div className="mt-3">
-                  <p>{userProfile?.Company_Description}</p>{" "}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="mt-4 d-flex justify-content-between profile-second-section">
+                <div className="p-3">
                   <div
-                    className="d-flex flex-column div-size"
-                    style={{ minWidth: "200px" }}
+                    className="position-relative"
+                    style={{ marginTop: "-75px" }}
                   >
-                    <label>
-                      <b>Location</b>
-                    </label>
-                    <span className="text-muted mt-2">
-                      {userProfile?.Location}
-                    </span>
-                  </div>
-                  <div
-                    className="d-flex flex-column"
-                    style={{ minWidth: "200px" }}
-                  >
-                    <label>
-                      <b>Employees(est)</b>
-                    </label>
-                    <span className="text-muted mt-2">
-                      {" "}
-                      {userProfile?.No_of_Employees || 0}
-                    </span>
-                  </div>
-
-                  <div
-                    className="d-flex flex-column"
-                    style={{ minWidth: "200px" }}
-                  >
-                    <div className="">
-                      <label className="d-block">
-                        <b>Size</b>
-                      </label>
-                      <button
-                        type="button"
-                        className="bg-info-subtle text-info border-0 btn btn-sm mt-2 rounded-pill size-btn px-2"
-                      >
-                        {userProfile?.Size || "Small"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 d-flex justify-content-between profile-second-section">
-                  <div
-                    className="d-flex flex-wrap gap-2 justify-content-start"
-                    style={{ minWidth: "200px", maxWidth: "200px" }}
-                  >
-                    <div className="">
-                      <label className="d-block">
-                        <b>Categories</b>
-                      </label>
-                      {userProfile?.Categories?.map(
-                        (category: any, index: number) => {
-                          return (
-                            <button
-                              key={index}
-                              type="button"
-                              className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1"
-                            >
-                              {category}
-                            </button>
-                          );
-                        }
-                      )}
-                    </div>
-                  </div>
-
-                  <div
-                    className="d-flex flex-column ms-4 "
-                    style={{ minWidth: "200px" }}
-                  >
-                    <label>
-                      <b>Year Founded</b>
-                    </label>
-                    <span className="text-muted mt-2">
-                      {userProfile?.Year_Founded}
-                    </span>
-                  </div>
-                  <div
-                    className="d-flex flex-column ms-4"
-                    style={{ minWidth: "200px" }}
-                  ></div>
-                </div>
-
-                {/* Stats Section */}
-              </div>
-            </div>
-          </div>
-
-          {/* Second profile container - Add onClick */}
-          {/* <div className='profile-container'
-                        onClick={() => handleSectionClick('collaboration')}
-                        style={{ cursor: 'pointer' }}>
-                        <div>
-                            <h5>Let's Collaborate</h5>
-
-                            <div className="mt-4">
-                                {
-                                    userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
-                                        return (
-                                            <div className="card mb-3" key={index} onClick={async () => {
-                                                const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
-                                                setCardDetails(mapper)
-                                            }}>
-                                                <div className="card-body d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6>{ele?.Package_Name}</h6>
-                                                        <p className="text-muted mb-0">
-                                                            {ele?.Package_Description}
-                                                        </p>
-                                                    </div>
-                                                    <div className='ms-5 text-end'>
-                                                        <h6 className='text-muted'>${ele?.Package_Price}</h6>
-                                                        <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm">Book Now</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-
-                                    })
-                                }
-
-
-
-                            </div>
-                        </div>
-                    </div> */}
-
-          <label className="d-block mb-3">Campaigns</label>
-
-          {/* Second profile container - Add onClick */}
-          <div className={``} style={{ cursor: "pointer" }}>
-            {/* Collaboration Section */}
-            {campaignData?.campaigns?.map((campaign: any, index: number) => {
-              return (
-                <div key={index} className="mb-3 profile-container">
-                  <div className="d-flex justify-content-between mb-2">
-                    <label className="d-block mt-2">
-                      <b className="line-clamp-1">{campaign?.Headline}</b>
-                    </label>
-                    <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">
-                      Public
-                    </button>
-                  </div>
-
-                  <p className="text-muted">{campaign?.Brief_Description}</p>
-
-                  <div className="d-flex gap-2 mb-2 align-items-center">
-                    <Icon
-                      icon="solar:eye-broken"
-                      width="18"
-                      height="18"
-                      className="text-gray flex-shrink-0"
+                    <img
+                      src={
+                        userProfile?.Company_Logo !== ""
+                          ? userProfile?.Company_Logo
+                          : defaultImagePath
+                      }
+                      alt="Profile Picture"
+                      width={150}
+                      height={150}
+                      className="rounded-circle border border-4 border-white"
                     />
-                    <p className="mb-0">
-                      {campaign?.Target_Audience?.join(" , ")}
-                    </p>
                   </div>
+                  <div className="mt-2">
+                    <div className="d-flex justify-content-between align-items-center gap-2 mb-1">
+                      <div className="">
+                        {" "}
+                        <h5 id="name" className="mb-0">
+                          {userProfile?.Company_Name}
+                        </h5>
+                      </div>
+                      <div className="d-flex align-items-center gap-2">
+                        <a href={userProfile?.Company_Website}>
+                          <i
+                            className="bi bi-globe"
+                            style={{ width: "19px", height: "19px" }}
+                          ></i>
+                        </a>
+                        <a
+                          href={`https://${userProfile?.Company_Linkedin}`}
+                          target="_blank"
+                        >
+                          <Icon
+                            style={{ cursor: "pointer" }}
+                            icon="mdi:linkedin"
+                            width={19}
+                            height={19}
+                            className="text-info"
+                          />
+                        </a>
+                      </div>
+                    </div>
 
-                  <div className="d-flex gap-2 justify-content-end">
-                    {/* <button className="btn btn-white border flex-shrink-0 btn-sm">Manage creators</button> */}
-                    <button
-                      onClick={() => {
-                        setSelectedCampaign(campaign);
-                      }}
-                      className="btn btn-dark flex-shrink-0 btn-sm"
-                      data-bs-toggle="modal"
-                      data-bs-target="#applyModal"
-                    >
-                      Learn More
-                    </button>
-                    {/* <button className="btn btn-white border flex-shrink-0 btn-sm">Detail</button>
-                                            <button className="btn btn-white border disabled flex-shrink-0 btn-sm">Apply</button> */}
+                    <div className="mt-3">
+                      <p>{userProfile?.Company_Description}</p>{" "}
+                    </div>
+
+                    <div className="mt-4 d-flex justify-content-between profile-second-section">
+                      <div
+                        className="d-flex flex-column div-size"
+                        style={{ minWidth: "200px" }}
+                      >
+                        <label>
+                          <b>Location</b>
+                        </label>
+                        <span className="text-muted mt-2">
+                          {userProfile?.Location}
+                        </span>
+                      </div>
+                      <div
+                        className="d-flex flex-column"
+                        style={{ minWidth: "200px" }}
+                      >
+                        <label>
+                          <b>Employees(est)</b>
+                        </label>
+                        <span className="text-muted mt-2">
+                          {" "}
+                          {userProfile?.No_of_Employees || 0}
+                        </span>
+                      </div>
+
+                      <div
+                        className="d-flex flex-column"
+                        style={{ minWidth: "200px" }}
+                      >
+                        <div className="">
+                          <label className="d-block">
+                            <b>Size</b>
+                          </label>
+                          <button
+                            type="button"
+                            className="bg-info-subtle text-info border-0 btn btn-sm mt-2 rounded-pill size-btn px-2"
+                          >
+                            {userProfile?.Size || "Small"}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 d-flex justify-content-between profile-second-section">
+                      <div
+                        className="d-flex flex-wrap gap-2 justify-content-start"
+                        style={{ minWidth: "200px", maxWidth: "200px" }}
+                      >
+                        <div className="">
+                          <label className="d-block">
+                            <b>Categories</b>
+                          </label>
+                          {userProfile?.Categories?.map(
+                            (category: any, index: number) => {
+                              return (
+                                <button
+                                  key={index}
+                                  type="button"
+                                  className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1"
+                                >
+                                  {category}
+                                </button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
+
+                      <div
+                        className="d-flex flex-column ms-4 "
+                        style={{ minWidth: "200px" }}
+                      >
+                        <label>
+                          <b>Year Founded</b>
+                        </label>
+                        <span className="text-muted mt-2">
+                          {userProfile?.Year_Founded}
+                        </span>
+                      </div>
+                      <div
+                        className="d-flex flex-column ms-4"
+                        style={{ minWidth: "200px" }}
+                      ></div>
+                    </div>
                   </div>
-
-                  {/* Collaboration Cards */}
                 </div>
-              );
-            })}
-            <ApplyModal selectedCampaign={selectedCampaign} />
-            {campaignData?.pagination?.Total_Pages !== page && (
-              <div className="d-flex justify-content-center">
-                <button
-                  className="btn btn-dark flex-shrink-0 btn-sm"
-                  onClick={() => {
-                    setPage(page + 1);
-                  }}
-                >
-                  Load more
-                </button>
               </div>
-            )}
+
+              <label className="d-block mb-3">Campaigns</label>
+
+              <div className={``} style={{ cursor: "pointer" }}>
+                {campaignData?.campaigns?.map(
+                  (campaign: any, index: number) => {
+                    return (
+                      <div key={index} className="mb-3 profile-container">
+                        <div className="d-flex justify-content-between mb-2">
+                          <label className="d-block mt-2">
+                            <b className="line-clamp-1">{campaign?.Headline}</b>
+                          </label>
+                          <button className="bg-primary-subtle text-primary border-0 btn btn-sm mt-2 rounded-pill size-btn px-2">
+                            Public
+                          </button>
+                        </div>
+
+                        <p className="text-muted">
+                          {campaign?.Brief_Description}
+                        </p>
+
+                        <div className="d-flex gap-2 mb-2 align-items-center">
+                          <Icon
+                            icon="solar:eye-broken"
+                            width="18"
+                            height="18"
+                            className="text-gray flex-shrink-0"
+                          />
+                          <p className="mb-0">
+                            {campaign?.Target_Audience?.join(" , ")}
+                          </p>
+                        </div>
+
+                        <div className="d-flex gap-2 justify-content-end">
+                          <button
+                            onClick={() => {
+                              setSelectedCampaign(campaign);
+                            }}
+                            className="btn btn-dark flex-shrink-0 btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#applyModal"
+                          >
+                            Learn More
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  }
+                )}
+                <ApplyModal selectedCampaign={selectedCampaign} />
+                {campaignData?.pagination?.Total_Pages !== page && (
+                  <div className="d-flex justify-content-center">
+                    <button
+                      className="btn btn-dark flex-shrink-0 btn-sm"
+                      onClick={() => {
+                        setPage(page + 1);
+                      }}
+                    >
+                      Load more
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
