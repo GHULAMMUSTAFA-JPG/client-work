@@ -57,7 +57,7 @@ const AuthPage = () => {
         return;
       }
       loginUser(data);
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } else {
       setIsLoading(false);
     }
@@ -159,7 +159,8 @@ const AuthPage = () => {
               subscription_status: response.data.subscription_status,
             };
             loginUser(userData);
-
+            localStorage.setItem("id", response?.data?._id);
+            localStorage.setItem("checkoutisbuyer", response?.data?.isBuyer);
             // Check if user is a buyer and handle subscription
             if (response.data.isBuyer) {
               console.log(

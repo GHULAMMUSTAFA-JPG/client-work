@@ -13,6 +13,7 @@ import EmptyState from "@/components/EmptyState";
 const Inbox = () => {
   const [messages, setMessages] = useState<any>([]);
   const [input, setInput] = useState<string>("");
+  const [selectedmsgid, setselectedmsgid] = useState(null);
   const {
     userProfile,
     conversations,
@@ -22,6 +23,7 @@ const Inbox = () => {
     restartSockets,
   } = useAuth();
   const [searchText, setSearchText] = useState<string | null>(null);
+  const [display, setdisplay] = useState<any>({});
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
@@ -39,6 +41,27 @@ const Inbox = () => {
       fetchProfileDataByIds(id, setSelectedIds);
     }
   }, [searchParams]);
+  if (sockets && selectedmsgid) {
+    sockets.onmessage = (event: any) => {
+      console.log("event called");
+
+      if (selectedmsgid) {
+        const incomingMessage = JSON.parse(event.data);
+        const filteredmessages =
+          incomingMessage.conversations &&
+          incomingMessage?.conversations?.filter(
+            (m: any) => m._id == selectedmsgid
+          );
+        console.log("filteredmessages", filteredmessages);
+        filteredmessages && setMessages(filteredmessages[0].messages);
+      }
+    };
+  }
+
+  // sockets.on('newMessage', (data) => {
+
+  //   io.emit('newMessage', { chatId: data.chatId, message: { user: data.user, message: data.message } });
+  // });
 
   const sendMessage = async () => {
     const data = JSON.stringify({
@@ -64,7 +87,11 @@ const Inbox = () => {
       restartSockets();
     }
   };
-
+  useEffect(() => {
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
   const readMessage = async (conversation: any) => {
     const data = {
       conversation_id: conversation?._id,
@@ -73,7 +100,16 @@ const Inbox = () => {
     if (sockets.readyState === WebSocket.OPEN) {
       sockets.send(JSON.stringify(data));
     }
+    setselectedmsgid(conversation?._id);
     setMessages(conversation.messages);
+    // setdisplay((prevDisplay: any) => {
+    //   const newDisplay = { ...prevDisplay };
+    //   Object.keys(newDisplay).forEach((key) => {
+    //     newDisplay[key] = true;
+    //   });
+    //   newDisplay[conversation._id] = false;
+    //   return newDisplay;
+    // });
   };
   console.log("conversations", conversations);
   return (
@@ -149,12 +185,22 @@ const Inbox = () => {
                   />
                   <div className="flex-grow-1">
                     <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                    <small className="text-muted line-clamp-1">
+                    <small
+                      // style={{
+                      //   display: display[chat?._id] == false ? "none" : "block",
+                      // }}
+                      className="text-muted line-clamp-1"
+                    >
                       {chat?.Last_Message?.Message}
                     </small>
                   </div>
                   {chat?.conversation_new_messages > 0 && (
-                    <span className="badge bg-danger ms-2">
+                    <span
+                      // style={{
+                      //   display: display[chat?._id] == false ? "none" : "block",
+                      // }}
+                      className="badge bg-danger ms-2"
+                    >
                       {chat?.conversation_new_messages}
                     </span>
                   )}
