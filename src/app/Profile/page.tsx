@@ -370,7 +370,7 @@ function ProfilePage() {
                     
                     {/* Skills Pills */}
                     <div className="d-flex flex-wrap gap-2 mb-3">
-                      {(userProfile?.Skills || ["Full Stack", "Cloud Architecture", "DevOps", "System Design", "Agile"]).map((skill, index) => (
+                      {(userProfile?.Skills || ["Full Stack", "Cloud Architecture", "DevOps", "System Design", "Agile"]).map((skill: string, index: number) => (
                         <span 
                           key={index}
                           className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
