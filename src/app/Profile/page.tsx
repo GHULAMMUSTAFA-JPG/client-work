@@ -349,7 +349,7 @@ function ProfilePage() {
                   className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1 mt-4"
                 >
                   <Icon icon="mdi:download" width={18} height={18} />
-                  <span>Download Extension</span>
+                  <span>Download Chrome Extension</span>
                 </Link>
               </div>
               {/* Profile Info */}
@@ -407,37 +407,37 @@ function ProfilePage() {
 
                 {/* Stats Row */}
                 <div className="row g-4 mb-4">
-                  <div className="col">
-                    <div className="d-flex flex-column">
+                  <div className="mt-6 grid grid-cols-5 gap-4-grid">
+                    <div className="bg-box profile-box">
                       <span className="text-muted">Profile views</span>
                       <strong>{userProfile?.Profile_Views || "1,234"}</strong>
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="d-flex flex-column">
+                            
+                  <div className="bg-box profile-box">
                       <span className="text-muted">Post impressions</span>
                       <strong>{userProfile?.Average_Impressions || "5.6k"}</strong>
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="d-flex flex-column">
+                 
+                 
+                  <div className="bg-box profile-box">
                       <span className="text-muted">Search appearances</span>
                       <strong>{userProfile?.Search_Appearances || "789"}</strong>
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="d-flex flex-column">
+                
+                  
+                  <div className="bg-box profile-box">
                       <span className="text-muted">Connections</span>
                       <strong>{userProfile?.No_of_Followers}+</strong>
                     </div>
-                  </div>
-                  <div className="col">
-                    <div className="d-flex flex-column">
+                  
+                 
+                  <div className="bg-box profile-box">
                       <span className="text-muted">Followers</span>
                       <strong>{userProfile?.Followers || "2.5k"}</strong>
                     </div>
                   </div>
                 </div>
+               
 
                 {/* About Section */}
                 <div className="mb-4">
