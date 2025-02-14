@@ -8,7 +8,6 @@ import EmptyState from "../EmptyState";
 import Link from "next/link";
 import { getBrandDiscoverList, toggleBrandInterest } from "@/@api/brandApi";
 import { isValidUrl } from "@/utils";
-import { useSearchParams } from "next/navigation";
 import { SortOptions } from "@/constant/brand";
 
 interface Brand {
@@ -20,88 +19,31 @@ interface Brand {
   description?: string;
   size?: string;
   categories: string[];
+  isInterested: boolean;
 }
 
-export default function BrandsTable() {
+interface BrandsTableProps {
+  brands: Brand[];
+  hasMore: boolean;
+  isLoading: boolean;
+  onLoadMore: () => void;
+}
+
+export default function BrandsTable({
+  brands,
+  hasMore,
+  isLoading,
+  onLoadMore,
+}: BrandsTableProps) {
   const { user } = useAuth();
-  const searchParams = useSearchParams();
   const [interestedBrands, setInterestedBrands] = useState<string[]>([]);
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
-  const sortBy = searchParams.get("sort") || "largest_first";
-
-  const fetchBrands = useCallback(
-    async (currentPage: number, shouldAppend: boolean = true) => {
-      if (!user?.uuid || isLoading) return;
-
-      try {
-        setIsLoading(true);
-        const data = await getBrandDiscoverList({
-          userId: user.uuid,
-          isInterested: false,
-          searchQuery: "",
-          sortBy,
-          page: currentPage,
-          limit: 10,
-        });
-
-        if (data?.brands) {
-          const newBrands = data.brands.map((brand: any) => ({
-            id: brand._id,
-            name: brand.Company_Name,
-            logo: brand.Company_Logo,
-            linkedin: brand.Company_Linkedin,
-            website: brand.Company_Website,
-            description: brand.Company_Description,
-            size: brand.Size,
-            categories: brand.Categories,
-          }));
-
-          setBrands((prev) =>
-            shouldAppend ? [...prev, ...newBrands] : newBrands
-          );
-
-          const newInterested = data.brands
-            .filter((brand: any) => brand.Is_Interested)
-            .map((brand: any) => brand._id);
-
-          setInterestedBrands((prev) => [
-            ...new Set([...prev, ...newInterested]),
-          ]);
-          setHasMore(
-            data.pagination.current_page < data.pagination.total_pages
-          );
-        } else {
-          setHasMore(false);
-        }
-      } catch (error) {
-        console.error("Error fetching brands:", error);
-        setHasMore(false);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [user?.uuid, sortBy]
-  );
-
-  useEffect(() => {
-    setBrands([]);
-    setPage(1);
-    setHasMore(true);
-    fetchBrands(1, false);
-  }, [sortBy, fetchBrands]);
-
-  useEffect(() => {
-    if (page > 1) {
-      fetchBrands(page, true);
-    }
-  }, [page, fetchBrands]);
-
-  // Intersection Observer setup
   const lastBrandRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Initialize interestedBrands from props
+    setInterestedBrands(brands.filter((b) => b.isInterested).map((b) => b.id));
+  }, [brands]);
 
   useEffect(() => {
     if (observer.current) observer.current.disconnect();
@@ -109,7 +51,7 @@ export default function BrandsTable() {
     observer.current = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasMore && !isLoading) {
-          setPage((prev) => prev + 1);
+          onLoadMore();
         }
       },
       { threshold: 0.1 }
@@ -124,7 +66,7 @@ export default function BrandsTable() {
         observer.current.disconnect();
       }
     };
-  }, [hasMore, isLoading]);
+  }, [hasMore, isLoading, onLoadMore]);
 
   const handleToggleInterest = async (brandId: string) => {
     const addInterest = !interestedBrands.includes(brandId);

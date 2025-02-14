@@ -1,31 +1,36 @@
 import { apiController } from "./baseUrl";
 
-export const getBrandDiscoverList = async ({
-  userId,
-  isInterested = false,
-  searchQuery = "",
-  sortBy = "largest_first",
-  page = 1,
-  limit = 10,
-}: {
+interface GetBrandDiscoverListParams {
   userId: string;
   isInterested?: boolean;
   searchQuery?: string;
   sortBy?: string;
   page?: number;
   limit?: number;
-}) => {
+  sales?: string;
+  size?: string;
+  regions?: string[];
+}
+
+export const getBrandDiscoverList = async (
+  params: GetBrandDiscoverListParams
+) => {
   try {
     const response = await apiController.post(
       "/dashboard/creators/discover_brands",
       {
-        user_id: userId,
-        is_interested: isInterested,
-        search_query: searchQuery,
-        sort_by: sortBy,
+        user_id: params.userId,
+        is_interested: params.isInterested,
+        search_query: params.searchQuery,
+        sort_by: params.sortBy,
+        filters: {
+          sales: params.sales,
+          size: params.size,
+          regions: params.regions,
+        },
         pagination: {
-          page,
-          limit,
+          page: params.page,
+          limit: params.limit,
         },
       }
     );

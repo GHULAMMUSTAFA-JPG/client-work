@@ -8,12 +8,12 @@ export default function BrandsFilters() {
   const searchParams = useSearchParams();
 
   const [selectedRegions, setSelectedRegions] = useState<string[]>(() => {
-    const regions = searchParams.get("regions")?.split(",") || ["all"];
+    const regions = searchParams.get("regions")?.split(",") || [];
     return regions;
   });
 
   const [selectedSizes, setSelectedSizes] = useState<string[]>(() => {
-    const sizes = searchParams.get("sizes")?.split(",") || ["all"];
+    const sizes = searchParams.get("sizes")?.split(",") || [];
     return sizes;
   });
 
@@ -42,7 +42,7 @@ export default function BrandsFilters() {
     }
 
     if (watching) {
-      params.set("Interested", "true");
+      params.set("interested", "true");
     }
 
     const newUrl = `${window.location.pathname}?${params.toString()}`;
