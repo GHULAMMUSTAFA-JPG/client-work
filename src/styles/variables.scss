@@ -1,4 +1,4 @@
-$primary: #15ab63;
+$primary: #1bb09d;
 $light: #d3d3d3;
 $info: #0761a2;
 $warning: #969696;
@@ -8,11 +8,11 @@ $orange: #f8ba06;
 $gray: #808080;
 $black: #000000;
 $white: #ffffff;
-$base: #f8fafd;
+$base: #f4f2ee;
 $bg-card-light: #f1f3f5;
-$hover: #f1f1f1;
+$hover: #f9fafb;
 $active: #25364c;
-$border: #efefef;
+$border: #dfdeda;
 $active-bg: #7fc1f031;
 
 $discussion: #7189FC;
@@ -35,5 +35,8 @@ $circle2: #2196f3; // Brighter blue
 $circle3: #2ecc71; // Brighter green
 $circle4: #0761a2; // Brighter blue     
 
-
+/*new variables*/
+$border-color: #dfdeda;
+$lightgraybg001: #f4f4f4;
 @import "bootstrap/scss/bootstrap";
+
