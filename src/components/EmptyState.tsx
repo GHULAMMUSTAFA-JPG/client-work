@@ -7,7 +7,7 @@ interface EmptyStateProps {
   description: string;
   secondaryDescription?: string;
   buttonText?: string;
-  buttonLink?: string;
+  buttonLink?: string | any;
   color?: string;
   iconSize?: number;
 }

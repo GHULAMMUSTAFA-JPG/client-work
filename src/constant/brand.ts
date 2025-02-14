@@ -19,3 +19,9 @@ export const brandsCategories = [
   { id: "marketing", label: "Marketing" },
   { id: "crm", label: "CRM" },
 ];
+
+export enum SortOptions {
+  LARGEST_FIRST = "largest_first",
+  SMALLEST_FIRST = "smallest_first",
+  POPULAR = "popular",
+}
