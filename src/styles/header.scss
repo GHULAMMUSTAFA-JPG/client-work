@@ -1,6 +1,7 @@
 .navbar {
     padding: 0.5rem;
     z-index: 2;
+    border-bottom: 1px solid $border-color;
     .dropdown-menu {
         width: 300px;
         max-height: 325px;
@@ -56,3 +57,11 @@
     top: 4px;
     right: 10px;
 }
+
+
+.table thead th {
+    background-color: $primary !important;
+    color: $white !important;
+    font-weight: 500;
+    padding: 1rem;
+  }

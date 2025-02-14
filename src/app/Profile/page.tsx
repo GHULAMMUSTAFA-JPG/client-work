@@ -416,30 +416,30 @@ function ProfilePage() {
                 {/* Stats Section */}
                 <div className="row mt-4 g-4">
                   <div className="col-md-4">
-                    <div className="card h-100">
+                    <div className="card h-100 bg-box">
                       <div className="card-body">
                         <p className="text-muted">Total Followers</p>
-                        <h5>{userProfile?.No_of_Followers}</h5>
+                        <h5 className="CounterTXT">{userProfile?.No_of_Followers}</h5>
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4">
-                    <div className="card h-100">
+                    <div className="card h-100 bg-box">
                       <div className="card-body">
                         <p className="text-muted">
                           Average Impressions per post
                         </p>
-                        <h5>{userProfile?.Average_Impressions}</h5>
+                        <h5 className="CounterTXT">{userProfile?.Average_Impressions}</h5>
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4">
-                    <div className="card h-100">
+                    <div className="card h-100 bg-box">
                       <div className="card-body">
                         <p className="text-muted">
                           Average Engagements per post
                         </p>
-                        <h5>{userProfile?.Average_Engagements}</h5>
+                        <h5 className="CounterTXT">{userProfile?.Average_Engagements}</h5>
                       </div>
                     </div>
                   </div>
