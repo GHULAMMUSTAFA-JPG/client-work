@@ -4,9 +4,9 @@ import BrandsTable from "@/components/brands/BrandTable";
 import { SortOptions } from "@/constant/brand";
 import { SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect,Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
-export default function Page() {
+function DiscoverBrandsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -28,7 +28,6 @@ export default function Page() {
 
   return (
     <div className="container py-4">
-     <Suspense fallback={<div>Loading search...</div>}>
       <header className="mb-4">
         <h1 className="h3 mb-2">Discover Brands</h1>
         <p className="text-muted">
@@ -93,7 +92,14 @@ export default function Page() {
           <BrandsTable />
         </main>
       </div>
-     </Suspense>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DiscoverBrandsContent />
+    </Suspense>
   );
 }
