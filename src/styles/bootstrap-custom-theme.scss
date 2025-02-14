@@ -125,6 +125,25 @@ body {
         }
     }
 
+
+    /* grid system by Amit */
+    .gap-4-grid {
+        gap: 1rem;
+      }
+      .grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+      .grid {
+        display: grid;
+      }
+
+      .profile-box {
+        padding: 10px 15px;
+        min-height: 100px;
+      }
+
+    
+/* grid system by Amit */
     // .campaign-listing-table {
     //     max-height: 494px;
     //     overflow: auto;

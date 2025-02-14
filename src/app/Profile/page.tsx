@@ -349,100 +349,102 @@ function ProfilePage() {
                   className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1 mt-4"
                 >
                   <Icon icon="mdi:download" width={18} height={18} />
-                  <span>Download Extension</span>
+                  <span>Download Chrome Extension</span>
                 </Link>
               </div>
               {/* Profile Info */}
               <div className="mt-2">
-                <div className="d-flex align-items-center gap-2 mb-1">
-                  <h5 id="name" onClick={editFieldHandler} className="mb-0">
-                    {userProfile?.Name}
-                  </h5>
+                {/* Name and Action Buttons Row */}
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                  <div>
+                    <h4 className="mb-1" id="name" onClick={editFieldHandler}>
+                      {userProfile?.Name}
+                    </h4>
+                    <h6 className="text-muted mb-2">{userProfile?.Current_Position || "Senior Software Engineer"}</h6>
+                    
+                    {/* Company and Location Row */}
+                    <div className="d-flex align-items-center gap-2 text-muted mb-2">
+                      <Icon icon="mdi:building" width={18} height={18} />
+                      <span>{userProfile?.Current_Company || "TechCorp Industries"}</span>
+                    </div>
+                    
+                    {/* Skills Pills */}
+                    <div className="d-flex flex-wrap gap-2 mb-3">
+                      {(userProfile?.Skills || ["Full Stack", "Cloud Architecture", "DevOps", "System Design", "Agile"]).map((skill, index) => (
+                        <span 
+                          key={index}
+                          className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-                  <a
-                    href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
-                    target="_blank"
-                  >
-                    <Icon
-                      style={{ cursor: "pointer" }}
-                      icon="mdi:linkedin"
-                      width={24}
-                      height={24}
-                      className="text-info"
-                    />
-                  </a>
-                  {userProfile?.Audience_Interest !== "" && (
-                    <button className="activated-subtle border btn-sm ms-1 px-2 py-1 rounded-pill text-info">
-                      {userProfile?.Audience_Interest}
-                    </button>
-                  )}
-                </div>
-                <div className="d-flex gap-2 align-items-center">
-                  <p className="mb-0 fs-12 text-warning">
-                    @{userProfile?.Profile_URL}
-                  </p>
-                  <div
-                    className="bg-light rounded-circle d-inline-block"
-                    style={{ width: "6px", height: "6px" }}
-                  ></div>
-                  <p className="mb-0 fs-12 text-warning">
-                    <span className="text-dark fw-medium">
-                      {userProfile?.No_of_Followers || 0}+
-                    </span>{" "}
-                    followers
-                  </p>
-                </div>
-
-                {/* <p className="mt-2">👋 Welcome to my partnership storefront!</p> */}
-
-                <div className="mt-3">
-                  <p>{userProfile?.Description || ""}</p>
-                </div>
-
-                {/* Action Buttons */}
-                {user?.isBuyer && (
-                  <div className="mt-4 d-flex gap-3">
-                    <button
-                      className="btn btn-dark"
-                      onClick={() => {
-                        router.push(`/inbox?id=${userProfile?._id}`);
-                      }}
+                  {/* Action Buttons */}
+                  <div className="d-flex gap-2">
+                    <button 
+                      className="btn btn-primary d-flex align-items-center gap-1"
+                      onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
                     >
-                      DM for Custom Collaborations
+                      <Icon icon="mdi:message" width={18} height={18} />
+                      Message me
                     </button>
+                    <button className="btn btn-outline-primary d-flex align-items-center gap-1">
+                      <Icon icon="mdi:plus" width={18} height={18} />
+                      Add to list
+                    </button>
+                    <a
+                      href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-outline-primary"
+                    >
+                      <Icon icon="mdi:linkedin" width={20} height={20} />
+                    </a>
                   </div>
-                )}
+                </div>
 
-                {/* Stats Section */}
-                <div className="row mt-4 g-4">
-                  <div className="col-md-4">
-                    <div className="card h-100 bg-box">
-                      <div className="card-body">
-                        <p className="text-muted">Total Followers</p>
-                        <h5 className="CounterTXT">{userProfile?.No_of_Followers}</h5>
-                      </div>
+                {/* Stats Row */}
+                <div className="row g-4 mb-4">
+                  <div className="mt-6 grid grid-cols-5 gap-4-grid">
+                    <div className="bg-box profile-box">
+                      <span className="text-muted">Profile views</span>
+                      <strong>{userProfile?.Profile_Views || "1,234"}</strong>
+                    </div>
+                            
+                  <div className="bg-box profile-box">
+                      <span className="text-muted">Post impressions</span>
+                      <strong>{userProfile?.Average_Impressions || "5.6k"}</strong>
+                    </div>
+                 
+                 
+                  <div className="bg-box profile-box">
+                      <span className="text-muted">Search appearances</span>
+                      <strong>{userProfile?.Search_Appearances || "789"}</strong>
+                    </div>
+                
+                  
+                  <div className="bg-box profile-box">
+                      <span className="text-muted">Connections</span>
+                      <strong>{userProfile?.No_of_Followers}+</strong>
+                    </div>
+                  
+                 
+                  <div className="bg-box profile-box">
+                      <span className="text-muted">Followers</span>
+                      <strong>{userProfile?.Followers || "2.5k"}</strong>
                     </div>
                   </div>
-                  <div className="col-md-4">
-                    <div className="card h-100 bg-box">
-                      <div className="card-body">
-                        <p className="text-muted">
-                          Average Impressions per post
-                        </p>
-                        <h5 className="CounterTXT">{userProfile?.Average_Impressions}</h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-4">
-                    <div className="card h-100 bg-box">
-                      <div className="card-body">
-                        <p className="text-muted">
-                          Average Engagements per post
-                        </p>
-                        <h5 className="CounterTXT">{userProfile?.Average_Engagements}</h5>
-                      </div>
-                    </div>
-                  </div>
+                </div>
+               
+
+                {/* About Section */}
+                <div className="mb-4">
+                  <h5 className="mb-3">About</h5>
+                  <p className="text-muted">
+                    {userProfile?.Description || "Passionate software engineer with 8+ years of experience building scalable applications and leading engineering teams."}
+                  </p>
                 </div>
               </div>
             </div>
