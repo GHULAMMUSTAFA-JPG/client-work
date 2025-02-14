@@ -133,12 +133,11 @@ const Inbox = () => {
                     });
                   }}
                   key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
-                    selectedIds?.Recipient_ID ===
-                    chat?.Last_Message?.Recipient_ID
+                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ===
+                      chat?.Last_Message?.Recipient_ID
                       ? "active"
                       : ""
-                  }`}
+                    }`}
                 >
                   <img
                     src={chat?.Profile_Image || defaultImagePath}
@@ -193,17 +192,19 @@ const Inbox = () => {
               {/* Messages */}
               <div className="card-body p-4">
                 {messages.map((msg: any, index: number) => (
-                  <div key={index} className="mb-3">
+                  <div key={index} className={`mb-3 ${msg.user !== "sender"
+                      ? ""
+                      : "d-flex justify-content-end flex-column"
+                    }`}>
                     <div
-                      className={`p-3 rounded ${
-                        msg.user !== "sender"
+                      className={`p-3 rounded d-inline-block ${msg.user !== "sender"
                           ? "bg-light"
-                          : "bg-primary text-white"
-                      }`}
+                          : "bg-primary text-white ms-auto"
+                        }`}
                     >
                       {msg.Message}
                     </div>
-                    <small className="text-muted">{msg.timeAgo}</small>
+                    <small className="text-muted d-block ms-auto">{msg.Time_Ago}</small>
                   </div>
                 ))}
                 <div ref={endOfMessagesRef}></div>
