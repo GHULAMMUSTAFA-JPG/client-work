@@ -7,8 +7,8 @@ interface GetBrandDiscoverListParams {
   sortBy?: string;
   page?: number;
   limit?: number;
-  sales?: string;
-  size?: string;
+  sales?: string[];
+  size?: string[];
   regions?: string[];
 }
 
@@ -16,6 +16,16 @@ export const getBrandDiscoverList = async (
   params: GetBrandDiscoverListParams
 ) => {
   try {
+    const filters: {
+      categories?: string[];
+      size?: string[];
+      location?: string[];
+    } = {};
+
+    if (params.sales?.length) filters.categories = params.sales;
+    if (params.size?.length) filters.size = params.size;
+    if (params.regions?.length) filters.location = params.regions;
+
     const response = await apiController.post(
       "/dashboard/creators/discover_brands",
       {
@@ -23,11 +33,7 @@ export const getBrandDiscoverList = async (
         is_interested: params.isInterested,
         search_query: params.searchQuery,
         sort_by: params.sortBy,
-        filters: {
-          sales: params.sales,
-          size: params.size,
-          regions: params.regions,
-        },
+        filters: Object.keys(filters).length > 0 ? filters : undefined,
         pagination: {
           page: params.page,
           limit: params.limit,
