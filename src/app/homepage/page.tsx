@@ -197,39 +197,41 @@ function Homepage() {
                     : userProfile?.Description}
                 </p>
 
-                <div className="row my-3 text-center">
-                  <div className="col-md-4 border-end pe-4">
-                    <p className="mb-0 fs-14 p-height">Followers</p>
-                    <p className="mb-0 fs-20 fw-medium">
-                      {userProfile?.No_of_Followers}{" "}
-                    </p>
+             
+
+                <div className="row mt-4 g-4">
+      <div className="col-md-4">
+            <div className="card h-100 bg-box">
+                  <div className="card-body">
+                        <p className="text-muted">Followers</p>
+                        <h5 className="CounterTXT">{userProfile?.No_of_Followers}{" "}</h5>
                   </div>
-                  <div className="col-md-4 border-end pe-4">
-                    <p className="mb-0 fs-14 p-height">
-                      Average Engagaements per post
-                    </p>
-                    <p className="mb-0 fs-20 fw-medium">
-                      {userProfile?.Average_Engagements}
-                    </p>
+            </div>
+      </div>
+      <div className="col-md-4">
+            <div className="card h-100 bg-box">
+                  <div className="card-body">
+                        <p className="text-muted">Average Engagaements per post</p>
+                        <h5 className="CounterTXT">{userProfile?.Average_Engagements}</h5>
                   </div>
-                  <div className="col-md-4">
-                    <p className="mb-0 fs-14 p-height">
-                      Average Impressions per post
-                    </p>
-                    <p className="mb-0 fs-20 fw-medium">
-                      {userProfile?.Average_Impressions}
-                    </p>
+            </div>
+      </div>
+      <div className="col-md-4">
+            <div className="card h-100 bg-box">
+                  <div className="card-body">
+                        <p className="text-muted">Average Impressions per post</p>
+                        <h5 className="CounterTXT">{userProfile?.Average_Impressions}</h5>
                   </div>
-                  {/* <div className="col-md-4 pe-5">
-                                        <p className='mb-0 fs-14 p-height'>S-Score</p>
-                                        <p className='mb-0 fs-20 fw-medium'>{userProfile?.['S-Score']}</p>
-                                    </div> */}
-                </div>
+            </div>
+      </div>
+
+      </div>
+
               </div>
             </div>
             <div className="card h-10">
               {!hasActiveCampaigns && (
-                <div className="card-body d-flex flex-column justify-content-center min-h-100">
+                <div className="d-flex flex-column justify-content-center min-h-100">
                   <WelcomeBanner
                     title="Welcome to Synnc!"
                     subtitle="Get started by exploring brand campaigns and applying for collaborations."

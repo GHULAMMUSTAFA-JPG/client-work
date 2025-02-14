@@ -1,20 +1,43 @@
 import { apiController } from "./baseUrl";
 
-export const getBrandDiscoverList = async (email: string) => {
+interface GetBrandDiscoverListParams {
+  userId: string;
+  isInterested?: boolean;
+  searchQuery?: string;
+  sortBy?: string;
+  page?: number;
+  limit?: number;
+  sales?: string;
+  size?: string;
+  regions?: string[];
+}
+
+export const getBrandDiscoverList = async (
+  params: GetBrandDiscoverListParams
+) => {
   try {
     const response = await apiController.post(
       "/dashboard/creators/discover_brands",
       {
-        email,
-        is_interested: false,
-        filters: {},
-        search_query: "string",
-        sort_by: "largest_first",
+        user_id: params.userId,
+        is_interested: params.isInterested,
+        search_query: params.searchQuery,
+        sort_by: params.sortBy,
+        filters: {
+          sales: params.sales,
+          size: params.size,
+          regions: params.regions,
+        },
+        pagination: {
+          page: params.page,
+          limit: params.limit,
+        },
       }
     );
 
     return response.data;
   } catch (error) {
+    console.error("Error fetching brand discover list:", error);
     return null;
   }
 };
