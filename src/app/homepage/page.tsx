@@ -31,7 +31,7 @@ function Homepage() {
       icon: "bi bi-download",
       link: "https://chrome.google.com/webstore/category/extensions"
     },
-    
+
     {
       title: "Step 2: Discover campaigns",
       description: "Find campaigns that match your expertise and interests.",
@@ -89,7 +89,7 @@ function Homepage() {
                     <div className="d-flex gap-2 align-items-center">
                       <Tooltip title={linkCopied ? "Link Copied" : "Share Profile"} arrow placement="top">
                         <Icon
-                          icon="iconamoon:share-1-thin"
+                          icon="mdi:share-outline"
                           width="20"
                           height="20"
                           className="cursor flex-shrink-0 text-dark me-1"
@@ -98,7 +98,7 @@ function Homepage() {
                       </Tooltip>
                       <Tooltip title="Edit Profile" arrow placement="top">
                         <Icon
-                          icon="material-symbols-light:edit-square-outline-rounded"
+                          icon="mdi:pencil-outline"
                           width="20"
                           height="20"
                           className="cursor flex-shrink-0 text-dark"
@@ -171,11 +171,11 @@ function Homepage() {
                     </div>
                     {/* tags */}
                       <div className="d-flex gap-2 ">
-                    <div className="d-flex" style={{ width: "14%", height: "27%", borderRadius: "8px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Software engineer</div> 
-                      <div className="d-flex" style={{ width: "14%", height: "27%", borderRadius: "8px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Content Creator</div>
-                      <div className="d-flex" style={{ width: "14%", height: "27%", borderRadius: "8px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Media Creator</div>
-                      <div className="d-flex" style={{ width: "14%", height: "27%", borderRadius: "8px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Content Creator</div>
-                      <div className="d-flex" style={{ width: "14%", height: "27%", borderRadius: "8px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Software engineer</div>
+                    <div className="d-flex" style={{ width: "16%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Software engineer</div> 
+                      <div className="d-flex" style={{ width: "16%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Content Creator</div>
+                      <div className="d-flex" style={{ width: "16%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Media Creator</div>
+                      <div className="d-flex" style={{ width: "16%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Content Creator</div>
+                        <div className="d-flex" style={{ width: "16%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px" , alignItems: "center", justifyContent: "center"}}> Software engineer</div>
                  
 
                     </div>
