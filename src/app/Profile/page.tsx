@@ -350,12 +350,12 @@ function ProfilePage() {
 
                   {/* Skills Row */}
                   <div className="chips-container d-flex flex-wrap gap-2">
-                    {userProfile?.Skills?.map((skill: string, index: number) => (
-                      <div className="chip" key={index}>
-                        <span className="chip-text">{skill}</span>
-                      </div>
-                    ))}
-                  </div>
+  <div className="chip"><div className="chip-text">Software engineer</div></div>
+  <div className="chip"><div className="chip-text">Content Creator</div></div>
+  <div className="chip"><div className="chip-text">Media Creator</div></div>
+  <div className="chip"><div className="chip-text">Content Creator</div></div>
+  <div className="chip"><div className="chip-text">Software engineer</div></div>
+</div>
                 </div>
               </div>
             </div>
