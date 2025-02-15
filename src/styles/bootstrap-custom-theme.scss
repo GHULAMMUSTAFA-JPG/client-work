@@ -149,7 +149,38 @@ body {
     //     overflow: auto;
     // }
 .text-muted {
-    color: $black !important;    
+    color: $black !important;   
+    font-size: 10px; 
+}
+.text-muted-l{
+    color: $black !important;   
+    font-size: 14px; 
+}
+
+.editprofilebox {
+    background: #e1e1e1;
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  .action-profilebox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+.react-calendar__month-view__days__day--weekend
+{
+    color: $black !important;
 }
     .card {
         border-radius: 8px;
