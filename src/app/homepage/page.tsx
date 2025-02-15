@@ -31,6 +31,7 @@ function Homepage() {
       icon: "bi bi-download",
       link: "https://chrome.google.com/webstore/category/extensions"
     },
+    
     {
       title: "Step 2: Discover campaigns",
       description: "Find campaigns that match your expertise and interests.",
