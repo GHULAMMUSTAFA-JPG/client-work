@@ -16,6 +16,7 @@ import HowItWorks from "@/components/HowItWorks";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 function Homepage() {
   const { user, userProfile, setIsLoading, notifications, setIsActive } =
@@ -28,6 +29,7 @@ function Homepage() {
       title: "Discover Campaigns",
       description: "Find brand campaigns that fit your niche.",
       icon: "bi bi-search",
+      link: "https://app.synnc.us/campaigns"
     },
     {
       title: "Apply & Get Hired",
@@ -232,14 +234,7 @@ function Homepage() {
             <div className="card h-10">
               {!hasActiveCampaigns && (
                 <div className="d-flex flex-column justify-content-center min-h-100">
-                  <WelcomeBanner
-                    title="Welcome to Synnc!"
-                    subtitle="Get started by exploring brand campaigns and applying for collaborations."
-                    cta={{
-                      text: "Find Campaigns",
-                      link: "/campaigns",
-                    }}
-                  />
+                  <HowItWorks steps={howItWorksSteeps} />
                 </div>
               )}
               {hasActiveCampaigns && (
@@ -392,8 +387,12 @@ function Homepage() {
                 )}
               </div>
             </div>
-            <div className="card mb-3">
-              <div className="card-body">
+            <div className="card mb-3 "
+         
+            >
+              <div className="card-body"
+         
+              >
                 <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
                 <PostCalendar />
               </div>
@@ -425,23 +424,6 @@ function Homepage() {
                         </div> */}
           </div>
         </div>
-        {!hasActiveCampaigns && <HowItWorks steps={howItWorksSteeps} />}
-        {/* <Topcard /> */}
-
-        {/* <div className="row graphs g-3">
-                    <div className="col-md-6">
-                        <ChartsDashboard />
-                    </div>
-                    <div className="col-md-6">
-                        <BarsDashboard />
-                    </div>
-                    <div className="col-md-6">
-                        <VerticalBarChart />
-                    </div>
-                    <div className="col-md-6">
-                        <ProgressDashboard />
-                    </div>
-                </div> */}
       </div>
 
       <EditProfileModal user={user} userProfile={userProfile} />
