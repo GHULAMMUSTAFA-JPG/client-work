@@ -162,9 +162,9 @@ body {
 
     .editprofilebox {
         background: #e1e1e1;
-        width: 42px;
-        height: 42px;
-        padding: 10px;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -699,6 +699,8 @@ body {
     .border-dotted {
         border-style: dotted !important;
     }
+
+    
 }
 
 
@@ -707,3 +709,154 @@ body {
     justify-content: center;
     padding: 15px 0;
   }
+
+
+  /* profile page css New UI created by Amit*/
+.profile-box-container
+{
+    padding: 0;
+    background-color: #ffffff;
+     border-radius: 1rem;
+    border: 1px solid $border-color;
+}
+
+
+  .profile-topsection {
+    display: flex;
+    flex: 1 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1rem;
+    
+    > *:first-child {
+      width: 60%;
+    }
+    
+    > *:last-child {
+      width: 40%;
+    }
+  }
+
+  .profile-bottom-section {
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .profile-left-column {
+    flex: 0.45;
+  }
+
+  .profile-right-column {
+    flex: 0.55;
+  }
+
+.aboutusSection {
+    padding: 1rem;
+    
+    h2 {
+        font-size: 1.25rem;
+     
+    }
+}
+  .letbox
+  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .profileactionsbtn {
+    display: flex;
+    gap: 10px;
+  }
+  .buttonboxcard {
+    display: flex;
+    width: 90%;
+    margin: 0px 15px 10px;
+  }
+  .card-content
+  {
+    width: 60%;
+  }
+  .profile-image-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    max-height: 300px;
+  }
+
+  .actionbtn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    line-height: 100px;
+    min-height: 200px;
+    align-items: end;
+  }
+
+  .-mt-16 {
+    margin-top: -4rem;
+  }
+
+  .chips-container {
+    padding: 0.5rem 0;
+    
+}
+
+.chip {
+    background-color: $primary;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+cursor: pointer;
+    &:hover {
+        background-color: darken($primary, 5%);
+    }
+
+    .chip-text {
+        font-size: 12px;
+        color: $white;
+        font-weight: 500;
+    }
+}
+
+.statsbox-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    border-top: 1px solid $border; 
+    background-color: #f8f9fa;  // light gray background
+    border-radius: 0 0 20px 20px;
+    .stats-box {
+      
+        padding: 1rem;
+        border-radius: 8px;
+              
+        .stats-heading {
+            font-size: 10px;
+            color: #808080;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+        
+        .stats-count {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: $black;
+        }
+    }
+}
