@@ -127,7 +127,7 @@ function ProfilePage() {
 
   useEffect(() => {
     setIsActive(5);
-  }, []);
+  }, [setIsActive]);
 
   useEffect(() => {
     let collabPack: any = [];
@@ -313,12 +313,11 @@ function ProfilePage() {
 
           <div
             className="profile-container mb-4 pb-3"
-            onClick={() => handleSectionClick("about")}
-            style={{ cursor: "pointer" }}
+           
           >
             {/* Banner Image */}
             <div className="position-relative">
-              <img
+              <Image
                 src={userProfile?.Banner_Image || "/assets/images/cover.png"}
                 alt="Profile Banner"
                 className="object-fit-cover rounded-3 w-100 cover-img"
@@ -342,15 +341,23 @@ function ProfilePage() {
                   className="rounded-circle border border-4 border-white"
                 />
 
+<div className="action-profilebox mt-4">
                 <Link
                   href="https://chrome.google.com/webstore/category/extensions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1 mt-4"
+                  className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center"
                 >
                   <Icon icon="mdi:download" width={18} height={18} />
                   <span>Download Chrome Extension</span>
                 </Link>
+                <div className="editprofilebox"  onClick={() => handleSectionClick("about")}
+            style={{ cursor: "pointer" }}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit-medium" aria-hidden="true" role="none" data-supported-dps="24x24" fill="currentColor">
+  <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+</svg>
+                </div>
+                </div>
               </div>
               {/* Profile Info */}
               <div className="mt-2">
@@ -370,7 +377,7 @@ function ProfilePage() {
                     
                     {/* Skills Pills */}
                     <div className="d-flex flex-wrap gap-2 mb-3">
-                      {(userProfile?.Skills || ["Full Stack", "Cloud Architecture", "DevOps", "System Design", "Agile"]).map((skill, index) => (
+                      {(userProfile?.Skills || ["Full Stack", "Cloud Architecture", "DevOps", "System Design", "Agile"]).map((skill: string, index: number) => (
                         <span 
                           key={index}
                           className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
@@ -409,30 +416,30 @@ function ProfilePage() {
                 <div className="row g-4 mb-4">
                   <div className="mt-6 grid grid-cols-5 gap-4-grid">
                     <div className="bg-box profile-box">
-                      <span className="text-muted">Profile views</span>
-                      <strong>{userProfile?.Profile_Views || "1,234"}</strong>
+                      <p className="text-muted">Profile views</p>
+                      <h5 className="CounterTXT">{userProfile?.Profile_Views || "1,234"}</h5>
                     </div>
                             
                   <div className="bg-box profile-box">
-                      <span className="text-muted">Post impressions</span>
-                      <strong>{userProfile?.Average_Impressions || "5.6k"}</strong>
+                      <p className="text-muted">Post impressions</p>
+                      <h5 className="CounterTXT">{userProfile?.Average_Impressions || "5.6k"}</h5>
                     </div>
                  
                  
                   <div className="bg-box profile-box">
-                      <span className="text-muted">Search appearances</span>
-                      <strong>{userProfile?.Search_Appearances || "789"}</strong>
+                      <p className="text-muted">Search appearances</p>
+                      <h5 className="CounterTXT">{userProfile?.Search_Appearances || "789"}</h5>
                     </div>
                 
                   
                   <div className="bg-box profile-box">
-                      <span className="text-muted">Connections</span>
-                      <strong>{userProfile?.No_of_Followers}+</strong>
+                      <p className="text-muted">Connections</p>
+                      <h5 className="CounterTXT">{userProfile?.No_of_Followers}+</h5>
                     </div>
                   
                  
                   <div className="bg-box profile-box">
-                      <span className="text-muted">Followers</span>
+                      <p className="text-muted">Followers</p>
                       <strong>{userProfile?.Followers || "2.5k"}</strong>
                     </div>
                   </div>
@@ -442,7 +449,7 @@ function ProfilePage() {
                 {/* About Section */}
                 <div className="mb-4">
                   <h5 className="mb-3">About</h5>
-                  <p className="text-muted">
+                  <p className="text-muted-l">
                     {userProfile?.Description || "Passionate software engineer with 8+ years of experience building scalable applications and leading engineering teams."}
                   </p>
                 </div>
