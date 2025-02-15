@@ -199,7 +199,11 @@ const CampaignTable = (props: any) => {
                                   }
                                 )
                               ) : (
-                                <>No campaign Found</>
+                                <tr>
+                                <td colSpan={5}>
+                                  <div className="no-records"><>No campaign Found</></div>
+                                 </td>
+                                </tr>
                               )}
                             </tbody>
                           </table>

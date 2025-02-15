@@ -129,59 +129,65 @@ body {
     /* grid system by Amit */
     .gap-4-grid {
         gap: 1rem;
-      }
-      .grid-cols-5 {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
-      .grid {
-        display: grid;
-      }
+    }
 
-      .profile-box {
+    .grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .grid {
+        display: grid;
+    }
+
+    .profile-box {
         padding: 10px 15px;
         min-height: 100px;
-      }
+    }
 
-    
-/* grid system by Amit */
+
+    /* grid system by Amit */
     // .campaign-listing-table {
     //     max-height: 494px;
     //     overflow: auto;
     // }
-.text-muted {
-    color: $black !important;   
-    font-size: 10px; 
-}
-.text-muted-l{
-    color: $black !important;   
-    font-size: 14px; 
-}
-
-.editprofilebox {
-    background: #e1e1e1;
-    width: 42px;
-    height: 42px;
-    padding: 10px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 0;
-    transition: all 0.3s ease-in-out;
-    &:hover {
-      transform: scale(1.1);
+    .text-muted {
+        color: $black !important;
+        font-size: 10px;
     }
-  }
-  .action-profilebox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-.react-calendar__month-view__days__day--weekend
-{
-    color: $black !important;
-}
+
+    .text-muted-l {
+        color: $black !important;
+        font-size: 14px;
+    }
+
+    .editprofilebox {
+        background: #e1e1e1;
+        width: 42px;
+        height: 42px;
+        padding: 10px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    .action-profilebox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .react-calendar__month-view__days__day--weekend {
+        color: $black !important;
+    }
+
     .card {
         border-radius: 8px;
         border: 1px solid $border;
@@ -211,7 +217,7 @@ body {
 
         .card-body {
             padding: 0;
-           }
+        }
     }
 
     .campaign-card {
@@ -309,7 +315,8 @@ body {
 
     .btn-primary {
         color: $white;
-        &:hover{
+
+        &:hover {
             color: $white;
         }
     }
@@ -317,22 +324,24 @@ body {
     .btn-outline-primary {
         color: $primary;
         border: 1px solid $primary;
+
         &:hover {
             color: $white;
             background-color: $primary;
             border: 1px solid $primary;
         }
-    }   
-.btn-dark
-{       
-    background: $primary;
-    color: $white;
-    border: none !important;
-    &:hover{
+    }
+
+    .btn-dark {
         background: $primary;
         color: $white;
-    }   
-}
+        border: none !important;
+
+        &:hover {
+            background: $primary;
+            color: $white;
+        }
+    }
 
     .btn-link {
         background-color: $activated-subtle;
@@ -345,6 +354,20 @@ body {
                 color: $white !important;
             }
         }
+    }
+
+    .btn-info {
+
+        background: $primary;
+        color: $white;
+        border: none !important;
+
+        &:hover {
+            background: $primary;
+            color: $white;
+        }
+
+
     }
 
     .nav-pills .nav-link.active {
@@ -637,6 +660,7 @@ body {
         background: $primary;
         color: $white;
         border-radius: 8px;
+
         &:hover {
             background: $primary !important;
         }
@@ -646,6 +670,7 @@ body {
         background: $primary;
         color: $white;
         border-radius: 8px;
+
         &:hover {
             background: $primary !important;
         }
@@ -675,3 +700,9 @@ body {
         border-style: dotted !important;
     }
 }
+
+.no-records {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+  }
