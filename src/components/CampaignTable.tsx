@@ -42,7 +42,7 @@ const CampaignTable = (props: any) => {
               {/* <hr /> */}
               <div className="row">
                 <div className="col-12 mb-2">
-                  <div className="tab-content " id="myTabContent" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
+                  <div className="tab-content " id="myTabContent">
                     <div
                       className="tab-pane fade show active"
                       id="home-tab-pane"
