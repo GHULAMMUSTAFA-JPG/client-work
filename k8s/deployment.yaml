@@ -21,7 +21,7 @@ spec:
                 app: synnc-ui
         spec:
             nodeSelector:
-                agentpool: litepreprod
+                agentpool: synccapi
             containers:
                 - name: synnc-ui
                   image: synccacr.azurecr.io/synnc-ui:latest
