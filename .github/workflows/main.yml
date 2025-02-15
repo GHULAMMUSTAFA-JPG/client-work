@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  REGISTRY_NAME: synccacr
+  REGISTRY_NAME: synccacr 
   CLUSTER_NAME: synnc-dev-k8
   CLUSTER_RESOURCE_GROUP: synnc-dev-k8
   IMAGE: synnc-ui
