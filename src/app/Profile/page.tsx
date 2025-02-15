@@ -324,11 +324,33 @@ function ProfilePage() {
                 width={1000}
                 height={1000}
               />
+              {/* Action Buttons positioned absolutely */}
+              <div className="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button 
+                  className="btn btn-primary d-flex align-items-center gap-1 text-light"
+                  onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
+                >
+                  <Icon icon="mdi:message" width={18} height={18} />
+                  Message me
+                </button>
+                <button className="btn btn-outline-primary d-flex align-items-center gap-1 text-light">
+                  <Icon icon="mdi:plus" width={18} height={18} />
+                  Add to list
+                </button>
+                <a
+                  href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-primary"
+                >
+                  <Icon icon="mdi:linkedin" width={20} height={20} />
+                </a>
+              </div>
             </div>
 
             {/* Profile Section */}
             <div className="p-3">
-              {/* Profile Image */}
+              {/* Profile Image and Action Box */}
               <div
                 className="position-relative d-flex align-items-center justify-content-between"
                 style={{ marginTop: "-75px" }}
@@ -341,110 +363,71 @@ function ProfilePage() {
                   className="rounded-circle border border-4 border-white"
                 />
 
-<div className="action-profilebox mt-4">
-                <Link
-                  href="https://chrome.google.com/webstore/category/extensions"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center"
-                >
-                  <Icon icon="mdi:download" width={18} height={18} />
-                  <span>Download Chrome Extension</span>
-                </Link>
-                <div className="editprofilebox"  onClick={() => handleSectionClick("about")}
-            style={{ cursor: "pointer" }}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit-medium" aria-hidden="true" role="none" data-supported-dps="24x24" fill="currentColor">
-  <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
-</svg>
-                </div>
+                <div className="action-profilebox mt-4">
+                  <Link
+                    href="https://chrome.google.com/webstore/category/extensions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center"
+                  >
+                    <Icon icon="mdi:download" width={18} height={18} />
+                    <span>Download Chrome Extension</span>
+                  </Link>
+                  <div className="editprofilebox" onClick={() => handleSectionClick("about")} style={{ cursor: "pointer" }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit-medium" aria-hidden="true" role="none" data-supported-dps="24x24" fill="currentColor">
+                      <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                    </svg>
+                  </div>
                 </div>
               </div>
+
               {/* Profile Info */}
               <div className="mt-2">
-                {/* Name and Action Buttons Row */}
-                <div className="d-flex justify-content-between align-items-start mb-2">
-                  <div>
-                    <h4 className="mb-1" id="name" onClick={editFieldHandler}>
-                      {userProfile?.Name}
-                    </h4>
-                    <h6 className="text-muted mb-2">{userProfile?.Current_Position || "Senior Software Engineer"}</h6>
-                    
-                    {/* Company and Location Row */}
-                    <div className="d-flex align-items-center gap-2 text-muted mb-2">
-                      <Icon icon="mdi:building" width={18} height={18} />
-                      <span>{userProfile?.Current_Company || "TechCorp Industries"}</span>
-                    </div>
-                    
-                    {/* Skills Pills */}
-                    <div className="d-flex flex-wrap gap-2 mb-3">
-                      {(userProfile?.Skills || ["Full Stack", "Cloud Architecture", "DevOps", "System Design", "Agile"]).map((skill: string, index: number) => (
-                        <span 
-                          key={index}
-                          className="badge rounded-pill bg-primary bg-opacity-10 text-primary px-3 py-2"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                <h4 className="mb-1" id="name" onClick={editFieldHandler}>
+                  {userProfile?.Name}
+                </h4>
+                <h6 className="text-muted mb-2">{userProfile?.Current_Position || "Senior Software Engineer"}</h6>
+                
+                {/* Company and Location Row */}
+                <div className="d-flex align-items-center gap-2 text-muted mb-2">
+                  <Icon icon="mdi:building" width={18} height={18} />
+                  <span>{userProfile?.Current_Company || "TechCorp Industries"}</span>
+                </div>
 
-                  {/* Action Buttons */}
-                  <div className="d-flex gap-2">
-                    <button 
-                      className="btn btn-primary d-flex align-items-center gap-1"
-                      onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
-                    >
-                      <Icon icon="mdi:message" width={18} height={18} />
-                      Message me
-                    </button>
-                    <button className="btn btn-outline-primary d-flex align-items-center gap-1">
-                      <Icon icon="mdi:plus" width={18} height={18} />
-                      Add to list
-                    </button>
-                    <a
-                      href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-outline-primary"
-                    >
-                      <Icon icon="mdi:linkedin" width={20} height={20} />
-                    </a>
-                  </div>
+                {/* Skills Row */}
+                <div className="d-flex" style={{gap: "10px", flexDirection: "row", width: "140%"}}>
+                  <div className="d-flex" style={{ width: "10%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px", justifyContent: "center", alignItems: "center" }}>Software engineer</div> 
+                  <div className="d-flex" style={{ width: "10%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px", justifyContent: "center", alignItems: "center" }}>Content Creator</div>
+                  <div className="d-flex" style={{ width: "10%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px", justifyContent: "center", alignItems: "center" }}>Media Creator</div>
+                  <div className="d-flex" style={{ width: "10%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px", justifyContent: "center", alignItems: "center" }}>Content Creator</div>
+                  <div className="d-flex" style={{ width: "10%", height: "24px", borderRadius: "10px", backgroundColor: "lightblue", fontSize: "10px", justifyContent: "center", alignItems: "center" }}>Software engineer</div>
                 </div>
 
                 {/* Stats Row */}
-                <div className="row g-4 mb-4">
+                <div className="row g-4 mb-4 mt-4">
                   <div className="mt-6 grid grid-cols-5 gap-4-grid">
                     <div className="bg-box profile-box">
                       <p className="text-muted">Profile views</p>
                       <h5 className="CounterTXT">{userProfile?.Profile_Views || "1,234"}</h5>
                     </div>
-                            
-                  <div className="bg-box profile-box">
+                    <div className="bg-box profile-box">
                       <p className="text-muted">Post impressions</p>
                       <h5 className="CounterTXT">{userProfile?.Average_Impressions || "5.6k"}</h5>
                     </div>
-                 
-                 
-                  <div className="bg-box profile-box">
+                    <div className="bg-box profile-box">
                       <p className="text-muted">Search appearances</p>
                       <h5 className="CounterTXT">{userProfile?.Search_Appearances || "789"}</h5>
                     </div>
-                
-                  
-                  <div className="bg-box profile-box">
+                    <div className="bg-box profile-box">
                       <p className="text-muted">Connections</p>
                       <h5 className="CounterTXT">{userProfile?.No_of_Followers}+</h5>
                     </div>
-                  
-                 
-                  <div className="bg-box profile-box">
+                    <div className="bg-box profile-box">
                       <p className="text-muted">Followers</p>
-                      <strong>{userProfile?.Followers || "2.5k"}</strong>
+                      <h5 className="CounterTXT">{userProfile?.Followers || "2.5k"}</h5>
                     </div>
                   </div>
                 </div>
-               
 
                 {/* About Section */}
                 <div className="mb-4">
