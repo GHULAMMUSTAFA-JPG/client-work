@@ -321,7 +321,7 @@ function ProfilePage() {
           <div className="profile-topsection">
             <div className="profile-image-content">
               <div className="profile-image">
-                <img
+                <Image
                   src={userProfile?.Profile_Image || defaultImagePath}
                   alt="Profile Picture"
                   width={150}
@@ -335,7 +335,7 @@ function ProfilePage() {
                   <h4 className="mb-1" id="name" onClick={editFieldHandler}>
                     {userProfile?.Name}
                     <div className="editprofilebox" onClick={() => handleSectionClick("about")} style={{ cursor: "pointer" }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit-medium" aria-hidden="true" role="none" data-supported-dps="24x24" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit-medium" aria-hidden="true" data-supported-dps="24x24" fill="currentColor">
                         <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
                       </svg>
                     </div>
@@ -362,13 +362,13 @@ function ProfilePage() {
             <div className="actionbtn-container">
               <div className="profileactionsbtn">
                 <button 
-                  className="btn btn-primary d-flex align-items-center gap-1 text-light"
+                  className="btn btn-primary d-flex align-items-center gap-1"
                   onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
                 >
                   <Icon icon="mdi:message" width={18} height={18} />
                   Message me
                 </button>
-                <button className="btn btn-outline-primary d-flex align-items-center gap-1 text-light">
+                <button className="btn btn-outline-primary d-flex align-items-center gap-1">
                   <Icon icon="mdi:plus" width={18} height={18} />
                   Add to list
                 </button>
@@ -376,9 +376,13 @@ function ProfilePage() {
                   href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-outline-primary"
+                  className="btn btn-linkedin"
                 >
-                  <Icon icon="mdi:linkedin" width={20} height={20} />
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.963" viewBox="0 0 20 19.963">
+  <path id="Path_854" data-name="Path 854" d="M68.173,115.963H64.031V102.625h4.148v13.337ZM66.1,100.8a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,66.1,100.8Zm17.6,15.159H79.558v-6.488c0-1.547-.031-3.537-2.152-3.537-2.158,0-2.489,1.684-2.489,3.425v6.6H70.774V102.625h3.974v1.822H74.8a4.363,4.363,0,0,1,3.924-2.152c4.192,0,4.972,2.764,4.972,6.357Z" transform="translate(-63.7 -96)" fill="#0077b5"/>
+</svg>
+
+
                 </a>
               </div>
               <div className="action-profilebox mt-4">
@@ -449,14 +453,16 @@ function ProfilePage() {
                   &nbsp; Let's Collaborate
                 </h2>
                 <div className="d-flex justify-content-between align-items-center">
-                     {userProfile?.Collaboration_Packages?.length < 1 && (
-                    <Icon
+                    {userProfile?.Collaboration_Packages?.length < 1 && (
+                      <Icon
                       icon="mdi:plus"
                       width="24"
                       height="24"
-                      className=" text-muted"
-                    />
-                  )}
+                      className="text-muted"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSectionClick("collaboration")}
+                      />
+                    )}
                 </div>
                 </div>
                 {/* Collaboration Cards */}
@@ -465,25 +471,25 @@ function ProfilePage() {
                     userProfile?.Collaboration_Packages?.map(
                       (ele: any, index: number) => {
                         return (
-                          <div className="card mb-3" key={index}>
+                          <div className="packagebox mb-3" key={index}>
                             <div className="card-body">
                               <div className="d-flex justify-content-between align-items-start mb-3">
                                 <h6 className="mb-0 line-clamp-2">
                                   {ele?.Package_Name}
                                 </h6>
                                 <div className="ms-5 text-end flex-shrink-0">
-                                  <h6 className="text-muted">
+                                  <h6 className="package-prize">
                                     ${ele?.Package_Price}
                                   </h6>
                             
                                 </div>
                               </div>
-                              <p className="text-muted">
+                              <p className="package-description">
                                 {ele?.Package_Description}
                               </p>
                             </div>
                             <div className="buttonboxcard">
-                            <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">
+                            <button className="booknowbtn"   onClick={() => handleSectionClick("collaboration")}>
                               Book Now
                             </button>
                             </div>
@@ -493,11 +499,11 @@ function ProfilePage() {
                     )
                   ) : (
                     <>
-                      <div className="card mb-3">
+                      <div className="packagebox mb-3">
                         <div className="card-body d-flex justify-content-between align-items-center">
                         <div className="card-content">
                             <h6>1x Sponsored Post</h6>
-                            <p className="text-muted mb-0">
+                            <p className="package-description mb-0">
                               I'll create a LinkedIn post to educate my audience
                               on the benefits of your company's offerings, or for
                               anything else you're interested in promoting, like
@@ -505,36 +511,36 @@ function ProfilePage() {
                             </p>
                           </div>
                           <div className="ms-5 text-end">
-                            <h6 className="text-muted mb-5">$ 900</h6>
+                            <h6 className="package-prize mb-5">$ 900</h6>
                           
                           </div>
                         </div>
                         <div className="buttonboxcard">
-                            <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">
+                            <button className="booknowbtn"   onClick={() => handleSectionClick("collaboration")}>
                               Book Now
                             </button>
                             </div>
                       </div>
-                      <div className="card mb-3">
+                      <div className="packagebox mb-3">
                         <div className="card-body d-flex justify-content-between align-items-center">
                           <div className="card-content">
                             <h6>
                               3x Sponsored Post Series (Most Popular • 20%
                               Discount)
                             </h6>
-                            <p className="text-muted mb-0">
+                            <p className="package-description mb-0">
                               I'll create a series of posts to educate my audience
                               on a specific topic, mentioning your brand
                               throughout and how you can help.
                             </p>
                           </div>
                           <div className="ms-5 text-end">
-                            <h6 className="text-muted mb-5">$ 2100</h6>
+                            <h6 className="package-prize mb-5">$ 2100</h6>
                            
                           </div>
                         </div>
                         <div className="buttonboxcard">
-                            <button className="btn btn-dark flex-shrink-0 btn-sm nowrap">
+                            <button className="booknowbtn"   onClick={() => handleSectionClick("collaboration")}>
                               Book Now
                             </button>
                             </div>
@@ -543,400 +549,8 @@ function ProfilePage() {
                   )}
                 </div>
               
-      
-          <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
-            <div className="profile-sidebar-wraper">
-              <div
-                className={`profile-container ${
-                  activeSection === "about"
-                    ? "d-none d-md-block d-lg-block"
-                    : "d-none"
-                }`}
-              >
-                <div className="d-flex justify-content-between mb-3 pt-2">
-                  <h6 className="mb-0 ">Edit Section</h6>
-                  <div>
-                    <button
-                      className="bg-white border btn btn-sm"
-                      onClick={handleCancel}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="btn btn-dark btn-sm ms-3"
-                      onClick={submitHandler}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-  
-                <div className="pb-2 ">
-                  <h6 className="mb-3">About me</h6>
-  
-                  <div className="mb-4">
-                    <label className="mb-2">Banner image</label>
-                    <div className="position-relative">
-                      <img
-                        src={editDetails.banner_image || defaultImagePath}
-                        alt="Banner"
-                        width={500}
-                        height={100}
-                        className="w-100 rounded-3 mb-2"
-                        style={{ objectFit: "cover" }}
-                      />
-                      <div
-                        className="d-flex align-items-center gap-2"
-                        style={{ cursor: "pointer" }}
-                      >
-                        <span className="text-muted" onClick={handleClick}>
-                          Choose a photo
-                        </span>
-                        <Icon
-                          icon="material-symbols:delete-outline"
-                          className="cursor-pointer"
-                          onClick={() => {
-                            setEditDetails((prev: any) => {
-                              return { ...prev, ["banner_image"]: null };
-                            });
-                          }}
-                        />
-                        <input
-                          type="file"
-                          ref={fileInputRef}
-                          onChange={(e: any) => {
-                            fileHandler(e, "banner_image");
-                          }}
-                          style={{ display: "none" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div className="mb-4">
-                    <label className="mb-2">Profile photo</label>
-                    <div className="position-relative">
-                      <img
-                        src={editDetails.profile_image || defaultImagePath}
-                        alt="Profile"
-                        width={80}
-                        height={80}
-                        className="rounded-circle mb-2"
-                      />
-                      <div
-                        className="d-flex align-items-center gap-2"
-                        style={{ cursor: "pointer" }}
-                      >
-                        <span onClick={handleClick1} className="text-muted">
-                          Choose a photo
-                        </span>
-                        <Icon
-                          icon="material-symbols:delete-outline"
-                          className="cursor-pointer"
-                          onClick={() => {
-                            setEditDetails((prev: any) => {
-                              return { ...prev, ["profile_image"]: null };
-                            });
-                          }}
-                        />
-                        <input
-                          type="file"
-                          ref={fileInputRef1}
-                          onChange={(e: any) => {
-                            fileHandler(e, "profile_image");
-                          }}
-                          style={{ display: "none" }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-  
-                  <div className="mb-4">
-                    <label className="mb-2">Name*</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={editDetails.name}
-                      onChange={changeHandler}
-                      id="name"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="mb-2">Linkedin Username*</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={editDetails.profile_url}
-                      onChange={changeHandler}
-                      id="profile_url"
-                      placeholder="john-doe"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="mb-2">Current Company*</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={editDetails.current_company}
-                      onChange={changeHandler}
-                      id="current_company"
-                      placeholder="Synnc"
-                    />
-                  </div>
-                  <div className="mb-4" ref={dropdownRef}>
-                    <label className="mb-2">Audience Interest*</label>
-                    <div className="position-relative">
-                      <div
-                        className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
-                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                      >
-                        {selectedSkills.length > 0 ? (
-                          <>
-                            {selectedSkills.map((skill) => (
-                              <span
-                                key={skill}
-                                className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
-                              >
-                                {skill}
-                                <Icon
-                                  icon="mdi:close"
-                                  className="cursor-pointer"
-                                  width={16}
-                                  height={16}
-                                  onClick={(e) => handleRemoveSkill(skill, e)}
-                                />
-                              </span>
-                            ))}
-                            {selectedSkills.length > 1 && (
-                              <span
-                                className="text-muted ms-2 cursor-pointer"
-                                onClick={() => {
-                                  setSelectedSkills([]);
-                                  setEditDetails((prev: any) => ({
-                                    ...prev,
-                                    audience_interest: "",
-                                  }));
-                                }}
-                              >
-                                Clear all
-                              </span>
-                            )}
-                          </>
-                        ) : (
-                          <span className="text-muted">
-                            Select up to 5 categories
-                          </span>
-                        )}
-                      </div>
-  
-                      {isDropdownOpen && (
-                        <div
-                          className="position-absolute start-0 w-100 mt-1 bg-white border rounded-3 shadow-sm"
-                          style={{
-                            maxHeight: "200px",
-                            overflowY: "auto",
-                            top: "calc(100% + 5px)",
-                            zIndex: 1050,
-                            position: "fixed",
-                            width: "inherit",
-                          }}
-                        >
-                          {AVAILABLE_SKILLS.map((skill) => (
-                            <div
-                              key={skill}
-                              className={`px-3 py-2 cursor-pointer hover-bg-light ${
-                                selectedSkills.includes(skill) ? "bg-light" : ""
-                              }`}
-                              onClick={() => {
-                                if (selectedSkills.length < 5) {
-                                  handleSkillSelect(skill);
-                                }
-                              }}
-                            >
-                              {skill}
-                              {selectedSkills.includes(skill) && (
-                                <Icon icon="mdi:check" className="float-end" />
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    {selectedSkills.length >= 5 && (
-                      <small className="text-muted">
-                        Maximum 5 categories can be selected
-                      </small>
-                    )}
-                  </div>
-  
-                  <div className="mb-4 bg-white">
-                    <label className="mb-2">Description of you*</label>
-                    <small className="d-block text-muted mb-2">
-                      Welcome brands and introduce yourself
-                    </small>
-                    <textarea
-                      className="form-control"
-                      rows={10}
-                      value={editDetails.description}
-                      onChange={changeHandler}
-                      id="description"
-                      placeholder="Welcome to my profile! I use this to collaborate with great brands and other creators..."
-                    />
-                  </div>
-                </div>
-              </div>
-  
-              <div
-                className={`profile-container ${
-                  activeSection === "collaboration" ? "" : "d-none"
-                }`}
-              >
-                <div className="d-flex justify-content-between mb-3 pt-2">
-                  <h6 className="mb-0 ">Edit Section</h6>
-                  <div>
-                    <button
-                      className="bg-white border btn btn-sm"
-                      onClick={handleCancel}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="btn btn-dark btn-sm ms-3"
-                      onClick={submitCardDetails}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-  
-                {/* Content Section */}
-                <div className="pb-2 main-box">
-                  <h6 className="mb-1">Let's Collaborate</h6>
-                  <p className="text-muted">
-                    Add your collaboration packages here
-                  </p>
-                  {/* Stats Section */}
-                  <div className="mb-4">
-                    <div className="card mb-3">
-                      {/* <div className="card-header bg-white">
-                                          <h6 className="mb-0">Package</h6>
-                                      </div> */}
-  
-                      {/* Card 1 */}
-                      {preview &&
-                        cardDetails &&
-                        cardDetails?.length !== 0 &&
-                        cardDetails?.map((ele: any, index: number) => {
-                          return (
-                            <div className="card-body" key={index}>
-                              <div>
-                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                  <h6 className="mb-0">Card {index + 1}</h6>
-                                  <Icon
-                                    icon="material-symbols:delete-outline"
-                                    className="cursor-pointer"
-                                    onClick={() => deleteSection(index)}
-                                  />
-                                </div>
-  
-                                {/* Title */}
-                                <div className="mb-3">
-                                  <label className="mb-2">Title *</label>
-                                  <input
-                                    id="package_name"
-                                    required={true}
-                                    defaultValue={ele.package_name}
-                                    onChange={(e) => valueAdder(e, index)}
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="1x Sponsored Post"
-                                  />
-                                </div>
-  
-                                {/* Description */}
-                                <div className="mb-3">
-                                  <label className="mb-2">Description</label>
-                                  <textarea
-                                    className="form-control"
-                                    rows={5}
-                                    defaultValue={ele?.package_description}
-                                    onChange={(e) => valueAdder(e, index)}
-                                    id="package_description"
-                                    placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
-                                  />
-                                </div>
-  
-                                {/* Price */}
-                                <div>
-                                  <label className="mb-2">Price</label>
-                                  <input
-                                    id="package_price"
-                                    min="0"
-                                    defaultValue={
-                                      ele?.package_price ? ele?.package_price : 0
-                                    }
-                                    type="number"
-                                    onChange={(e) => {
-                                      valueAdder(e, index);
-                                    }}
-                                    className="form-control"
-                                    placeholder="$ 100"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                    </div>
-                    <button
-                      className="btn btn-outline-dark w-100"
-                      onClick={() => {
-                        setPreview(false);
-                        const newEntry = {
-                          package_name: "",
-                          package_description: "",
-                          package_price: 0,
-                        };
-                        const newArray: any = cardDetails;
-                        newArray?.push(newEntry);
-                        setCardDetails(newArray);
-                        setTimeout(() => {
-                          setPreview(true);
-                        }, 100);
-                      }}
-                    >
-                      + Add Card
-                    </button>
-                  </div>
-  
-                  <button
-                    className="btn btn-outline-danger w-100 mt-auto"
-                    onClick={() => {
-                      setPreview(false);
-  
-                      setCardDetails([]);
-                      setTimeout(() => {
-                        setPreview(true);
-                      }, 100);
-                    }}
-                  >
-                    Delete Block
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-       
-
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
+       {/* sidebar sections starts here */}
+           <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
 <div className="profile-sidebar-wraper">
   <div
     className={`profile-container ${
@@ -945,6 +559,7 @@ function ProfilePage() {
         : "d-none"
     }`}
   >
+   {/* Edit profile starts here */}
     <div className="d-flex justify-content-between mb-3 pt-2">
       <h6 className="mb-0 ">Edit Section</h6>
       <div>
@@ -969,7 +584,7 @@ function ProfilePage() {
       <div className="mb-4">
         <label className="mb-2">Banner image</label>
         <div className="position-relative">
-          <img
+          <Image
             src={editDetails.banner_image || defaultImagePath}
             alt="Banner"
             width={500}
@@ -1008,7 +623,7 @@ function ProfilePage() {
       <div className="mb-4">
         <label className="mb-2">Profile photo</label>
         <div className="position-relative">
-          <img
+          <Image
             src={editDetails.profile_image || defaultImagePath}
             alt="Profile"
             width={80}
@@ -1178,7 +793,7 @@ function ProfilePage() {
       </div>
     </div>
   </div>
-
+ {/* Main lets colorborate box Section starts here */}
   <div
     className={`profile-container ${
       activeSection === "collaboration" ? "" : "d-none"
@@ -1202,7 +817,7 @@ function ProfilePage() {
       </div>
     </div>
 
-    {/* Content Section */}
+    {/* package Content Section starts here */}
     <div className="pb-2 main-box">
       <h6 className="mb-1">Let's Collaborate</h6>
       <p className="text-muted">
@@ -1316,9 +931,22 @@ function ProfilePage() {
         Delete Block
       </button>
     </div>
+     {/* package Content Section ends here */}
   </div>
+   {/* Main lets colorborate box Section starts here */}
 </div>
 </div>
+  {/* sidebar sections ends here */}
+       
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     </div>
   );
