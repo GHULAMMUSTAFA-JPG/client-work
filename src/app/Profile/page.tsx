@@ -308,7 +308,7 @@ function ProfilePage() {
     <div className="container">
   <div className="main-profilebanner">
     {/* Banner Image */}
-    <Image
+    <img
       src={userProfile?.Banner_Image || "https://e1cdn.social27.com/digitalevents/synnc/cover.png"}
       width={1000}
       height={300}
@@ -321,8 +321,8 @@ function ProfilePage() {
           <div className="profile-topsection">
             <div className="profile-image-content">
               <div className="profile-image">
-                <Image
-                  src={userProfile?.Profile_Image || defaultImagePath}
+              <img
+                    src={userProfile?.Profile_Image || defaultImagePath}
                   alt="Profile Picture"
                   width={150}
                   height={150}
