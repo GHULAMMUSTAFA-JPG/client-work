@@ -379,9 +379,7 @@ function CompanyPage() {
                 src={
                   userProfile?.Company_Banner !== ""
                     ? userProfile?.Company_Banner
-                    : defaultImagePath
-                }
-                alt="Profile Banner"
+                    : "https://e1cdn.social27.com/digitalevents/synnc/cover.png"}
                 width={1000}
                 height={300}
                 alt="Profile Banner"
