@@ -584,7 +584,7 @@ function ProfilePage() {
       <div className="mb-4 section-box_container">
         <label className="mb-2">Banner image</label>
         <div className="position-relative">
-          <Image
+        <img
             src={editDetails.banner_image || defaultImagePath}
             alt="Banner"
             width={500}
@@ -623,7 +623,7 @@ function ProfilePage() {
       <div className="mb-4 section-box_container">
         <label className="mb-2">Profile photo</label>
         <div className="position-relative">
-          <Image
+        <img
             src={editDetails.profile_image || defaultImagePath}
             alt="Profile"
             width={80}
