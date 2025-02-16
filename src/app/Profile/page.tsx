@@ -453,14 +453,16 @@ function ProfilePage() {
                   &nbsp; Let's Collaborate
                 </h2>
                 <div className="d-flex justify-content-between align-items-center">
-                     {userProfile?.Collaboration_Packages?.length < 1 && (
-                    <Icon
+                    {userProfile?.Collaboration_Packages?.length < 1 && (
+                      <Icon
                       icon="mdi:plus"
                       width="24"
                       height="24"
-                      className=" text-muted"
-                    />
-                  )}
+                      className="text-muted"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSectionClick("collaboration")}
+                      />
+                    )}
                 </div>
                 </div>
                 {/* Collaboration Cards */}
@@ -487,7 +489,7 @@ function ProfilePage() {
                               </p>
                             </div>
                             <div className="buttonboxcard">
-                            <button className="booknowbtn">
+                            <button className="booknowbtn"   onClick={() => handleSectionClick("collaboration")}>
                               Book Now
                             </button>
                             </div>
@@ -514,7 +516,7 @@ function ProfilePage() {
                           </div>
                         </div>
                         <div className="buttonboxcard">
-                            <button className="booknowbtn">
+                            <button className="booknowbtn"   onClick={() => handleSectionClick("collaboration")}>
                               Book Now
                             </button>
                             </div>
@@ -538,7 +540,7 @@ function ProfilePage() {
                           </div>
                         </div>
                         <div className="buttonboxcard">
-                            <button className="booknowbtn">
+                            <button className="booknowbtn"   onClick={() => handleSectionClick("collaboration")}>
                               Book Now
                             </button>
                             </div>
