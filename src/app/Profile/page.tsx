@@ -309,7 +309,7 @@ function ProfilePage() {
   <div className="main-profilebanner">
     {/* Banner Image */}
     <Image
-      src="/assets/images/cover.png"
+      src={userProfile?.Banner_Image || "https://e1cdn.social27.com/digitalevents/synnc/cover.png"}
       width={1000}
       height={300}
       alt="Profile Banner"
@@ -553,7 +553,7 @@ function ProfilePage() {
            <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
 <div className="profile-sidebar-wraper">
   <div
-    className={`profile-container ${
+    className={`profilee-container ${
       activeSection === "about"
         ? "d-none d-md-block d-lg-block"
         : "d-none"
@@ -581,7 +581,7 @@ function ProfilePage() {
     <div className="pb-2 ">
       <h6 className="mb-3">About me</h6>
 
-      <div className="mb-4">
+      <div className="mb-4 section-box_container">
         <label className="mb-2">Banner image</label>
         <div className="position-relative">
           <Image
@@ -620,7 +620,7 @@ function ProfilePage() {
         </div>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 section-box_container">
         <label className="mb-2">Profile photo</label>
         <div className="position-relative">
           <Image
@@ -658,7 +658,7 @@ function ProfilePage() {
         </div>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 section-box_container">
         <label className="mb-2">Name*</label>
         <input
           type="text"
@@ -669,7 +669,7 @@ function ProfilePage() {
           placeholder="John Doe"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 section-box_container">
         <label className="mb-2">Linkedin Username*</label>
         <input
           type="text"
@@ -680,7 +680,7 @@ function ProfilePage() {
           placeholder="john-doe"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 section-box_container">
         <label className="mb-2">Current Company*</label>
         <input
           type="text"
@@ -691,7 +691,7 @@ function ProfilePage() {
           placeholder="Synnc"
         />
       </div>
-      <div className="mb-4" ref={dropdownRef}>
+      <div className="mb-4 section-box_container" ref={dropdownRef}>
         <label className="mb-2">Audience Interest*</label>
         <div className="position-relative">
           <div
@@ -795,7 +795,7 @@ function ProfilePage() {
   </div>
  {/* Main lets colorborate box Section starts here */}
   <div
-    className={`profile-container ${
+    className={`profilee-container ${
       activeSection === "collaboration" ? "" : "d-none"
     }`}
   >
@@ -824,7 +824,7 @@ function ProfilePage() {
         Add your collaboration packages here
       </p>
       {/* Stats Section */}
-      <div className="mb-4">
+      <div className="mb-4 section-box_container">
         <div className="card mb-3">
           {/* <div className="card-header bg-white">
                               <h6 className="mb-0">Package</h6>

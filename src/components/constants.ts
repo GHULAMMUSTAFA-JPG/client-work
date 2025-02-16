@@ -1,1 +1,1 @@
-export const defaultImagePath = "https://cdn.synnc.us/creator/7a06f497-8214-4cd8-b9a1-12cc3ffd1001.jpg"
+export const defaultImagePath = "https://e1cdn.social27.com/digitalevents/synnc/cover.png"
