@@ -936,3 +936,20 @@ body {
     border: 1px solid transparent;
 
 }
+
+.main-profilebanner {
+    width: 100%;
+    min-height: 300px;
+    background: $primary;
+    border-radius: 5px;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: $gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
