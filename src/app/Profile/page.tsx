@@ -306,16 +306,16 @@ function ProfilePage() {
 
   return (
     <div className="container">
-   <div className="main-profilebanner">
-        {/* Banner Image */}
-        <Image
-          src={userProfile?.Banner_Image || "/public/assets/images/cover.png"}
-          width={1000}
-          height={300}
-          alt="Profile Banner"
-          className="object-fit-cover rounded-3 w-100 cover-img"
-        />
-      </div>
+  <div className="main-profilebanner">
+    {/* Banner Image */}
+    <Image
+      src="/assets/images/cover.png"
+      width={1000}
+      height={300}
+      alt="Profile Banner"
+      className="object-fit-cover rounded-3 w-100 cover-img"
+    />
+  </div>
       <div className="col-md-8 mx-auto">
         <div className="profile-box-container mb-4 -mt-16 position-relative">
           <div className="profile-topsection">

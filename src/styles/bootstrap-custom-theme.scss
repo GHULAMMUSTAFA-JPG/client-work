@@ -72,10 +72,11 @@ body {
     h5 {
         font-size: 18px;
     }
+
     .btn {
-        font-size: 12px!important;
+        font-size: 12px !important;
         padding: 5px 10px;
-      }
+    }
 
     .table {
         border-radius: 8px;
@@ -704,7 +705,7 @@ body {
         border-style: dotted !important;
     }
 
-    
+
 }
 
 
@@ -712,124 +713,126 @@ body {
     display: flex;
     justify-content: center;
     padding: 15px 0;
-  }
+}
 
 
-  /* profile page css New UI created by Amit*/
-.profile-box-container
-{
+/* profile page css New UI created by Amit*/
+.profile-box-container {
     padding: 0;
     background-color: #ffffff;
-     border-radius: 1rem;
+    border-radius: 1rem;
     border: 1px solid $border-color;
 }
 
 
-  .profile-topsection {
+.profile-topsection {
     display: flex;
     flex: 1 auto;
     align-items: flex-start;
     justify-content: space-between;
     padding: 1rem;
-    
-    > *:first-child {
-      width: 60%;
-    }
-    
-    > *:last-child {
-      width: 40%;
-    }
-  }
 
-  .profile-bottom-section {
+    >*:first-child {
+        width: 60%;
+    }
+
+    >*:last-child {
+        width: 40%;
+    }
+}
+
+.profile-bottom-section {
     display: flex;
     gap: 1rem;
     padding: 0;
-  }
+}
 
-  .profile-left-column {
+.profile-left-column {
     flex: 0.45;
-  }
+}
 
-  .profile-right-column {
+.profile-right-column {
     flex: 0.55;
-  }
+}
 
 .aboutusSection {
     padding: 1rem;
-    
+
     h2 {
         font-size: 1.25rem;
-     
+
     }
 }
-  .letbox
-  {
+
+.letbox {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .profileactionsbtn {
+}
+
+.profileactionsbtn {
     display: flex;
     gap: 10px;
-  }
-  .buttonboxcard {
+}
+
+.buttonboxcard {
     display: flex;
     margin: 10px 0 0;
 
     .booknowbtn {
         width: 100%;
-      background-color: $primary;
-      color: $white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      &:hover {
-        background-color: darken($primary, 5%);
-      }
+        background-color: $primary;
+        color: $white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background-color: darken($primary, 5%);
+        }
     }
-  }
+}
 
-.package-prize
-{
+.package-prize {
     color: $black !important;
-  font-size: 14px;
+    font-size: 14px;
 }
 
-.package-description
-{
-  color: $black !important;
-  font-size: 12px;
+.package-description {
+    color: $black !important;
+    font-size: 12px;
 }
 
 
-  .card-content
-  {
+.card-content {
     width: 60%;
-  }
-  .profile-image-content {
+}
+
+.profile-image-content {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
-  #name {
+}
+
+#name {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
-  .banner-image {
+}
+
+.banner-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
     max-height: 300px;
-  }
+}
 
-  .actionbtn-container {
+.actionbtn-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -837,15 +840,15 @@ body {
     line-height: 100px;
     min-height: 200px;
     align-items: end;
-  }
+}
 
-  .-mt-16 {
+.-mt-16 {
     margin-top: -4rem;
-  }
+}
 
-  .chips-container {
+.chips-container {
     padding: 0.5rem 0;
-    
+
 }
 
 .chip {
@@ -855,7 +858,8 @@ body {
     display: inline-flex;
     align-items: center;
     transition: all 0.2s ease-in-out;
-cursor: pointer;
+    cursor: pointer;
+
     &:hover {
         background-color: darken($primary, 5%);
     }
@@ -871,21 +875,22 @@ cursor: pointer;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
-    border-top: 1px solid $border; 
-    background-color: #f8f9fa;  // light gray background
+    border-top: 1px solid $border;
+    background-color: #f8f9fa; // light gray background
     border-radius: 0 0 20px 20px;
+
     .stats-box {
-      
+
         padding: 1rem;
         border-radius: 8px;
-              
+
         .stats-heading {
             font-size: 10px;
             color: #808080;
             margin-bottom: 0.5rem;
             font-weight: 300;
         }
-        
+
         .stats-count {
             font-size: 1.25rem;
             font-weight: 500;
@@ -895,7 +900,7 @@ cursor: pointer;
 }
 
 .btn-linkedin {
-    background-color:transparent;
+    background-color: transparent;
     color: #0077b5;
     border: 1px solid #0077b5;
     padding: 0.5rem 1rem;
@@ -909,15 +914,16 @@ cursor: pointer;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     text-decoration: none;
+
     &:hover {
         border: 1px solid #0077b5;
     }
 }
-.packagebox     
-{   
-  border-radius: 8px;
-  border: 1px solid #dfdeda;
-  background: #ffffff;
-  box-shadow:none;
-  padding: 12px 10px;
+
+.packagebox {
+    border-radius: 8px;
+    border: 1px solid #dfdeda;
+    background: #ffffff;
+    box-shadow: none;
+    padding: 12px 10px;
 }
