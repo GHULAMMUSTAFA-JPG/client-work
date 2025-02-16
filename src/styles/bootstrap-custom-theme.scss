@@ -953,3 +953,37 @@ body {
     justify-content: center;
     align-items: center;
   }
+
+  .profile-sidebar-wraper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    overflow: hidden;
+      overflow-y: hidden;
+    z-index: 1;
+    overflow-y: scroll;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 0;
+    width: 30%;
+    padding: 85px 15px;
+
+    .profile-container {
+        border-radius: 0;
+        width: 430px;
+       
+    }
+}
+
+  .profile-container {
+    padding: 1rem;
+    background-color: $white;
+    border-radius: 1rem;
+    border: 1px solid $border-color;
+
+    .cover-img {
+        width: 100%;
+        height: 200px;
+    }
+}
