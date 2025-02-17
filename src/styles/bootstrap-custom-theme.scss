@@ -1,646 +1,1018 @@
 body {
+  // fonts
+  .fw-400 {
+    font-weight: 400;
+  }
 
-    // fonts
-    .fw-400 {
-        font-weight: 400;
-    }
+  .fw-500 {
+    font-weight: 500;
+  }
 
-    .fw-500 {
+  .fw-600 {
+    font-weight: 600;
+  }
+
+  .fw-700 {
+    font-weight: 700;
+  }
+
+  .fw-900 {
+    font-weight: 900;
+  }
+
+  .fs-9 {
+    font-size: 9px;
+  }
+
+  .fs-10 {
+    font-size: 10px;
+  }
+
+  .fs-12 {
+    font-size: 12px;
+  }
+
+  .fs-13 {
+    font-size: 13px;
+  }
+
+  .fs-14 {
+    font-size: 14px;
+  }
+
+  .fs-16 {
+    font-size: 16px;
+  }
+
+  .fs-18 {
+    font-size: 18px;
+  }
+
+  .fs-20 {
+    font-size: 20px;
+  }
+
+  .fs-22 {
+    font-size: 22px;
+  }
+
+  .fs-24 {
+    font-size: 24px;
+  }
+
+  .fs-40 {
+    font-size: 40px;
+  }
+
+  .w-45 {
+    width: 45%;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+
+  .btn {
+    font-size: 12px !important;
+    padding: 5px 10px;
+  }
+
+  .table {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0;
+
+    thead {
+      th {
+        background-color: $success;
+        color: $secondary;
         font-weight: 500;
+        padding: 1rem;
+        // white-space: nowrap;
+      }
     }
 
-    .fw-600 {
-        font-weight: 600;
-    }
+    tbody {
+      td {
+        padding: 1rem;
+        // white-space: nowrap;
+      }
 
-    .fw-700 {
-        font-weight: 700;
-    }
+      tr {
+        --bs-table-bg: $dark;
 
-    .fw-900 {
-        font-weight: 900;
+        &:last-child {
+          td {
+            border: 0;
+          }
+        }
+      }
     }
+  }
 
-    .fs-9 {
-        font-size: 9px;
-    }
+  textarea {
+    resize: none;
+  }
 
-    .fs-10 {
-        font-size: 10px;
-    }
+  .table > thead {
+    vertical-align: middle;
+  }
 
-    .fs-12 {
-        font-size: 12px;
-    }
-
-    .fs-13 {
-        font-size: 13px;
-    }
-
-    .fs-14 {
-        font-size: 14px;
-    }
-
-    .fs-16 {
-        font-size: 16px;
-    }
-
-    .fs-18 {
-        font-size: 18px;
-    }
-
-    .fs-20 {
-        font-size: 20px;
-    }
-
-    .fs-22 {
-        font-size: 22px;
-    }
-
-    .fs-24 {
-        font-size: 24px;
-    }
-
-    .fs-40 {
-        font-size: 40px;
-    }
-
-    .w-45 {
-        width: 45%;
-    }
-
-    h5 {
-        font-size: 18px;
+  .card-with-table {
+    .card-header {
+      background-color: $white;
+      border-radius: 8px 8px 0 0;
     }
 
     .table {
-        border-radius: 8px;
-        overflow: hidden;
-        margin-bottom: 0;
-
-        thead {
-            th {
-                background-color: $success;
-                color: $secondary;
-                font-weight: 500;
-                padding: 1rem;
-                // white-space: nowrap;
-            }
-        }
-
-        tbody {
-            td {
-                padding: 1rem;
-                // white-space: nowrap;
-            }
-
-            tr {
-                --bs-table-bg: $dark;
-
-                &:last-child {
-                    td {
-                        border: 0;
-                    }
-                }
-            }
-        }
+      border-radius: 0;
     }
+  }
 
-    textarea {
-        resize: none;
+  // .campaign-listing-table {
+  //     max-height: 494px;
+  //     overflow: auto;
+  // }
+
+  /* grid system by Amit */
+  .gap-4-grid {
+    gap: 1rem;
+  }
+
+  .grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .grid {
+    display: grid;
+  }
+
+  .profile-box {
+    padding: 10px 15px;
+    min-height: 100px;
+  }
+
+  /* grid system by Amit */
+  // .campaign-listing-table {
+  //     max-height: 494px;
+  //     overflow: auto;
+  // }
+  .text-muted {
+    color: $black !important;
+    font-size: 10px;
+  }
+
+  .text-muted-l {
+    color: $black !important;
+    font-size: 14px;
+  }
+
+  .editprofilebox {
+    background: #e1e1e1;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
     }
+  }
 
-    .table>thead {
-        vertical-align: middle;
+  .action-profilebox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .react-calendar__month-view__days__day--weekend {
+    color: $black !important;
+  }
+
+  .card {
+    border-radius: 8px;
+    border: 1px solid $border;
+  }
+  .card {
+    border-radius: 8px;
+    border: 1px solid $border;
+    background: $white;
+    box-shadow: 1px 1px 3px $border;
+  }
+
+  .card-hover {
+    &:hover {
+      background-color: $hover !important;
+      cursor: pointer;
     }
+  }
 
-    .card-with-table {
-        .card-header {
-            background-color: $white;
-            border-radius: 8px 8px 0 0;
-        }
+  .card-wrapper {
+    min-height: 280px;
+  }
 
-        .table {
-            border-radius: 0;
-        }
-    }
-
-
-    /* grid system by Amit */
-    .gap-4-grid {
-        gap: 1rem;
-      }
-      .grid-cols-5 {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
-      .grid {
-        display: grid;
-      }
-
-      .profile-box {
-        padding: 10px 15px;
-        min-height: 100px;
-      }
-
-    
-/* grid system by Amit */
-    // .campaign-listing-table {
-    //     max-height: 494px;
-    //     overflow: auto;
-    // }
-.text-muted {
-    color: $black !important;    
-}
+  .graphs {
     .card {
-        border-radius: 8px;
-        border: 1px solid $border;
-        background: $white;
-        box-shadow: 1px 1px 3px $border;
+      height: 100%;
     }
+  }
 
-    .card-hover {
-        &:hover {
-            background-color: $hover !important;
-            cursor: pointer;
+  .listing-card {
+    border-radius: 0;
+
+    .card-body {
+      padding: 0;
+    }
+  }
+
+  .campaign-card {
+    border-radius: 0;
+    border: none;
+
+    .campaign-post {
+      cursor: pointer;
+      padding: 1.5rem 1rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: $hover;
+        transition: all 0.3s ease-in-out;
+
+        .icon-apply {
+          background-color: $white;
         }
-    }
 
-    .card-wrapper {
-        min-height: 280px;
-    }
-
-    .graphs {
-        .card {
-            height: 100%;
+        .badge {
+          border: 1px solid $light !important;
         }
+      }
     }
+  }
 
-    .listing-card {
-        border-radius: 0;
-
-        .card-body {
-            padding: 0;
-           }
-    }
-
+  .modal {
     .campaign-card {
-        border-radius: 0;
-        border: none;
+      border: none;
 
-        .campaign-post {
-            cursor: pointer;
-            padding: 1.5rem 1rem;
-            transition: all 0.3s ease-in-out;
-
-            &:hover {
-                background-color: $hover;
-                transition: all 0.3s ease-in-out;
-
-                .icon-apply {
-                    background-color: $white;
-                }
-
-                .badge {
-                    border: 1px solid $light !important;
-                }
-            }
-        }
+      .campaign-post {
+        padding: 1.5rem 0.5rem;
+      }
     }
+  }
 
-    .modal {
-        .campaign-card {
-            border: none;
-
-            .campaign-post {
-                padding: 1.5rem 0.5rem;
-            }
-        }
-    }
-
-    .create-campaign-wrapper {
-
-        .form-control,
-        .form-select {
-            // background-color: $base;
-            // border: none;
-            font-size: 12px;
-        }
-    }
-
-    .custom-select {
-        width: 190px;
-        min-width: 190px;
-        font-size: 13px;
-    }
-
-    .custom-input {
-        width: 220px;
-        min-width: 220px;
-        font-size: 13px;
-        padding-left: 2.5rem;
-    }
-
-    .form-control {
-        font-size: 12px;
-    }
-
+  .create-campaign-wrapper {
+    .form-control,
     .form-select {
-        font-size: 12px;
+      // background-color: $base;
+      // border: none;
+      font-size: 12px;
     }
+  }
 
-    .dropdown-item {
-        font-size: 14px;
-        white-space: normal;
-        padding: 1rem;
+  .custom-select {
+    width: 190px;
+    min-width: 190px;
+    font-size: 13px;
+  }
 
-        &:hover {
-            background-color: $hover;
-        }
+  .custom-input {
+    width: 220px;
+    min-width: 220px;
+    font-size: 13px;
+    padding-left: 2.5rem;
+  }
+
+  .form-control {
+    font-size: 12px;
+  }
+
+  .form-select {
+    font-size: 12px;
+  }
+
+  .dropdown-item {
+    font-size: 14px;
+    white-space: normal;
+    padding: 1rem;
+
+    &:hover {
+      background-color: $hover;
     }
+  }
 
-    .dropdown-toggle::after {
-        display: none;
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    left: auto !important;
+    right: 0;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
+
+  .btn-sm {
+    font-size: 12px;
+  }
+
+  .btn-primary {
+    color: $white;
+  }
+  .btn-primary {
+    color: $white;
+
+    &:hover {
+      color: $white;
     }
+  }
 
-    .dropdown-menu {
-        width: 100%;
-        left: auto !important;
-        right: 0;
+  .btn-outline-primary {
+    color: $primary;
+    border: 1px solid $primary;
+
+    &:hover {
+      color: $white;
+      background-color: $primary;
+      border: 1px solid $primary;
     }
+  }
 
-    .btn {
-        font-size: 14px;
-    }
-
-    .btn-sm {
-        font-size: 12px;
-    }
-
-    .btn-primary {
-        color: $white;
-        &:hover{
-            color: $white;
-        }
-    }
-
-    .btn-outline-primary {
-        color: $primary;
-        border: 1px solid $primary;
-        &:hover {
-            color: $white;
-            background-color: $primary;
-            border: 1px solid $primary;
-        }
-    }   
-.btn-dark
-{       
+  .btn-dark {
     background: $primary;
     color: $white;
     border: none !important;
-    &:hover{
-        background: $primary;
-        color: $white;
-    }   
+
+    &:hover {
+      background: $primary;
+      color: $white;
+    }
+  }
+
+  .btn-link {
+    background-color: $activated-subtle;
+    padding: 10px 20px;
+  }
+
+  .btn-outline-info {
+    &:hover {
+      svg {
+        color: $white !important;
+      }
+    }
+  }
+  .btn-outline-info {
+    &:hover {
+      svg {
+        color: $white !important;
+      }
+    }
+  }
+
+  .btn-info {
+    background: $primary;
+    color: $white;
+    border: none !important;
+
+    &:hover {
+      background: $primary;
+      color: $white;
+    }
+  }
+
+  .nav-pills .nav-link.active {
+    color: $primary !important;
+    background-color: transparent;
+  }
+
+  .nav-underline .nav-link {
+    color: $secondary;
+    font-size: 16px;
+  }
+  .nav-underline .nav-link {
+    color: $primary;
+    font-size: 16px;
+  }
+
+  .nav-underline .nav-link.active,
+  .nav-underline .show > .nav-link {
+    font-weight: 500;
+    color: $info;
+    border-bottom-color: $info;
+  }
+  .nav-underline .nav-link.active,
+  .nav-underline .show > .nav-link {
+    font-weight: 500;
+    color: $primary;
+    border-bottom-color: $primary;
+  }
+
+  .badge {
+    padding: 4px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .modal {
+    .modal-title {
+      font-size: 18px !important;
+    }
+
+    .table {
+      thead {
+        th {
+          white-space: nowrap;
+        }
+      }
+
+      tbody {
+        td {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .offcanvas.offcanvas-end {
+    width: 60vw;
+  }
+
+  .offcanvas.offcanvas-end.offcanvas-create-campaign {
+    width: 70vw;
+  }
+
+  .offcanvas.offcanvas-end.campaign-offcanvas-buyer {
+    width: 60vw;
+  }
+
+  .offcanvas-header {
+    border-bottom: 1px solid $border;
+    padding: 1rem 1.5rem;
+  }
+
+  .offcanvas-body {
+    padding: 1rem 1.5rem;
+  }
+
+  .offcanvas-lg {
+    background-color: $dark !important;
+
+    .btn-close {
+      filter: invert(1);
+      opacity: 1;
+    }
+  }
+
+  .accordion-item {
+    margin-bottom: 1rem;
+
+    .accordion-header {
+      .accordion-button {
+        font-weight: 500;
+        font-size: 20px;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  .accordion-button:not(.collapsed) {
+    color: $black;
+    background-color: $info-subtle-active;
+  }
+
+  .modal {
+    .accordion-button:not(.collapsed) {
+      background-color: transparent;
+    }
+
+    .accordion-button {
+      font-weight: 500;
+      font-size: 14px !important;
+    }
+
+    .accordion-button::after {
+      background-size: 12px;
+    }
+  }
+
+  .form-check {
+    margin-bottom: 0.5rem;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .drop-down-table {
+    // .dropdown-item:hover {
+
+    //     background-color: transparent !important;
+    // }
+    .scroll {
+      scroll-behavior: smooth;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 75px;
+    }
+  }
+  .bg-warning {
+    background-color: $warning !important;
+  }
+
+  .bg-success {
+    background-color: $success !important;
+  }
+
+  .text-orange {
+    color: $orange !important;
+  }
+
+  .text-yellow {
+    color: #b38b12 !important;
+  }
+
+  .bg-orange-subtle {
+    background-color: rgb(236, 213, 143) !important;
+  }
+
+  .bg-purple-subtle {
+    background-color: rgb(223, 180, 238) !important;
+  }
+
+  .text-purple {
+    color: #8b5cf6 !important;
+  }
+
+  .text-discussion {
+    color: $discussion !important;
+  }
+
+  .text-contacted {
+    color: $contacted !important;
+  }
+
+  .text-activated {
+    color: $activated !important;
+  }
+
+  .text-to-contact {
+    color: $to-contact !important;
+  }
+
+  .activated-subtle {
+    background-color: $activated-subtle !important;
+  }
+
+  .discussion-subtle {
+    background-color: $discussion-subtle !important;
+  }
+
+  .contacted-subtle {
+    background-color: $contacted-subtle !important;
+  }
+
+  .to-contact-subtle {
+    background-color: $to-contact-subtle !important;
+  }
+
+  .not-fit-subtle {
+    background-color: $not-fit-subtle !important;
+  }
+
+  .text-gray {
+    color: $gray !important;
+  }
+
+  .bg-orange {
+    background-color: $orange !important;
+  }
+
+  .bg-base {
+    background-color: $base !important;
+  }
+
+  .bg-card-light {
+    background-color: $bg-card-light !important;
+  }
+
+  .bg-form {
+    background-color: $form !important;
+  }
+
+  // .bg-circle1 {
+  //     background-color: $circle1 !important;
+  // }
+
+  .bg-circle-2 {
+    background-color: $circle2 !important;
+  }
+
+  // .bg-circle3 {
+  //     background-color: $circle3 !important;
+  // }
+
+  // .bg-circle4 {
+  //     background-color: $circle4 !important;
+  // }
+  .bg-circle1 {
+    background: linear-gradient(to right, #4e37b2, #7b5ac5);
+  }
+
+  .bg-circle3 {
+    background: linear-gradient(to right, #1ea97c, #3cc29e);
+  }
+
+  .bg-circle2 {
+    background: linear-gradient(to right, #2750b0, #4c5fd8);
+  }
+
+  .bg-circle4 {
+    background: linear-gradient(to right, #ff6b00, #ff9248);
+  }
+
+  .bg-circle {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .active-compaigns {
+    .active-compaign-circle {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+
+    .active-mini-circle {
+      height: 20px;
+      width: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      background-color: $info !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .waiting-img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  }
+
+  /* styles/calendar.css */
+  .react-calendar {
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    line-height: 10px;
+  }
+
+  .react-calendar__navigation {
+    margin-bottom: 0;
+    height: 30px;
+  }
+
+  .react-calendar__tile--active {
+    background: $primary;
+    color: $white;
+    border-radius: 8px;
+  }
+  .react-calendar__tile--active {
+    background: $primary;
+    color: $white;
+    border-radius: 8px;
+
+    &:hover {
+      background: $primary !important;
+    }
+  }
+
+  .react-calendar__tile--now {
+    background: $info;
+    color: $white;
+    border-radius: 8px;
+  }
+  .react-calendar__tile--now {
+    background: $primary;
+    color: $white;
+    border-radius: 8px;
+
+    &:hover {
+      background: $primary !important;
+    }
+  }
+
+  .alert-info {
+    background-color: #e6f3ff;
+    border: 1px solid #67b1e6;
+    box-shadow: 0 2px 8px rgba(7, 97, 162, 0.1);
+    max-width: 300px;
+    color: #0761a2;
+
+    .btn-close {
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .alert-dismissible {
+    padding-right: 1rem;
+  }
+
+  .border-dotted {
+    border-style: dotted !important;
+  }
 }
 
-    .btn-link {
-        background-color: $activated-subtle;
-        padding: 10px 20px;
+.no-records {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+/* profile page css New UI created by Amit*/
+.profile-box-container {
+  padding: 0;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid $border-color;
+}
+
+.profile-topsection {
+  display: flex;
+  flex: 1 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem;
+
+  > *:first-child {
+    width: 60%;
+  }
+
+  > *:last-child {
+    width: 40%;
+  }
+}
+
+.profile-bottom-section {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+}
+
+.profile-left-column {
+  flex: 0.45;
+}
+
+.profile-right-column {
+  flex: 0.55;
+}
+
+.aboutusSection {
+  padding: 1rem;
+
+  h2 {
+    font-size: 1.25rem;
+  }
+}
+
+.letbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profileactionsbtn {
+  display: flex;
+  gap: 10px;
+}
+
+.buttonboxcard {
+  display: flex;
+  margin: 10px 0 0;
+
+  .booknowbtn {
+    width: 100%;
+    background-color: $primary;
+    color: $white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken($primary, 5%);
+    }
+  }
+}
+
+.package-prize {
+  color: $black !important;
+  font-size: 14px;
+}
+
+.package-description {
+  color: $black !important;
+  font-size: 12px;
+}
+
+.card-content {
+  width: 60%;
+}
+
+.profile-image-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  max-height: 300px;
+}
+
+.actionbtn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  line-height: 100px;
+  min-height: 200px;
+  align-items: end;
+}
+
+.-mt-16 {
+  margin-top: -4rem;
+}
+
+.chips-container {
+  padding: 0.5rem 0;
+}
+
+.chip {
+  background-color: $primary;
+  border-radius: 20px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($primary, 5%);
+  }
+
+  .chip-text {
+    font-size: 12px;
+    color: $white;
+    font-weight: 500;
+  }
+}
+
+.statsbox-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  border-top: 1px solid $border;
+  background-color: #f8f9fa; // light gray background
+  border-radius: 0 0 20px 20px;
+
+  .stats-box {
+    padding: 1rem;
+    border-radius: 8px;
+
+    .stats-heading {
+      font-size: 10px;
+      color: #808080;
+      margin-bottom: 0.5rem;
+      font-weight: 300;
     }
 
-    .btn-outline-info {
-        &:hover {
-            svg {
-                color: $white !important;
-            }
-        }
+    .stats-count {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: $black;
     }
-
-    .nav-pills .nav-link.active {
-        color: $primary !important;
-        background-color: transparent;
-    }
-
-    .nav-underline .nav-link {
-        color: $primary;
-        font-size: 16px;
-    }
-
-    .nav-underline .nav-link.active,
-    .nav-underline .show>.nav-link {
-        font-weight: 500;
-        color: $primary;
-        border-bottom-color: $primary;
-    }
-
-    .badge {
-        padding: 4px;
-        font-size: 10px;
-    }
-
-    .modal {
-        .modal-title {
-            font-size: 18px !important;
-        }
-
-        .table {
-            thead {
-                th {
-                    white-space: nowrap;
-                }
-            }
-
-            tbody {
-                td {
-                    white-space: nowrap;
-                }
-            }
-        }
-    }
-
-    .offcanvas.offcanvas-end {
-        width: 60vw;
-    }
-
-    .offcanvas.offcanvas-end.offcanvas-create-campaign {
-        width: 70vw;
-    }
-
-    .offcanvas.offcanvas-end.campaign-offcanvas-buyer {
-        width: 60vw;
-    }
-
-    .offcanvas-header {
-        border-bottom: 1px solid $border;
-        padding: 1rem 1.5rem;
-    }
-
-    .offcanvas-body {
-        padding: 1rem 1.5rem;
-    }
-
-    .offcanvas-lg {
-        background-color: $dark !important;
-
-        .btn-close {
-            filter: invert(1);
-            opacity: 1;
-        }
-    }
-
-    .accordion-item {
-        margin-bottom: 1rem;
-
-        .accordion-header {
-
-            .accordion-button {
-                font-weight: 500;
-                font-size: 20px;
-
-                &:focus {
-                    box-shadow: none;
-                }
-            }
-        }
-    }
-
-    .accordion-button:not(.collapsed) {
-        color: $black;
-        background-color: $info-subtle-active;
-    }
-
-    .modal {
-        .accordion-button:not(.collapsed) {
-            background-color: transparent;
-        }
-
-        .accordion-button {
-            font-weight: 500;
-            font-size: 14px !important;
-        }
-
-        .accordion-button::after {
-            background-size: 12px;
-        }
-    }
-
-    .form-check {
-        margin-bottom: 0.5rem;
-    }
-
-    .nowrap {
-        white-space: nowrap;
-    }
-
-    .drop-down-table {
-
-        // .dropdown-item:hover {
-
-        //     background-color: transparent !important;
-        // }
-        .scroll {
-            scroll-behavior: smooth;
-            overflow-y: auto;
-            overflow-x: hidden;
-            max-height: 75px;
-        }
-    }
-
-    .text-orange {
-        color: $orange !important;
-    }
-
-    .text-yellow {
-        color: #b38b12 !important;
-    }
-
-    .bg-orange-subtle {
-        background-color: rgb(236, 213, 143) !important;
-    }
-
-    .bg-purple-subtle {
-        background-color: rgb(223, 180, 238) !important;
-    }
-
-    .text-purple {
-        color: #8b5cf6 !important;
-    }
-
-    .text-discussion {
-        color: $discussion !important;
-    }
-
-    .text-contacted {
-        color: $contacted !important;
-    }
-
-    .text-activated {
-        color: $activated !important;
-    }
-
-    .text-to-contact {
-        color: $to-contact !important;
-    }
-
-    .activated-subtle {
-        background-color: $activated-subtle !important;
-    }
-
-    .discussion-subtle {
-        background-color: $discussion-subtle !important;
-    }
-
-    .contacted-subtle {
-        background-color: $contacted-subtle !important;
-    }
-
-    .to-contact-subtle {
-        background-color: $to-contact-subtle !important;
-    }
-
-    .not-fit-subtle {
-        background-color: $not-fit-subtle !important;
-    }
-
-    .text-gray {
-        color: $gray !important;
-    }
-
-    .bg-orange {
-        background-color: $orange !important;
-    }
-
-    .bg-base {
-        background-color: $base !important;
-    }
-
-    .bg-card-light {
-        background-color: $bg-card-light !important;
-    }
-
-    .bg-form {
-        background-color: $form !important;
-    }
-
-    // .bg-circle1 {
-    //     background-color: $circle1 !important;
-    // }
-
-    .bg-circle-2 {
-        background-color: $circle2 !important;
-    }
-
-    // .bg-circle3 {
-    //     background-color: $circle3 !important;
-    // }
-
-    // .bg-circle4 {
-    //     background-color: $circle4 !important;
-    // }
-    .bg-circle1 {
-        background: linear-gradient(to right, #4e37b2, #7b5ac5);
-    }
-
-    .bg-circle3 {
-        background: linear-gradient(to right, #1ea97c, #3cc29e);
-    }
-
-    .bg-circle2 {
-        background: linear-gradient(to right, #2750b0, #4c5fd8);
-    }
-
-    .bg-circle4 {
-        background: linear-gradient(to right, #ff6b00, #ff9248);
-    }
-
-    .bg-circle {
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .active-compaigns {
-        .active-compaign-circle {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;
-        }
-
-        .active-mini-circle {
-            height: 20px;
-            width: 20px;
-            min-width: 20px;
-            border-radius: 50%;
-            background-color: $info !important;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .waiting-img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-    }
-
-    /* styles/calendar.css */
-    .react-calendar {
-        border: none;
-        border-radius: 8px;
-        padding: 0;
-        width: 100%;
-        font-family: 'Poppins', sans-serif;
-        line-height: 10px;
-    }
-
-    .react-calendar__navigation {
-        margin-bottom: 0;
-        height: 30px;
-    }
-
-    .react-calendar__tile--active {
-        background: $primary;
-        color: $white;
-        border-radius: 8px;
-        &:hover {
-            background: $primary !important;
-        }
-    }
-
-    .react-calendar__tile--now {
-        background: $primary;
-        color: $white;
-        border-radius: 8px;
-        &:hover {
-            background: $primary !important;
-        }
-    }
-
-    .alert-info {
-        background-color: #e6f3ff;
-        border: 1px solid #67b1e6;
-        box-shadow: 0 2px 8px rgba(7, 97, 162, 0.1);
-        max-width: 300px;
-        color: #0761a2;
-
-        .btn-close {
-            opacity: 0.5;
-
-            &:hover {
-                opacity: 1;
-            }
-        }
-    }
-
-    .alert-dismissible {
-        padding-right: 1rem;
-    }
-
-    .border-dotted {
-        border-style: dotted !important;
-    }
+  }
+}
+
+.btn-linkedin {
+  background-color: transparent;
+  color: #0077b5;
+  border: 1px solid #0077b5;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    border: 1px solid #0077b5;
+  }
+}
+
+.packagebox {
+  border-radius: 8px;
+  border: 1px solid #dfdeda;
+  background: #ffffff;
+  box-shadow: none;
+  padding: 12px 10px;
+}
+
+.section-box_container {
+  background: #f2f2f2;
+  padding: 10px 12px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+
+.main-profilebanner {
+  width: 100%;
+  min-height: 300px;
+  background: $primary;
+  border-radius: 5px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: $gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-sidebar-wraper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: hidden;
+  z-index: 1;
+  overflow-y: scroll;
+  background: #fff;
+  border: 1px solid #ddd;
+  margin: 0;
+  width: 30%;
+  padding: 85px 15px;
+
+  .profile-container {
+    border-radius: 0;
+    width: 430px;
+  }
+}
+
+.profile-container {
+  padding: 1rem;
+  background-color: $white;
+  border-radius: 1rem;
+  border: 1px solid $border-color;
+
+  .cover-img {
+    width: 100%;
+    height: 200px;
+  }
 }

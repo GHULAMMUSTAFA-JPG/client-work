@@ -16,6 +16,7 @@ import HowItWorks from "@/components/HowItWorks";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 function Homepage() {
   const { user, userProfile, setIsLoading, notifications, setIsActive } =
@@ -25,18 +26,22 @@ function Homepage() {
   const [linkCopied, setLinkCopied] = useState<boolean>(false);
   const howItWorksSteeps = [
     {
-      title: "Discover Campaigns",
-      description: "Find brand campaigns that fit your niche.",
+      title: "Step 1: Claim your profile",
+      description: "Download and install our Chrome extension to get started.",
+      icon: "bi bi-download",
+      link: "https://chrome.google.com/webstore/category/extensions",
+    },
+
+    {
+      title: "Step 2: Discover campaigns",
+      description: "Find campaigns that match your expertise and interests.",
       icon: "bi bi-search",
+      link: "https://app.synnc.us/campaigns",
     },
     {
-      title: "Apply & Get Hired",
-      description: "Submit your application and collaborate with brands.",
-      icon: "bi bi-person-check",
-    },
-    {
-      title: "Create & Get Paid",
-      description: "Deliver high-quality content and receive payment securely.",
+      title: "Step 3: Get Paid",
+      description:
+        "Complete campaign requirements and receive payment securely.",
       icon: "bi bi-currency-dollar",
     },
   ];
@@ -77,32 +82,28 @@ function Homepage() {
           <HowToInstall />
 
           <div className="col-md-8">
-            <div className="card mb-3 ">
+            <div className="card mb-3">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <div className="d-flex align-items-center mb-3 gap-3">
-                    <p className="mb-0 fs-16 fw-medium">Profile</p>
-
-                    <div className="d-flex gap-2 align-items-center cursor">
+                  <p className="mb-0 fs-16 fw-medium">Profile</p>
+                  <div className="d-flex align-items-center">
+                    <div className="d-flex gap-2 align-items-center">
                       <Tooltip
                         title={linkCopied ? "Link Copied" : "Share Profile"}
                         arrow
                         placement="top"
-                        className=""
                       >
                         <Icon
-                          icon="iconamoon:share-1-thin"
+                          icon="mdi:share-outline"
                           width="20"
                           height="20"
                           className="cursor flex-shrink-0 text-dark me-1"
-                          onClick={() => {
-                            shareProfile();
-                          }}
+                          onClick={shareProfile}
                         />
                       </Tooltip>
                       <Tooltip title="Edit Profile" arrow placement="top">
                         <Icon
-                          icon="material-symbols-light:edit-square-outline-rounded"
+                          icon="mdi:pencil-outline"
                           width="20"
                           height="20"
                           className="cursor flex-shrink-0 text-dark"
@@ -110,37 +111,38 @@ function Homepage() {
                         />
                       </Tooltip>
                     </div>
+                    <Link
+                      href="https://chrome.google.com/webstore/category/extensions"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1"
+                    >
+                      <Icon icon="mdi:download" width={18} height={18} />
+                      <span>Download Extension</span>
+                    </Link>
                   </div>
-                  <Link
-                    href="https://chrome.google.com/webstore/category/extensions"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1"
-                  >
-                    <Icon icon="mdi:download" width={18} height={18} />
-                    <span>Download Extension</span>
-                  </Link>
                 </div>
-                <div className="d-flex gap-2 mb-3">
+
+                <div className="d-flex gap-3">
                   <img
                     src={userProfile?.Profile_Image || defaultImagePath}
                     className="border object-fit-cover rounded-circle flex-shrink-0"
-                    alt="logo"
-                    width={40}
-                    height={40}
+                    alt="Profile Picture"
+                    width={80}
+                    height={80}
                   />
+
                   <div className="flex-grow-1">
-                    <div className="d-flex align-items-center">
-                      <p className="mb-0 fw-medium fs-16">
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                      <h5 className="mb-0 fw-medium fs-16">
                         {userProfile?.Name}
-                      </p>
+                      </h5>
                       <img
                         src={`https://flagcdn.com/24x18/${
                           userProfile?.Country_Code || "us"
                         }.png`}
                         width={24}
                         height={14}
-                        className="mx-2"
                       />
                       <Link
                         href={
@@ -160,7 +162,7 @@ function Homepage() {
                       </Link>
                     </div>
 
-                    <div className="d-flex gap-2 align-items-center mt-2">
+                    <div className="d-flex gap-2 align-items-center mb-2">
                       <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
                       </p>
@@ -168,6 +170,7 @@ function Homepage() {
                         className="bg-light rounded-circle d-inline-block"
                         style={{ width: "6px", height: "6px" }}
                       ></div>
+
                       <p className="mb-0 fs-12 text-warning">
                         <span className="text-dark fw-medium">
                           {userProfile?.No_of_Followers}{" "}
@@ -175,27 +178,105 @@ function Homepage() {
                         followers
                       </p>
                     </div>
+                    {/* tags */}
+                    <div className="d-flex gap-2 ">
+                      <div
+                        className="d-flex"
+                        style={{
+                          width: "16%",
+                          height: "24px",
+                          borderRadius: "10px",
+                          backgroundColor: "lightblue",
+                          fontSize: "10px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {" "}
+                        Software engineer
+                      </div>
+                      <div
+                        className="d-flex"
+                        style={{
+                          width: "16%",
+                          height: "24px",
+                          borderRadius: "10px",
+                          backgroundColor: "lightblue",
+                          fontSize: "10px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {" "}
+                        Content Creator
+                      </div>
+                      <div
+                        className="d-flex"
+                        style={{
+                          width: "16%",
+                          height: "24px",
+                          borderRadius: "10px",
+                          backgroundColor: "lightblue",
+                          fontSize: "10px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {" "}
+                        Media Creator
+                      </div>
+                      <div
+                        className="d-flex"
+                        style={{
+                          width: "16%",
+                          height: "24px",
+                          borderRadius: "10px",
+                          backgroundColor: "lightblue",
+                          fontSize: "10px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {" "}
+                        Content Creator
+                      </div>
+                      <div
+                        className="d-flex"
+                        style={{
+                          width: "16%",
+                          height: "24px",
+                          borderRadius: "10px",
+                          backgroundColor: "lightblue",
+                          fontSize: "10px",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {" "}
+                        Software engineer
+                      </div>
+                    </div>
+                    <div className="d-flex gap-2 flex-wrap mb-3">
+                      {userProfile?.Skills?.map(
+                        (element: any, index: number) => (
+                          <span
+                            key={index}
+                            className="badge bg-success text-secondary rounded-pill fw-light border border-transparent"
+                          >
+                            {element}
+                          </span>
+                        )
+                      )}
+                    </div>
+
+                    <p className="mb-0 fs-12 text-warning">
+                      {userProfile?.Description &&
+                      userProfile?.Description?.length > 100
+                        ? userProfile?.Description?.slice(0, 100) + "..."
+                        : userProfile?.Description}
+                    </p>
                   </div>
                 </div>
-
-                <div className="d-flex gap-2 flex-wrap mb-3">
-                  {userProfile?.Skills?.map((element: any, index: number) => {
-                    return (
-                      <span
-                        key={index}
-                        className="badge bg-success text-secondary rounded-pill fw-light border border-transparent"
-                      >
-                        {element}
-                      </span>
-                    );
-                  })}
-                </div>
-                <p className="mb-0 fs-12 text-warning">
-                  {userProfile?.Description &&
-                  userProfile?.Description?.length > 100
-                    ? userProfile?.Description?.slice(0, 100) + "..."
-                    : userProfile?.Description}
-                </p>
 
                 <div className="row mt-4 g-4">
                   <div className="col-md-4">
@@ -238,14 +319,7 @@ function Homepage() {
             <div className="card h-10">
               {!hasActiveCampaigns && (
                 <div className="d-flex flex-column justify-content-center min-h-100">
-                  <WelcomeBanner
-                    title="Welcome to Synnc!"
-                    subtitle="Get started by exploring brand campaigns and applying for collaborations."
-                    cta={{
-                      text: "Find Campaigns",
-                      link: "/campaigns",
-                    }}
-                  />
+                  <HowItWorks steps={howItWorksSteeps} />
                 </div>
               )}
               {hasActiveCampaigns && (
@@ -315,11 +389,10 @@ function Homepage() {
               )}
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="card mb-3">
+          <div className="col-md-4 ">
+            <div className="card mb-3" style={{ height: "48%" }}>
               <div className="card-body">
-                <p className="mb-2 fs-16 fw-medium">Notifications</p>
-
+                <p className="mb-2 fs-16 fw-medium ">Notifications</p>
                 {notifications?.notifications &&
                 notifications?.notifications?.length !== 0 ? (
                   notifications?.notifications?.map(
@@ -431,23 +504,6 @@ function Homepage() {
                         </div> */}
           </div>
         </div>
-        {!hasActiveCampaigns && <HowItWorks steps={howItWorksSteeps} />}
-        {/* <Topcard /> */}
-
-        {/* <div className="row graphs g-3">
-                    <div className="col-md-6">
-                        <ChartsDashboard />
-                    </div>
-                    <div className="col-md-6">
-                        <BarsDashboard />
-                    </div>
-                    <div className="col-md-6">
-                        <VerticalBarChart />
-                    </div>
-                    <div className="col-md-6">
-                        <ProgressDashboard />
-                    </div>
-                </div> */}
       </div>
 
       <EditProfileModal user={user} userProfile={userProfile} />

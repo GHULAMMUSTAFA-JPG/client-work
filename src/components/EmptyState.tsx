@@ -26,10 +26,12 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center text-center h-100">
-      <div className="mb-3">
+      <div className="mb-3 text-xs">
         <i className={icon} style={{ fontSize: iconSize, color }}></i>
       </div>
-      <h3 className="text-dark fw-bold">{title}</h3>
+      <h3 className="text-dark text-xs"
+      style={{fontSize: "1.1rem"}}>
+        {title}</h3>
       <p className="text-muted small">{description}</p>
       {secondaryDescription && (
         <p className="text-muted small">{secondaryDescription}</p>

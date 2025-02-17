@@ -17,7 +17,7 @@ import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 import { Tooltip } from "@mui/material";
 import { withAuthRole } from "@/utils/withAuthRole";
 
-function homepagebuyer() {
+function Homepagebuyer() {
   const { user, setIsLoading, notifications, userProfile } = useAuth();
   const [rendControl, setRendControl] = useState<boolean>(false);
   const [users, setUsers] = useState<any[]>([]);
@@ -66,7 +66,7 @@ function homepagebuyer() {
         <div className="row mt-3 004">
           <div className="col-md-8">
             <div className="card welcom-card-height mb-3">
-              <div className="card-body " style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
+              <div className="card-body ">
                 <div className="d-flex align-items-center justify-content-between gap-5">
                   <div>
                     <h3 className="fw-medium">
@@ -142,7 +142,7 @@ function homepagebuyer() {
                 </div>
               </div>
             </div>
-            <div className="card card-with-table" style={{ border: "0.5px solid grey", borderRadius: "10px" }}>
+            <div className="card card-with-table">
               <div className="card-header p-3">
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="mb-0 fw-medium fs-16">Campaigns</p>
@@ -256,7 +256,7 @@ function homepagebuyer() {
 
           <div className="col-md-4">
             <div className="card mb-3">
-              <div className="card-body" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
+              <div className="card-body">
                 <p className="mb-3 fs-16 fw-medium">Notifications</p>
                 {notifications?.notifications?.map(
                   (notify: any, index: number) => {
@@ -332,7 +332,7 @@ function homepagebuyer() {
             </div>
 
             <div className="card mb-3">
-              <div className="card-body" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
+              <div className="card-body">
                 <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
                 <PostCalendar />
               </div>
@@ -367,6 +367,6 @@ function homepagebuyer() {
   );
 }
 export default withAuthRole({
-  Component: homepagebuyer,
+  Component: Homepagebuyer,
   allowedRoles: ["buyer"],
 });

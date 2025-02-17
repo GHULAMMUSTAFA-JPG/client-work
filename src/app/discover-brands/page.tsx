@@ -20,10 +20,6 @@ interface Brand {
   isInterested: boolean;
 }
 
-interface BrandsFiltersProps {
-  onFilterComplete: () => void;
-}
-
 function DiscoverBrandsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -42,20 +38,10 @@ function DiscoverBrandsContent() {
 
       try {
         setIsLoading(true);
-        const filters: {
-          sales?: string;
-          size?: string;
-          regions?: string[];
-        } = {};
-
         const categoryParam = searchParams.get("categories");
         const sizeParam = searchParams.get("sizes");
         const regionsParam = searchParams.get("regions");
         const interestedParam = searchParams.get("interested");
-
-        if (categoryParam) filters.sales = categoryParam;
-        if (sizeParam) filters.size = sizeParam;
-        if (regionsParam) filters.regions = regionsParam.split(",");
 
         const data = await getBrandDiscoverList({
           userId: user.uuid,
@@ -64,7 +50,9 @@ function DiscoverBrandsContent() {
           sortBy: searchParams.get("sort") || SortOptions.LARGEST_FIRST,
           page: currentPage,
           limit: 10,
-          ...(Object.keys(filters).length > 0 && filters),
+          sales: categoryParam ? categoryParam.split(",") : undefined,
+          size: sizeParam ? sizeParam.split(",") : undefined,
+          regions: regionsParam ? regionsParam.split(",") : undefined,
         });
 
         if (data?.brands) {

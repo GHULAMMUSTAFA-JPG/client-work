@@ -2,6 +2,19 @@
 .login-container {
     background: linear-gradient(to bottom, #ffffff, #c2cccb14, #1bb09d4a) !important;
 
+    .maincardbox {
+        background: #fff;
+        width: 100%;
+        max-width: 575px;
+        margin: 30px auto;
+        display: flex;
+        justify-content: center;
+        padding: 70px 25px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px #00000014;
+        border: 1px solid #1bb09d80;
+      }
+
     .form-control {
         border-radius: 8px;
         padding: 0.75rem 1rem;

@@ -17,7 +17,7 @@ function Campaigns() {
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
   const { user, setIsLoading } = useAuth();
   const handleRowClick = (e: any) => {
-    router.push(`/SubmitCampaigns?id=${e.target.id}`);
+    router.push(`/campaign-hub?id=${e.target.id}`);
   };
 
   useEffect(() => {

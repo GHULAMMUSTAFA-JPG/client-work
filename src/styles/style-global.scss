@@ -11,6 +11,7 @@
 @import "./loader.css";
 @import "./chatbot.scss";
 @import "./profile.scss";
+@import "./tabs.scss";
 
 ::-webkit-scrollbar {
   width: 4px;
@@ -342,4 +343,38 @@ body {
 .offcanvas.offcanvas-end {
   z-index: 1053 !important;
   width: 600px;
+}
+
+.pending {
+  background-color: #fff3cd;
+  color: #664d03;
+}
+
+.approved {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.rejected {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.draft {
+  background-color: #e2e3e5;
+  color: #41464b;
+}
+
+.archived {
+  background-color: #cff4fc;
+  color: #055160;
+}
+
+.needs_updates {
+  background-color: #ffe5d0;
+  color: #fd7e14;
+}
+.live {
+  background-color: #d1e7dd;
+  color: #0f5132;
 }

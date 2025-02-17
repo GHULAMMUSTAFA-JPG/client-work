@@ -331,7 +331,8 @@ const AuthPage = () => {
       </div>
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-md-5">
+       <div className="maincardbox">
+       <div className="box-content-wrapper">
             <div className="text-center mb-4">
               <div className="btn-group mb-4">
                 <button
@@ -648,6 +649,7 @@ const AuthPage = () => {
               </>
             )}
           </div>
+       </div>
         </div>
       </div>
     </div>

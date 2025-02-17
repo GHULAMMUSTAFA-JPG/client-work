@@ -45,12 +45,18 @@
 
 .profile-sidebar-wraper {
     position: fixed;
-    padding-top: 70px;
     top: 0;
     right: 0;
     height: 100vh;
-    overflow: auto;
+    overflow: hidden;
+      overflow-y: hidden;
     z-index: 1;
+    overflow-y: scroll;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 0;
+    width: 30%;
+    padding: 85px 15px;
 
     .profile-container {
         border-radius: 0;
@@ -58,3 +64,4 @@
        
     }
 }
+

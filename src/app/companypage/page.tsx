@@ -60,7 +60,7 @@ interface CategoryOption {
   label: string;
 }
 
-function companypage() {
+function CompanyPage() {
   const { user, setIsLoading, rendControl, setRendControl, setIsActive } =
     useAuth();
   const fileInputRef: any = useRef(null);
@@ -373,34 +373,24 @@ function companypage() {
 
   return (
     <div className="container">
-      <div className="row mt-3">
-        <div className="col-md-8 mx-auto">
-          {/* First profile container - Add onClick */}
-          <div
-            className="profile-container mb-4 pb-3 " 
-            onClick={() => handleSectionClick("about")}
-            style={{ cursor: "pointer" , borderRadius: "10px" , border: "0.5px solid grey "}}
-          >
-            {/* Banner Image */}
-            <div className="position-relative">
-              <img
+    <div className="main-profilebanner">
+      {/* Banner Image */}
+      <img
                 src={
                   userProfile?.Company_Banner !== ""
                     ? userProfile?.Company_Banner
-                    : defaultImagePath
-                }
+                    : "https://e1cdn.social27.com/digitalevents/synnc/cover.png"}
+                width={1000}
+                height={300}
                 alt="Profile Banner"
                 className="object-fit-cover rounded-3 w-100 cover-img"
-                width={1000}
-                height={1000}
-                style={{ borderRadius: "10px" , border: "0.5px solid grey "}}
               />
-            </div>
-
-            {/* Profile Section */}
-            <div className="p-3">
-              {/* Profile Image */}
-              <div className="position-relative" style={{ marginTop: "-75px" }}>
+    </div>
+        <div className="col-md-8 mx-auto">
+          <div className="profile-box-container mb-4 -mt-16 position-relative">
+            <div className="profile-topsection">
+              <div className="profile-image-content">
+                <div className="profile-image">
                 <img
                   src={
                     userProfile?.Company_Logo !== ""
@@ -410,185 +400,139 @@ function companypage() {
                   alt="Profile Picture"
                   width={150}
                   height={150}
-                  className="rounded-circle border border-1 border-black "
+                  className="rounded-circle border border-4 border-white"
                
                 />
-              </div>
-              {/* Profile Info */}
-              <div className="mt-2">
-                <div className="d-flex justify-content-between align-items-center gap-2 mb-1">
-                  <div className="">
-                    {" "}
-                    <h5 id="name" className="mb-0">
-                      {userProfile?.Company_Name}
-                    </h5>
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <a href={userProfile?.Company_Website}>
-                      <i
-                        className="bi bi-globe"
-                        style={{ width: "19px", height: "19px" }}
-                      ></i>
-                    </a>
-                    <a
-                      href={`https://${userProfile?.Company_Linkedin}`}
-                      target="_blank"
-                    >
-                      <Icon
-                        style={{ cursor: "pointer" }}
-                        icon="mdi:linkedin"
-                        width={19}
-                        height={19}
-                        className="text-info"
-                      />
-                    </a>
-                  </div>
                 </div>
-
-                {/* <p className="mt-2">👋 Welcome to my partnership storefront!</p> */}
-
-                <div className="mt-3">
-                  <p>{userProfile?.Company_Description}</p>{" "}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="mt-4 d-flex justify-content-between profile-second-section">
-                  <div
-                    className="d-flex flex-column div-size"
-                    style={{ minWidth: "200px" }}
-                  >
-                    <label>
-                      <b>Location</b>
-                    </label>
-                    <span className="text-muted mt-2">
-                      {userProfile?.Location}
-                    </span>
-                  </div>
-                  <div
-                    className="d-flex flex-column"
-                    style={{ minWidth: "200px" }}
-                  >
-                    <label>
-                      <b>Employees(est)</b>
-                    </label>
-                    <span className="text-muted mt-2">
-                      {" "}
-                      {userProfile?.No_of_Employees || 0}
-                    </span>
-                  </div>
-
-                  <div
-                    className="d-flex flex-column"
-                    style={{ minWidth: "200px" }}
-                  >
-                    <div className="">
-                      <label className="d-block">
-                        <b>Size</b>
-                      </label>
-                      <button
-                        type="button"
-                        className="bg-info-subtle text-info border-0 btn btn-sm mt-2 rounded-pill size-btn px-2"
-                      >
-                        {userProfile?.Size || "Small"}
-                      </button>
+                <div className="profile-image-content-text">
+                  {/* Profile Info */}
+                  <div className="mt-2">
+                    <h4 className="mb-1" id="name" onClick={editFieldHandler}>
+                    {userProfile?.Company_Name}
+                      <div className="editprofilebox"  onClick={() => handleSectionClick("about")} style={{ cursor: "pointer" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="edit-medium" aria-hidden="true" data-supported-dps="24x24" fill="currentColor">
+                          <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                        </svg>
+                      </div>
+                    </h4>
+                    <h6 className="text-muted mb-2">{userProfile?.Current_Position || "Senior Software Engineer"}</h6>
+                    
+                    {/* Company and Location Row */}
+                    <div className="d-flex align-items-center gap-2 text-muted mb-2">
+                      <Icon icon="mdi:building" width={18} height={18} />
+                      <span>{userProfile?.Current_Company || "TechCorp Industries"}</span>
                     </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 d-flex justify-content-between profile-second-section">
-                  <div
-                    className="d-flex flex-wrap gap-2 justify-content-start"
-                    style={{ minWidth: "200px", maxWidth: "200px" }}
-                  >
-                    <div className="">
-                      <label className="d-block">
-                        <b>Categories</b>
-                      </label>
-                      {userProfile?.Categories?.map(
+  
+                    {/* Skills Row */}
+                    <div className="chips-container d-flex flex-wrap gap-2">
+                    {userProfile?.Categories?.map(
                         (category: any, index: number) => {
                           return (
-                            <button
-                              key={index}
-                              type="button"
-                              className="activated-subtle text-activated border-0 btn btn-sm mt-2 rounded-pill size-btn px-2 mx-1"
-                            >
-                              {category}
-                            </button>
+                            <div className="chip" key={index}><div className="chip-text">{category}</div></div>
                           );
                         }
                       )}
-                    </div>
+                     </div>
                   </div>
-
-                  <div
-                    className="d-flex flex-column ms-4 "
-                    style={{ minWidth: "200px" }}
-                  >
-                    <label>
-                      <b>Year Founded</b>
-                    </label>
-                    <span className="text-muted mt-2">
-                      {userProfile?.Year_Founded}
-                    </span>
-                  </div>
-                  <div
-                    className="d-flex flex-column ms-4"
-                    style={{ minWidth: "200px" }}
-                  ></div>
                 </div>
+              </div>
+              <div className="actionbtn-container">
+                <div className="profileactionsbtn">
+                <a
+                    href={userProfile?.Company_Website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-linkedin"
+                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+  <path id="Icon_fa-solid-globe" data-name="Icon fa-solid-globe" d="M16.5,12a29.31,29.31,0,0,1-.155,3H7.655A28.034,28.034,0,0,1,7.5,12a29.311,29.311,0,0,1,.155-3h8.691A28.034,28.034,0,0,1,16.5,12Zm1.35-3h5.77a12.042,12.042,0,0,1,0,6H17.85A29.616,29.616,0,0,0,18,12,29.616,29.616,0,0,0,17.85,9Zm5.278-1.5h-5.47A16.488,16.488,0,0,0,15.066.394,12.023,12.023,0,0,1,23.123,7.5Zm-6.989,0H7.861A18.892,18.892,0,0,1,9.127,3.061,7.657,7.657,0,0,1,10.7.647,1.937,1.937,0,0,1,12,0a1.937,1.937,0,0,1,1.3.647,7.657,7.657,0,0,1,1.57,2.414A18.543,18.543,0,0,1,16.139,7.5Zm-9.8,0H.872A12.031,12.031,0,0,1,8.934.394,16.488,16.488,0,0,0,6.342,7.5ZM.38,9H6.15a30.075,30.075,0,0,0,0,6H.38a12.042,12.042,0,0,1,0-6ZM9.127,20.934A18.565,18.565,0,0,1,7.861,16.5h8.278a18.784,18.784,0,0,1-1.266,4.434,7.657,7.657,0,0,1-1.57,2.414A1.926,1.926,0,0,1,12,24a1.937,1.937,0,0,1-1.3-.647,7.657,7.657,0,0,1-1.57-2.414ZM6.342,16.5a16.488,16.488,0,0,0,2.592,7.106A12.031,12.031,0,0,1,.872,16.5Zm16.786,0a12.033,12.033,0,0,1-8.058,7.106A16.548,16.548,0,0,0,17.663,16.5h5.466Z" fill="#1bb09d"/>
+</svg>
 
-                {/* Stats Section */}
+  
+  
+                  </a>
+                   <a
+                    href={`https://${userProfile?.Company_Linkedin}`}
+                      target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-linkedin"
+                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="19.963" viewBox="0 0 20 19.963">
+    <path id="Path_854" data-name="Path 854" d="M68.173,115.963H64.031V102.625h4.148v13.337ZM66.1,100.8a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,66.1,100.8Zm17.6,15.159H79.558v-6.488c0-1.547-.031-3.537-2.152-3.537-2.158,0-2.489,1.684-2.489,3.425v6.6H70.774V102.625h3.974v1.822H74.8a4.363,4.363,0,0,1,3.924-2.152c4.192,0,4.972,2.764,4.972,6.357Z" transform="translate(-63.7 -96)" fill="#0077b5"/>
+  </svg>
+  
+  
+                  </a>
+                </div>
+                <div className="action-profilebox mt-4">
+                  <Link
+                    href="https://chrome.google.com/webstore/category/extensions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center"
+                  >
+                    <Icon icon="mdi:download" width={18} height={18} />
+                    <span>Download Chrome Extension</span>
+                  </Link>
+                </div>   
               </div>
             </div>
+            <div className="statsbox-container">
+              <div className="stats-box">
+                <div className="stats-count">{userProfile?.Location}</div>
+                <div className="stats-heading">Location</div>
+              </div>
+              <div className="stats-box">
+                <div className="stats-count">{" "}{userProfile?.No_of_Employees || 0}</div>
+                <div className="stats-heading">Employees(est)</div>
+              </div>
+              <div className="stats-box">
+                <div className="stats-count">{userProfile?.Size || "Small"}</div>
+                <div className="stats-heading">Size</div>
+              </div>
+              <div className="stats-box">
+                <div className="stats-count">{userProfile?.Year_Founded}</div>
+                <div className="stats-heading">Year Founded</div>
+              </div>
+             </div>
           </div>
-
-          {/* Second profile container - Add onClick */}
-          {/* <div className='profile-container'
-                        onClick={() => handleSectionClick('collaboration')}
-                        style={{ cursor: 'pointer' }}>
-                        <div>
-                            <h5>Let's Collaborate</h5>
-
-                            <div className="mt-4">
-                                {
-                                    userProfile?.Collaboration_Packages?.map((ele: any, index: number) => {
-                                        return (
-                                            <div className="card mb-3" key={index} onClick={async () => {
-                                                const mapper = await mapperFunction(userProfile?.Collaboration_Packages)
-                                                setCardDetails(mapper)
-                                            }}>
-                                                <div className="card-body d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6>{ele?.Package_Name}</h6>
-                                                        <p className="text-muted mb-0">
-                                                            {ele?.Package_Description}
-                                                        </p>
-                                                    </div>
-                                                    <div className='ms-5 text-end'>
-                                                        <h6 className='text-muted'>${ele?.Package_Price}</h6>
-                                                        <button id={ele?._id} className="btn btn-dark flex-shrink-0 btn-sm">Book Now</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-
-                                    })
-                                }
-
-
-
-                            </div>
-                        </div>
-                    </div> */}
-
-          <label className="d-block mb-3">Campaigns</label>
-
-          {/* Second profile container - Add onClick */}
-          <div className={``} style={{ cursor: "pointer" }}>
+  
+          <div className="profile-bottom-section">
+            <div className="profile-left-column">
+              <div className="profile-box-container mb-4 mt-16 position-relative">
+                <div className="aboutusSection">
+                  <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    &nbsp; About
+                  </h2>
+                  <p className="text-muted-l">
+                  {userProfile?.Company_Description || "Passionate software engineer with 8+ years of experience building scalable applications and leading engineering teams."}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="profile-right-column">
+              <div className="profile-box-container mb-4 mt-16 position-relative">
+                {/* Collaboration Section */}
+                <div className="aboutusSection">
+                  <div className="letbox_campaigns">
+                  <h2>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+                    </svg>
+                    &nbsp; Campaigns
+                  </h2>
+            {/* Campaigns html starts here */}
+            <div className={``} style={{ cursor: "pointer" }}>
             {/* Collaboration Section */}
             {campaignData?.campaigns?.map((campaign: any, index: number) => {
               return (
-                <div key={index} className="mb-3 profile-container" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
+                <div key={index} className="mb-3 profile-container">
                   <div className="d-flex justify-content-between mb-2">
                     <label className="d-block mt-2">
                       <b className="line-clamp-1 me-3">{campaign?.Headline}</b>
@@ -671,8 +615,14 @@ function companypage() {
                 </div>
               )}
           </div>
-        </div>
-        <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
+ {/* Campaigns html starts here */}
+            
+                  </div>
+                  {/* Campaigns */}
+               
+                
+         {/* sidebar sections starts here */}
+         <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
           <div className="profile-sidebar-wraper" style={{borderRadius: "10px" , border: "0.5px solid grey "}}>
             {/* First edit section */}
             <div
@@ -1098,11 +1048,22 @@ function companypage() {
             </div>
           </div>
         </div>
+    {/* sidebar sections ends here */}
+         
+  
+  
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
       </div>
-    </div>
   );
 }
 export default withAuthRole({
-  Component: companypage,
+  Component: CompanyPage,
   allowedRoles: ["buyer"],
 });

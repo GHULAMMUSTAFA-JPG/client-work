@@ -222,7 +222,7 @@ const Inbox = () => {
               {/* Card Header */}
               <div className="card-header bg-white p-3">
                 <div className="d-flex align-items-center justify-between">
-                  <img
+                  <Image
                     src={selectedIds?.Profile_Image || defaultImagePath}
                     alt="Profile"
                     width={40}
