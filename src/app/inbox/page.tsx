@@ -22,7 +22,7 @@ const Inbox = () => {
     selectedIds,
     restartSockets,
   } = useAuth();
-  const [searchText, setSearchText] = useState<string | null>(null);
+  const [searchText, setSearchText] = useState<string>("");
   const [display, setdisplay] = useState<any>({});
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
@@ -92,6 +92,11 @@ const Inbox = () => {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+  const filteredConversations = conversations?.conversations?.filter(
+    (chat: any) => {
+      return chat?.Name?.toLowerCase().includes(searchText?.toLowerCase());
+    }
+  );
   const readMessage = async (conversation: any) => {
     const data = {
       conversation_id: conversation?._id,
@@ -144,7 +149,7 @@ const Inbox = () => {
 
           {/* Conversation List */}
           <div className="conversation-list">
-            {conversations?.conversations?.length === 0 ? (
+            {filteredConversations?.length === 0 ? (
               <EmptyState
                 icon="bi bi-chat-dots-fill"
                 title="No Messages Yet"
@@ -154,7 +159,7 @@ const Inbox = () => {
                 buttonLink="/campaigns"
               />
             ) : (
-              conversations?.conversations?.map((chat: any, index: number) => (
+              filteredConversations?.map((chat: any, index: number) => (
                 <div
                   id={chat?.Last_Message?.Recipient_ID}
                   onClick={() => {
@@ -169,11 +174,12 @@ const Inbox = () => {
                     });
                   }}
                   key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ===
-                      chat?.Last_Message?.Recipient_ID
+                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
+                    selectedIds?.Recipient_ID ===
+                    chat?.Last_Message?.Recipient_ID
                       ? "active"
                       : ""
-                    }`}
+                  }`}
                 >
                   <img
                     src={chat?.Profile_Image || defaultImagePath}
@@ -238,19 +244,26 @@ const Inbox = () => {
               {/* Messages */}
               <div className="card-body p-4">
                 {messages.map((msg: any, index: number) => (
-                  <div key={index} className={`mb-3 ${msg.user !== "sender"
-                      ? ""
-                      : "d-flex justify-content-end flex-column"
-                    }`}>
+                  <div
+                    key={index}
+                    className={`mb-3 ${
+                      msg.user !== "sender"
+                        ? ""
+                        : "d-flex justify-content-end flex-column"
+                    }`}
+                  >
                     <div
-                      className={`p-3 rounded d-inline-block ${msg.user !== "sender"
+                      className={`p-3 rounded d-inline-block ${
+                        msg.user !== "sender"
                           ? "bg-light"
                           : "bg-primary text-white ms-auto"
-                        }`}
+                      }`}
                     >
                       {msg.Message}
                     </div>
-                    <small className="text-muted d-block ms-auto">{msg.Time_Ago}</small>
+                    <small className="text-muted d-block ms-auto">
+                      {msg.Time_Ago}
+                    </small>
                   </div>
                 ))}
                 <div ref={endOfMessagesRef}></div>

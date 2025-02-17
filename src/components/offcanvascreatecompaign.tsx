@@ -103,7 +103,7 @@ function OffcanvasCreateCompaign(props: any) {
       startInput.focus();
     }
   };
-
+  console.log("dto", dto);
   useEffect(() => {
     user?.email &&
       setDto((prev: any) => {
@@ -247,7 +247,8 @@ function OffcanvasCreateCompaign(props: any) {
             setRendControl,
             Newmapper,
             setIsLoading,
-            selectedSkills
+            selectedSkills,
+            setActiveTab
           )
         : createCampaign(
             dto,
@@ -255,7 +256,8 @@ function OffcanvasCreateCompaign(props: any) {
             setRendControl,
             Newmapper,
             setIsLoading,
-            selectedSkills
+            selectedSkills,
+            setActiveTab
           );
     }
   };

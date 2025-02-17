@@ -197,36 +197,42 @@ function Homepage() {
                     : userProfile?.Description}
                 </p>
 
-             
-
                 <div className="row mt-4 g-4">
-      <div className="col-md-4">
-            <div className="card h-100 bg-box">
-                  <div className="card-body">
+                  <div className="col-md-4">
+                    <div className="card h-100 bg-box">
+                      <div className="card-body">
                         <p className="text-muted">Followers</p>
-                        <h5 className="CounterTXT">{userProfile?.No_of_Followers}{" "}</h5>
+                        <h5 className="CounterTXT">
+                          {userProfile?.No_of_Followers}{" "}
+                        </h5>
+                      </div>
+                    </div>
                   </div>
-            </div>
-      </div>
-      <div className="col-md-4">
-            <div className="card h-100 bg-box">
-                  <div className="card-body">
-                        <p className="text-muted">Average Engagaements per post</p>
-                        <h5 className="CounterTXT">{userProfile?.Average_Engagements}</h5>
+                  <div className="col-md-4">
+                    <div className="card h-100 bg-box">
+                      <div className="card-body">
+                        <p className="text-muted">
+                          Average Engagaements per post
+                        </p>
+                        <h5 className="CounterTXT">
+                          {userProfile?.Average_Engagements}
+                        </h5>
+                      </div>
+                    </div>
                   </div>
-            </div>
-      </div>
-      <div className="col-md-4">
-            <div className="card h-100 bg-box">
-                  <div className="card-body">
-                        <p className="text-muted">Average Impressions per post</p>
-                        <h5 className="CounterTXT">{userProfile?.Average_Impressions}</h5>
+                  <div className="col-md-4">
+                    <div className="card h-100 bg-box">
+                      <div className="card-body">
+                        <p className="text-muted">
+                          Average Impressions per post
+                        </p>
+                        <h5 className="CounterTXT">
+                          {userProfile?.Average_Impressions}
+                        </h5>
+                      </div>
+                    </div>
                   </div>
-            </div>
-      </div>
-
-      </div>
-
+                </div>
               </div>
             </div>
             <div className="card h-10">

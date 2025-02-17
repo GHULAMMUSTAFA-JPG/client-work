@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import useForm from "@/hooks/useForm";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Loader from "@/components/loader";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -313,7 +314,11 @@ const AuthPage = () => {
     window.location.href = authorizationUrl;
   };
 
-  return (
+  return codess ? (
+    <div>
+      <Loader />
+    </div>
+  ) : (
     <div className="min-vh-100 d-flex align-items-center justify-content-center login-container py-5">
       <div className="position-absolute top-0 start-0 p-3">
         <img

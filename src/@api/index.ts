@@ -329,7 +329,8 @@ export const createCampaign = async (
   setRendControl: any,
   Newmapper: any,
   setIsLoading?: any,
-  selectedSkills?: any
+  selectedSkills?: any,
+  setActiveTab?: any
 ) => {
   try {
     console.log("selectedSkills", selectedSkills);
@@ -354,6 +355,7 @@ export const createCampaign = async (
     console.log("buttonClose", buttonClose);
     buttonClose && buttonClose.click();
     setIsLoading(false);
+    setActiveTab("ongoing");
     Newmapper();
     return response;
   } catch (error) {
@@ -369,7 +371,8 @@ export const updateCampaign = async (
   setRendControl: any,
   Newmapper: any,
   setIsLoading?: any,
-  selectedSkills?: any
+  selectedSkills?: any,
+  setActiveTab?: any
 ) => {
   try {
     if (!selectedSkills) {
@@ -391,7 +394,7 @@ export const updateCampaign = async (
     );
     buttonClose && buttonClose.click();
     setIsLoading(false);
-
+    setActiveTab("ongoing");
     Newmapper();
     return response;
   } catch (error) {
