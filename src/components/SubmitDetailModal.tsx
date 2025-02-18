@@ -16,7 +16,7 @@ function SubmitDetailModal(props: any) {
     selectedCreator,
   } = props;
   const { setIsLoading } = useAuth();
-  console.log("selectedPost", selectedPost);
+  // console.log("selectedPost", selectedPost);
   const actionFunction = async (type: string) => {
     const dto = {
       campaign_id: campaignData?._id,

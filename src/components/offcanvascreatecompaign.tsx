@@ -103,7 +103,7 @@ function OffcanvasCreateCompaign(props: any) {
       startInput.focus();
     }
   };
-  console.log("dto", dto);
+  // console.log("dto", dto);
   useEffect(() => {
     user?.email &&
       setDto((prev: any) => {
@@ -141,7 +141,7 @@ function OffcanvasCreateCompaign(props: any) {
   }, []);
 
   function formatDate(inputDate: any) {
-    console.log(inputDate);
+    // console.log(inputDate);
     const months: any = {
       Jan: "01",
       Feb: "02",
@@ -165,7 +165,7 @@ function OffcanvasCreateCompaign(props: any) {
       return;
     }
   }
-  console.log("dto", dto);
+  // console.log("dto", dto);
   const mapper = () => {
     const obj = {
       Is_Public: data?.campaign?.Is_Public,
@@ -221,7 +221,7 @@ function OffcanvasCreateCompaign(props: any) {
   }, [user]);
 
   const updateDto = (e: any) => {
-    console.log("e", e.target.id);
+    // console.log("e", e.target.id);
     if (e.target.id == "Is_Public") {
       setDto((prev: any) => {
         const updatedDto = { ...prev, [e.target.id]: e.target.checked };

@@ -54,7 +54,7 @@ export function PostsList({
     goLiveDate: post.goLiveDate || "2024-03-01",
   }));
 
-  console.log("enhancedPosts", enhancedPosts);
+  // console.log("enhancedPosts", enhancedPosts);
   return (
     <div className="border-end" style={{ width: "380px", overflowY: "auto" }}>
       <div className="p-4">

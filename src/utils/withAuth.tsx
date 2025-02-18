@@ -21,7 +21,7 @@ const withAuth = <P extends {}>(
     useEffect(() => {
       if (typeof window !== "undefined") {
         const currentpath = window.location.href;
-        console.log(currentpath, "currentpath");
+        // console.log(currentpath, "currentpath");
         if (!isAuthenticated) {
           if (pathname == "/login") {
           } else if (
@@ -32,7 +32,7 @@ const withAuth = <P extends {}>(
             router.push("/login");
           }
         } else {
-          console.log("asdjagsduasda",user.isBuyer)
+          // console.log("asdjagsduasda",user.isBuyer)
           if (!user.isBuyer)
             currentpath.includes("/login")
               ? router.push("/homepage")

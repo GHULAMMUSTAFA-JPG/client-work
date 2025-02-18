@@ -22,7 +22,7 @@ export function withAuthRole({ Component, allowedRoles }: any) {
         window.location.href = "/login";
         // router.push("/login");
       } else if (!user.isBuyer && !allowedRoles.includes("creator")) {
-        console.log("creator but buyer route");
+        // console.log("creator but buyer route");
         window.location.href = "/login";
         // router.push("/login");
       }

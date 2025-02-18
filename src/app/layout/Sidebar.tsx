@@ -12,10 +12,10 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
   const { user, isActive, setIsActive } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
-  console.log("isActive", isActive);
-  console.log("menuItems", menuItems);
+  // console.log("isActive", isActive);
+  // console.log("menuItems", menuItems);
   useEffect(() => {
-    console.log("path changed useeffect calles");
+    // console.log("path changed useeffect calles");
 
     if (!user?.isBuyer) {
       if (window.location.pathname == "/homepage") {

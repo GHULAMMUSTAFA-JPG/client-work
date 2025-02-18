@@ -15,9 +15,9 @@ const Main = ({ children, isAuthenticated, user }: any) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("Auth status:", isAuthenticated);
-    console.log("User data:", user);
-    console.log("Current path:", pathname);
+    // console.log("Auth status:", isAuthenticated);
+    // console.log("User data:", user);
+    // console.log("Current path:", pathname);
 
     if (isAuthenticated && user?.isBuyer) {
       if (pathname !== "/stripe" && pathname !== "/thankyou") {
@@ -25,7 +25,7 @@ const Main = ({ children, isAuthenticated, user }: any) => {
           !user.subscription_status?.has_active_subscription &&
           user.subscription_status?.requires_payment
         ) {
-          console.log("Redirecting to stripe...");
+          // console.log("Redirecting to stripe...");
           router.push("/stripe");
         }
       }

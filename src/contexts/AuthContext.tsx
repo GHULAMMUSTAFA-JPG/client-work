@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      console.log("storedUser", storedUser);
+      // console.log("storedUser", storedUser);
       setIsAuthenticated(true);
       setUser(JSON.parse(storedUser)); // Load user data from localStorage
     }

@@ -33,7 +33,7 @@ function Homepagebuyer() {
 
   useEffect(() => {
     if (user?.email) {
-      console.log("fetchbuterdatafirst");
+      // console.log("fetchbuterdatafirst");
       fetchBuyerActiveCampaigns(user?.email, setActiveCampaigns, setIsLoading);
       fetchBuyersData(setUserData, user?.email, setIsLoading);
     }
@@ -49,7 +49,7 @@ function Homepagebuyer() {
   };
 
   const shareProfile = () => {
-    console.log(userProfile, user);
+    // console.log(userProfile, user);
     try {
       const path = window.location.origin + "/company-view/" + userProfile?._id;
       navigator.clipboard.writeText(path);

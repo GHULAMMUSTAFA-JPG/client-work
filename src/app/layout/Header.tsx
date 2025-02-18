@@ -48,7 +48,7 @@ export default function Header() {
 
   useEffect(() => {
     if (user?.email) {
-      console.log("fetchbuyerdatasecond");
+      // console.log("fetchbuyerdatasecond");
 
       // getHistoryOfUser();
       !user?.isBuyer
@@ -83,9 +83,9 @@ export default function Header() {
         const message = event.data;
         const response = JSON.parse(message);
 
-        console.log(response, "response from sockets", selectedIds);
+        // console.log(response, "response from sockets", selectedIds);
         if (response?.notifications) {
-          console.log(response?.notifications, "response?.notifications");
+          // console.log(response?.notifications, "response?.notifications");
           setNotifications(response);
           const not = response?.notifications || [];
           const hasUnseen = not.some(

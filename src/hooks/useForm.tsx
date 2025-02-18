@@ -26,7 +26,7 @@ const useForm = ({ initialValues, validate }: UseFormProps) => {
   ) => {
     event.preventDefault();
     if (!validate || Object.keys(errors).length === 0) {
-      console.log("callback", callback);
+      // console.log("callback", callback);
       callback();
     }
   };

@@ -63,7 +63,7 @@ function CampaignOverview({
   const [isOpen, setIsOpen] = useState(true);
 
   const handleItemClick = (status: any, array_item: any) => {
-    console.log(array_item, status, selectedCampaignDetails);
+    // console.log(array_item, status, selectedCampaignDetails);
     changeCreatorStatus(
       {
         creator_id: array_item?._id,

@@ -333,8 +333,8 @@ export const createCampaign = async (
   setActiveTab?: any
 ) => {
   try {
-    console.log("selectedSkills", selectedSkills);
-    console.log("setRendControl", setRendControl);
+    // console.log("selectedSkills", selectedSkills);
+    // console.log("setRendControl", setRendControl);
     if (!selectedSkills) {
       toast.warn("Please select Target Audience");
       return;
@@ -343,7 +343,7 @@ export const createCampaign = async (
       ...dto, // Spread the existing dto properties
       Target_Audience: selectedSkills, // Update Target_Audience with selectedSkills
     };
-    console.log("updatedDto", updatedDto);
+    // console.log("updatedDto", updatedDto);
     const response: any = await apiController.post(
       `/dashboard/campaigns/create_campaign`,
       updatedDto
@@ -352,7 +352,7 @@ export const createCampaign = async (
     const buttonClose: any = document.getElementById(
       "createCampaignOffcanvasModal"
     );
-    console.log("buttonClose", buttonClose);
+    // console.log("buttonClose", buttonClose);
     buttonClose && buttonClose.click();
     setIsLoading(false);
     setActiveTab("ongoing");
@@ -764,7 +764,7 @@ export const handleFileUpload = async (event: any, setIsLoading?: any) => {
     // Wait for all files to be uploaded
     try {
       const results = await Promise.all(fileUploadPromises);
-      console.log("All files uploaded successfully:", results);
+      // console.log("All files uploaded successfully:", results);
       return results;
     } catch (error) {
       console.error("Error uploading one or more files:", error);

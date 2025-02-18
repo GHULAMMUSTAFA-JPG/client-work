@@ -175,7 +175,7 @@ export function ContentVersions({
                   </h4>
                   <button
                     className="btn btn-link btn-sm p-0 d-flex align-items-center"
-                    onClick={() => console.log("Refreshing metrics...")}
+                    // onClick={() => console.log("Refreshing metrics...")}
                   >
                     <RefreshCw
                       className="me-1"
@@ -230,14 +230,14 @@ export function ContentVersions({
     input.onchange = (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
-        console.log("Resubmitting file:", file);
+        // console.log("Resubmitting file:", file);
       }
     };
     input.click();
   };
 
   const handleFeedbackSubmit = (versionId: string) => {
-    console.log("Submitting feedback for version:", versionId);
+    // console.log("Submitting feedback for version:", versionId);
   };
 
   return (
@@ -403,7 +403,7 @@ export function ContentVersions({
                       </button>
                       <button
                         onClick={() => {
-                          console.log("Discarding version:", version.id);
+                          // console.log("Discarding version:", version.id);
                           setShowConfirmDelete(null);
                         }}
                         className="btn btn-danger btn-sm"
