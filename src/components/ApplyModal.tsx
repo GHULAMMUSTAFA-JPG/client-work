@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "./constants";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 function ApplyModal({ selectedCampaign, disable }: any) {
   const { user, setIsLoading } = useAuth();
@@ -77,30 +78,34 @@ function ApplyModal({ selectedCampaign, disable }: any) {
                     </small>
                     <div className="d-flex gap-3 mt-2">
                       {/* LinkedIn & Website Links */}
-                      <a
-                        href={selectedCampaign?.LinkedIn_URL || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Icon
-                          icon="mdi:linkedin"
-                          width="28"
-                          height="28"
-                          className="text-info"
-                        />
-                      </a>
-                      <a
-                        href={selectedCampaign?.Website_URL || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Icon
-                          icon="mdi:web"
-                          width="28"
-                          height="28"
-                          className="text-primary"
-                        />
-                      </a>
+                      {selectedCampaign?.Company_Linkedin && (
+                        <Link
+                          href={`https://${selectedCampaign.Company_Linkedin}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon
+                            icon="mdi:linkedin"
+                            width="28"
+                            height="28"
+                            className="text-info"
+                          />
+                        </Link>
+                      )}
+                      {selectedCampaign?.Company_Website && (
+                        <Link
+                          href={selectedCampaign?.Company_Website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon
+                            icon="mdi:web"
+                            width="28"
+                            height="28"
+                            className="text-primary"
+                          />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

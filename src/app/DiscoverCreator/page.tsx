@@ -14,6 +14,7 @@ import ApplyModal from "@/components/ApplyModal";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 import { withAuthRole } from "@/utils/withAuthRole";
+import Link from "next/link";
 
 function DiscoverCreator() {
   const searchParams = useSearchParams();
@@ -130,20 +131,40 @@ function DiscoverCreator() {
 
                         <div className="d-flex justify-content-between">
                           <div className="d-flex justify-content-between  gap-2 align-items-center">
-                            <Icon
-                              icon="mdi:linkedin"
-                              width="18"
-                              height="18"
-                              className="text-info ms-2"
-                              style={{ minWidth: "18px", minHeight: "18px" }}
-                            />
-                            <Icon
-                              icon="mdi:web"
-                              width="18"
-                              height="18"
-                              className="text-warning ms-1"
-                              style={{ minWidth: "18px", minHeight: "18px" }}
-                            />
+                            {campaign.Company_Website && (
+                              <Link
+                                href={`${campaign.Company_Website}`}
+                                target="_blank"
+                              >
+                                <Icon
+                                  icon="mdi:web"
+                                  width="18"
+                                  height="18"
+                                  className="text-warning ms-1"
+                                  style={{
+                                    minWidth: "18px",
+                                    minHeight: "18px",
+                                  }}
+                                />
+                              </Link>
+                            )}
+                            {campaign.Company_Linkedin && (
+                              <Link
+                                href={`https://${campaign.Company_Linkedin}`}
+                                target="_blank"
+                              >
+                                <Icon
+                                  icon="mdi:linkedin"
+                                  width="18"
+                                  height="18"
+                                  className="text-info ms-2"
+                                  style={{
+                                    minWidth: "18px",
+                                    minHeight: "18px",
+                                  }}
+                                />
+                              </Link>
+                            )}
                           </div>
                           <div className="applied-btn-container ms-auto">
                             {/* <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {

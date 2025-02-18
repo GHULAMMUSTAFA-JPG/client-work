@@ -144,22 +144,36 @@ function Homepage() {
                         width={24}
                         height={14}
                       />
-                      <Link
-                        href={
-                          userProfile?.Profile_URL
-                            ? `https://www.linkedin.com/in/${userProfile?.Profile_URL}`
-                            : "#"
-                        }
-                        target="_blank"
-                      >
-                        <Icon
-                          style={{ cursor: "pointer" }}
-                          icon="mdi:linkedin"
-                          width={24}
-                          height={24}
-                          className="text-info"
-                        />
-                      </Link>
+                      {userProfile?.Profile_URL ? (
+                        <Link
+                          href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
+                          target="_blank"
+                        >
+                          <Icon
+                            style={{ cursor: "pointer" }}
+                            icon="mdi:linkedin"
+                            width={24}
+                            height={24}
+                            className="text-info"
+                          />
+                        </Link>
+                      ) : (
+                        <Tooltip
+                          title="Add your LinkedIn User"
+                          arrow
+                          placement="top"
+                        >
+                          <Icon
+                            style={{ cursor: "pointer", color: "grey" }}
+                            icon="mdi:linkedin"
+                            width={24}
+                            height={24}
+                            // className="text-info"
+                            className="text-grey"
+                            onClick={() => router.push("/Profile")}
+                          />
+                        </Tooltip>
+                      )}
                     </div>
 
                     <div className="d-flex gap-2 align-items-center mb-2">
@@ -180,81 +194,25 @@ function Homepage() {
                     </div>
                     {/* tags */}
                     <div className="d-flex gap-2 ">
-                      <div
-                        className="d-flex"
-                        style={{
-                          width: "16%",
-                          height: "24px",
-                          borderRadius: "10px",
-                          backgroundColor: "lightblue",
-                          fontSize: "10px",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        Software engineer
-                      </div>
-                      <div
-                        className="d-flex"
-                        style={{
-                          width: "16%",
-                          height: "24px",
-                          borderRadius: "10px",
-                          backgroundColor: "lightblue",
-                          fontSize: "10px",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        Content Creator
-                      </div>
-                      <div
-                        className="d-flex"
-                        style={{
-                          width: "16%",
-                          height: "24px",
-                          borderRadius: "10px",
-                          backgroundColor: "lightblue",
-                          fontSize: "10px",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        Media Creator
-                      </div>
-                      <div
-                        className="d-flex"
-                        style={{
-                          width: "16%",
-                          height: "24px",
-                          borderRadius: "10px",
-                          backgroundColor: "lightblue",
-                          fontSize: "10px",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        Content Creator
-                      </div>
-                      <div
-                        className="d-flex"
-                        style={{
-                          width: "16%",
-                          height: "24px",
-                          borderRadius: "10px",
-                          backgroundColor: "lightblue",
-                          fontSize: "10px",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {" "}
-                        Software engineer
-                      </div>
+                      {userProfile?.Audience_Interest.split(", ")?.map(
+                        (audience_interest: string, index: number) => (
+                          <div
+                            className="d-flex"
+                            style={{
+                              width: "16%",
+                              height: "24px",
+                              borderRadius: "10px",
+                              backgroundColor: "lightblue",
+                              fontSize: "10px",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            {" "}
+                            {audience_interest}
+                          </div>
+                        )
+                      )}
                     </div>
                     <div className="d-flex gap-2 flex-wrap mb-3">
                       {userProfile?.Skills?.map(
@@ -395,8 +353,9 @@ function Homepage() {
                 <p className="mb-2 fs-16 fw-medium ">Notifications</p>
                 {notifications?.notifications &&
                 notifications?.notifications?.length !== 0 ? (
-                  notifications?.notifications?.map(
-                    (notify: any, index: number) => {
+                  notifications?.notifications
+                    .slice(0, 8)
+                    ?.map((notify: any, index: number) => {
                       return (
                         <div key={index} className="notification-list">
                           <div className="d-flex gap-3">
@@ -459,8 +418,7 @@ function Homepage() {
                           <hr className="my-2 text-warning" />
                         </div>
                       );
-                    }
-                  )
+                    })
                 ) : (
                   <EmptyState
                     icon="bi bi-bell-slash"

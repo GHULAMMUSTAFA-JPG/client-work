@@ -11,6 +11,7 @@ import { defaultImagePath } from "@/components/constants";
 import { useAuth } from "@/contexts/AuthContext";
 import EmptyState from "@/components/EmptyState";
 import { withAuthRole } from "@/utils/withAuthRole";
+import Link from "next/link";
 function Campaigns() {
   const router = useRouter();
   const [campaigns, setCampaigns] = useState<any>();
@@ -120,7 +121,33 @@ function Campaigns() {
                                             </p>
                                           </div>
                                         </div>
-                                        <Icon
+                                        {/* {campaign.Company_Website && (
+                                          <Link
+                                            href={`${campaign.Company_Website}`}
+                                            target="_blank"
+                                          >
+                                            <Icon
+                                              icon="mdi:web"
+                                              width="18"
+                                              height="18"
+                                              className="text-warning ms-1"
+                                            />
+                                          </Link>
+                                        )}
+                                        {campaign.Company_Linkedin && (
+                                          <Link
+                                            href={`https://${campaign.Company_Linkedin}`}
+                                            target="_blank"
+                                          >
+                                            <Icon
+                                              icon="mdi:linkedin"
+                                              width="18"
+                                              height="18"
+                                              className="text-info ms-2"
+                                            />
+                                          </Link>
+                                        )} */}
+                                        {/* <Icon
                                           icon="mdi:linkedin"
                                           width={18}
                                           height={18}
@@ -131,7 +158,7 @@ function Campaigns() {
                                           width={18}
                                           height={18}
                                           className="text-warning ms-1"
-                                        />
+                                        /> */}
                                       </div>
                                       <div className="d-flex gap-2 mb-4 align-items-center">
                                         <Icon
@@ -205,7 +232,7 @@ function Campaigns() {
                                             </p>
                                           </div>
                                         </div>
-                                        <Icon
+                                        {/* <Icon
                                           icon="mdi:linkedin"
                                           width={18}
                                           height={18}
@@ -216,7 +243,7 @@ function Campaigns() {
                                           width={18}
                                           height={18}
                                           className="text-warning ms-1"
-                                        />
+                                        /> */}
                                       </div>
                                       <div className="d-flex gap-2 mb-4 align-items-center">
                                         <Icon

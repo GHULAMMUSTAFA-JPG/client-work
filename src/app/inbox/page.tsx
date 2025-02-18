@@ -69,8 +69,13 @@ const Inbox = () => {
 
   useEffect(() => {
     if (selectedIds.Conversation_Id) {
-      const element = document.getElementById(selectedIds.Conversation_Id);
-      element?.click();
+      const data = {
+        conversation_id: selectedIds.Conversation_Id,
+        sender_id: userProfile?._id,
+      };
+      if (sockets.readyState === WebSocket.OPEN) {
+        sockets.send(JSON.stringify(data));
+      }
     }
   }, [conversations]);
 

@@ -152,6 +152,16 @@ const AuthPage = () => {
           if (response.data.subscription_status.requires_payment == true) {
             localStorage.setItem("id", response.data._id);
             localStorage.setItem("checkoutisbuyer", response?.data.isBuyer);
+            // console.log("isbuyer from email", data);
+            const userData = response?.data;
+            // console.log("userData", userData);
+            localStorage.setItem("user", JSON.stringify(response.data));
+            setUser(userData);
+            // localStorage.setItem(
+            //   "user",
+            //   JSON.stringify(data?.session_response)
+            // );
+            setIsAuthenticated(true);
             router.push("/stripe");
           } else if (response?.data) {
             // Store subscription status in localStorage along with other user data

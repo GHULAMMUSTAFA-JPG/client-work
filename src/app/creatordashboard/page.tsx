@@ -60,7 +60,7 @@ function CreatorDashboard() {
                         <th scope="col" className="text-start ps-4">
                           Creators
                         </th>
-                        <th scope="col">Social Platform</th>
+                        {/* <th scope="col">Social Platform</th> */}
                         <th scope="col">Followers</th>
                         <th scope="col">Impressions</th>
                         <th scope="col">Average Impressions</th>
@@ -87,7 +87,7 @@ function CreatorDashboard() {
                                 </span>
                               </div>
                             </td>
-                            <td>
+                            {/* <td>
                               <div className="d-flex align-items-center justify-content-center mb-2">
                                 <span className="ms-2">
                                   @{user?.Profile_URL}
@@ -106,7 +106,7 @@ function CreatorDashboard() {
                                   {user?.Username}
                                 </span>
                               </div>
-                            </td>
+                            </td> */}
                             <td>
                               <p className="mb-2">
                                 {user?.No_of_Followers?.toLocaleString()}
