@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState, useCallback } from "react";
 import { getBrandDiscoverList } from "@/@api/brandApi";
 import { useAuth } from "@/contexts/AuthContext";
+import { withAuthRole } from "@/utils/withAuthRole";
 
 interface Brand {
   id: string;
@@ -34,6 +35,7 @@ function DiscoverBrandsContent() {
 
   const fetchBrands = useCallback(
     async (currentPage: number, shouldAppend: boolean = true) => {
+      console.log(user);
       if (!user?.uuid || isLoading) return;
 
       try {
@@ -220,10 +222,15 @@ function DiscoverBrandsContent() {
   );
 }
 
-export default function Page() {
+function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <DiscoverBrandsContent />
     </Suspense>
   );
 }
+
+export default withAuthRole({
+  Component: Page,
+  allowedRoles: ["creator"],
+});

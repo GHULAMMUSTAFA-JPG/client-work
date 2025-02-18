@@ -20,13 +20,13 @@ export function CampaignTabs({
 }: CampaignTabsProps) {
   const getTabStyles = (tab: Tab) => {
     return `campaign-tab ${activeTab === tab.id ? "active" : "inactive"} ${
-      tab.status || "default"
+      tab.id || "default"
     }`;
   };
 
   const getBadgeStyles = (tab: Tab) => {
     return `campaign-badge ${activeTab === tab.id ? "active" : "inactive"} ${
-      tab.status || "default"
+      tab.id || "default"
     }`;
   };
 

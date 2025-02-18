@@ -5,7 +5,6 @@ import {
   MessageSquare,
   Edit,
   Plus,
-  Link,
   ExternalLink,
   BarChart,
   RefreshCw,
@@ -20,7 +19,6 @@ import {
 } from "lucide-react";
 import { CampaignDrawer } from "./CampaignDrawer";
 import { getStatusBadge } from "./utils";
-import Image from "next/image";
 
 interface PerformanceMetrics {
   impressions: number;
@@ -247,7 +245,6 @@ export function ContentVersions({
           <h2 className="h4 mb-0">Content Versions</h2>
           <StatusFilter value={statusFilter} onChange={setStatusFilter} />
         </div>
-        <AddContentButton onClick={onAddContent} />
       </div>
 
       <div className="mb-4">
@@ -473,17 +470,5 @@ function StatusFilter({
         ))}
       </select>
     </div>
-  );
-}
-
-function AddContentButton({ onClick }: { onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className="btn btn-primary d-inline-flex align-items-center"
-    >
-      <Plus className="me-2" style={{ width: "1rem", height: "1rem" }} />
-      Add Content
-    </button>
   );
 }

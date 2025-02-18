@@ -241,7 +241,7 @@ export function CampaignHeader({
           </div>
         </div>
       </div>
-      <div className=" py-2 border-top">
+      <div className="px-4 py-2 border-top">
         <div className="d-flex flex-column gap-4">
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center gap-4">

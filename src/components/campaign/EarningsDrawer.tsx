@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  X,
-  DollarSign,
-  Calendar,
-  Clock,
-  AlertCircle,
-  Download,
-  Filter,
-  ChevronDown,
-} from "lucide-react";
+import { DollarSign, Calendar, Clock, AlertCircle } from "lucide-react";
 
 interface Transaction {
   id: string;
@@ -40,13 +31,13 @@ export function EarningsDrawer({
   const getStatusColor = (status: Transaction["status"]) => {
     switch (status) {
       case "pending":
-        return "text-warning bg-warning-subtle border-warning";
+        return "draft";
       case "processing":
-        return "text-primary bg-primary-subtle border-primary";
+        return "needs_updates";
       case "completed":
-        return "text-success bg-success-subtle border-success";
+        return "approved";
       default:
-        return "";
+        return "draft";
     }
   };
 
@@ -54,22 +45,19 @@ export function EarningsDrawer({
     switch (status) {
       case "pending":
         return (
-          <Clock
-            className="text-warning"
-            style={{ width: "1rem", height: "1rem" }}
-          />
+          <Clock className="draft" style={{ width: "1rem", height: "1rem" }} />
         );
       case "processing":
         return (
           <AlertCircle
-            className="text-primary"
+            className="needs_updates"
             style={{ width: "1rem", height: "1rem" }}
           />
         );
       case "completed":
         return (
           <DollarSign
-            className="text-success"
+            className="approved"
             style={{ width: "1rem", height: "1rem" }}
           />
         );
@@ -150,12 +138,8 @@ export function EarningsDrawer({
             </div>
           </div>
 
-          <div className="card">
-            <div className="card-header">
-              <div className="d-flex align-items-center justify-content-between">
-                <h3 className="h5 mb-0">Transaction History</h3>
-              </div>
-            </div>
+          <div>
+            <h3 className="h5 mb-0 py-2">Transaction History</h3>
 
             <div className="table-responsive">
               <table className="table table-hover mb-0">

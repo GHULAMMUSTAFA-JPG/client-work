@@ -4,29 +4,10 @@ import { CheckCircle, Clock, AlertCircle } from "lucide-react";
 const getStatusBadge = (status: string) => {
   return (
     <span className={`badge ${status}`}>
-      {status.charAt(0).toUpperCase() + status.slice(1)}
+      {status?.charAt(0).toUpperCase() + status?.slice(1)}
     </span>
   );
 };
-
-/* const getStatusInfo = (status: "Public" | "Private"): StatusInfo => {
-  const statusBadge = getStatusBadge(status);
-  
-  switch (status) {
-    case "Public":
-      return {
-        color: "text-green-700 bg-green-50 border-green-200",
-        icon: <CheckCircle className="w-4 h-4 text-green-500" />,
-        label: statusBadge,
-      };
-    case "Private":
-      return {
-        color: "text-gray-700 bg-gray-50 border-gray-200", 
-        icon: <Clock className="w-4 h-4 text-gray-500" />,
-        label: statusBadge,
-      };
-  }
-}; */
 
 const getPaymentStatusInfo = (
   status: PaymentStatus["status"],

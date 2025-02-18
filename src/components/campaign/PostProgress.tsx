@@ -8,6 +8,7 @@ import {
   HelpCircle,
   FileText,
 } from "lucide-react";
+import { createCampaignPostSubmission } from "@/@api/campaign";
 
 interface PostStage {
   id: string;
@@ -30,27 +31,54 @@ interface ModalProps {
 }
 
 function ImpressionUploadModal({ isOpen, onClose }: ModalProps) {
+  const [formData, setFormData] = useState({
+    submission_title: "",
+    submission_text_content: "",
+    media_content: [] as File[],
+  });
   const [successMessage, setSuccessMessage] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   if (!isOpen) return null;
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
+    const files = event.target.files;
+    if (files) {
+      setFormData((prev) => ({
+        ...prev,
+        media_content: [...prev.media_content, ...Array.from(files)],
+      }));
     }
   };
 
-  const handleSubmit = () => {
-    if (selectedFile) {
-      setSuccessMessage(
-        "✅ Your impressions have been submitted and are under review."
-      );
-      setTimeout(() => {
-        setSuccessMessage("");
-        onClose();
-      }, 2000);
+  const handleSubmit = async () => {
+    if (formData.media_content.length === 0) return;
+
+    try {
+      const response = await createCampaignPostSubmission({
+        campaign_id: "CAMPAIGN_ID", // Replace with actual campaign ID
+        creator_id: "CREATOR_ID", // Replace with actual creator ID
+        post_id: "POST_ID", // Replace with actual post ID
+        submission_title: formData.submission_title,
+        submission_text_content: formData.submission_text_content,
+        media_content: formData.media_content,
+      });
+
+      if (response) {
+        setSuccessMessage(
+          "✅ Your impressions have been submitted and are under review."
+        );
+        setTimeout(() => {
+          setSuccessMessage("");
+          onClose();
+          setFormData({
+            submission_title: "",
+            submission_text_content: "",
+            media_content: [],
+          });
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Error submitting impressions:", error);
     }
   };
 
@@ -76,6 +104,38 @@ function ImpressionUploadModal({ isOpen, onClose }: ModalProps) {
             ) : (
               <>
                 <div className="mb-3">
+                  <label className="form-label">Submission Title</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={formData.submission_title}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        submission_title: e.target.value,
+                      }))
+                    }
+                    placeholder="Enter submission title"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Description</label>
+                  <textarea
+                    className="form-control"
+                    value={formData.submission_text_content}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        submission_text_content: e.target.value,
+                      }))
+                    }
+                    placeholder="Enter submission description"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="mb-3">
                   <p className="text-muted small mb-2">
                     Please upload your campaign impressions data in one of the
                     following formats:
@@ -99,17 +159,29 @@ function ImpressionUploadModal({ isOpen, onClose }: ModalProps) {
                     accept=".jpg,.jpeg,.png,.pdf,.csv"
                     className="d-none"
                     id="file-upload"
+                    multiple
                   />
                   <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
                     <FileText className="mx-auto mb-2" size={48} />
                     <p className="mb-1 text-muted">
-                      {selectedFile
-                        ? selectedFile.name
+                      {formData.media_content.length > 0
+                        ? `${formData.media_content.length} files selected`
                         : "Click to upload or drag and drop"}
                     </p>
-                    <small className="text-muted">Up to 10MB</small>
+                    <small className="text-muted">Up to 10MB per file</small>
                   </label>
                 </div>
+
+                {formData.media_content.length > 0 && (
+                  <div className="mb-3">
+                    <p className="mb-2">Selected Files:</p>
+                    {formData.media_content.map((file, index) => (
+                      <div key={index} className="small text-muted">
+                        {file.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -118,10 +190,12 @@ function ImpressionUploadModal({ isOpen, onClose }: ModalProps) {
             <button
               type="button"
               className={`btn ${
-                selectedFile ? "btn-primary" : "btn-secondary"
+                formData.media_content.length > 0
+                  ? "btn-primary"
+                  : "btn-secondary"
               }`}
               onClick={handleSubmit}
-              disabled={!selectedFile}
+              disabled={formData.media_content.length === 0}
             >
               Submit Impressions
             </button>
@@ -184,7 +258,7 @@ export function PostProgress({
             bg: "bg-success",
             border: "border-primary",
             text: "text-white",
-            line: "bg-success",
+            line: "bg-black",
           };
         }
         return {
@@ -277,15 +351,7 @@ export function PostProgress({
                 <div className="mt-3 text-center">
                   <div className="d-flex align-items-center gap-2">
                     {getStageIcon(stage)}
-                    <span
-                      className={`small fw-medium ${
-                        stage.status === "completed"
-                          ? "text-success"
-                          : isClickable
-                          ? "text-primary"
-                          : "text-muted"
-                      }`}
-                    >
+                    <span className={`small fw-medium text-muted`}>
                       {stage.label}
                     </span>
                   </div>
