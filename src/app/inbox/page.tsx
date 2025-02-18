@@ -11,9 +11,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import EmptyState from "@/components/EmptyState";
 
 const Inbox = () => {
-  const [messages, setMessages] = useState<any>([]);
+  // const [messages, setMessages] = useState<any>([]);
   const [input, setInput] = useState<string>("");
-  const [selectedmsgid, setselectedmsgid] = useState(null);
+  // const [selectedmsgid, setselectedmsgid] = useState(null);
   const {
     userProfile,
     conversations,
@@ -23,9 +23,9 @@ const Inbox = () => {
     restartSockets,
   } = useAuth();
   const [searchText, setSearchText] = useState<string>("");
-  const [display, setdisplay] = useState<any>({});
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+  console.log("selected_selectedIds.", selectedIds.Conversation_Id);
 
   useEffect(() => {
     const id = searchParams.get("id");
@@ -41,27 +41,6 @@ const Inbox = () => {
       fetchProfileDataByIds(id, setSelectedIds);
     }
   }, [searchParams]);
-  if (sockets && selectedmsgid) {
-    sockets.onmessage = (event: any) => {
-      console.log("event called");
-
-      if (selectedmsgid) {
-        const incomingMessage = JSON.parse(event.data);
-        const filteredmessages =
-          incomingMessage.conversations &&
-          incomingMessage?.conversations?.filter(
-            (m: any) => m._id == selectedmsgid
-          );
-        console.log("filteredmessages", filteredmessages);
-        filteredmessages && setMessages(filteredmessages[0].messages);
-      }
-    };
-  }
-
-  // sockets.on('newMessage', (data) => {
-
-  //   io.emit('newMessage', { chatId: data.chatId, message: { user: data.user, message: data.message } });
-  // });
 
   const sendMessage = async () => {
     const data = JSON.stringify({
@@ -76,7 +55,7 @@ const Inbox = () => {
       };
 
       // Update the messages state with the new message
-      setMessages((prevMessages: any) => [...prevMessages, newMessage]);
+      // setMessages((prevMessages: any) => [...prevMessages, newMessage]);
 
       sockets.send(data);
       setInput("");
@@ -87,16 +66,20 @@ const Inbox = () => {
       restartSockets();
     }
   };
+
   useEffect(() => {
-    if (endOfMessagesRef.current) {
-      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
+    if (selectedIds.Conversation_Id) {
+      const element = document.getElementById(selectedIds.Conversation_Id);
+      element?.click();
     }
-  }, [messages]);
+  }, [conversations]);
+
   const filteredConversations = conversations?.conversations?.filter(
     (chat: any) => {
       return chat?.Name?.toLowerCase().includes(searchText?.toLowerCase());
     }
   );
+  // console.log("filteredConversations", filteredConversations);
   const readMessage = async (conversation: any) => {
     const data = {
       conversation_id: conversation?._id,
@@ -105,16 +88,6 @@ const Inbox = () => {
     if (sockets.readyState === WebSocket.OPEN) {
       sockets.send(JSON.stringify(data));
     }
-    setselectedmsgid(conversation?._id);
-    setMessages(conversation.messages);
-    // setdisplay((prevDisplay: any) => {
-    //   const newDisplay = { ...prevDisplay };
-    //   Object.keys(newDisplay).forEach((key) => {
-    //     newDisplay[key] = true;
-    //   });
-    //   newDisplay[conversation._id] = false;
-    //   return newDisplay;
-    // });
   };
   console.log("conversations", conversations);
   return (
@@ -161,7 +134,7 @@ const Inbox = () => {
             ) : (
               filteredConversations?.map((chat: any, index: number) => (
                 <div
-                  id={chat?.Last_Message?.Recipient_ID}
+                  id={chat?._id}
                   onClick={() => {
                     readMessage(chat);
                     setSelectedIds({
@@ -243,29 +216,33 @@ const Inbox = () => {
 
               {/* Messages */}
               <div className="card-body p-4">
-                {messages.map((msg: any, index: number) => (
-                  <div
-                    key={index}
-                    className={`mb-3 ${
-                      msg.user !== "sender"
-                        ? ""
-                        : "d-flex justify-content-end flex-column"
-                    }`}
-                  >
+                {filteredConversations
+                  .filter(
+                    (chat: any) => chat._id === selectedIds?.Conversation_Id
+                  )[0]
+                  ?.messages.map((msg: any, index: number) => (
                     <div
-                      className={`p-3 rounded d-inline-block ${
+                      key={index}
+                      className={`mb-3 ${
                         msg.user !== "sender"
-                          ? "bg-light"
-                          : "bg-primary text-white ms-auto"
+                          ? ""
+                          : "d-flex justify-content-end flex-column"
                       }`}
                     >
-                      {msg.Message}
+                      <div
+                        className={`p-3 rounded d-inline-block ${
+                          msg.user !== "sender"
+                            ? "bg-light"
+                            : "bg-primary text-white ms-auto"
+                        }`}
+                      >
+                        {msg.Message}
+                      </div>
+                      <small className="text-muted d-block ms-auto">
+                        {msg.Time_Ago}
+                      </small>
                     </div>
-                    <small className="text-muted d-block ms-auto">
-                      {msg.Time_Ago}
-                    </small>
-                  </div>
-                ))}
+                  ))}
                 <div ref={endOfMessagesRef}></div>
               </div>
 
