@@ -13,9 +13,11 @@ import {
   addCampaignPostSubmission,
   handleFileUpload,
 } from "@/@api";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import { EarningsDrawer } from "@/components/campaign/EarningsDrawer";
+import { getCampaignPosts } from "@/@api/campaign";
+import { withAuthRole } from "@/utils/withAuthRole";
 
 function CampaignHubContent() {
   const [activeTab, setActiveTab] = useState("all");
@@ -82,6 +84,8 @@ function CampaignHubContent() {
     const code = searchParams.get("id");
     if (code) {
       getSubmissionCampaigns(code, currentPage);
+    } else {
+      redirect("/campaigns");
     }
   }, [searchParams, user?.email, currentPage]);
 
@@ -231,8 +235,20 @@ function CampaignHubContent() {
     setIsEarningsDrawerOpen(true);
   };
 
+  const getCampaignPostsList = async () => {
+    const response = await getCampaignPosts(
+      user?.uuid,
+      campaignData?.campaign?._id
+    );
+    console.log("response", response);
+  };
+
+  useEffect(() => {
+    if (user?.uuid && campaignData?.campaign?._id) getCampaignPostsList();
+  }, []);
+
   return (
-    <div className="min-vh-100">
+    <div className="min-vh-100 bg-white">
       {campaignData && (
         <CampaignHeader
           onBack={() => window.history.back()}
@@ -280,7 +296,7 @@ function CampaignHubContent() {
           <PostProgress postId={selectedPostId} stages={postStages} />
           <ContentVersions
             versions={contentVersions as any}
-            onAddContent={() => setIsNewContentDrawerOpen(true)}
+            onAddContent={() => {}}
           />
         </div>
       </div>
@@ -293,6 +309,8 @@ function CampaignHubContent() {
         dueDate="Mar 31, 2024"
         payout="$300"
         type="post"
+        creatorId={user?.uuid}
+        campaignId={campaignData?.campaign?._id}
       />
 
       <CampaignDrawer
@@ -303,6 +321,8 @@ function CampaignHubContent() {
         dueDate="Mar 31, 2024"
         payout="$300"
         type="content"
+        creatorId={user?.uuid}
+        campaignId={campaignData?.campaign?._id}
       />
 
       <EarningsDrawer
@@ -317,10 +337,15 @@ function CampaignHubContent() {
   );
 }
 
-export default function Page() {
+function Page() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <CampaignHubContent />
     </Suspense>
   );
 }
+
+export default withAuthRole({
+  Component: Page,
+  allowedRoles: ["creator"],
+});

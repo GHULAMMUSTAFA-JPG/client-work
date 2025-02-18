@@ -16,8 +16,8 @@ function Campaigns() {
   const [campaigns, setCampaigns] = useState<any>();
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
   const { user, setIsLoading } = useAuth();
-  const handleRowClick = (e: any) => {
-    router.push(`/campaign-hub?id=${e.target.id}`);
+  const handleRowClick = (id: string) => {
+    router.push(`/campaign-hub?id=${id}`);
   };
 
   useEffect(() => {
@@ -89,7 +89,10 @@ function Campaigns() {
                             (campaign: any, index: number) => {
                               return (
                                 <div key={index} className="col-md-4">
-                                  <div className="card card-hover h-100">
+                                  <div
+                                    className="card card-hover h-100"
+                                    onClick={() => handleRowClick(campaign._id)}
+                                  >
                                     <div className="card-body d-flex flex-column">
                                       <div className="d-flex gap-2 mb-4">
                                         <img
@@ -142,26 +145,6 @@ function Campaigns() {
                                             " , "
                                           )}
                                         </p>
-                                      </div>
-                                      <div className="d-flex gap-3 justify-content-end">
-                                        <button
-                                          className="btn btn-outline-dark"
-                                          id={campaign?._id}
-                                          onClick={handleRowClick}
-                                        >
-                                          Manage Submissions
-                                        </button>
-                                        <button
-                                          className="btn btn-dark"
-                                          key={index}
-                                          onClick={() => {
-                                            setSelectedCampaign(campaign);
-                                          }}
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#exampleModal"
-                                        >
-                                          Detail
-                                        </button>
                                       </div>
                                     </div>
                                   </div>

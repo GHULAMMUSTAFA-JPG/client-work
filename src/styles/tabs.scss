@@ -19,7 +19,7 @@
   }
 
   &.active {
-    &.needs_updates {
+    &.pending {
       border-color: #f97316;
       color: #c2410c;
       background-color: #fff7ed;
@@ -41,6 +41,12 @@
       border-color: #9ca3af;
       color: #374151;
       background-color: #f9fafb;
+    }
+
+    &.rejected {
+      border-color: #dc2626;
+      color: #7f1d1d;
+      background-color: #fef2f2;
     }
 
     &.default {
@@ -81,6 +87,11 @@
     &.archived {
       background-color: #f3f4f6;
       color: #1f2937;
+    }
+
+    &.rejected {
+      background-color: #fee2e2;
+      color: #7f1d1d;
     }
 
     &.default {

@@ -6,10 +6,12 @@ import {
   Plus,
   DollarSign,
   Eye,
+  Calendar,
+  Globe,
 } from "lucide-react";
-import { CampaignDrawer } from "./CampaignDrawer";
 import { Post } from "@/types";
 import { getStatusBadge } from "./utils";
+import { CampaignDrawer } from "./CampaignDrawer";
 
 interface PostsListProps {
   posts: Post[];
@@ -157,23 +159,52 @@ export function PostsList({
         )}
       </div>
 
-      <CampaignDrawer
-        isOpen={!!viewingPost}
-        onClose={() => setViewingPost(null)}
-        title="Post Details"
-        description={viewingPost?.description || ""}
-        dueDate={viewingPost?.dueDate || ""}
-        payout={`$${viewingPost?.budget || 0}`}
-        type="details"
-        initialData={{
-          ...viewingPost,
-          submittedDate: viewingPost?.submittedDate,
-          goLiveDate: viewingPost?.goLiveDate,
-          type: viewingPost?.type || "",
-          status: viewingPost?.status || "",
-          budget: viewingPost?.budget?.toString() || "",
-        }}
-      />
+      {viewingPost && (
+        <div
+          className="modal show d-block"
+          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <CampaignDrawer
+                isOpen={!!viewingPost}
+                title="Post Details"
+                onClose={() => setViewingPost(null)}
+                type="details"
+                description={viewingPost.description || ""}
+                dueDate={viewingPost.submittedDate || ""}
+                payout={viewingPost.budget.toString()}
+                initialData={{
+                  campaignName: viewingPost.title,
+                  status: viewingPost.status,
+                  duration: `${viewingPost.submittedDate} - ${viewingPost.goLiveDate}`,
+                  budget: `$${viewingPost.budget}`,
+                  type: viewingPost.type,
+                  description: viewingPost.description || "",
+                  dueDate: viewingPost.submittedDate || "",
+                  sections: [
+                    {
+                      title: "Post Information",
+                      items: [
+                        {
+                          label: "Description",
+                          type: "text",
+                          value: viewingPost.description || "",
+                        },
+                        {
+                          label: "Content Type",
+                          type: "text",
+                          value: viewingPost.type,
+                        },
+                      ],
+                    },
+                  ],
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
