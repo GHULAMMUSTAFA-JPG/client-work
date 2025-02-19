@@ -118,7 +118,7 @@ function Homepage() {
                       className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center gap-1"
                     >
                       <Icon icon="mdi:download" width={18} height={18} />
-                      <span>Download Extension</span>
+                      <span>Download Chrome Extension</span>
                     </Link>
                   </div>
                 </div>
@@ -180,37 +180,16 @@ function Homepage() {
                       <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
                       </p>
-                      <div
-                        className="bg-light rounded-circle d-inline-block"
-                        style={{ width: "6px", height: "6px" }}
-                      ></div>
-
-                      <p className="mb-0 fs-12 text-warning">
-                        <span className="text-dark fw-medium">
-                          {userProfile?.No_of_Followers}{" "}
-                        </span>
-                        followers
-                      </p>
+                    
                     </div>
                     {/* tags */}
                     <div className="d-flex gap-2 ">
                       {userProfile?.Audience_Interest.split(", ")?.map(
                         (audience_interest: string, index: number) => (
-                          <div
-                            className="d-flex"
-                            style={{
-                              width: "16%",
-                              height: "24px",
-                              borderRadius: "10px",
-                              backgroundColor: "lightblue",
-                              fontSize: "10px",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            {" "}
-                            {audience_interest}
-                          </div>
+                          <div className="chip" key={index}>
+                          <div className="chip-text">{" "}{audience_interest}
+</div>
+                        </div>
                         )
                       )}
                     </div>

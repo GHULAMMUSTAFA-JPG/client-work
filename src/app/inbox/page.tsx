@@ -127,69 +127,52 @@ const Inbox = () => {
 
           {/* Conversation List */}
           <div className="conversation-list">
-            {filteredConversations?.length === 0 ? (
-              <EmptyState
-                icon="bi bi-chat-dots-fill"
-                title="No Messages Yet"
-                description="This is where you’ll communicate with brands about campaigns."
-                secondaryDescription="Once you apply for a campaign, brands will contact you here."
-                buttonText="Explore Campaigns"
-                buttonLink="/campaigns"
-              />
-            ) : (
-              filteredConversations?.map((chat: any, index: number) => (
-                <div
-                  id={chat?._id}
-                  onClick={() => {
-                    readMessage(chat);
-                    setSelectedIds({
-                      Recipient_ID: chat?.Last_Message?.Recipient_ID,
-                      Message_ID: chat?.Last_Message?.Message_ID,
-                      Conversation_Id: chat?._id,
-                      Sender_ID: userProfile?._id,
-                      Name: chat?.Name,
-                      Profile_Image: chat?.Profile_Image,
-                    });
-                  }}
-                  key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
-                    selectedIds?.Recipient_ID ===
-                    chat?.Last_Message?.Recipient_ID
-                      ? "active"
-                      : ""
-                  }`}
+            {filteredConversations?.map((chat: any, index: number) => (
+              <div
+                id={chat?._id}
+                onClick={() => {
+                readMessage(chat);
+                setSelectedIds({
+                  Recipient_ID: chat?.Last_Message?.Recipient_ID,
+                  Message_ID: chat?.Last_Message?.Message_ID,
+                  Conversation_Id: chat?._id,
+                  Sender_ID: userProfile?._id,
+                  Name: chat?.Name,
+                  Profile_Image: chat?.Profile_Image,
+                });
+                }}
+                key={index}
+                className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
+                selectedIds?.Recipient_ID ===
+                chat?.Last_Message?.Recipient_ID
+                  ? "active"
+                  : ""
+                }`}
+              >
+                <img
+                src={chat?.Profile_Image || defaultImagePath}
+                alt="Profile"
+                width={40}
+                height={40}
+                className="rounded-circle me-2 flex-shrink-0"
+                />
+                <div className="flex-grow-1">
+                <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
+                <small
+                  className="text-muted line-clamp-1"
                 >
-                  <img
-                    src={chat?.Profile_Image || defaultImagePath}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-circle me-2 flex-shrink-0"
-                  />
-                  <div className="flex-grow-1">
-                    <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                    <small
-                      // style={{
-                      //   display: display[chat?._id] == false ? "none" : "block",
-                      // }}
-                      className="text-muted line-clamp-1"
-                    >
-                      {chat?.Last_Message?.Message}
-                    </small>
-                  </div>
-                  {chat?.conversation_new_messages > 0 && (
-                    <span
-                      // style={{
-                      //   display: display[chat?._id] == false ? "none" : "block",
-                      // }}
-                      className="badge bg-danger ms-2"
-                    >
-                      {chat?.conversation_new_messages}
-                    </span>
-                  )}
+                  {chat?.Last_Message?.Message}
+                </small>
                 </div>
-              ))
-            )}
+                {chat?.conversation_new_messages > 0 && (
+                <span
+                  className="badge bg-danger ms-2"
+                >
+                  {chat?.conversation_new_messages}
+                </span>
+                )}
+              </div>
+              ))}
           </div>
         </div>
 
