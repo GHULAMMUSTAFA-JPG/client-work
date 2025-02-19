@@ -76,11 +76,29 @@ body {
   }
 
   .btn {
-    font-size: 13px !important;
-    padding: 10px 15px;
+    font-size: 12px !important;
+    padding: 10px 12px;
+  }
+  .btn:hover {
+    //color: $white;
+    background-color: $primary;
+    //border-color: var(--bs-btn-hover-border-color);
   }
 
-
+  .howitwork 
+  {
+  h2 {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+  }
+    h4
+    {
+      font-size: 1.1rem !important;
+      font-weight: 500 !important;
+     
+    }
+  }
 
   .table {
     border-radius: 8px;
@@ -1022,4 +1040,37 @@ body {
 .rounded-dash
 {
   border-radius: 50%;
+}
+
+.statsbox-container-dash {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  border-top: 1px solid $border;
+  background-color: #f8f9fa; // light gray background
+  border-radius: 0 0 20px 20px;
+
+  .stats-box-dash {
+    padding: 1rem;
+    border-radius: 8px;
+
+    .stats-heading {
+      font-size: 10px;
+      color: #808080;
+      margin-bottom: 0.5rem;
+      font-weight: 300;
+    }
+
+    .stats-count-dash {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: $black;
+    }
+  }
+}
+
+.box-filter
+{
+  background: #fff;
+  padding: 10px 20px;
 }
