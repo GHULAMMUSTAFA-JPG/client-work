@@ -71,13 +71,13 @@ function Homepagebuyer() {
                   <div>
                     <h3 className="fw-medium">
                       Welcome Back,{" "}
-                      <span className="fw-bold">
+                      <span>
                         {userData?.Company_Name &&
-                          userData?.Company_Name?.slice(0, 30) + "...."}
+                          userData?.Company_Name?.slice(0, 50) + "..."}
                       </span>
                     </h3>
                     {/* <p className='mb-0 fw-medium fs-20'>Apollo: Join our Creator Program</p> */}
-                    <p className="mb-0 fs-14 text-muted line-clamp-5">
+                    <p className="mb-0 fs-14 line-clamp-5">
                       {userData?.Company_Description}
                     </p>
                   </div>
@@ -117,7 +117,7 @@ function Homepagebuyer() {
                     {userData?.Company_Logo && userData?.Company_Logo !== "" ? (
                       <img
                         src={userData?.Company_Logo}
-                        className="border object-fit-cover rounded flex-shrink-0"
+                        className="border object-fit-cover rounded-dash flex-shrink-0"
                         alt="logo"
                         width={120}
                         height={120}

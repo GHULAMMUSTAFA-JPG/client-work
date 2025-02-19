@@ -76,9 +76,11 @@ body {
   }
 
   .btn {
-    font-size: 12px !important;
-    padding: 5px 10px;
+    font-size: 13px !important;
+    padding: 10px 15px;
   }
+
+
 
   .table {
     border-radius: 8px;
@@ -989,10 +991,10 @@ body {
   top: 0;
   right: 0;
   height: 100vh;
-  overflow: hidden;
-  overflow-y: hidden;
+  // overflow: hidden;
+  // overflow-y: hidden;
   z-index: 1;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   background: #fff;
   border: 1px solid #ddd;
   margin: 0;
@@ -1015,4 +1017,9 @@ body {
     width: 100%;
     height: 200px;
   }
+}
+
+.rounded-dash
+{
+  border-radius: 50%;
 }

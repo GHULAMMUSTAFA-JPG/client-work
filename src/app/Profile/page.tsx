@@ -370,7 +370,7 @@ function ProfilePage() {
                   {/* Skills Row */}
                   <div className="chips-container d-flex flex-wrap gap-2">
                     {TargetAudience?.map((skill: string) => (
-                      <div className="chip">
+                      <div className="chip" key={skill}>
                         <div className="chip-text">{skill}</div>
                       </div>
                     ))}
@@ -625,7 +625,7 @@ function ProfilePage() {
                       }`}
                     >
                       {/* Edit profile starts here */}
-                      <div className="d-flex justify-content-between mb-3 pt-2">
+                      <div className="d-flex justify-content-between align-items-center mb-3 px-3">
                         <h6 className="mb-0 ">Edit Section</h6>
                         <div>
                           <button
@@ -643,7 +643,7 @@ function ProfilePage() {
                         </div>
                       </div>
 
-                      <div className="pb-2 ">
+                      <div className="pb-2 profile-sidebar-scroll">
                         <h6 className="mb-3">About me</h6>
 
                         <div className="mb-4 section-box_container">
