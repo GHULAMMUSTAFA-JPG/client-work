@@ -23,9 +23,16 @@ const Inbox = () => {
     restartSockets,
   } = useAuth();
   const [searchText, setSearchText] = useState<string>("");
+  const [conversationstate, setconversationstate] = useState(
+    conversations?.conversations
+  );
+  console.log("conversationstate", conversationstate);
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
   console.log("selected_selectedIds.", selectedIds.Conversation_Id);
+  useEffect(() => {
+    setconversationstate(conversations?.conversations);
+  }, [conversations]);
 
   useEffect(() => {
     const id = searchParams.get("id");
@@ -48,11 +55,20 @@ const Inbox = () => {
       message: input,
     });
     if (sockets && sockets.readyState === WebSocket.OPEN) {
-      const newMessage = {
-        Message: input,
-        timeAgo: "Just now",
-        user: "sender",
-      };
+      setconversationstate((prev: any) => {
+        return prev.map((chat: any) => {
+          if (chat?._id == selectedIds.Conversation_Id) {
+            return {
+              ...chat,
+              messages: [
+                ...chat.messages,
+                { Message: input, Time_Ago: "Just now", user: "sender" },
+              ],
+            };
+          }
+          return chat;
+        });
+      });
 
       // Update the messages state with the new message
       // setMessages((prevMessages: any) => [...prevMessages, newMessage]);
@@ -67,8 +83,27 @@ const Inbox = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (
+  //     selectedIds.Conversation_Id &&
+  //     filteredConversations.find((chat: any, index: any) => {
+  //       chat?._id == selectedIds.Conversation_Id;
+  //     }).conversation_new_messages > 0
+  //   ) {
+  //     const element = document.getElementById(selectedIds.Conversation_Id);
+  //     element?.click();
+  //   }
+  // }, [conversations]);
+
   useEffect(() => {
-    if (selectedIds.Conversation_Id) {
+    if (
+      selectedIds.Conversation_Id &&
+      conversationstate.find(
+        (chat: any) => chat?._id == selectedIds.Conversation_Id
+      )?.conversation_new_messages > 0
+    ) {
+      console.log("new message arrived");
+
       const data = {
         conversation_id: selectedIds.Conversation_Id,
         sender_id: userProfile?._id,
@@ -79,11 +114,21 @@ const Inbox = () => {
     }
   }, [conversations]);
 
-  const filteredConversations = conversations?.conversations?.filter(
-    (chat: any) => {
-      return chat?.Name?.toLowerCase().includes(searchText?.toLowerCase());
+  useEffect(() => {
+    const filteredConversations = conversations?.conversations?.filter(
+      (chat: any) => {
+        return chat?.Name?.toLowerCase().includes(searchText?.toLowerCase());
+      }
+    );
+    setconversationstate(filteredConversations);
+  }, [searchText]);
+
+  useEffect(() => {
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  );
+  }, [selectedIds?.Conversation_Id, conversationstate]);
+
   // console.log("filteredConversations", filteredConversations);
   const readMessage = async (conversation: any) => {
     const data = {
@@ -127,7 +172,7 @@ const Inbox = () => {
 
           {/* Conversation List */}
           <div className="conversation-list">
-            {filteredConversations?.length === 0 ? (
+            {conversationstate?.length === 0 ? (
               <EmptyState
                 icon="bi bi-chat-dots-fill"
                 title="No Messages Yet"
@@ -137,7 +182,7 @@ const Inbox = () => {
                 buttonLink="/campaigns"
               />
             ) : (
-              filteredConversations?.map((chat: any, index: number) => (
+              conversationstate?.map((chat: any, index: number) => (
                 <div
                   id={chat?._id}
                   onClick={() => {
@@ -221,7 +266,7 @@ const Inbox = () => {
 
               {/* Messages */}
               <div className="card-body p-4">
-                {filteredConversations
+                {conversationstate
                   .filter(
                     (chat: any) => chat._id === selectedIds?.Conversation_Id
                   )[0]
