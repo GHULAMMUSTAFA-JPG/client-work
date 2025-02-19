@@ -8,7 +8,7 @@ const AnalyticsPage = () => {
       <HowToInstall />
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
-          <h1 className="h4 mb-0">Analytics</h1>
+          <h1 className="fs-18 fw-medium mb-0">Analytics</h1>
           <span className="text-danger">● Status: Needs Connection</span>
         </div>
         <button className="btn btn-outline-primary btn-sm">

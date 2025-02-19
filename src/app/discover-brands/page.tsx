@@ -147,7 +147,7 @@ function DiscoverBrandsContent() {
   return (
     <div className="container py-4">
       <header className="mb-4">
-        <h1 className="h3 mb-2">Discover Brands</h1>
+        <h1 className="fs-18 fw-medium mb-0">Discover Brands</h1>
         <p className="text-muted">
           Explore brands looking to collaborate and sponsor you in endless ways.
         </p>
@@ -155,7 +155,9 @@ function DiscoverBrandsContent() {
 
       <div className="row g-4">
         <aside className="col-lg-3">
+          <div className="box-filter">
           <BrandsFilters />
+          </div>
         </aside>
 
         <main className="col-lg-9">
