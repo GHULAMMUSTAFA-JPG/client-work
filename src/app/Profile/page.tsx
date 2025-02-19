@@ -370,7 +370,7 @@ function ProfilePage() {
                   {/* Skills Row */}
                   <div className="chips-container d-flex flex-wrap gap-2">
                     {TargetAudience?.map((skill: string) => (
-                      <div className="chip">
+                      <div className="chip" key={skill}>
                         <div className="chip-text">{skill}</div>
                       </div>
                     ))}
