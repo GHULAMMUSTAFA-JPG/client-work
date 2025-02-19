@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
 import { withAuthRole } from "@/utils/withAuthRole";
+import { Tooltip } from "@mui/material";
 interface editDtoProps {
   email: string;
   name: string;
@@ -98,7 +99,8 @@ function ProfilePage() {
   const dropdownRef = useRef<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-
+  console.log("cardDetails", cardDetails);
+  console.log("preview", preview);
   const AVAILABLE_SKILLS = [
     "AI creators with founders and enterprise employee audiences",
     "Finance professionals",
@@ -304,6 +306,7 @@ function ProfilePage() {
     }
   }, [userProfile]);
   const TargetAudience = userProfile?.Audience_Interest.split(", ");
+  console.log("TargetAudience", TargetAudience);
   return (
     <div className="container">
       <div className="main-profilebanner">
@@ -354,33 +357,40 @@ function ProfilePage() {
                       </svg>
                     </div>
                   </h4>
-                  <h6 className="text-muted mb-2">
+                  {/* <h6 className="text-muted mb-2">
                     {userProfile?.Current_Position ||
                       "Senior Software Engineer"}
-                  </h6>
+                  </h6> */}
 
                   {/* Company and Location Row */}
-                  <div className="d-flex align-items-center gap-2 text-muted mb-2">
-                    <Icon icon="mdi:building" width={18} height={18} />
-                    <span>
-                      {userProfile?.Current_Company || "TechCorp Industries"}
-                    </span>
-                  </div>
+                  {userProfile?.Current_Company && (
+                    <div className="d-flex align-items-center gap-2 text-muted mb-2">
+                      <Icon icon="mdi:building" width={18} height={18} />
+                      <span>{userProfile?.Current_Company}</span>
+                    </div>
+                  )}
 
                   {/* Skills Row */}
-                  <div className="chips-container d-flex flex-wrap gap-2">
-                    {TargetAudience?.map((skill: string) => (
-                      <div className="chip" key={skill}>
-                        <div className="chip-text">{skill}</div>
+                  {TargetAudience &&
+                    TargetAudience.length > 0 &&
+                    TargetAudience[0] !== "" && (
+                      <div className="chips-container d-flex flex-wrap gap-2">
+                        {TargetAudience?.map((skill: string) => (
+                          <div className="chip" key={skill}>
+                            <div className="chip-text">{skill}</div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    )}
                 </div>
               </div>
             </div>
             <div className="actionbtn-container">
-              <div className="profileactionsbtn">
-             {/*    <button
+              <div
+                style={{ display: "flex", alignItems: "center" }}
+                className="profileactionsbtn"
+              >
+                {/*    <button
                   className="btn btn-primary d-flex align-items-center gap-1"
                   onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
                 >
@@ -391,27 +401,52 @@ function ProfilePage() {
                   <Icon icon="mdi:plus" width={18} height={18} />
                   Add to list
                 </button>
-                <a
-                  href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-linkedin"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="19.963"
-                    viewBox="0 0 20 19.963"
+
+                {userProfile?.Profile_URL ? (
+                  <a
+                    href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-linkedin"
                   >
-                    <path
-                      id="Path_854"
-                      data-name="Path 854"
-                      d="M68.173,115.963H64.031V102.625h4.148v13.337ZM66.1,100.8a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,66.1,100.8Zm17.6,15.159H79.558v-6.488c0-1.547-.031-3.537-2.152-3.537-2.158,0-2.489,1.684-2.489,3.425v6.6H70.774V102.625h3.974v1.822H74.8a4.363,4.363,0,0,1,3.924-2.152c4.192,0,4.972,2.764,4.972,6.357Z"
-                      transform="translate(-63.7 -96)"
-                      fill="#0077b5"
-                    />
-                  </svg>
-                </a>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="19.963"
+                      viewBox="0 0 20 19.963"
+                    >
+                      <path
+                        id="Path_854"
+                        data-name="Path 854"
+                        d="M68.173,115.963H64.031V102.625h4.148v13.337ZM66.1,100.8a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,66.1,100.8Zm17.6,15.159H79.558v-6.488c0-1.547-.031-3.537-2.152-3.537-2.158,0-2.489,1.684-2.489,3.425v6.6H70.774V102.625h3.974v1.822H74.8a4.363,4.363,0,0,1,3.924-2.152c4.192,0,4.972,2.764,4.972,6.357Z"
+                        transform="translate(-63.7 -96)"
+                        fill="#0077b5"
+                      />
+                    </svg>
+                  </a>
+                ) : (
+                  <Tooltip
+                    onClick={() => handleSectionClick("about")}
+                    title="Add your LinkedIn User"
+                    arrow
+                    placement="top"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="19.963"
+                      viewBox="0 0 20 19.963"
+                    >
+                      <path
+                        id="Path_854"
+                        data-name="Path 854"
+                        d="M68.173,115.963H64.031V102.625h4.148v13.337ZM66.1,100.8a2.4,2.4,0,1,1,2.4-2.4A2.4,2.4,0,0,1,66.1,100.8Zm17.6,15.159H79.558v-6.488c0-1.547-.031-3.537-2.152-3.537-2.158,0-2.489,1.684-2.489,3.425v6.6H70.774V102.625h3.974v1.822H74.8a4.363,4.363,0,0,1,3.924-2.152c4.192,0,4.972,2.764,4.972,6.357Z"
+                        transform="translate(-63.7 -96)"
+                        fill="grey"
+                      />
+                    </svg>
+                  </Tooltip>
+                )}
               </div>
               <div className="action-profilebox mt-4">
                 <Link
@@ -427,31 +462,33 @@ function ProfilePage() {
             </div>
           </div>
           <div className="statsbox-container">
-            <div className="stats-box">
+            {/* <div className="stats-box">
               <div className="stats-count">
                 {userProfile?.Profile_Views || "1,234"}
               </div>
               <div className="stats-heading">Profile views</div>
-            </div>
+            </div> */}
             <div className="stats-box">
               <div className="stats-count">
-                {userProfile?.Average_Impressions || "5.6k"}
+                {userProfile?.Average_Impressions || "0"}
               </div>
-              <div className="stats-heading">Post impressions</div>
+              <div className="stats-heading">Average Post Impressions</div>
             </div>
-            <div className="stats-box">
+            {/* <div className="stats-box">
               <div className="stats-count">
-                {userProfile?.Search_Appearances || "789"}
+                {userProfile?.Search_Appearances || "0"}
               </div>
               <div className="stats-heading">Search appearances</div>
-            </div>
+            </div> */}
             <div className="stats-box">
-              <div className="stats-count">{userProfile?.No_of_Followers}+</div>
-              <div className="stats-heading">Connections</div>
+              <div className="stats-count">
+                {userProfile?.Average_Engagements}
+              </div>
+              <div className="stats-heading">Average Post Engagements</div>
             </div>
             <div className="stats-box">
               <div className="stats-count">
-                {userProfile?.Followers || "2.5k"}
+                {userProfile?.No_of_Followers || "0"}
               </div>
               <div className="stats-heading">Followers</div>
             </div>
@@ -462,29 +499,48 @@ function ProfilePage() {
           <div className="profile-left-column">
             <div className="profile-box-container mb-4 mt-16 position-relative">
               <div className="aboutusSection">
-                <h2>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                  &nbsp; About
-                </h2>
-                <p className="text-muted-l">
-                  {userProfile?.Description ||
-                    "Passionate software engineer with 8+ years of experience building scalable applications and leading engineering teams."}
-                </p>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <h2>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    &nbsp; About
+                  </h2>
+                  {userProfile?.Description == "" && (
+                    <div
+                      className="editprofilebox"
+                      onClick={() => handleSectionClick("about")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        id="edit-medium"
+                        aria-hidden="true"
+                        data-supported-dps="24x24"
+                        fill="currentColor"
+                      >
+                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                <p className="text-muted-l">{userProfile?.Description}</p>
               </div>
             </div>
           </div>
@@ -492,7 +548,10 @@ function ProfilePage() {
             <div className="profile-box-container mb-4 mt-16 position-relative">
               {/* Collaboration Section */}
               <div className="aboutusSection">
-                <div className="letbox">
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                  className="letbox"
+                >
                   <h2>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -509,6 +568,14 @@ function ProfilePage() {
                     </svg>
                     &nbsp; Let's Collaborate
                   </h2>
+                  <Icon
+                    icon="mdi:plus"
+                    width="24"
+                    height="24"
+                    className="text-muted"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleSectionClick("collaboration")}
+                  />
                   <div className="d-flex justify-content-between align-items-center">
                     {userProfile?.Collaboration_Packages?.length < 1 && (
                       <Icon
@@ -644,7 +711,7 @@ function ProfilePage() {
                       </div>
 
                       <div className="pb-2 profile-sidebar-scroll">
-                                             <div className="mb-4 section-box_container">
+                        <div className="mb-4 section-box_container">
                           <label className="mb-2">Banner image</label>
                           <div className="position-relative">
                             <img
@@ -859,7 +926,9 @@ function ProfilePage() {
                         </div>
 
                         <div className="mb-4 bg-white">
-                          <label className="mb-2">*About Me (Description)</label>
+                          <label className="mb-2">
+                            *About Me (Description)
+                          </label>
                           <small className="d-block text-muted mb-2">
                             Welcome brands and introduce yourself
                           </small>
@@ -905,7 +974,10 @@ function ProfilePage() {
                           Add your collaboration packages here
                         </p>
                         {/* Stats Section */}
-                        <div className="mb-4 section-box_container">
+                        <div
+                          style={{ overflowY: "scroll" }}
+                          className="mb-4 section-box_container"
+                        >
                           <div className="card mb-3">
                             {/* <div className="card-header bg-white">
                               <h6 className="mb-0">Package</h6>
@@ -989,14 +1061,22 @@ function ProfilePage() {
                             className="btn btn-outline-dark w-100"
                             onClick={() => {
                               setPreview(false);
+
+                              // Ensure cardDetails is always an array before manipulating
                               const newEntry = {
                                 package_name: "",
                                 package_description: "",
                                 package_price: 0,
                               };
-                              const newArray: any = cardDetails;
-                              newArray?.push(newEntry);
+
+                              // Using spread operator to create a new array if cardDetails is already defined
+                              const newArray = Array.isArray(cardDetails)
+                                ? [...cardDetails]
+                                : [];
+                              newArray.push(newEntry);
+
                               setCardDetails(newArray);
+
                               setTimeout(() => {
                                 setPreview(true);
                               }, 100);
