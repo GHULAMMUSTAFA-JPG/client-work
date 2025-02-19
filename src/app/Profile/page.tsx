@@ -380,13 +380,13 @@ function ProfilePage() {
             </div>
             <div className="actionbtn-container">
               <div className="profileactionsbtn">
-                <button
+             {/*    <button
                   className="btn btn-primary d-flex align-items-center gap-1"
                   onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
                 >
                   <Icon icon="mdi:message" width={18} height={18} />
                   Message me
-                </button>
+                </button> */}
                 <button className="btn btn-outline-primary d-flex align-items-center gap-1">
                   <Icon icon="mdi:plus" width={18} height={18} />
                   Add to list
@@ -626,7 +626,7 @@ function ProfilePage() {
                     >
                       {/* Edit profile starts here */}
                       <div className="d-flex justify-content-between align-items-center mb-3 px-3">
-                        <h6 className="mb-0 ">Edit Section</h6>
+                        <h6 className="mb-0 ">Edit Profile</h6>
                         <div>
                           <button
                             className="bg-white border btn btn-sm"
@@ -644,9 +644,7 @@ function ProfilePage() {
                       </div>
 
                       <div className="pb-2 profile-sidebar-scroll">
-                        <h6 className="mb-3">About me</h6>
-
-                        <div className="mb-4 section-box_container">
+                                             <div className="mb-4 section-box_container">
                           <label className="mb-2">Banner image</label>
                           <div className="position-relative">
                             <img
@@ -861,7 +859,7 @@ function ProfilePage() {
                         </div>
 
                         <div className="mb-4 bg-white">
-                          <label className="mb-2">Description of you*</label>
+                          <label className="mb-2">*About Me (Description)</label>
                           <small className="d-block text-muted mb-2">
                             Welcome brands and introduce yourself
                           </small>

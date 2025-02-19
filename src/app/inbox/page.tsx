@@ -147,7 +147,7 @@ const Inbox = () => {
         <div className="col-md-4 col-lg-3 border-end p-0">
           {/* Header */}
           <div className="p-3 border-bottom">
-            <h5 className="mb-0">Messages</h5>
+            <h5 className="fs-18 fw-medium mb-0">Messages</h5>
           </div>
 
           {/* Search Bar */}

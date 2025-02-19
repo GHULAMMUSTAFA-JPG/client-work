@@ -631,7 +631,7 @@ function CompanyPage() {
               }`}
             >
               <div className="d-flex justify-content-between align-items-center mb-3 px-3">
-                <h6 className="mb-0 ">Edit Section</h6>
+                <h6 className="mb-0 ">Edit Profile</h6>
                 <div>
                   <button
                     className="bg-white border btn btn-sm"
@@ -649,9 +649,7 @@ function CompanyPage() {
               </div>
 
               <div className="pb-2 profile-sidebar-scroll">
-                <h6 className="mb-3">About Company</h6>
-
-                <div className="mb-4">
+                  <div className="mb-4 section-box_container">
                   <label className="mb-2">Banner image</label>
                   <div className="position-relative">
                     <img
@@ -694,7 +692,7 @@ function CompanyPage() {
                   </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Company Logo</label>
                   <div className="position-relative">
                     <img
@@ -736,7 +734,7 @@ function CompanyPage() {
                   </div>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Company Name*</label>
                   <input
                     type="text"
@@ -747,8 +745,8 @@ function CompanyPage() {
                     placeholder="Synnc"
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="mb-2">Description</label>
+                <div className="mb-4 section-box_container">
+                  <label className="mb-2">About Me(Description)</label>
                   <textarea
                     className="form-control"
                     placeholder="Synnc is a platform that connects brands with creators to help them grow their business."
@@ -758,7 +756,7 @@ function CompanyPage() {
                     rows={4}
                   ></textarea>
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Company Website</label>
                   <input
                     type="text"
@@ -769,7 +767,7 @@ function CompanyPage() {
                     placeholder="https://www.synnc.com"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Company Linkedin</label>
                   <input
                     type="text"
@@ -780,7 +778,7 @@ function CompanyPage() {
                     placeholder="https://www.linkedin.com/company/synnc"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Location</label>
                   <input
                     type="text"
@@ -791,7 +789,7 @@ function CompanyPage() {
                     placeholder="United States"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Employees(est)</label>
                   <input
                     type="number"
@@ -803,7 +801,7 @@ function CompanyPage() {
                     placeholder="e.g 100"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Year founded(est)</label>
                   <input
                     type="text"
@@ -814,7 +812,7 @@ function CompanyPage() {
                     placeholder="e.g 1996"
                   />
                 </div>
-                <div className="mb-4">
+                <div className="mb-4 section-box_container">
                   <label className="mb-2">Size</label>
                   <select
                     className="form-select form-select-sm"
@@ -842,7 +840,7 @@ function CompanyPage() {
                   </select>
                 </div>
 
-                <div className="mb-4 " ref={dropdownRef}>
+                <div className="mb-4 section-box_container" ref={dropdownRef}>
                   <label className="mb-2 mt-3">Categories</label>
                   <div className="position-relative">
                     <div
