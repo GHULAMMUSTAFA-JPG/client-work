@@ -11,9 +11,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import EmptyState from "@/components/EmptyState";
 
 const Inbox = () => {
-  // const [messages, setMessages] = useState<any>([]);
   const [input, setInput] = useState<string>("");
-  // const [selectedmsgid, setselectedmsgid] = useState(null);
   const {
     userProfile,
     conversations,
@@ -22,32 +20,38 @@ const Inbox = () => {
     selectedIds,
     restartSockets,
   } = useAuth();
+  const router = useRouter();
   const [searchText, setSearchText] = useState<string>("");
   const [conversationstate, setconversationstate] = useState(
     conversations?.conversations
   );
-  console.log("conversationstate", conversationstate);
+
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
-  console.log("selected_selectedIds.", selectedIds.Conversation_Id);
+
   useEffect(() => {
-    setconversationstate(conversations?.conversations);
+    conversations && setconversationstate(conversations?.conversations);
   }, [conversations]);
 
   useEffect(() => {
     const id = searchParams.get("id");
     if (id) {
+      // Find the conversation that matches the recipient_id
+      const conversation = conversationstate?.find(
+        (chat: any) => chat?.Last_Message?.Recipient_ID === id
+      );
+
       setSelectedIds((prev: any) => ({
         ...prev,
         Recipient_ID: id,
+        Conversation_Id: conversation?._id || null,
+        Name: conversation?.Name || null,
+        Profile_Image: conversation?.Profile_Image || null,
       }));
-      setTimeout(() => {
-        const clickButton = document?.getElementById(id);
-        clickButton && clickButton.click();
-      }, 1500);
+
       fetchProfileDataByIds(id, setSelectedIds);
     }
-  }, [searchParams]);
+  }, [searchParams, conversationstate]);
 
   const sendMessage = async () => {
     const data = JSON.stringify({
@@ -57,21 +61,18 @@ const Inbox = () => {
     if (sockets && sockets.readyState === WebSocket.OPEN) {
       setconversationstate((prev: any) => {
         return prev.map((chat: any) => {
-          if (chat?._id == selectedIds.Conversation_Id) {
+          if (chat?.Last_Message?.Recipient_ID === selectedIds.Recipient_ID) {
             return {
               ...chat,
               messages: [
                 ...chat.messages,
-                { Message: input, Time_Ago: "Just now", user: "sender" },
+                { Message: input, Time_Ago: "", user: "sender" },
               ],
             };
           }
           return chat;
         });
       });
-
-      // Update the messages state with the new message
-      // setMessages((prevMessages: any) => [...prevMessages, newMessage]);
 
       sockets.send(data);
       setInput("");
@@ -83,53 +84,32 @@ const Inbox = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (
-  //     selectedIds.Conversation_Id &&
-  //     filteredConversations.find((chat: any, index: any) => {
-  //       chat?._id == selectedIds.Conversation_Id;
-  //     }).conversation_new_messages > 0
-  //   ) {
-  //     const element = document.getElementById(selectedIds.Conversation_Id);
-  //     element?.click();
-  //   }
-  // }, [conversations]);
-
   useEffect(() => {
-    if (
-      selectedIds.Conversation_Id &&
-      conversationstate.find(
-        (chat: any) => chat?._id == selectedIds.Conversation_Id
-      )?.conversation_new_messages > 0
-    ) {
-      console.log("new message arrived");
+    const currentConversation = conversationstate?.find(
+      (chat: any) =>
+        chat?.Last_Message?.Recipient_ID === selectedIds.Recipient_ID
+    );
 
+    if (
+      selectedIds.Recipient_ID &&
+      currentConversation?.conversation_new_messages > 0
+    ) {
       const data = {
-        conversation_id: selectedIds.Conversation_Id,
+        conversation_id: currentConversation._id,
         sender_id: userProfile?._id,
       };
       if (sockets.readyState === WebSocket.OPEN) {
         sockets.send(JSON.stringify(data));
       }
     }
-  }, [conversations]);
-
-  useEffect(() => {
-    const filteredConversations = conversations?.conversations?.filter(
-      (chat: any) => {
-        return chat?.Name?.toLowerCase().includes(searchText?.toLowerCase());
-      }
-    );
-    setconversationstate(filteredConversations);
-  }, [searchText]);
+  }, [conversationstate]);
 
   useEffect(() => {
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [selectedIds?.Conversation_Id, conversationstate]);
+  }, [selectedIds?.Recipient_ID, conversationstate]);
 
-  // console.log("filteredConversations", filteredConversations);
   const readMessage = async (conversation: any) => {
     const data = {
       conversation_id: conversation?._id,
@@ -139,18 +119,16 @@ const Inbox = () => {
       sockets.send(JSON.stringify(data));
     }
   };
-  console.log("conversations", conversations);
+
   return (
     <div className="container-fluid chatbot-container">
       <div className="row bg-white">
         {/* Left Sidebar */}
         <div className="col-md-4 col-lg-3 border-end p-0">
-          {/* Header */}
           <div className="p-3 border-bottom">
-            <h5 className="fs-18 fw-medium mb-0">Messages</h5>
+            <h5 className="mb-0">Messages</h5>
           </div>
 
-          {/* Search Bar */}
           <div className="p-3 border-bottom">
             <div className="input-group">
               <span className="input-group-text bg-form border-0">
@@ -170,13 +148,12 @@ const Inbox = () => {
             </div>
           </div>
 
-          {/* Conversation List */}
           <div className="conversation-list">
             {conversationstate?.length === 0 ? (
               <EmptyState
                 icon="bi bi-chat-dots-fill"
                 title="No Messages Yet"
-                description="This is where you’ll communicate with brands about campaigns."
+                description="This is where you'll communicate with brands about campaigns."
                 secondaryDescription="Once you apply for a campaign, brands will contact you here."
                 buttonText="Explore Campaigns"
                 buttonLink="/campaigns"
@@ -184,7 +161,7 @@ const Inbox = () => {
             ) : (
               conversationstate?.map((chat: any, index: number) => (
                 <div
-                  id={chat?._id}
+                  id={chat?.Last_Message?.Recipient_ID}
                   onClick={() => {
                     readMessage(chat);
                     setSelectedIds({
@@ -213,22 +190,12 @@ const Inbox = () => {
                   />
                   <div className="flex-grow-1">
                     <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
-                    <small
-                      // style={{
-                      //   display: display[chat?._id] == false ? "none" : "block",
-                      // }}
-                      className="text-muted line-clamp-1"
-                    >
+                    <small className="text-muted line-clamp-1">
                       {chat?.Last_Message?.Message}
                     </small>
                   </div>
                   {chat?.conversation_new_messages > 0 && (
-                    <span
-                      // style={{
-                      //   display: display[chat?._id] == false ? "none" : "block",
-                      // }}
-                      className="badge bg-danger ms-2"
-                    >
+                    <span className="badge bg-danger ms-2">
                       {chat?.conversation_new_messages}
                     </span>
                   )}
@@ -240,9 +207,8 @@ const Inbox = () => {
 
         {/* Chat Area */}
         <div className="col-md-8 col-lg-9 p-0">
-          {selectedIds?.Conversation_Id ? (
+          {selectedIds?.Recipient_ID ? (
             <div className="card h-100 border-0">
-              {/* Card Header */}
               <div className="card-header bg-white p-3">
                 <div className="d-flex align-items-center justify-between">
                   <img
@@ -264,39 +230,40 @@ const Inbox = () => {
                 </div>
               </div>
 
-              {/* Messages */}
               <div className="card-body p-4">
-                {conversationstate
-                  .filter(
-                    (chat: any) => chat._id === selectedIds?.Conversation_Id
-                  )[0]
-                  ?.messages.map((msg: any, index: number) => (
-                    <div
-                      key={index}
-                      className={`mb-3 ${
-                        msg.user !== "sender"
-                          ? ""
-                          : "d-flex justify-content-end flex-column"
-                      }`}
-                    >
+                {conversationstate &&
+                  conversationstate
+                    .find(
+                      (chat: any) =>
+                        chat?.Last_Message?.Recipient_ID ===
+                        selectedIds?.Recipient_ID
+                    )
+                    ?.messages.map((msg: any, index: number) => (
                       <div
-                        className={`p-3 rounded d-inline-block ${
+                        key={index}
+                        className={`mb-3 ${
                           msg.user !== "sender"
-                            ? "bg-light"
-                            : "bg-primary text-white ms-auto"
+                            ? ""
+                            : "d-flex justify-content-end flex-column"
                         }`}
                       >
-                        {msg.Message}
+                        <div
+                          className={`p-3 rounded d-inline-block ${
+                            msg.user !== "sender"
+                              ? "bg-light"
+                              : "bg-primary text-white ms-auto"
+                          }`}
+                        >
+                          {msg.Message}
+                        </div>
+                        <small className="text-muted d-block ms-auto">
+                          {msg.Time_Ago}
+                        </small>
                       </div>
-                      <small className="text-muted d-block ms-auto">
-                        {msg.Time_Ago}
-                      </small>
-                    </div>
-                  ))}
+                    ))}
                 <div ref={endOfMessagesRef}></div>
               </div>
 
-              {/* Message Input */}
               <div className="card-footer bg-white p-3">
                 <div className="input-group">
                   <textarea
@@ -321,7 +288,7 @@ const Inbox = () => {
             <EmptyState
               icon="bi bi-chat-dots-fill"
               title="No Messages Yet"
-              description="This is where you’ll communicate with brands about campaigns."
+              description="This is where you'll communicate with brands about campaigns."
               secondaryDescription="Once you apply for a campaign, brands will contact you here."
               buttonText="Explore Campaigns"
               buttonLink="/campaigns"
