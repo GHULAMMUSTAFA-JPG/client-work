@@ -626,11 +626,11 @@ function CompanyPage() {
           <div className="profile-sidebar-wraper" style={{borderRadius: "10px" , border: "0.5px solid grey "}}>
             {/* First edit section */}
             <div
-              className={`profile-container h-auto ${
+              className={`profilee-container ${
                 activeSection === "about" ? "" : "d-none"
               }`}
             >
-              <div className="d-flex justify-content-between mb-3 pt-2">
+              <div className="d-flex justify-content-between align-items-center mb-3 px-3">
                 <h6 className="mb-0 ">Edit Section</h6>
                 <div>
                   <button
@@ -648,7 +648,7 @@ function CompanyPage() {
                 </div>
               </div>
 
-              <div className="pb-2 ">
+              <div className="pb-2 profile-sidebar-scroll">
                 <h6 className="mb-3">About Company</h6>
 
                 <div className="mb-4">
