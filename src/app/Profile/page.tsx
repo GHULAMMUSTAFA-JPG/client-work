@@ -618,7 +618,7 @@ function ProfilePage() {
                 <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
                   <div className="profile-sidebar-wraper">
                     <div
-                      className={`profile-container h-auto ${
+                      className={`profilee-container ${
                         activeSection === "about"
                           ? "d-none d-md-block d-lg-block"
                           : "d-none"
