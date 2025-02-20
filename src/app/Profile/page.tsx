@@ -209,30 +209,31 @@ function ProfilePage() {
         email: user?.email,
       };
       // console.log("updateddetails", updateddetails);
-
-      if (!editDetails.name) {
-        toast.error("Name cannot be empty");
-        return;
-      }
-      if (!editDetails.current_company) {
-        toast.error("Current company cannot be empty");
-        return;
-      }
-      if (!editDetails.profile_url) {
-        toast.error("Linkedin username cannot be empty");
-        return;
-      }
-      if (!editDetails.profile_url) {
-        toast.error("Linkedin username cannot be empty");
-        return;
-      }
-      if (!editDetails.audience_interest) {
-        toast.error("Categories cannot be empty");
-        return;
-      }
-      if (!editDetails.description) {
-        toast.error("About cannot be empty");
-        return;
+      if (activeSection === "about") {
+        if (!editDetails.name) {
+          toast.error("Name cannot be empty");
+          return;
+        }
+        if (!editDetails.current_company) {
+          toast.error("Current company cannot be empty");
+          return;
+        }
+        if (!editDetails.profile_url) {
+          toast.error("Linkedin username cannot be empty");
+          return;
+        }
+        if (!editDetails.profile_url) {
+          toast.error("Linkedin username cannot be empty");
+          return;
+        }
+        if (!editDetails.audience_interest) {
+          toast.error("Categories cannot be empty");
+          return;
+        }
+        if (!editDetails.description) {
+          toast.error("About cannot be empty");
+          return;
+        }
       }
 
       const response = await axios.put(
@@ -596,7 +597,13 @@ function ProfilePage() {
               {/* Collaboration Section */}
               <div
                 className="aboutusSection"
-                style={{ height: "500px", overflowY: "scroll" }}
+                style={{
+                  height:
+                    userProfile?.Collaboration_Packages?.length > 0
+                      ? "500px"
+                      : "  auto",
+                  overflowY: "scroll",
+                }}
               >
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
