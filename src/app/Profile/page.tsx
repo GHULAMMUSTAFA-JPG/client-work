@@ -95,14 +95,14 @@ function ProfilePage() {
   const [cardDetails, setCardDetails] = useState<any[]>(
     userProfile?.Collaboration_Packages
   );
-  console.log("first", userProfile?.Collaboration_Packages);
+  // console.log("first", userProfile?.Collaboration_Packages);
   const [showSidebar, setShowSidebar] = useState(true);
 
   const dropdownRef = useRef<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  console.log("cardDetails", cardDetails);
-  console.log("preview", preview);
+  // console.log("cardDetails", cardDetails);
+  // console.log("preview", preview);
   const AVAILABLE_SKILLS = [
     "AI creators with founders and enterprise employee audiences",
     "Finance professionals",
@@ -208,7 +208,33 @@ function ProfilePage() {
         ...editDetails,
         email: user?.email,
       };
-      console.log("updateddetails", updateddetails);
+      // console.log("updateddetails", updateddetails);
+
+      if (!editDetails.name) {
+        toast.error("Name cannot be empty");
+        return;
+      }
+      if (!editDetails.current_company) {
+        toast.error("Current company cannot be empty");
+        return;
+      }
+      if (!editDetails.profile_url) {
+        toast.error("Linkedin username cannot be empty");
+        return;
+      }
+      if (!editDetails.profile_url) {
+        toast.error("Linkedin username cannot be empty");
+        return;
+      }
+      if (!editDetails.audience_interest) {
+        toast.error("Categories cannot be empty");
+        return;
+      }
+      if (!editDetails.description) {
+        toast.error("About cannot be empty");
+        return;
+      }
+
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/dashboard/creators/update_creator`,
         updateddetails
@@ -225,7 +251,7 @@ function ProfilePage() {
 
   const fileHandler = async (e: any, id: string) => {
     const file = e.target.files;
-    console.log(file?.[0]?.type, "hello");
+    // console.log(file?.[0]?.type, "hello");
     if (file?.[0]?.type == "image/png" || file?.[0]?.type == "image/jpeg") {
       const filePath: any = await handleFileUpload(e, setIsLoading);
       if (filePath[0]?.file_urls) {
@@ -266,9 +292,15 @@ function ProfilePage() {
   };
 
   const submitCardDetails = async (e: any) => {
+    console.log("cardDetails", cardDetails);
     const check = cardDetails?.some((entry) => entry.package_name == "");
+    const checkDescriptionLength = cardDetails?.some(
+      (entry) => entry.package_description.length < 100
+    );
     if (check) {
       toast.warn("Title cannot be empty");
+    } else if (checkDescriptionLength) {
+      toast.warn("Every card description must be more than 100 characters");
     } else {
       setIsLoading(true);
       e.preventDefault();
@@ -321,7 +353,7 @@ function ProfilePage() {
     }
   }, [userProfile]);
   const TargetAudience = userProfile?.Audience_Interest.split(", ");
-  console.log("TargetAudience", TargetAudience);
+  // console.log("TargetAudience", TargetAudience);
   return (
     <div className="container">
       <div className="main-profilebanner">
@@ -562,7 +594,10 @@ function ProfilePage() {
           <div className="profile-right-column">
             <div className="profile-box-container mb-4 mt-16 position-relative">
               {/* Collaboration Section */}
-              <div className="aboutusSection">
+              <div
+                className="aboutusSection"
+                style={{ height: "500px", overflowY: "scroll" }}
+              >
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
                   className="letbox"
@@ -642,7 +677,10 @@ function ProfilePage() {
                                   </h6>
                                 </div>
                               </div>
-                              <p className="package-description">
+                              <p
+                                style={{ height: "200px", overflowY: "scroll" }}
+                                className="package-description"
+                              >
                                 {ele?.Package_Description}
                               </p>
                             </div>
@@ -840,6 +878,7 @@ function ProfilePage() {
                             onChange={changeHandler}
                             id="name"
                             placeholder="John Doe"
+                            maxLength={50}
                           />
                         </div>
                         <div className="mb-4 section-box_container">
@@ -868,7 +907,7 @@ function ProfilePage() {
                           className="mb-4 section-box_container"
                           ref={dropdownRef}
                         >
-                          <label className="mb-2">Audience Interest*</label>
+                          <label className="mb-2">Categories*</label>
                           <div className="position-relative">
                             <div
                               className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
