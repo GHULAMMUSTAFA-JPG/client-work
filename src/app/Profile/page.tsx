@@ -92,8 +92,10 @@ function ProfilePage() {
   const [activeSection, setActiveSection] = useState<
     "about" | "collaboration" | null
   >("about");
-  const [cardDetails, setCardDetails] = useState<any[]>();
-
+  const [cardDetails, setCardDetails] = useState<any[]>(
+    userProfile?.Collaboration_Packages
+  );
+  console.log("first", userProfile?.Collaboration_Packages);
   const [showSidebar, setShowSidebar] = useState(true);
 
   const dropdownRef = useRef<any>(null);
@@ -118,6 +120,19 @@ function ProfilePage() {
     "Business consultants",
     "Industry analysts",
   ];
+
+  useEffect(() => {
+    let collabPack: any = [];
+    userProfile?.Collaboration_Packages?.map((element: any) => {
+      const entry = {
+        package_name: element?.Package_Name,
+        package_description: element?.Package_Description,
+        package_price: element?.Package_Price,
+      };
+      collabPack?.push(entry);
+    });
+    userProfile?._id && setCardDetails(collabPack);
+  }, [userProfile]);
 
   const handleClick = () => {
     fileInputRef && fileInputRef.current.click();
@@ -568,15 +583,35 @@ function ProfilePage() {
                     </svg>
                     &nbsp; Let's Collaborate
                   </h2>
-                  <Icon
-                    icon="mdi:plus"
-                    width="24"
-                    height="24"
-                    className="text-muted"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleSectionClick("collaboration")}
-                  />
-                  <div className="d-flex justify-content-between align-items-center">
+                  {userProfile?.Collaboration_Packages.length > 0 ? (
+                    <div
+                      className="editprofilebox"
+                      onClick={() => handleSectionClick("collaboration")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        id="edit-medium"
+                        aria-hidden="true"
+                        data-supported-dps="24x24"
+                        fill="currentColor"
+                      >
+                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                      </svg>
+                    </div>
+                  ) : (
+                    <Icon
+                      icon="mdi:plus"
+                      width="24"
+                      height="24"
+                      className="text-muted"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleSectionClick("collaboration")}
+                    />
+                  )}
+
+                  {/* <div className="d-flex justify-content-between align-items-center">
                     {userProfile?.Collaboration_Packages?.length < 1 && (
                       <Icon
                         icon="mdi:plus"
@@ -587,7 +622,7 @@ function ProfilePage() {
                         onClick={() => handleSectionClick("collaboration")}
                       />
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 {/* Collaboration Cards */}
                 <div className="mt-4">
@@ -614,9 +649,9 @@ function ProfilePage() {
                             <div className="buttonboxcard">
                               <button
                                 className="booknowbtn"
-                                onClick={() =>
-                                  handleSectionClick("collaboration")
-                                }
+                                // onClick={() =>
+                                //   handleSectionClick("collaboration")
+                                // }
                               >
                                 Book Now
                               </button>
@@ -627,7 +662,7 @@ function ProfilePage() {
                     )
                   ) : (
                     <>
-                      <div className="packagebox mb-3">
+                      {/* <div className="packagebox mb-3">
                         <div className="card-body d-flex justify-content-between align-items-center">
                           <div className="card-content">
                             <h6>1x Sponsored Post</h6>
@@ -676,7 +711,7 @@ function ProfilePage() {
                             Book Now
                           </button>
                         </div>
-                      </div>
+                      </div> */}
                     </>
                   )}
                 </div>
@@ -945,7 +980,8 @@ function ProfilePage() {
                     </div>
                     {/* Main lets colorborate box Section starts here */}
                     <div
-                      className={`profilee-container ${
+                      style={{ paddingLeft: "13px" }}
+                      className={`profilee-container  ${
                         activeSection === "collaboration" ? "" : "d-none"
                       }`}
                     >
@@ -975,7 +1011,10 @@ function ProfilePage() {
                         </p>
                         {/* Stats Section */}
                         <div
-                          style={{ overflowY: "scroll" }}
+                          style={{
+                            overflowY: "scroll",
+                            backgroundColor: "white",
+                          }}
                           className="mb-4 section-box_container"
                         >
                           <div className="card mb-3">
