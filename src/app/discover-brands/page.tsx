@@ -1,238 +1,184 @@
 "use client";
-import BrandsFilters from "@/components/brands/BrandFilter";
-import BrandsTable from "@/components/brands/BrandTable";
-import { SortOptions } from "@/constant/brand";
-import { SearchIcon, ArrowDownWideNarrow } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState, useCallback } from "react";
-import { getBrandDiscoverList } from "@/@api/brandApi";
-import { useAuth } from "@/contexts/AuthContext";
-import { withAuthRole } from "@/utils/withAuthRole";
 
-interface Brand {
-  id: string;
-  name: string;
-  logo: string;
-  linkedin?: string;
-  website?: string;
-  description?: string;
-  size?: string;
-  categories: string[];
-  isInterested: boolean;
+import { useState } from "react";
+import { Search, Globe, Building, Linkedin } from "lucide-react";
+import Image from "next/image";
+import BrandFilterOffcanvas from "@/components/BrandFilterOffcanvas";
+import BrandViewCampaignOffcanvas from "@/components/BrandViewCampaignOffcanvas";
+
+interface Campaign {
+  title: string;
+  description: string;
+  budgetRange: string;
+  duration: string;
+  requirements: string[];
 }
 
-function DiscoverBrandsContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const { user } = useAuth();
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("query") || ""
-  );
-  const [brands, setBrands] = useState<Brand[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+interface Brand {
+  id: number;
+  name: string;
+  description: string;
+  categories: string[];
+  size: string;
+  campaigns: Campaign[];
+}
 
-  const fetchBrands = useCallback(
-    async (currentPage: number, shouldAppend: boolean = true) => {
-      console.log(user);
-      if (!user?.uuid || isLoading) return;
-
-      try {
-        setIsLoading(true);
-        const categoryParam = searchParams.get("categories");
-        const sizeParam = searchParams.get("sizes");
-        const regionsParam = searchParams.get("regions");
-        const interestedParam = searchParams.get("interested");
-
-        const data = await getBrandDiscoverList({
-          userId: user.uuid,
-          isInterested: interestedParam === "true",
-          searchQuery: searchParams.get("query") || "",
-          sortBy: searchParams.get("sort") || SortOptions.LARGEST_FIRST,
-          page: currentPage,
-          limit: 10,
-          sales: categoryParam ? categoryParam.split(",") : undefined,
-          size: sizeParam ? sizeParam.split(",") : undefined,
-          regions: regionsParam ? regionsParam.split(",") : undefined,
-        });
-
-        if (data?.brands) {
-          const newBrands = data.brands.map((brand: any) => ({
-            id: brand._id,
-            name: brand.Company_Name,
-            logo: brand.Company_Logo,
-            linkedin: brand.Company_Linkedin,
-            website: brand.Company_Website,
-            description: brand.Company_Description,
-            size: brand.Size,
-            categories: brand.Categories,
-            isInterested: brand.Is_Interested,
-          }));
-
-          setBrands((prev) =>
-            shouldAppend ? [...prev, ...newBrands] : newBrands
-          );
-
-          setHasMore(
-            data.pagination.current_page < data.pagination.total_pages
-          );
-        } else {
-          setHasMore(false);
+export default function DiscoverBrandsPage() {
+  // Static brands data
+  const brands: Brand[] = [
+    {
+      id: 1,
+      name: "Fathom",
+      description: "Fathom records, transcribes, highlights, and summarizes your meetings so you can focus on the conversation.",
+      categories: ["Sales Acceleration", "Conversation Intelligence"],
+      size: "Small",
+      campaigns: [
+        {
+          title: "Early Access Program",
+          description: "Join our early access program and get exclusive benefits",
+          budgetRange: "$5,000 - $10,000",
+          duration: "3 months",
+          requirements: [
+            "Minimum 5,000 followers",
+            "Experience with SaaS products",
+            "Active content creation"
+          ]
+        },
+        {
+          title: "Product Review Campaign",
+          description: "Create in-depth review content about our platform",
+          budgetRange: "$2,000 - $4,000",
+          duration: "1 month",
+          requirements: [
+            "Tech-focused audience",
+            "Previous review experience",
+            "Video content capabilities"
+          ]
         }
-      } catch (error) {
-        console.error("Error fetching brands:", error);
-        setHasMore(false);
-      } finally {
-        setIsLoading(false);
-      }
+      ]
     },
-    [user?.uuid, searchParams]
-  );
-
-  useEffect(() => {
-    setBrands([]);
-    setPage(1);
-    setHasMore(true);
-    fetchBrands(1, false);
-  }, [searchParams, fetchBrands]);
-
-  useEffect(() => {
-    if (page > 1) {
-      fetchBrands(page, true);
-    }
-  }, [page, fetchBrands]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    if (!params.has("sort")) {
-      params.set("sort", SortOptions.LARGEST_FIRST);
-      router.replace(`?${params.toString()}`);
-    }
-  }, [searchParams, router]);
-
-  const handleSortChange = (sortOption: SortOptions) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("sort", sortOption);
-    if (searchQuery) params.set("query", searchQuery);
-    router.push(`?${params.toString()}`);
-  };
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuery = e.target.value;
-    setSearchQuery(newQuery);
-  };
-
-  const handleSearchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const params = new URLSearchParams(searchParams);
-      if (searchQuery) {
-        params.set("query", searchQuery);
-      } else {
-        params.delete("query");
-      }
-      router.push(`?${params.toString()}`);
-    }
-  };
-
-  const handleFilterComplete = () => {
-    setBrands([]);
-    setPage(1);
-    setHasMore(true);
-    fetchBrands(1, false);
-  };
-
-  const currentSort = searchParams.get("sort") || SortOptions.POPULAR;
+    {
+      id: 2,
+      name: "BookYourData",
+      description: "BookYourData is an email lead list builder for accurate business-to-business (B2B) email lists.",
+      categories: ["Sales", "Sales Intelligence"],
+      size: "Small",
+      campaigns: []
+    },
+    {
+      id: 3,
+      name: "AVADA",
+      description: "AVADA is The Top Rated Marketing Automation Platform specialized for Shopify, Magento, WooCommerce, SMBs",
+      categories: ["Marketing", "Marketing Automation"],
+      size: "Small",
+      campaigns: []
+    },
+    // Add more brands as needed
+  ];
 
   return (
-    <div className="container py-4">
-      <header className="mb-4">
-        <h1 className="fs-18 fw-medium mb-0">Discover Brands</h1>
-        <p className="text-muted">
-          Explore brands looking to collaborate and sponsor you in endless ways.
-        </p>
-      </header>
+    <>
+      <div className="container py-4">
+        <div className="mb-4">
+          <h1 className="h3 mb-2">Discover Brands</h1>
+          <p className="text-muted fs-14">
+            Explore brands looking to collaborate and sponsor you in endless ways.
+          </p>
+        </div>
 
-      <div className="row g-4">
-        <aside className="col-lg-3">
-          <div className="box-filter">
-          <BrandsFilters />
-          </div>
-        </aside>
-
-        <main className="col-lg-9">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <div
-              className="position-relative flex-grow-1 me-3"
-              style={{ maxWidth: "400px" }}
-            >
-              <SearchIcon
-                className="position-absolute"
-                style={{
-                  left: "8px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  width: "16px",
-                  height: "16px",
-                  color: "#6c757d",
-                }}
-              />
+        <div className="row g-3 mb-4 align-items-center">
+          <div className="col">
+            <div className="input-group discover-brands-search">
+              <span className="input-group-text border-end-0 bg-white">
+                <Search className="h-4 w-4 text-gray fs-12" width={16} height={16} />
+              </span>
               <input
                 type="search"
+                className="form-control border-start-0"
                 placeholder="Search brands and keywords"
-                className="form-control ps-4"
-                style={{ padding: "7px" }}
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onKeyDown={handleSearchSubmit}
               />
             </div>
+          </div>
+
+          <div className="col-auto d-flex gap-2">
+            <button
+              className="btn btn-outline-secondary d-flex align-items-center gap-2"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#filtersOffcanvas"
+            >
+              Filters
+            </button>
+
             <div className="dropdown">
               <button
-                className="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2"
+                className="btn btn-outline-secondary dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
               >
-                <ArrowDownWideNarrow size={16} />
-                {currentSort.replace(/_/g, " ")}
+                Sort: Best match
               </button>
               <ul className="dropdown-menu dropdown-menu-end">
-                {Object.entries(SortOptions).map(([key, value]) => (
-                  <li key={key}>
-                    <button
-                      className="dropdown-item"
-                      onClick={() => handleSortChange(value)}
-                    >
-                      {key.replace(/_/g, " ")}
-                    </button>
-                  </li>
-                ))}
+                <li><button className="dropdown-item">Best match</button></li>
+                <li><button className="dropdown-item">Most Popular</button></li>
+                <li><button className="dropdown-item">Top Rating</button></li>
+                <li><button className="dropdown-item">Newest</button></li>
               </ul>
             </div>
           </div>
+        </div>
 
-          <BrandsTable
-            brands={brands}
-            hasMore={hasMore}
-            isLoading={isLoading}
-            onLoadMore={() => setPage((prev) => prev + 1)}
-          />
-        </main>
+        {/* Brands List */}
+        <div className="brands-list">
+          {brands.map((brand) => (
+            <div key={brand.id} className="card mb-3">
+              <div className="card-body p-4">
+                <div className="row">
+                  <div className="col-auto">
+                    <div className="wrapper-img-brand">
+                      <Image src="/assets/images/apollo.png" alt={`${brand.name} logo`} width={60} height={60} className="rounded" />
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                      <h5 className="card-title mb-0">{brand.name}</h5>
+                      <div className="d-flex gap-1">
+                        <Linkedin className="h-4 w-4 text-gray" width={16} height={16} />
+                        <Globe className="h-4 w-4 text-gray" width={16} height={16} />
+                      </div>
+                    </div>
+                    <p className="card-text text-gray fs-12 mb-3">{brand.description}</p>
+                    <div className="d-flex gap-2">
+                      <span className="badge bg-primary bg-opacity-10 text-primary">
+                        {brand.size}
+                      </span>
+                      {brand.categories.map((category, idx) => (
+                        <span key={idx} className="badge bg-secondary bg-opacity-10 text-secondary">
+                          {category}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col-auto">
+                    <div className="d-flex gap-2">
+                      <button
+                        className="btn btn-primary"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#campaignsOffcanvas"
+                      >
+                        View campaigns
+                      </button>
+                      <button className="btn btn-outline-secondary">I'm Interested</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      <BrandFilterOffcanvas />
+      <BrandViewCampaignOffcanvas />
+    </>
+
   );
 }
-
-function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <DiscoverBrandsContent />
-    </Suspense>
-  );
-}
-
-export default withAuthRole({
-  Component: Page,
-  allowedRoles: ["creator"],
-});
