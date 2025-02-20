@@ -250,6 +250,7 @@ body {
   }
 
   .applied-btn-container {
+
     .btn:disabled,
     .btn.disabled,
     fieldset:disabled .btn {
@@ -267,7 +268,7 @@ body {
     }
   }
 
-  .is-invalid + svg {
+  .is-invalid+svg {
     right: 1rem !important;
     top: 34% !important;
   }
@@ -300,20 +301,22 @@ body {
   background-color: $white;
   border-radius: 50%;
 }
+
 .custom-list {
   list-style: none;
   padding-left: 0;
-  counter-reset: li; /* Reset the counter for ordered lists */
+  counter-reset: li;
+  /* Reset the counter for ordered lists */
 }
 
-.custom-list > li {
+.custom-list>li {
   display: flex;
   align-items: flex-start;
   margin-bottom: 1rem;
   font-size: 16px;
 }
 
-.custom-list > li::before {
+.custom-list>li::before {
   content: counter(li);
   counter-increment: li;
   display: flex;
@@ -328,6 +331,7 @@ body {
   font-weight: bold;
   font-size: 14px;
 }
+
 .modal-backdrop {
   z-index: 1050 !important;
 }
@@ -374,7 +378,14 @@ body {
   background-color: #ffe5d0;
   color: #fd7e14;
 }
+
 .live {
   background-color: #d1e7dd;
   color: #0f5132;
+}
+
+.discover-brands-search {
+  .form-control {
+    padding: 10px 12px;
+  }
 }
