@@ -547,6 +547,20 @@ export default function Header() {
                   <a
                     className="dropdown-item"
                     href="#"
+                    onClick={() => {
+                      router.push("/settings");
+                    }}
+                  >
+                    <form className="d-flex" role="search">
+                      <p className="mb-0">Settings</p>
+                    </form>
+                  </a>
+                </li>  
+                
+                             <li>
+                  <a
+                    className="dropdown-item"
+                    href="#"
                     onClick={navigateToSignIn}
                   >
                     <form className="d-flex" role="search">
