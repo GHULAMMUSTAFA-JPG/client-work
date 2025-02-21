@@ -108,7 +108,7 @@ export default function BrandViewCampaignOffcanvas({ brandid }: any) {
               <div className="row mb-4">
                 <div className="col-6">
                   <div className="mb-2 text-muted fs-12">Budget Range</div>
-                  {/* <div className="text-gray">{campaign.budgetRange}</div> */}
+                  <div className="text-gray">{campaign?.Budget}</div>
                 </div>
                 <div className="col-6">
                   <div className="mb-2 text-muted fs-12">Duration</div>
