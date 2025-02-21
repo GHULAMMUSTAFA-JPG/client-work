@@ -1074,3 +1074,76 @@ body {
   background: #fff;
   padding: 10px 20px;
 }
+
+
+/* settings page css New UI created by Amit*/
+.settings-card
+{
+  padding: 0;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid #dfdeda;
+  min-height: 300px;
+  box-shadow: 1px 1px 4px #ddd;
+  padding: 15px 20px 0;
+  font-size: 13px !important;
+  .section-block {
+    padding: 15px 0 40px;
+    border-bottom: 1px solid #ddd;
+    margin: 0 0 20px;
+  }
+
+.form-container {
+  display: flex;
+  justify-content: safe;
+  gap: 15px;
+}
+.form-group label {
+  margin: 15px 0;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.form-group input {
+  height: 38px;
+  border: none;
+  padding: 0 10px;
+    border-bottom-width: medium;
+    border-bottom-style: none;
+    border-bottom-color: currentcolor;
+  border-bottom: 1px solid #ddd;
+}
+
+.stripes_Cont {
+  padding: 15px 20px;
+  background: #fafafa;
+  transition: background 0.3s ease-in-out;
+  margin: 3px 0;
+  &:hover {
+    background: $bg-card-light;
+  }
+
+}
+.stripe_icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.h-6 {
+  width: 45px;
+}
+.FooterboxSettings
+{
+  padding: 25px 20px;
+
+}
+.box_footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+}
+/* settings page css New UI created by Amit*/
