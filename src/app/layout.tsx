@@ -12,8 +12,8 @@ import "aos/dist/aos.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Main from "@/components/Main";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import Loader from "@/components/loader";
+import "@/styles/globals.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 interface RootLayoutProps {
