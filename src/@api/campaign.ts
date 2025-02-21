@@ -4,15 +4,13 @@ export const createCampaignPost = async (payload: {
   campaign_id: string;
   creator_id: string;
   budget: number;
-  content_type: string;
+  category: string;
   title: string;
   description: string;
 }) => {
   try {
-    console.log("payload", payload);
-
     const response = await apiController.post(
-      "/dashboard/campaigns/create_campaign_post",
+      "/dashboard/campaigns/campaign-post",
       payload
     );
 
@@ -23,55 +21,82 @@ export const createCampaignPost = async (payload: {
   }
 };
 
-export const getCampaignPosts = async (
-  creatorId: string,
-  campaignId: string
-) => {
+export const createCampaignPostContent = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  content_title: string;
+  content_text_content: string;
+}) => {
   try {
-    const response = await apiController.get(
-      `/dashboard/campaigns/get_campaign_creator_posts?creator_id=${creatorId}&campaign_id=${campaignId}`
+    const response = await apiController.post(
+      "/dashboard/campaigns/campaign-post-content",
+      payload
     );
 
     return response.data;
   } catch (error) {
-    console.error("Error getting campaign posts:", error);
+    console.error("Error creating campaign post content:", error);
     return null;
   }
 };
 
-export const createCampaignPostSubmission = async (payload: {
-  campaign_id: string;
+export const getCampaignCreatorPosts = async (params: {
   creator_id: string;
-  post_id: string;
-  submission_title: string;
-  submission_text_content: string;
-  media_content: File[];
+  campaign_id: string;
 }) => {
   try {
-    const formData = new FormData();
-    formData.append("campaign_id", payload.campaign_id);
-    formData.append("creator_id", payload.creator_id);
-    formData.append("post_id", payload.post_id);
-    formData.append("submission_title", payload.submission_title);
-    formData.append("submission_text_content", payload.submission_text_content);
-
-    payload.media_content.forEach((file) => {
-      formData.append("media_content", file);
-    });
-
-    const response = await apiController.post(
-      "/dashboard/campaigns/create_campaign_post_submission",
-      formData,
+    const response = await apiController.get(
+      `/dashboard/campaigns/campaign-creator-posts`,
       {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        params,
       }
     );
 
     return response.data;
   } catch (error) {
-    console.error("Error creating campaign post submission:", error);
+    console.error("Error fetching campaign creator posts:", error);
+    return null;
+  }
+};
+
+export const getCampaignPostDetails = async (params: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+}) => {
+  try {
+    const response = await apiController.get(
+      `/dashboard/campaigns/campaign-post-data`,
+      {
+        params,
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching campaign post details:", error);
+    return null;
+  }
+};
+
+export const getPostContentDetails = async (params: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  content_id: string;
+}) => {
+  try {
+    const response = await apiController.get(
+      `/dashboard/campaigns/post-content-data`,
+      {
+        params,
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching post content details:", error);
     return null;
   }
 };

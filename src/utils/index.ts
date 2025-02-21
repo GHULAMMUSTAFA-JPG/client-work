@@ -7,3 +7,15 @@ export const isValidUrl = (url: string | undefined) => {
     return false;
   }
 };
+
+export function formatDate(inputDate: string): string {
+  if (!inputDate) return "N/V";
+  const date = new Date(inputDate);
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  };
+
+  return date.toLocaleDateString("en-US", options).replace(",", ".");
+}

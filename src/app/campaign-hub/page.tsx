@@ -1,80 +1,41 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
-import { CampaignHeader } from "@/components/campaign/CampaignHeader";
-import { CampaignTabs } from "@/components/campaign/CampaignTabs";
-import { PostsList } from "@/components/campaign/PostsList";
-import { PostProgress } from "@/components/campaign/PostProgress";
-import { ContentVersions } from "@/components/campaign/ContentVersions";
-import { CampaignDrawer } from "@/components/campaign/CampaignDrawer";
-import { LinkedInPostType } from "@/types/linkedin";
+import React, { Suspense, useEffect, useState } from "react";
+import { CampaignHeader } from "@/components/campaign-hub/CampaignHeader";
+import { CampaignTabs } from "@/components/campaign-hub/CampaignTabs";
+import { PostsList } from "@/components/campaign-hub/PostsList";
+import { PostProgress } from "@/components/campaign-hub/PostProgress";
+import { ContentVersions } from "@/components/campaign-hub/ContentVersions";
+import { CampaignDrawer } from "@/components/campaign-hub/CampaignDrawer";
+import { EarningsDrawer } from "@/components/campaign-hub/EarningsDrawer";
+import { CreatePostDrawer } from "@/components/campaign-hub/CreatePostDrawer";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  getCreatorsCampaignSubmissions,
-  addCampaignPostSubmission,
-  handleFileUpload,
-} from "@/@api";
 import { redirect, useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
-import { EarningsDrawer } from "@/components/campaign/EarningsDrawer";
-import { getCampaignPosts } from "@/@api/campaign";
+import { getCampaignCreatorPosts } from "@/@api/campaign";
+import { CampaignStatus, Status } from "@/types";
+import { formatDate } from "@/utils";
 import { withAuthRole } from "@/utils/withAuthRole";
 
 function CampaignHubContent() {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState<Status | "all">("all");
   const [selectedPostId, setSelectedPostId] = useState("1");
   const [isNewPostDrawerOpen, setIsNewPostDrawerOpen] = useState(false);
   const [isNewContentDrawerOpen, setIsNewContentDrawerOpen] = useState(false);
-  const [campaignData, setCampaignData] = useState<any>(null);
   const [isEarningsDrawerOpen, setIsEarningsDrawerOpen] = useState(false);
+  const [isCreatePostDrawerOpen, setIsCreatePostDrawerOpen] = useState(false);
 
+  const [campaignData, setCampaignData] = useState<any>(null);
   const { user, setIsLoading } = useAuth();
   const searchParams = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [postsPerPage] = useState(10);
-
-  const transactions = [
-    {
-      id: "1",
-      date: "Mar 15, 2024",
-      campaignName: "AI Social27 - Instagram Reel",
-      amount: 400,
-      status: "completed" as const,
-    },
-    {
-      id: "2",
-      date: "Mar 15, 2024",
-      campaignName: "AI Social27 - Instagram Image",
-      amount: 300,
-      status: "processing" as const,
-    },
-    {
-      id: "3",
-      date: "Mar 31, 2024",
-      campaignName: "AI Social27 - TikTok Post",
-      amount: 300,
-      status: "pending" as const,
-    },
-  ];
-
-  const getSubmissionCampaigns = async (code: string, page: number) => {
+  const getCampaignPostsList = async (code: string) => {
     try {
       setIsLoading(true);
-      const response = await getCreatorsCampaignSubmissions(
-        {
-          email: user?.email,
-          campaign_id: code,
-          page,
-          limit: postsPerPage,
-        },
-        setCampaignData,
-        setIsLoading
-      );
-
-      setCampaignData(response.data);
-      setTotalPages(Math.ceil(response.total / postsPerPage));
+      const response = await getCampaignCreatorPosts({
+        creator_id: user?.uuid as string,
+        campaign_id: code,
+      });
+      setCampaignData(response);
     } catch (error) {
-      toast.error("Failed to fetch campaign submissions");
+      console.error("Error fetching campaign posts:", error);
     } finally {
       setIsLoading(false);
     }
@@ -82,82 +43,72 @@ function CampaignHubContent() {
 
   useEffect(() => {
     const code = searchParams.get("id");
-    if (code) {
-      getSubmissionCampaigns(code, currentPage);
-    } else {
+    if (!code) {
       redirect("/campaigns");
+      return;
     }
-  }, [searchParams, user?.email, currentPage]);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+    if (user) {
+      getCampaignPostsList(code);
+    }
+  }, [searchParams, user]);
 
   const transformedTabs = (campaignData: any) => {
-    const posts = campaignData?.campaign?.Posts || [];
+    const posts = campaignData?.Posts || [];
 
     return [
       {
-        id: "all",
         label: "All (Recent)",
         count: posts.length,
+        status: "all",
       },
       {
-        id: "pending",
-        label: "Content Submissions Ongoing",
+        label: "Pending Feedback",
         count: posts.filter(
-          (post: any) => post.Status.toLowerCase() === "pending approval"
+          (post: any) => post.Status === Status.PendingApproval
         ).length,
-        status: "needs_updates" as const,
+        status: Status.PendingApproval,
       },
       {
-        id: "approved",
-        label: "Approved & Ready to Publish",
-        count: posts.filter(
-          (post: any) => post.Status.toLowerCase() === "approved"
-        ).length,
-        status: "approved" as const,
-      },
-      {
-        id: "live",
-        label: "Live & Tracking Impressions",
-        count: posts.filter((post: any) => post.Status.toLowerCase() === "live")
+        label: "Approved To Publish",
+        count: posts.filter((post: any) => post.Status === Status.Approved)
           .length,
-        status: "live" as const,
+        status: Status.Approved,
       },
       {
-        id: "rejected",
-        label: "Rejected",
-        count:
-          campaignData?.campaign?.Posts?.filter(
-            (post: any) => post.Status.toLowerCase() === "rejected"
-          ).length || 0,
+        label: "Upload Impressions",
+        count: posts.filter((post: any) => post.Status === Status.InProgress)
+          .length,
+        status: Status.InProgress,
       },
       {
-        id: "archived",
-        label: "Archived",
-        count: posts.filter(
-          (post: any) => post.Status.toLowerCase() === "archived"
-        ).length,
-        status: "archived" as const,
+        label: "Completed",
+        count: posts.filter((post: any) => post.Status === Status.Completed)
+          .length,
+        status: Status.Completed,
       },
     ];
   };
+
   const transformedPosts =
-    campaignData?.campaign?.Posts?.map((post: any) => ({
-      id: post.Post_ID,
-      type: post.Post_Type || "instagram-image",
+    campaignData?.Posts?.map((post: any) => ({
+      id: post._id,
+      category: post.Category || "unknown-category",
       title: post.Post_Title,
-      status: post.Status.toLowerCase(),
+      status: post.Status ? post.Status : "unknown",
       budget: post.Budget || 0,
-      mediaContent: post.Media_Content,
-      submittedAt: post.Submitted_At,
+      mediaContent:
+        post.Content_Versions?.flatMap(
+          (content: any) => content.Media_Content
+        ) || [],
+      submittedAt: formatDate(
+        post.Content_Versions?.[post.Content_Versions.length - 1]
+          ?.Submitted_At || post.Created_At
+      ),
     })) || [];
 
   const filteredPosts = transformedPosts.filter((post: any) => {
     if (activeTab === "all") return true;
-    if (activeTab === "pending_approval")
-      return post.status === "pending approval";
     return post.status === activeTab;
   });
 
@@ -231,72 +182,113 @@ function CampaignHubContent() {
     },
   ];
 
-  const handleViewEarnings = () => {
-    setIsEarningsDrawerOpen(true);
+  const transactions = [
+    {
+      id: "1",
+      date: "Mar 15, 2024",
+      campaignName: "AI Social27 - Instagram Reel",
+      amount: 400,
+      status: "completed" as const,
+      postDetails: {
+        title: "One (1) Instagram Reel",
+        type: "instagram-reel",
+        agreedAmount: 400,
+        paidAmount: 400,
+        status: "Completed",
+      },
+    },
+    {
+      id: "2",
+      date: "Mar 15, 2024",
+      campaignName: "AI Social27 - Instagram Image",
+      amount: 300,
+      status: "processing" as const,
+      postDetails: {
+        title: "One (1) Instagram Image",
+        type: "instagram-image",
+        agreedAmount: 300,
+        paidAmount: 0,
+        status: "Processing",
+      },
+    },
+    {
+      id: "3",
+      date: "Mar 31, 2024",
+      campaignName: "AI Social27 - TikTok Post",
+      amount: 300,
+      status: "pending" as const,
+      postDetails: {
+        title: "One (1) TikTok post",
+        type: "tiktok",
+        agreedAmount: 300,
+        paidAmount: 0,
+        status: "Pending",
+      },
+    },
+  ];
+
+  console.log("campaignData", campaignData);
+  const handleStageClick = (stageId: string) => {
+    console.log(`Clicked stage: ${stageId}`);
   };
 
-  const getCampaignPostsList = async () => {
-    const response = await getCampaignPosts(
-      user?.uuid,
-      campaignData?.campaign?._id
-    );
-    console.log("response", response);
+  const handleCreatePost = (postData: any) => {
+    console.log("Creating new post:", postData);
+    setIsCreatePostDrawerOpen(false);
   };
 
-  useEffect(() => {
-    if (user?.uuid && campaignData?.campaign?._id) getCampaignPostsList();
-  }, []);
+  const totalCampaignBudget = transformedPosts.reduce(
+    (sum: number, post: any) => sum + post.budget,
+    0
+  );
+  const receivedPayments = transactions
+    .filter((t) => t.status === "completed")
+    .reduce((sum, t) => sum + t.amount, 0);
+  const pendingPayments = transactions
+    .filter((t) => t.status !== "completed")
+    .reduce((sum, t) => sum + t.amount, 0);
 
   return (
-    <div className="min-vh-100 bg-white">
+    <div className="tw-min-h-screen tw-bg-gray-50">
       {campaignData && (
         <CampaignHeader
           onBack={() => window.history.back()}
-          title={campaignData.campaign.Headline}
-          budget={`$${campaignData.campaign.Budget}`}
-          date={campaignData.campaign.Created_At}
-          status={campaignData.campaign.Status || "Public"}
-          objective={campaignData.campaign.Objective}
-          audience={campaignData.campaign.Target_Audience}
-          platform={campaignData.campaign.Platform}
-          website={campaignData.campaign.Website}
-          paymentStatus={{
-            status: "processing",
-            lastUpdated: "2024-03-15 09:00 AM",
-            expectedDate: "2024-03-31",
-          }}
-          paymentBreakdown={{
-            totalBudget: 1200,
-            earnings: 700,
-            platformFee: 50,
-            netAmount: 650,
-          }}
-          onViewEarnings={handleViewEarnings}
+          title={campaignData.Headline}
+          budget={`${campaignData.Posts.reduce(
+            (sum: number, post: any) => sum + post.Budget,
+            0
+          )}`}
+          date={formatDate(campaignData.Created_At)}
+          status={"Public"}
+          objective={campaignData.Brief_Description}
+          audience={campaignData.Target_Audience}
         />
       )}
 
       <CampaignTabs
-        tabs={transformedTabs(campaignData)}
+        tabs={transformedTabs(campaignData) as any}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
 
-      <div className="d-flex">
+      <div className="tw-flex">
         <PostsList
           posts={filteredPosts}
           selectedPostId={selectedPostId}
           onPostSelect={setSelectedPostId}
-          onAddPost={() => setIsNewPostDrawerOpen(true)}
-          currentPage={currentPage as number}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
+          onCreatePost={() => setIsCreatePostDrawerOpen(true)}
+          campaignStatus={CampaignStatus.Live}
         />
 
-        <div className="flex-grow-1">
-          <PostProgress postId={selectedPostId} stages={postStages} />
+        <div className="tw-flex-1">
+          <PostProgress
+            postId={selectedPostId}
+            stages={postStages}
+            onStageClick={handleStageClick}
+          />
           <ContentVersions
             versions={contentVersions as any}
-            onAddContent={() => {}}
+            onAddContent={() => setIsNewContentDrawerOpen(true)}
           />
         </div>
       </div>
@@ -304,13 +296,11 @@ function CampaignHubContent() {
       <CampaignDrawer
         isOpen={isNewPostDrawerOpen}
         onClose={() => setIsNewPostDrawerOpen(false)}
-        title="Add New Submission"
+        title="Create New Post"
         description="Create a new post for this campaign"
         dueDate="Mar 31, 2024"
         payout="$300"
         type="post"
-        creatorId={user?.uuid}
-        campaignId={campaignData?.campaign?._id}
       />
 
       <CampaignDrawer
@@ -321,17 +311,23 @@ function CampaignHubContent() {
         dueDate="Mar 31, 2024"
         payout="$300"
         type="content"
-        creatorId={user?.uuid}
-        campaignId={campaignData?.campaign?._id}
       />
 
       <EarningsDrawer
         isOpen={isEarningsDrawerOpen}
         onClose={() => setIsEarningsDrawerOpen(false)}
-        totalEarnings={5000}
-        pendingPayments={1200}
+        campaignName="AI Social27"
+        totalEarnings={totalCampaignBudget}
+        pendingPayments={pendingPayments}
+        receivedPayments={receivedPayments}
         nextPayoutDate="March 31, 2024"
         transactions={transactions}
+      />
+
+      <CreatePostDrawer
+        isOpen={isCreatePostDrawerOpen}
+        onClose={() => setIsCreatePostDrawerOpen(false)}
+        onSubmit={handleCreatePost}
       />
     </div>
   );
