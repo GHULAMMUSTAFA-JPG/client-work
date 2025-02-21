@@ -42,8 +42,9 @@ export default function DiscoverBrandsPage() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [brandid, setbrandid] = useState(null);
   const observer = useRef<IntersectionObserver>();
-
+  console.log("brandid", brandid);
   const handleSortChange = (option: string) => {
     setSortOption(option);
     if (page !== 1) {
@@ -209,80 +210,87 @@ export default function DiscoverBrandsPage() {
           {/* Brands List */}
           <div className="brands-list">
             {brandss?.map((brand: any, index: any) => (
-              <div
-                key={brand._id}
-                ref={index === brandss.length - 1 ? lastBrandElementRef : null}
-                className="card mb-3"
-              >
-                <div className="card-body p-4">
-                  <div className="row">
-                    <div className="col-auto">
-                      <div className="wrapper-img-brand">
-                        <img
-                          src={
-                            brand.Company_Banner
-                              ? brand.Company_Banner
-                              : defaultImagePath
-                          }
-                          // alt={`${brand.Company_Name} logo`}
-                          width={60}
-                          height={60}
-                          className="rounded"
-                        />
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div className="d-flex align-items-center gap-2 mb-2">
-                        <h5 className="card-title mb-0">
-                          {brand.Company_Name}
-                        </h5>
-                        <div className="d-flex gap-1">
-                          <Linkedin
-                            className="h-4 w-4 text-gray"
-                            width={16}
-                            height={16}
-                          />
-                          <Globe
-                            className="h-4 w-4 text-gray"
-                            width={16}
-                            height={16}
+              <>
+                <div
+                  key={brand._id}
+                  ref={
+                    index === brandss.length - 1 ? lastBrandElementRef : null
+                  }
+                  className="card mb-3"
+                >
+                  <div className="card-body p-4">
+                    <div className="row">
+                      <div className="col-auto">
+                        <div className="wrapper-img-brand">
+                          <img
+                            src={
+                              brand.Company_Banner
+                                ? brand.Company_Banner
+                                : defaultImagePath
+                            }
+                            // alt={`${brand.Company_Name} logo`}
+                            width={60}
+                            height={60}
+                            className="rounded"
                           />
                         </div>
                       </div>
-                      <p className="card-text text-gray fs-12 mb-3">
-                        {brand.Company_Description}
-                      </p>
-                      <div className="d-flex gap-2">
-                        <span className="badge bg-primary bg-opacity-10 text-primary">
-                          {brand.Size}
-                        </span>
-                        {brand?.Categories?.map((category: any, idx: any) => (
-                          <span
-                            key={idx}
-                            className="badge bg-secondary bg-opacity-10 text-secondary"
-                          >
-                            {category}
+                      <div className="col">
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <h5 className="card-title mb-0">
+                            {brand.Company_Name}
+                          </h5>
+                          <div className="d-flex gap-1">
+                            <Linkedin
+                              className="h-4 w-4 text-gray"
+                              width={16}
+                              height={16}
+                            />
+                            <Globe
+                              className="h-4 w-4 text-gray"
+                              width={16}
+                              height={16}
+                            />
+                          </div>
+                        </div>
+                        <p className="card-text text-gray fs-12 mb-3">
+                          {brand.Company_Description}
+                        </p>
+                        <div className="d-flex gap-2">
+                          <span className="badge bg-primary bg-opacity-10 text-primary">
+                            {brand.Size}
                           </span>
-                        ))}
+                          {brand?.Categories?.map((category: any, idx: any) => (
+                            <span
+                              key={idx}
+                              className="badge bg-secondary bg-opacity-10 text-secondary"
+                            >
+                              {category}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-auto">
-                      <div className="d-flex gap-2">
-                        <button
-                          className="btn btn-primary"
-                          data-bs-toggle="offcanvas"
-                          data-bs-target="#campaignsOffcanvas"
-                        >
-                          View campaigns
-                        </button>
-                        <button className="btn btn-outline-secondary">
-                          I'm Interested
-                        </button>
+                      <div className="col-auto">
+                        <div className="d-flex gap-2">
+                          <button
+                            onClick={() => {
+                              setbrandid(brand._id);
+                            }}
+                            className="btn btn-primary"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#campaignsOffcanvas"
+                          >
+                            View campaigns
+                          </button>
+                          <button className="btn btn-outline-secondary">
+                            I'm Interested
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </>
             ))}
             {loading && <Loader />}
           </div>
@@ -304,7 +312,8 @@ export default function DiscoverBrandsPage() {
           page={page}
           setPage={setPage}
         />
-        <BrandViewCampaignOffcanvas />
+
+        <BrandViewCampaignOffcanvas brandid={brandid} />
       </>
     </>
   );
