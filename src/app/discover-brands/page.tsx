@@ -118,6 +118,9 @@ export default function DiscoverBrandsPage() {
   useEffect(() => {
     const fetchFilters = async () => {
       try {
+        if (!searchquery) {
+          setLoading(true);
+        }
         const response = await apiController.get("/unique_filters");
         console.log("filters", response);
         if (response.status === 200) {
@@ -203,11 +206,11 @@ export default function DiscoverBrandsPage() {
                 >
                   Sort:{" "}
                   {sortOption == "most_popular"
-                    ? "MOST POPULAR"
+                    ? "Most Popular"
                     : sortOption == "largest_first"
-                    ? "LARGEST FIRST"
+                    ? "Largest First"
                     : sortOption == "smallest_first"
-                    ? "SMALLEST FIRST"
+                    ? "Smallest First"
                     : ""}
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end">
@@ -216,7 +219,7 @@ export default function DiscoverBrandsPage() {
                       className="dropdown-item"
                       onClick={() => handleSortChange("most_popular")}
                     >
-                      MOST POPULAR
+                      Most Popular
                     </button>
                   </li>
                   <li>
@@ -224,7 +227,7 @@ export default function DiscoverBrandsPage() {
                       className="dropdown-item"
                       onClick={() => handleSortChange("largest_first")}
                     >
-                      LARGEST FIRST
+                      Largest First
                     </button>
                   </li>
                   <li>
@@ -232,7 +235,7 @@ export default function DiscoverBrandsPage() {
                       className="dropdown-item"
                       onClick={() => handleSortChange("smallest_first")}
                     >
-                      SMALLEST FIRST
+                      Smallest First
                     </button>
                   </li>
                 </ul>
@@ -342,7 +345,8 @@ export default function DiscoverBrandsPage() {
                 </div>
               </>
             ))}
-            {loading && <Loader />}
+            {/* {loading && <Loader />} */}
+            {loading && !searchquery && <Loader />}
           </div>
         </div>
         <BrandFilterOffcanvas
