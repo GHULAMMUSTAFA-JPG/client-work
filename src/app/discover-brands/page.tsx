@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Search, Globe, Building, Linkedin, ArrowLeft } from "lucide-react";
 import { Undo2 } from "lucide-react";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { defaultImagePath } from "@/components/constants";
 import Image from "next/image";
 import { apiController } from "../../@api/baseUrl";
@@ -11,6 +12,7 @@ import BrandViewCampaignOffcanvas from "@/components/BrandViewCampaignOffcanvas"
 import { useAuth } from "@/contexts/AuthContext";
 import Loader from "@/components/loader";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface Campaign {
   title: string;
@@ -284,7 +286,41 @@ export default function DiscoverBrandsPage() {
                             {brand.Company_Name}
                           </h5>
                           <div className="d-flex gap-1">
-                            <Linkedin
+                            {brand.Company_Website && (
+                              <Link
+                                href={`https://${brand.Company_Website}`}
+                                target="_blank"
+                              >
+                                <Icon
+                                  icon="mdi:web"
+                                  width="18"
+                                  height="18"
+                                  className="text-warning ms-1"
+                                  style={{
+                                    minWidth: "18px",
+                                    minHeight: "18px",
+                                  }}
+                                />
+                              </Link>
+                            )}
+                            {brand.Company_Linkedin && (
+                              <Link
+                                href={`https://${brand.Company_Linkedin}`}
+                                target="_blank"
+                              >
+                                <Icon
+                                  icon="mdi:linkedin"
+                                  width="18"
+                                  height="18"
+                                  className="text-info ms-2"
+                                  style={{
+                                    minWidth: "18px",
+                                    minHeight: "18px",
+                                  }}
+                                />
+                              </Link>
+                            )}
+                            {/* <Linkedin
                               className="h-4 w-4 text-gray"
                               width={16}
                               height={16}
@@ -293,7 +329,7 @@ export default function DiscoverBrandsPage() {
                               className="h-4 w-4 text-gray"
                               width={16}
                               height={16}
-                            />
+                            /> */}
                           </div>
                         </div>
                         <p className="card-text text-gray fs-12 mb-3">
