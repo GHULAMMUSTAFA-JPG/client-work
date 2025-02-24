@@ -31,7 +31,7 @@ interface Brand {
 
 export default function DiscoverBrandsPage() {
   const { user, setIsLoading } = useAuth();
-  const [brandss, setbrandss] = useState([]);
+  const [brandss, setbrandss] = useState<any[]>([]);
   const [availablefilters, setavailablefilters] = useState();
   const [searchquery, setsearchquery] = useState("");
   const [sortOption, setSortOption] = useState("most_popular");
@@ -118,9 +118,6 @@ export default function DiscoverBrandsPage() {
   useEffect(() => {
     const fetchFilters = async () => {
       try {
-        if (!searchquery) {
-          setLoading(true);
-        }
         const response = await apiController.get("/unique_filters");
         console.log("filters", response);
         if (response.status === 200) {
@@ -134,7 +131,7 @@ export default function DiscoverBrandsPage() {
     fetchFilters();
   }, []);
 
-  const handleInterested = async (check: any, id: any) => {
+  const handleInterested = async (check: any, id: any, index: any) => {
     try {
       const url =
         check == "add"
@@ -148,7 +145,17 @@ export default function DiscoverBrandsPage() {
       console.log(response);
       if (response.status === 200) {
         setLoading(false);
-        setrerender(!rerender);
+        const updatedBrands = brandss.map((brand: any, i: any) => {
+          if (i === index) {
+            return {
+              ...brand,
+              Is_Interested: !brand.Is_Interested,
+            };
+          }
+          return brand;
+        });
+        setbrandss(updatedBrands);
+        // setrerender(!rerender);
         // toast.success(response.data.message);
       }
     } catch (error) {
@@ -323,7 +330,7 @@ export default function DiscoverBrandsPage() {
                             <button
                               style={{ display: "flex", gap: "8px" }}
                               onClick={() =>
-                                handleInterested("remove", brand._id)
+                                handleInterested("remove", brand._id, index)
                               }
                               className="btn btn-outline-secondary"
                             >
@@ -332,7 +339,9 @@ export default function DiscoverBrandsPage() {
                             </button>
                           ) : (
                             <button
-                              onClick={() => handleInterested("add", brand._id)}
+                              onClick={() =>
+                                handleInterested("add", brand._id, index)
+                              }
                               className="btn btn-outline-secondary"
                             >
                               I'm Interested

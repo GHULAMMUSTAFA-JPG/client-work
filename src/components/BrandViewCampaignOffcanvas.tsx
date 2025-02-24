@@ -10,10 +10,10 @@ export default function BrandViewCampaignOffcanvas({
 }: any) {
   const { user, setIsLoading } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [campaigns, setcampaigns] = useState([]);
+  const [campaigns, setcampaigns] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const [rerender, setrerender] = useState(false);
+  // const [rerender, setrerender] = useState(false);
   const observer = useRef<IntersectionObserver>();
   console.log("user", user);
   console.log("brandid", brandid);
@@ -60,7 +60,7 @@ export default function BrandViewCampaignOffcanvas({
     };
 
     fetctCampaigns();
-  }, [brandid, page, rerender]);
+  }, [brandid, page]);
   const lastBrandElementRef = useCallback(
     (node: HTMLDivElement) => {
       if (loading) return;
@@ -78,7 +78,7 @@ export default function BrandViewCampaignOffcanvas({
   useEffect(() => {
     setPage(1);
   }, [brandid]);
-  const handleApply = async (id: any) => {
+  const handleApply = async (id: any, index: any) => {
     try {
       const response = await apiController.post(
         `/dashboard/campaigns/apply_campaign`,
@@ -90,9 +90,17 @@ export default function BrandViewCampaignOffcanvas({
       );
       console.log(response);
       if (response.status === 200) {
-        setPage(1);
+        const updatedcompaigns = campaigns.map((campaign: any, i: any) => {
+          if (i === index) {
+            return {
+              ...campaign,
+              Is_Applied: true,
+            };
+          }
+          return campaign;
+        });
+        setcampaigns(updatedcompaigns);
         // toast.success(response.data.message);
-        setrerender(!rerender);
       }
     } catch (error: any) {
       console.error("Error fetching data:", error);
@@ -175,7 +183,7 @@ export default function BrandViewCampaignOffcanvas({
                   </button>
                 ) : (
                   <button
-                    onClick={() => handleApply(campaign._id)}
+                    onClick={() => handleApply(campaign._id, index)}
                     className="btn btn-primary w-100"
                   >
                     Apply for Campaign
