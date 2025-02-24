@@ -13,6 +13,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import Loader from "@/components/loader";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { FilterIcon, ArrowDownUp } from "lucide-react";
 
 interface Campaign {
   title: string;
@@ -203,17 +204,29 @@ export default function DiscoverBrandsPage() {
                 className="btn btn-outline-secondary d-flex align-items-center gap-2"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#filtersOffcanvas"
+                style={{ color: "black" }}
               >
+                <FilterIcon />
                 Filters
               </button>
 
-              <div className="dropdown">
+              <div
+                style={{ display: "flex", gap: "5px", alignItems: "center" }}
+                className="dropdown"
+              >
+                <span style={{ color: "grey" }}> Sort: </span>
+
                 <button
+                  style={{
+                    color: "black",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                  }}
                   className="btn btn-outline-secondary dropdown-toggle"
                   type="button"
                   data-bs-toggle="dropdown"
                 >
-                  Sort:{" "}
                   {sortOption == "most_popular"
                     ? "Most Popular"
                     : sortOption == "largest_first"
@@ -221,6 +234,7 @@ export default function DiscoverBrandsPage() {
                     : sortOption == "smallest_first"
                     ? "Smallest First"
                     : ""}
+                  <ArrowDownUp size={20} />
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li>
@@ -268,9 +282,10 @@ export default function DiscoverBrandsPage() {
                       <div className="col-auto">
                         <div className="wrapper-img-brand">
                           <img
+                            style={{ height: brand.Company_Logo ? "" : "60px" }}
                             src={
-                              brand.Company_Banner
-                                ? brand.Company_Banner
+                              brand.Company_Logo
+                                ? brand.Company_Logo
                                 : defaultImagePath
                             }
                             // alt={`${brand.Company_Name} logo`}
@@ -336,14 +351,11 @@ export default function DiscoverBrandsPage() {
                           {brand.Company_Description}
                         </p>
                         <div className="d-flex gap-2">
-                          <span className="badge bg-primary bg-opacity-10 text-primary">
+                          <span className="badge  text-primary">
                             {brand.Size}
                           </span>
                           {brand?.Categories?.map((category: any, idx: any) => (
-                            <span
-                              key={idx}
-                              className="badge bg-secondary bg-opacity-10 text-secondary"
-                            >
+                            <span key={idx} className="badge  text-secondary">
                               {category}
                             </span>
                           ))}

@@ -96,7 +96,7 @@ function ProfilePage() {
     userProfile?.Collaboration_Packages
   );
   // console.log("first", userProfile?.Collaboration_Packages);
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const dropdownRef = useRef<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
