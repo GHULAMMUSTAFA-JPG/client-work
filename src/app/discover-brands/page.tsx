@@ -206,7 +206,7 @@ export default function DiscoverBrandsPage() {
                 data-bs-target="#filtersOffcanvas"
                 style={{ color: "black" }}
               >
-                <FilterIcon />
+                <FilterIcon size={13} />
                 Filters
               </button>
 
@@ -234,7 +234,7 @@ export default function DiscoverBrandsPage() {
                     : sortOption == "smallest_first"
                     ? "Smallest First"
                     : ""}
-                  <ArrowDownUp size={20} />
+                  <ArrowDownUp size={13} />
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li>
