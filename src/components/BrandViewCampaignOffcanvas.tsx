@@ -2,14 +2,20 @@ import { apiController } from "@/@api/baseUrl";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "./loader";
+import { toast } from "react-toastify";
 
-export default function BrandViewCampaignOffcanvas({ brandid }: any) {
+export default function BrandViewCampaignOffcanvas({
+  brandid,
+  companyname,
+}: any) {
   const { user, setIsLoading } = useAuth();
   const [loading, setLoading] = useState(false);
   const [campaigns, setcampaigns] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const [rerender, setrerender] = useState(false);
   const observer = useRef<IntersectionObserver>();
+  console.log("user", user);
   console.log("brandid", brandid);
   console.log("hasMore", hasMore);
   interface Campaign {
@@ -54,7 +60,7 @@ export default function BrandViewCampaignOffcanvas({ brandid }: any) {
     };
 
     fetctCampaigns();
-  }, [brandid, page]);
+  }, [brandid, page, rerender]);
   const lastBrandElementRef = useCallback(
     (node: HTMLDivElement) => {
       if (loading) return;
@@ -72,7 +78,27 @@ export default function BrandViewCampaignOffcanvas({ brandid }: any) {
   useEffect(() => {
     setPage(1);
   }, [brandid]);
-
+  const handleApply = async (id: any) => {
+    try {
+      const response = await apiController.post(
+        `/dashboard/campaigns/apply_campaign`,
+        {
+          campaign_id: id,
+          creator_email: user.email,
+          message: "",
+        }
+      );
+      console.log(response);
+      if (response.status === 200) {
+        setPage(1);
+        // toast.success(response.data.message);
+        setrerender(!rerender);
+      }
+    } catch (error: any) {
+      console.error("Error fetching data:", error);
+      // toast.error(error?.data?.message);
+    }
+  };
   return (
     <div
       className="offcanvas offcanvas-end"
@@ -81,7 +107,7 @@ export default function BrandViewCampaignOffcanvas({ brandid }: any) {
     >
       <div className="offcanvas-header border-bottom">
         <div>
-          <h5 className="offcanvas-title">Fathom Campaigns</h5>
+          <h5 className="offcanvas-title">{companyname}</h5>
           <p className="text-muted fs-12 mb-0">
             Available collaboration opportunities
           </p>
@@ -93,63 +119,72 @@ export default function BrandViewCampaignOffcanvas({ brandid }: any) {
         ></button>
       </div>
       <div className="offcanvas-body">
-        {campaigns?.map((campaign: any, index: any) => (
-          <div
-            key={campaign._id}
-            ref={index === campaigns.length - 1 ? lastBrandElementRef : null}
-            className="card mb-4"
-          >
-            <div key={index} className="pb-4 border-bottom card-body">
-              <h5 className="mb-2">{campaign.Headline}</h5>
-              <p className="text-gray fs-14 mb-4">
-                {campaign.Brief_Description}
-              </p>
+        {campaigns?.length === 0 ? (
+          <div className="text-center">
+            <p className="text-muted fs-14">No campaigns found</p>
+          </div>
+        ) : (
+          campaigns?.map((campaign: any, index: any) => (
+            <div
+              key={campaign._id}
+              ref={index === campaigns.length - 1 ? lastBrandElementRef : null}
+              className="card mb-4"
+            >
+              <div key={index} className="pb-4 border-bottom card-body">
+                <h5 className="mb-2">{campaign.Headline}</h5>
+                <p className="text-gray fs-14 mb-4">
+                  {campaign.Brief_Description}
+                </p>
 
-              <div className="row mb-4">
-                <div className="col-6">
-                  <div className="mb-2 text-muted fs-12">Budget Range</div>
-                  <div className="text-gray">{campaign?.Budget}</div>
-                </div>
-                <div className="col-6">
-                  <div className="mb-2 text-muted fs-12">Duration</div>
-                  <div className="text-gray">
-                    {campaign.Is_Ongoing
-                      ? "On Going"
-                      : campaign.Start_Date + "/" + campaign.End_Date}
+                <div className="row mb-4">
+                  <div className="col-6">
+                    <div className="mb-2 text-muted fs-12">Budget Range</div>
+                    <div className="text-gray">{campaign?.Budget}</div>
+                  </div>
+                  <div className="col-6">
+                    <div className="mb-2 text-muted fs-12">Duration</div>
+                    <div className="text-gray">
+                      {campaign.Is_Ongoing
+                        ? "On Going"
+                        : campaign.Start_Date + "/" + campaign.End_Date}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mb-4">
-                <div className="mb-2 text-muted fs-12">Requirements</div>
-                <ul className="list-unstyled text-gray">
-                  {campaign.Campaign_Details}
-                </ul>
+                <div className="mb-4">
+                  <div className="mb-2 text-muted fs-12">Requirements</div>
+                  <ul className="list-unstyled text-gray">
+                    {campaign.Campaign_Details}
+                  </ul>
+                </div>
+                {campaign.Is_Applied ? (
+                  <button
+                    style={{ backgroundColor: "grey" }}
+                    disabled
+                    className="btn btn-primary w-100"
+                  >
+                    Applied
+                  </button>
+                ) : campaign.Is_Invited ? (
+                  <button
+                    style={{ backgroundColor: "grey" }}
+                    disabled
+                    className="btn btn-primary w-100"
+                  >
+                    Invited
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleApply(campaign._id)}
+                    className="btn btn-primary w-100"
+                  >
+                    Apply for Campaign
+                  </button>
+                )}
               </div>
-              {campaign.Is_Applied ? (
-                <button
-                  style={{ backgroundColor: "grey" }}
-                  disabled
-                  className="btn btn-primary w-100"
-                >
-                  Applied
-                </button>
-              ) : campaign.Is_Invited ? (
-                <button
-                  style={{ backgroundColor: "grey" }}
-                  disabled
-                  className="btn btn-primary w-100"
-                >
-                  Invited
-                </button>
-              ) : (
-                <button className="btn btn-primary w-100">
-                  Apply for Campaign
-                </button>
-              )}
             </div>
-          </div>
-        ))}
+          ))
+        )}
         {loading && <Loader />}
       </div>
     </div>

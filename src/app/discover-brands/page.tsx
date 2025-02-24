@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Search, Globe, Building, Linkedin } from "lucide-react";
+import { Search, Globe, Building, Linkedin, ArrowLeft } from "lucide-react";
+import { Undo2 } from "lucide-react";
 import { defaultImagePath } from "@/components/constants";
 import Image from "next/image";
 import { apiController } from "../../@api/baseUrl";
@@ -9,6 +10,7 @@ import BrandFilterOffcanvas from "@/components/BrandFilterOffcanvas";
 import BrandViewCampaignOffcanvas from "@/components/BrandViewCampaignOffcanvas";
 import { useAuth } from "@/contexts/AuthContext";
 import Loader from "@/components/loader";
+import { toast } from "react-toastify";
 
 interface Campaign {
   title: string;
@@ -43,6 +45,7 @@ export default function DiscoverBrandsPage() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [brandid, setbrandid] = useState(null);
+  const [companyname, setcompanyname] = useState("");
   const observer = useRef<IntersectionObserver>();
   console.log("brandid", brandid);
   const handleSortChange = (option: string) => {
@@ -128,6 +131,29 @@ export default function DiscoverBrandsPage() {
     fetchFilters();
   }, []);
 
+  const handleInterested = async (check: any, id: any) => {
+    try {
+      const url =
+        check == "add"
+          ? "/dashboard/creators/add_brand_to_creator_interest"
+          : "/dashboard/creators/remove_brand_from_creator_interest";
+      // setLoading(true);
+      const response = await apiController.post(url, {
+        creator_id: user.uuid,
+        brand_id: id,
+      });
+      console.log(response);
+      if (response.status === 200) {
+        setLoading(false);
+        setrerender(!rerender);
+        // toast.success(response.data.message);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <>
       <>
@@ -175,7 +201,14 @@ export default function DiscoverBrandsPage() {
                   type="button"
                   data-bs-toggle="dropdown"
                 >
-                  Sort: {sortOption}
+                  Sort:{" "}
+                  {sortOption == "most_popular"
+                    ? "MOST POPULAR"
+                    : sortOption == "largest_first"
+                    ? "LARGEST FIRST"
+                    : sortOption == "smallest_first"
+                    ? "SMALLEST FIRST"
+                    : ""}
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end">
                   <li>
@@ -183,7 +216,7 @@ export default function DiscoverBrandsPage() {
                       className="dropdown-item"
                       onClick={() => handleSortChange("most_popular")}
                     >
-                      MOST_POPULAR
+                      MOST POPULAR
                     </button>
                   </li>
                   <li>
@@ -191,7 +224,7 @@ export default function DiscoverBrandsPage() {
                       className="dropdown-item"
                       onClick={() => handleSortChange("largest_first")}
                     >
-                      LARGEST_FIRST
+                      LARGEST FIRST
                     </button>
                   </li>
                   <li>
@@ -199,7 +232,7 @@ export default function DiscoverBrandsPage() {
                       className="dropdown-item"
                       onClick={() => handleSortChange("smallest_first")}
                     >
-                      SMALLEST_FIRST
+                      SMALLEST FIRST
                     </button>
                   </li>
                 </ul>
@@ -274,6 +307,7 @@ export default function DiscoverBrandsPage() {
                         <div className="d-flex gap-2">
                           <button
                             onClick={() => {
+                              setcompanyname(brand.Company_Name);
                               setbrandid(brand._id);
                             }}
                             className="btn btn-primary"
@@ -282,9 +316,25 @@ export default function DiscoverBrandsPage() {
                           >
                             View campaigns
                           </button>
-                          <button className="btn btn-outline-secondary">
-                            I'm Interested
-                          </button>
+                          {brand.Is_Interested ? (
+                            <button
+                              style={{ display: "flex", gap: "8px" }}
+                              onClick={() =>
+                                handleInterested("remove", brand._id)
+                              }
+                              className="btn btn-outline-secondary"
+                            >
+                              <Undo2 size={16} />
+                              <span>Interested</span>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleInterested("add", brand._id)}
+                              className="btn btn-outline-secondary"
+                            >
+                              I'm Interested
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -313,7 +363,10 @@ export default function DiscoverBrandsPage() {
           setPage={setPage}
         />
 
-        <BrandViewCampaignOffcanvas brandid={brandid} />
+        <BrandViewCampaignOffcanvas
+          brandid={brandid}
+          companyname={companyname}
+        />
       </>
     </>
   );
