@@ -10,18 +10,20 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { CampaignDrawer } from "./CampaignDrawer";
-import Link from "next/link";
+import { getStripeLoginLink } from "@/@api/campaign";
+import { toast } from "react-toastify";
 
 interface CampaignHeaderProps {
   onBack: () => void;
   title: string;
   budget: string;
   date: string;
-  status: "Public" | "Private";
+  status: "Public" | "Draft";
   objective?: string;
   audience?: string[];
   platform?: string[];
   website?: string;
+  userId: string;
   onViewEarnings?: () => void;
 }
 
@@ -35,9 +37,24 @@ export function CampaignHeader({
   audience,
   platform,
   website,
-  onViewEarnings,
+  userId,
 }: CampaignHeaderProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [loadingEarnings, setLoadingEarnings] = useState(false);
+
+  const handleViewEarnings = async () => {
+    if (!userId) return alert("Stripe account ID is missing.");
+
+    setLoadingEarnings(true);
+    const response = await getStripeLoginLink(userId);
+    setLoadingEarnings(false);
+
+    if (response?.url) {
+      window.open(response.url, "_blank", "noopener noreferrer");
+    } else {
+      toast.error("Missing Stripe account");
+    }
+  };
 
   return (
     <div className="tw-bg-white tw-border-b tw-border-gray-200">
@@ -61,21 +78,16 @@ export function CampaignHeader({
               </span>
             </div>
 
-            <Link
-              href="https://dashboard.stripe.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => {
-                e.preventDefault();
-                onViewEarnings && onViewEarnings();
-              }}
+            <button
+              onClick={handleViewEarnings}
               className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-text-sm tw-text-primary hover:tw-text-primary-dark tw-border tw-border-primary hover:tw-bg-primary/5 tw-rounded-md"
+              disabled={loadingEarnings}
               title="View your earnings in Stripe Dashboard"
             >
               <CreditCard className="tw-w-4 tw-h-4 tw-mr-2" />
-              View Earnings
+              {loadingEarnings ? "Loading..." : "View Earnings"}
               <ExternalLink className="tw-w-3 tw-h-3 tw-ml-1" />
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -87,7 +99,13 @@ export function CampaignHeader({
                 <h1 className="tw-text-2xl tw-font-semibold tw-text-gray-900">
                   {title}
                 </h1>
-                <span className="tw-px-2.5 tw-py-0.5 tw-text-sm tw-font-medium tw-bg-green-100 tw-text-green-800 tw-rounded-full">
+                <span
+                  className={`tw-px-2.5 tw-py-0.5 tw-text-sm tw-font-medium tw-rounded-full ${
+                    status === "Draft"
+                      ? "tw-bg-gray-100 tw-text-gray-800"
+                      : "tw-bg-green-100 tw-text-green-800"
+                  }`}
+                >
                   {status}
                 </span>
               </div>

@@ -1,23 +1,31 @@
 import React, { useState } from "react";
 import { X, Link as LinkIcon, ExternalLink, AlertCircle } from "lucide-react";
+import { toast } from "react-toastify";
+import { addCampaignLiveLink } from "@/@api/campaign";
 
 interface LivePostDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (url: string) => void;
+  onSubmit: () => void;
+  campaignId: string;
+  creatorId: string;
+  postId: string;
 }
 
 export function LivePostDrawer({
   isOpen,
   onClose,
   onSubmit,
+  campaignId,
+  creatorId,
+  postId,
 }: LivePostDrawerProps) {
   const [postUrl, setPostUrl] = useState("");
   const [error, setError] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!postUrl) {
@@ -30,7 +38,17 @@ export function LivePostDrawer({
       return;
     }
 
-    onSubmit(postUrl);
+    const response = await addCampaignLiveLink({
+      campaign_id: campaignId,
+      creator_id: creatorId,
+      post_id: postId,
+      live_link: postUrl,
+    });
+    if (response) {
+      toast.success("LinkedIn post URL submitted successfully");
+    }
+
+    onSubmit();
     setPostUrl("");
     setError("");
   };

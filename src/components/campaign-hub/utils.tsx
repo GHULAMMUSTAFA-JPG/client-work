@@ -33,18 +33,26 @@ export const getStatusStyles = (status: Status) => {
   }
 };
 
-export const getCampaignStatusStyles = (status: CampaignStatus) => {
+export const getCampaignStatusStyles = (status: Status | CampaignStatus) => {
   const baseStyles =
     "tw-inline-flex tw-items-center tw-px-2 tw-py-0.5 tw-text-xs tw-font-medium tw-rounded";
 
   switch (status) {
-    case CampaignStatus.Draft:
-      return `${baseStyles} tw-bg-gray-100 tw-text-gray-800`;
-    case CampaignStatus.Live:
-      return `${baseStyles} tw-bg-blue-100 tw-text-blue-800`;
-    case CampaignStatus.Completed:
+    case Status.Approved:
       return `${baseStyles} tw-bg-green-100 tw-text-green-800`;
-    case CampaignStatus.Closed:
+    case Status.Rejected:
+      return `${baseStyles} tw-bg-red-100 tw-text-red-800`;
+    case Status.PendingApproval:
+      return `${baseStyles} tw-bg-yellow-100 tw-text-yellow-800`;
+    case Status.InProgress:
+      return `${baseStyles} tw-bg-blue-100 tw-text-blue-800`;
+    case Status.Completed:
+      return `${baseStyles} tw-bg-purple-100 tw-text-purple-800`;
+    case Status.Published:
+      return `${baseStyles} tw-bg-indigo-100 tw-text-indigo-800`;
+    case Status.Paused:
+      return `${baseStyles} tw-bg-orange-100 tw-text-orange-800`;
+    case Status.Cancelled:
       return `${baseStyles} tw-bg-gray-100 tw-text-gray-600`;
     default:
       return baseStyles;

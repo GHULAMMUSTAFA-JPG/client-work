@@ -6,18 +6,13 @@ import {
   Upload,
   DollarSign,
   HelpCircle,
-  FileText,
-  ExternalLink,
-  BarChart2,
-  Eye,
-  RefreshCw,
 } from "lucide-react";
 import { LivePostDrawer } from "./LivePostDrawer";
 import { ImpressionsDrawer } from "./ImpressionsDrawer";
 import { PaymentStatusDrawer } from "./PaymentStatusDrawer";
 
 interface PostStage {
-  id: string;
+  id: number;
   label: string;
   description: string;
   value?: string | number;
@@ -26,21 +21,38 @@ interface PostStage {
 }
 
 interface PostProgressProps {
-  postId: string;
+  postId: string | null;
   stages: PostStage[];
-  onStageClick?: (stageId: string) => void;
+  onStageClick?: (stageId: number | string) => void;
+  campaignId: string;
+  creatorId: string;
+  currentStage: number;
 }
 
 export function PostProgress({
   postId,
   stages,
-  onStageClick,
+  creatorId,
+  campaignId,
+  currentStage,
 }: PostProgressProps) {
-  const [hoveredStage, setHoveredStage] = useState<string | null>(null);
-  const [showTooltip, setShowTooltip] = useState<string | null>(null);
+  const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [isLivePostDrawerOpen, setIsLivePostDrawerOpen] = useState(false);
   const [isImpressionsDrawerOpen, setIsImpressionsDrawerOpen] = useState(false);
   const [isPaymentDrawerOpen, setIsPaymentDrawerOpen] = useState(false);
+
+  const updatedStages = stages.map((stage) => {
+    const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
+    const thisStageIndex = stages.findIndex((s) => s.id === stage.id);
+
+    if (thisStageIndex < currentStageIndex) {
+      return { ...stage, status: "completed" as const };
+    } else if (thisStageIndex === currentStageIndex) {
+      return { ...stage, status: "pending" as const };
+    } else {
+      return { ...stage, status: "inactive" as const };
+    }
+  });
 
   const getStageIcon = (stage: PostStage) => {
     if (stage.icon) return stage.icon;
@@ -62,10 +74,6 @@ export function PostProgress({
   };
 
   const getStageColor = (stage: PostStage, isHovered: boolean) => {
-    const approvedStageIndex = stages.findIndex((s) => s.label === "Approved");
-    const stageIndex = stages.findIndex((s) => s.id === stage.id);
-    const isBeforeApproved = stageIndex <= approvedStageIndex;
-
     switch (stage.status) {
       case "completed":
         return {
@@ -75,20 +83,13 @@ export function PostProgress({
           line: "tw-bg-green-500",
         };
       case "pending":
-        if (isBeforeApproved) {
-          return {
-            bg: isHovered ? "tw-bg-blue-600" : "tw-bg-blue-500",
-            border: "tw-border-blue-500",
-            text: "tw-text-white",
-            line: "tw-bg-blue-500",
-          };
-        }
         return {
-          bg: "tw-bg-gray-100",
-          border: "tw-border-gray-300",
-          text: "tw-text-gray-500",
-          line: "tw-bg-gray-200",
+          bg: isHovered ? "tw-bg-blue-600" : "tw-bg-blue-500",
+          border: "tw-border-blue-500",
+          text: "tw-text-white",
+          line: "tw-bg-blue-500",
         };
+
       default:
         return {
           bg: "tw-bg-white",
@@ -100,12 +101,7 @@ export function PostProgress({
   };
 
   const handleStageClick = (stage: PostStage, index: number) => {
-    const approvedStageIndex = stages.findIndex((s) => s.label === "Approved");
-    const isBeforeApproved = index <= approvedStageIndex;
-
-    if (isBeforeApproved) {
-      onStageClick?.(stage.id);
-    } else {
+    if (stage.id === currentStage) {
       switch (stage.label) {
         case "Live Post Link":
           setIsLivePostDrawerOpen(true);
@@ -120,13 +116,8 @@ export function PostProgress({
     }
   };
 
-  const currentStageIndex = stages.findIndex(
-    (stage) => stage.status === "pending"
-  );
-  const progress =
-    ((currentStageIndex === -1 ? stages.length : currentStageIndex) /
-      stages.length) *
-    100;
+  const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
+  const progress = (currentStageIndex / (stages.length - 1)) * 100;
 
   return (
     <div className="tw-p-6 tw-border-b tw-border-gray-200">
@@ -143,13 +134,13 @@ export function PostProgress({
         <div className="tw-absolute tw-top-4 tw-left-0 tw-w-full tw-h-1 tw-bg-gray-200">
           <div
             className="tw-h-full tw-bg-primary tw-transition-all tw-duration-500"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${progress + 4}%` }}
           />
         </div>
 
         {/* Stages */}
         <div className="tw-relative tw-flex tw-justify-between">
-          {stages.map((stage, index) => {
+          {updatedStages.map((stage, index) => {
             const colors = getStageColor(stage, hoveredStage === stage.id);
             const approvedStageIndex = stages.findIndex(
               (s) => s.label === "Approved"
@@ -210,8 +201,6 @@ export function PostProgress({
                       className={`tw-text-sm tw-font-medium ${
                         stage.status === "completed"
                           ? "tw-text-green-700"
-                          : isBeforeApproved
-                          ? "tw-text-primary"
                           : "tw-text-gray-700"
                       }`}
                     >
@@ -224,38 +213,43 @@ export function PostProgress({
           })}
         </div>
       </div>
+      {postId && (
+        <>
+          <LivePostDrawer
+            isOpen={isLivePostDrawerOpen}
+            onClose={() => setIsLivePostDrawerOpen(false)}
+            onSubmit={() => {
+              setIsLivePostDrawerOpen(false);
+            }}
+            campaignId={campaignId}
+            creatorId={creatorId}
+            postId={postId}
+          />
 
-      <LivePostDrawer
-        isOpen={isLivePostDrawerOpen}
-        onClose={() => setIsLivePostDrawerOpen(false)}
-        onSubmit={(url) => {
-          console.log("Live post URL submitted:", url);
-          setIsLivePostDrawerOpen(false);
-        }}
-      />
+          <ImpressionsDrawer
+            isOpen={isImpressionsDrawerOpen}
+            onClose={() => setIsImpressionsDrawerOpen(false)}
+            postId={postId}
+            onSubmit={(data) => {
+              console.log("Impressions data submitted:", data);
+              setIsImpressionsDrawerOpen(false);
+            }}
+          />
 
-      <ImpressionsDrawer
-        isOpen={isImpressionsDrawerOpen}
-        onClose={() => setIsImpressionsDrawerOpen(false)}
-        postId={postId}
-        onSubmit={(data) => {
-          console.log("Impressions data submitted:", data);
-          setIsImpressionsDrawerOpen(false);
-        }}
-      />
-
-      <PaymentStatusDrawer
-        isOpen={isPaymentDrawerOpen}
-        onClose={() => setIsPaymentDrawerOpen(false)}
-        postId={postId}
-        status={{
-          status: "processing",
-          amount: 300,
-          dueDate: "2024-03-31",
-          paymentMethod: "Bank Transfer",
-          transactionId: "TRX123456",
-        }}
-      />
+          <PaymentStatusDrawer
+            isOpen={isPaymentDrawerOpen}
+            onClose={() => setIsPaymentDrawerOpen(false)}
+            postId={postId}
+            status={{
+              status: "processing",
+              amount: 300,
+              dueDate: "2024-03-31",
+              paymentMethod: "Bank Transfer",
+              transactionId: "TRX123456",
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }

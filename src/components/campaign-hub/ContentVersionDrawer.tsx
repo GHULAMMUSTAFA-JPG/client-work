@@ -11,27 +11,12 @@ import {
   MousePointer,
   BarChart,
 } from "lucide-react";
-
-interface ContentVersion {
-  id: string;
-  date: string;
-  imageUrl?: string;
-  status: "approved" | "rejected" | "pending" | "draft";
-  feedback?: string[];
-  livePostLink?: string;
-  postType: string;
-  metrics?: {
-    impressions: number;
-    clicks: number;
-    engagement: number;
-    lastUpdated: string;
-  };
-}
+import { Version } from "./ContentVersions";
 
 interface ContentVersionDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  version: ContentVersion;
+  version: Version;
 }
 
 export function ContentVersionDrawer({

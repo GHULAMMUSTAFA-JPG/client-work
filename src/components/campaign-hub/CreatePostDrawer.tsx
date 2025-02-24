@@ -1,55 +1,81 @@
 import React, { useState } from "react";
-import { X, Calendar, AlertCircle, DollarSign } from "lucide-react";
+import { X, Calendar, Clock, AlertCircle, DollarSign } from "lucide-react";
 import { linkedInPostTypes } from "@/types/linkedin";
+import { createCampaignPost } from "@/@api/campaign";
 
 interface CreatePostDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (postData: any) => void;
+  campaignId: string;
+  creatorId: string;
+  campaignStatus: string;
+  onSubmit: () => void;
 }
 
 export function CreatePostDrawer({
   isOpen,
   onClose,
+  campaignId,
+  creatorId,
+  campaignStatus,
   onSubmit,
 }: CreatePostDrawerProps) {
   const [postType, setPostType] = useState("");
   const [budget, setBudget] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [description, setDescription] = useState("");
+
   const [error, setError] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!postType) {
       setError("Please select a post type");
       return;
     }
-
     if (!budget) {
       setError("Please enter a proposed budget");
       return;
     }
-
     if (!dueDate) {
       setError("Please select a due date");
       return;
     }
 
+    if (!description) {
+      setError("Please enter a post description");
+      return;
+    }
+
+    setError("");
     const postData = {
-      type: postType,
+      campaign_id: campaignId,
+      creator_id: creatorId,
       budget: parseFloat(budget),
-      submissionDate: new Date().toISOString(),
-      dueDate,
-      instructions,
-      campaignStatus: "Campaign Live",
+      category: postType,
+      title: postType,
+      description,
+      submission_date: new Date().toISOString(),
+      due_date: new Date(dueDate).toISOString(),
     };
 
-    onSubmit(postData);
+    const response = await createCampaignPost(postData);
+
+    if (!response) {
+      setError("Failed to create post. Please try again.");
+      return;
+    }
+
+    setPostType("");
+    setBudget("");
+    setDueDate("");
+    setDescription("");
+    onClose();
+    onSubmit();
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -79,10 +105,8 @@ export function CreatePostDrawer({
               </div>
             </div>
 
-            {/* Content */}
             <div className="tw-flex-1 tw-overflow-y-auto">
               <form onSubmit={handleSubmit} className="tw-p-6 tw-space-y-6">
-                {/* Post Type Selection */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     Post Type
@@ -141,17 +165,49 @@ export function CreatePostDrawer({
                       <span>Proposed Budget</span>
                     </div>
                   </label>
-                  <input
-                    type="number"
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    className="tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
-                    placeholder="0.00"
-                    min="0"
-                    step="0.01"
-                  />
+                  <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
+                    <div className="tw-absolute tw-inset-y-0 tw-left-0 tw-pl-3 tw-flex tw-items-center tw-pointer-events-none">
+                      <span className="tw-text-gray-500 tw-sm:tw-text-sm">
+                        $
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      value={budget}
+                      onChange={(e) => setBudget(e.target.value)}
+                      className="tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                      placeholder="0.00"
+                      min="0"
+                      step="0.01"
+                    />
+                  </div>
                 </div>
 
+                {/* Campaign Status */}
+                <div>
+                  <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                    Campaign Status
+                  </label>
+                  <div className="tw-mt-1">
+                    <div className="tw-px-4 tw-py-2 tw-bg-blue-50 tw-text-blue-700 tw-rounded-md tw-border tw-border-blue-200">
+                      {campaignStatus}
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                    <div className="tw-flex tw-items-center tw-space-x-2">
+                      <Clock className="tw-w-4 tw-h-4 tw-text-gray-400" />
+                      <span>Submission Date</span>
+                    </div>
+                  </label>
+                  <div className="tw-mt-1">
+                    <div className="tw-px-4 tw-py-2 tw-bg-gray-50 tw-text-gray-700 tw-rounded-md tw-border tw-border-gray-200">
+                      {new Date().toLocaleDateString()}
+                    </div>
+                  </div>
+                </div>
                 {/* Due Date */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
@@ -169,18 +225,20 @@ export function CreatePostDrawer({
                   />
                 </div>
 
-                {/* Instructions */}
+                {/* Description */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                    Instructions Box
+                    Description
                   </label>
-                  <textarea
-                    value={instructions}
-                    onChange={(e) => setInstructions(e.target.value)}
-                    rows={4}
-                    className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
-                    placeholder="Provide any special notes or instructions for the brand..."
-                  />
+                  <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
+                    <textarea
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      rows={4}
+                      className="tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                      placeholder="Enter post description..."
+                    />
+                  </div>
                 </div>
 
                 {error && (
