@@ -24,7 +24,7 @@ interface Post {
 
 interface PostsListProps {
   posts: Post[];
-  selectedPostId: string;
+  selectedPostId: string | null;
   campaignStatus: CampaignStatus;
   onPostSelect: (postId: string) => void;
   onCreatePost: () => void;

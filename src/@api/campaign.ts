@@ -1,5 +1,23 @@
 import { apiController } from "./baseUrl";
 
+const handleApiRequest = async <T>(
+  method: "get" | "post" | "put",
+  url: string,
+  payloadOrParams?: object
+): Promise<T | null> => {
+  try {
+    const response =
+      method === "get"
+        ? await apiController.get(url, { params: payloadOrParams })
+        : await apiController[method](url, payloadOrParams);
+
+    return response.data;
+  } catch (error) {
+    console.error(`API Error (${method.toUpperCase()} ${url}):`, error);
+    return null;
+  }
+};
+
 export const createCampaignPost = async (payload: {
   campaign_id: string;
   creator_id: string;
@@ -7,19 +25,17 @@ export const createCampaignPost = async (payload: {
   category: string;
   title: string;
   description: string;
-}) => {
-  try {
-    const response = await apiController.post(
-      "/dashboard/campaigns/campaign-post",
-      payload
-    );
+  submission_date: string;
+  due_date: string;
+}) => handleApiRequest("post", "/dashboard/campaigns/campaign-post", payload);
 
-    return response.data;
-  } catch (error) {
-    console.error("Error creating campaign post:", error);
-    return null;
-  }
-};
+export const updatePostProposalStatus = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  status: string;
+}) =>
+  handleApiRequest("put", "/dashboard/campaigns/post-proposal-status", payload);
 
 export const createCampaignPostContent = async (payload: {
   campaign_id: string;
@@ -27,76 +43,104 @@ export const createCampaignPostContent = async (payload: {
   post_id: string;
   content_title: string;
   content_text_content: string;
-}) => {
-  try {
-    const response = await apiController.post(
-      "/dashboard/campaigns/campaign-post-content",
-      payload
-    );
+  media_content: string[];
+}) =>
+  handleApiRequest(
+    "post",
+    "/dashboard/campaigns/campaign-post-content",
+    payload
+  );
 
-    return response.data;
-  } catch (error) {
-    console.error("Error creating campaign post content:", error);
-    return null;
-  }
-};
+export const updatePostContentStatus = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  content_id: string;
+  status: string;
+  feedback?: string;
+}) =>
+  handleApiRequest(
+    "put",
+    "/dashboard/campaigns/update-post-cotent-status",
+    payload
+  );
+
+export const addCampaignLiveLink = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  live_link: string;
+}) =>
+  handleApiRequest("put", "/dashboard/campaigns/campaign-live-link", payload);
+
+export const addCampaignPostImpressions = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  impressions: number;
+  clicks: number;
+  engagement_rate: number;
+  comments: number;
+  shares: number;
+}) =>
+  handleApiRequest(
+    "put",
+    "/dashboard/campaigns/campaign-post-impressions",
+    payload
+  );
 
 export const getCampaignCreatorPosts = async (params: {
   creator_id: string;
   campaign_id: string;
-}) => {
-  try {
-    const response = await apiController.get(
-      `/dashboard/campaigns/campaign-creator-posts`,
-      {
-        params,
-      }
-    );
+}) =>
+  handleApiRequest(
+    "get",
+    "/dashboard/campaigns/campaign-creator-posts",
+    params
+  );
 
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching campaign creator posts:", error);
-    return null;
-  }
-};
+export const getCampaignActiveCreatorsOverview = async (params: {
+  campaign_id: string;
+  buyer_id: string;
+}) =>
+  handleApiRequest(
+    "get",
+    "/dashboard/campaigns/campaign-active-creators-overview",
+    params
+  );
 
 export const getCampaignPostDetails = async (params: {
   campaign_id: string;
   creator_id: string;
   post_id: string;
-}) => {
-  try {
-    const response = await apiController.get(
-      `/dashboard/campaigns/campaign-post-data`,
-      {
-        params,
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching campaign post details:", error);
-    return null;
-  }
-};
+}) =>
+  handleApiRequest("get", "/dashboard/campaigns/campaign-post-data", params);
 
 export const getPostContentDetails = async (params: {
   campaign_id: string;
   creator_id: string;
   post_id: string;
   content_id: string;
-}) => {
-  try {
-    const response = await apiController.get(
-      `/dashboard/campaigns/post-content-data`,
-      {
-        params,
-      }
-    );
+}) => handleApiRequest("get", "/dashboard/campaigns/post-content-data", params);
 
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching post content details:", error);
-    return null;
-  }
+export const getCampaignPostProposals = async (params: { buyer_id: string }) =>
+  handleApiRequest(
+    "get",
+    "/dashboard/campaigns/campaign-post-proposals",
+    params
+  );
+
+export const getPostProposalDetails = async (params: {
+  buyer_id: string;
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+}) =>
+  handleApiRequest("get", "/dashboard/campaigns/post-proposal-details", params);
+
+export const getStripeLoginLink = async (user_id: string) => {
+  return handleApiRequest<{ object: string; created: number; url: string }>(
+    "get",
+    `/payments/${user_id}/generate-customer-portal`
+  );
 };
