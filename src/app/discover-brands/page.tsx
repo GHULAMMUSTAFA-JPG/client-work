@@ -86,7 +86,7 @@ export default function DiscoverBrandsPage() {
         const response = await apiController.post(
           "/dashboard/creators/discover_brands",
           {
-            user_id: user.uuid,
+            user_id: user?.uuid,
             is_interested: interested,
             filters: {
               categories: categories,

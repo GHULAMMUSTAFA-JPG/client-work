@@ -57,6 +57,11 @@ export default function BrandFilterOffcanvas({
       setPage(1);
     }
     setrerender(!rerender);
+    (
+      document
+        .getElementById("filtersOffcanvas")
+        ?.querySelector(".btn-close") as HTMLButtonElement
+    ).click();
   };
 
   return (
