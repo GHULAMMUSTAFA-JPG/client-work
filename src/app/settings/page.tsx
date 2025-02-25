@@ -35,8 +35,14 @@ function App() {
   const [charges_enabled, setcharges_enabled] = useState(null);
   const [onboarding_status, setonboarding_status] = useState(null);
   const [email, setemail] = useState();
+  const [storedname, setStoredname] = useState("");
   console.log("user", user);
-  const storedname = localStorage.getItem("Company_Name");
+  useEffect(() => {
+    // Check if window is defined (we're in the browser)
+    if (typeof window !== "undefined") {
+      setStoredname(localStorage.getItem("Company_Name") || "");
+    }
+  }, []);
   const handlequickactions = async () => {
     try {
       const response = await apiController.get(
