@@ -119,7 +119,7 @@ function DiscoverCreator() {
                         <div className="d-flex gap-2 align-items-center">
                           <img
                             src={campaign?.Company_Logo || defaultImagePath}
-                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                            className="border object-fit-cover rounded-circle flex-shrink-0 vh-40"
                             alt="logo"
                             width={40}
                             height={40}

@@ -102,7 +102,7 @@ const CampaignTable = (props: any) => {
                                           </div>
                                         </td>
                                         <td>
-                                          <div className="d-flex align-items-center justify-content-center">
+                                          <div className="d-flex align-items-center justify-content-center gap-3 text-center">
                                             <div>
                                               <p className="mb-0">
                                                 {
@@ -114,7 +114,7 @@ const CampaignTable = (props: any) => {
                                                 Approved
                                               </p>
                                             </div>
-                                            <div className="ms-5">
+                                            <div>
                                               <p className="mb-0">
                                                 {
                                                   camp?.Creator_Insights
@@ -125,7 +125,7 @@ const CampaignTable = (props: any) => {
                                                 Applied
                                               </p>
                                             </div>
-                                            <div className="ms-5">
+                                            <div>
                                               <p className="mb-0">
                                                 {
                                                   camp?.Creator_Insights
@@ -136,7 +136,7 @@ const CampaignTable = (props: any) => {
                                                 Invited
                                               </p>
                                             </div>
-                                            <div className="ms-5">
+                                            <div>
                                               <p className="mb-0">
                                                 {
                                                   camp?.Creator_Insights
@@ -160,7 +160,7 @@ const CampaignTable = (props: any) => {
                                               camp?.Is_Public
                                                 ? "bg-primary-subtle text-primary"
                                                 : "bg-danger-subtle text-danger"
-                                            } border-0 btn btn-sm px-3 rounded-pill`}
+                                            } border-0 pt-2 pb-2 btn-sm px-3 rounded-pill`}
                                           >
                                             {camp?.Is_Public
                                               ? "Public"
@@ -168,6 +168,7 @@ const CampaignTable = (props: any) => {
                                           </span>
                                         </td>
                                         <td className="text-center w-s">
+                                        <div className="d-flex align-items-center justify-content-center gap-3 text-center">
                                           <Icon
                                             onClick={() => {
                                               setSelectedCampaign(camp);
@@ -193,6 +194,7 @@ const CampaignTable = (props: any) => {
                                               );
                                             }}
                                           />
+                                          </div>
                                         </td>
                                       </tr>
                                     );
