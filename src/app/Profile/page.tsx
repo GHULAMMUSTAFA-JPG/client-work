@@ -550,7 +550,7 @@ function ProfilePage() {
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <h2>
+                  <h2 className="d-flex align-items-center py-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -609,7 +609,7 @@ function ProfilePage() {
                   style={{ display: "flex", justifyContent: "space-between" }}
                   className="letbox"
                 >
-                  <h2>
+                  <h2 className="d-flex align-items-center py-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -774,7 +774,7 @@ function ProfilePage() {
                       {/* Edit profile starts here */}
                       <div className="d-flex justify-content-between align-items-center mb-3 px-3">
                         <h6 className="mb-0 ">Edit Profile</h6>
-                        <div>
+                        <div className="d-flex align-items-center gap-2">
                           <button
                             className="bg-white border btn btn-sm"
                             onClick={handleCancel}

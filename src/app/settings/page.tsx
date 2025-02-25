@@ -54,7 +54,7 @@ function App() {
       <div className="row my-3">
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-end mb-3">
-            <p className="mb-0 fw-medium fs-16">
+            <p className="d-flex mb-0 fw-medium fs-16 d-flex align-items-center">
               <svg
                 id="Icon_feather-settings"
                 data-name="Icon feather-settings"
@@ -308,7 +308,7 @@ function App() {
 
             <div className="FooterboxSettings d-flex justify-content-between">
               <div className="box_footer">
-                <div>
+                <div className="d-flex align-items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -330,7 +330,7 @@ function App() {
                   &nbsp;<span>Terms Service</span>
                 </div>
 
-                <div>
+                <div className="d-flex align-items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -351,7 +351,7 @@ function App() {
               <div className="box_footer">
                 <button
                   onClick={() => logout()}
-                  className="btn btn-primary-outline flex items-center space-x-2 text-red-600 hover:text-red-700 hover:bg-red-50 px-4 py-2 rounded-md"
+                  className="btn btn-primary-outline flex items-center space-x-2 text-red-600 hover:text-red-700 hover:bg-red-50 px-4 py-2 rounded-md d-flex gap-2"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
