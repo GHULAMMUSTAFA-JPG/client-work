@@ -245,7 +245,7 @@ function Homepage() {
                     {/* tags */}
                     {userProfile?.Audience_Interest.split(", ")?.length > 0 &&
                       userProfile?.Audience_Interest.split(", ")[0] !== "" && (
-                        <div className="d-flex gap-2 ">
+                        <div className="d-flex gap-2 mb-3">
                           {userProfile?.Audience_Interest.split(", ")?.map(
                             (audience_interest: string, index: number) => (
                               <div className="chip" key={index}>
