@@ -32,6 +32,11 @@ function App() {
     selectedIds,
   } = useAuth();
   const router = useRouter();
+  const [charges_enabled, setcharges_enabled] = useState(null);
+  const [onboarding_status, setonboarding_status] = useState(null);
+  const [email, setemail] = useState();
+  console.log("user", user);
+  const storedname = localStorage.getItem("Company_Name");
   const handlequickactions = async () => {
     try {
       const response = await apiController.get(
@@ -49,6 +54,114 @@ function App() {
       // return null
     }
   };
+  useEffect(() => {
+    const getemail = async () => {
+      try {
+        const response = await apiController.get(
+          `/email?user_id=${user?.uuid || user?._id}`
+        );
+        console.log("status", response);
+        if (response.status === 200) {
+          setemail(response.data.email);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    getemail();
+  }, []);
+  useEffect(() => {
+    const fetchAccountStatus = async () => {
+      try {
+        const response = await apiController.get(
+          `/payments/${user?.uuid}/account-status`
+        );
+        console.log("status", response);
+        if (response.status === 200) {
+          setcharges_enabled(response.data.charges_enabled);
+          setonboarding_status(response.data.onboarding_status);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAccountStatus();
+  }, []);
+
+  const handlestripe = async () => {
+    try {
+      if (charges_enabled == true && onboarding_status == true) {
+        const response = await apiController.get(
+          `/payments/${user?.uuid}/generate-customer-portal`
+        );
+        window.open(response.data.url, "_blank");
+        console.log("handlestripe", response);
+      } else if (charges_enabled == false && onboarding_status == true) {
+        const response = await apiController.get(
+          `/payments/${user?.uuid}/generate-customer-portal`
+        );
+        window.open(response.data.url, "_blank");
+
+        console.log("not called");
+      } else {
+        const response = await apiController.get(
+          `/payments/${user.uuid}/connect-stripe`
+        );
+        console.log("responseconnect", response);
+        if (response.status === 200) {
+          window.open(response.data.url, "_blank");
+        }
+      }
+
+      // setCompanyData(response?.data);
+      // setIsLoading && setIsLoading(false);
+      // return response
+    } catch (error) {
+      console.log(error);
+      // setIsLoading && setIsLoading(false);
+
+      // setCompanyData({});
+      // return null
+    }
+  };
+
+  const handlestripedashboard = async () => {
+    try {
+      if (!user.isBuyer) {
+        const response = await apiController.get(
+          `/payments/${user?.uuid}/generate-customer-portal`
+        );
+        if (response.status === 200) {
+          window.open(response.data.url, "_blank");
+        }
+      } else {
+        const response = await apiController.get(
+          `/payments/create-customer-portal?user_id=${user?._id}`
+        );
+        if (response.status === 200) {
+          window.open(response.data, "_blank");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlebuyerconnect = async () => {
+    try {
+      const response = await apiController.get(
+        `/payments/create-customer-portal?user_id=${user?._id}`
+      );
+      if (response.status === 200) {
+        window.open(response.data, "_blank");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row my-3">
@@ -92,7 +205,9 @@ function App() {
               <div className="d-flex justify-content-between">
                 <p className="fw-medium fs-16">Profile Information</p>
                 <div
-                  onClick={() => router.push("/Profile")}
+                  onClick={() => {
+                    router.push(user.isBuyer ? "/companypage" : "/Profile");
+                  }}
                   className="btn btn-primary"
                 >
                   Edit
@@ -100,11 +215,15 @@ function App() {
               </div>
               <div className="form-container mt-3">
                 <div className="form-group">
-                  <label htmlFor="fullname">Full Name:</label>
+                  <label htmlFor="fullname">
+                    {user?.isBuyer ? "Company Name" : "Full Name:"}{" "}
+                  </label>
                   <input
+                    style={{ pointerEvents: "none", cursor: "default" }}
                     type="text"
                     id="fullname"
                     name="fullname"
+                    value={user?.name || storedname}
                     required
                     placeholder="John Doe"
                   />
@@ -112,10 +231,12 @@ function App() {
                 <div className="form-group">
                   <label htmlFor="email">Email:</label>
                   <input
+                    style={{ pointerEvents: "none", cursor: "default" }}
                     type="email"
                     id="email"
                     name="email"
                     required
+                    value={email}
                     placeholder="john@example.com"
                   />
                 </div>
@@ -160,7 +281,7 @@ function App() {
                 </div>
                 <div className="buttonbox">
                   <div
-                    onClick={() => router.push("/Profile")}
+                    // onClick={() => router.push("/Profile")}
                     className="btn btn-outline-primary"
                   >
                     Connect
@@ -169,52 +290,119 @@ function App() {
               </div>
 
               <div className="stripes_Cont d-flex justify-content-between">
-                <div className="stripe_icon">
-                  {" "}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="lucide lucide-building2 h-6 w-6 text-gray-600"
-                  >
-                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-                    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
-                    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
-                    <path d="M10 6h4"></path>
-                    <path d="M10 10h4"></path>
-                    <path d="M10 14h4"></path>
-                    <path d="M10 18h4"></path>
-                  </svg>{" "}
-                  Company Profile{" "}
-                </div>
+                {user?.isBuyer ? (
+                  <div className="stripe_icon">
+                    {" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="lucide lucide-building2 h-6 w-6 text-gray-600"
+                    >
+                      <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                      <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                      <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                      <path d="M10 6h4"></path>
+                      <path d="M10 10h4"></path>
+                      <path d="M10 14h4"></path>
+                      <path d="M10 18h4"></path>
+                    </svg>{" "}
+                    Company Profile{" "}
+                  </div>
+                ) : (
+                  <div className="stripe_icon">
+                    {" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-6 w-6 text-gray-600"
+                    >
+                      <circle cx="12" cy="8" r="5"></circle>
+                      <path d="M20 21a8 8 0 1 0-16 0"></path>
+                    </svg>
+                    Creator Profile{" "}
+                  </div>
+                )}
                 <div className="buttonbox">
-                  <a href="#" className="btn btn-outline-primary">
+                  <a
+                    href={!user?.isBuyer ? `/Profile` : `/companypage`}
+                    className="btn btn-outline-primary"
+                  >
                     Update
                   </a>
                 </div>
               </div>
 
-              <div className="stripes_Cont d-flex justify-content-between">
-                <div className="stripe_icon">
-                  <img
-                    src="https://e1cdn.social27.com/digitalevents/chatbot/Stripe_Logo%2C_revised_2016.svg"
-                    alt="Stripe"
-                    className="h-6"
-                  />{" "}
-                  Stripe Account{" "}
+              {!user?.isBuyer ? (
+                <div className="stripes_Cont d-flex justify-content-between">
+                  <div className="stripe_icon">
+                    <img
+                      src="https://e1cdn.social27.com/digitalevents/chatbot/Stripe_Logo%2C_revised_2016.svg"
+                      alt="Stripe"
+                      className="h-6"
+                    />{" "}
+                    Stripe Account{" "}
+                  </div>
+                  <div className="buttonbox">
+                    <button
+                      onClick={handlestripe}
+                      className="btn btn-outline-primary"
+                    >
+                      {charges_enabled == false && onboarding_status == true
+                        ? "Visit My Stripe Dashboard"
+                        : charges_enabled == true && onboarding_status == true
+                        ? "Visit My Stripe Dashboard"
+                        : "Connect"}
+                    </button>
+                    {charges_enabled == false && onboarding_status == true && (
+                      <div
+                        style={{
+                          width: "200px",
+                          color: "red",
+                          fontSize: "10px",
+                          marginTop: "10px",
+                        }}
+                      >
+                        Your account is not ready to accept payments. Stripe may
+                        ask you to complete additional steps. Visit your Stripe
+                        Dashboard for more information by clicking here.
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="buttonbox">
-                  <a href="#" className="btn btn-outline-primary">
-                    Connect
-                  </a>
+              ) : (
+                <div className="stripes_Cont d-flex justify-content-between">
+                  <div className="stripe_icon">
+                    <img
+                      src="https://e1cdn.social27.com/digitalevents/chatbot/Stripe_Logo%2C_revised_2016.svg"
+                      alt="Stripe"
+                      className="h-6"
+                    />{" "}
+                    Stripe Account{" "}
+                  </div>
+                  <div className="buttonbox">
+                    <button
+                      onClick={handlebuyerconnect}
+                      className="btn btn-outline-primary"
+                    >
+                      Visit My Stripe Dashboard
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="section-block">
@@ -223,7 +411,7 @@ function App() {
               </div>
 
               <div
-                onClick={handlequickactions}
+                // onClick={handlequickactions}
                 className="stripes_Cont d-flex justify-content-between"
               >
                 <div className="stripe_icon">
@@ -265,7 +453,10 @@ function App() {
                 </div>
               </div>
 
-              <div className="stripes_Cont d-flex justify-content-between">
+              <div
+                onClick={handlestripedashboard}
+                className="stripes_Cont d-flex justify-content-between tw-cursor-pointer"
+              >
                 <div className="stripe_icon">
                   {" "}
                   <svg

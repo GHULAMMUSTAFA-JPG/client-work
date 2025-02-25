@@ -93,41 +93,83 @@ function Homepage() {
                         arrow
                         placement="top"
                       >
-
-                         <div
-                      className="editprofilebox"
-                      onClick={shareProfile}
-                      style={{ cursor: "pointer" }}
-                    >
-                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="22" viewBox="0 0 20 22">
-  <g id="Icon_feather-share-2" data-name="Icon feather-share-2" transform="translate(-2 -1)">
-    <path id="Path_855" data-name="Path 855" d="M21,5a3,3,0,1,1-3-3A3,3,0,0,1,21,5Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_856" data-name="Path 856" d="M9,12A3,3,0,1,1,6,9,3,3,0,0,1,9,12Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_857" data-name="Path 857" d="M21,19a3,3,0,1,1-3-3A3,3,0,0,1,21,19Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_858" data-name="Path 858" d="M8.59,13.51l6.83,3.98M15.41,6.51,8.59,10.49" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg>
-
-                    </div>
-       
+                        <div
+                          className="editprofilebox"
+                          onClick={shareProfile}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="22"
+                            viewBox="0 0 20 22"
+                          >
+                            <g
+                              id="Icon_feather-share-2"
+                              data-name="Icon feather-share-2"
+                              transform="translate(-2 -1)"
+                            >
+                              <path
+                                id="Path_855"
+                                data-name="Path 855"
+                                d="M21,5a3,3,0,1,1-3-3A3,3,0,0,1,21,5Z"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              <path
+                                id="Path_856"
+                                data-name="Path 856"
+                                d="M9,12A3,3,0,1,1,6,9,3,3,0,0,1,9,12Z"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              <path
+                                id="Path_857"
+                                data-name="Path 857"
+                                d="M21,19a3,3,0,1,1-3-3A3,3,0,0,1,21,19Z"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              <path
+                                id="Path_858"
+                                data-name="Path 858"
+                                d="M8.59,13.51l6.83,3.98M15.41,6.51,8.59,10.49"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                            </g>
+                          </svg>
+                        </div>
                       </Tooltip>
                       <Tooltip title="Edit Profile" arrow placement="top">
-                      <div
-                      className="editprofilebox"
-                      onClick={() => router.push("/Profile")}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        id="edit-medium"
-                        aria-hidden="true"
-                        data-supported-dps="24x24"
-                        fill="currentColor"
-                      >
-                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
-                      </svg>
-                    </div>
+                        <div
+                          className="editprofilebox"
+                          onClick={() => router.push("/Profile")}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            id="edit-medium"
+                            aria-hidden="true"
+                            data-supported-dps="24x24"
+                            fill="currentColor"
+                          >
+                            <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                          </svg>
+                        </div>
                       </Tooltip>
                     </div>
                     <Link
@@ -199,20 +241,24 @@ function Homepage() {
                       <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
                       </p>
-                    
                     </div>
                     {/* tags */}
-                    <div className="d-flex gap-2 ">
-                      {userProfile?.Audience_Interest.split(", ")?.map(
-                        (audience_interest: string, index: number) => (
-                          <div className="chip" key={index}>
-                          <div className="chip-text">{" "}{audience_interest}
-</div>
+                    {userProfile?.Audience_Interest.split(", ")?.length > 0 &&
+                      userProfile?.Audience_Interest.split(", ")[0] !== "" && (
+                        <div className="d-flex gap-2 ">
+                          {userProfile?.Audience_Interest.split(", ")?.map(
+                            (audience_interest: string, index: number) => (
+                              <div className="chip" key={index}>
+                                <div className="chip-text">
+                                  {" "}
+                                  {audience_interest}
+                                </div>
+                              </div>
+                            )
+                          )}
                         </div>
-                        )
                       )}
-                    </div>
-                    <div className="d-flex gap-2 flex-wrap mb-3">
+                    {/* <div className="d-flex gap-2 flex-wrap mb-3">
                       {userProfile?.Skills?.map(
                         (element: any, index: number) => (
                           <span
@@ -223,7 +269,7 @@ function Homepage() {
                           </span>
                         )
                       )}
-                    </div>
+                    </div> */}
 
                     <p className="mb-0 fs-12 text-warning">
                       {userProfile?.Description &&
@@ -235,37 +281,33 @@ function Homepage() {
                 </div>
 
                 <div className="statsbox-container-dash">
-               
-                <div className="stats-box-dash">
-                       
-                        <h5 className="stats-count-dash">
-                          {userProfile?.No_of_Followers}{" "}
-                        </h5>
-                        <p className="stats-heading-dash">Followers</p>
-                 </div>
-                  
-                  
-                 <div className="stats-box-dash">
-                          <h5 className="stats-count-dash">
-                          {userProfile?.Average_Engagements}
-                        </h5>
-                        <p className="stats-heading-dash">
-                          Average Engagaements per post
-                        </p>
-                      </div>
-              
-                      <div className="stats-box-dash">
-                               <h5 className="stats-count-dash">
-                          {userProfile?.Average_Impressions}
-                        </h5>
-                        <p className="stats-heading-dash">
-                          Average Impressions per post
-                        </p>
-                      </div>
-               
+                  <div className="stats-box-dash">
+                    <h5 className="stats-count-dash">
+                      {userProfile?.No_of_Followers}{" "}
+                    </h5>
+                    <p className="stats-heading-dash">Followers</p>
+                  </div>
+
+                  <div className="stats-box-dash">
+                    <h5 className="stats-count-dash">
+                      {userProfile?.Average_Engagements}
+                    </h5>
+                    <p className="stats-heading-dash">
+                      Average Engagaements per post
+                    </p>
+                  </div>
+
+                  <div className="stats-box-dash">
+                    <h5 className="stats-count-dash">
+                      {userProfile?.Average_Impressions}
+                    </h5>
+                    <p className="stats-heading-dash">
+                      Average Impressions per post
+                    </p>
+                  </div>
                 </div>
-     </div>
-     </div>
+              </div>
+            </div>
             <div className="card h-10">
               {!hasActiveCampaigns && (
                 <div className="d-flex flex-column justify-content-center min-h-100 howitwork">

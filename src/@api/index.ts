@@ -784,6 +784,7 @@ export const fetchBuyersData = async (
       `/dashboard/buyers/get_buyer?email=${email}`
     );
     setData(response?.data);
+    localStorage.setItem("Company_Name", response?.data?.Company_Name);
     setIsLoading && setIsLoading(false);
     return response?.data;
   } catch (error) {
@@ -948,6 +949,7 @@ export const getCompanyPageData = async (
       `/dashboard/buyers/get_buyer?email=${email}`
     );
     setData(response?.data);
+    localStorage.setItem("Company_Name", response?.data?.Company_Name);
   } catch (error) {
     console.log(error);
     setData(null);
