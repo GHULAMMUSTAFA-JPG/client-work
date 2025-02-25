@@ -501,7 +501,7 @@ function CompanyPage() {
             <div className="profile-left-column">
               <div className="profile-box-container mb-4 mt-16 position-relative">
                 <div className="aboutusSection">
-                  <h2>
+                  <h2 className="d-flex align-items-center py-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                       <circle cx="9" cy="7" r="4"></circle>
@@ -521,7 +521,7 @@ function CompanyPage() {
                 {/* Collaboration Section */}
                 <div className="aboutusSection">
                   <div className="letbox_campaigns">
-                  <h2>
+                  <h2 className="d-flex align-items-center py-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
                     </svg>
@@ -623,7 +623,7 @@ function CompanyPage() {
                 
          {/* sidebar sections starts here */}
          <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
-          <div className="profile-sidebar-wraper" style={{borderRadius: "10px" , border: "0.5px solid grey "}}>
+          <div className="profile-sidebar-wraper">
             {/* First edit section */}
             <div
               className={`profilee-container ${
@@ -632,7 +632,7 @@ function CompanyPage() {
             >
               <div className="d-flex justify-content-between align-items-center mb-3 px-3">
                 <h6 className="mb-0 ">Edit Profile</h6>
-                <div>
+                <div className="d-flex align-items-center gap-2">
                   <button
                     className="bg-white border btn btn-sm"
                     onClick={handleCancel}

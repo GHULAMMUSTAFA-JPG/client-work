@@ -291,7 +291,7 @@ export default function DiscoverBrandsPage() {
                             // alt={`${brand.Company_Name} logo`}
                             width={60}
                             height={60}
-                            className="rounded"
+                            className="rounded vh-60"
                           />
                         </div>
                       </div>
