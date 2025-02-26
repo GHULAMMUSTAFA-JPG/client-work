@@ -105,7 +105,7 @@ function CompanyPage() {
   >("about");
   const [cardDetails, setCardDetails] = useState<any[]>();
   // Add new state for sidebar visibility
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
   const [campaignData, setCampaignData] = useState<any>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -9,6 +9,9 @@ import { defaultImagePath } from "@/components/constants";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
 import EmptyState from "@/components/EmptyState";
+import { CampaignAcceptanceCard } from "@/components/CampaignAcceptanceCard";
+import { ProposalCard } from "@/components/ProposalCard";
+import { ApprovedCard } from "@/components/ApprovedCard";
 
 const Inbox = () => {
   const [input, setInput] = useState<string>("");
@@ -231,12 +234,11 @@ const Inbox = () => {
                     });
                   }}
                   key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
-                    selectedIds?.Recipient_ID ===
+                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ===
                     chat?.Last_Message?.Recipient_ID
-                      ? "active"
-                      : ""
-                  }`}
+                    ? "active"
+                    : ""
+                    }`}
                 >
                   <img
                     src={chat?.Profile_Image || defaultImagePath}
@@ -300,18 +302,16 @@ const Inbox = () => {
                     ?.messages.map((msg: any, index: number) => (
                       <div
                         key={index}
-                        className={`mb-3 ${
-                          msg.user !== "sender"
-                            ? ""
-                            : "d-flex justify-content-end flex-column"
-                        }`}
+                        className={`mb-3 ${msg.user !== "sender"
+                          ? ""
+                          : "d-flex justify-content-end flex-column"
+                          }`}
                       >
                         <div
-                          className={`p-3 rounded d-inline-block ${
-                            msg.user !== "sender"
-                              ? "bg-light"
-                              : "bg-primary text-white ms-auto"
-                          }`}
+                          className={`p-3 rounded d-inline-block ${msg.user !== "sender"
+                            ? "bg-light"
+                            : "bg-primary text-white ms-auto"
+                            }`}
                         >
                           {msg.Message}
                         </div>
@@ -321,6 +321,9 @@ const Inbox = () => {
                       </div>
                     ))}
                 <div ref={endOfMessagesRef}></div>
+                <CampaignAcceptanceCard campaignName="Sample Campaign" campaignLink="https://example.com" acceptanceDate="2023-02-15" />
+                <ProposalCard campaignName="Proposal Example" postTitle="Content Creation" amount={1000} submissionDate="2023-03-01" status="pending" />
+                <ApprovedCard campaignName="Approved Campaign" postTitle="" amount={0} submissionDate="" status="approved" />
               </div>
 
               <div className="card-footer bg-white p-3">

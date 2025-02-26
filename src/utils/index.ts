@@ -1,3 +1,6 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export const isValidUrl = (url: string | undefined) => {
   try {
     if (!url) return false;
@@ -18,4 +21,8 @@ export function formatDate(inputDate: string): string {
   };
 
   return date.toLocaleDateString("en-US", options).replace(",", ".");
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
