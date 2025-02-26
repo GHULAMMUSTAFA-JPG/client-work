@@ -27,7 +27,7 @@ export const createCampaignPost = async (payload: {
   description: string;
   submission_date: string;
   due_date: string;
-}) => handleApiRequest("post", "/dashboard/campaigns/campaign-post", payload);
+}) => handleApiRequest("post", "/creators/campaigns/campaign-post", payload);
 
 export const updatePostProposalStatus = async (payload: {
   campaign_id: string;
@@ -35,7 +35,7 @@ export const updatePostProposalStatus = async (payload: {
   post_id: string;
   status: string;
 }) =>
-  handleApiRequest("put", "/dashboard/campaigns/post-proposal-status", payload);
+  handleApiRequest("put", "/brands/campaigns/post-proposal-status", payload);
 
 export const createCampaignPostContent = async (payload: {
   campaign_id: string;
@@ -47,7 +47,7 @@ export const createCampaignPostContent = async (payload: {
 }) =>
   handleApiRequest(
     "post",
-    "/dashboard/campaigns/campaign-post-content",
+    "/creators/campaigns/campaign-post-content",
     payload
   );
 
@@ -61,7 +61,7 @@ export const updatePostContentStatus = async (payload: {
 }) =>
   handleApiRequest(
     "put",
-    "/dashboard/campaigns/update-post-cotent-status",
+    "/brands/campaigns/update-post-cotent-status",
     payload
   );
 
@@ -71,7 +71,7 @@ export const addCampaignLiveLink = async (payload: {
   post_id: string;
   live_link: string;
 }) =>
-  handleApiRequest("put", "/dashboard/campaigns/campaign-live-link", payload);
+  handleApiRequest("put", "/creators/campaigns/campaign-live-link", payload);
 
 export const addCampaignPostImpressions = async (payload: {
   campaign_id: string;
@@ -85,7 +85,7 @@ export const addCampaignPostImpressions = async (payload: {
 }) =>
   handleApiRequest(
     "put",
-    "/dashboard/campaigns/campaign-post-impressions",
+    "/creators/campaigns/campaign-post-impressions",
     payload
   );
 
@@ -95,7 +95,7 @@ export const getCampaignCreatorPosts = async (params: {
 }) =>
   handleApiRequest(
     "get",
-    "/dashboard/campaigns/campaign-creator-posts",
+    "/creators/campaigns/campaign-creator-posts",
     params
   );
 
@@ -105,7 +105,7 @@ export const getCampaignActiveCreatorsOverview = async (params: {
 }) =>
   handleApiRequest(
     "get",
-    "/dashboard/campaigns/campaign-active-creators-overview",
+    "/brands/campaigns/campaign-active-creators-overview",
     params
   );
 
@@ -114,19 +114,19 @@ export const getCampaignPostDetails = async (params: {
   creator_id: string;
   post_id: string;
 }) =>
-  handleApiRequest("get", "/dashboard/campaigns/campaign-post-data", params);
+  handleApiRequest("get", "/creators/campaigns/campaign-post-data", params);
 
 export const getPostContentDetails = async (params: {
   campaign_id: string;
   creator_id: string;
   post_id: string;
   content_id: string;
-}) => handleApiRequest("get", "/dashboard/campaigns/post-content-data", params);
+}) => handleApiRequest("get", "/creators/campaigns/post-content-data", params);
 
 export const getCampaignPostProposals = async (params: { buyer_id: string }) =>
   handleApiRequest(
     "get",
-    "/dashboard/campaigns/campaign-post-proposals",
+    "/brands/campaigns/campaigns-post-proposals",
     params
   );
 
@@ -136,7 +136,7 @@ export const getPostProposalDetails = async (params: {
   creator_id: string;
   post_id: string;
 }) =>
-  handleApiRequest("get", "/dashboard/campaigns/post-proposal-details", params);
+  handleApiRequest("get", "/brands/campaigns/post-proposal-details", params);
 
 export const getStripeLoginLink = async (user_id: string) => {
   return handleApiRequest<{ object: string; created: number; url: string }>(
