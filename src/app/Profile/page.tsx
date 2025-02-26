@@ -7,7 +7,7 @@ import { defaultImagePath } from "@/components/constants";
 import { useEffect, useRef, useState } from "react";
 import { handleFileUpload, updateProfileInformation } from "@/@api";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
@@ -97,7 +97,7 @@ function ProfilePage() {
   );
   // console.log("first", userProfile?.Collaboration_Packages);
   const [showSidebar, setShowSidebar] = useState(false);
-
+  const searchParams = useSearchParams();
   const dropdownRef = useRef<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
@@ -120,7 +120,13 @@ function ProfilePage() {
     "Business consultants",
     "Industry analysts",
   ];
+  useEffect(() => {
+    if (searchParams.get("edit") === "true") {
+      console.log("useeeee");
 
+      setShowSidebar(true);
+    }
+  }, [searchParams]);
   useEffect(() => {
     let collabPack: any = [];
     userProfile?.Collaboration_Packages?.map((element: any) => {
