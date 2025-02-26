@@ -544,7 +544,7 @@ function CompanyPage() {
           <div className="profile-left-column">
             <div className="profile-box-container mb-4 mt-16 position-relative">
               <div className="aboutusSection">
-                <h2>
+                <h2 style={{ display: "flex" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -575,7 +575,7 @@ function CompanyPage() {
               {/* Collaboration Section */}
               <div className="aboutusSection">
                 <div className="letbox_campaigns">
-                  <h2>
+                  <h2 style={{ display: "flex" }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -711,7 +711,7 @@ function CompanyPage() {
                     >
                       <div className="d-flex justify-content-between align-items-center mb-3 px-3">
                         <h6 className="mb-0 ">Edit Profile</h6>
-                        <div>
+                        <div style={{ display: "flex" }}>
                           <button
                             className="bg-white border btn btn-sm"
                             onClick={handleCancel}

@@ -30,6 +30,29 @@ const Inbox = () => {
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // if (
+    //   conversationstate?.find(
+    //     (chat: any) =>
+    //       chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //   )?.messages[
+    //     conversationstate.find(
+    //       (chat: any) =>
+    //         chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //     )?.messages.length - 1
+    //   ] ==
+    //   conversations?.conversations.find(
+    //     (chat: any) =>
+    //       chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //   )?.messages[
+    //     conversations?.conversations.find(
+    //       (chat: any) =>
+    //         chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //     )?.messages.length - 1
+    //   ]
+    // ) {
+    //   return;
+    // }
+
     conversations && setconversationstate(conversations?.conversations);
   }, [conversations]);
 
@@ -52,6 +75,28 @@ const Inbox = () => {
       fetchProfileDataByIds(id, setSelectedIds);
     }
   }, [searchParams, conversationstate]);
+  // useEffect(() => {
+  //   const updateConversation = (newConversations: any) => {
+  //     setconversationstate((prev: any) => {
+  //       return prev.map((chat: any) => {
+  //         const updatedChat = newConversations.find(
+  //           (newChat: any) => newChat._id === chat._id
+  //         );
+  //         if (updatedChat) {
+  //           return {
+  //             ...chat,
+  //             messages: [...chat?.messages, ...updatedChat?.messages],
+  //           };
+  //         }
+  //         return chat;
+  //       });
+  //     });
+  //   };
+
+  //   if (conversationstate) {
+  //     updateConversation(conversationstate);
+  //   }
+  // }, [conversationstate]);
 
   const sendMessage = async () => {
     const data = JSON.stringify({
@@ -119,6 +164,18 @@ const Inbox = () => {
       sockets.send(JSON.stringify(data));
     }
   };
+
+  useEffect(() => {
+    if (searchText) {
+      setconversationstate((prev: any) => {
+        return prev.filter((chat: any) => {
+          return chat?.Name.toLowerCase().includes(searchText.toLowerCase());
+        });
+      });
+    } else {
+      setconversationstate(conversations?.conversations);
+    }
+  }, [searchText]);
 
   return (
     <div className="container-fluid chatbot-container">
@@ -211,13 +268,15 @@ const Inbox = () => {
             <div className="card h-100 border-0">
               <div className="card-header bg-white p-3">
                 <div className="d-flex align-items-center justify-between">
-                  <img
-                    src={selectedIds?.Profile_Image || defaultImagePath}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-circle me-2"
-                  />
+                  {selectedIds?.Profile_Image && (
+                    <img
+                      src={selectedIds?.Profile_Image || defaultImagePath}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="rounded-circle me-2"
+                    />
+                  )}
                   <h6 className="mb-0 fs-14">{selectedIds?.Name}</h6>
                   <button
                     className="btn btn-link text-primary"

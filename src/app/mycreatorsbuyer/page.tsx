@@ -238,7 +238,11 @@ function mycreatorsbuyer() {
                                       key={user?._id}
                                       className="cursor hover-bg-light"
                                       onClick={(e) => {
-                                        if ((e.target as HTMLElement).closest(".drop-down-table")) {
+                                        if (
+                                          (e.target as HTMLElement).closest(
+                                            ".drop-down-table"
+                                          )
+                                        ) {
                                           return;
                                         }
                                         setSelectedCreatorId(user?._id);
@@ -568,7 +572,13 @@ function mycreatorsbuyer() {
                         return (
                           <div key={index} className="col-md-4 col-xl-3">
                             <div className="card">
-                              <div className="card-body" style={{ borderRadius: "10px" , border: "0.5px solid grey "}}>
+                              <div
+                                className="card-body"
+                                style={{
+                                  borderRadius: "10px",
+                                  border: "0.5px solid grey ",
+                                }}
+                              >
                                 <div className="d-flex align-items-center justify-content-between mb-4">
                                   <p className="mb-0 fw-medium text-truncate">
                                     {entry?.List_Name &&
