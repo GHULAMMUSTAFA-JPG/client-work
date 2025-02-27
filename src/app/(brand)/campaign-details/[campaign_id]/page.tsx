@@ -58,8 +58,8 @@ function CampaignDetailsContent() {
       setIsLoading(true);
       const data = (await getBrandCampaignApplications(campaignId)) as any;
       const activeCreatorsData = await getBrandCampaignActiveCreators({
-        campaign_id: "67b7312e4072311729976007",
-        buyer_id: "67ad8ec04402ca116fc05f76",
+        campaign_id: campaignId,
+        buyer_id: user._id,
       });
 
       if (data?.campaign) {
