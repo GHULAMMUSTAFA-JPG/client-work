@@ -41,7 +41,6 @@ export function CreatorDetailView({
     setSelectedContent(null);
   };
 
-  console.log(posts, selectedPost, selectedContent);
   const metrics = useMemo(() => {
     const totalImpressions = posts.reduce(
       (sum, post) => sum + (post.impressions || 0),
