@@ -107,7 +107,10 @@ export default function Header() {
               messages?.conversation_new_messages !== 0 &&
               selectedIds?.Conversation_Id !== messages?._id
           );
-          setNewMessage(hasNewMessage);
+          setTimeout(() => {
+            setNewMessage(hasNewMessage);
+          }, 0);
+          // setNewMessage(hasNewMessage);
           setConversationList(response);
           setConversations(response);
         }
@@ -555,9 +558,9 @@ export default function Header() {
                       <p className="mb-0">Settings</p>
                     </form>
                   </a>
-                </li>  
-                
-                             <li>
+                </li>
+
+                <li>
                   <a
                     className="dropdown-item"
                     href="#"

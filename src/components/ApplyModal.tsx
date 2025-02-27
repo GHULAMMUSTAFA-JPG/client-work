@@ -169,6 +169,11 @@ function ApplyModal({ selectedCampaign, disable }: any) {
               )}
 
               <button
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
                 className={`btn ${
                   selectedCampaign?.Is_Applied ? "btn-dark" : "btn-info"
                 } w-100 mt-4`}
