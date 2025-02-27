@@ -15,7 +15,7 @@ import {
 } from "@/@api";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 import ApplyModal from "@/components/ApplyModal";
 import { withAuthRole } from "@/utils/withAuthRole";
@@ -105,7 +105,7 @@ function CompanyPage() {
   >("about");
   const [cardDetails, setCardDetails] = useState<any[]>();
   // Add new state for sidebar visibility
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
   const [campaignData, setCampaignData] = useState<any>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -142,7 +142,7 @@ function CompanyPage() {
     },
     { value: "Experience Management", label: "Experience Management" },
   ];
-
+  const searchParams = useSearchParams();
   const handleClick = () => {
     fileInputRef && fileInputRef.current.click();
   };
@@ -150,7 +150,13 @@ function CompanyPage() {
   const handleClick1 = () => {
     fileInputRef1 && fileInputRef1.current.click();
   };
+  useEffect(() => {
+    if (searchParams.get("edit") === "true") {
+      console.log("useeeee");
 
+      setShowSidebar(true);
+    }
+  }, [searchParams]);
   useEffect(() => {
     let collabPack: any = [];
     userProfile?.Collaboration_Packages?.map((element: any) => {
@@ -538,7 +544,7 @@ function CompanyPage() {
           <div className="profile-left-column">
             <div className="profile-box-container mb-4 mt-16 position-relative">
               <div className="aboutusSection">
-                <h2>
+                <h2 style={{ display: "flex" }}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -569,7 +575,7 @@ function CompanyPage() {
               {/* Collaboration Section */}
               <div className="aboutusSection">
                 <div className="letbox_campaigns">
-                  <h2>
+                  <h2 style={{ display: "flex" }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -705,7 +711,7 @@ function CompanyPage() {
                     >
                       <div className="d-flex justify-content-between align-items-center mb-3 px-3">
                         <h6 className="mb-0 ">Edit Profile</h6>
-                        <div>
+                        <div style={{ display: "flex" }}>
                           <button
                             className="bg-white border btn btn-sm"
                             onClick={handleCancel}

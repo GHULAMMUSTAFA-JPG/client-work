@@ -38,6 +38,7 @@ function App() {
   const [email, setemail] = useState();
   const [emailLoading, setEmailLoading] = useState(true);
   const [storedname, setStoredname] = useState("");
+  const [checksloading, setchecksloading] = useState(false);
   console.log("user", user);
   useEffect(() => {
     // Check if window is defined (we're in the browser)
@@ -86,6 +87,7 @@ function App() {
   useEffect(() => {
     const fetchAccountStatus = async () => {
       try {
+        setchecksloading(true);
         const response = await apiController.get(
           `/payments/${user?.uuid}/account-status`
         );
@@ -93,8 +95,10 @@ function App() {
         if (response.status === 200) {
           setcharges_enabled(response.data.charges_enabled);
           setonboarding_status(response.data.onboarding_status);
+          setchecksloading(false);
         }
       } catch (error) {
+        setchecksloading(false);
         console.error("Error fetching data:", error);
       }
     };
@@ -173,7 +177,7 @@ function App() {
       console.log(error);
     }
   };
-
+  console.log("userProfile", userProfile);
   return (
     <>
       <div className="container-fluid">
@@ -219,7 +223,11 @@ function App() {
                   <p className="fw-medium fs-16">Profile Information</p>
                   <div
                     onClick={() => {
-                      router.push(user.isBuyer ? "/companypage" : "/Profile");
+                      router.push(
+                        user.isBuyer
+                          ? "/companypage?edit=true"
+                          : "/Profile?edit=true"
+                      );
                     }}
                     className="btn btn-primary"
                   >
@@ -293,12 +301,49 @@ function App() {
                     LinkedIn{" "}
                   </div>
                   <div className="buttonbox">
-                    <div
-                      // onClick={() => router.push("/Profile")}
-                      className="btn btn-outline-primary"
-                    >
-                      Connect
-                    </div>
+                    {user?.isBuyer ? (
+                      <div
+                        onClick={() => router.push("/companypage?edit=true")}
+                        className="btn btn-outline-primary"
+                        style={{
+                          pointerEvents: userProfile?.Company_Linkedin
+                            ? "none"
+                            : "auto",
+                          opacity: userProfile?.Company_Linkedin ? 0.5 : 1,
+                          backgroundColor: userProfile?.Company_Linkedin
+                            ? "#d6d6d6"
+                            : "",
+                          borderColor: userProfile?.Company_Linkedin
+                            ? "#d6d6d6"
+                            : "",
+                          color: userProfile?.Company_Linkedin ? "#a1a1a1" : "",
+                        }}
+                      >
+                        {userProfile?.Company_Linkedin
+                          ? "Connected"
+                          : "Connect"}
+                      </div>
+                    ) : (
+                      <div
+                        onClick={() => router.push("/Profile?edit=true")}
+                        className="btn btn-outline-primary"
+                        style={{
+                          pointerEvents: userProfile?.Profile_URL
+                            ? "none"
+                            : "auto",
+                          opacity: userProfile?.Profile_URL ? 0.5 : 1,
+                          backgroundColor: userProfile?.Profile_URL
+                            ? "#d6d6d6"
+                            : "",
+                          borderColor: userProfile?.Profile_URL
+                            ? "#d6d6d6"
+                            : "",
+                          color: userProfile?.Profile_URL ? "#a1a1a1" : "",
+                        }}
+                      >
+                        {userProfile?.Profile_URL ? "Connected" : "Connect"}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -370,16 +415,19 @@ function App() {
                       Stripe Account{" "}
                     </div>
                     <div className="buttonbox">
-                      <button
-                        onClick={handlestripe}
-                        className="btn btn-outline-primary"
-                      >
-                        {charges_enabled == false && onboarding_status == true
-                          ? "Visit My Stripe Dashboard"
-                          : charges_enabled == true && onboarding_status == true
-                          ? "Visit My Stripe Dashboard"
-                          : "Connect"}
-                      </button>
+                      {!checksloading && (
+                        <button
+                          onClick={handlestripe}
+                          className="btn btn-outline-primary"
+                        >
+                          {charges_enabled == false && onboarding_status == true
+                            ? "Visit My Stripe Dashboard"
+                            : charges_enabled == true &&
+                              onboarding_status == true
+                            ? "Visit My Stripe Dashboard"
+                            : "Connect"}
+                        </button>
+                      )}
                       {charges_enabled == false &&
                         onboarding_status == true && (
                           <div

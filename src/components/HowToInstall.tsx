@@ -3,7 +3,7 @@ import React from "react";
 
 const HowToInstall = () => {
   return (
-    <div className="accordion " id="installAccordion">
+    <div style={{ zIndex: 1 }} className="accordion " id="installAccordion">
       <div className="accordion-item border rounded">
         <h2 className="accordion-header" id="headingInstall">
           <button
@@ -40,7 +40,7 @@ const HowToInstall = () => {
                   <a href="#" target="_blank" rel="noopener noreferrer">
                     Install the Chrome Extension
                   </a>
-                   and pin it to your Chrome topbar. Ensure you’re logged into
+                  and pin it to your Chrome topbar. Ensure you’re logged into
                   LinkedIn already in this Chrome browser.
                 </p>
                 <div></div>
@@ -52,8 +52,8 @@ const HowToInstall = () => {
               </li>
               <li>
                 Click the Track Post button on any of your LinkedIn posts to
-                track them on Syncc. This will open the LinkedIn post in a
-                new page in your browser.
+                track them on Syncc. This will open the LinkedIn post in a new
+                page in your browser.
               </li>
               <li>
                 Add the post’s analytics to a brand’s campaign on this Analytics

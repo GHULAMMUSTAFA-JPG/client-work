@@ -9,6 +9,9 @@ import { defaultImagePath } from "@/components/constants";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter } from "next/navigation";
 import EmptyState from "@/components/EmptyState";
+import { CampaignAcceptanceCard } from "@/components/CampaignAcceptanceCard";
+import { ProposalCard } from "@/components/ProposalCard";
+import { ApprovedCard } from "@/components/ApprovedCard";
 
 const Inbox = () => {
   const [input, setInput] = useState<string>("");
@@ -30,6 +33,29 @@ const Inbox = () => {
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // if (
+    //   conversationstate?.find(
+    //     (chat: any) =>
+    //       chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //   )?.messages[
+    //     conversationstate.find(
+    //       (chat: any) =>
+    //         chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //     )?.messages.length - 1
+    //   ] ==
+    //   conversations?.conversations.find(
+    //     (chat: any) =>
+    //       chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //   )?.messages[
+    //     conversations?.conversations.find(
+    //       (chat: any) =>
+    //         chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+    //     )?.messages.length - 1
+    //   ]
+    // ) {
+    //   return;
+    // }
+
     conversations && setconversationstate(conversations?.conversations);
   }, [conversations]);
 
@@ -52,6 +78,28 @@ const Inbox = () => {
       fetchProfileDataByIds(id, setSelectedIds);
     }
   }, [searchParams, conversationstate]);
+  // useEffect(() => {
+  //   const updateConversation = (newConversations: any) => {
+  //     setconversationstate((prev: any) => {
+  //       return prev.map((chat: any) => {
+  //         const updatedChat = newConversations.find(
+  //           (newChat: any) => newChat._id === chat._id
+  //         );
+  //         if (updatedChat) {
+  //           return {
+  //             ...chat,
+  //             messages: [...chat?.messages, ...updatedChat?.messages],
+  //           };
+  //         }
+  //         return chat;
+  //       });
+  //     });
+  //   };
+
+  //   if (conversationstate) {
+  //     updateConversation(conversationstate);
+  //   }
+  // }, [conversationstate]);
 
   const sendMessage = async () => {
     const data = JSON.stringify({
@@ -120,6 +168,18 @@ const Inbox = () => {
     }
   };
 
+  useEffect(() => {
+    if (searchText) {
+      setconversationstate((prev: any) => {
+        return prev.filter((chat: any) => {
+          return chat?.Name.toLowerCase().includes(searchText.toLowerCase());
+        });
+      });
+    } else {
+      setconversationstate(conversations?.conversations);
+    }
+  }, [searchText]);
+
   return (
     <div className="container-fluid chatbot-container">
       <div className="row bg-white">
@@ -174,12 +234,11 @@ const Inbox = () => {
                     });
                   }}
                   key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
-                    selectedIds?.Recipient_ID ===
+                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ===
                     chat?.Last_Message?.Recipient_ID
-                      ? "active"
-                      : ""
-                  }`}
+                    ? "active"
+                    : ""
+                    }`}
                 >
                   <img
                     src={chat?.Profile_Image || defaultImagePath}
@@ -211,13 +270,15 @@ const Inbox = () => {
             <div className="card h-100 border-0">
               <div className="card-header bg-white p-3">
                 <div className="d-flex align-items-center justify-between">
-                  <img
-                    src={selectedIds?.Profile_Image || defaultImagePath}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-circle me-2"
-                  />
+                  {selectedIds?.Profile_Image && (
+                    <img
+                      src={selectedIds?.Profile_Image || defaultImagePath}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="rounded-circle me-2"
+                    />
+                  )}
                   <h6 className="mb-0 fs-14">{selectedIds?.Name}</h6>
                   <button
                     className="btn btn-link text-primary"
@@ -241,18 +302,16 @@ const Inbox = () => {
                     ?.messages.map((msg: any, index: number) => (
                       <div
                         key={index}
-                        className={`mb-3 ${
-                          msg.user !== "sender"
-                            ? ""
-                            : "d-flex justify-content-end flex-column"
-                        }`}
+                        className={`mb-3 ${msg.user !== "sender"
+                          ? ""
+                          : "d-flex justify-content-end flex-column"
+                          }`}
                       >
                         <div
-                          className={`p-3 rounded d-inline-block ${
-                            msg.user !== "sender"
-                              ? "bg-light"
-                              : "bg-primary text-white ms-auto"
-                          }`}
+                          className={`p-3 rounded d-inline-block ${msg.user !== "sender"
+                            ? "bg-light"
+                            : "bg-primary text-white ms-auto"
+                            }`}
                         >
                           {msg.Message}
                         </div>
@@ -262,6 +321,9 @@ const Inbox = () => {
                       </div>
                     ))}
                 <div ref={endOfMessagesRef}></div>
+                <CampaignAcceptanceCard campaignName="Sample Campaign" campaignLink="https://example.com" acceptanceDate="2023-02-15" />
+                <ProposalCard campaignName="Proposal Example" postTitle="Content Creation" amount={1000} submissionDate="2023-03-01" status="pending" />
+                <ApprovedCard campaignName="Approved Campaign" postTitle="" amount={0} submissionDate="" status="approved" />
               </div>
 
               <div className="card-footer bg-white p-3">
