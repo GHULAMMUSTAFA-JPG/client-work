@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import { useParams, redirect } from "next/navigation";
+import { useParams, redirect, useSearchParams } from "next/navigation";
 import { Edit } from "lucide-react";
 import { Campaign, Creator, CreatorStatus } from "@/types";
 import { CreatorDetailView } from "@/components/campaign-brand/CreatorDetailView";
@@ -31,9 +31,11 @@ type TabType = "invited" | "applied" | "in_campaign";
 function CampaignDetailsContent() {
   const router = useRouter();
   const { campaign_id } = useParams();
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab") as TabType | null;
   const { user } = useAuth();
   const [campaign, setCampaign] = useState<Campaign | null>(null);
-  const [activeTab, setActiveTab] = useState<TabType>("invited");
+  const [activeTab, setActiveTab] = useState<TabType>(tabParam || "invited");
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [campaignFormData, setCampaignFormData] =
@@ -57,7 +59,7 @@ function CampaignDetailsContent() {
       const data = (await getBrandCampaignApplications(campaignId)) as any;
       const activeCreatorsData = await getBrandCampaignActiveCreators({
         campaign_id: campaignId,
-        buyer_id: user?._id,
+        buyer_id: user._id,
       });
 
       if (data?.campaign) {
@@ -83,6 +85,19 @@ function CampaignDetailsContent() {
       fetchCampaign();
     }
   }, [campaign_id, refreshTrigger, user]);
+
+  useEffect(() => {
+    if (tabParam && ["invited", "applied", "in_campaign"].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
+
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    router.push(`/campaign-details/${campaign_id}?tab=${tab}`, {
+      scroll: false,
+    });
+  };
 
   const handleStatusChange = async (
     creatorId: string,
@@ -189,7 +204,7 @@ function CampaignDetailsContent() {
               {tabs.map((tab) => (
                 <Tooltip key={tab.id} content={tab.tooltip}>
                   <button
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => handleTabChange(tab.id)}
                     className={`tw-whitespace-nowrap tw-py-4 tw-px-1 tw-border-b-2 tw-font-medium tw-text-sm ${
                       activeTab === tab.id
                         ? "tw-border-teal-500 tw-text-teal-600"
