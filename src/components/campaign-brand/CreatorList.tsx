@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 import { GB, US, CA } from "country-flag-icons/react/3x2";
 import Tooltip from "./Tooltip";
-import { Creator } from "@/types";
+import { Creator, CreatorStatus } from "@/types";
 
 const CountryFlag = ({ country }: { country: string }) => {
   const flags: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -22,7 +22,7 @@ const CountryFlag = ({ country }: { country: string }) => {
 
 interface CreatorListProps {
   creators: Creator[];
-  onStatusChange: (creatorId: string, newStatus: Creator["status"]) => void;
+  onStatusChange: (creatorId: string, newStatus: CreatorStatus) => void;
   onMessageCreator: (creatorId: string) => void;
 }
 
@@ -35,15 +35,15 @@ export default function CreatorList({
     const baseClasses =
       "tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium";
     switch (status) {
-      case "approved":
+      case CreatorStatus.Approved:
         return `${baseClasses} tw-bg-green-100 tw-text-green-800`;
-      case "applied":
+      case CreatorStatus.Applied:
         return `${baseClasses} tw-bg-yellow-100 tw-text-yellow-800`;
-      case "not_fit":
+      case CreatorStatus.NotFit:
         return `${baseClasses} tw-bg-red-100 tw-text-red-800`;
-      case "in_discussion":
+      case CreatorStatus.InDiscussion:
         return `${baseClasses} tw-bg-blue-100 tw-text-blue-800`;
-      case "invited":
+      case CreatorStatus.Invited:
         return `${baseClasses} tw-bg-purple-100 tw-text-purple-800`;
       default:
         return `${baseClasses} tw-bg-gray-100 tw-text-gray-800`;
@@ -52,9 +52,9 @@ export default function CreatorList({
 
   const getDateLabel = (status: Creator["status"]) => {
     switch (status) {
-      case "invited":
+      case CreatorStatus.Invited:
         return "INVITE DATE";
-      case "applied":
+      case CreatorStatus.Applied:
         return "APPLIED DATE";
       default:
         return "SUBMISSION DATE";
@@ -75,7 +75,7 @@ export default function CreatorList({
           </div>
         </div>
         <div className="tw-col-span-2 tw-font-medium">
-          {getDateLabel(creators[0]?.status || "applied")}
+          {getDateLabel(creators[0]?.status || CreatorStatus.Applied)}
         </div>
         <div className="tw-col-span-1 tw-font-medium tw-text-right">
           ACTIONS
@@ -106,14 +106,18 @@ export default function CreatorList({
                 <div>
                   <div className="tw-font-medium tw-flex tw-items-center tw-gap-2">
                     {creator.name}
-                    <CountryFlag country={creator.country} />
+                    {creator.country && (
+                      <CountryFlag country={creator.country} />
+                    )}
                   </div>
-                  <div className="tw-text-sm tw-text-gray-500">
-                    {creator.jobTitle} at {creator.company}
-                  </div>
-                  {creator.linkedInId && (
+                  {creator.jobTitle && (
+                    <div className="tw-text-sm tw-text-gray-500">
+                      {creator.jobTitle} at {creator.company}
+                    </div>
+                  )}
+                  {creator?.linkedInId && (
                     <a
-                      href={`https://linkedin.com/in/${creator.linkedInId}`}
+                      href={`https://linkedin.com/in/${creator?.linkedInId}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="tw-text-sm tw-text-blue-600 hover:tw-underline tw-flex tw-items-center tw-mt-1"
@@ -125,7 +129,7 @@ export default function CreatorList({
                       >
                         <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                       </svg>
-                      {creator.followers.toLocaleString()} followers
+                      {creator?.followers?.toLocaleString()} followers
                     </a>
                   )}
                 </div>
@@ -134,7 +138,7 @@ export default function CreatorList({
 
             <div className="tw-col-span-2">
               <span className={getStatusBadgeClass(creator.status)}>
-                {creator.status.replace("_", " ")}
+                {creator.status?.replace("_", " ")}
               </span>
             </div>
 
@@ -165,12 +169,14 @@ export default function CreatorList({
                 </button>
               </Tooltip>
 
-              {(creator.status === "applied" ||
-                creator.status === "invited") && (
+              {(creator.status === CreatorStatus.Applied ||
+                creator.status === CreatorStatus.Invited) && (
                 <>
                   <Tooltip content="Approve creator for the campaign">
                     <button
-                      onClick={() => onStatusChange(creator.id, "approved")}
+                      onClick={() =>
+                        onStatusChange(creator.id, CreatorStatus.Approved)
+                      }
                       className="tw-p-2 tw-text-green-600 hover:tw-text-green-700 hover:tw-bg-green-50 tw-rounded-lg tw-transition-colors tw-duration-150"
                     >
                       <CheckCircle className="tw-w-5 tw-h-5" />
@@ -178,7 +184,9 @@ export default function CreatorList({
                   </Tooltip>
                   <Tooltip content="Archive without notifying the creator">
                     <button
-                      onClick={() => onStatusChange(creator.id, "not_fit")}
+                      onClick={() =>
+                        onStatusChange(creator.id, CreatorStatus.NotFit)
+                      }
                       className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-700 hover:tw-bg-gray-50 tw-rounded-lg tw-transition-colors tw-duration-150"
                     >
                       <ThumbsDown className="tw-w-5 tw-h-5" />

@@ -629,7 +629,7 @@ function CompanyPage() {
                               <button
                                 onClick={() => {
                                   router.push(
-                                    `/buyerdashboard?id=${campaign?._id}`
+                                    `/campaign-details?id=${campaign?._id}`
                                   );
                                 }}
                                 className="btn btn-white border flex-shrink-0 btn-sm"

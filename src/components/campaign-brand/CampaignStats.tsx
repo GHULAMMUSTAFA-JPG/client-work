@@ -6,7 +6,7 @@ import {
   DollarSign,
   HelpCircle,
 } from "lucide-react";
-import { Campaign } from "@/types";
+import { Campaign, CreatorStatus } from "@/types";
 import Tooltip from "./Tooltip";
 
 interface StatCardProps {
@@ -61,10 +61,10 @@ interface CampaignStatsProps {
 export default function CampaignStats({ campaign }: CampaignStatsProps) {
   const hasImpressions = campaign.creators.some((c) => c.impressions);
   const newApplications = campaign.creators.filter(
-    (c) => c.status === "applied"
+    (c) => c.status === CreatorStatus.Applied
   ).length;
   const inCampaign = campaign.creators.filter(
-    (c) => c.status === "approved"
+    (c) => c.status === CreatorStatus.Approved
   ).length;
 
   return (
