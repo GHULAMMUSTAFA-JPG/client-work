@@ -140,7 +140,6 @@ function EditCreateCampaign({
       }
 
       const submissionData = prepareSubmissionData();
-      console.log("isEditMode", isEditMode);
       if (isEditMode) {
         await updateBrandCampaign(submissionData);
       } else {

@@ -7,13 +7,11 @@ import { CreatorDetailView } from "./CreatorDetailView";
 
 interface CampaignBrandViewProps {
   campaign: Campaign;
-  onBack: () => void;
   onMessageCreator: (creatorId: string) => void;
 }
 
 export function CampaignBrandView({
   campaign,
-  onBack,
   onMessageCreator,
 }: CampaignBrandViewProps) {
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
