@@ -26,13 +26,13 @@ export interface Creator {
   name: string;
   profilePicture?: string;
   linkedInId?: string;
-  country: string;
-  jobTitle: string;
-  company: string;
-  followers: number;
-  status: "approved" | "applied" | "not_fit" | "in_discussion" | "invited";
-  ongoingSpend: number;
-  paymentStatus: "paid" | "in_process" | "unpaid";
+  country?: string;
+  jobTitle?: string;
+  company?: string;
+  followers?: number;
+  status?: CreatorStatus;
+  ongoingSpend?: number;
+  paymentStatus?: "paid" | "in_process" | "unpaid";
   impressions?: number;
   engagement?: number;
   averageImpressions: number;
@@ -41,6 +41,7 @@ export interface Creator {
   contentStatus?: string;
   postsCompleted?: number;
   totalPosts?: number;
+  posts?: Post[];
 }
 
 export interface Campaign {
@@ -75,13 +76,13 @@ export interface ContentItem {
   content: string;
   date: string;
   status: "draft" | "in_review" | "approved" | "published";
-  messages: ChatMessage[];
+  images: string[];
 }
 
-export interface ChatMessage {
-  id: string;
-  sender: string;
-  message: string;
-  timestamp: string;
-  isCreator: boolean;
+export enum CreatorStatus {
+  Approved = "Approved",
+  InDiscussion = "In Discussion",
+  Invited = "Invited",
+  Applied = "Applied",
+  NotFit = "Not_Fit",
 }

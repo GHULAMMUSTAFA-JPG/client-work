@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   ArrowLeft,
   FileText,
@@ -11,103 +11,25 @@ import {
 } from "lucide-react";
 import { Creator, Post, ContentItem } from "@/types";
 import Tooltip from "./Tooltip";
+import { useRouter } from "next/navigation";
 
 interface CreatorDetailViewProps {
   creator: Creator;
   onBack: () => void;
+  posts: Post[];
 }
 
-export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
+export function CreatorDetailView({
+  creator,
+  onBack,
+  posts,
+}: CreatorDetailViewProps) {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
     null
   );
-
-  const posts: Post[] = [
-    {
-      id: "1",
-      title: "Initial Campaign Post",
-      date: "2025-02-15",
-      status: "approved",
-      content: `🚀 Excited to share my experience with the incredible AI-powered features that are revolutionizing how we work!`,
-      impressions: 8500,
-      engagement: 5.2,
-      link: `https://linkedin.com/posts/${creator.linkedInId}-post-1`,
-      contentItems: [
-        {
-          id: "1-1",
-          type: "image",
-          content:
-            "https://images.unsplash.com/photo-1677442136019-21780ecad995",
-          date: "2025-02-14",
-          status: "approved",
-          messages: [
-            {
-              id: "m1",
-              sender: "Brand Manager",
-              message:
-                "Great image choice! The lighting really makes the product stand out.",
-              timestamp: "2025-02-14T10:30:00Z",
-              isCreator: false,
-            },
-            {
-              id: "m2",
-              sender: creator.name,
-              message: "Thanks! I tried to capture the essence of innovation.",
-              timestamp: "2025-02-14T10:35:00Z",
-              isCreator: true,
-            },
-          ],
-        },
-        {
-          id: "1-2",
-          type: "text",
-          content: "Draft caption for the main post highlighting key features",
-          date: "2025-02-13",
-          status: "approved",
-          messages: [
-            {
-              id: "m3",
-              sender: "Content Reviewer",
-              message: "Could you add more specific examples of the features?",
-              timestamp: "2025-02-13T15:20:00Z",
-              isCreator: false,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: "2",
-      title: "Product Feature Highlight",
-      date: "2025-02-20",
-      status: "in_review",
-      content: `🎉 Deep diving into another game-changing feature today!`,
-      impressions: 7800,
-      engagement: 4.8,
-      link: `https://linkedin.com/posts/${creator.linkedInId}-post-2`,
-      contentItems: [
-        {
-          id: "2-1",
-          type: "video",
-          content: "product-demo.mp4",
-          date: "2025-02-19",
-          status: "in_review",
-          messages: [
-            {
-              id: "m4",
-              sender: "Brand Manager",
-              message:
-                "The demo flow looks great! Just a few minor tweaks needed.",
-              timestamp: "2025-02-19T14:15:00Z",
-              isCreator: false,
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const router = useRouter();
 
   const handleViewContent = (content: ContentItem) => {
     setSelectedContent(content);
@@ -119,9 +41,36 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
     setSelectedContent(null);
   };
 
+  console.log(posts, selectedPost, selectedContent);
+  const metrics = useMemo(() => {
+    const totalImpressions = posts.reduce(
+      (sum, post) => sum + (post.impressions || 0),
+      0
+    );
+
+    const engagementRates = posts
+      .filter((post) => post.engagement !== null)
+      .map((post) => post.engagement || 0);
+
+    const avgEngagement =
+      engagementRates.length > 0
+        ? engagementRates.reduce((sum, rate) => sum + rate, 0) /
+          engagementRates.length
+        : 0;
+
+    // Assuming CTR is 60% of engagement rate for this example
+    const clickThroughRate = avgEngagement * 0.6;
+
+    return {
+      totalImpressions,
+      avgEngagement: avgEngagement.toFixed(1),
+      clickThroughRate: clickThroughRate.toFixed(1),
+    };
+  }, [posts]);
+
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
-      <div className=" tw-mx-auto tw-px-4 tw-py-8">
+      <div className="tw-mx-auto tw-px-4 tw-py-8">
         <button
           onClick={onBack}
           className="tw-flex tw-items-center tw-text-gray-600 hover:tw-text-gray-800 tw-mb-6"
@@ -131,7 +80,6 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
         </button>
 
         <div className="tw-grid tw-grid-cols-12 tw-gap-6">
-          {/* Left Sidebar - Posts List */}
           <div className="tw-col-span-3">
             <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-4">
               <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
@@ -202,10 +150,12 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
                       Total Impressions
                     </div>
                     <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {(16300).toLocaleString()}
+                      {metrics.totalImpressions.toLocaleString()}
                     </div>
                     <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      +12% from previous
+                      {posts.length > 0
+                        ? `${posts.length} posts`
+                        : "No posts yet"}
                     </div>
                   </div>
                   <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
@@ -213,10 +163,12 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
                       Avg. Engagement Rate
                     </div>
                     <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      5.0%
+                      {metrics.avgEngagement}%
                     </div>
                     <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      +0.8% from previous
+                      {creator.averageEngagement
+                        ? `${creator.averageEngagement}% creator avg.`
+                        : "No data"}
                     </div>
                   </div>
                   <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
@@ -224,10 +176,10 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
                       Click-through Rate
                     </div>
                     <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      3.2%
+                      {metrics.clickThroughRate}%
                     </div>
                     <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      +0.5% from previous
+                      Based on engagement
                     </div>
                   </div>
                 </div>
@@ -246,7 +198,10 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
                       </p>
                     </div>
                     <div className="tw-flex tw-items-center tw-gap-3">
-                      <button className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded-lg hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2">
+                      <button
+                        className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded-lg hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
+                        onClick={() => router.push(`/inbox?id=${creator.id}`)}
+                      >
                         <MessageSquare className="tw-w-4 tw-h-4" />
                         Message
                       </button>
@@ -306,10 +261,6 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
                         <div className="tw-text-sm tw-text-gray-600 tw-truncate">
                           {item.content}
                         </div>
-                        <div className="tw-mt-2 tw-flex tw-items-center tw-text-xs tw-text-gray-500">
-                          <MessageSquare className="tw-w-3 tw-h-3 tw-mr-1" />
-                          {item.messages.length} messages
-                        </div>
                       </div>
                     ))}
                   </div>
@@ -320,7 +271,6 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
         </div>
       </div>
 
-      {/* Content Details Drawer */}
       {isDrawerOpen && selectedContent && (
         <div className="tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-50 tw-z-50">
           <div className="tw-absolute tw-right-0 tw-top-0 tw-h-full tw-w-1/3 tw-bg-white tw-shadow-xl">
@@ -340,53 +290,28 @@ export function CreatorDetailView({ creator, onBack }: CreatorDetailViewProps) {
                   <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
                     Content
                   </h4>
-                  {selectedContent.type === "image" ? (
-                    <img
-                      src={selectedContent.content}
-                      alt="Content"
-                      className="tw-w-full tw-rounded-lg"
-                    />
-                  ) : (
-                    <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                      <p className="tw-text-sm tw-text-gray-600">
-                        {selectedContent.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <div>
-                  <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
-                    Chat History
-                  </h4>
-                  <div className="tw-space-y-4">
-                    {selectedContent.messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`tw-flex ${
-                          message.isCreator
-                            ? "tw-justify-end"
-                            : "tw-justify-start"
-                        }`}
-                      >
-                        <div
-                          className={`tw-max-w-[80%] tw-rounded-lg tw-p-3 ${
-                            message.isCreator
-                              ? "tw-bg-teal-50 tw-text-teal-900"
-                              : "tw-bg-gray-100 tw-text-gray-900"
-                          }`}
-                        >
-                          <div className="tw-text-xs tw-font-medium tw-mb-1">
-                            {message.sender}
-                          </div>
-                          <p className="tw-text-sm">{message.message}</p>
-                          <div className="tw-text-xs tw-text-gray-500 tw-mt-1">
-                            {new Date(message.timestamp).toLocaleTimeString()}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
+                    <p className="tw-text-sm tw-text-gray-600">
+                      {selectedContent.content}
+                    </p>
                   </div>
+                  {selectedContent.type === "image" ? (
+                    <div className="tw-mt-4">
+                      <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+                        Media
+                      </h4>
+                      <div className="tw-grid tw-gap-2">
+                        {selectedContent.images?.map((image) => (
+                          <img
+                            key={image}
+                            src={image}
+                            alt="Content"
+                            className="tw-w-full tw-rounded-lg"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
