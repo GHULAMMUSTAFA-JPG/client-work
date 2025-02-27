@@ -19,6 +19,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 import ApplyModal from "@/components/ApplyModal";
 import { withAuthRole } from "@/utils/withAuthRole";
+import Tooltip from "@mui/material/Tooltip";
 interface editDtoProps {
   email: string;
   first_name: string;
@@ -379,7 +380,7 @@ function CompanyPage() {
 
   return (
     <div className="container">
-      <div className="main-profilebanner">
+      <div className="main-profilebanner hidebanner">
         {/* Banner Image */}
         <img
           src={
@@ -394,7 +395,7 @@ function CompanyPage() {
         />
       </div>
       <div className="col-md-8 mx-auto">
-        <div className="profile-box-container mb-4 -mt-16 position-relative">
+        <div className="profile-box-container mb-4 position-relative">
           <div className="profile-topsection">
             <div className="profile-image-content">
               <div className="profile-image">
@@ -415,6 +416,7 @@ function CompanyPage() {
                 <div className="mt-2">
                   <h4 className="mb-1" id="name" onClick={editFieldHandler}>
                     {userProfile?.Company_Name}
+                    <Tooltip title="Edit Profile" arrow placement="top">
                     <div
                       className="editprofilebox"
                       onClick={() => handleSectionClick("about")}
@@ -431,19 +433,20 @@ function CompanyPage() {
                         <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
                       </svg>
                     </div>
+                    </Tooltip>
                   </h4>
-                  <h6 className="text-muted mb-2">
+           {/*        <h6 className="text-muted mb-2">
                     {userProfile?.Current_Position ||
                       "Senior Software Engineer"}
-                  </h6>
+                  </h6> */}
 
                   {/* Company and Location Row */}
-                  <div className="d-flex align-items-center gap-2 text-muted mb-2">
+       {/*            <div className="d-flex align-items-center gap-2 text-muted mb-2">
                     <Icon icon="mdi:building" width={18} height={18} />
                     <span>
                       {userProfile?.Current_Company || "TechCorp Industries"}
                     </span>
-                  </div>
+                  </div> */}
 
                   {/* Skills Row */}
                   <div className="chips-container d-flex flex-wrap gap-2">
@@ -504,7 +507,7 @@ function CompanyPage() {
                   </svg>
                 </a>
               </div>
-              <div className="action-profilebox mt-4">
+ {/*              <div className="action-profilebox mt-4">
                 <Link
                   href="https://chrome.google.com/webstore/category/extensions"
                   target="_blank"
@@ -514,7 +517,7 @@ function CompanyPage() {
                   <Icon icon="mdi:download" width={18} height={18} />
                   <span>Download Chrome Extension</span>
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="statsbox-container">
@@ -544,7 +547,7 @@ function CompanyPage() {
           <div className="profile-left-column">
             <div className="profile-box-container mb-4 mt-16 position-relative">
               <div className="aboutusSection">
-                <h2 style={{ display: "flex" }}>
+                <h2 style={{ display: "flex" }} className="py-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -575,7 +578,7 @@ function CompanyPage() {
               {/* Collaboration Section */}
               <div className="aboutusSection">
                 <div className="letbox_campaigns">
-                  <h2 style={{ display: "flex" }}>
+                  <h2 style={{ display: "flex" }} className="py-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -728,7 +731,7 @@ function CompanyPage() {
                       </div>
 
                       <div className="pb-2 profile-sidebar-scroll">
-                        <div className="mb-4 section-box_container">
+                        <div className="mb-4 section-box_container hidebanner">
                           <label className="mb-2">Banner image</label>
                           <div className="position-relative">
                             <img
