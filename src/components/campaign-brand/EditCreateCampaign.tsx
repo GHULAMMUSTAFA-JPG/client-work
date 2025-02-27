@@ -1,115 +1,73 @@
 import { useEffect, useState, useRef } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
-import { createCampaign, handleFileUpload, updateCampaign } from "@/@api";
+import { handleFileUpload } from "@/@api";
 import { toast } from "react-toastify";
+import Image from "next/image";
+import { AVAILABLE_SKILLS } from "@/constant/campaign";
+import { createBrandCampaign, updateBrandCampaign } from "@/@api/campaign";
 
-const AVAILABLE_SKILLS = [
-  "AI/Analytics",
-  "Blog",
-  "Career Coaching",
-  "Creator Tools",
-  "CRM",
-  "Collaboration & Productivity",
-  "Content Creation",
-  "Customer Service",
-  "Customer Success",
-  "Cybersecurity",
-  "Data",
-  "Design",
-  "E-commerce",
-  "Enterprise",
-  "Finance",
-  "HR",
-  "IT & Software Development",
-  "Management & Leadership",
-  "Marketing",
-  "Project Management",
-  "Product Management",
-  "Research",
-  "Security",
-  "Service Businesses",
-  "Sales",
-  "Solopreneurship",
-  "Tech",
-  "Venture Capital",
-  "Writing",
-  "Supply Chain & Logistics",
-  "International Trade",
-  "Business Intelligence",
-  "Change Management",
-  "Mergers & Acquisitions",
-  "Risk Management",
-  "Sustainable Business Practices",
-  "Digital Transformation",
-  "Business Law & Compliance",
-  "Operations Management",
-  "Quality Assurance",
-  "Business Process Outsourcing",
-  "Innovation Management",
-  "Corporate Social Responsibility",
-  "Employee Experience",
-  "Training & Development",
-  "Business Strategy",
-  "Franchising",
-  "Real Estate Investment",
-  "Business Consulting",
-  "Healthcare Management",
-  "Nonprofit Management",
-  "Agricultural Business",
-  "Hospitality Management",
-  "Educational Technology",
-  "Sports Management",
-  "Entertainment Business",
-  "Retail Management",
-  "Manufacturing",
-  "Business Analytics",
-  "Intellectual Property Management",
-];
-
-interface createCampaignDto {
-  Is_Public: boolean;
-  Headline: string;
-  Budget: number;
-  Brief_Description: string;
-  Campaign_Details: string;
-  Is_Ongoing: boolean;
-  Start_Date?: string | null;
-  End_Date?: string | null;
-  Target_Audience: string[];
-  Campaign_Required_Channels: string;
-  Campaign_Media: string;
-  Email: string;
-  Campaign_Id?: string;
+export interface CampaignFormData {
+  campaignId: string;
+  isPublic: boolean;
+  headline: string;
+  budget: number;
+  briefDescription: string;
+  campaignDetails: string;
+  isOngoing: boolean;
+  startDate: string | null;
+  endDate: string | null;
+  targetAudience: string[];
+  mediaUrl: string;
 }
 
-function OffcanvasCreateCompaign(props: any) {
-  const { rendControl, setRendControl, data } = props;
+interface EditCreateCampaignProps {
+  initialData?: CampaignFormData;
+  isEditMode: boolean;
+  onSuccess?: () => void;
+}
+
+function EditCreateCampaign({
+  initialData,
+  isEditMode,
+  onSuccess,
+}: EditCreateCampaignProps) {
   const [activeTab, setActiveTab] = useState("ongoing");
-  const [dto, setDto] = useState<createCampaignDto>();
-  const dropdownRef: any = useRef(null);
+  const [formData, setFormData] = useState<CampaignFormData>({
+    isPublic: false,
+    headline: "",
+    budget: 0,
+    briefDescription: "",
+    campaignDetails: "",
+    isOngoing: true,
+    startDate: null,
+    endDate: null,
+    targetAudience: [],
+    mediaUrl: "",
+    campaignId: "",
+  });
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const { user, setIsLoading } = useAuth();
 
   useEffect(() => {
-    if (data) {
-      const obj = mapper();
-      data?.campaign?.Is_Ongoing == true
-        ? setActiveTab("ongoing")
-        : setActiveTab("dateRange");
-      setDto(obj);
-      if (data?.campaign?.Target_Audience) {
-        setSelectedSkills(data.campaign.Target_Audience);
-      }
+    if (initialData) {
+      setFormData(initialData);
+      setSelectedSkills(initialData.targetAudience || []);
+      setActiveTab(initialData.isOngoing ? "ongoing" : "dateRange");
     } else {
-      Newmapper();
+      resetForm();
     }
-  }, [data]);
+  }, [initialData]);
 
   useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     }
@@ -120,162 +78,135 @@ function OffcanvasCreateCompaign(props: any) {
     };
   }, []);
 
-  useEffect(() => {
-    user?.email &&
-      setDto((prev: any) => {
-        return { ...prev, ["Email"]: user?.email };
-      });
-  }, [user]);
-
-  function formatDate(inputDate: any) {
-    const months: any = {
-      Jan: "01",
-      Feb: "02",
-      Mar: "03",
-      Apr: "04",
-      May: "05",
-      Jun: "06",
-      Jul: "07",
-      Aug: "08",
-      Sep: "09",
-      Oct: "10",
-      Nov: "11",
-      Dec: "12",
-    };
-    if (inputDate) {
-      const [month, day, year]: any = inputDate?.replace(".", "")?.split(" ");
-
-      const data = `${year}-${months[month]}-${day.padStart(2, "0")}`;
-      return data?.slice(0, data?.length - 1);
-    } else {
-      return;
-    }
-  }
-
-  const mapper = () => {
-    const obj = {
-      Is_Public: data?.campaign?.Is_Public,
-      Headline: data?.campaign?.Headline,
-      Budget: data?.campaign?.Budget,
-      Brief_Description: data?.campaign?.Brief_Description,
-      Campaign_Details: data?.campaign?.Campaign_Details,
-      Is_Ongoing: data?.campaign?.Is_Ongoing,
-      Start_Date: data?.campaign?.Is_Ongoing
-        ? null
-        : data?.campaign?.Start_Date
-        ? formatDate(data?.campaign?.Start_Date)
-        : null,
-      End_Date: data?.campaign?.Is_Ongoing
-        ? null
-        : data?.campaign?.End_Date
-        ? formatDate(data?.campaign?.End_Date)
-        : null,
-      Target_Audience: data?.campaign?.Target_Audience,
-      Campaign_Required_Channels: data?.campaign?.Campaign_Required_Channels,
-      Campaign_Media: data?.campaign?.Campaign_Media,
-      Email: data?.campaign?.user?.email,
-      Campaign_Id: data?.campaign?._id,
-    };
-    return obj;
-  };
-
-  const Newmapper = () => {
-    const obj = {
-      Is_Public: false,
-      Headline: "",
-      Budget: 0,
-      Brief_Description: "",
-      Campaign_Details: "",
-      Is_Ongoing: true,
-      Start_Date: null,
-      End_Date: null,
-      Target_Audience: [],
-      Campaign_Required_Channels: "",
-      Campaign_Media: "",
-      Email: user?.email,
-    };
-    setDto(obj);
+  const resetForm = () => {
+    setFormData({
+      isPublic: false,
+      headline: "",
+      budget: 0,
+      briefDescription: "",
+      campaignDetails: "",
+      isOngoing: true,
+      startDate: null,
+      endDate: null,
+      targetAudience: [],
+      mediaUrl: "",
+      campaignId: "",
+    });
     setSelectedSkills([]);
-    return obj;
+    setActiveTab("ongoing");
   };
 
-  const updateDto = (e: any) => {
-    if (e.target.id == "Is_Public") {
-      setDto((prev: any) => {
-        const updatedDto = { ...prev, [e.target.id]: e.target.checked };
-        return updatedDto;
-      });
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { id, value, type } = e.target;
+
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData((prev) => ({ ...prev, [id]: checked }));
+    } else if (type === "number") {
+      setFormData((prev) => ({ ...prev, [id]: Number(value) }));
     } else {
-      setDto((prev: any) => {
-        const updatedDto = { ...prev, [e.target.id]: e.target.value };
-        return updatedDto;
-      });
+      setFormData((prev) => ({ ...prev, [id]: value }));
     }
   };
 
-  const handleSubmit = async (e: any) => {
-    setIsLoading(true);
+  const prepareSubmissionData = () => {
+    return {
+      Is_Public: formData.isPublic,
+      Headline: formData.headline,
+      Budget: formData.budget,
+      Brief_Description: formData.briefDescription,
+      Campaign_Details: formData.campaignDetails,
+      Is_Ongoing: formData.isOngoing,
+      Start_Date: formData.startDate,
+      End_Date: formData.endDate,
+      Target_Audience: selectedSkills,
+      Campaign_Media: formData.mediaUrl,
+      Campaign_Id: formData.campaignId,
+    };
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await validate();
-    if (result) {
-      data
-        ? updateCampaign(
-            dto,
-            rendControl,
-            setRendControl,
-            Newmapper,
-            setIsLoading,
-            selectedSkills,
-            setActiveTab
-          )
-        : createCampaign(
-            dto,
-            rendControl,
-            setRendControl,
-            Newmapper,
-            setIsLoading,
-            selectedSkills,
-            setActiveTab
-          );
+    setIsLoading(true);
+
+    try {
+      if (!validateForm()) {
+        setIsLoading(false);
+        return;
+      }
+
+      const submissionData = prepareSubmissionData();
+      console.log("isEditMode", isEditMode);
+      if (isEditMode) {
+        await updateBrandCampaign(submissionData);
+      } else {
+        await createBrandCampaign({
+          ...submissionData,
+          Email: user?.email,
+        });
+        resetForm();
+      }
+
+      if (onSuccess) {
+        onSuccess();
+      }
+
+      const closeButton = document.getElementById(
+        "createCampaignOffcanvasModal"
+      );
+      if (closeButton) {
+        closeButton.click();
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const validate = async () => {
-    if (dto?.Headline == "" && !dto?.Headline) {
+  const validateForm = () => {
+    if (!formData.headline) {
       toast.warn("Campaign Name cannot be empty");
-      setIsLoading(false);
       return false;
-    } else if (dto?.Budget == 0 && !dto?.Budget) {
-      toast.warn("Campaign budget cannot be less than 1");
-      setIsLoading(false);
-      return false;
-    } else if (dto?.Brief_Description == "") {
-      toast.warn("Campaign description cannot be empty");
-      setIsLoading(false);
-      return false;
-    } else if (dto?.Campaign_Details == "" && !dto?.Campaign_Details) {
-      toast.warn("Campaign details cannot be empty");
-      setIsLoading(false);
-      return false;
-    } else if (!dto?.Is_Ongoing) {
-      if (dto?.Start_Date == "" || !dto?.Start_Date) {
-        toast.warn("Start date cannot be empty");
-        setIsLoading(false);
-        return false;
-      } else if (dto?.End_Date == "" || !dto?.End_Date) {
-        toast.warn("End date cannot be empty");
-        setIsLoading(false);
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return true;
     }
+
+    if (!formData.budget || formData.budget <= 0) {
+      toast.warn("Campaign budget cannot be less than 1");
+      return false;
+    }
+
+    if (!formData.briefDescription) {
+      toast.warn("Campaign description cannot be empty");
+      return false;
+    }
+
+    if (!formData.campaignDetails) {
+      toast.warn("Campaign details cannot be empty");
+      return false;
+    }
+
+    if (!formData.isOngoing) {
+      if (!formData.startDate) {
+        toast.warn("Start date cannot be empty");
+        return false;
+      }
+
+      if (!formData.endDate) {
+        toast.warn("End date cannot be empty");
+        return false;
+      }
+    }
+
+    return true;
   };
 
   const handleSkillSelect = (skill: string) => {
-    if (!selectedSkills.includes(skill)) {
+    if (!selectedSkills.includes(skill) && selectedSkills.length < 5) {
       setSelectedSkills([...selectedSkills, skill]);
     }
   };
@@ -287,6 +218,31 @@ function OffcanvasCreateCompaign(props: any) {
     );
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only jpg, jpeg, and png files are allowed.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const result: any = await handleFileUpload(e, setIsLoading);
+      setFormData((prev) => ({
+        ...prev,
+        mediaUrl: result?.[0]?.file_urls || "",
+      }));
+    } catch (error) {
+      toast.error("Failed to upload image. Please try again.");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className="offcanvas offcanvas-end offcanvas-create-campaign"
@@ -296,7 +252,7 @@ function OffcanvasCreateCompaign(props: any) {
     >
       <div className="offcanvas-header">
         <h5 className="offcanvas-title" id="offcanvasRight2Label">
-          {data ? "Update Campaign" : "Create Campaign"}
+          {isEditMode ? "Update Campaign" : "Create Campaign"}
         </h5>
         <button
           type="button"
@@ -310,7 +266,6 @@ function OffcanvasCreateCompaign(props: any) {
         <div className="create-campaign-wrapper">
           <div className="row g-5">
             <div className="col-md-6">
-              {/* Basic Campaign Info Section */}
               <div className="mb-4">
                 <h6 className="mb-3">Basic Campaign Info</h6>
                 <div className="mb-3 border mb-3 p-3 rounded">
@@ -325,25 +280,24 @@ function OffcanvasCreateCompaign(props: any) {
                       <input
                         className="form-check-input"
                         type="checkbox"
-                        checked={dto?.Is_Public}
+                        checked={formData.isPublic}
                         role="switch"
-                        id="Is_Public"
-                        onChange={updateDto}
+                        id="isPublic"
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
                 </div>
               </div>
-              {/* Left Column */}
               <div className="mb-3">
                 <label className="form-label">Campaign Name *</label>
                 <input
                   type="text"
-                  id="Headline"
+                  id="headline"
                   className="form-control"
-                  value={dto?.Headline}
+                  value={formData.headline}
                   placeholder="New Generative AI Product Launch: Agentspot"
-                  onChange={updateDto}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="mb-3">
@@ -357,11 +311,11 @@ function OffcanvasCreateCompaign(props: any) {
                   </select>
                   <input
                     type="number"
-                    id="Budget"
-                    value={dto?.Budget}
+                    id="budget"
+                    value={formData.budget}
                     className="form-control"
                     placeholder="0"
-                    onChange={updateDto}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -371,10 +325,10 @@ function OffcanvasCreateCompaign(props: any) {
                 <textarea
                   className="form-control"
                   rows={3}
-                  id="Brief_Description"
+                  id="briefDescription"
                   placeholder="Help us launch Agentspot, an AI agent for SMBs to enterprises"
-                  value={dto?.Brief_Description ? dto?.Brief_Description : ""}
-                  onChange={updateDto}
+                  value={formData.briefDescription}
+                  onChange={handleInputChange}
                 ></textarea>
               </div>
 
@@ -387,17 +341,15 @@ function OffcanvasCreateCompaign(props: any) {
                 <textarea
                   className="form-control"
                   rows={6}
-                  id="Campaign_Details"
-                  value={dto?.Campaign_Details ? dto?.Campaign_Details : ""}
-                  onChange={updateDto}
+                  id="campaignDetails"
+                  value={formData.campaignDetails}
+                  onChange={handleInputChange}
                   placeholder="We're launching a new product feature that helps brands manage business creator partnerships at scale! The cold DMs and endless back-and-forths waste countless hours, so we allow brands to book collaborations directly with you and streamline 90% of the process."
                 ></textarea>
               </div>
             </div>
 
             <div className="col-md-6">
-              {/* Right Column */}
-
               <div className="mb-4">
                 <label className="form-label">Date Range of Campaign *</label>
                 <div className="d-flex flex-column gap-2">
@@ -409,15 +361,14 @@ function OffcanvasCreateCompaign(props: any) {
                         }`}
                         onClick={() => {
                           setActiveTab("ongoing");
-                          setDto((prev: any) => ({
+                          setFormData((prev) => ({
                             ...prev,
-                            Is_Ongoing: true,
-                            Start_Date: null,
-                            End_Date: null,
+                            isOngoing: true,
+                            startDate: null,
+                            endDate: null,
                           }));
                         }}
                         type="button"
-                        id="Is_Ongoing"
                         style={{
                           backgroundColor:
                             activeTab === "ongoing" ? "#15ab63" : "transparent",
@@ -433,9 +384,9 @@ function OffcanvasCreateCompaign(props: any) {
                           activeTab === "dateRange" ? "active text-white" : ""
                         }`}
                         onClick={() => {
-                          setDto((prev: any) => ({
+                          setFormData((prev) => ({
                             ...prev,
-                            Is_Ongoing: false,
+                            isOngoing: false,
                           }));
                           setActiveTab("dateRange");
                         }}
@@ -457,22 +408,22 @@ function OffcanvasCreateCompaign(props: any) {
                     <div className="input-group">
                       <input
                         type="date"
-                        id="Start_Date"
-                        value={dto?.Start_Date || ""}
-                        onChange={(e: any) => {
+                        id="startDate"
+                        value={formData.startDate || ""}
+                        onChange={(e) => {
                           const startDate = e.target.value;
-                          setDto((prev: any) => ({
+                          setFormData((prev) => ({
                             ...prev,
-                            Start_Date: startDate,
-                            Is_Ongoing: false,
+                            startDate: startDate,
+                            isOngoing: false,
                           }));
                           if (
-                            dto?.End_Date &&
-                            new Date(startDate) > new Date(dto.End_Date)
+                            formData.endDate &&
+                            new Date(startDate) > new Date(formData.endDate)
                           ) {
-                            setDto((prev: any) => ({
+                            setFormData((prev) => ({
                               ...prev,
-                              End_Date: "",
+                              endDate: "",
                             }));
                           }
                         }}
@@ -481,24 +432,26 @@ function OffcanvasCreateCompaign(props: any) {
                       <span className="input-group-text">→</span>
                       <input
                         type="date"
-                        value={dto?.End_Date || ""}
-                        onChange={(e: any) => {
+                        value={formData.endDate || ""}
+                        onChange={(e) => {
                           const endDate = e.target.value;
-                          if (dto?.Start_Date && endDate) {
-                            if (new Date(endDate) <= new Date(dto.Start_Date)) {
+                          if (formData.startDate && endDate) {
+                            if (
+                              new Date(endDate) <= new Date(formData.startDate)
+                            ) {
                               toast.warn(
                                 "End date must be greater than the start date!"
                               );
                               return;
                             }
                           }
-                          setDto((prev: any) => ({
+                          setFormData((prev) => ({
                             ...prev,
-                            End_Date: endDate,
-                            Is_Ongoing: false,
+                            endDate: endDate,
+                            isOngoing: false,
                           }));
                         }}
-                        id="End_Date"
+                        id="endDate"
                         className="form-control"
                       />
                     </div>
@@ -506,7 +459,7 @@ function OffcanvasCreateCompaign(props: any) {
                 </div>
               </div>
 
-              <div className="mb-4 " ref={dropdownRef}>
+              <div className="mb-4" ref={dropdownRef}>
                 <label className="mb-2 mt-3">
                   What type of creators and target audience? *
                 </label>
@@ -535,7 +488,10 @@ function OffcanvasCreateCompaign(props: any) {
                         {selectedSkills.length > 1 && (
                           <span
                             className="text-muted ms-2 cursor-pointer"
-                            onClick={() => setSelectedSkills([])}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedSkills([]);
+                            }}
                           >
                             Clear all
                           </span>
@@ -556,8 +512,8 @@ function OffcanvasCreateCompaign(props: any) {
                         overflowY: "auto",
                         top: "calc(100% + 5px)",
                         zIndex: 1050,
-                        position: "fixed",
-                        width: "inherit",
+                        position: "absolute",
+                        width: "100%",
                       }}
                     >
                       {AVAILABLE_SKILLS.map((skill) => (
@@ -567,9 +523,8 @@ function OffcanvasCreateCompaign(props: any) {
                             selectedSkills.includes(skill) ? "bg-light" : ""
                           }`}
                           onClick={() => {
-                            if (selectedSkills.length < 5) {
-                              handleSkillSelect(skill);
-                            }
+                            handleSkillSelect(skill);
+                            setIsDropdownOpen(false);
                           }}
                         >
                           {skill}
@@ -596,70 +551,45 @@ function OffcanvasCreateCompaign(props: any) {
                   <small className="text-muted">Max 10 MB</small>
                 </div>
                 <div className="d-flex gap-2">
-                  {dto?.Campaign_Media && (
+                  {formData.mediaUrl && (
                     <>
                       <div className="position-relative">
-                        <img
-                          src={dto?.Campaign_Media}
+                        <Image
+                          src={formData.mediaUrl}
                           width={100}
                           height={100}
                           className="border object-fit-cover rounded flex-shrink-0"
+                          alt="Campaign media"
                         />
                         <Icon
                           icon="mdi:close-circle"
-                          className="position-absolute cross-icon cursor"
+                          className="position-absolute cross-icon cursor-pointer"
                           width={20}
                           height={20}
                           onClick={() =>
-                            setDto((prev: any) => {
-                              return { ...prev, ["Campaign_Media"]: "" };
-                            })
+                            setFormData((prev) => ({
+                              ...prev,
+                              mediaUrl: "",
+                            }))
                           }
                         />
                       </div>
                     </>
                   )}
                   <div
-                    className="border-dashed rounded-2 text-center bg-base size-box cursor"
+                    className="border-dashed rounded-2 text-center bg-base size-box cursor-pointer"
                     onClick={() =>
-                      document.getElementById("Campaign_Media")?.click()
+                      document.getElementById("campaignMedia")?.click()
                     }
                   >
                     <input
-                      onChange={async (e: any) => {
-                        const file = e.target.files;
-                        if (file[0]) {
-                          const selectedFile = file[0];
-
-                          const allowedTypes = [
-                            "image/jpeg",
-                            "image/png",
-                            "image/jpg",
-                          ];
-                          if (allowedTypes.includes(selectedFile.type)) {
-                            const result: any = await handleFileUpload(
-                              e,
-                              setIsLoading
-                            );
-                            setDto((prev: any) => {
-                              return {
-                                ...prev,
-                                ["Campaign_Media"]: result?.[0].file_urls,
-                              };
-                            });
-                          } else {
-                            toast.error(
-                              "Only jpg, jpeg, and png files are allowed."
-                            );
-                          }
-                        }
-                      }}
+                      onChange={handleImageUpload}
                       type="file"
                       className="d-none"
-                      id="Campaign_Media"
+                      id="campaignMedia"
                       accept="image/*"
                     />
-                    <label className="cursor">
+                    <label className="cursor-pointer">
                       <Icon icon="ph:plus-bold" className="fs-4" />
                     </label>
                   </div>
@@ -675,7 +605,7 @@ function OffcanvasCreateCompaign(props: any) {
           style={{ width: "120px" }}
           data-bs-dismiss="offcanvas"
           aria-label="Close"
-          onClick={() => Newmapper()}
+          onClick={resetForm}
         >
           Discard
         </button>
@@ -684,11 +614,11 @@ function OffcanvasCreateCompaign(props: any) {
           style={{ width: "120px" }}
           onClick={handleSubmit}
         >
-          {data ? "Update" : "Publish"}
+          {isEditMode ? "Update" : "Publish"}
         </button>
       </div>
     </div>
   );
 }
 
-export default OffcanvasCreateCompaign;
+export default EditCreateCampaign;

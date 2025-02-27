@@ -39,7 +39,7 @@ const Main = ({ children, isAuthenticated, user }: any) => {
   //     }
   //   }
   //   else if(isAuthenticated && user.isBuyer==false){
-  //     if (pathname=="/homepagebuyer" || pathname="/mycreatorsbuyer" || pathname=="/buyerdashboard" ||pathname=="/companypage"){
+  //     if (pathname=="/homepagebuyer" || pathname="/mycreatorsbuyer" || pathname=="/campaign-details" ||pathname=="/companypage"){
   //       router.push("/")
   //     }
   //   }
@@ -64,7 +64,11 @@ const Main = ({ children, isAuthenticated, user }: any) => {
   const buyerMenuItems = [
     { label: "Dashboard", href: "/homepagebuyer", icon: "bi bi-house-door" },
     { label: "Discover", href: "/mycreatorsbuyer", icon: "bi bi-people" },
-    { label: "My Campaigns", href: "/buyerdashboard", icon: "bi bi-megaphone" },
+    {
+      label: "My Campaigns",
+      href: "/campaign-details",
+      icon: "bi bi-megaphone",
+    },
     { label: "Messages", href: "/inbox", icon: "bi bi-chat-left-text" },
     { label: "Company Page", href: "/companypage", icon: "bi bi-buildings" },
     { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart-line" },

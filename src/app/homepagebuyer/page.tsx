@@ -67,8 +67,6 @@ function Homepagebuyer() {
       <div className="container-fluid">
         <div className="row mt-3 004">
           <div className="col-md-8">
-      
-         
             <div className="card mb-3">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
@@ -80,43 +78,85 @@ function Homepagebuyer() {
                         arrow
                         placement="top"
                       >
-
-                         <div
-                      className="editprofilebox"
-                      onClick={() => {
-                        shareProfile();
-                      }}
-                      style={{ cursor: "pointer" }}
-                    >
-                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="22" viewBox="0 0 20 22">
-  <g id="Icon_feather-share-2" data-name="Icon feather-share-2" transform="translate(-2 -1)">
-    <path id="Path_855" data-name="Path 855" d="M21,5a3,3,0,1,1-3-3A3,3,0,0,1,21,5Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_856" data-name="Path 856" d="M9,12A3,3,0,1,1,6,9,3,3,0,0,1,9,12Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_857" data-name="Path 857" d="M21,19a3,3,0,1,1-3-3A3,3,0,0,1,21,19Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_858" data-name="Path 858" d="M8.59,13.51l6.83,3.98M15.41,6.51,8.59,10.49" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg>
-
-                    </div>
-       
+                        <div
+                          className="editprofilebox"
+                          onClick={() => {
+                            shareProfile();
+                          }}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="22"
+                            viewBox="0 0 20 22"
+                          >
+                            <g
+                              id="Icon_feather-share-2"
+                              data-name="Icon feather-share-2"
+                              transform="translate(-2 -1)"
+                            >
+                              <path
+                                id="Path_855"
+                                data-name="Path 855"
+                                d="M21,5a3,3,0,1,1-3-3A3,3,0,0,1,21,5Z"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              <path
+                                id="Path_856"
+                                data-name="Path 856"
+                                d="M9,12A3,3,0,1,1,6,9,3,3,0,0,1,9,12Z"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              <path
+                                id="Path_857"
+                                data-name="Path 857"
+                                d="M21,19a3,3,0,1,1-3-3A3,3,0,0,1,21,19Z"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              <path
+                                id="Path_858"
+                                data-name="Path 858"
+                                d="M8.59,13.51l6.83,3.98M15.41,6.51,8.59,10.49"
+                                fill="none"
+                                stroke="#000"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                            </g>
+                          </svg>
+                        </div>
                       </Tooltip>
                       <Tooltip title="Edit Profile" arrow placement="top">
-                      <div
-                      className="editprofilebox"
-                      onClick={() => router.push("/companypage")}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        id="edit-medium"
-                        aria-hidden="true"
-                        data-supported-dps="24x24"
-                        fill="currentColor"
-                      >
-                        <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
-                      </svg>
-                    </div>
+                        <div
+                          className="editprofilebox"
+                          onClick={() => router.push("/companypage")}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            id="edit-medium"
+                            aria-hidden="true"
+                            data-supported-dps="24x24"
+                            fill="currentColor"
+                          >
+                            <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
+                          </svg>
+                        </div>
                       </Tooltip>
                     </div>
                     <Link
@@ -132,38 +172,37 @@ function Homepagebuyer() {
                 </div>
 
                 <div className="d-flex gap-3 mb-4">
-                {userData?.Company_Logo && userData?.Company_Logo !== "" ? (
-                      <img
-                        src={userData?.Company_Logo}
-                        className="border object-fit-cover rounded-dash flex-shrink-0"
-                        alt="logo"
-                        width={120}
-                        height={120}
-                      />
-                    ) : (
-                      <div
-                        className="discussion-subtle border object-fit-cover rounded d-flex align-items-center justify-content-center"
-                        style={{ width: "120px", height: "120px" }}
-                      >
-                        <span className="fs-40 fw-medium text-uppercase">
-                          {" "}
-                          {userData?.Company_Name &&
-                          userData?.Company_Name! == ""
-                            ? userData?.Company_Name?.slice(0, 2)
-                            : userData?.Email && userData?.Email !== ""
-                            ? userData?.Email?.slice(0, 2)
-                            : "NA"}
-                        </span>
-                      </div>
-                    )}
+                  {userData?.Company_Logo && userData?.Company_Logo !== "" ? (
+                    <img
+                      src={userData?.Company_Logo}
+                      className="border object-fit-cover rounded-dash flex-shrink-0"
+                      alt="logo"
+                      width={120}
+                      height={120}
+                    />
+                  ) : (
+                    <div
+                      className="discussion-subtle border object-fit-cover rounded d-flex align-items-center justify-content-center"
+                      style={{ width: "120px", height: "120px" }}
+                    >
+                      <span className="fs-40 fw-medium text-uppercase">
+                        {" "}
+                        {userData?.Company_Name && userData?.Company_Name! == ""
+                          ? userData?.Company_Name?.slice(0, 2)
+                          : userData?.Email && userData?.Email !== ""
+                          ? userData?.Email?.slice(0, 2)
+                          : "NA"}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex-grow-1">
                     <div className="d-flex align-items-center gap-2 mb-2">
                       <h5 className="mb-0 fw-medium fs-16">
-                      Welcome Back,{" "}
-                      <span>
-                        {userData?.Company_Name &&
-                          userData?.Company_Name?.slice(0, 50) + "..."}
-                      </span>
+                        Welcome Back,{" "}
+                        <span>
+                          {userData?.Company_Name &&
+                            userData?.Company_Name?.slice(0, 50) + "..."}
+                        </span>
                       </h5>
                       <img
                         src={`https://flagcdn.com/24x18/${
@@ -206,12 +245,11 @@ function Homepagebuyer() {
 
                     <div className="d-flex gap-2 align-items-center mb-2">
                       <p className="mb-0 fs-12 line-clamp-5">
-                      {userData?.Company_Description}
+                        {userData?.Company_Description}
                       </p>
-                    
                     </div>
                     {/* tags */}
-            
+
                     <div className="d-flex gap-2 flex-wrap mb-3">
                       {userProfile?.Skills?.map(
                         (element: any, index: number) => (
@@ -235,49 +273,31 @@ function Homepagebuyer() {
                 </div>
 
                 <div className="statsbox-container-dash">
-               
-                
-                  
-            
-                      <div className="stats-box-dash">
-                               <h5 className="stats-count-dash">
-                               {" "}{userProfile?.No_of_Employees || 0}
-                        </h5>
-                        <p className="stats-heading-dash">
-                        Employees(est)
-                        </p>
-                      </div>
+                  <div className="stats-box-dash">
+                    <h5 className="stats-count-dash">
+                      {" "}
+                      {userProfile?.No_of_Employees || 0}
+                    </h5>
+                    <p className="stats-heading-dash">Employees(est)</p>
+                  </div>
 
                   <div className="stats-box-dash">
-                               <h5 className="stats-count-dash">
-                               {userProfile?.Size || "Small"}
-                        </h5>
-                        <p className="stats-heading-dash">
-                        Size
-                        </p>
-                      </div>
-                      
+                    <h5 className="stats-count-dash">
+                      {userProfile?.Size || "Small"}
+                    </h5>
+                    <p className="stats-heading-dash">Size</p>
+                  </div>
+
                   <div className="stats-box-dash">
-                               <h5 className="stats-count-dash">
-                               {userProfile?.Year_Founded}
-                        </h5>
-                        <p className="stats-heading-dash">
-                        Year Founded
-                        </p>
-                      </div>
-               
+                    <h5 className="stats-count-dash">
+                      {userProfile?.Year_Founded}
+                    </h5>
+                    <p className="stats-heading-dash">Year Founded</p>
+                  </div>
                 </div>
-     </div>
-     </div>
+              </div>
+            </div>
 
-
-
-
-
-
-
-
-    
             <div className="card card-with-table">
               <div className="card-header p-3">
                 <div className="d-flex align-items-center justify-content-between">
@@ -325,7 +345,7 @@ function Homepagebuyer() {
                                   key={index}
                                   onClick={() => {
                                     router.push(
-                                      `/buyerdashboard?id=${campaign?._id}`
+                                      `/campaign-details?id=${campaign?._id}`
                                     );
                                   }}
                                 >
@@ -392,7 +412,7 @@ function Homepagebuyer() {
 
           <div className="col-md-4">
             <div className="card mb-3">
-            <div className="card-body">
+              <div className="card-body">
                 <p className="mb-2 fs-16 fw-medium ">Notifications</p>
                 {notifications?.notifications &&
                 notifications?.notifications?.length !== 0 ? (

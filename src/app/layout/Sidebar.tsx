@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
         setIsActive(0);
       } else if (window.location.pathname == "/mycreatorsbuyer") {
         setIsActive(1);
-      } else if (window.location.pathname == "/buyerdashboard") {
+      } else if (window.location.pathname == "/campaign-details") {
         setIsActive(2);
       } else if (window.location.pathname == "/inbox") {
         setIsActive(3);

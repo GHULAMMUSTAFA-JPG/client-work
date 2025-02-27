@@ -1,7 +1,7 @@
 import { apiController } from "./baseUrl";
 
 const handleApiRequest = async <T>(
-  method: "get" | "post" | "put",
+  method: "get" | "post" | "put" | "delete",
   url: string,
   payloadOrParams?: object
 ): Promise<T | null> => {
@@ -9,6 +9,8 @@ const handleApiRequest = async <T>(
     const response =
       method === "get"
         ? await apiController.get(url, { params: payloadOrParams })
+        : method === "delete"
+        ? await apiController.delete(url, { data: payloadOrParams })
         : await apiController[method](url, payloadOrParams);
 
     return response.data;
@@ -142,5 +144,114 @@ export const getStripeLoginLink = async (user_id: string) => {
   return handleApiRequest<{ object: string; created: number; url: string }>(
     "get",
     `/payments/${user_id}/generate-customer-portal`
+  );
+};
+
+export const getBrandCampaignById = async (
+  campaign_id: string,
+  buyer_id?: string
+) => {
+  return handleApiRequest<{ object: string; created: number; url: string }>(
+    "get",
+    `brands/campaigns/campaign-active-creators-overview?campaign_id=${campaign_id}&buyer_id=${buyer_id}`
+  );
+};
+
+export const getBrandCampaignList = async (email: string) => {
+  return handleApiRequest<{ object: string; created: number; url: string }>(
+    "get",
+    `/dashboard/campaigns/get_buyer_campaigns/${email}`
+  );
+};
+
+export const getCampaignBuyerView = async (campaign_id: string) => {
+  return handleApiRequest(
+    "get",
+    `/brands/campaigns/campaign-buyer-view/${campaign_id}`
+  );
+};
+
+export const getBrandCampaignApplications = async (campaign_id: string) => {
+  return handleApiRequest(
+    "get",
+    `/brands/campaigns/campaign-buyer-view/${campaign_id}`
+  );
+};
+
+export const getBrandCampaignActiveCreators = async (params: {
+  campaign_id: string;
+  buyer_id: string;
+}) => {
+  return handleApiRequest(
+    "get",
+    "/brands/campaigns/campaign-active-creators-overview",
+    params
+  );
+};
+
+export const getBrandCampaignPosts = async (params: {
+  campaign_id: string;
+  creator_id: string;
+}) => {
+  return handleApiRequest(
+    "get",
+    "/brands/campaigns/campaign-creator-posts",
+    params
+  );
+};
+
+export const getBrandCampaignPostDetails = async (params: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+}) => {
+  return handleApiRequest(
+    "get",
+    "/brands/campaigns/campaign-post-data",
+    params
+  );
+};
+
+export const getBrandCampaignPostContent = async (params: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  content_id: string;
+}) => {
+  return handleApiRequest("get", "/brands/campaigns/post-content-data", params);
+};
+
+export const deleteBrandCampaign = async (campaign_id: string) => {
+  return handleApiRequest(
+    "delete",
+    `/dashboard/campaigns/delete_campaign/${campaign_id}`
+  );
+};
+
+export const changeBrandCreatorStatus = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  status: string;
+}) => {
+  return handleApiRequest(
+    "post",
+    `/dashboard/campaigns/change_creator_status`,
+    payload
+  );
+};
+
+export const updateBrandCampaign = async (payload: object) => {
+  return handleApiRequest(
+    "put",
+    `/dashboard/campaigns/update_campaign`,
+    payload
+  );
+};
+
+export const createBrandCampaign = async (payload: object) => {
+  return handleApiRequest(
+    "post",
+    "/dashboard/campaigns/create_campaign",
+    payload
   );
 };

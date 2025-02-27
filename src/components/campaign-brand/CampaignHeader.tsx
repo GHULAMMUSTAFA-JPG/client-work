@@ -2,16 +2,13 @@ import React from "react";
 import { ArrowLeft, Edit, Globe, Lock } from "lucide-react";
 import { Campaign } from "@/types";
 import Tooltip from "./Tooltip";
+import Link from "next/link";
 
 interface CampaignHeaderProps {
   campaign: Campaign;
-  onBack: () => void;
 }
 
-export default function CampaignHeader({
-  campaign,
-  onBack,
-}: CampaignHeaderProps) {
+export default function CampaignHeader({ campaign }: CampaignHeaderProps) {
   const statusInfo = {
     public: {
       icon: Globe,
@@ -29,13 +26,13 @@ export default function CampaignHeader({
 
   return (
     <div className="tw-mb-8">
-      <button
-        onClick={onBack}
+      <Link
+        href="/campaign-details"
         className="tw-flex tw-items-center tw-text-gray-600 hover:tw-text-gray-800 tw-mb-4"
       >
         <ArrowLeft className="tw-w-4 tw-h-4 tw-mr-2" />
         All Campaigns
-      </button>
+      </Link>
 
       <div className="tw-flex tw-justify-between tw-items-center">
         <div>
