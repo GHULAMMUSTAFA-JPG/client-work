@@ -50,7 +50,7 @@ export const ProposalCard = ({
   const getStatusColor = () => {
     switch (status) {
       case "approved":
-        return "bg-success text-white";
+        return "bg-primary text-white";
       case "rejected":
         return "bg-danger text-white";
       default:
