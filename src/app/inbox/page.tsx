@@ -28,34 +28,11 @@ const Inbox = () => {
   const [conversationstate, setconversationstate] = useState(
     conversations?.conversations
   );
-
+  console.log("conversations", conversations);
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // if (
-    //   conversationstate?.find(
-    //     (chat: any) =>
-    //       chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
-    //   )?.messages[
-    //     conversationstate.find(
-    //       (chat: any) =>
-    //         chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
-    //     )?.messages.length - 1
-    //   ] ==
-    //   conversations?.conversations.find(
-    //     (chat: any) =>
-    //       chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
-    //   )?.messages[
-    //     conversations?.conversations.find(
-    //       (chat: any) =>
-    //         chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
-    //     )?.messages.length - 1
-    //   ]
-    // ) {
-    //   return;
-    // }
-
     conversations && setconversationstate(conversations?.conversations);
   }, [conversations]);
 
@@ -78,28 +55,6 @@ const Inbox = () => {
       fetchProfileDataByIds(id, setSelectedIds);
     }
   }, [searchParams, conversationstate]);
-  // useEffect(() => {
-  //   const updateConversation = (newConversations: any) => {
-  //     setconversationstate((prev: any) => {
-  //       return prev.map((chat: any) => {
-  //         const updatedChat = newConversations.find(
-  //           (newChat: any) => newChat._id === chat._id
-  //         );
-  //         if (updatedChat) {
-  //           return {
-  //             ...chat,
-  //             messages: [...chat?.messages, ...updatedChat?.messages],
-  //           };
-  //         }
-  //         return chat;
-  //       });
-  //     });
-  //   };
-
-  //   if (conversationstate) {
-  //     updateConversation(conversationstate);
-  //   }
-  // }, [conversationstate]);
 
   const sendMessage = async () => {
     const data = JSON.stringify({
@@ -169,16 +124,18 @@ const Inbox = () => {
   };
 
   useEffect(() => {
-    if (searchText) {
-      setconversationstate((prev: any) => {
-        return prev.filter((chat: any) => {
-          return chat?.Name.toLowerCase().includes(searchText.toLowerCase());
-        });
-      });
-    } else {
-      setconversationstate(conversations?.conversations);
+    if (conversations?.conversations) {
+      if (searchText) {
+        const filteredConversations = conversations.conversations.filter(
+          (chat: any) =>
+            chat?.Name.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setconversationstate(filteredConversations);
+      } else {
+        setconversationstate(conversations.conversations);
+      }
     }
-  }, [searchText]);
+  }, [searchText, conversations?.conversations]);
 
   return (
     <div className="container-fluid chatbot-container">
@@ -234,11 +191,12 @@ const Inbox = () => {
                     });
                   }}
                   key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${selectedIds?.Recipient_ID ===
+                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
+                    selectedIds?.Recipient_ID ===
                     chat?.Last_Message?.Recipient_ID
-                    ? "active"
-                    : ""
-                    }`}
+                      ? "active"
+                      : ""
+                  }`}
                 >
                   <img
                     src={chat?.Profile_Image || defaultImagePath}
@@ -293,37 +251,118 @@ const Inbox = () => {
 
               <div className="card-body p-4">
                 {conversationstate &&
-                  conversationstate
-                    .find(
+                  (() => {
+                    const currentConversation = conversationstate.find(
                       (chat: any) =>
                         chat?.Last_Message?.Recipient_ID ===
                         selectedIds?.Recipient_ID
-                    )
-                    ?.messages.map((msg: any, index: number) => (
-                      <div
-                        key={index}
-                        className={`mb-3 ${msg.user !== "sender"
-                          ? ""
-                          : "d-flex justify-content-end flex-column"
-                          }`}
-                      >
-                        <div
-                          className={`p-3 rounded d-inline-block ${msg.user !== "sender"
-                            ? "bg-light"
-                            : "bg-primary text-white ms-auto"
-                            }`}
-                        >
-                          {msg.Message}
+                    );
+
+                    // If there's no conversation, return null
+                    if (!currentConversation) return null;
+
+                    // Get the creator_id from the conversation (outside the messages array)
+                    const creator_id = currentConversation.Creator_ID; //
+                    return currentConversation?.messages.map(
+                      (msg: any, index: number) => (
+                        <div key={index}>
+                          {msg.Message_Type == "conversation_message" ? (
+                            <div
+                              className={`mb-3 ${
+                                msg.user !== "sender"
+                                  ? ""
+                                  : "d-flex justify-content-end flex-column"
+                              }`}
+                            >
+                              <div
+                                className={`p-3 rounded d-inline-block ${
+                                  msg.user !== "sender"
+                                    ? "bg-light"
+                                    : "bg-primary text-white ms-auto"
+                                }`}
+                              >
+                                {msg.Message}
+                              </div>
+                              <small className="text-muted d-block ms-auto">
+                                {msg.Time_Ago}
+                              </small>
+                            </div>
+                          ) : msg.Message_Type == "campaign_post_proposal" ? (
+                            <div
+                              className={`mb-3 ${
+                                msg.user !== "sender"
+                                  ? ""
+                                  : "d-flex justify-content-end flex-column"
+                              }`}
+                            >
+                              <div
+                                className={`p-3 rounded d-inline-block ${
+                                  msg.user !== "sender"
+                                    ? ""
+                                    : " text-white ms-auto"
+                                }`}
+                              >
+                                <ProposalCard
+                                  Campaign_ID={msg.Post_Details.Campaign_ID}
+                                  Post_ID={msg.Post_Details.Post_ID}
+                                  creator_id={creator_id}
+                                  campaignName={
+                                    msg.Post_Details.Campaign_Headline
+                                  }
+                                  postTitle={msg.Post_Details.Post_Title}
+                                  amount={msg.Post_Details.Budget}
+                                  submissionDate={msg.Post_Details.Created_At}
+                                  status={
+                                    msg.Post_Details.Proposal_Status == 1
+                                      ? "pending"
+                                      : msg.Post_Details.Proposal_Status == 2
+                                      ? "approved"
+                                      : "rejected"
+                                  }
+                                  rules={msg.Post_Details.Post_Description}
+                                />
+                              </div>
+                            </div>
+                          ) : msg.Message_Type ==
+                            "campaign_creator_accepted" ? (
+                            <div
+                              className={`mb-3 ${
+                                msg.user !== "sender"
+                                  ? ""
+                                  : "d-flex justify-content-end flex-column"
+                              }`}
+                            >
+                              <div
+                                className={`p-3 rounded d-inline-block ${
+                                  msg.user !== "sender"
+                                    ? ""
+                                    : "text-white ms-auto"
+                                }`}
+                              >
+                                <CampaignAcceptanceCard
+                                  campaignName={
+                                    msg.Campaign_Details.Campaign_Headline
+                                  }
+                                  campaignLink="https://example.com"
+                                  acceptanceDate={msg.Timestamp}
+                                  campaignid={msg.Campaign_Details.Campaign_ID}
+                                />
+                              </div>
+                            </div>
+                          ) : null}
                         </div>
-                        <small className="text-muted d-block ms-auto">
-                          {msg.Time_Ago}
-                        </small>
-                      </div>
-                    ))}
+                      )
+                    );
+                  })()}
+
+                {/* <ApprovedCard
+                  campaignName="Approved Campaign"
+                  postTitle=""
+                  amount={0}
+                  submissionDate=""
+                  status="approved"
+                /> */}
                 <div ref={endOfMessagesRef}></div>
-                <CampaignAcceptanceCard campaignName="Sample Campaign" campaignLink="https://example.com" acceptanceDate="2023-02-15" />
-                <ProposalCard campaignName="Proposal Example" postTitle="Content Creation" amount={1000} submissionDate="2023-03-01" status="pending" />
-                <ApprovedCard campaignName="Approved Campaign" postTitle="" amount={0} submissionDate="" status="approved" />
               </div>
 
               <div className="card-footer bg-white p-3">

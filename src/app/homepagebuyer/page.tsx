@@ -73,7 +73,7 @@ function Homepagebuyer() {
                   <p className="mb-0 fs-16 fw-medium">Profile</p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
-                      <Tooltip
+                      {/*  <Tooltip
                         title={linkCopied ? "Link Copied" : "Share Profile"}
                         arrow
                         placement="top"
@@ -139,7 +139,7 @@ function Homepagebuyer() {
                             </g>
                           </svg>
                         </div>
-                      </Tooltip>
+                      </Tooltip> */}
                       <Tooltip title="Edit Profile" arrow placement="top">
                         <div
                           className="editprofilebox"
@@ -159,7 +159,7 @@ function Homepagebuyer() {
                         </div>
                       </Tooltip>
                     </div>
-                    <Link
+                    {/*       <Link
                       href="https://chrome.google.com/webstore/category/extensions"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -167,7 +167,7 @@ function Homepagebuyer() {
                     >
                       <Icon icon="mdi:download" width={18} height={18} />
                       <span>Download Chrome Extension</span>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
 
@@ -197,11 +197,11 @@ function Homepagebuyer() {
                   )}
                   <div className="flex-grow-1">
                     <div className="d-flex align-items-center gap-2 mb-2">
-                      <h5 className="mb-0 fw-medium fs-16">
+                      <h5 className="mb-0 fw-medium fs-16 biggerTxt">
                         Welcome Back,{" "}
                         <span>
                           {userData?.Company_Name &&
-                            userData?.Company_Name?.slice(0, 50) + "..."}
+                            userData?.Company_Name?.slice(0, 50)}
                         </span>
                       </h5>
                       <img
@@ -244,7 +244,7 @@ function Homepagebuyer() {
                     </div>
 
                     <div className="d-flex gap-2 align-items-center mb-2">
-                      <p className="mb-0 fs-12 line-clamp-5">
+                      <p className="mb-0 fs-13 line-clamp-5">
                         {userData?.Company_Description}
                       </p>
                     </div>
