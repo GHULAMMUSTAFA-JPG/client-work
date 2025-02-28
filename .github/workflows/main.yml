@@ -43,7 +43,7 @@ jobs:
       # Set the target Azure Kubernetes Service (AKS) cluster.
       - uses: azure/k8s-set-context@v1
         with:
-          kubeconfig: ${{ secrets.PRE_PROD_KUBE_CONFIG }}
+          kubeconfig: ${{ secrets.SYNCC_PROD_KUBE_CONFIG }}
         id: login 
 
       # Deploy app to AKS
