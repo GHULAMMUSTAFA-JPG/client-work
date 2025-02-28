@@ -1332,3 +1332,73 @@ body {
   color: #000;
   line-height: 18px;
 }
+.bg-circle-notification {
+  background-color: #fff !important;
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notification-list {
+  padding: 12px 8px;
+  margin: 10px auto;
+  border-radius: 10px;
+  border: 1px solid rgba(27, 176, 157, 0.2901960784);
+  cursor: pointer;
+  box-shadow: 0px 0px 5px #ddd;
+  background: #1bb09d17;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+     background:#1bb09d57;
+   }
+}
+
+.new_campaign 
+{
+  background: #1bb09d17;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+     background:#1bb09d57;
+   }
+}
+
+.accepted_campaign 
+{
+  background: #1bb09d17;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background:#1bb09d57;
+   }
+}
+.rejected_campaign 
+{
+  background: #1bb09d17;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background:#1bb09d57;
+   }
+}
+.post_approved 
+{
+  background: #1bb09d17;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background:#1bb09d57;
+   }
+}
+
+.post_submission 
+{
+  background: #1bb09d17;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background:#1bb09d57;
+   }
+}
+
+.text-info {
+  color: #1bb09d !important;
+}

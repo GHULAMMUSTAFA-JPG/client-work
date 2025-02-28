@@ -443,83 +443,118 @@ function Homepagebuyer() {
           <div className="col-md-4">
             <div className="card mb-3">
               <div className="card-body">
-                <p className="mb-2 fs-16 fw-medium ">Notifications</p>
-                {notifications?.notifications &&
-                notifications?.notifications?.length !== 0 ? (
-                  notifications?.notifications
-                    .slice(0, 8)
-                    ?.map((notify: any, index: number) => {
-                      return (
-                        <div key={index} className="notification-list">
-                          <div className="d-flex gap-3">
-                            <div className="rounded-circle flex-shrink-0 bg-circle-notification">
-                              {notify?.Notification_Icon_Type ==
-                                "new_campaign_application" && (
-                                <Icon
-                                  icon="ci:add-plus"
-                                  width="22"
-                                  height="22"
-                                  className="text-info"
-                                />
-                              )}
-                              {notify?.Notification_Icon_Type ==
-                                "campaign_application_accepted" && (
-                                <Icon
-                                  icon="mdi:tick"
-                                  width="20"
-                                  height="20"
-                                  className="text-primary"
-                                />
-                              )}
-                              {notify?.Notification_Icon_Type ==
-                                "campaign_post_rejected" && (
-                                <Icon
-                                  icon="pepicons-pencil:exclamation"
-                                  width="22"
-                                  height="22"
-                                  className="text-danger"
-                                />
-                              )}
-                              {notify?.Notification_Icon_Type ==
-                                "campaign_post_approved" && (
-                                <Icon
-                                  icon="mdi:tick"
-                                  width="20"
-                                  height="20"
-                                  className="text-primary"
-                                />
-                              )}
-                              {notify?.Notification_Icon_Type ==
-                                "campaign_post_submission" && (
-                                <Icon
-                                  icon="ci:add-plus"
-                                  width="22"
-                                  height="22"
-                                  className="text-info"
-                                />
-                              )}
-                            </div>
-                            <div className="flex-grow-1">
-                              <p className="mb-0 fw-medium fs-12">
-                                {notify?.Title}
-                              </p>
-                              <p className="mb-0 fs-10 text-warning line-clamp-1">
-                                {notify?.Message}
-                              </p>
-                            </div>
-                          </div>
-                          <hr className="my-2 text-warning" />
-                        </div>
-                      );
-                    })
-                ) : (
-                  <EmptyState
-                    icon="bi bi-bell-slash"
-                    title="No New Notifications"
-                    description="You're all caught up! No new notifications at the moment."
-                    iconSize={32}
+              <p className="mb-2 fs-16 fw-medium ">Notifications</p>
+              {notifications?.notifications &&
+              notifications?.notifications?.length !== 0 ? (
+                notifications?.notifications
+                .slice(0, viewRow)
+                ?.map((notify: any, index: number) => {
+                return (
+                <div
+                  key={index}
+                  className={`notification-list ${
+                  notify?.Notification_Icon_Type ===
+                  "new_campaign_application"
+                  ? "new_campaign"
+                  : notify?.Notification_Icon_Type ===
+                  "campaign_application_accepted"
+                  ? "accepted_campaign"
+                  : notify?.Notification_Icon_Type ===
+                  "campaign_post_rejected"
+                  ? "rejected_campaign"
+                  : notify?.Notification_Icon_Type ===
+                  "campaign_post_approved"
+                  ? "post_approved"
+                  : notify?.Notification_Icon_Type ===
+                  "campaign_post_submission"
+                  ? "post_submission"
+                  : ""
+                  }`}
+                >
+                  <div className="d-flex gap-3">
+                  <div className="rounded-circle flex-shrink-0 bg-circle-notification">
+                  {notify?.Notification_Icon_Type == 
+                  "new_campaign_application" && (
+                  <Icon
+                    icon="mdi:bell"
+                    width="22"
+                    height="22"
+                    className="text-info"
                   />
-                )}
+                  )}
+                  {notify?.Notification_Icon_Type == 
+                  "campaign_application_accepted" && (
+                  <Icon
+                    icon="mdi:bell"
+                    width="20"
+                    height="20"
+                    className="text-primary"
+                  />
+                  )}
+                  {notify?.Notification_Icon_Type == 
+                  "campaign_post_rejected" && (
+                  <Icon
+                    icon="mdi:bell"
+                    width="22"
+                    height="22"
+                    className="text-danger"
+                  />
+                  )}
+                  {notify?.Notification_Icon_Type == 
+                  "campaign_post_approved" && (
+                  <Icon
+                    icon="mdi:bell"
+                    width="20"
+                    height="20"
+                    className="text-primary"
+                  />
+                  )}
+                  {notify?.Notification_Icon_Type == 
+                  "campaign_post_submission" && (
+                  <Icon
+                    icon="mdi:bell"
+                    width="22"
+                    height="22"
+                    className="text-info"
+                  />
+                  )}
+                  </div>
+                  <div className="flex-grow-1">
+                  <p className="mb-0 fw-medium fs-12">
+                  {notify?.Title}
+                  </p>
+                  <p
+                  className="mb-0 fs-10 line-clamp-1"
+                  style={{ color: "black" }}
+                  >
+                  {notify?.Message}
+                  </p>
+                  </div>
+                  </div>
+                </div>
+                );
+                })
+              ) : (
+                <EmptyState
+                icon="bi bi-bell-slash"
+                title="No New Notifications"
+                description="You're all caught up! No new notifications at the moment."
+                iconSize={32}
+                />
+              )}
+              {notifications?.notifications?.length > viewRow && (
+                <div className="text-center mt-3">
+                <button
+                className="btn btn-outline-primary btn-sm"
+                onClick={() => {
+                  showViewRow(notifications?.notifications?.length);
+                }}
+                >
+                Load More
+                </button>
+                </div>
+               )}          
+            
               </div>
             </div>
 
