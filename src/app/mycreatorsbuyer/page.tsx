@@ -25,7 +25,7 @@ import { useRouter } from "next/navigation";
 import { withAuthRole } from "@/utils/withAuthRole";
 import CreatorProfileDrawer from "@/components/CreatorProfileDrawer";
 
-function mycreatorsbuyer() {
+function Mycreatorsbuyer() {
   const { user, setIsLoading, userProfile, setIsActive } = useAuth();
   const [users, setUsers] = useState<any[]>([]);
   const [buyersDetails, setBuyerDetails] = useState<any>();
@@ -659,6 +659,6 @@ function mycreatorsbuyer() {
   );
 }
 export default withAuthRole({
-  Component: mycreatorsbuyer,
+  Component: Mycreatorsbuyer,
   allowedRoles: ["buyer"],
 });
