@@ -178,7 +178,7 @@ function mycreatorsbuyer() {
                   aria-controls="contact-tab-pane"
                   aria-selected="false"
                 >
-                  My List{" "}
+                  My Lists{" "}
                 </button>
               </li>
               <div className="position-relative w-auto mb-2 ms-auto">
