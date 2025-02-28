@@ -138,7 +138,6 @@ function CampaignDetailsContent() {
         onBack={handleBack}
         posts={selectedCreator.posts || []}
         campaignId={campaign_id as string}
-        onSubmit={fetchCampaign}
       />
     );
   }
