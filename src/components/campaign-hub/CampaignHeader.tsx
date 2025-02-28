@@ -145,7 +145,6 @@ export function CampaignHeader({
         title="Campaign Details"
         description={objective || ""}
         dueDate=""
-        payout=""
         type="details"
         initialData={{
           title: "Campaign Details",

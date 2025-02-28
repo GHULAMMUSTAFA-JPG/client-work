@@ -25,6 +25,7 @@ export function CampaignBrandView({
         creator={selectedCreator}
         onBack={() => setSelectedCreator(null)}
         posts={selectedCreator.posts || []}
+        campaignId={campaign.id}
       />
     );
   }
