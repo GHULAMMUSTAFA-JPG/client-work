@@ -28,13 +28,44 @@ const Inbox = () => {
   const [conversationstate, setconversationstate] = useState(
     conversations?.conversations
   );
-  console.log("conversations", conversations);
+  const [sentmessagesarray, setsentmessagesarray] = useState<any>([]);
+  console.log("sentmessagesarray", sentmessagesarray);
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+  console.log("conversationstate", conversationstate);
+  useEffect(() => {
+    console.log("useeefffff");
+
+    if (conversations) {
+      // Find current conversation
+      const currentConversation = conversations?.conversations?.find(
+        (chat: any) =>
+          chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+      );
+
+      // Get messages from current conversation
+      const currentMessages = currentConversation?.messages || [];
+
+      // Filter out messages from sentmessagesarray that exist in the current conversation
+      const updatedSentMessages = sentmessagesarray.filter((sentMsg: any) => {
+        // Check if message with the same messageId exists in the conversation messages
+        const messageExists = currentMessages.some(
+          (convMsg: any) => convMsg.Frontend_Message_ID === sentMsg.messageId
+        );
+
+        // Keep the message in sentmessagesarray only if it doesn't exist in the conversation
+        return !messageExists;
+      });
+
+      console.log("updatedSentMessages", updatedSentMessages);
+      setsentmessagesarray(updatedSentMessages);
+      setconversationstate(conversations?.conversations);
+    }
+  }, [conversations, selectedIds?.Recipient_ID]);
 
   useEffect(() => {
-    conversations && setconversationstate(conversations?.conversations);
-  }, [conversations]);
+    setsentmessagesarray([]);
+  }, [selectedIds]);
 
   useEffect(() => {
     const id = searchParams.get("id");
@@ -57,9 +88,21 @@ const Inbox = () => {
   }, [searchParams, conversationstate]);
 
   const sendMessage = async () => {
+    console.log("send called");
+    const messageId = Date.now().toString();
+    const newMessage = {
+      Message: input,
+      Message_Type: "conversation_message",
+      Time_Ago: "",
+      user: "sender",
+      messageId: messageId,
+    };
+    setsentmessagesarray((prev: any) => [...prev, newMessage]);
+
     const data = JSON.stringify({
       recipient_id: selectedIds?.Recipient_ID,
       message: input,
+      message_id: messageId,
     });
     if (sockets && sockets.readyState === WebSocket.OPEN) {
       setconversationstate((prev: any) => {
@@ -67,10 +110,7 @@ const Inbox = () => {
           if (chat?.Last_Message?.Recipient_ID === selectedIds.Recipient_ID) {
             return {
               ...chat,
-              messages: [
-                ...chat.messages,
-                { Message: input, Time_Ago: "", user: "sender" },
-              ],
+              messages: [...chat.messages],
             };
           }
           return chat;
@@ -354,6 +394,30 @@ const Inbox = () => {
                       )
                     );
                   })()}
+                {sentmessagesarray.map((msg: any, index: number) => (
+                  <div key={index}>
+                    <div
+                      className={`mb-3 ${
+                        msg.user !== "sender"
+                          ? ""
+                          : "d-flex justify-content-end flex-column"
+                      }`}
+                    >
+                      <div
+                        className={`p-3 rounded d-inline-block ${
+                          msg.user !== "sender"
+                            ? "bg-light"
+                            : "bg-primary text-white ms-auto"
+                        }`}
+                      >
+                        {msg.Message}
+                      </div>
+                      <small className="text-muted d-block ms-auto">
+                        {msg.Time_Ago}
+                      </small>
+                    </div>
+                  </div>
+                ))}
 
                 {/* <ApprovedCard
                   campaignName="Approved Campaign"
