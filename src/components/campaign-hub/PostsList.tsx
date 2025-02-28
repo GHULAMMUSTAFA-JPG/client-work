@@ -129,7 +129,6 @@ export function PostsList({
         title="Post Details"
         description={viewingPost?.description || ""}
         dueDate={viewingPost?.Created_At || ""}
-        payout={`$${viewingPost?.budget || 0}`}
         type="details"
         isPost={true}
         initialData={{

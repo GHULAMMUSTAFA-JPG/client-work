@@ -126,17 +126,6 @@ function CampaignHubContent() {
     return post.status === activeTab;
   });
 
-  const totalCampaignBudget = transformedPosts.reduce(
-    (sum: number, post: any) => sum + post.budget,
-    0
-  );
-  const receivedPayments = transactions
-    .filter((t) => t.status === "completed")
-    .reduce((sum, t) => sum + t.amount, 0);
-  const pendingPayments = transactions
-    .filter((t) => t.status !== "completed")
-    .reduce((sum, t) => sum + t.amount, 0);
-
   const isCampaignActive = !!campaignData?.Posts?.find(
     (post: any) => post.Status === Status.Approved
   );
