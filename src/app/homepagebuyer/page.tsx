@@ -211,6 +211,37 @@ function Homepagebuyer() {
                         width={24}
                         height={14}
                       /> */}
+                      {userProfile?.Company_Website ? (
+                        <Link
+                          href={`${userProfile?.Company_Website}`}
+                          target="_blank"
+                        >
+                          <Icon
+                            icon="mdi:web"
+                            width="18"
+                            height="18"
+                            className="text-warning ms-1"
+                            style={{
+                              minWidth: "18px",
+                              minHeight: "18px",
+                            }}
+                          />
+                        </Link>
+                      ) : (
+                        <Tooltip title="" arrow placement="top">
+                          <Icon
+                            icon="mdi:web"
+                            onClick={() => router.push("/companypage")}
+                            width="18"
+                            height="18"
+                            className="text-warning ms-1"
+                            style={{
+                              minWidth: "18px",
+                              minHeight: "18px",
+                            }}
+                          />
+                        </Tooltip>
+                      )}
                       {userProfile?.Company_Linkedin ? (
                         <Link
                           href={`https://www.linkedin.com/company/${userProfile?.Company_Linkedin}`}
