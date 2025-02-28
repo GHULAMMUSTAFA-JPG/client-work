@@ -7,8 +7,7 @@ interface DrawerProps {
   onClose: () => void;
   title: string;
   description: string;
-  dueDate: string;
-  payout: string;
+  dueDate?: string;
   type: "post" | "content" | "edit" | "details";
   postType?: string;
   initialData?: any;

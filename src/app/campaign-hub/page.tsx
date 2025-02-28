@@ -26,7 +26,6 @@ function CampaignHubContent() {
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [isNewPostDrawerOpen, setIsNewPostDrawerOpen] = useState(false);
   const [isNewContentDrawerOpen, setIsNewContentDrawerOpen] = useState(false);
-  const [isEarningsDrawerOpen, setIsEarningsDrawerOpen] = useState(false);
   const [isCreatePostDrawerOpen, setIsCreatePostDrawerOpen] = useState(false);
   const [contentVersion, setContentVersion] = useState<Version[]>([]);
 
@@ -44,6 +43,7 @@ function CampaignHubContent() {
         creator_id: user?.uuid as string,
         campaign_id: code,
       });
+
       setCampaignData(response);
       if (response && (response as any).Posts.length) {
         const contentList = transformPostContent((response as any).Posts[0]);
@@ -195,7 +195,7 @@ function CampaignHubContent() {
     () => getCurrentStage(selectedPost),
     [selectedPost]
   );
-
+  console.log("campaignData", campaignData);
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
       {campaignData && (
@@ -244,6 +244,8 @@ function CampaignHubContent() {
               campaignId={campaignData?._id}
               creatorId={user.uuid}
               postId={selectedPostId}
+              onSubmit={getCampaignPostsList}
+              canSubmit={selectedPost?.Status === Status.Approved}
             />
           ) : (
             <EmptyState
@@ -261,8 +263,6 @@ function CampaignHubContent() {
         onClose={() => setIsNewPostDrawerOpen(false)}
         title="Create New Post"
         description="Create a new post for this campaign"
-        dueDate="Mar 31, 2024"
-        payout="$300"
         type="post"
       />
 
@@ -271,20 +271,7 @@ function CampaignHubContent() {
         onClose={() => setIsNewContentDrawerOpen(false)}
         title="Add New Content"
         description="Upload new content for review"
-        dueDate="Mar 31, 2024"
-        payout="$300"
         type="content"
-      />
-
-      <EarningsDrawer
-        isOpen={isEarningsDrawerOpen}
-        onClose={() => setIsEarningsDrawerOpen(false)}
-        campaignName="AI Social27"
-        totalEarnings={totalCampaignBudget}
-        pendingPayments={pendingPayments}
-        receivedPayments={receivedPayments}
-        nextPayoutDate="March 31, 2024"
-        transactions={transactions}
       />
 
       <CreatePostDrawer

@@ -9,20 +9,23 @@ import {
   X,
   Eye,
 } from "lucide-react";
-import { Creator, Post, ContentItem } from "@/types";
+import { Creator, Post, ContentItem, Status } from "@/types";
 import Tooltip from "./Tooltip";
 import { useRouter } from "next/navigation";
+import { updatePostStatus } from "@/@api/campaign";
 
 interface CreatorDetailViewProps {
   creator: Creator;
   onBack: () => void;
   posts: Post[];
+  campaignId: string;
 }
 
 export function CreatorDetailView({
   creator,
   onBack,
   posts,
+  campaignId,
 }: CreatorDetailViewProps) {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -57,7 +60,6 @@ export function CreatorDetailView({
           engagementRates.length
         : 0;
 
-    // Assuming CTR is 60% of engagement rate for this example
     const clickThroughRate = avgEngagement * 0.6;
 
     return {
@@ -66,6 +68,15 @@ export function CreatorDetailView({
       clickThroughRate: clickThroughRate.toFixed(1),
     };
   }, [posts]);
+
+  const handleApprovePost = async (postId: string) => {
+    await updatePostStatus({
+      campaign_id: campaignId,
+      creator_id: creator.id,
+      post_id: postId,
+      status: Status.Approved + "",
+    });
+  };
 
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
@@ -205,7 +216,10 @@ export function CreatorDetailView({
                         Message
                       </button>
                       {selectedPost.status === "in_review" && (
-                        <button className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2">
+                        <button
+                          className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2"
+                          onClick={() => handleApprovePost(selectedPost.id)}
+                        >
                           <CheckCircle className="tw-w-4 tw-h-4" />
                           Approve
                         </button>
