@@ -51,9 +51,9 @@ export const ApprovedCard = ({
     };
 
     return (
-        <div className="border-opacity-25 border-primary card p-4 shadow-sm w-100 my-3" style={{ maxWidth: '28rem' }}>
+        <div className="border-opacity-25 border-primary card p-4 shadow-sm w-100" style={{ maxWidth: '28rem' }}>
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h3 className="fw-medium text-dark">{campaignName}</h3>
+                <h3 className="fw-medium text-dark line-clamp-2">{campaignName}</h3>
                 <span className={`badge p-2 ${getStatusColor()}`}>
                     {getStatusText()}
                 </span>

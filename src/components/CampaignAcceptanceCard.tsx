@@ -35,20 +35,20 @@ export const CampaignAcceptanceCard = ({
   console.log("campaignid", campaignid);
   return (
     <div
-      className="border-opacity-25 border-primary card p-4 shadow-sm w-100 my-3"
+      className="border-opacity-25 border-primary card p-4 shadow-sm w-100"
       style={{ maxWidth: "28rem" }}
     >
       <div className="d-flex align-items-center justify-content-between mb-3">
         <div className="d-flex align-items-center gap-2">
           <CalendarCheck
-            className="text-primary"
+            className="text-primary flex-shrink-0"
             style={{ width: "1.25rem", height: "1.25rem" }}
           />
-          <h3 className="fw-medium text-dark mb-0">
+          <h3 className="fw-medium text-dark mb-0 line-clamp-2">
             {isCreatorView ? "Accepted to Campaign" : "Creator Accepted"}
           </h3>
         </div>
-        <span className="small text-gray">{acceptanceDate}</span>
+        <span className="small text-gray flex-shrink-0 ms-3">{acceptanceDate}</span>
       </div>
 
       <div className="d-flex align-items-center justify-content-between">
@@ -63,7 +63,7 @@ export const CampaignAcceptanceCard = ({
           data-bs-toggle="modal"
           data-bs-target="#applyModal"
           // href={campaignLink}
-          className="d-flex align-items-center gap-1 text-primary text-decoration-none small fw-medium"
+          className="d-flex align-items-center gap-1 text-primary text-decoration-none small fw-medium cursor ms-3"
           // target="_blank"
           rel="noopener noreferrer"
         >
