@@ -73,7 +73,7 @@ function Homepagebuyer() {
                   <p className="mb-0 fs-16 fw-medium">Profile</p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
-                     {/*  <Tooltip
+                      {/*  <Tooltip
                         title={linkCopied ? "Link Copied" : "Share Profile"}
                         arrow
                         placement="top"
@@ -159,7 +159,7 @@ function Homepagebuyer() {
                         </div>
                       </Tooltip>
                     </div>
-              {/*       <Link
+                    {/*       <Link
                       href="https://chrome.google.com/webstore/category/extensions"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -182,7 +182,7 @@ function Homepagebuyer() {
                     />
                   ) : (
                     <div
-                      className="discussion-subtle border object-fit-cover rounded d-flex align-items-center justify-content-center"
+                      className="companyImgbox border object-fit-cover rounded d-flex align-items-center justify-content-center"
                       style={{ width: "120px", height: "120px" }}
                     >
                       <span className="fs-40 fw-medium text-uppercase">

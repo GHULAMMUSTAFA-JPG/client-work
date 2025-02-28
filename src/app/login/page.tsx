@@ -271,7 +271,7 @@ const AuthPage = () => {
   const toggleAuthMode = () => {
     if (userType === "creator") {
       setUserType("brand");
-      setIsLogin(false);
+      setIsLogin(true);
     } else {
       setIsLogin(!isLogin);
     }
@@ -341,35 +341,35 @@ const AuthPage = () => {
       </div>
       <div className="container">
         <div className="row justify-content-center">
-          <div className="maincardbox">
+          <div className="bg-white rounded-2 shadow-lg py-3 max-w-28rem max-w-md">
             <div className="box-content-wrapper">
               <div className="text-center mb-4">
-                <div className="btn-group mb-4">
+                <div className="mb-4 tabs-box">
                   <button
-                    className={`btn ${
-                      userType === "creator" ? "btn-dark" : "btn-outline-dark"
+                    className={`${
+                      userType === "creator" ? "btn-tab-selected" : "btn-tab-Nselected"
                     }`}
                     onClick={() => toggleUserType()}
                   >
                     Creator
                   </button>
                   <button
-                    className={`btn ${
-                      userType === "brand" ? "btn-dark" : "btn-outline-dark"
+                    className={` ${
+                      userType === "brand" ? "btn-tab-selected" : "btn-tab-Nselected"
                     }`}
                     onClick={() => toggleUserType()}
                   >
                     Brand
                   </button>
                 </div>
-                <h1 className="h3 fw-medium mb-2">
+                <h1 className="headingtxt mt-5 mb-3">
                   {userType === "brand" ? "Brand" : "Creator"} Sign{" "}
                   {userType === "creator" || isLogin ? "In" : "Up"}
                 </h1>
-                <p className="text-muted fs-16">
+     {/*            <p className="sub-headingtxt">
                   Sign {userType === "creator" || isLogin ? "in to" : "up for"}{" "}
                   Synnc for {userType === "brand" ? "brands" : "creators"}
-                </p>
+                </p> */}
               </div>
 
               {error && (
@@ -385,6 +385,7 @@ const AuthPage = () => {
               )}
 
               {userType !== "creator" && (
+            
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -392,6 +393,15 @@ const AuthPage = () => {
                     handleSubmit(e, handleAuth);
                   }}
                 >
+                   <div className="sub-headingtxt text-center mb-4">
+                   {isLogin
+                        ? "Find and hire top LinkedIn creators to grow your business."
+                        : userType === "brand"
+                        ? "Ready to connect with LinkedIn influencers? Set up your brand account below."
+                        : "Email"}
+                      {!isLogin && userType === "brand"}
+                                     
+                    </div>
                   {!isLogin && (
                     <>
                       <div className="row mb-3">
@@ -468,8 +478,11 @@ const AuthPage = () => {
                       </div>
                     </>
                   )}
+    
+                     
 
                   <div className="mb-3">
+                    
                     <label
                       htmlFor={isLogin ? "email" : "email"}
                       className="form-label fs-14"
@@ -534,10 +547,14 @@ const AuthPage = () => {
                   )}
 
                   <div className="mb-4">
+                    <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="password" className="form-label fs-14">
                       Password
                       {!isLogin}
                     </label>
+                    <a href="#" className="Link-Txt fs-14 cursor mb-2">
+                      Forgot password?  </a>
+                      </div>
                     <div className="position-relative">
                       <input
                         type={showPassword ? "text" : "password"}
@@ -578,7 +595,7 @@ const AuthPage = () => {
 
                   <button
                     type="submit"
-                    className="btn btn-dark btn-lg w-100 mb-3 d-flex align-items-center justify-content-center"
+                    className="SignIN-btn mb-3 mt-3"
                     disabled={loader}
                   >
                     {loader
@@ -596,7 +613,7 @@ const AuthPage = () => {
                     />
                   </button>
 
-                  <div className="text-center mb-4 d-flex justify-content-center align-items-center gap-3">
+                  <div className="text-center mb-3 mt-3 d-flex justify-content-center align-items-center gap-1">
                     <span className="text-muted small fs-14">
                       {isLogin
                         ? "Need an account as a Brand? "
@@ -606,7 +623,7 @@ const AuthPage = () => {
                     </span>
                     <span
                       onClick={toggleAuthMode}
-                      className="text-dark p-0 small text-decoration-none fs-16 fw-medium cursor"
+                      className="Link-Txt fs-14 cursor"
                     >
                       {isLogin ? "Sign up" : "Sign in"}
                     </span>
@@ -626,6 +643,7 @@ const AuthPage = () => {
 
               {userType === "creator" && (
                 <>
+                 <div className="sub-headingtxt text-center mb-4" role="alert">Showcase your LinkedIn influence and earn through brand collaborations.</div>
                   <button
                     type="button"
                     onClick={(e: any) => {
@@ -635,34 +653,36 @@ const AuthPage = () => {
                       // For example:
                       // window.location.href = 'your-linkedin-oauth-url'
                     }}
-                    className="btn btn-outline-info btn-lg w-100 mb-4 d-flex align-items-center justify-content-center"
+                    className="SignIN-linkedINbtn mb-3 mt-3"
                     // disabled={loader}
                   >
-                    <Icon
-                      icon="mdi:linkedin"
-                      width={20}
-                      height={20}
-                      className="me-2 text-info"
-                    />
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-linkedin "><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                     Continue with LinkedIn
                   </button>
-                  <div className="text-center mb-4 d-flex justify-content-center align-items-center gap-3">
+                  <div className="fs-14 py-2 text-center">We use LinkedIn to verify your professional profile and gather campaign analytics.</div>
+                  <div className="text-center mb-3 mt-3 d-flex justify-content-center align-items-center gap-1">
                     <span className="text-muted small fs-14">
                       {isLogin
-                        ? "Need an account as a Brand? "
+                        ? "Not a Creator?"
                         : isLogin
                         ? "Don't have an account? "
                         : "Have an account? "}
                     </span>
                     <span
                       onClick={toggleAuthMode}
-                      className="text-dark p-0 small text-decoration-none fs-16 fw-medium cursor"
+                      className="Link-Txt fs-14 cursor"
                     >
-                      {isLogin ? "Sign up" : "Sign in"}
+                      {isLogin ? "Sign in as a Brand" : "Sign in"}
                     </span>
                   </div>
                 </>
               )}
+                <div className="footer-pannel fs-12 text-center">
+                By signing in, you agree to our &nbsp;
+                <a href="/terms" className="Link-Txt fs-14 cursor">Terms</a> 
+                &nbsp; and  &nbsp;
+                <a href="/privacy" className="Link-Txt fs-14 cursor">Privacy Policy</a>.
+                </div>
             </div>
           </div>
         </div>

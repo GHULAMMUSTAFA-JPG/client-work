@@ -50,9 +50,9 @@ export const ProposalCard = ({
   const getStatusColor = () => {
     switch (status) {
       case "approved":
-        return "bg-primary text-white";
+        return "bg-primary-subtle text-primary";
       case "rejected":
-        return "bg-danger text-white";
+        return "bg-danger-subtle text-danger";
       default:
         return "pending";
     }
@@ -88,12 +88,12 @@ export const ProposalCard = ({
 
   return (
     <div
-      className="border-opacity-25 border-primary card p-4 shadow-sm w-100 my-3"
+      className="border-opacity-25 border-primary card p-4 shadow-sm w-100"
       style={{ maxWidth: "28rem" }}
     >
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3 className="fw-medium text-dark">{campaignName}</h3>
-        <span className={`badge p-2 ${getStatusColor()}`}>
+        <h3 className="fw-medium text-dark line-clamp-2">{campaignName}</h3>
+        <span className={`badge p-2 ms-3 ${getStatusColor()}`}>
           {getStatusText()}
         </span>
       </div>

@@ -239,7 +239,7 @@ const Inbox = () => {
                   }`}
                 >
                   <img
-                    src={chat?.Profile_Image || defaultImagePath}
+                    src={chat?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
                     alt="Profile"
                     width={40}
                     height={40}
