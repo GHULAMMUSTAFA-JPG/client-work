@@ -1,3 +1,4 @@
+import { Status } from "@/types";
 import { apiController } from "./baseUrl";
 
 const handleApiRequest = async <T>(
@@ -243,6 +244,19 @@ export const createBrandCampaign = async (payload: object) => {
   return handleApiRequest(
     "post",
     "/dashboard/campaigns/create_campaign",
+    payload
+  );
+};
+
+export const updatePostStatus = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  post_id: string;
+  status: string;
+}) => {
+  return handleApiRequest(
+    "put",
+    "/brands/campaigns/post-proposal-status",
     payload
   );
 };
