@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Edit, Plus, Trash2, Eye } from "lucide-react";
+import { Plus, Eye } from "lucide-react";
 import { CampaignDrawer } from "./CampaignDrawer";
-import { CreatePostDrawer } from "./CreatePostDrawer";
 import { ContentVersionDrawer } from "./ContentVersionDrawer";
 import { Status } from "@/types"; // Ensure the correct Status enum is imported
 import { getCampaignStatusStyles } from "./utils";
@@ -18,13 +17,14 @@ interface PerformanceMetrics {
 export interface Version {
   id: string;
   date: string;
-  imageUrl?: string;
+  media?: string[];
   status: Status;
   title: string;
-  feedback?: string[];
+  feedback: string;
   livePostLink?: string;
   postType: string;
   metrics?: PerformanceMetrics;
+  description?: string;
 }
 
 interface ContentVersionsProps {
@@ -33,6 +33,8 @@ interface ContentVersionsProps {
   campaignId: string;
   creatorId: string;
   postId: string;
+  canSubmit: boolean;
+  onSubmit: () => void;
 }
 
 // **Mapping dropdown values to the Status enum**
@@ -45,23 +47,20 @@ const statusFilterMap: Record<string, Status> = {
 
 export function ContentVersions({
   versions,
-  onAddContent,
   campaignId,
   creatorId,
   postId,
+  canSubmit,
+  onSubmit,
 }: ContentVersionsProps) {
   const [statusFilter, setStatusFilter] = useState<
     "all" | keyof typeof statusFilterMap
   >("all");
 
   const [editingVersion, setEditingVersion] = useState<Version | null>(null);
-  const [showConfirmDelete, setShowConfirmDelete] = useState<string | null>(
-    null
-  );
   const [isCreatePostDrawerOpen, setIsCreatePostDrawerOpen] = useState(false);
   const [selectedVersion, setSelectedVersion] = useState<Version | null>(null);
 
-  // **Fixing the filtering logic**
   const filteredVersions =
     versions?.filter((version) =>
       statusFilter === "all"
@@ -115,9 +114,9 @@ export function ContentVersions({
               <div className="tw-flex tw-items-start tw-justify-between tw-mb-4">
                 <div className="tw-flex tw-items-center tw-space-x-3">
                   <div className="tw-flex-shrink-0 tw-h-16 tw-w-24">
-                    {version.imageUrl ? (
+                    {version.media?.length ? (
                       <img
-                        src={version.imageUrl}
+                        src={version.media[0]}
                         alt={`Version from ${version.date}`}
                         className="tw-h-16 tw-w-24 tw-object-cover tw-rounded-md"
                       />
@@ -162,10 +161,11 @@ export function ContentVersions({
       <PostContentAddNewContent
         isOpen={isCreatePostDrawerOpen}
         onClose={() => setIsCreatePostDrawerOpen(false)}
-        onSubmit={() => {}}
+        onSubmit={() => onSubmit()}
         campaignId={campaignId}
         creatorId={creatorId}
         postId={postId}
+        canSubmit={canSubmit}
       />
 
       <CampaignDrawer
@@ -174,7 +174,6 @@ export function ContentVersions({
         title="Edit Content"
         description="Update content details"
         dueDate="Mar 31, 2024"
-        payout="$300"
         type="edit"
         postType={editingVersion?.postType}
         initialData={editingVersion}

@@ -8,10 +8,11 @@ export const transformPostContent = (post: any) => {
     post?.Content_Versions?.map((content: any) => ({
       id: content.Content_ID,
       date: content.Submitted_At || post.Created_At,
-      imageUrl: content.Media_Content?.[0],
+      media: content.Media_Content || [],
       status: content.Status,
       title: content.Content_Title || post.Post_Title,
-      feedback: content.Feedback ? [content.Feedback] : [],
+      description: content.Content_Text_Content || post.Post_Description,
+      feedback: content.Feedback,
       livePostLink: post.Live_Link || undefined,
       postType: post.Category || "unknown",
       metrics: post.Impressions

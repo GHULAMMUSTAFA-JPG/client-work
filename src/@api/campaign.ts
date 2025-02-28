@@ -95,11 +95,7 @@ export const getCampaignCreatorPosts = async (params: {
   creator_id: string;
   campaign_id: string;
 }) =>
-  handleApiRequest(
-    "get",
-    "/creators/campaigns/campaign-creator-posts",
-    params
-  );
+  handleApiRequest("get", "/creators/campaigns/campaign-creator-posts", params);
 
 export const getCampaignActiveCreatorsOverview = async (params: {
   campaign_id: string;
@@ -115,8 +111,7 @@ export const getCampaignPostDetails = async (params: {
   campaign_id: string;
   creator_id: string;
   post_id: string;
-}) =>
-  handleApiRequest("get", "/creators/campaigns/campaign-post-data", params);
+}) => handleApiRequest("get", "/creators/campaigns/campaign-post-data", params);
 
 export const getPostContentDetails = async (params: {
   campaign_id: string;
@@ -126,11 +121,7 @@ export const getPostContentDetails = async (params: {
 }) => handleApiRequest("get", "/creators/campaigns/post-content-data", params);
 
 export const getCampaignPostProposals = async (params: { buyer_id: string }) =>
-  handleApiRequest(
-    "get",
-    "/brands/campaigns/campaigns-post-proposals",
-    params
-  );
+  handleApiRequest("get", "/brands/campaigns/campaigns-post-proposals", params);
 
 export const getPostProposalDetails = async (params: {
   buyer_id: string;
