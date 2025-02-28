@@ -27,7 +27,7 @@ function Homepagebuyer() {
   const [activeCampaigns, setActiveCampaigns] = useState<any>();
   const [viewRow, showViewRow] = useState<number>(6);
   const [linkCopied, setLinkCopied] = useState<boolean>(false);
-
+  console.log("userProfile", userProfile);
   const router = useRouter();
   useEffect(() => {
     fetchData();
@@ -204,16 +204,16 @@ function Homepagebuyer() {
                             userData?.Company_Name?.slice(0, 50)}
                         </span>
                       </h5>
-                      <img
+                      {/* <img
                         src={`https://flagcdn.com/24x18/${
                           userProfile?.Country_Code || "us"
                         }.png`}
                         width={24}
                         height={14}
-                      />
-                      {userProfile?.Profile_URL ? (
+                      /> */}
+                      {userProfile?.Company_Linkedin ? (
                         <Link
-                          href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
+                          href={`https://www.linkedin.com/company/${userProfile?.Company_Linkedin}`}
                           target="_blank"
                         >
                           <Icon
@@ -235,9 +235,8 @@ function Homepagebuyer() {
                             icon="mdi:linkedin"
                             width={24}
                             height={24}
-                            // className="text-info"
                             className="text-grey"
-                            onClick={() => router.push("/Profile")}
+                            onClick={() => router.push("/companypage")}
                           />
                         </Tooltip>
                       )}

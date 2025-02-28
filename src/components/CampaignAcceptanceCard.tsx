@@ -22,7 +22,7 @@ export const CampaignAcceptanceCard = ({
 
   const handleViewCampaign = async (id: any) => {
     try {
-      const response = await apiController.get(`/dashboard/campaigns/${id}`);
+      const response = await apiController.get(`/dashboard/campaigns/${id}/`);
       // const data = await response.json();
       console.log(response);
       if (response.status === 200) {
@@ -48,7 +48,9 @@ export const CampaignAcceptanceCard = ({
             {isCreatorView ? "Accepted to Campaign" : "Creator Accepted"}
           </h3>
         </div>
-        <span className="small text-gray flex-shrink-0 ms-3">{acceptanceDate}</span>
+        <span className="small text-gray flex-shrink-0 ms-3">
+          {acceptanceDate}
+        </span>
       </div>
 
       <div className="d-flex align-items-center justify-content-between">
