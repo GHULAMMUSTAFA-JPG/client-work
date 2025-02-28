@@ -193,7 +193,7 @@ function CompanyPage() {
             : "Small",
         categories: userProfile?.Categories,
         year_founded:
-          userProfile?.Year_Founded == "" ? 1995 : userProfile?.Year_Founded,
+          userProfile?.Year_Founded == "" ? 2025 : userProfile?.Year_Founded,
       });
 
     userProfile?.Categories && setSelectedCategories(userProfile?.Categories);
@@ -403,7 +403,7 @@ function CompanyPage() {
                   src={
                     userProfile?.Company_Logo !== ""
                       ? userProfile?.Company_Logo
-                      : defaultImagePath
+                      : "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
                   }
                   alt="Profile Picture"
                   width={150}
@@ -414,7 +414,7 @@ function CompanyPage() {
               <div className="profile-image-content-text">
                 {/* Profile Info */}
                 <div className="mt-2">
-                  <h4 className="mb-1" id="name" onClick={editFieldHandler}>
+                  <h4 className="mb-1 fs-20" id="name" onClick={editFieldHandler}>
                     {userProfile?.Company_Name}
                     <Tooltip title="Edit Profile" arrow placement="top">
                     <div
@@ -469,27 +469,27 @@ function CompanyPage() {
                   href={userProfile?.Company_Website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-linkedin"
+                  className={`btn btn-linkedin ${!userProfile?.Company_Website ? 'hidebanner' : ''}`}
                 >
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
                   >
-                    <path
-                      id="Icon_fa-solid-globe"
-                      data-name="Icon fa-solid-globe"
-                      d="M16.5,12a29.31,29.31,0,0,1-.155,3H7.655A28.034,28.034,0,0,1,7.5,12a29.311,29.311,0,0,1,.155-3h8.691A28.034,28.034,0,0,1,16.5,12Zm1.35-3h5.77a12.042,12.042,0,0,1,0,6H17.85A29.616,29.616,0,0,0,18,12,29.616,29.616,0,0,0,17.85,9Zm5.278-1.5h-5.47A16.488,16.488,0,0,0,15.066.394,12.023,12.023,0,0,1,23.123,7.5Zm-6.989,0H7.861A18.892,18.892,0,0,1,9.127,3.061,7.657,7.657,0,0,1,10.7.647,1.937,1.937,0,0,1,12,0a1.937,1.937,0,0,1,1.3.647,7.657,7.657,0,0,1,1.57,2.414A18.543,18.543,0,0,1,16.139,7.5Zm-9.8,0H.872A12.031,12.031,0,0,1,8.934.394,16.488,16.488,0,0,0,6.342,7.5ZM.38,9H6.15a30.075,30.075,0,0,0,0,6H.38a12.042,12.042,0,0,1,0-6ZM9.127,20.934A18.565,18.565,0,0,1,7.861,16.5h8.278a18.784,18.784,0,0,1-1.266,4.434,7.657,7.657,0,0,1-1.57,2.414A1.926,1.926,0,0,1,12,24a1.937,1.937,0,0,1-1.3-.647,7.657,7.657,0,0,1-1.57-2.414ZM6.342,16.5a16.488,16.488,0,0,0,2.592,7.106A12.031,12.031,0,0,1,.872,16.5Zm16.786,0a12.033,12.033,0,0,1-8.058,7.106A16.548,16.548,0,0,0,17.663,16.5h5.466Z"
-                      fill="#1bb09d"
-                    />
+                  <path
+                    id="Icon_fa-solid-globe"
+                    data-name="Icon fa-solid-globe"
+                    d="M16.5,12a29.31,29.31,0,0,1-.155,3H7.655A28.034,28.034,0,0,1,7.5,12a29.311,29.311,0,0,1,.155-3h8.691A28.034,28.034,0,0,1,16.5,12Zm1.35-3h5.77a12.042,12.042,0,0,1,0,6H17.85A29.616,29.616,0,0,0,18,12,29.616,29.616,0,0,0,17.85,9Zm5.278-1.5h-5.47A16.488,16.488,0,0,0,15.066.394,12.023,12.023,0,0,1,23.123,7.5Zm-6.989,0H7.861A18.892,18.892,0,0,1,9.127,3.061,7.657,7.657,0,0,1,10.7.647,1.937,1.937,0,0,1,12,0a1.937,1.937,0,0,1,1.3.647,7.657,7.657,0,0,1,1.57,2.414A18.543,18.543,0,0,1,16.139,7.5Zm-9.8,0H.872A12.031,12.031,0,0,1,8.934.394,16.488,16.488,0,0,0,6.342,7.5ZM.38,9H6.15a30.075,30.075,0,0,0,0,6H.38a12.042,12.042,0,0,1,0-6ZM9.127,20.934A18.565,18.565,0,0,1,7.861,16.5h8.278a18.784,18.784,0,0,1-1.266,4.434,7.657,7.657,0,0,1-1.57,2.414A1.926,1.926,0,0,1,12,24a1.937,1.937,0,0,1-1.3-.647,7.657,7.657,0,0,1-1.57-2.414ZM6.342,16.5a16.488,16.488,0,0,0,2.592,7.106A12.031,12.031,0,0,1,.872,16.5Zm16.786,0a12.033,12.033,0,0,1-8.058,7.106A16.548,16.548,0,0,0,17.663,16.5h5.466Z"
+                    fill="#1bb09d"
+                  />
                   </svg>
                 </a>
                 <a
                   href={`https://${userProfile?.Company_Linkedin}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-linkedin"
+                  className={`btn btn-linkedin ${!userProfile?.Company_Linkedin ? 'hidebanner' : ''}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -701,11 +701,7 @@ function CompanyPage() {
                 <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
                   <div
                     className="profile-sidebar-wraper"
-                    style={{
-                      borderRadius: "10px",
-                      border: "0.5px solid grey ",
-                    }}
-                  >
+                                     >
                     {/* First edit section */}
                     <div
                       className={`profilee-container ${
@@ -778,13 +774,14 @@ function CompanyPage() {
                         </div>
 
                         <div className="mb-4 section-box_container">
-                          <label className="mb-2">Company Logo</label>
+                          <label className="py-1">Company Logo </label>
+                          <div className="fs-10 mb-2">Please upload an image of 150px × 150px for the best quality</div>
                           <div className="position-relative">
                             <img
                               src={
                                 editDetails.company_logo !== ""
                                   ? editDetails?.company_logo
-                                  : defaultImagePath
+                                  : "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
                               }
                               alt="Profile"
                               width={80}
@@ -897,7 +894,7 @@ function CompanyPage() {
                             value={editDetails.year_founded}
                             onChange={changeHandler}
                             id="year_founded"
-                            placeholder="e.g 1996"
+                            placeholder="e.g 2024"
                           />
                         </div>
                         <div className="mb-4 section-box_container">

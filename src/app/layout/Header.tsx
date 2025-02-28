@@ -450,7 +450,7 @@ export default function Header() {
                               <img
                                 src={
                                   conversation?.Profile_Image ||
-                                  defaultImagePath
+                                  "defaultImagePath"
                                 }
                                 alt="Profile"
                                 width={32}
@@ -517,10 +517,12 @@ export default function Header() {
                       alt="user"
                       width={32}
                       height={32}
-                      className="user-img"
+                      className="user-img rounded-circle"
                     />
                   ) : (
-                    <img src={defaultImagePath} width={32} height={32} />
+                    <img src={"https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"} width={32} height={32} 
+                     className="user-img rounded-circle"
+                    />
                   )}
                   <p className="mb-0 ms-2">
                     {userProfile?.Company_Name || userProfile?.Name}

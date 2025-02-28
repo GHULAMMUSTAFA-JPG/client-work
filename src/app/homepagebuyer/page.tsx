@@ -182,7 +182,7 @@ function Homepagebuyer() {
                     />
                   ) : (
                     <div
-                      className="discussion-subtle border object-fit-cover rounded d-flex align-items-center justify-content-center"
+                      className="companyImgbox border object-fit-cover rounded d-flex align-items-center justify-content-center"
                       style={{ width: "120px", height: "120px" }}
                     >
                       <span className="fs-40 fw-medium text-uppercase">

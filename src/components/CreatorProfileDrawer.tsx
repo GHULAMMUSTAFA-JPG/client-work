@@ -43,7 +43,7 @@ export default function CreatorProfileDrawer({ creatorId }: CreatorProfileDrawer
             <div className="p-3">
               <div className="position-relative" style={{ marginTop: "-50px" }}>
                 <img
-                  src={userProfile?.Profile_Image || defaultImagePath}
+                  src={userProfile?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
                   alt="Profile Picture"
                   width={100}
                   height={100}
