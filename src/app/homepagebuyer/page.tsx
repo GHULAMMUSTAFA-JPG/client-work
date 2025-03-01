@@ -450,9 +450,9 @@ function Homepagebuyer() {
                 .slice(0, viewRow)
                 ?.map((notify: any, index: number) => {
                 return (
-                <div
+                  <div
                   key={index}
-                  className={`notification-list ${
+                  className={`notification_wrapper ${
                   notify?.Notification_Icon_Type ===
                   "new_campaign_application"
                   ? "new_campaign"
@@ -471,66 +471,49 @@ function Homepagebuyer() {
                   : ""
                   }`}
                 >
-                  <div className="d-flex gap-3">
-                  <div className="rounded-circle flex-shrink-0 bg-circle-notification">
                   {notify?.Notification_Icon_Type == 
                   "new_campaign_application" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="22"
-                    height="22"
-                    className="text-info"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                    <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                        )}
+
+                    {notify?.Notification_Icon_Type == 
                   "campaign_application_accepted" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="20"
-                    height="20"
-                    className="text-primary"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                        <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                    )}
+
+                   {notify?.Notification_Icon_Type == 
                   "campaign_post_rejected" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="22"
-                    height="22"
-                    className="text-danger"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                          <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                    )}
+                 
+                   {notify?.Notification_Icon_Type == 
                   "campaign_post_approved" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="20"
-                    height="20"
-                    className="text-primary"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                         <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                    )}
+
+                        {notify?.Notification_Icon_Type == 
                   "campaign_post_submission" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="22"
-                    height="22"
-                    className="text-info"
-                  />
+                              <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
                   )}
-                  </div>
-                  <div className="flex-grow-1">
-                  <p className="mb-0 fw-medium fs-12">
-                  {notify?.Title}
-                  </p>
-                  <p
-                  className="mb-0 fs-10 line-clamp-1"
-                  style={{ color: "black" }}
-                  >
-                  {notify?.Message}
-                  </p>
-                  </div>
-                  </div>
+
+                  
+                        <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-900">{notify?.Title}</p>
+                        <p className="text-sm text-gray-500">{notify?.Message}</p>
+                        <p className="text-muted text-gray-400 mt-1">5 min ago</p>
+                        </div>
+                      
+               
                 </div>
                 );
                 })
@@ -542,18 +525,24 @@ function Homepagebuyer() {
                 iconSize={32}
                 />
               )}
-              {notifications?.notifications?.length > viewRow && (
+                {notifications?.notifications && notifications?.notifications?.length > 0 && (
                 <div className="text-center mt-3">
-                <button
-                className="btn btn-outline-primary btn-sm"
-                onClick={() => {
-                  showViewRow(notifications?.notifications?.length);
-                }}
-                >
-                Load More
-                </button>
+                  <button
+                  className="loadmorebtn"
+                  onClick={() => {
+                    if (viewRow >= notifications?.notifications?.length) {
+                    showViewRow(5);
+                    } else {
+                    showViewRow(notifications?.notifications?.length);
+                    }
+                  }}
+                  >
+                  {viewRow >= notifications?.notifications?.length
+                    ? "Show Less"
+                    : "Load More"}
+                  </button>
                 </div>
-               )}          
+                )}
             
               </div>
             </div>
