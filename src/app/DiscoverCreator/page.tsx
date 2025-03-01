@@ -25,8 +25,14 @@ function DiscoverCreator() {
   const [pageNo, setPageNo] = useState<number>(1);
   const [limit, setLimit] = useState<number>(30);
   const [selectedCampaign, setSelectedCampaign] = useState<any>(null);
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+ const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   useEffect(() => {
+    if (isSidebarOpen) {
+      setIsSidebarOpen(false);
+    }
     setIsActive(1);
     if (!brandName && user?.email) {
       getDiscoverCampaigns(
@@ -60,16 +66,25 @@ function DiscoverCreator() {
         <div className="container">
           <div className="row my-2">
             <div className="col-12">
-              <div className="d-flex align-items-center justify-content-between flex-wrap mb-3">
+              <h2 className="fs-20 fw-700">Discover Brand Campaigns</h2> 
+              <p className="mt-2 fs-14">Find and collaborate with top brands looking for creators like you. Apply to campaigns that match your expertise and audience to monetize your content.</p>
+                <div className="mt-1 flex items-center">
+                <div className="flex items-center text-sm text-teal-600">
+                  <span className="font-medium">9 campaigns available</span>
+                  <span className="mx-2">•</span><span>5 highly matched</span>
+              </div></div>
+            </div>
+            <div className="col-12">
+              <div className="d-flex align-items-center justify-content-between flex-wrap mb-3 mt-3">
                 <div className="position-relative w-auto mb-2">
                   <input
                     type="text"
                     onChange={(e: any) => {
                       setSearchText(e?.target?.value);
                     }}
-                    className="form-control custom-input"
+                    className="form-control custom-input-brand"
                     id="exampleFormControlInput1"
-                    placeholder="Search for Campaigns"
+                    placeholder="Search campaigns by brands, topic, or budget.."
                     onKeyDown={(e: any) => {
                       e.key == "Enter" && searchCampaign();
                     }}
@@ -84,7 +99,7 @@ function DiscoverCreator() {
                   {/* <Icon icon="akar-icons:settings-vertical" width={20} height={20} className='text-primary position-absolute top-50 end-0 translate-middle-y me-3 cursor' data-bs-toggle="modal" data-bs-target="#exampleModal" /> */}
                 </div>
                 <select
-                  className="form-select custom-select mb-2"
+                  className="form-select custom-select-brand mb-2"
                   onChange={(e: any) => {
                     filterCampaignCall(e.target.value);
                   }}
@@ -94,10 +109,7 @@ function DiscoverCreator() {
                   <option value="newest">Newest</option>
                   <option value="oldest">Oldest</option>
                 </select>
-                {/* <button className='btn btn-primary rounded-pill d-flex align-items-center' data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    <Icon icon="akar-icons:settings-vertical" width={20} height={20} />
-                                    <span className='ms-2'>Advanced Filters</span>
-                                </button> */}
+               
               </div>
             </div>
           </div>
@@ -109,101 +121,84 @@ function DiscoverCreator() {
                   className="col-md-12"
                   onClick={() => {
                     setSelectedCampaign(campaign);
+                    toggleSidebar();
                   }}
-                  data-bs-toggle="modal"
-                  data-bs-target="#applyModal"
                 >
-
-      <div className="card card-hover py-2">
-  
-       <div className="card-body d-flex justify-content-start gap-3 item-content-start"> 
-                  <div className="image-content">
-                  <img
-                            src={campaign?.Company_Logo || defaultImagePath}
-                            className="border object-fit-cover rounded-circle flex-shrink-0 vh-60"
-                            alt="logo"
-                            width={40}
-                            height={40}
+                  <div className="card card-hover py-2">
+                    <div className="card-body d-flex justify-content-start gap-3 item-content-start">
+                      <div className="img-container-lg">
+                        <img
+                          src={campaign?.Company_Logo || defaultImagePath}
+                          className="flex-shrink-0"
+                          alt="logo"
+                         
+                        />
+                      </div>
+                      <div className="content-wrapper w-100 mt-1">
+                        <p className="fw-medium mb-0 fs-16 line-clamp-1">
+                          {campaign?.Headline?.slice(0, 100)}
+                        </p>
+                        <p className="fs-13 mb-0 fs-16 line-clamp-1">
+                          {campaign?.Campaign_Details?.slice(0, 100)}
+                        </p>
+                        <div className="d-flex gap-2 mt-2 mb-2 align-items-center">
+                          <Icon
+                            icon="solar:eye-broken"
+                            width="18"
+                            height="18"
+                            className="text-gray flex-shrink-0"
                           />
-                  </div>
-                  <div className="content-wrapper w-100 mt-1">
-                  <p className="fw-medium mb-0 fs-16 line-clamp-1">
-                            {campaign?.Headline?.slice(0, 100)}
-                  </p>
-                   <p className="fs-13 mb-0 fs-16 line-clamp-1">
-                            {campaign?.Campaign_Details?.slice(0, 100)}
-                  </p>
-               <div className="d-flex gap-2 mt-2 mb-2 align-items-center">
-                <Icon
-                  icon="solar:eye-broken"
-                  width="18"
-                  height="18"
-                  className="text-gray flex-shrink-0"
-                />
-                <p className="mb-0 line-clamp-1">
-                  {campaign?.Target_Audience?.join(" , ")}
-                </p>
-              </div>
-              <div className="d-flex py-1">
-                  {campaign.Company_Website && (
-                    <Link
-                      href={`${campaign.Company_Website}`}
-                      target="_blank"
-                    >
-                      <Icon
-                        icon="mdi:web"
-                        width="18"
-                        height="18"
-                        className="text-warning ms-1"
-                        style={{
-                          minWidth: "18px",
-                          minHeight: "18px",
-                        }}
-                      />
-                    </Link>
-                  )}
-                  {campaign.Company_Linkedin && (
-                    <Link
-                      href={`https://${campaign.Company_Linkedin}`}
-                      target="_blank"
-                    >
-                      <Icon
-                        icon="mdi:linkedin"
-                        width="18"
-                        height="18"
-                        className="text-info ms-2"
-                        style={{
-                          minWidth: "18px",
-                          minHeight: "18px",
-                        }}
-                      />
-                    </Link>
-                  )}
-                </div>
-                  </div>
-                  <div className="action_wrapper text-end">
-                  
-                         <p className="fs-13 mb-0 fs-16 line-clamp-1 text-right">
-                         $  {campaign?.Budget}
-                  </p>
-                  <div className="learnmore-btn d-flex justify-content-end">
-                        <button
-                          className="btn btn-dark ms-2 btn-sm w-s mt-2"
-                          data-bs-toggle="modal"
-                          data-bs-target="#applyModal"
-                          onClick={() => {
-                            setSelectedCampaign(campaign);
-                          }}
-                        >
-                          Learn more
-                        </button>
+                          <p className="mb-0 line-clamp-1">
+                            {campaign?.Target_Audience?.join(" , ")}
+                          </p>
+                        </div>
+                        <div className="d-flex py-1">
+                          {campaign.Company_Website && (
+                            <Link href={`${campaign.Company_Website}`} target="_blank">
+                              <Icon
+                                icon="mdi:web"
+                                width="18"
+                                height="18"
+                                className="text-warning ms-1"
+                                style={{
+                                  minWidth: "18px",
+                                  minHeight: "18px",
+                                }}
+                              />
+                            </Link>
+                          )}
+                          {campaign.Company_Linkedin && (
+                            <Link href={`https://${campaign.Company_Linkedin}`} target="_blank">
+                              <Icon
+                                icon="mdi:linkedin"
+                                width="18"
+                                height="18"
+                                className="text-info ms-2"
+                                style={{
+                                  minWidth: "18px",
+                                  minHeight: "18px",
+                                }}
+                              />
+                            </Link>
+                          )}
+                        </div>
                       </div>
-
+                      <div className="action_wrapper text-end">
+                        <p className="fs-13 mb-0 fs-16 line-clamp-1 text-right">
+                          $ {campaign?.Budget}
+                        </p>
+                        <div className="learnmore-btn d-flex justify-content-end">
+                          <button
+                            className="btn btn-dark ms-2 btn-sm w-s mt-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#applyModal"
+                          >
+                            Learn more
+                          </button>
+                        </div>
                       </div>
-
-      </div>
-      </div>       
-                 
+                    </div>
+                  </div>
                 </div>
               );
             })}
@@ -221,7 +216,151 @@ function DiscoverCreator() {
             </div>
           )}
         </div>
+        {isSidebarOpen && (
+        <div className="sidebar-drawer-campaign">
+          <div className="sidebar-header">
+          <div className="d-flex justify-content-between align-items-center py-2 px-3 bg-light-gray">
+            <h6>Campaign Details</h6>
+          <button onClick={toggleSidebar} className="bg-white border btn btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16.325" height="16.325" viewBox="0 0 16.325 16.325">
+  <path id="Icon_ion-close" data-name="Icon ion-close" d="M15.822,13.785l5.7-5.7a1.441,1.441,0,0,0-2.036-2.04l-5.7,5.7-5.7-5.7a1.442,1.442,0,0,0-2.04,2.04l5.7,5.7-5.7,5.7a1.442,1.442,0,0,0,2.04,2.04l5.7-5.7,5.7,5.7a1.442,1.442,0,0,0,2.04-2.04Z" transform="translate(-5.623 -5.623)"/>
+</svg>
+</button></div>
+        
+          </div>
+          <div className="sidebar-content py-2 px-3 bg-light-gray"> 
+           
+
+            <div className="d-flex justify-content-between align-items-center gap-3 py-2">
+            <div className="profileMatchbox py-2 mb-3 px-3">
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="fs-12 fw-400">S Factor</span>
+              <span className="fs-14 fw-700">85/100</span>
+              </div>
+              <div className="mt-1 fs-14 fw-400">Strong Match</div>
+              </div>
+
+              <div className="profileInfo py-1 mb-3 px-3">
+              <div className="mt-1 fs-12 fw-500">Why This Campaign Matches Your Profile</div>
+              <div className="mt-1 fs-12 fw-400">Based on your expertise in Career Coaching, this campaign aligns well with your content style and audience interests.</div>
+              </div>
+            </div>
+
+           <div className="d-flex justify-content-between align-items-start gap-3 py-2">
+                      <div className="box-wrapper py-2 mb-3 px-3">
+                      
+
+                      <div className="d-flex align-items-start gap-2">
+                        <div className="img-container-sml">
+                        <img
+                          src={selectedCampaign?.Company_Logo || defaultImagePath}
+                          className="flex-shrink-0"
+                          alt="logo"
+                          />
+                          </div>
+                        <div>
+                          <p className="fw-medium mb-0 fs-14">{selectedCampaign?.Headline}</p>
+                          <p className="fs-12 mb-0 line-clamp-5">{selectedCampaign?.Campaign_Details.slice(0, 100)}
+                         </p>
+                          <div className="d-flex gap-1 align-items-center py-2">
+                          {selectedCampaign?.Company_Website && (
+                          <Link href={`${selectedCampaign.Company_Website}`} target="_blank">
+                            <Icon
+                              icon="mdi:web"
+                              width="18"
+                              height="18"
+                              className="text-warning ms-1"
+                              style={{
+                                minWidth: "18px",
+                                minHeight: "18px",
+                              }}
+                            />
+                          </Link>
+                        )}
+                        {selectedCampaign?.Company_Linkedin && (
+                          <Link href={`https://${selectedCampaign.Company_Linkedin}`} target="_blank">
+                            <Icon
+                              icon="mdi:linkedin"
+                              width="18"
+                              height="18"
+                              className="text-info ms-2"
+                              style={{
+                                minWidth: "18px",
+                                minHeight: "18px",
+                              }}
+                            />
+                          </Link>
+                        )}
+                          </div>
+                      <p className="fs-12 mb-0 fw-500">Target Audience</p>
+                      <div className="d-flex flex-wrap gap-1 py-2">
+                  {selectedCampaign?.Target_Audience?.map(
+                    (audience: string, index: number) => (
+                      <span
+                        key={index}
+                        className="chips"
+                      >
+                        {audience}
+                      </span>
+                    )
+                  )}
+                </div>
+                <p className="fs-12 mb-0 fw-500">Campaign Details</p>
+                <p className="fs-12 mb-0 line-clamp-6">{selectedCampaign?.Campaign_Details}</p>
+                        </div>
+                      </div>
+
+                      
+
+                      </div>
+                      <div className="box-wrapper py-2 mb-3 px-3">
+                     <p className="fs-12 mb-0">Timeline for Delivery
+                      <br />
+
+Campaign Runs: June 1 - June 30, 2025<br />
+Key Milestones:<br />
+<ul className="Listbox">
+  <li>June 1, 2025: Campaign launch</li>
+  <li >June 15, 2025: Mid-campaign check-in</li>
+  <li >June 30, 2025: Campaign wrap-up</li>
+</ul>
+Campaign Requirements<br />
+<ul className="Listbox">
+  <li >1-2 LinkedIn posts</li>
+  <li>Professional tone</li>
+  <li>Include product benefits</li>
+  </ul>
+ </p>
+
+                      <div className="grey-box round-3 py-1 mt-3 mb-3 px-3">
+              <div className="mt-1 fs-12 fw-500 mb-1">Compensation</div>
+              <div className="mt-1 fs-16 fw-500 mb-1">$ {selectedCampaign?.Budget.toLocaleString()}</div>
+              <div className="mt-1 fs-10 fw-400 mb-1">Final rates may be negotiated based on scope and deliverables.</div>
+              </div>
+             </div>
+
+
+            
+           </div>
+
+
+
+                <div className="mainbox">
+
+                </div>
+         
+           </div>
+           <div className="sidebar-footer">
+          <div className="d-flex justify-content-end gap-2 py-2 px-3 bg-light-gray">
+            <button className="btn btn-outline-dark btn-sm" onClick={toggleSidebar}>Cancel</button>
+            <button className="btn btn-dark btn-sm">Apply Now</button>
+          </div>
+           </div>
+        </div>
+      )}
       </section>
+
+
+
       <CampaignOffcanvas />
       <CampaignFilterModal selectedCampaign={selectedCampaign} />
       <ApplyModal selectedCampaign={selectedCampaign} />
