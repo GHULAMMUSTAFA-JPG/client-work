@@ -82,7 +82,7 @@ function Homepage() {
           <HowToInstall />
 
           <div className="col-md-8">
-            <div className="card mb-3">
+            <div className="card mb-1">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <p className="mb-0 fs-16 fw-medium">Profile</p>
@@ -193,7 +193,7 @@ function Homepage() {
                     height={80}
                   />
 
-                  <div className="flex-grow-1">
+                  <div className="flex-grow-1 mb-3">
                     <div className="d-flex align-items-center gap-2 mb-2">
                       <h5 className="mb-0 fw-medium fs-16">
                         {userProfile?.Name}
@@ -258,19 +258,7 @@ function Homepage() {
                           )}
                         </div>
                       )}
-                    {/* <div className="d-flex gap-2 flex-wrap mb-3">
-                      {userProfile?.Skills?.map(
-                        (element: any, index: number) => (
-                          <span
-                            key={index}
-                            className="badge bg-success text-secondary rounded-pill fw-light border border-transparent"
-                          >
-                            {element}
-                          </span>
-                        )
-                      )}
-                    </div> */}
-
+         
                     <p className="mb-0 fs-12 text-warning">
                       {userProfile?.Description &&
                       userProfile?.Description?.length > 100
@@ -279,35 +267,42 @@ function Homepage() {
                     </p>
                   </div>
                 </div>
-
-                <div className="statsbox-container-dash">
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.No_of_Followers}{" "}
-                    </h5>
-                    <p className="stats-heading-dash">Followers</p>
-                  </div>
-
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.Average_Engagements}
-                    </h5>
-                    <p className="stats-heading-dash">
-                      Average Engagaements per post
-                    </p>
-                  </div>
-
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.Average_Impressions}
-                    </h5>
-                    <p className="stats-heading-dash">
-                      Average Impressions per post
-                    </p>
-                  </div>
-                </div>
-              </div>
+             </div>
             </div>
+            <div className="statsbox-container-dash py-3">
+           <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-users text-blue-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                  <p className="fs-14">Followers</p>
+                  <p className="fs-16 fw-bold">{userProfile?.No_of_Followers}{" "}</p>
+                </div>
+          </div>
+
+       <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-message-square text-teal-500"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                <p className="fs-14">Average Engagaements per post</p>
+                  <p className="fs-16 fw-bold">{userProfile?.Average_Engagements}</p>
+                </div>
+          </div>
+
+          <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-message-square text-teal-500"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                <p className="fs-14">Average Impressions per post</p>
+                <p className="fs-16 fw-bold">{userProfile?.Average_Impressions}</p>
+                </div>
+          </div>
+  </div>
             <div className="card h-10">
               {!hasActiveCampaigns && (
                 <div className="d-flex flex-column justify-content-center min-h-100 howitwork">
