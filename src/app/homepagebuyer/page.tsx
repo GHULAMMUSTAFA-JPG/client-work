@@ -461,81 +461,59 @@ function Homepagebuyer() {
             </div>
           </div>
 
-          <div className="col-md-4">
+            <div className="col-md-4">
             <div className="card mb-3">
               <div className="card-body">
-              <p className="mb-2 fs-16 fw-medium ">Notifications</p>
-              {notifications?.notifications &&
-              notifications?.notifications?.length !== 0 ? (
-                notifications?.notifications
-                .slice(0, viewRow)
-                ?.map((notify: any, index: number) => {
+              <p className="mb-2 fs-16 fw-medium">Notifications</p>
+              {notifications?.notifications?.length ? (
+                notifications.notifications.slice(0, viewRow).map((notify: any, index: number) => {
+                const iconType = notify?.Notification_Icon_Type;
+                const iconMap: { [key: string]: JSX.Element } = {
+                  "new_campaign_application": (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="Notification_icon">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                  </svg>
+                  ),
+                  "campaign_application_accepted": (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="Notification_icon">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                  </svg>
+                  ),
+                  "campaign_post_rejected": (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="Notification_icon">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                  </svg>
+                  ),
+                  "campaign_post_approved": (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="Notification_icon">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                  </svg>
+                  ),
+                  "campaign_post_submission": (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="Notification_icon">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                  </svg>
+                  ),
+                  "default": (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-message-square "><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  )
+                };
                 return (
-                  <div
-                  key={index}
-                  className={`notification_wrapper ${
-                  notify?.Notification_Icon_Type ===
-                  "new_campaign_application"
-                  ? "new_campaign"
-                  : notify?.Notification_Icon_Type ===
-                  "campaign_application_accepted"
-                  ? "accepted_campaign"
-                  : notify?.Notification_Icon_Type ===
-                  "campaign_post_rejected"
-                  ? "rejected_campaign"
-                  : notify?.Notification_Icon_Type ===
-                  "campaign_post_approved"
-                  ? "post_approved"
-                  : notify?.Notification_Icon_Type ===
-                  "campaign_post_submission"
-                  ? "post_submission"
-                  : ""
-                  }`}
-                >
-                  {notify?.Notification_Icon_Type == 
-                  "new_campaign_application" && (
-                    <div className="notify_icons">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-                      </div>
-                        )}
-
-                    {notify?.Notification_Icon_Type == 
-                  "campaign_application_accepted" && (
-                        <div className="notify_icons">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-                      </div>
-                    )}
-
-                   {notify?.Notification_Icon_Type == 
-                  "campaign_post_rejected" && (
-                          <div className="notify_icons">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-                      </div>
-                    )}
-                 
-                   {notify?.Notification_Icon_Type == 
-                  "campaign_post_approved" && (
-                         <div className="notify_icons">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-                      </div>
-                    )}
-
-                        {notify?.Notification_Icon_Type == 
-                  "campaign_post_submission" && (
-                              <div className="notify_icons">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
-                      </div>
-                  )}
-
-                  
-                        <div className="ml-3">
-                        <p className="text-sm font-medium text-gray-900">{notify?.Title}</p>
-                        <p className="text-sm text-gray-500">{notify?.Message}</p>
-                        <p className="text-muted text-gray-400 mt-1">5 min ago</p>
-                        </div>
-                      
-               
-                </div>
+                  <div key={index} className={`notification_wrapper ${iconType}`}>
+                  <div className="notify_icons">
+                    {iconMap[iconType] || iconMap["default"]}
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-900">{notify?.Title}</p>
+                    <p className="text-sm text-gray-500">{notify?.Message}</p>
+                    <p className="text-muted text-gray-400 mt-1">5 min ago</p>
+                  </div>
+                  </div>
                 );
                 })
               ) : (
@@ -546,35 +524,32 @@ function Homepagebuyer() {
                 iconSize={32}
                 />
               )}
-                {notifications?.notifications && notifications?.notifications?.length > 0 && (
+              {notifications?.notifications?.length > 0 && (
                 <div className="text-center mt-3">
-                  <button
+                <button
                   className="loadmorebtn"
                   onClick={() => {
-                    if (viewRow >= notifications?.notifications?.length) {
+                  if (viewRow >= notifications.notifications.length) {
                     showViewRow(5);
-                    } else {
-                    showViewRow(notifications?.notifications?.length);
-                    }
+                  } else {
+                    showViewRow(notifications.notifications.length);
+                  }
                   }}
-                  >
-                  {viewRow >= notifications?.notifications?.length
-                    ? "Show Less"
-                    : "Load More"}
-                  </button>
+                >
+                  {viewRow >= notifications.notifications.length ? "Show Less" : "Load More"}
+                </button>
                 </div>
-                )}
-            
+              )}
               </div>
             </div>
 
             <div className="card mb-3">
               <div className="card-body">
-                <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
-                <PostCalendar />
+              <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
+              <PostCalendar />
               </div>
             </div>
-          </div>
+            </div>
         </div>
 
     
