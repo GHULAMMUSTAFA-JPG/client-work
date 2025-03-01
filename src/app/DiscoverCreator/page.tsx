@@ -57,8 +57,8 @@ function DiscoverCreator() {
   return (
     <>
       <section className="dashboard">
-        <div className="container-fluid">
-          <div className="row my-3">
+        <div className="container">
+          <div className="row my-2">
             <div className="col-12">
               <div className="d-flex align-items-center justify-content-between flex-wrap mb-3">
                 <div className="position-relative w-auto mb-2">
@@ -106,93 +106,87 @@ function DiscoverCreator() {
               return (
                 <div
                   key={index}
-                  className="col-lg-4 col-md-6"
+                  className="col-md-12"
                   onClick={() => {
                     setSelectedCampaign(campaign);
                   }}
                   data-bs-toggle="modal"
                   data-bs-target="#applyModal"
                 >
-                  <div className="card card-hover h-100">
-                    <div className="card-body d-flex flex-column">
-                      <div className="d-flex justify-content-between gap-2 mb-4 align-items-center">
-                        <div className="d-flex gap-2 align-items-center">
-                          <img
+
+      <div className="card card-hover py-2">
+  
+       <div className="card-body d-flex justify-content-start gap-3 item-content-start"> 
+                  <div className="image-content">
+                  <img
                             src={campaign?.Company_Logo || defaultImagePath}
-                            className="border object-fit-cover rounded-circle flex-shrink-0 vh-40"
+                            className="border object-fit-cover rounded-circle flex-shrink-0 vh-60"
                             alt="logo"
                             width={40}
                             height={40}
                           />
-                          <p className="fw-medium mb-0 fs-16 line-clamp-1">
+                  </div>
+                  <div className="content-wrapper w-100 mt-1">
+                  <p className="fw-medium mb-0 fs-16 line-clamp-1">
                             {campaign?.Headline?.slice(0, 100)}
-                          </p>
-                        </div>
-
-                        <div className="d-flex justify-content-between">
-                          <div className="d-flex justify-content-between  gap-2 align-items-center">
-                            {campaign.Company_Website && (
-                              <Link
-                                href={`${campaign.Company_Website}`}
-                                target="_blank"
-                              >
-                                <Icon
-                                  icon="mdi:web"
-                                  width="18"
-                                  height="18"
-                                  className="text-warning ms-1"
-                                  style={{
-                                    minWidth: "18px",
-                                    minHeight: "18px",
-                                  }}
-                                />
-                              </Link>
-                            )}
-                            {campaign.Company_Linkedin && (
-                              <Link
-                                href={`https://${campaign.Company_Linkedin}`}
-                                target="_blank"
-                              >
-                                <Icon
-                                  icon="mdi:linkedin"
-                                  width="18"
-                                  height="18"
-                                  className="text-info ms-2"
-                                  style={{
-                                    minWidth: "18px",
-                                    minHeight: "18px",
-                                  }}
-                                />
-                              </Link>
-                            )}
-                          </div>
-                          <div className="applied-btn-container ms-auto">
-                            {/* <button className='btn btn-outline-info btn-sm' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => {
-                                                        setSelectedCampaign(campaign)
-                                                    }}>Detail</button> */}
-                            {/* <button className='btn btn-info ms-2 btn-sm' data-bs-toggle="modal" data-bs-target="#applyModal"
-                                                            onClick={() => {
-                                                                setSelectedCampaign(campaign)
-                                                            }}
-                                                            disabled={campaign?.Is_Applied}
-                                                        >{campaign?.Is_Applied ? "Applied" : "Apply"}</button> */}
-                          </div>
-
-                          {/* <p className='mb-0 text-warning'>{campaign?.Company_Name}</p> */}
-                        </div>
-                      </div>
-                      <div className="d-flex gap-2 mb-2 align-items-center">
-                        <Icon
-                          icon="solar:eye-broken"
-                          width="18"
-                          height="18"
-                          className="text-gray flex-shrink-0"
-                        />
-                        <p className="mb-0 line-clamp-1">
-                          {campaign?.Target_Audience?.join(" , ")}
-                        </p>
-                      </div>
-                      <div className="learnmore-btn d-flex justify-content-end">
+                  </p>
+                   <p className="fs-13 mb-0 fs-16 line-clamp-1">
+                            {campaign?.Campaign_Details?.slice(0, 100)}
+                  </p>
+               <div className="d-flex gap-2 mt-2 mb-2 align-items-center">
+                <Icon
+                  icon="solar:eye-broken"
+                  width="18"
+                  height="18"
+                  className="text-gray flex-shrink-0"
+                />
+                <p className="mb-0 line-clamp-1">
+                  {campaign?.Target_Audience?.join(" , ")}
+                </p>
+              </div>
+              <div className="d-flex py-1">
+                  {campaign.Company_Website && (
+                    <Link
+                      href={`${campaign.Company_Website}`}
+                      target="_blank"
+                    >
+                      <Icon
+                        icon="mdi:web"
+                        width="18"
+                        height="18"
+                        className="text-warning ms-1"
+                        style={{
+                          minWidth: "18px",
+                          minHeight: "18px",
+                        }}
+                      />
+                    </Link>
+                  )}
+                  {campaign.Company_Linkedin && (
+                    <Link
+                      href={`https://${campaign.Company_Linkedin}`}
+                      target="_blank"
+                    >
+                      <Icon
+                        icon="mdi:linkedin"
+                        width="18"
+                        height="18"
+                        className="text-info ms-2"
+                        style={{
+                          minWidth: "18px",
+                          minHeight: "18px",
+                        }}
+                      />
+                    </Link>
+                  )}
+                </div>
+                  </div>
+                  <div className="action_wrapper text-end">
+                  
+                         <p className="fs-13 mb-0 fs-16 line-clamp-1 text-right">
+                         $  {campaign?.Budget}
+                  </p>
+                  <div className="learnmore-btn d-flex justify-content-end">
                         <button
                           className="btn btn-dark ms-2 btn-sm w-s mt-2"
                           data-bs-toggle="modal"
@@ -204,12 +198,12 @@ function DiscoverCreator() {
                           Learn more
                         </button>
                       </div>
-                      {/* <div className='d-flex gap-2 mb-3'>
-                                                    <Icon icon="tabler:arrows-cross" width={14} height={14} className='text-gray flex-shrink-0 mt-1' />
-                                                    <p className='mb-0'>{campaign?.Campaign_Required_Channels?.length > 100 ? campaign?.Campaign_Required_Channels?.slice(0,100) + "...": campaign?.Campaign_Required_Channels}</p>
-                                                </div> */}
-                    </div>
-                  </div>
+
+                      </div>
+
+      </div>
+      </div>       
+                 
                 </div>
               );
             })}

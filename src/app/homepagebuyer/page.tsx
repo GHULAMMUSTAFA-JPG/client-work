@@ -301,34 +301,62 @@ function Homepagebuyer() {
                     </p>
                   </div>
                 </div>
-
-                <div className="statsbox-container-dash">
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {" "}
-                      {userProfile?.No_of_Employees || 0}
-                    </h5>
-                    <p className="stats-heading-dash">Employees(est)</p>
-                  </div>
-
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.Size || "Small"}
-                    </h5>
-                    <p className="stats-heading-dash">Size</p>
-                  </div>
-
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.Year_Founded}
-                    </h5>
-                    <p className="stats-heading-dash">Year Founded</p>
-                  </div>
-                </div>
               </div>
             </div>
 
-            <div className="card card-with-table">
+            <div className="statsbox-container-dash mb-3">
+
+
+            <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20.087" viewBox="0 0 24 20.087">
+  <g id="Icon_feather-users" data-name="Icon feather-users" transform="translate(0 -1.913)">
+    <path id="Path_865" data-name="Path 865" d="M17,21V19a4,4,0,0,0-4-4H5a4,4,0,0,0-4,4v2" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_866" data-name="Path 866" d="M13,7A4,4,0,1,1,9,3,4,4,0,0,1,13,7Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_867" data-name="Path 867" d="M23,21V19a4,4,0,0,0-3-3.87m-4-12a4,4,0,0,1,0,7.75" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
+
+                  </div>
+
+                <div className="ml-4">
+                  <p className="fs-14">Employees (est)</p>
+                  <p className="fs-16 fw-bold"> {" "}{userProfile?.No_of_Employees || 0}</p>
+                </div>
+          </div>
+          <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
+  <path id="Icon_core-resize-both" data-name="Icon core-resize-both" d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z" transform="translate(-3.75 -3.75)"/>
+</svg>
+
+                  </div>
+
+                <div className="ml-4">
+                  <p className="fs-14">Size</p>
+                  <p className="fs-16 fw-bold">{userProfile?.Size || "Small"}</p>
+                </div>
+          </div>
+
+          <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="Icon_feather-clock" data-name="Icon feather-clock" transform="translate(-1 -1)">
+    <path id="Path_863" data-name="Path 863" d="M22,12A10,10,0,1,1,12,2,10,10,0,0,1,22,12Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_864" data-name="Path 864" d="M12,6v6l4,2" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
+
+                  </div>
+
+                <div className="ml-4">
+                  <p className="fs-14">Year Founded</p>
+                  <p className="fs-16 fw-bold">{userProfile?.Year_Founded}</p>
+                </div>
+          </div>
+</div>
+
+             <div className="card card-with-table">
               <div className="card-header p-3">
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="mb-0 fw-medium fs-16">Campaigns</p>
@@ -349,7 +377,7 @@ function Homepagebuyer() {
                   </button>
                 </div>
               </div>
-              <div className="card-body p-0">
+              <div className="card-body p-3">
                 <div className="table-responsive campaign-listing-table">
                   <table className="table align-middle text-center mb-0 table-hover">
                     <thead>
@@ -380,14 +408,7 @@ function Homepagebuyer() {
                                   }}
                                 >
                                   <td className="text-start">
-                                    {/* <div className="d-flex align-items-center">
-                                                                 <Image src="/assets/images/user1.jpg" alt="logo" width={30} height={30} className="user-img img-fluid" />
-                                                                  <div className="ms-2 text-start">
-                                                                  <p className="mb-0">Billi Ellish</p>
-                                                                      <p className="fs-12 text-muted mb-0">Nov 20, 2024</p>
-                                                                    </div>
-                                                                   </div> */}
-                                    <a
+                                                        <a
                                       href="#"
                                       className="fw-medium text-dark fs-16"
                                     >
@@ -450,9 +471,9 @@ function Homepagebuyer() {
                 .slice(0, viewRow)
                 ?.map((notify: any, index: number) => {
                 return (
-                <div
+                  <div
                   key={index}
-                  className={`notification-list ${
+                  className={`notification_wrapper ${
                   notify?.Notification_Icon_Type ===
                   "new_campaign_application"
                   ? "new_campaign"
@@ -471,66 +492,49 @@ function Homepagebuyer() {
                   : ""
                   }`}
                 >
-                  <div className="d-flex gap-3">
-                  <div className="rounded-circle flex-shrink-0 bg-circle-notification">
                   {notify?.Notification_Icon_Type == 
                   "new_campaign_application" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="22"
-                    height="22"
-                    className="text-info"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                    <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                        )}
+
+                    {notify?.Notification_Icon_Type == 
                   "campaign_application_accepted" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="20"
-                    height="20"
-                    className="text-primary"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                        <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                    )}
+
+                   {notify?.Notification_Icon_Type == 
                   "campaign_post_rejected" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="22"
-                    height="22"
-                    className="text-danger"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                          <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                    )}
+                 
+                   {notify?.Notification_Icon_Type == 
                   "campaign_post_approved" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="20"
-                    height="20"
-                    className="text-primary"
-                  />
-                  )}
-                  {notify?.Notification_Icon_Type == 
+                         <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
+                    )}
+
+                        {notify?.Notification_Icon_Type == 
                   "campaign_post_submission" && (
-                  <Icon
-                    icon="mdi:bell"
-                    width="22"
-                    height="22"
-                    className="text-info"
-                  />
+                              <div className="notify_icons">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="Notification_icon"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+                      </div>
                   )}
-                  </div>
-                  <div className="flex-grow-1">
-                  <p className="mb-0 fw-medium fs-12">
-                  {notify?.Title}
-                  </p>
-                  <p
-                  className="mb-0 fs-10 line-clamp-1"
-                  style={{ color: "black" }}
-                  >
-                  {notify?.Message}
-                  </p>
-                  </div>
-                  </div>
+
+                  
+                        <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-900">{notify?.Title}</p>
+                        <p className="text-sm text-gray-500">{notify?.Message}</p>
+                        <p className="text-muted text-gray-400 mt-1">5 min ago</p>
+                        </div>
+                      
+               
                 </div>
                 );
                 })
@@ -542,18 +546,24 @@ function Homepagebuyer() {
                 iconSize={32}
                 />
               )}
-              {notifications?.notifications?.length > viewRow && (
+                {notifications?.notifications && notifications?.notifications?.length > 0 && (
                 <div className="text-center mt-3">
-                <button
-                className="btn btn-outline-primary btn-sm"
-                onClick={() => {
-                  showViewRow(notifications?.notifications?.length);
-                }}
-                >
-                Load More
-                </button>
+                  <button
+                  className="loadmorebtn"
+                  onClick={() => {
+                    if (viewRow >= notifications?.notifications?.length) {
+                    showViewRow(5);
+                    } else {
+                    showViewRow(notifications?.notifications?.length);
+                    }
+                  }}
+                  >
+                  {viewRow >= notifications?.notifications?.length
+                    ? "Show Less"
+                    : "Load More"}
+                  </button>
                 </div>
-               )}          
+                )}
             
               </div>
             </div>
@@ -567,18 +577,7 @@ function Homepagebuyer() {
           </div>
         </div>
 
-        {/* <TopCardBuyer /> */}
-        {/* <div className="row graphs g-3">
-                    <div className="col-md-6">
-                        <BarsDashboard />
-                    </div>
-                    <div className="col-md-6">
-                        <ProgressDashboardBuyer />
-                    </div>
-                </div>
-                <div className="row my-3">
-                    <CardsDashboardBuyer />
-                </div> */}
+    
       </div>
       <EditProfileModalBuyer
         user={user}
