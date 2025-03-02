@@ -27,27 +27,36 @@ export function CreatePostDrawer({
 
   const [error, setError] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const errors: Record<string, string> = {};
+    let hasErrors = false;
 
     if (!postType) {
-      setError("Please select a post type");
-      return;
+      errors.postType = "Please select a post type";
+      hasErrors = true;
     }
     if (!budget) {
-      setError("Please enter a proposed budget");
-      return;
+      errors.budget = "Please enter a proposed budget";
+      hasErrors = true;
     }
     if (!dueDate) {
-      setError("Please select a due date");
-      return;
+      errors.dueDate = "Please select a due date";
+      hasErrors = true;
+    }
+    if (!description) {
+      errors.description = "Please enter a post description";
+      hasErrors = true;
     }
 
-    if (!description) {
-      setError("Please enter a post description");
+    setFieldErrors(errors);
+
+    if (hasErrors) {
+      setError("Please fill in all required fields");
       return;
     }
 
@@ -74,6 +83,7 @@ export function CreatePostDrawer({
     setBudget("");
     setDueDate("");
     setDescription("");
+    setFieldErrors({});
     onClose();
     onSubmit();
   };
@@ -107,21 +117,45 @@ export function CreatePostDrawer({
 
             <div className="tw-flex-1 tw-overflow-y-auto">
               <form onSubmit={handleSubmit} className="tw-p-6 tw-space-y-6">
+                {error && (
+                  <div className="tw-p-4 tw-bg-red-50 tw-rounded-lg">
+                    <div className="tw-flex">
+                      <AlertCircle className="tw-h-5 tw-w-5 tw-text-red-400" />
+                      <div className="tw-ml-3">
+                        <h3 className="tw-text-sm tw-font-medium tw-text-red-800">
+                          Error
+                        </h3>
+                        <div className="tw-mt-2 tw-text-sm tw-text-red-700">
+                          <p>{error}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                    Post Type
+                    Post Type <span className="tw-text-red-500">*</span>
+                    {fieldErrors.postType && (
+                      <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
+                        {fieldErrors.postType}
+                      </span>
+                    )}
                   </label>
                   <div className="tw-relative">
                     <button
                       type="button"
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                      className="tw-w-full tw-bg-white tw-px-4 tw-py-3 tw-text-left tw-border tw-border-gray-300 tw-rounded-lg tw-shadow-sm focus:tw-outline-none focus:tw-ring-1 focus:tw-ring-primary focus:tw-border-primary"
+                      className={`tw-w-full tw-bg-white tw-px-4 tw-py-3 tw-text-left tw-border ${
+                        fieldErrors.postType
+                          ? "tw-border-red-500"
+                          : "tw-border-gray-300"
+                      } tw-rounded-lg tw-shadow-sm focus:tw-outline-none focus:tw-ring-1 focus:tw-ring-primary focus:tw-border-primary`}
                     >
                       {postType ? (
                         <span>
                           {
                             linkedInPostTypes.find(
-                              (type) => type.id === postType
+                              (type) => type.label === postType
                             )?.label
                           }
                         </span>
@@ -139,8 +173,9 @@ export function CreatePostDrawer({
                             key={type.id}
                             type="button"
                             onClick={() => {
-                              setPostType(type.id);
+                              setPostType(type.label);
                               setIsDropdownOpen(false);
+                              setFieldErrors({ ...fieldErrors, postType: "" });
                             }}
                             className="tw-w-full tw-px-4 tw-py-3 tw-text-left hover:tw-bg-gray-50"
                           >
@@ -162,7 +197,15 @@ export function CreatePostDrawer({
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <DollarSign className="tw-w-4 tw-h-4 tw-text-gray-400" />
-                      <span>Proposed Budget</span>
+                      <span>
+                        Proposed Budget{" "}
+                        <span className="tw-text-red-500">*</span>
+                      </span>
+                      {fieldErrors.budget && (
+                        <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
+                          {fieldErrors.budget}
+                        </span>
+                      )}
                     </div>
                   </label>
                   <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
@@ -174,8 +217,15 @@ export function CreatePostDrawer({
                     <input
                       type="number"
                       value={budget}
-                      onChange={(e) => setBudget(e.target.value)}
-                      className="tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                      onChange={(e) => {
+                        setBudget(e.target.value);
+                        setFieldErrors({ ...fieldErrors, budget: "" });
+                      }}
+                      className={`tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border ${
+                        fieldErrors.budget
+                          ? "tw-border-red-500"
+                          : "tw-border-gray-300"
+                      } tw-rounded-md focus:tw-ring-primary focus:tw-border-primary`}
                       placeholder="0.00"
                       min="0"
                       step="0.01"
@@ -213,49 +263,59 @@ export function CreatePostDrawer({
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
-                      <span>Due Date</span>
+                      <span>
+                        Due Date <span className="tw-text-red-500">*</span>
+                      </span>
+                      {fieldErrors.dueDate && (
+                        <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
+                          {fieldErrors.dueDate}
+                        </span>
+                      )}
                     </div>
                   </label>
                   <input
                     type="date"
                     value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
+                    onChange={(e) => {
+                      setDueDate(e.target.value);
+                      setFieldErrors({ ...fieldErrors, dueDate: "" });
+                    }}
                     min={today}
-                    className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                    className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
+                      fieldErrors.dueDate
+                        ? "tw-border-red-500"
+                        : "tw-border-gray-300"
+                    } tw-rounded-md focus:tw-ring-primary focus:tw-border-primary`}
                   />
                 </div>
 
                 {/* Description */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                    Description
+                    Description <span className="tw-text-red-500">*</span>
+                    {fieldErrors.description && (
+                      <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
+                        {fieldErrors.description}
+                      </span>
+                    )}
                   </label>
                   <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
                     <textarea
                       value={description}
-                      onChange={(e) => setDescription(e.target.value)}
+                      onChange={(e) => {
+                        setDescription(e.target.value);
+                        setFieldErrors({ ...fieldErrors, description: "" });
+                      }}
                       rows={4}
-                      className="tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                      className={`tw-w-full tw-pl-7 tw-pr-12 tw-py-2 tw-border ${
+                        fieldErrors.description
+                          ? "tw-border-red-500"
+                          : "tw-border-gray-300"
+                      } tw-rounded-md focus:tw-ring-primary focus:tw-border-primary`}
                       placeholder="Enter post description..."
                     />
                   </div>
                 </div>
-
-                {error && (
-                  <div className="tw-p-4 tw-bg-red-50 tw-rounded-lg">
-                    <div className="tw-flex">
-                      <AlertCircle className="tw-h-5 tw-w-5 tw-text-red-400" />
-                      <div className="tw-ml-3">
-                        <h3 className="tw-text-sm tw-font-medium tw-text-red-800">
-                          Error
-                        </h3>
-                        <div className="tw-mt-2 tw-text-sm tw-text-red-700">
-                          <p>{error}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </form>
             </div>
 
