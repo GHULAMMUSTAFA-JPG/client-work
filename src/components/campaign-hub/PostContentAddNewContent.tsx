@@ -62,21 +62,38 @@ export function PostContentAddNewContent({
   const [driveLink, setDriveLink] = useState("");
   const [driveLinks, setDriveLinks] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+  const [filePreviews, setFilePreviews] = useState<
+    { url: string; type: string }[]
+  >([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [error, setError] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{
+    type?: boolean;
+    title?: boolean;
+    files?: boolean;
+    driveLinks?: boolean;
+  }>({});
   if (!isOpen) return null;
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       const newFiles: File[] = [];
+      const newPreviews: { url: string; type: string }[] = [];
       let hasError = false;
 
       for (let i = 0; i < selectedFiles.length; i++) {
         const file = selectedFiles[i];
         if (file.type.startsWith("image/") || file.type === "application/pdf") {
           newFiles.push(file);
+
+          // Create preview URL for the file
+          const previewUrl = URL.createObjectURL(file);
+          newPreviews.push({
+            url: previewUrl,
+            type: file.type,
+          });
         } else {
           hasError = true;
         }
@@ -91,19 +108,30 @@ export function PostContentAddNewContent({
       }
 
       setFiles([...files, ...newFiles]);
+      setFilePreviews([...filePreviews, ...newPreviews]);
+      setFieldErrors({ ...fieldErrors, files: false });
     }
   };
 
   const removeFile = (index: number) => {
     const updatedFiles = [...files];
+    const updatedPreviews = [...filePreviews];
+
+    // Revoke the object URL to avoid memory leaks
+    URL.revokeObjectURL(updatedPreviews[index].url);
+
     updatedFiles.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+
     setFiles(updatedFiles);
+    setFilePreviews(updatedPreviews);
   };
 
   const addDriveLink = () => {
     if (driveLink.trim()) {
       setDriveLinks([...driveLinks, driveLink]);
       setDriveLink("");
+      setFieldErrors({ ...fieldErrors, driveLinks: false });
     }
   };
 
@@ -143,6 +171,19 @@ export function PostContentAddNewContent({
     }
   };
 
+  const resetForm = () => {
+    setSelectedType("");
+    setTitle("");
+    setDescription("");
+    setDriveLink("");
+    setDriveLinks([]);
+    setFiles([]);
+    filePreviews.forEach((preview) => URL.revokeObjectURL(preview.url));
+    setFilePreviews([]);
+    setError("");
+    setFieldErrors({});
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -150,13 +191,37 @@ export function PostContentAddNewContent({
       return;
     }
 
+    const errors: {
+      type?: boolean;
+      title?: boolean;
+      files?: boolean;
+      driveLinks?: boolean;
+    } = {};
+    let hasError = false;
+
     if (!selectedType) {
-      setError("Please select a content type");
-      return;
+      errors.type = true;
+      hasError = true;
     }
 
     if (!title.trim()) {
-      setError("Please enter a title");
+      errors.title = true;
+      hasError = true;
+    }
+
+    if (selectedType === "local" && files.length === 0) {
+      errors.files = true;
+      hasError = true;
+    }
+
+    if (selectedType === "drive" && driveLinks.length === 0) {
+      errors.driveLinks = true;
+      hasError = true;
+    }
+
+    if (hasError) {
+      setFieldErrors(errors);
+      setError("Please fill in all required fields");
       return;
     }
 
@@ -192,6 +257,7 @@ export function PostContentAddNewContent({
       return;
     }
 
+    resetForm();
     onSubmit("");
     onClose();
   };
@@ -206,7 +272,6 @@ export function PostContentAddNewContent({
       <div className="tw-fixed tw-inset-y-0 tw-right-0 tw-flex tw-max-w-full tw-pl-10">
         <div className="tw-w-screen tw-max-w-md">
           <div className="tw-flex tw-h-full tw-flex-col tw-bg-white tw-shadow-xl">
-            {/* Header */}
             <div className="tw-px-6 tw-py-6 tw-border-b tw-border-gray-200">
               <div className="tw-flex tw-items-center tw-justify-between">
                 <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
@@ -221,19 +286,44 @@ export function PostContentAddNewContent({
               </div>
             </div>
 
-            {/* Content */}
             <div className="tw-flex-1 tw-overflow-y-auto">
               <form onSubmit={handleSubmit} className="tw-p-6 tw-space-y-6">
-                {/* Content Type Selection */}
+                {canSubmit === false && (
+                  <div className="tw-p-4 tw-bg-yellow-50 tw-rounded-lg">
+                    <div className="tw-flex">
+                      <AlertCircle className="tw-h-5 tw-w-5 tw-text-yellow-400" />
+                      <div className="tw-ml-3">
+                        <div className="tw-mt-2 tw-text-sm tw-text-yellow-700">
+                          <p>
+                            Can't submit content before post proposal is
+                            accepted
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                    Content Type
+                    Content Type <span className="tw-text-red-500">*</span>
+                    {fieldErrors.type && (
+                      <span className="tw-text-red-500 tw-ml-2">
+                        Required field
+                      </span>
+                    )}
                   </label>
                   <div className="tw-relative">
                     <button
                       type="button"
-                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                      className="tw-w-full tw-bg-white tw-px-4 tw-py-3 tw-text-left tw-border tw-border-gray-300 tw-rounded-lg tw-shadow-sm focus:tw-outline-none focus:tw-ring-1 focus:tw-ring-primary focus:tw-border-primary"
+                      onClick={() => {
+                        setIsDropdownOpen(!isDropdownOpen);
+                        setFieldErrors({ ...fieldErrors, type: false });
+                      }}
+                      className={`tw-w-full tw-bg-white tw-px-4 tw-py-3 tw-text-left tw-border ${
+                        fieldErrors.type
+                          ? "tw-border-red-500"
+                          : "tw-border-gray-300"
+                      } tw-rounded-lg tw-shadow-sm focus:tw-outline-none focus:tw-ring-1 focus:tw-ring-primary focus:tw-border-primary`}
                     >
                       {selectedType ? (
                         <div className="tw-flex tw-items-center">
@@ -266,6 +356,7 @@ export function PostContentAddNewContent({
                             onClick={() => {
                               setSelectedType(type.id);
                               setIsDropdownOpen(false);
+                              setFieldErrors({ ...fieldErrors, type: false });
                             }}
                             className="tw-w-full tw-px-4 tw-py-3 tw-text-left hover:tw-bg-gray-50 tw-flex tw-items-center tw-space-x-3"
                           >
@@ -284,6 +375,49 @@ export function PostContentAddNewContent({
                     )}
                   </div>
                 </div>
+                {filePreviews.length > 0 && (
+                  <div className="tw-mt-4">
+                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700">
+                      Selected Files:
+                    </h4>
+                    <div className="tw-mt-2 tw-grid tw-grid-cols-3 tw-gap-2">
+                      {filePreviews.map((preview, index) => (
+                        <div
+                          key={index}
+                          className="tw-relative tw-bg-gray-50 tw-rounded-md tw-overflow-hidden tw-border tw-border-gray-200"
+                        >
+                          {preview.type.startsWith("image/") ? (
+                            <div className="tw-h-20 tw-w-full">
+                              <img
+                                src={preview.url}
+                                alt={files[index].name}
+                                className="tw-object-cover tw-w-full tw-h-full"
+                              />
+                            </div>
+                          ) : (
+                            <div className="tw-p-2 tw-flex tw-items-center tw-justify-center tw-h-20">
+                              <FileText className="tw-h-8 tw-w-8 tw-text-gray-400" />
+                            </div>
+                          )}
+                          <div className="tw-p-1 tw-bg-white">
+                            <div className="tw-flex tw-items-center tw-justify-between">
+                              <span className="tw-text-xs tw-truncate tw-max-w-[80%]">
+                                {files[index].name}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => removeFile(index)}
+                                className="tw-text-red-500 hover:tw-text-red-700"
+                              >
+                                <X className="tw-h-4 tw-w-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Title */}
                 <div>
@@ -291,14 +425,28 @@ export function PostContentAddNewContent({
                     htmlFor="title"
                     className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1"
                   >
-                    Title
+                    Title <span className="tw-text-red-500">*</span>
+                    {fieldErrors.title && (
+                      <span className="tw-text-red-500 tw-ml-2">
+                        Required field
+                      </span>
+                    )}
                   </label>
                   <input
                     type="text"
                     id="title"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      if (e.target.value.trim()) {
+                        setFieldErrors({ ...fieldErrors, title: false });
+                      }
+                    }}
+                    className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
+                      fieldErrors.title
+                        ? "tw-border-red-500"
+                        : "tw-border-gray-300"
+                    } tw-rounded-md focus:tw-ring-primary focus:tw-border-primary`}
                     placeholder="Enter content title"
                   />
                 </div>
@@ -325,9 +473,20 @@ export function PostContentAddNewContent({
                 {selectedType === "local" && (
                   <div>
                     <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Upload Files
+                      Upload Files <span className="tw-text-red-500">*</span>
+                      {fieldErrors.files && (
+                        <span className="tw-text-red-500 tw-ml-2">
+                          At least one file is required
+                        </span>
+                      )}
                     </label>
-                    <div className="tw-mt-1 tw-flex tw-justify-center tw-px-6 tw-pt-5 tw-pb-6 tw-border-2 tw-border-gray-300 tw-border-dashed tw-rounded-lg">
+                    <div
+                      className={`tw-mt-1 tw-flex tw-justify-center tw-px-6 tw-pt-5 tw-pb-6 tw-border-2 ${
+                        fieldErrors.files
+                          ? "tw-border-red-500"
+                          : "tw-border-gray-300"
+                      } tw-border-dashed tw-rounded-lg`}
+                    >
                       <div className="tw-space-y-1 tw-text-center">
                         <Upload className="tw-mx-auto tw-h-12 tw-w-12 tw-text-gray-400" />
                         <div className="tw-flex tw-text-sm tw-text-gray-600">
@@ -348,33 +507,6 @@ export function PostContentAddNewContent({
                         </p>
                       </div>
                     </div>
-
-                    {files.length > 0 && (
-                      <div className="tw-mt-4">
-                        <h4 className="tw-text-sm tw-font-medium tw-text-gray-700">
-                          Selected Files:
-                        </h4>
-                        <ul className="tw-mt-2 tw-space-y-2">
-                          {files.map((file, index) => (
-                            <li
-                              key={index}
-                              className="tw-flex tw-items-center tw-justify-between tw-bg-gray-50 tw-px-3 tw-py-2 tw-rounded-md"
-                            >
-                              <span className="tw-text-sm tw-truncate">
-                                {file.name}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={() => removeFile(index)}
-                                className="tw-text-red-500 hover:tw-text-red-700"
-                              >
-                                <X className="tw-h-4 tw-w-4" />
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
                   </div>
                 )}
 
@@ -385,7 +517,13 @@ export function PostContentAddNewContent({
                       htmlFor="drive-link"
                       className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1"
                     >
-                      Google Drive Links
+                      Google Drive Links{" "}
+                      <span className="tw-text-red-500">*</span>
+                      {fieldErrors.driveLinks && (
+                        <span className="tw-text-red-500 tw-ml-2">
+                          At least one link is required
+                        </span>
+                      )}
                     </label>
                     <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
                       <div className="tw-flex">
@@ -394,7 +532,11 @@ export function PostContentAddNewContent({
                           id="drive-link"
                           value={driveLink}
                           onChange={(e) => setDriveLink(e.target.value)}
-                          className="tw-flex-1 tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-l-md focus:tw-ring-primary focus:tw-border-primary"
+                          className={`tw-flex-1 tw-px-3 tw-py-2 tw-border ${
+                            fieldErrors.driveLinks
+                              ? "tw-border-red-500"
+                              : "tw-border-gray-300"
+                          } tw-rounded-l-md focus:tw-ring-primary focus:tw-border-primary`}
                           placeholder="https://drive.google.com/..."
                         />
                         <button
@@ -450,22 +592,6 @@ export function PostContentAddNewContent({
                         </h3>
                         <div className="tw-mt-2 tw-text-sm tw-text-red-700">
                           <p>{error}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {canSubmit === false && (
-                  <div className="tw-p-4 tw-bg-yellow-50 tw-rounded-lg">
-                    <div className="tw-flex">
-                      <AlertCircle className="tw-h-5 tw-w-5 tw-text-yellow-400" />
-                      <div className="tw-ml-3">
-                        <div className="tw-mt-2 tw-text-sm tw-text-yellow-700">
-                          <p>
-                            Can't submit content before post proposal is
-                            accepted
-                          </p>
                         </div>
                       </div>
                     </div>

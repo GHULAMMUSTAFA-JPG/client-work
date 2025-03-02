@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { CampaignHeader } from "@/components/campaign-hub/CampaignHeader";
 import { CampaignTabs } from "@/components/campaign-hub/CampaignTabs";
 import { PostsList } from "@/components/campaign-hub/PostsList";
@@ -9,7 +9,6 @@ import {
   Version,
 } from "@/components/campaign-hub/ContentVersions";
 import { CampaignDrawer } from "@/components/campaign-hub/CampaignDrawer";
-import { EarningsDrawer } from "@/components/campaign-hub/EarningsDrawer";
 import { CreatePostDrawer } from "@/components/campaign-hub/CreatePostDrawer";
 import { useAuth } from "@/contexts/AuthContext";
 import { redirect, useSearchParams } from "next/navigation";
@@ -28,10 +27,51 @@ function CampaignHubContent() {
   const [isNewContentDrawerOpen, setIsNewContentDrawerOpen] = useState(false);
   const [isCreatePostDrawerOpen, setIsCreatePostDrawerOpen] = useState(false);
   const [contentVersion, setContentVersion] = useState<Version[]>([]);
-
   const [campaignData, setCampaignData] = useState<any>(null);
+  const [selectedPost, setSelectedPost] = useState<any>(null);
   const { user, setIsLoading } = useAuth();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (campaignData && selectedPostId) {
+      const post =
+        campaignData.Posts?.find((item: any) => item._id === selectedPostId) ||
+        null;
+      setSelectedPost(post);
+    } else {
+      setSelectedPost(null);
+    }
+  }, [campaignData, selectedPostId]);
+
+  const getCurrentStage = (post: any): number => {
+    const {
+      Content_Versions = [],
+      Live_Link,
+      Impressions,
+      Payment,
+      Status,
+    } = post;
+
+    if (Content_Versions.length === 0) return 1;
+    if (
+      Content_Versions.some(
+        (content: any) => content.Feedback && content.Feedback.length > 0
+      )
+    )
+      return 2;
+    if (
+      Content_Versions.some((content: any) => content.Status === 1) ||
+      Status === 1
+    )
+      return 3;
+
+    if (Live_Link) return 4;
+    if (Impressions) return 5;
+
+    if (Payment && Payment.Status) return 6;
+    return 1;
+  };
+
   const getCampaignPostsList = async () => {
     try {
       const code = searchParams.get("id");
@@ -46,9 +86,10 @@ function CampaignHubContent() {
 
       setCampaignData(response);
       if (response && (response as any).Posts.length) {
-        const contentList = transformPostContent((response as any).Posts[0]);
+        const firstPost = (response as any).Posts[0];
+        const contentList = transformPostContent(firstPost);
         setContentVersion(contentList);
-        setSelectedPostId((response as any).Posts[0]._id);
+        setSelectedPostId(firstPost._id);
       }
     } catch (error) {
       console.error("Error fetching campaign posts:", error);
@@ -135,7 +176,9 @@ function CampaignHubContent() {
     if (post) {
       const contentList = transformPostContent(post);
       setContentVersion(contentList);
-    } else setContentVersion([]);
+    } else {
+      setContentVersion([]);
+    }
 
     setSelectedPostId(id);
   };
@@ -143,48 +186,19 @@ function CampaignHubContent() {
   const handleTabChange = (tab: Status | "all") => {
     setActiveTab(tab);
     if (tab === "all") {
-      setSelectedPostId(transformedPosts?.[0].id);
-      handleSelectedPostChange(transformedPosts?.[0].id);
+      if (transformedPosts.length > 0) {
+        setSelectedPostId(transformedPosts[0].id);
+        handleSelectedPostChange(transformedPosts[0].id);
+      }
     } else {
       const post = transformedPosts?.find((post: any) => post.status === tab);
-
-      setSelectedPostId(post?.id);
-      handleSelectedPostChange(post?.id);
+      if (post) {
+        setSelectedPostId(post.id);
+        handleSelectedPostChange(post.id);
+      }
     }
   };
 
-  const getCurrentStage = (post: any): number => {
-    if (!post) return 1;
-
-    const { Content_Versions = [], LiveLink, Impressions, Payment } = post;
-
-    if (Content_Versions.length === 0) return 1;
-
-    if (Content_Versions.some((content: any) => content.Feedback?.length > 0))
-      return 2;
-
-    if (Content_Versions.some((content: any) => content.Status === "Approved"))
-      return 3;
-
-    if (LiveLink) return 4;
-
-    if (Impressions) return 5;
-
-    if (Payment?.Status) return 6;
-
-    return 1;
-  };
-
-  const selectedPost = useMemo(
-    () => campaignData?.Posts?.find((item: any) => item._id === selectedPostId),
-    [campaignData, selectedPostId]
-  );
-
-  const currentStage = useMemo(
-    () => getCurrentStage(selectedPost),
-    [selectedPost]
-  );
-  console.log("campaignData", campaignData);
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
       {campaignData && (
@@ -223,7 +237,7 @@ function CampaignHubContent() {
             stages={postStages}
             campaignId={campaignData?._id}
             creatorId={user.uuid}
-            currentStage={currentStage}
+            currentStage={selectedPost ? getCurrentStage(selectedPost) : 1}
           />
 
           {selectedPostId ? (

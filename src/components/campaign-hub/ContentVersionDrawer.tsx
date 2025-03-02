@@ -39,14 +39,23 @@ export function ContentVersionDrawer({
               </div>
             </div>
 
-            {/* Content */}
             <div className="tw-flex-1 tw-overflow-y-auto">
               <div className="tw-p-6 tw-space-y-6">
-                {/* Content Preview */}
                 <div>
                   <h3 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
                     Content Preview
                   </h3>
+
+                  <div className="tw-grid tw-grid-cols-2 tw-gap-4">
+                    {version.media?.map((item, idx) => (
+                      <img
+                        key={idx}
+                        src={item}
+                        alt={`Content preview ${idx + 1}`}
+                        className="tw-w-full tw-h-auto tw-rounded-lg tw-object-cover"
+                      />
+                    ))}
+                  </div>
                   <div className="tw-py-2">
                     <p className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
                       Description
@@ -54,17 +63,6 @@ export function ContentVersionDrawer({
                     <p className="tw-text-sm tw-text-gray-600">
                       {version.description}
                     </p>
-                  </div>
-
-                  <div className="tw-space-y-4">
-                    {version.media?.map((item, idx) => (
-                      <img
-                        key={idx}
-                        src={item}
-                        alt="Content preview 1"
-                        className="tw-w-full tw-rounded-lg"
-                      />
-                    ))}
                   </div>
                 </div>
 
