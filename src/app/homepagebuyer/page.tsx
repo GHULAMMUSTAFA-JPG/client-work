@@ -172,18 +172,19 @@ function Homepagebuyer() {
                 </div>
 
                 <div className="d-flex gap-3 mb-4">
+
+                <div className="img-container-lg-general">
                   {userData?.Company_Logo && userData?.Company_Logo !== "" ? (
                     <img
                       src={userData?.Company_Logo}
-                      className="border object-fit-cover rounded-dash flex-shrink-0"
+                      className="flex-shrink-0"
                       alt="logo"
-                      width={120}
-                      height={120}
+                     
                     />
                   ) : (
                     <div
                       className="companyImgbox border object-fit-cover rounded d-flex align-items-center justify-content-center"
-                      style={{ width: "120px", height: "120px" }}
+                     
                     >
                       <span className="fs-40 fw-medium text-uppercase">
                         {" "}
@@ -195,6 +196,7 @@ function Homepagebuyer() {
                       </span>
                     </div>
                   )}
+                  </div>
                   <div className="flex-grow-1">
                     <div className="d-flex align-items-center gap-2 mb-2">
                       <h5 className="mb-0 fw-medium fs-16 biggerTxt">
@@ -302,60 +304,72 @@ function Homepagebuyer() {
                   </div>
                 </div>
               </div>
+
+              <div className="d-flex justify-content-between align-itmes-center">
+             <div className="statsbox-container-3">
+             <div className="stats-box">
+              <div className="stats-count">
+              {" "}{userProfile?.No_of_Employees || 0}
+              </div>
+              <div className="stats-heading">Employees (est)</div>
             </div>
+              </div>
 
-            <div className="statsbox-container-dash mb-3">
+              <div className="statsbox-container-3">
+             <div className="stats-box">
+              <div className="stats-count">
+              {userProfile?.Size || "Small"}
+              </div>
+              <div className="stats-heading">Size</div>
+            </div>
+              </div>
+
+             <div className="statsbox-container-3">
+             <div className="stats-box">
+              <div className="stats-count">
+              {userProfile?.Year_Founded}
+              </div>
+              <div className="stats-heading">Year Founded</div>
+            </div>
+              </div>
+              </div>
 
 
-            <div className="d-flex align-items-center gap-2 box-effect-shadow">
+            </div>
+            <div className="statsbox-container-dash py-3">
+           <div className="d-flex align-items-center gap-2 box-effect-shadow">
                  <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20.087" viewBox="0 0 24 20.087">
-  <g id="Icon_feather-users" data-name="Icon feather-users" transform="translate(0 -1.913)">
-    <path id="Path_865" data-name="Path 865" d="M17,21V19a4,4,0,0,0-4-4H5a4,4,0,0,0-4,4v2" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_866" data-name="Path 866" d="M13,7A4,4,0,1,1,9,3,4,4,0,0,1,13,7Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_867" data-name="Path 867" d="M23,21V19a4,4,0,0,0-3-3.87m-4-12a4,4,0,0,1,0,7.75" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg>
-
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-teal-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   </div>
 
                 <div className="ml-4">
-                  <p className="fs-14">Employees (est)</p>
-                  <p className="fs-16 fw-bold"> {" "}{userProfile?.No_of_Employees || 0}</p>
+                  <p className="fs-14">Active Campaigns</p>
+                  <p className="fs-16 fw-bold text-red">3</p>
                 </div>
           </div>
+
+       <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-blue-svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                <p className="fs-14">Pending Applications</p>
+                  <p className="fs-16 fw-bold text-red">5</p>
+                </div>
+          </div>
+
           <div className="d-flex align-items-center gap-2 box-effect-shadow">
                  <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
-  <path id="Icon_core-resize-both" data-name="Icon core-resize-both" d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z" transform="translate(-3.75 -3.75)"/>
-</svg>
-
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-green-svg"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
                   </div>
 
                 <div className="ml-4">
-                  <p className="fs-14">Size</p>
-                  <p className="fs-16 fw-bold">{userProfile?.Size || "Small"}</p>
+                <p className="fs-14">Total Spend</p>
+                <p className="fs-16 fw-bold text-red">$12,450</p>
                 </div>
           </div>
-
-          <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                 <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
-  <g id="Icon_feather-clock" data-name="Icon feather-clock" transform="translate(-1 -1)">
-    <path id="Path_863" data-name="Path 863" d="M22,12A10,10,0,1,1,12,2,10,10,0,0,1,22,12Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_864" data-name="Path 864" d="M12,6v6l4,2" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg>
-
-                  </div>
-
-                <div className="ml-4">
-                  <p className="fs-14">Year Founded</p>
-                  <p className="fs-16 fw-bold">{userProfile?.Year_Founded}</p>
-                </div>
-          </div>
-</div>
-
+  </div>
              <div className="card card-with-table">
               <div className="card-header p-3">
                 <div className="d-flex align-items-center justify-content-between">
@@ -463,8 +477,15 @@ function Homepagebuyer() {
 
             <div className="col-md-4">
             <div className="card mb-3">
-              <div className="card-body">
-              <p className="mb-2 fs-16 fw-medium">Notifications</p>
+                  <div className="card-body">
+              <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
+              <PostCalendar />
+              </div>
+            </div>
+
+            <div className="card mb-3">
+            <div className="card-body">
+              <p className="mb-2 fs-16 fw-medium">What's New (Notifications)</p>
               {notifications?.notifications?.length ? (
                 notifications.notifications.slice(0, viewRow).map((notify: any, index: number) => {
                 const iconType = notify?.Notification_Icon_Type;
@@ -509,9 +530,12 @@ function Homepagebuyer() {
                     {iconMap[iconType] || iconMap["default"]}
                   </div>
                   <div className="ml-3">
+                    <div className="d-flex justify-content-between align-items-center">
                     <p className="text-sm font-medium text-gray-900">{notify?.Title}</p>
+                    <p className="fs-10 text-grey">5 min ago</p>
+                    </div>
                     <p className="text-sm text-gray-500">{notify?.Message}</p>
-                    <p className="text-muted text-gray-400 mt-1">5 min ago</p>
+                    
                   </div>
                   </div>
                 );
@@ -525,28 +549,23 @@ function Homepagebuyer() {
                 />
               )}
               {notifications?.notifications?.length > 0 && (
-                <div className="text-center mt-3">
-                <button
-                  className="loadmorebtn"
-                  onClick={() => {
-                  if (viewRow >= notifications.notifications.length) {
-                    showViewRow(5);
-                  } else {
-                    showViewRow(notifications.notifications.length);
-                  }
-                  }}
-                >
-                  {viewRow >= notifications.notifications.length ? "Show Less" : "Load More"}
-                </button>
+                <div className="text-center mt-1">
+                {notifications.notifications.length > 5 && (
+                  <button
+                    className="loadmorebtn"
+                    onClick={() => {
+                      if (viewRow >= notifications.notifications.length) {
+                        showViewRow(5);
+                      } else {
+                        showViewRow(notifications.notifications.length);
+                      }
+                    }}
+                  >
+                    {viewRow >= notifications.notifications.length ? "Show Less" : "Load More"}
+                  </button>
+                )}
                 </div>
               )}
-              </div>
-            </div>
-
-            <div className="card mb-3">
-              <div className="card-body">
-              <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
-              <PostCalendar />
               </div>
             </div>
             </div>

@@ -408,7 +408,7 @@ function CompanyPage() {
                   alt="Profile Picture"
                   width={150}
                   height={150}
-                  className="rounded-circle border border-4 border-white"
+                  className=""
                 />
               </div>
               <div className="profile-image-content-text">
@@ -777,6 +777,7 @@ function CompanyPage() {
                           <label className="py-1">Company Logo </label>
                           <div className="fs-10 mb-2">Please upload an image of 150px × 150px for the best quality</div>
                           <div className="position-relative">
+                          <div className="img-container-lg-general">
                             <img
                               src={
                                 editDetails.company_logo !== ""
@@ -786,8 +787,9 @@ function CompanyPage() {
                               alt="Profile"
                               width={80}
                               height={80}
-                              className="rounded-circle mb-2"
+                              className="mb-2"
                             />
+                            </div>
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ cursor: "pointer" }}
