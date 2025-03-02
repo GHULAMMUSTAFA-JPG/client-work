@@ -363,7 +363,7 @@ export default function DiscoverBrandsPage() {
                               setcompanyname(brand.Company_Name);
                               setbrandid(brand._id);
                             }}
-                            className="btn btn-primary"
+                            className="btn btn-dark ms-2  w-s"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#campaignsOffcanvas"
                           >
@@ -375,7 +375,7 @@ export default function DiscoverBrandsPage() {
                               onClick={() =>
                                 handleInterested("remove", brand._id, index)
                               }
-                              className="btn btn-outline-secondary"
+                              className="btn btn-outline-primary"
                             >
                               <Undo2 size={16} />
                               <span>Interested</span>
@@ -385,7 +385,7 @@ export default function DiscoverBrandsPage() {
                               onClick={() =>
                                 handleInterested("add", brand._id, index)
                               }
-                              className="btn btn-outline-secondary"
+                              className="btn btn-outline-primary"
                             >
                               I'm Interested
                             </button>

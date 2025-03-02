@@ -212,13 +212,15 @@ function DiscoverCreator() {
                             </Link>
                           )}
                         </div>
-                        
+                        <p className="fs-12 mb-0 mx-2 text-black bg-light rounded p-1">
+                          Deadline: {campaign?.End_Date ? campaign.End_Date : "Ongoing"}
+                        </p>
                         
                         </div>
 
 
 
-                        <p className="fs-13 mb-0 fs-16 line-clamp-1">
+                        <p className="fs-13 mb-0 fs-16 w-90 line-clamp-2">
                           {campaign?.Campaign_Details?.slice(0, 100)}
                         </p>
                         <div className="d-flex gap-2 mt-2 mb-2 align-items-center">
@@ -242,19 +244,16 @@ function DiscoverCreator() {
 
                       <div className="action_wrapper">
                         <div className="d-flex justify-content-end flex-column">
-                        <p className="fs-13 mb-0 text-right">
+                        <p className="fs-13 mb-0 text-right text-black">
                           ${campaign?.Budget} per post
                         </p>
-                        <p className="fs-13 mb-0 text-right">
-                          Deadline: {campaign?.End_Date ? campaign.End_Date : "Ongoing"}
-                        </p>
+                      
                         </div>
                         <div className="learnmore-btn d-flex justify-content-end">
-                          <button
-                            className="btn btn-dark ms-2 btn-sm w-s mt-2"
-                            data-bs-toggle="modal"
-                            data-bs-target="#applyModal"
-                          >
+                          <button  onClick={() => {
+                    setSelectedCampaign(campaign);
+                    toggleSidebar();
+                  }} className="btn btn-dark ms-2 btn-sm w-s mt-2">
                             Learn more
                           </button>
                         </div>
@@ -294,7 +293,7 @@ function DiscoverCreator() {
            
 
             <div className="d-flex justify-content-between align-items-center gap-3 py-2">
-            <div className="profileMatchbox py-2  px-3">
+            <div className="profileMatchbox py-1  px-3">
             <div className="mt-1 fs-12 fw-500 mb-1">Compensation</div>
               <div className="mt-1 fs-16 fw-500 mb-1">$ {selectedCampaign?.Budget.toLocaleString()} per post</div>
               <div className="mt-1 fs-10 fw-400 mb-1">Final rates may be negotiated based on scope and deliverables.</div>
@@ -308,7 +307,7 @@ function DiscoverCreator() {
             </div>
 
            <div className="d-flex justify-content-between align-items-start gap-3">
-                <div className="py-2 mb-3 px-3">
+                <div className="py-2 mb-1">
                 
 
                 <div className="d-flex align-items-start gap-2">
@@ -320,26 +319,10 @@ function DiscoverCreator() {
               />
               </div>
             <div>
+
+              <div className="d-flex algin-items-center">
               <p className="fw-medium mb-0 fs-16">{selectedCampaign?.Headline}</p>
-              <p className="fw-medium mb-0 fs-14">  {selectedCampaign?.Start_Date &&
-                  selectedCampaign?.End_Date ? (
-                    <span className="fs-13 d-flex align-items-center mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13.267" height="15.162" viewBox="0 0 13.267 15.162">
-  <path id="Icon_fa-regular-calendar-days" data-name="Icon fa-regular-calendar-days" d="M4.5.711a.711.711,0,0,0-1.421,0V1.9H1.9A1.9,1.9,0,0,0,0,3.79v9.476a1.9,1.9,0,0,0,1.9,1.9h9.476a1.9,1.9,0,0,0,1.9-1.9V3.79a1.9,1.9,0,0,0-1.9-1.9H10.187V.711a.711.711,0,0,0-1.421,0V1.9H4.5ZM1.421,5.686H3.79V7.344H1.421Zm0,3.08H3.79v1.9H1.421Zm3.79,0H8.055v1.9H5.212Zm4.264,0h2.369v1.9H9.476Zm2.369-1.421H9.476V5.686h2.369Zm0,4.738v1.185a.475.475,0,0,1-.474.474h-1.9V12.082Zm-3.79,0V13.74H5.212V12.082Zm-4.264,0V13.74H1.9a.475.475,0,0,1-.474-.474V12.082ZM8.055,7.344H5.212V5.686H8.055Z" fill="#5c5c5c"/>
-</svg>
- &nbsp; {selectedCampaign?.Start_Date} -{" "}
-                      {selectedCampaign?.End_Date}
-                    </span>
-                  ) : (
-                    <span className="fs-13 d-flex align-items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="14.173" height="16.198" viewBox="0 0 14.173 16.198">
-                    <path id="Icon_fa-regular-calendar-check" data-name="Icon fa-regular-calendar-check" d="M4.05,0a.757.757,0,0,1,.759.759V2.025H9.365V.759a.759.759,0,1,1,1.519,0V2.025h1.265A2.027,2.027,0,0,1,14.173,4.05V14.173A2.027,2.027,0,0,1,12.149,16.2H2.025A2.027,2.027,0,0,1,0,14.173V4.05A2.027,2.027,0,0,1,2.025,2.025H3.29V.759A.757.757,0,0,1,4.05,0Zm8.605,6.074H1.519v8.1a.508.508,0,0,0,.506.506H12.149a.508.508,0,0,0,.506-.506ZM10.409,9.4,6.865,12.939a.756.756,0,0,1-1.072,0L3.768,10.915A.758.758,0,0,1,4.84,9.842l1.487,1.487L9.333,8.324A.758.758,0,0,1,10.405,9.4Z" fill="#5c5c5c"/>
-                  </svg>
-                   &nbsp;
-                   Ongoing Campaign</span>
-                  )}</p>
-              <p className="fs-12 mb-0 line-clamp-5">{selectedCampaign?.Campaign_Details.slice(0, 100)}
-             </p>
-              <div className="d-flex gap-1 align-items-center py-2">
+              <div className="d-flex gap-1 align-items-center">
               {selectedCampaign?.Company_Website && (
               <Link href={`${selectedCampaign.Company_Website}`} target="_blank">
                 <Icon
@@ -369,6 +352,27 @@ function DiscoverCreator() {
               </Link>
             )}
               </div>
+              </div>
+
+              <p className="fw-medium mb-0 fs-14">  {selectedCampaign?.Start_Date &&
+                  selectedCampaign?.End_Date ? (
+                    <span className="fs-13 d-flex align-items-center mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13.267" height="15.162" viewBox="0 0 13.267 15.162">
+  <path id="Icon_fa-regular-calendar-days" data-name="Icon fa-regular-calendar-days" d="M4.5.711a.711.711,0,0,0-1.421,0V1.9H1.9A1.9,1.9,0,0,0,0,3.79v9.476a1.9,1.9,0,0,0,1.9,1.9h9.476a1.9,1.9,0,0,0,1.9-1.9V3.79a1.9,1.9,0,0,0-1.9-1.9H10.187V.711a.711.711,0,0,0-1.421,0V1.9H4.5ZM1.421,5.686H3.79V7.344H1.421Zm0,3.08H3.79v1.9H1.421Zm3.79,0H8.055v1.9H5.212Zm4.264,0h2.369v1.9H9.476Zm2.369-1.421H9.476V5.686h2.369Zm0,4.738v1.185a.475.475,0,0,1-.474.474h-1.9V12.082Zm-3.79,0V13.74H5.212V12.082Zm-4.264,0V13.74H1.9a.475.475,0,0,1-.474-.474V12.082ZM8.055,7.344H5.212V5.686H8.055Z" fill="#5c5c5c"/>
+</svg>
+ &nbsp; {selectedCampaign?.Start_Date} -{" "}
+                      {selectedCampaign?.End_Date}
+                    </span>
+                  ) : (
+                    <span className="fs-13 d-flex align-items-center mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="14.173" height="16.198" viewBox="0 0 14.173 16.198">
+                    <path id="Icon_fa-regular-calendar-check" data-name="Icon fa-regular-calendar-check" d="M4.05,0a.757.757,0,0,1,.759.759V2.025H9.365V.759a.759.759,0,1,1,1.519,0V2.025h1.265A2.027,2.027,0,0,1,14.173,4.05V14.173A2.027,2.027,0,0,1,12.149,16.2H2.025A2.027,2.027,0,0,1,0,14.173V4.05A2.027,2.027,0,0,1,2.025,2.025H3.29V.759A.757.757,0,0,1,4.05,0Zm8.605,6.074H1.519v8.1a.508.508,0,0,0,.506.506H12.149a.508.508,0,0,0,.506-.506ZM10.409,9.4,6.865,12.939a.756.756,0,0,1-1.072,0L3.768,10.915A.758.758,0,0,1,4.84,9.842l1.487,1.487L9.333,8.324A.758.758,0,0,1,10.405,9.4Z" fill="#5c5c5c"/>
+                  </svg>
+                   &nbsp;
+                   Ongoing Campaign</span>
+                  )}</p>
+              <p className="fs-12 mb-0 line-clamp-5">{selectedCampaign?.Campaign_Details.slice(0, 100)}
+             </p>
+             
                 <p className="fs-12 mb-0 fw-500">Target Audience</p>
                 <div className="d-flex flex-wrap gap-1 py-2">
             {selectedCampaign?.Target_Audience?.map(
@@ -384,7 +388,7 @@ function DiscoverCreator() {
           </div>
         
           <p className="fs-12 mb-0 fw-500">Campaign Details</p>
-            <p className={`fs-12 mb-0 text-gray ${isReadMore ? '' : 'line-clamp-3'}`}>
+            <p className={`fs-12 mb-0 text-gray ${isReadMore ? '' : 'line-clamp-2'}`}>
             {selectedCampaign?.Campaign_Details}
             </p>
             {selectedCampaign?.Campaign_Details.length > 100 && (
@@ -407,7 +411,7 @@ function DiscoverCreator() {
 
           <div className="mainbox">
           {!selectedCampaign?.Is_Applied && (
-                <div className="mt-3">
+                <div className="mt-1">
                    <p className="fs-12 mb-0 fw-500 mb-2">Send a Message to Apply</p>
                
                   <textarea
