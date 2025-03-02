@@ -382,11 +382,11 @@ function ProfilePage() {
             <div className="profile-image-content">
               <div className="profile-image">
                 <img
-                  src={userProfile?.Profile_Image || defaultImagePath}
+                  src={userProfile?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
                   alt="Profile Picture"
                   width={150}
                   height={150}
-                  className="rounded-circle border border-4 border-white"
+                  className=""
                 />
               </div>
               <div className="profile-image-content-text">
@@ -842,15 +842,17 @@ function ProfilePage() {
                         <div className="mb-4 section-box_container">
                           <label className="mb-2">Profile photo</label>
                           <div className="position-relative">
+                          <div className="img-container-lg-general">
                             <img
                               src={
-                                editDetails.profile_image || defaultImagePath
+                                editDetails.profile_image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
                               }
                               alt="Profile"
                               width={80}
                               height={80}
-                              className="rounded-circle mb-2"
+                              className="mb-2"
                             />
+                            </div>
                             <div
                               className="d-flex align-items-center gap-2"
                               style={{ cursor: "pointer" }}
