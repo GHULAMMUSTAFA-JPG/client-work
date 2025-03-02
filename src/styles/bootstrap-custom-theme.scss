@@ -120,6 +120,47 @@ body {
     }
   }
 
+  .text-red {
+    color: #ff0000 !important;
+  }
+  .text-teal {
+    color: #1bb09d !important;
+  }
+  .text-white {
+    color: #ffffff !important;
+  }
+  .text-gray {
+    color: #808080 !important;
+  } 
+  .text-black {
+    color: #000000 !important;
+  } 
+  .text-dark {
+    color: #1f2937 !important;
+  } 
+  .text-light {
+    color: #f3f4f6 !important;
+  }
+  .text-primary {
+    color: #1bb09d !important;
+  }
+  .bg-light {
+    background-color: #f3f4f6 !important;
+  } 
+  .bg-teal {
+    background-color: #1bb09d !important;
+  }
+  .bg-white {
+    background-color: #ffffff !important;
+  }
+  .bg-dark {
+    background-color: #1f2937 !important;
+  } 
+
+  .card-body-box {
+    flex: 0;
+    padding: 4px 20px 0;
+  }
   .table {
     border-radius: 8px;
     overflow: hidden;
@@ -1424,7 +1465,7 @@ body {
   border-radius: 4px;
   width:100%;
   max-width: 40%;
-  height: 90px;
+  height: 100px;
 }
 .profileInfo 
 {
@@ -1433,6 +1474,7 @@ body {
   border-radius: 4px;
   width:100%;
   max-width: 60%;
+  height: 100px;
  
 }
 .box-wrapper
@@ -1486,8 +1528,9 @@ body {
       padding: 3px 5px;
       background: #f0fdfa;
       font-size: 11px;
-      border: 1px solid #cae2e2;
+      border: 1px solid #cae2e273;
       border-radius: 3px;
+      color: teal;
     }
     .Listbox {
       list-style-type: disc;
@@ -1518,3 +1561,4 @@ body {
       padding: 12px 10px;
       font-size: 13px !important;
     }
+
