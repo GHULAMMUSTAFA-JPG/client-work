@@ -19,7 +19,8 @@ function CampaignDetails() {
   const [campaignFormData, setCampaignFormData] =
     useState<CampaignFormData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
+  console.log("selectedCampaign", selectedCampaign);
+  console.log("campaignFormData", campaignFormData);
   const fetchCampaignList = async () => {
     if (!user?._id) return;
     try {
@@ -49,6 +50,8 @@ function CampaignDetails() {
         setCampaignFormData(
           extractCampaignFormData(campaignDetails) as CampaignFormData
         );
+    } else {
+      setCampaignFormData(null);
     }
   }, [selectedCampaign, campaignList]);
 

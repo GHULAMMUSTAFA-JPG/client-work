@@ -73,7 +73,7 @@ function mycreatorsbuyer() {
         query
       );
     }
-  }, [user?.email, rendControl]);
+  }, [user?.email, rendControl, query]);
 
   useEffect(() => {
     selectedId !== "" &&
@@ -247,10 +247,12 @@ function mycreatorsbuyer() {
                                         }
                                         setSelectedCreatorId(user?._id);
                                       }}
-                                      data-bs-toggle="offcanvas"
-                                      data-bs-target="#creatorProfileDrawer"
                                     >
-                                      <td className="text-start ps-4">
+                                      <td
+                                        className="text-start ps-4"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#creatorProfileDrawer"
+                                      >
                                         <div className="d-flex align-items-center">
                                           <img
                                             src={
@@ -267,23 +269,35 @@ function mycreatorsbuyer() {
                                           </span>
                                         </div>
                                       </td>
-                                      <td>
+                                      <td
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#creatorProfileDrawer"
+                                      >
                                         <p className="mb-2">
                                           {user?.Current_Company}
                                         </p>
                                       </td>
-                                      <td>
+                                      <td
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#creatorProfileDrawer"
+                                      >
                                         <p className="mb-2">
                                           {user?.No_of_Followers?.toLocaleString()}
                                         </p>
                                       </td>
-                                      <td>
+                                      <td
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#creatorProfileDrawer"
+                                      >
                                         <p className="mb-2">
                                           {user?.No_of_Impressions?.toLocaleString()}
                                         </p>
                                       </td>
 
-                                      <td>
+                                      <td
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#creatorProfileDrawer"
+                                      >
                                         <p className="mb-2">
                                           {user?.No_of_Engagements?.toLocaleString()}
                                         </p>

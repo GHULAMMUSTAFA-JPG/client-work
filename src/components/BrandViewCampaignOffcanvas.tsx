@@ -167,7 +167,11 @@ export default function BrandViewCampaignOffcanvas({
                 </div>
                 {campaign.Is_Applied ? (
                   <button
-                    style={{ backgroundColor: "grey" }}
+                    style={{
+                      backgroundColor: "grey",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                     disabled
                     className="btn btn-primary w-100"
                   >
@@ -175,7 +179,11 @@ export default function BrandViewCampaignOffcanvas({
                   </button>
                 ) : campaign.Is_Invited ? (
                   <button
-                    style={{ backgroundColor: "grey" }}
+                    style={{
+                      backgroundColor: "grey",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                     disabled
                     className="btn btn-primary w-100"
                   >
@@ -183,6 +191,7 @@ export default function BrandViewCampaignOffcanvas({
                   </button>
                 ) : (
                   <button
+                    style={{ display: "flex", justifyContent: "center" }}
                     onClick={() => handleApply(campaign._id, index)}
                     className="btn btn-primary w-100"
                   >

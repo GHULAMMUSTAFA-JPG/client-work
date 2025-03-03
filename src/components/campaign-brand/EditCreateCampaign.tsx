@@ -601,7 +601,7 @@ function EditCreateCampaign({
       <div className="border-top d-flex gap-3 justify-content-end p-3">
         <button
           className="btn btn-outline-info"
-          style={{ width: "120px" }}
+          style={{ width: "120px", display: "flex", justifyContent: "center" }}
           data-bs-dismiss="offcanvas"
           aria-label="Close"
           onClick={resetForm}
@@ -610,7 +610,7 @@ function EditCreateCampaign({
         </button>
         <button
           className="btn btn-info"
-          style={{ width: "120px" }}
+          style={{ width: "120px", display: "flex", justifyContent: "center" }}
           onClick={handleSubmit}
         >
           {isEditMode ? "Update" : "Publish"}

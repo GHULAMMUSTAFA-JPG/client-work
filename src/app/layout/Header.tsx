@@ -80,9 +80,11 @@ export default function Header() {
       };
 
       ws.onmessage = (event) => {
+        console.log("message recieved");
+
         const message = event.data;
         const response = JSON.parse(message);
-
+        console.log("response", response);
         // console.log(response, "response from sockets", selectedIds);
         if (response?.notifications) {
           // console.log(response?.notifications, "response?.notifications");
@@ -520,8 +522,13 @@ export default function Header() {
                       className="user-img rounded-circle"
                     />
                   ) : (
-                    <img src={"https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"} width={32} height={32} 
-                     className="user-img rounded-circle"
+                    <img
+                      src={
+                        "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+                      }
+                      width={32}
+                      height={32}
+                      className="user-img rounded-circle"
                     />
                   )}
                   <p className="mb-0 ms-2">

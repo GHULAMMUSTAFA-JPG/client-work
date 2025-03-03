@@ -124,11 +124,14 @@ export const fetchBuyerDiscoveryData = async (
   setIsLoading: any,
   query: string
 ) => {
-  setIsLoading(true);
+  if (!query) {
+    setIsLoading(true);
+  }
   try {
     const response: any = await apiController.get(
-      `/dashboard/buyers/discover_creators/${email}?query=${query}`
+      `/dashboard/buyers/discover_creators/?email=${email}&search_query=${query}`
     );
+
     setIsLoading(false);
     setData(response?.data);
     return response;

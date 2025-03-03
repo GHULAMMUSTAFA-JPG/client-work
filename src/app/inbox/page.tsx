@@ -32,7 +32,9 @@ const Inbox = () => {
   console.log("sentmessagesarray", sentmessagesarray);
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
+  console.log("conversations", conversations);
   console.log("conversationstate", conversationstate);
+
   useEffect(() => {
     console.log("useeefffff");
 
@@ -85,7 +87,7 @@ const Inbox = () => {
 
       fetchProfileDataByIds(id, setSelectedIds);
     }
-  }, [searchParams, conversationstate]);
+  }, [searchParams]);
 
   const sendMessage = async () => {
     console.log("send called");
@@ -239,7 +241,10 @@ const Inbox = () => {
                   }`}
                 >
                   <img
-                    src={chat?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
+                    src={
+                      chat?.Profile_Image ||
+                      "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+                    }
                     alt="Profile"
                     width={40}
                     height={40}
