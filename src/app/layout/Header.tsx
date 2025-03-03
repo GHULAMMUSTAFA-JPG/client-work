@@ -452,7 +452,7 @@ export default function Header() {
                               <img
                                 src={
                                   conversation?.Profile_Image ||
-                                  "defaultImagePath"
+                                  "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
                                 }
                                 alt="Profile"
                                 width={32}
