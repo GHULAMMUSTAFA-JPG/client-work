@@ -82,7 +82,8 @@ function Homepage() {
           <HowToInstall />
 
           <div className="col-md-8">
-            <div className="card mb-3">
+            <div className="card mb-1">
+             
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <p className="mb-0 fs-16 fw-medium">Profile</p>
@@ -185,15 +186,16 @@ function Homepage() {
                 </div>
 
                 <div className="d-flex gap-3">
+                <div className="img-container-lg-general">
                   <img
-                    src={userProfile?.Profile_Image || defaultImagePath}
+                    src={userProfile?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
                     className="border object-fit-cover rounded-circle flex-shrink-0"
                     alt="Profile Picture"
                     width={80}
                     height={80}
                   />
-
-                  <div className="flex-grow-1">
+                  </div>
+                  <div className="flex-grow-1 mb-3">
                     <div className="d-flex align-items-center gap-2 mb-2">
                       <h5 className="mb-0 fw-medium fs-16">
                         {userProfile?.Name}
@@ -258,19 +260,7 @@ function Homepage() {
                           )}
                         </div>
                       )}
-                    {/* <div className="d-flex gap-2 flex-wrap mb-3">
-                      {userProfile?.Skills?.map(
-                        (element: any, index: number) => (
-                          <span
-                            key={index}
-                            className="badge bg-success text-secondary rounded-pill fw-light border border-transparent"
-                          >
-                            {element}
-                          </span>
-                        )
-                      )}
-                    </div> */}
-
+         
                     <p className="mb-0 fs-12 text-warning">
                       {userProfile?.Description &&
                       userProfile?.Description?.length > 100
@@ -279,35 +269,70 @@ function Homepage() {
                     </p>
                   </div>
                 </div>
+             </div>
+             <div className="d-flex justify-content-between align-itmes-center">
+             <div className="statsbox-container-3">
+             <div className="stats-box">
+              <div className="stats-count">
+              {userProfile?.No_of_Followers}{" "}
+              </div>
+              <div className="stats-heading">Followers</div>
+            </div>
+              </div>
 
-                <div className="statsbox-container-dash">
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.No_of_Followers}{" "}
-                    </h5>
-                    <p className="stats-heading-dash">Followers</p>
-                  </div>
+              <div className="statsbox-container-3">
+             <div className="stats-box">
+              <div className="stats-count">
+              {userProfile?.Average_Engagements}
+              </div>
+              <div className="stats-heading">Average Engagaements per post</div>
+            </div>
+              </div>
 
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.Average_Engagements}
-                    </h5>
-                    <p className="stats-heading-dash">
-                      Average Engagaements per post
-                    </p>
-                  </div>
-
-                  <div className="stats-box-dash">
-                    <h5 className="stats-count-dash">
-                      {userProfile?.Average_Impressions}
-                    </h5>
-                    <p className="stats-heading-dash">
-                      Average Impressions per post
-                    </p>
-                  </div>
-                </div>
+             <div className="statsbox-container-3">
+             <div className="stats-box">
+              <div className="stats-count">
+              {userProfile?.Average_Impressions}
+              </div>
+              <div className="stats-heading">Average Impressions per post</div>
+            </div>
+              </div>
               </div>
             </div>
+            <div className="statsbox-container-dash py-3">
+           <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-teal-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                  <p className="fs-14">Active Campaigns</p>
+                  <p className="fs-16 fw-bold text-red">3</p>
+                </div>
+          </div>
+
+       <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-blue-svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                <p className="fs-14">Pending Applications</p>
+                  <p className="fs-16 fw-bold text-red">5</p>
+                </div>
+          </div>
+
+          <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-green-svg"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
+                  </div>
+
+                <div className="ml-4">
+                <p className="fs-14">Total Spend</p>
+                <p className="fs-16 fw-bold text-red">$12,450</p>
+                </div>
+          </div>
+  </div>
             <div className="card h-10">
               {!hasActiveCampaigns && (
                 <div className="d-flex flex-column justify-content-center min-h-100 howitwork">
@@ -382,9 +407,18 @@ function Homepage() {
             </div>
           </div>
           <div className="col-md-4 ">
+           
+            <div className="card mb-3">
+              <div className="card-body">
+                <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
+                <PostCalendar />
+              </div>
+            </div>
+
+
             <div className="card mb-3" style={{ height: "48%" }}>
               <div className="card-body">
-                <p className="mb-2 fs-16 fw-medium ">Notifications</p>
+                <p className="mb-2 fs-16 fw-medium ">What's New (Notifications)</p>
                 {notifications?.notifications &&
                 notifications?.notifications?.length !== 0 ? (
                   notifications?.notifications
@@ -463,37 +497,8 @@ function Homepage() {
                 )}
               </div>
             </div>
-            <div className="card mb-3">
-              <div className="card-body">
-                <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
-                <PostCalendar />
-              </div>
-            </div>
 
-            {/* <div className="card">
-                            <div className="card-body">
-                                <p className='mb-2 fs-16 fw-medium'>Payments</p>
-                                <div className='d-flex justify-content-between align-items-center mb-2'>
-                                    <p className='mb-0 fs-12'>Total Sync Earnings</p>
-                                    <p className='mb-0 fw-medium fs-16'>$30k</p>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex justify-content-between align-items-center mb-2'>
-                                    <p className='mb-0 fs-12'>Payement Incoming for Campaign</p>
-                                    <i className="bi bi-check-circle-fill text-primary ms-2"></i>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex justify-content-between align-items-center mb-2'>
-                                    <p className='mb-0 fs-12'>Payement Sent</p>
-                                    <i className="bi bi-check-circle-fill text-primary ms-2"></i>
-                                </div>
-                                <hr className='my-2 text-warning' />
-                                <div className='d-flex justify-content-between align-items-center'>
-                                    <p className='mb-0 fs-12'>Payement Incoming for Campaign</p>
-                                    <i className="bi bi-check-circle-fill text-primary ms-2"></i>
-                                </div>
-                            </div>
-                        </div> */}
+   
           </div>
         </div>
       </div>

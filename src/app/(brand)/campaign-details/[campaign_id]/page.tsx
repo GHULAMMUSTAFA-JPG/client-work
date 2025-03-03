@@ -33,6 +33,7 @@ function CampaignDetailsContent() {
   const { campaign_id } = useParams();
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab") as TabType | null;
+  const creatorParam = searchParams.get("creator");
   const { user } = useAuth();
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>(tabParam || "invited");
@@ -92,6 +93,25 @@ function CampaignDetailsContent() {
     }
   }, [tabParam]);
 
+  useEffect(() => {
+    if (campaignActiveCreatorsData && creatorParam) {
+      let creator = null;
+
+      if (campaignActiveCreatorsData?.Active_Creators) {
+        const activeCreator = campaignActiveCreatorsData.Active_Creators.find(
+          (c: any) => c.Creator_ID === creatorParam
+        );
+        if (activeCreator) {
+          creator = createCreatorFromData(activeCreator);
+        }
+      }
+
+      if (creator) {
+        setSelectedCreator(creator);
+      }
+    }
+  }, [campaignActiveCreatorsData, creatorParam]);
+
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     router.push(`/campaign-details/${campaign_id}?tab=${tab}`, {
@@ -120,6 +140,9 @@ function CampaignDetailsContent() {
   const handleBack = () => {
     if (selectedCreator) {
       setSelectedCreator(null);
+      router.push(`/campaign-details/${campaign_id}?tab=${activeTab}`, {
+        scroll: false,
+      });
     }
   };
 
@@ -137,6 +160,8 @@ function CampaignDetailsContent() {
         creator={selectedCreator}
         onBack={handleBack}
         posts={selectedCreator.posts || []}
+        campaignId={campaign_id as string}
+        onUpdate={() => setRefreshTrigger((prev) => prev + 1)}
       />
     );
   }
@@ -229,7 +254,15 @@ function CampaignDetailsContent() {
                         <CreatorProgress
                           key={creator.Creator_ID}
                           creator={creatorData}
-                          onViewDetails={() => setSelectedCreator(creatorData)}
+                          onViewDetails={() => {
+                            setSelectedCreator(creatorData);
+                            router.push(
+                              `/campaign-details/${campaign_id}?tab=${activeTab}&creator=${creator.Creator_ID}`,
+                              {
+                                scroll: false,
+                              }
+                            );
+                          }}
                           onMessageCreator={() =>
                             handleMessageCreator(creator.Creator_ID)
                           }
@@ -241,7 +274,15 @@ function CampaignDetailsContent() {
                     <CreatorProgress
                       key={creator.id}
                       creator={creator}
-                      onViewDetails={() => setSelectedCreator(creator)}
+                      onViewDetails={() => {
+                        setSelectedCreator(creator);
+                        router.push(
+                          `/campaign-details/${campaign_id}?tab=${activeTab}&creator=${creator.id}`,
+                          {
+                            scroll: false,
+                          }
+                        );
+                      }}
                       onMessageCreator={() => handleMessageCreator(creator.id)}
                     />
                   ))}

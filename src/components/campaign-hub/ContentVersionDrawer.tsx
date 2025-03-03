@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  X,
-  MessageSquare,
-  Building2,
-  User,
-  Clock,
-  ExternalLink,
-  Eye,
-  Heart,
-  MousePointer,
-  BarChart,
-} from "lucide-react";
+import { X, User, ExternalLink, Eye, Heart, MousePointer } from "lucide-react";
 import { Version } from "./ContentVersions";
 
 interface ContentVersionDrawerProps {
@@ -25,7 +14,6 @@ export function ContentVersionDrawer({
   version,
 }: ContentVersionDrawerProps) {
   if (!isOpen) return null;
-
   return (
     <div className="tw-fixed tw-inset-0 tw-z-50 tw-overflow-hidden">
       <div
@@ -51,48 +39,30 @@ export function ContentVersionDrawer({
               </div>
             </div>
 
-            {/* Content */}
             <div className="tw-flex-1 tw-overflow-y-auto">
               <div className="tw-p-6 tw-space-y-6">
-                {/* Content Preview */}
                 <div>
                   <h3 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
                     Content Preview
                   </h3>
-                  <div className="tw-space-y-4">
-                    {/* Example images - replace with actual content */}
-                    <img
-                      src="https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=800"
-                      alt="Content preview 1"
-                      className="tw-w-full tw-rounded-lg"
-                    />
-                    <img
-                      src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=800"
-                      alt="Content preview 2"
-                      className="tw-w-full tw-rounded-lg"
-                    />
-                  </div>
-                </div>
 
-                {/* Buyer Information */}
-                <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg tw-space-y-4">
-                  <div className="tw-flex tw-items-center tw-space-x-2">
-                    <Building2 className="tw-w-5 tw-h-5 tw-text-gray-400" />
-                    <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                      Modern Home Inc.
-                    </span>
+                  <div className="tw-grid tw-grid-cols-2 tw-gap-4">
+                    {version.media?.map((item, idx) => (
+                      <img
+                        key={idx}
+                        src={item}
+                        alt={`Content preview ${idx + 1}`}
+                        className="tw-w-full tw-h-auto tw-rounded-lg tw-object-cover"
+                      />
+                    ))}
                   </div>
-                  <div className="tw-flex tw-items-center tw-space-x-2">
-                    <User className="tw-w-5 tw-h-5 tw-text-gray-400" />
-                    <span className="tw-text-sm tw-text-gray-600">
-                      John Doe (Campaign Manager)
-                    </span>
-                  </div>
-                  <div className="tw-flex tw-items-center tw-space-x-2">
-                    <Clock className="tw-w-5 tw-h-5 tw-text-gray-400" />
-                    <span className="tw-text-sm tw-text-gray-600">
-                      Submitted on {version.date}
-                    </span>
+                  <div className="tw-py-2">
+                    <p className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+                      Description
+                    </p>
+                    <p className="tw-text-sm tw-text-gray-600">
+                      {version.description}
+                    </p>
                   </div>
                 </div>
 
@@ -138,60 +108,29 @@ export function ContentVersionDrawer({
                 )}
 
                 {/* Comments Section */}
-                <div>
-                  <h3 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-4">
-                    Buyer Comments
-                  </h3>
-                  <div className="tw-space-y-4">
-                    <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                      <div className="tw-flex tw-items-start tw-space-x-3">
-                        <div className="tw-flex-shrink-0">
-                          <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-gray-300 tw-flex tw-items-center tw-justify-center">
-                            <User className="tw-w-5 tw-h-5 tw-text-gray-500" />
+                {version.feedback && (
+                  <div>
+                    <h3 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-4">
+                      Feedback
+                    </h3>
+                    <div className="tw-space-y-4">
+                      <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
+                        <div className="tw-flex tw-items-start tw-space-x-3">
+                          <div className="tw-flex-shrink-0">
+                            <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-gray-300 tw-flex tw-items-center tw-justify-center">
+                              <User className="tw-w-5 tw-h-5 tw-text-gray-500" />
+                            </div>
                           </div>
-                        </div>
-                        <div>
-                          <div className="tw-flex tw-items-center tw-space-x-2">
-                            <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                              John Doe
-                            </span>
-                            <span className="tw-text-xs tw-text-gray-500">
-                              2 hours ago
-                            </span>
+                          <div>
+                            <p className="tw-mt-1 tw-text-sm tw-text-gray-600">
+                              {version.feedback}
+                            </p>
                           </div>
-                          <p className="tw-mt-1 tw-text-sm tw-text-gray-600">
-                            Great work on the composition! The lighting really
-                            makes the product stand out.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                      <div className="tw-flex tw-items-start tw-space-x-3">
-                        <div className="tw-flex-shrink-0">
-                          <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-gray-300 tw-flex tw-items-center tw-justify-center">
-                            <User className="tw-w-5 tw-h-5 tw-text-gray-500" />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="tw-flex tw-items-center tw-space-x-2">
-                            <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                              Sarah Smith
-                            </span>
-                            <span className="tw-text-xs tw-text-gray-500">
-                              1 day ago
-                            </span>
-                          </div>
-                          <p className="tw-mt-1 tw-text-sm tw-text-gray-600">
-                            The messaging aligns perfectly with our brand
-                            guidelines. Ready for publishing!
-                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Live Post Link */}
                 {version.livePostLink && (

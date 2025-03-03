@@ -1,5 +1,14 @@
 import React from "react";
-import { X, Calendar, Clock, AlertTriangle, Link, Globe } from "lucide-react";
+import {
+  X,
+  Calendar,
+  Clock,
+  AlertTriangle,
+  Link,
+  Globe,
+  Edit,
+  Trash2,
+} from "lucide-react";
 import { getIcon, getStatusLabel, getStatusStyles } from "./utils";
 
 interface DrawerProps {
@@ -7,12 +16,13 @@ interface DrawerProps {
   onClose: () => void;
   title: string;
   description: string;
-  dueDate: string;
-  payout: string;
+  dueDate?: string;
   type: "post" | "content" | "edit" | "details";
   postType?: string;
   initialData?: any;
   isPost?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export function CampaignDrawer({
@@ -23,6 +33,8 @@ export function CampaignDrawer({
   description,
   isPost,
   initialData,
+  onEdit,
+  onDelete,
 }: DrawerProps) {
   if (!isOpen) return null;
 
@@ -139,6 +151,34 @@ export function CampaignDrawer({
     );
   };
 
+  const renderActionButtons = () => {
+    if (!isPost) return null;
+
+    return (
+      <div className="tw-mb-6">
+        <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-3">
+          Actions
+        </h4>
+        <div className="tw-flex tw-space-x-3">
+          <button
+            onClick={onEdit}
+            className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-blue-50 tw-text-blue-600 tw-rounded-md hover:tw-bg-blue-100"
+          >
+            <Edit className="tw-w-4 tw-h-4 tw-mr-2" />
+            <span className="tw-text-sm tw-font-medium">Edit Post</span>
+          </button>
+          <button
+            onClick={onDelete}
+            className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-red-50 tw-text-red-600 tw-rounded-md hover:tw-bg-red-100"
+          >
+            <Trash2 className="tw-w-4 tw-h-4 tw-mr-2" />
+            <span className="tw-text-sm tw-font-medium">Delete Post</span>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return type === "details" ? (
     <div className="tw-fixed tw-inset-0 tw-z-50 tw-overflow-hidden">
       <div
@@ -207,6 +247,7 @@ export function CampaignDrawer({
 
                 {renderLivePostLink()}
                 {renderRequiredUpdates()}
+                {renderActionButtons()}
               </div>
             </div>
           </div>

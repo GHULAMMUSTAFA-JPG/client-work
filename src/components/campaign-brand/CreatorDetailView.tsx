@@ -8,21 +8,29 @@ import {
   DollarSign,
   X,
   Eye,
+  ThumbsDown,
+  CloudFog,
 } from "lucide-react";
-import { Creator, Post, ContentItem } from "@/types";
+import { Creator, Post, ContentItem, Status } from "@/types";
 import Tooltip from "./Tooltip";
 import { useRouter } from "next/navigation";
+import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
+import { toast } from "react-toastify";
 
 interface CreatorDetailViewProps {
   creator: Creator;
   onBack: () => void;
   posts: Post[];
+  campaignId: string;
+  onUpdate: () => void;
 }
 
 export function CreatorDetailView({
   creator,
   onBack,
   posts,
+  campaignId,
+  onUpdate,
 }: CreatorDetailViewProps) {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -57,7 +65,6 @@ export function CreatorDetailView({
           engagementRates.length
         : 0;
 
-    // Assuming CTR is 60% of engagement rate for this example
     const clickThroughRate = avgEngagement * 0.6;
 
     return {
@@ -66,6 +73,59 @@ export function CreatorDetailView({
       clickThroughRate: clickThroughRate.toFixed(1),
     };
   }, [posts]);
+
+  const handleApprovePost = async (postId: string) => {
+    await updatePostStatus({
+      campaign_id: campaignId,
+      creator_id: creator.id,
+      post_id: postId,
+      status: Status.Approved + "",
+    });
+    onUpdate();
+  };
+
+  const handleApproveContent = async (contentId: string) => {
+    if (!selectedPost) return;
+    try {
+      const result = await updatePostContentStatus({
+        campaign_id: campaignId,
+        creator_id: creator.id,
+        post_id: selectedPost.id,
+        content_id: contentId,
+        status: Status.Approved + "",
+      });
+
+      if (!result) {
+        toast.error("Failed to approve content. Please try again.");
+      }
+      onUpdate();
+    } catch (error) {
+      toast.error("An error occurred while approving content.");
+      console.error("Error approving content:", error);
+    }
+  };
+
+  const handleRejectContent = async (contentId: string, feedback?: string) => {
+    if (!selectedPost) return;
+    try {
+      const result = await updatePostContentStatus({
+        campaign_id: campaignId,
+        creator_id: creator.id,
+        post_id: selectedPost.id,
+        content_id: contentId,
+        status: Status.Rejected + "",
+        feedback,
+      });
+
+      if (!result) {
+        toast.error("Failed to reject content. Please try again.");
+      }
+      onUpdate();
+    } catch (error) {
+      toast.error("An error occurred while rejecting content.");
+      console.error("Error rejecting content:", error);
+    }
+  };
 
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
@@ -205,7 +265,10 @@ export function CreatorDetailView({
                         Message
                       </button>
                       {selectedPost.status === "in_review" && (
-                        <button className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2">
+                        <button
+                          className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2"
+                          onClick={() => handleApprovePost(selectedPost.id)}
+                        >
                           <CheckCircle className="tw-w-4 tw-h-4" />
                           Approve
                         </button>
@@ -248,14 +311,34 @@ export function CreatorDetailView({
                               {item.status.replace("_", " ")}
                             </span>
                           </div>
-                          <Tooltip content="View content details">
-                            <button
-                              onClick={() => handleViewContent(item)}
-                              className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-900 hover:tw-bg-gray-100 tw-rounded-lg tw-transition-colors"
-                            >
-                              <Eye className="tw-w-4 tw-h-4" />
-                            </button>
-                          </Tooltip>
+                          <div className="tw-flex tw-items-center tw-gap-2">
+                            {item.status === "in_review" && (
+                              <>
+                                <button
+                                  onClick={() => handleApproveContent(item.id)}
+                                  className="tw-p-2 tw-text-green-600 hover:tw-text-green-800 hover:tw-bg-green-50 tw-rounded-lg tw-transition-colors"
+                                  title="Approve content"
+                                >
+                                  <CheckCircle className="tw-w-4 tw-h-4" />
+                                </button>
+                                <button
+                                  onClick={() => handleRejectContent(item.id)}
+                                  className="tw-p-2 tw-text-red-600 hover:tw-text-red-800 hover:tw-bg-red-50 tw-rounded-lg tw-transition-colors"
+                                  title="Reject content"
+                                >
+                                  <ThumbsDown className="tw-w-4 tw-h-4" />
+                                </button>
+                              </>
+                            )}
+                            <Tooltip content="View content details">
+                              <button
+                                onClick={() => handleViewContent(item)}
+                                className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-900 hover:tw-bg-gray-100 tw-rounded-lg tw-transition-colors"
+                              >
+                                <Eye className="tw-w-4 tw-h-4" />
+                              </button>
+                            </Tooltip>
+                          </div>
                         </div>
                         <div className="tw-text-sm tw-text-gray-600 tw-truncate">
                           {item.content}
@@ -272,8 +355,8 @@ export function CreatorDetailView({
 
       {isDrawerOpen && selectedContent && (
         <div className="tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-50 tw-z-50">
-          <div className="tw-absolute tw-right-0 tw-top-0 tw-h-full tw-w-1/3 tw-bg-white tw-shadow-xl">
-            <div className="tw-p-6">
+          <div className="tw-absolute tw-right-0 tw-top-0 tw-h-full tw-w-1/3 tw-bg-white tw-shadow-xl tw-flex tw-flex-col">
+            <div className="tw-p-6 tw-flex-1 tw-overflow-y-auto">
               <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
                 <h3 className="tw-text-lg tw-font-medium">Content Details</h3>
                 <button
@@ -286,26 +369,31 @@ export function CreatorDetailView({
 
               <div className="tw-space-y-6">
                 <div>
-                  <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
-                    Content
-                  </h4>
-                  <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                    <p className="tw-text-sm tw-text-gray-600">
-                      {selectedContent.content}
-                    </p>
-                  </div>
+                  {selectedContent.content && (
+                    <div>
+                      <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+                        Content
+                      </h4>
+                      <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
+                        <p className="tw-text-sm tw-text-gray-600">
+                          {selectedContent.content}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   {selectedContent.type === "image" ? (
                     <div className="tw-mt-4">
                       <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
                         Media
                       </h4>
-                      <div className="tw-grid tw-gap-2">
+                      <div className="tw-grid tw-grid-cols-2 tw-gap-2">
                         {selectedContent.images?.map((image) => (
                           <img
                             key={image}
                             src={image}
                             alt="Content"
-                            className="tw-w-full tw-rounded-lg"
+                            className="tw-w-full tw-h-auto tw-rounded-lg"
                           />
                         ))}
                       </div>
@@ -314,6 +402,46 @@ export function CreatorDetailView({
                 </div>
               </div>
             </div>
+
+            {selectedContent.status === "in_review" && (
+              <div className="tw-p-4 tw-border-t tw-bg-gray-50 tw-flex tw-justify-end tw-gap-3">
+                <button
+                  onClick={() => {
+                    router.push(`/inbox?id=${creator.id}`);
+                  }}
+                  className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-blue-500 tw-text-blue-600 tw-rounded-lg hover:tw-bg-blue-50 tw-transition-colors"
+                >
+                  <div className="tw-flex tw-items-center tw-gap-2">
+                    <MessageSquare className="tw-w-4 tw-h-4" />
+                    <span>Provide Feedback</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    handleRejectContent(selectedContent.id);
+                    handleCloseDrawer();
+                  }}
+                  className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded-lg hover:tw-bg-red-50 tw-transition-colors"
+                >
+                  <div className="tw-flex tw-items-center tw-gap-2">
+                    <ThumbsDown className="tw-w-4 tw-h-4" />
+                    <span>Reject</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => {
+                    handleApproveContent(selectedContent.id);
+                    handleCloseDrawer();
+                  }}
+                  className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-transition-colors"
+                >
+                  <div className="tw-flex tw-items-center tw-gap-2">
+                    <CheckCircle className="tw-w-4 tw-h-4" />
+                    <span>Approve</span>
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

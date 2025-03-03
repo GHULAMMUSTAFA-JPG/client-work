@@ -21,6 +21,33 @@ const AuthPage = () => {
   const { loginUser, user, setIsLoading, setIsAuthenticated, setUser } =
     useAuth();
   const [isLogin, setIsLogin] = useState(true);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [forgotPasswordError, setForgotPasswordError] = useState<string | null>(null);
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<string | null>(null);
+
+  const handleForgotPassword = async () => {
+    setForgotPasswordError(null);
+    setForgotPasswordSuccess(null);
+    if (!forgotPasswordEmail) {
+      setForgotPasswordError("Email is required");
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
+        email: forgotPasswordEmail,
+      });
+      setIsLoading(false);
+      if (response.status === 200) {
+        setForgotPasswordSuccess("Password reset link has been sent to your email");
+      } else {
+        setForgotPasswordError("Failed to send password reset link. Please try again later.");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setForgotPasswordError("An error occurred. Please try again later.");
+    }
+  };
   const [loader, setLoader] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
   const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
@@ -324,6 +351,14 @@ const AuthPage = () => {
     window.location.href = authorizationUrl;
   };
 
+  function addClassToDiv(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+    event.preventDefault();
+    const forgetPasswordSection = document.querySelector('.forgetpasswordSection');
+    if (forgetPasswordSection) {
+      forgetPasswordSection.classList.add('showforgetpasswordSection');
+    }
+  }
+
   return codess ? (
     <div>
       <Loader />
@@ -362,14 +397,71 @@ const AuthPage = () => {
                     Brand
                   </button>
                 </div>
+
+                {userType !== "creator" && isLogin && (
+                  <div className="mb-4  forgetpasswordSection">
+                         <div className="back-to-login">
+                        <a onClick={() => {
+                        setIsLogin(true);
+                        const forgetPasswordSection = document.querySelector('.forgetpasswordSection');
+                        if (forgetPasswordSection) {
+                          forgetPasswordSection.classList.remove('showforgetpasswordSection');
+                        }
+                        }} className="Link-Txt fs-14 d-flex cursor">
+                        <Icon icon="material-symbols:arrow-back" className="me-2" width={20} height={20} />
+                        Back to Sign In
+                        </a>
+                    </div>
+                    <div className="content-area text-center">
+             
+                  <h1 className="headingtxt mt-5 mb-3">Reset Your Password</h1>
+                  <div className="sub-headingtxt text-center mb-4">Check your email for a link to reset your password.</div>
+                  <input
+                    type="email"
+                    name="forgotPasswordEmail"
+                    placeholder="Enter your email"
+                    className={`form-control ${forgotPasswordError ? "is-invalid" : ""}`}
+                    value={forgotPasswordEmail}
+                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                  />
+                  {forgotPasswordError && (
+                    <div className="invalid-feedback">{forgotPasswordError}</div>
+                  )}
+                  {forgotPasswordSuccess && (
+                    <div className="alert alert-success py-2 small mt-2" role="alert">
+                      {forgotPasswordSuccess}
+                    </div>
+                  )}
+                    <button
+                    type="button"
+                    className="SignIN-btn mb-3 mt-3"
+                    onClick={handleForgotPassword}
+                    >
+                    Send Reset Link
+                    </button>
+                    {forgotPasswordSuccess && (
+                    <div className="alert alert-success py-2 small mt-2" role="alert" style={{ backgroundColor: '#f0fdfa', border: '1px solid  #99f6e4' }}>
+                      <div className="resetpassword-content">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-mail text-teal-500 mr-3 mt-0.5 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                     <div className="result-contentbox">
+                     <p>Email Sent</p>
+                      <p>We've sent a password reset link to your email address. Please check your inbox and follow the instructions to reset your password.</p>
+                      <p>Didn't receive an email? Check your spam folder or try again.</p>
+                     </div>
+                     </div>
+                    </div>
+                    )}
+                </div></div>
+              )}
+
+
+
+
                 <h1 className="headingtxt mt-5 mb-3">
                   {userType === "brand" ? "Brand" : "Creator"} Sign{" "}
                   {userType === "creator" || isLogin ? "In" : "Up"}
                 </h1>
-     {/*            <p className="sub-headingtxt">
-                  Sign {userType === "creator" || isLogin ? "in to" : "up for"}{" "}
-                  Synnc for {userType === "brand" ? "brands" : "creators"}
-                </p> */}
+   
               </div>
 
               {error && (
@@ -383,6 +475,8 @@ const AuthPage = () => {
                   {linkedInError}
                 </div>
               )}
+
+
 
               {userType !== "creator" && (
             
@@ -552,8 +646,12 @@ const AuthPage = () => {
                       Password
                       {!isLogin}
                     </label>
-                    <a href="#" className="Link-Txt fs-14 cursor mb-2">
-                      Forgot password?  </a>
+                    <a
+                      className="Link-Txt fs-14 cursor mb-2"
+                      onClick={addClassToDiv}
+                    >
+                      Forgot password?
+                    </a>
                       </div>
                     <div className="position-relative">
                       <input
