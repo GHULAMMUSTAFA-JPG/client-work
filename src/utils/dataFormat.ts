@@ -267,3 +267,25 @@ export const extractCampaignFormData = (data: any) => {
     mediaUrl: data?.Campaign_Media ?? "",
   };
 };
+
+export const getCurrentPostStage = (post: any): number => {
+  const { Content_Versions = [], Live_Link, Impressions } = post;
+  if (Live_Link) return 5;
+  if (Impressions) return 6;
+
+  if (
+    Content_Versions.length === 0 ||
+    Content_Versions.every((content: any) => content.Is_Draft === true)
+  ) {
+    return 1;
+  }
+  if (
+    Content_Versions.some((content: any) => content.Is_Draft == false) &&
+    Content_Versions.some((content: any) => content.Status === 1)
+  )
+    return 2;
+
+  if (Content_Versions.some((content: any) => content.Status === 2)) return 4;
+
+  return 1;
+};

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { X, Calendar, Clock, AlertCircle, DollarSign } from "lucide-react";
 import { linkedInPostTypes } from "@/types/linkedin";
 import { createCampaignPost } from "@/@api/campaign";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface CreatePostDrawerProps {
   isOpen: boolean;
@@ -28,6 +29,9 @@ export function CreatePostDrawer({
   const [error, setError] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   if (!isOpen) return null;
 
@@ -79,6 +83,14 @@ export function CreatePostDrawer({
       return;
     }
 
+    if (response && typeof response === "object" && "_id" in response) {
+      const currentCampaignId = searchParams.get("id");
+      if (currentCampaignId) {
+        const url = `/campaign-hub?id=${currentCampaignId}&postId=${response._id}`;
+        router.push(url);
+      }
+    }
+
     setPostType("");
     setBudget("");
     setDueDate("");
@@ -104,7 +116,7 @@ export function CreatePostDrawer({
             <div className="tw-px-6 tw-py-6 tw-border-b tw-border-gray-200">
               <div className="tw-flex tw-items-center tw-justify-between">
                 <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
-                Finalize Your Post
+                  Finalize Your Post
                 </h2>
                 <button
                   onClick={onClose}
@@ -264,7 +276,7 @@ export function CreatePostDrawer({
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
                       <span>
-                      Payout Date<span className="tw-text-red-500">*</span>
+                        Payout Date<span className="tw-text-red-500">*</span>
                       </span>
                       {fieldErrors.dueDate && (
                         <span className="tw-ml-2 tw-text-red-600 tw-text-xs">

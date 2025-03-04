@@ -4,7 +4,6 @@ import { Suspense } from "react";
 
 import useForm from "@/hooks/useForm";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Loader from "@/components/loader";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";

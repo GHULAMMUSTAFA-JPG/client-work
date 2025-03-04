@@ -23,10 +23,11 @@ interface PostStage {
 interface PostProgressProps {
   postId: string | null;
   stages: PostStage[];
-  onStageClick?: (stageId: number | string) => void;
   campaignId: string;
   creatorId: string;
   currentStage: number;
+  onSubmit: () => void;
+  linkedinPostUrl: string;
 }
 
 export function PostProgress({
@@ -35,12 +36,13 @@ export function PostProgress({
   creatorId,
   campaignId,
   currentStage,
+  onSubmit,
+  linkedinPostUrl,
 }: PostProgressProps) {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [isLivePostDrawerOpen, setIsLivePostDrawerOpen] = useState(false);
   const [isImpressionsDrawerOpen, setIsImpressionsDrawerOpen] = useState(false);
   const [isPaymentDrawerOpen, setIsPaymentDrawerOpen] = useState(false);
-  console.log("currentStage", currentStage);
   const updatedStages = stages.map((stage) => {
     const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
     const thisStageIndex = stages.findIndex((s) => s.id === stage.id);
@@ -55,7 +57,6 @@ export function PostProgress({
       return { ...stage, status: "inactive" as const };
     }
   });
-  console.log("updatedStages", updatedStages);
   const getStageIcon = (stage: PostStage) => {
     if (stage.icon) return stage.icon;
 
@@ -229,6 +230,7 @@ export function PostProgress({
             onClose={() => setIsLivePostDrawerOpen(false)}
             onSubmit={() => {
               setIsLivePostDrawerOpen(false);
+              onSubmit();
             }}
             campaignId={campaignId}
             creatorId={creatorId}
@@ -239,9 +241,12 @@ export function PostProgress({
             isOpen={isImpressionsDrawerOpen}
             onClose={() => setIsImpressionsDrawerOpen(false)}
             postId={postId}
-            onSubmit={(data) => {
-              console.log("Impressions data submitted:", data);
+            campaignId={campaignId}
+            creatorId={creatorId}
+            linkedinPostUrl={linkedinPostUrl}
+            onSubmit={() => {
               setIsImpressionsDrawerOpen(false);
+              onSubmit();
             }}
           />
 

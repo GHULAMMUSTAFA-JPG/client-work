@@ -11,14 +11,14 @@ import {
 import { CampaignDrawer } from "@/components/campaign-hub/CampaignDrawer";
 import { CreatePostDrawer } from "@/components/campaign-hub/CreatePostDrawer";
 import { useAuth } from "@/contexts/AuthContext";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { getCampaignCreatorPosts } from "@/@api/campaign";
 import { CampaignStatus, Status } from "@/types";
 import { formatDate } from "@/utils";
 import { withAuthRole } from "@/utils/withAuthRole";
 import EmptyState from "@/components/EmptyState";
-import { transformPostContent } from "@/utils/dataFormat";
-import { postStages, transactions } from "@/constant/campaign";
+import { getCurrentPostStage, transformPostContent } from "@/utils/dataFormat";
+import { postStages } from "@/constant/campaign";
 
 function CampaignHubContent() {
   const [activeTab, setActiveTab] = useState<Status | "all">("all");
@@ -31,6 +31,7 @@ function CampaignHubContent() {
   const [selectedPost, setSelectedPost] = useState<any>(null);
   const { user, setIsLoading } = useAuth();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     if (campaignData && selectedPostId) {
@@ -42,40 +43,6 @@ function CampaignHubContent() {
       setSelectedPost(null);
     }
   }, [campaignData, selectedPostId]);
-
-  const getCurrentStage = (post: any): number => {
-    const {
-      Content_Versions = [],
-      Live_Link,
-      Impressions,
-      Payment,
-      Status,
-    } = post;
-
-    if (
-      Content_Versions.length === 0 ||
-      Content_Versions.every((content: any) => content.Is_Draft === true)
-    ) {
-      return 1;
-    }
-    if (
-      Content_Versions.some((content: any) => content.Is_Draft == false) &&
-      Content_Versions.some((content: any) => content.Status === 1)
-    )
-      return 2;
-
-    if (Content_Versions.some((content: any) => content.Status === 2)) return 4;
-    if (
-      Content_Versions.some((content: any) => content.Status !== 2) &&
-      Content_Versions.some((content: any) => content.Status === 3)
-    )
-      return 9;
-    if (Live_Link) return 5;
-
-    // if (Payment && Payment.Status) return 6;
-    if (Impressions) return 6;
-    return 1;
-  };
 
   const getCampaignPostsList = async () => {
     try {
@@ -91,16 +58,37 @@ function CampaignHubContent() {
 
       setCampaignData(response);
       if (response && (response as any).Posts.length) {
-        const firstPost = (response as any).Posts[0];
+        const postId = searchParams.get("postId");
+        let firstPost;
+
+        if (postId) {
+          firstPost =
+            (response as any).Posts.find((post: any) => post._id === postId) ||
+            (response as any).Posts[0];
+        } else {
+          firstPost = (response as any).Posts[0];
+        }
+
         const contentList = transformPostContent(firstPost);
         setContentVersion(contentList);
         setSelectedPostId(firstPost._id);
+
+        // Update URL with the selected post ID
+        if (firstPost._id !== postId) {
+          updateUrlWithPostId(code, firstPost._id);
+        }
       }
     } catch (error) {
       console.error("Error fetching campaign posts:", error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const updateUrlWithPostId = (campaignId: string, postId: string) => {
+    router.replace(`/campaign-hub?id=${campaignId}&postId=${postId}`, {
+      scroll: false,
+    });
   };
 
   useEffect(() => {
@@ -112,7 +100,7 @@ function CampaignHubContent() {
     if (user) {
       getCampaignPostsList();
     }
-  }, [searchParams, user]);
+  }, [user]);
 
   const transformedTabs = (campaignData: any) => {
     const posts = campaignData?.Posts || [];
@@ -181,13 +169,14 @@ function CampaignHubContent() {
     if (post) {
       const contentList = transformPostContent(post);
       setContentVersion(contentList);
-    } else {
-      setContentVersion([]);
+      setSelectedPostId(id);
+
+      const campaignId = searchParams.get("id");
+      if (campaignId) {
+        updateUrlWithPostId(campaignId, id);
+      }
     }
-
-    setSelectedPostId(id);
   };
-
   const handleTabChange = (tab: Status | "all") => {
     setActiveTab(tab);
     if (tab === "all") {
@@ -242,7 +231,9 @@ function CampaignHubContent() {
             stages={postStages}
             campaignId={campaignData?._id}
             creatorId={user.uuid}
-            currentStage={selectedPost ? getCurrentStage(selectedPost) : 1}
+            currentStage={selectedPost ? getCurrentPostStage(selectedPost) : 1}
+            onSubmit={getCampaignPostsList}
+            linkedinPostUrl={selectedPost?.Live_Link || ""}
           />
 
           {selectedPostId ? (
