@@ -5,12 +5,10 @@ import {
   Eye,
   MousePointer,
   Heart,
-  RefreshCw,
   AlertCircle,
   ExternalLink,
 } from "lucide-react";
 import { addCampaignPostImpressions } from "@/@api/campaign";
-import { toast } from "react-toastify";
 import Link from "next/link";
 
 interface ImpressionsData {

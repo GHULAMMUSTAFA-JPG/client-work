@@ -522,14 +522,18 @@ export default function Header() {
                       className="user-img rounded-circle"
                     />
                   ) : (
-                    <img
-                      src={
-                        "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                      }
-                      width={32}
-                      height={32}
-                      className="user-img rounded-circle"
-                    />
+                    <div
+                      className="d-flex align-items-center justify-content-center bg-light rounded-circle"
+                      style={{ width: "32px", height: "32px" }}
+                    >
+                      <span className="fw-bold text-uppercase">
+                        {userProfile?.Company_Name
+                          ? userProfile.Company_Name.charAt(0)
+                          : userProfile?.Name
+                          ? userProfile.Name.charAt(0)
+                          : "U"}
+                      </span>
+                    </div>
                   )}
                   <p className="mb-0 ms-2">
                     {userProfile?.Company_Name || userProfile?.Name}

@@ -52,7 +52,7 @@ function Campaigns() {
                       aria-controls="active-campaigns"
                       aria-selected="true"
                     >
-                     Ongoing Campaigns (
+                      Ongoing Campaigns (
                       {campaigns?.Activated_Campaigns?.length || 0})
                     </button>
                   </li>
@@ -96,16 +96,31 @@ function Campaigns() {
                                   >
                                     <div className="card-body d-flex flex-column">
                                       <div className="d-flex gap-2 mb-4">
-                                        <img
-                                          src={
-                                            campaign?.Company_Logo ||
-                                            defaultImagePath
-                                          }
-                                          className="border object-fit-cover rounded-circle flex-shrink-0"
-                                          alt="logo"
-                                          width={40}
-                                          height={40}
-                                        />
+                                        {campaign?.Company_Logo ? (
+                                          <img
+                                            src={campaign.Company_Logo}
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                          />
+                                        ) : (
+                                          <div
+                                            className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
+                                            style={{
+                                              width: "40px",
+                                              height: "40px",
+                                            }}
+                                          >
+                                            <span className="fw-bold text-uppercase">
+                                              {campaign?.Company_Name
+                                                ? campaign.Company_Name.charAt(
+                                                    0
+                                                  )
+                                                : "C"}
+                                            </span>
+                                          </div>
+                                        )}
                                         <div>
                                           <p className="fw-medium mb-0 fs-16">
                                             {campaign?.Headline?.slice(0, 100)}

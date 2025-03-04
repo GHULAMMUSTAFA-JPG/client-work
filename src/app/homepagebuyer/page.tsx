@@ -182,13 +182,12 @@ function Homepagebuyer() {
                     ) : (
                       <div className="companyImgbox border object-fit-cover rounded d-flex align-items-center justify-content-center">
                         <span className="fs-40 fw-medium text-uppercase">
-                          {" "}
                           {userData?.Company_Name &&
-                          userData?.Company_Name! == ""
-                            ? userData?.Company_Name?.slice(0, 2)
+                          userData?.Company_Name !== ""
+                            ? userData?.Company_Name?.slice(0, 1)
                             : userData?.Email && userData?.Email !== ""
-                            ? userData?.Email?.slice(0, 2)
-                            : "NA"}
+                            ? userData?.Email?.slice(0, 1)
+                            : "N"}
                         </span>
                       </div>
                     )}

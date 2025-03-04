@@ -399,17 +399,28 @@ function CompanyPage() {
           <div className="profile-topsection">
             <div className="profile-image-content">
               <div className="profile-image">
-                <img
-                  src={
-                    userProfile?.Company_Logo !== ""
-                      ? userProfile?.Company_Logo
-                      : "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                  }
-                  alt="Profile Picture"
-                  width={150}
-                  height={150}
-                  className=""
-                />
+                {userProfile?.Company_Logo !== "" ? (
+                  <img
+                    src={userProfile?.Company_Logo}
+                    alt="Profile Picture"
+                    width={150}
+                    height={150}
+                    className=""
+                  />
+                ) : (
+                  <div
+                    className="d-flex align-items-center justify-content-center bg-light rounded-circle"
+                    style={{ width: "150px", height: "150px" }}
+                  >
+                    <span className="fs-1 fw-bold text-uppercase">
+                      {userProfile?.Company_Name
+                        ? userProfile.Company_Name.charAt(0)
+                        : userProfile?.Email
+                        ? userProfile.Email.charAt(0)
+                        : "N"}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="profile-image-content-text">
                 {/* Profile Info */}
@@ -787,17 +798,28 @@ function CompanyPage() {
                           </div>
                           <div className="position-relative">
                             <div className="img-container-lg-general">
-                              <img
-                                src={
-                                  editDetails.company_logo !== ""
-                                    ? editDetails?.company_logo
-                                    : "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                                }
-                                alt="Profile"
-                                width={80}
-                                height={80}
-                                className="mb-2"
-                              />
+                              {editDetails.company_logo !== "" ? (
+                                <img
+                                  src={editDetails.company_logo}
+                                  alt="Profile"
+                                  width={80}
+                                  height={80}
+                                  className="mb-2"
+                                />
+                              ) : (
+                                <div
+                                  className="d-flex align-items-center justify-content-center bg-light rounded-circle"
+                                  style={{ width: "150px", height: "150px" }}
+                                >
+                                  <span className="fs-1 fw-bold text-uppercase">
+                                    {userProfile?.Company_Name
+                                      ? userProfile.Company_Name.charAt(0)
+                                      : userProfile?.Email
+                                      ? userProfile.Email.charAt(0)
+                                      : "N"}
+                                  </span>
+                                </div>
+                              )}
                             </div>
                             <div
                               className="d-flex align-items-center gap-2"

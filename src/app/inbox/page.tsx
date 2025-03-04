@@ -240,16 +240,24 @@ const Inbox = () => {
                       : ""
                   }`}
                 >
-                  <img
-                    src={
-                      chat?.Profile_Image ||
-                      "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                    }
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-circle me-2 flex-shrink-0"
-                  />
+                  {chat?.Profile_Image ? (
+                    <img
+                      src={chat.Profile_Image}
+                      alt="Profile"
+                      width={40}
+                      height={40}
+                      className="rounded-circle me-2 flex-shrink-0"
+                    />
+                  ) : (
+                    <div
+                      className="d-flex align-items-center justify-content-center bg-light rounded-circle me-2 flex-shrink-0"
+                      style={{ width: "40px", height: "40px" }}
+                    >
+                      <span className="fw-bold text-uppercase">
+                        {chat?.Name ? chat.Name.charAt(0) : "A"}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex-grow-1">
                     <h6 className="mb-0 fs-14">{chat?.Name || "Anonymous"}</h6>
                     <small className="text-muted line-clamp-1">

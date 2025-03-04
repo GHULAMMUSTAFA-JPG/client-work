@@ -281,13 +281,21 @@ export default function DiscoverBrandsPage() {
                     <div className="row">
                       <div className="col-auto">
                         <div className="img-container-lg">
-                          <img
-                              src={
-                              brand.Company_Logo
-                                ? brand.Company_Logo
-                                : defaultImagePath
-                            }
+                          {brand.Company_Logo ? (
+                            <img
+                              src={brand.Company_Logo}
+                              alt={brand.Company_Name}
+                              className="w-100 h-100 object-fit-cover"
                             />
+                          ) : (
+                            <div className="d-flex align-items-center justify-content-center bg-light rounded-circle w-100 h-100">
+                              <span className="fs-1 fw-bold text-uppercase">
+                                {brand.Company_Name
+                                  ? brand.Company_Name.charAt(0)
+                                  : "B"}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="col">
@@ -330,17 +338,13 @@ export default function DiscoverBrandsPage() {
                                 />
                               </Link>
                             )}
-                           
                           </div>
-                          <span className="status-box">
-                            {brand.Size}
-                          </span>
+                          <span className="status-box">{brand.Size}</span>
                         </div>
                         <p className="card-text text-gray fs-12 mb-3">
                           {brand.Company_Description}
                         </p>
                         <div className="d-flex gap-2">
-                        
                           {brand?.Categories?.map((category: any, idx: any) => (
                             <span key={idx} className="chips">
                               {category}
