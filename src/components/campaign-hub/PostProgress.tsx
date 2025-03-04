@@ -129,7 +129,7 @@ export function PostProgress({
   const progress = (currentStageIndex / (stages.length - 1)) * 100;
 
   return (
-    <div className="tw-p-6 tw-border-b tw-border-gray-200 tw-bg-blue-50">
+    <div className="tw-p-6 tw-border-b tw-border-gray-200 border-line">
       <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
         <h2 className="tw-text-lg tw-font-semibold">Post Progress</h2>
         <div className="tw-flex tw-items-center tw-text-sm tw-text-gray-500">
