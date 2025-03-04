@@ -330,27 +330,19 @@ export default function DiscoverBrandsPage() {
                                 />
                               </Link>
                             )}
-                            {/* <Linkedin
-                              className="h-4 w-4 text-gray"
-                              width={16}
-                              height={16}
-                            />
-                            <Globe
-                              className="h-4 w-4 text-gray"
-                              width={16}
-                              height={16}
-                            /> */}
+                           
                           </div>
+                          <span className="status-box">
+                            {brand.Size}
+                          </span>
                         </div>
                         <p className="card-text text-gray fs-12 mb-3">
                           {brand.Company_Description}
                         </p>
                         <div className="d-flex gap-2">
-                          <span className="badge  text-primary">
-                            {brand.Size}
-                          </span>
+                        
                           {brand?.Categories?.map((category: any, idx: any) => (
-                            <span key={idx} className="badge  text-secondary">
+                            <span key={idx} className="chips">
                               {category}
                             </span>
                           ))}

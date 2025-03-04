@@ -193,7 +193,7 @@ export default function BrandViewCampaignOffcanvas({
                   <button
                     style={{ display: "flex", justifyContent: "center" }}
                     onClick={() => handleApply(campaign._id, index)}
-                    className="btn btn-primary w-100"
+                    className="btn btn-dark w-100"
                   >
                     Apply for Campaign
                   </button>

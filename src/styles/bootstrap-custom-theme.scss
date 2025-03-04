@@ -1022,21 +1022,19 @@ body {
 }
 
 .chip {
-  background-color: $primary;
+  background-color: #f0fdfa !important;
   border-radius: 20px;
   padding: 6px 12px;
   display: inline-flex;
   align-items: center;
   transition: all 0.2s ease-in-out;
-  cursor: pointer;
+  
 
-  &:hover {
-    background-color: darken($primary, 5%);
-  }
+  
 
   .chip-text {
     font-size: 12px;
-    color: $white;
+    color: teal;
     font-weight: 500;
   }
 }
@@ -1548,11 +1546,11 @@ body {
 
   .sidebar-content {
     background: #ffffff;
-    overflow: hidden;
-      overflow-y: hidden;
-    overflow-y: auto;
-    height: 510px;
-
+  overflow: hidden;
+    overflow-y: hidden;
+  overflow-y: hidden;
+  overflow-y: auto;
+  height: calc(100vh - 200px);
     .link {
       color: teal;
       text-decoration: underline;
@@ -1700,4 +1698,91 @@ body {
       padding: 12px 10px;
       font-size: 13px !important;
     }
+    .border-line {
+      border-top: 3px solid #10b981 !important;
+    }
+.post-selected-box
+{
+  width: 100%;
+  padding: 20px 10px;
+  background-color: #fff;
+  border-left: 3px solid #fff;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  border-bottom: 1px solid #ededed;
+  &:hover {
+    background-color:  #ecfdf5;
+    border-left:3px solid #10b981;
+  }
 
+}
+.post-selected-box-active
+{
+  background-color: #d1fae5;
+  border-left:3px solid #10b981;
+  position: relative;
+  &::after
+  {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 10px;
+    height: 30px;
+    background-color: #10b981;
+    z-index: 1;
+    border-radius: 2px 0 0 2px;
+    top: calc(50% - 15px);
+    @keyframes flicker {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    animation: flicker 1s infinite;
+  }
+}
+.icon-bg
+{
+  background-color: #dbeafe;
+  padding: 4px;
+  border-radius: 3px;
+}
+.status-text-yellow
+{
+  color: #130e01 !important;
+  background-color: #fff3cd !important;
+  font-size: 0.70rem;
+  line-height: 1rem;
+  padding: 2px 3px;
+  border-radius: 3px;
+}
+.status-text-green
+{
+  color: #0f4723 !important;
+  background-color: #d1fae5 !important;
+  font-size: 0.70rem;
+  line-height: 1rem;
+  padding: 2px 3px;
+  border-radius: 3px;
+}
+
+
+.status-box {
+  color: #166534;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background-color: #f0fdfa;
+  padding: 2px 5px;
+  border: 1px solid #21a49340;
+  border-radius: 1px;
+}
+.post_items
+{
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}

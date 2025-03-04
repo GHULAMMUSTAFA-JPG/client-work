@@ -50,74 +50,77 @@ export function PostsList({
           Start New Post
         </button>
 
-        <div className="tw-space-y-3">
+        <div className="">
           {posts.map((post) => (
             <div
               key={post.id}
-              className="tw-rounded-lg tw-border tw-border-gray-200 tw-overflow-hidden tw-bg-white"
+              className="tw-overflow-hidden"
             >
               <button
                 onClick={() => onPostSelect(post.id)}
-                className={`tw-w-full tw-text-left tw-p-4 tw-transition-colors tw-duration-200 ${
+                className={`post-selected-box ${
                   selectedPostId === post.id
-                    ? "tw-bg-blue-50 tw-border-primary"
-                    : "hover:tw-bg-gray-50"
+                    ? "post-selected-box-active"
+                    : "hover:post-selected-box"
                 }`}
               >
-                <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
-                  <div className="tw-flex tw-items-center tw-space-x-3">
+                <div className="tw-flex tw-items-start tw-justify-between tw-mb-2">
+                  <div className="tw-flex tw-space-x-3 tw-items-start">
                     <span
-                      className={`tw-flex-shrink-0 tw-p-2 tw-rounded-full ${
-                        post.status === Status.InProgress
-                          ? "tw-bg-orange-50"
-                          : "tw-bg-gray-100"
-                      }`}
+                      className="icon-bg"
                     >
                       {getIcon(post.type)}
                     </span>
-                    <div>
-                      <h3 className="tw-text-sm tw-font-medium tw-text-gray-900">
+                    <div className="post_items">
+                      <h3 className="tw-text-sm tw-font-medium tw-text-gray-900 text-left">
                         {post.title}
                       </h3>
-                      <div className="tw-flex tw-items-center tw-mt-1">
-                        <span className="tw-text-sm tw-font-medium tw-text-green-600">
+                        <div className="tw-flex tw-justify-between tw-items-center tw-flex-col">
+                        <div className="fs-13 mt-1 fw-500 text-teal">
                           ${post.budget}
-                        </span>
-                      </div>
+                        </div>
+                        <div className="status-box">
+                          {campaignStatus}
+                        </div>
+                        </div>
+                       
                     </div>
                   </div>
-                  <span className={getStatusStyles(post.status)}>
+                  <span className="status-text-yellow">
                     {getStatusLabel(post.status)}
                   </span>
                 </div>
 
-                <div className="tw-mt-2">
-                  <span className={getCampaignStatusStyles(campaignStatus)}>
-                    {campaignStatus}
-                  </span>
-                </div>
+                <div className="d-flex justify-content-between items-center">
+                        <div className="d-flex items-center gap-2">
+                        <div className="d-flex align-items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-mouse-pointer "><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path><path d="m13 13 6 6"></path></svg><span className="fs-10">Click to select</span></div>
+                        </div>
+                        <div className="status-box">
+                        <button
+                  onClick={() => setViewingPost(post)}
+                  className="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-1 tw-text-xs tw-text-gray-600 hover:tw-text-gray-900"
+                >
+                  <Eye className="tw-w-3 tw-h-3 tw-mr-1" />
+
+                 View Details
+                </button>
+                        </div>
+                        </div>
+
+         
 
                 {post.status === Status.InProgress && (
-                  <div className="tw-mt-2 tw-p-2 tw-bg-orange-50 tw-rounded-md">
+                  <div className="tw-mt-2 tw-p-2">
                     <div className="tw-flex">
-                      <AlertTriangle className="tw-w-4 tw-h-4 tw-text-orange-400 tw-mt-0.5 tw-mr-2 tw-flex-shrink-0" />
-                      <p className="tw-text-xs tw-text-orange-700">
+                      <AlertTriangle className="" />
+                      <p className="">
                         Updates required. Click to view feedback.
                       </p>
                     </div>
                   </div>
                 )}
               </button>
-
-              <div className="tw-px-4 tw-py-2 tw-bg-gray-50 tw-border-t tw-border-gray-200">
-                <button
-                  onClick={() => setViewingPost(post)}
-                  className="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-1 tw-text-xs tw-text-gray-600 hover:tw-text-gray-900"
-                >
-                  <Eye className="tw-w-3 tw-h-3 tw-mr-1" />
-                  View Details
-                </button>
-              </div>
+     
             </div>
           ))}
         </div>
