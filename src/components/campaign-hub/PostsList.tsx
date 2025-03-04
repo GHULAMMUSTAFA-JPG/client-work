@@ -47,7 +47,7 @@ export function PostsList({
           className="tw-w-full tw-mb-4 tw-inline-flex tw-items-center tw-justify-center tw-px-4 tw-py-2 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-primary"
         >
           <Plus className="tw-w-4 tw-h-4 tw-mr-2" />
-          Create New Post
+          Start New Post
         </button>
 
         <div className="tw-space-y-3">

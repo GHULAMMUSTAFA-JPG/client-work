@@ -269,7 +269,7 @@ function CampaignHubContent() {
       <CampaignDrawer
         isOpen={isNewPostDrawerOpen}
         onClose={() => setIsNewPostDrawerOpen(false)}
-        title="Create New Post"
+        title="Start New Post"
         description="Create a new post for this campaign"
         type="post"
       />

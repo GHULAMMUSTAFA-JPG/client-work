@@ -98,13 +98,13 @@ export function CreatePostDrawer({
       />
 
       <div className="tw-fixed tw-inset-y-0 tw-right-0 tw-flex tw-max-w-full tw-pl-10">
-        <div className="tw-w-screen tw-max-w-md">
+        <div className="tw-w-screen tw-max-w-md w32rem">
           <div className="tw-flex tw-h-full tw-flex-col tw-bg-white tw-shadow-xl">
             {/* Header */}
             <div className="tw-px-6 tw-py-6 tw-border-b tw-border-gray-200">
               <div className="tw-flex tw-items-center tw-justify-between">
                 <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
-                  Create New Post
+                Finalize Your Post
                 </h2>
                 <button
                   onClick={onClose}
@@ -264,7 +264,7 @@ export function CreatePostDrawer({
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
                       <span>
-                        Due Date <span className="tw-text-red-500">*</span>
+                      Payout Date<span className="tw-text-red-500">*</span>
                       </span>
                       {fieldErrors.dueDate && (
                         <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
@@ -334,7 +334,7 @@ export function CreatePostDrawer({
                   onClick={handleSubmit}
                   className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark tw-rounded-md"
                 >
-                  Submit Proposal for Review
+                  Send Post for Brand Review
                 </button>
               </div>
             </div>

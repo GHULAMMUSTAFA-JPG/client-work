@@ -99,7 +99,7 @@ export const ProposalCard = ({
       </div>
       <div>
         <div className="mb-3">
-          <p className="text-secondary small">Post Title</p>
+          <p className="text-secondary small">Post Category</p>
           <p className="fw-medium">{postTitle}</p>
         </div>
 
@@ -126,7 +126,7 @@ export const ProposalCard = ({
             onClick={() => setIsRulesOpen(!isRulesOpen)}
             className="text-secondary w-100 text-start d-flex justify-content-between align-items-center p-0"
           >
-            <span className="fw-medium">Important Rules</span>
+            <span className="fw-medium">Post Description</span>
             {isRulesOpen ? (
               <ChevronUp style={{ width: "1rem", height: "1rem" }} />
             ) : (
