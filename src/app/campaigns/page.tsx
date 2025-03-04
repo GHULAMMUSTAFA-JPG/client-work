@@ -52,7 +52,7 @@ function Campaigns() {
                       aria-controls="active-campaigns"
                       aria-selected="true"
                     >
-                      Active Campaigns (
+                     Ongoing Campaigns (
                       {campaigns?.Activated_Campaigns?.length || 0})
                     </button>
                   </li>
@@ -67,7 +67,7 @@ function Campaigns() {
                       aria-controls="submitted-campaigns"
                       aria-selected="false"
                     >
-                      Submitted Campaigns (
+                      Submitted Applications (
                       {campaigns?.Submitted_Campaigns?.length || 0})
                     </button>
                   </li>

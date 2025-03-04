@@ -754,7 +754,10 @@ const AuthPage = () => {
                     className="SignIN-linkedINbtn mb-3 mt-3"
                     // disabled={loader}
                   >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-linkedin "><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+           <svg xmlns="http://www.w3.org/2000/svg" width="20.999" height="21" viewBox="0 0 20.999 21">
+  <path id="Icon_corebrands-linkedin-in" data-name="Icon corebrands-linkedin-in" d="M6.2,21H1.847V6.979H6.2ZM4.022,5.067A2.534,2.534,0,1,1,6.543,2.522,2.543,2.543,0,0,1,4.022,5.067ZM22.5,21H18.152V14.175c0-1.627-.033-3.713-2.264-3.713-2.264,0-2.611,1.767-2.611,3.6V21H8.928V6.979H13.1V8.892h.061a4.574,4.574,0,0,1,4.119-2.264c4.406,0,5.216,2.9,5.216,6.67V21Z" transform="translate(-1.5)" fill="#fff"/>
+</svg>
+
                     Continue with LinkedIn
                   </button>
                   <div className="fs-14 py-2 text-center">We use LinkedIn to verify your professional profile and gather campaign analytics.</div>

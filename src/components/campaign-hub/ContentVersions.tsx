@@ -69,7 +69,7 @@ export function ContentVersions({
     ) || [];
 
   return (
-    <div className="tw-p-6">
+    <div className="tw-p-6 tw-bg-blue-50">
       <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
         <div className="tw-flex tw-items-center tw-space-x-4">
           <h2 className="tw-text-lg tw-font-semibold">Content Versions</h2>

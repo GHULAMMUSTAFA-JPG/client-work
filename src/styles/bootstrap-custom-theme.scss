@@ -1511,9 +1511,13 @@ body {
   border-radius: 5px;
 }
 
+.w32rem
+{
+  max-width: 32rem !important;
+}
 .action_wrapper
 {
-  width: 400px;
+  width: 290px;
 }
 
 /* sidebar css */
