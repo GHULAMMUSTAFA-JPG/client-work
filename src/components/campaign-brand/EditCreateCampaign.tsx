@@ -553,7 +553,7 @@ function EditCreateCampaign({
                   {formData.mediaUrl && (
                     <>
                       <div className="position-relative">
-                        <Image
+                        <img
                           src={formData.mediaUrl}
                           width={100}
                           height={100}
