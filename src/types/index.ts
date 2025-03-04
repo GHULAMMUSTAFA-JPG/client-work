@@ -1,12 +1,16 @@
 export enum Status {
   PendingApproval = 1,
-  Approved,
-  Rejected,
-  InProgress,
-  Completed,
-  Published,
-  Paused,
-  Cancelled,
+  Approved = 2,
+  Rejected = 3,
+  InProgress = 4,
+  Completed = 5,
+  Published = 6,
+  Paused = 7,
+  Cancelled = 8,
+  Unpaid = 9,
+  Paid = 10,
+  PaymentProcessing = 11,
+  PostImpressionUploaded = 12,
 }
 export enum CampaignStatus {
   Draft = "Draft",

@@ -15,7 +15,7 @@ export const getStatusStyles = (status: Status) => {
     case Status.PendingApproval:
       return `${baseStyles} tw-bg-orange-100 tw-text-orange-800 tw-border tw-border-orange-200`;
     case Status.Approved:
-      return `${baseStyles} tw-bg-green-100 tw-text-green-800 tw-border tw-border-green-200`;
+      return `${baseStyles} tw-bg-yellow-100 tw-text-yellow-800 tw-border tw-border-yellow-200`;
     case Status.Rejected:
       return `${baseStyles} tw-bg-red-100 tw-text-red-800 tw-border tw-border-red-200`;
     case Status.InProgress:
@@ -62,9 +62,9 @@ export const getCampaignStatusStyles = (status: Status | CampaignStatus) => {
 export const getStatusLabel = (status: Status) => {
   switch (status) {
     case Status.PendingApproval:
-      return "Pending Feedback";
+      return "Awaiting Approval";
     case Status.Approved:
-      return "Approved to Publish";
+      return "Pending Feedback";
     case Status.Rejected:
       return "Rejected";
     case Status.InProgress:
@@ -77,6 +77,14 @@ export const getStatusLabel = (status: Status) => {
       return "Paused";
     case Status.Cancelled:
       return "Cancelled";
+    case Status.Unpaid:
+      return "Unpaid";
+    case Status.Paid:
+      return "Paid";
+    case Status.PaymentProcessing:
+      return "Payment Processing";
+    case Status.PostImpressionUploaded:
+      return "Post Impression Uploaded";
     default:
       return "Unknown Status";
   }

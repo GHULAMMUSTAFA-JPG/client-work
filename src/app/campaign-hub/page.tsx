@@ -52,23 +52,28 @@ function CampaignHubContent() {
       Status,
     } = post;
 
-    if (Content_Versions.length === 0) return 1;
     if (
-      Content_Versions.some(
-        (content: any) => content.Feedback && content.Feedback.length > 0
-      )
+      Content_Versions.length === 0 ||
+      Content_Versions.every((content: any) => content.Is_Draft === true)
+    ) {
+      return 1;
+    }
+    if (
+      Content_Versions.some((content: any) => content.Is_Draft == false) &&
+      Content_Versions.some((content: any) => content.Status === 1)
     )
       return 2;
+
+    if (Content_Versions.some((content: any) => content.Status === 2)) return 4;
     if (
-      Content_Versions.some((content: any) => content.Status === 1) ||
-      Status === 1
+      Content_Versions.some((content: any) => content.Status !== 2) &&
+      Content_Versions.some((content: any) => content.Status === 3)
     )
-      return 3;
+      return 9;
+    if (Live_Link) return 5;
 
-    if (Live_Link) return 4;
-    if (Impressions) return 5;
-
-    if (Payment && Payment.Status) return 6;
+    // if (Payment && Payment.Status) return 6;
+    if (Impressions) return 6;
     return 1;
   };
 
@@ -248,7 +253,7 @@ function CampaignHubContent() {
               creatorId={user.uuid}
               postId={selectedPostId}
               onSubmit={getCampaignPostsList}
-              canSubmit={selectedPost?.Status === Status.Approved}
+              canSubmit={true}
             />
           ) : (
             <EmptyState

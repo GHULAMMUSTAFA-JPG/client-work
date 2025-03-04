@@ -16,7 +16,7 @@ interface PostStage {
   label: string;
   description: string;
   value?: string | number;
-  status: "completed" | "pending" | "inactive";
+  status: "completed" | "pending" | "inactive" | "rejected";
   icon?: React.ReactNode;
 }
 
@@ -40,7 +40,7 @@ export function PostProgress({
   const [isLivePostDrawerOpen, setIsLivePostDrawerOpen] = useState(false);
   const [isImpressionsDrawerOpen, setIsImpressionsDrawerOpen] = useState(false);
   const [isPaymentDrawerOpen, setIsPaymentDrawerOpen] = useState(false);
-
+  console.log("currentStage", currentStage);
   const updatedStages = stages.map((stage) => {
     const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
     const thisStageIndex = stages.findIndex((s) => s.id === stage.id);
@@ -49,11 +49,13 @@ export function PostProgress({
       return { ...stage, status: "completed" as const };
     } else if (thisStageIndex === currentStageIndex) {
       return { ...stage, status: "pending" as const };
+    } else if (currentStage === 9 && thisStageIndex === currentStageIndex) {
+      return { ...stage, status: "rejected" as const };
     } else {
       return { ...stage, status: "inactive" as const };
     }
   });
-
+  console.log("updatedStages", updatedStages);
   const getStageIcon = (stage: PostStage) => {
     if (stage.icon) return stage.icon;
 
@@ -75,6 +77,13 @@ export function PostProgress({
 
   const getStageColor = (stage: PostStage, isHovered: boolean) => {
     switch (stage.status) {
+      case "rejected":
+        return {
+          bg: isHovered ? "tw-bg-blue-600" : "tw-bg-blue-500",
+          border: "tw-border-blue-500",
+          text: "tw-text-white",
+          line: "tw-bg-blue-500",
+        };
       case "completed":
         return {
           bg: isHovered ? "tw-bg-green-600" : "tw-bg-green-500",
