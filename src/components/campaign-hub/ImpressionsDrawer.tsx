@@ -5,10 +5,11 @@ import {
   Eye,
   MousePointer,
   Heart,
-  RefreshCw,
   AlertCircle,
   ExternalLink,
 } from "lucide-react";
+import { addCampaignPostImpressions } from "@/@api/campaign";
+import Link from "next/link";
 
 interface ImpressionsData {
   impressions: number;
@@ -22,14 +23,20 @@ interface ImpressionsDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   postId: string;
-  onSubmit: (data: ImpressionsData) => void;
+  campaignId: string;
+  creatorId: string;
+  onSubmit: () => void;
+  linkedinPostUrl: string;
 }
 
 export function ImpressionsDrawer({
   isOpen,
   onClose,
   postId,
+  campaignId,
+  creatorId,
   onSubmit,
+  linkedinPostUrl,
 }: ImpressionsDrawerProps) {
   const [impressionsData, setImpressionsData] = useState<ImpressionsData>({
     impressions: 0,
@@ -38,20 +45,48 @@ export function ImpressionsDrawer({
     comments: 0,
     shares: 0,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(impressionsData);
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      const response = await addCampaignPostImpressions({
+        campaign_id: campaignId,
+        creator_id: creatorId,
+        post_id: postId,
+        impressions: impressionsData.impressions,
+        clicks: impressionsData.clicks,
+        engagement_rate: impressionsData.engagement,
+        comments: impressionsData.comments,
+        shares: impressionsData.shares,
+      });
+
+      if (response) {
+        onSubmit();
+      }
+    } catch (error) {
+      setError("Failed to update post metrics");
+      console.error("Error updating post metrics:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (field: keyof ImpressionsData, value: string) => {
-    const numValue = parseFloat(value) || 0;
-    setImpressionsData((prev) => ({
-      ...prev,
-      [field]: numValue,
-    }));
+    // Only allow numeric input
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      const numValue = parseFloat(value) || 0;
+      setImpressionsData((prev) => ({
+        ...prev,
+        [field]: numValue,
+      }));
+    }
   };
 
   return (
@@ -89,29 +124,29 @@ export function ImpressionsDrawer({
                     <h3 className="tw-text-sm tw-font-medium tw-text-gray-900">
                       LinkedIn Post
                     </h3>
-                    <a
-                      href={`https://linkedin.com/post/${postId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="tw-text-sm tw-text-[#0A66C2] hover:tw-text-[#0A66C2]/80 tw-flex tw-items-center"
-                    >
-                      View Post
-                      <ExternalLink className="tw-w-4 tw-h-4 tw-ml-1" />
-                    </a>
+                    {linkedinPostUrl && (
+                      <Link
+                        href={linkedinPostUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="tw-text-sm tw-text-[#0A66C2] hover:tw-text-[#0A66C2]/80 tw-flex tw-items-center"
+                      >
+                        View Post
+                        <ExternalLink className="tw-w-4 tw-h-4 tw-ml-1" />
+                      </Link>
+                    )}
                   </div>
                   <div className="tw-flex tw-items-center tw-justify-between tw-text-sm tw-text-gray-500">
-                    <span>Post ID: {postId}</span>
-                    <button
-                      onClick={() => {
-                        /* Refresh metrics */
-                      }}
-                      className="tw-flex tw-items-center tw-text-[#0A66C2] hover:tw-text-[#0A66C2]/80"
-                    >
-                      <RefreshCw className="tw-w-4 tw-h-4 tw-mr-1" />
-                      Refresh Metrics
-                    </button>
+                    Post ID: {postId}
                   </div>
                 </div>
+
+                {error && (
+                  <div className="tw-mb-4 tw-p-3 tw-bg-red-50 tw-border tw-border-red-200 tw-rounded-md tw-text-red-600 tw-flex tw-items-start">
+                    <AlertCircle className="tw-w-5 tw-h-5 tw-mr-2 tw-flex-shrink-0 tw-mt-0.5" />
+                    <span>{error}</span>
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="tw-space-y-6">
                   {/* Metrics Grid */}
@@ -124,13 +159,13 @@ export function ImpressionsDrawer({
                         </div>
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         value={impressionsData.impressions}
                         onChange={(e) =>
                           handleInputChange("impressions", e.target.value)
                         }
                         className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]"
-                        min="0"
+                        inputMode="decimal"
                       />
                     </div>
 
@@ -142,13 +177,13 @@ export function ImpressionsDrawer({
                         </div>
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         value={impressionsData.clicks}
                         onChange={(e) =>
                           handleInputChange("clicks", e.target.value)
                         }
                         className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]"
-                        min="0"
+                        inputMode="decimal"
                       />
                     </div>
 
@@ -160,15 +195,13 @@ export function ImpressionsDrawer({
                         </div>
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         value={impressionsData.engagement}
                         onChange={(e) =>
                           handleInputChange("engagement", e.target.value)
                         }
                         className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]"
-                        min="0"
-                        max="100"
-                        step="0.01"
+                        inputMode="decimal"
                       />
                     </div>
 
@@ -177,13 +210,13 @@ export function ImpressionsDrawer({
                         Comments
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         value={impressionsData.comments}
                         onChange={(e) =>
                           handleInputChange("comments", e.target.value)
                         }
                         className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]"
-                        min="0"
+                        inputMode="decimal"
                       />
                     </div>
 
@@ -192,13 +225,13 @@ export function ImpressionsDrawer({
                         Shares
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         value={impressionsData.shares}
                         onChange={(e) =>
                           handleInputChange("shares", e.target.value)
                         }
                         className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]"
-                        min="0"
+                        inputMode="decimal"
                       />
                     </div>
                   </div>
@@ -241,9 +274,10 @@ export function ImpressionsDrawer({
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-green-500"
+                  disabled={isSubmitting}
+                  className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-green-500 disabled:tw-opacity-70"
                 >
-                  Update Metrics
+                  {isSubmitting ? "Updating..." : "Update Metrics"}
                 </button>
               </div>
             </div>

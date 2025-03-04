@@ -4,13 +4,11 @@ import { Suspense } from "react";
 
 import useForm from "@/hooks/useForm";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Loader from "@/components/loader";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
-import { url } from "inspector";
 import { apiController } from "@/@api/baseUrl";
 import { login, newLogin } from "@/@api";
 import { toast } from "react-toastify";
@@ -22,8 +20,12 @@ const AuthPage = () => {
     useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
-  const [forgotPasswordError, setForgotPasswordError] = useState<string | null>(null);
-  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<string | null>(null);
+  const [forgotPasswordError, setForgotPasswordError] = useState<string | null>(
+    null
+  );
+  const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<
+    string | null
+  >(null);
 
   const handleForgotPassword = async () => {
     setForgotPasswordError(null);
@@ -34,14 +36,21 @@ const AuthPage = () => {
     }
     try {
       setIsLoading(true);
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
-        email: forgotPasswordEmail,
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
+        {
+          email: forgotPasswordEmail,
+        }
+      );
       setIsLoading(false);
       if (response.status === 200) {
-        setForgotPasswordSuccess("Password reset link has been sent to your email");
+        setForgotPasswordSuccess(
+          "Password reset link has been sent to your email"
+        );
       } else {
-        setForgotPasswordError("Failed to send password reset link. Please try again later.");
+        setForgotPasswordError(
+          "Failed to send password reset link. Please try again later."
+        );
       }
     } catch (error) {
       setIsLoading(false);
@@ -49,13 +58,12 @@ const AuthPage = () => {
     }
   };
   const [loader, setLoader] = useState(false);
-  const [loginError, setLoginError] = useState<string | null>(null); // State to handle login errors
-  const [linkedInError, setLinkedInError] = useState<string | null>(null); // State for LinkedIn sign-in errors
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [linkedInError, setLinkedInError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const searchParams = useSearchParams();
   const codess = searchParams.get("code");
   const getToken = async (code: any) => {
-    // setIsLoading(true)
     const response = await apiController.get(
       `${process.env.NEXT_PUBLIC_API_URL}/linkedin/portal_generate_oauth_token?code=${code}`,
       {
@@ -64,7 +72,6 @@ const AuthPage = () => {
         },
       }
     );
-    console.log("Origin", window.location.origin);
     if (response.status == 200) {
       setIsLoading(false);
       const profileData = response?.data?.profile_data;
@@ -85,20 +92,14 @@ const AuthPage = () => {
         return;
       }
       loginUser(data);
-      // router.push("/dashboard");
     } else {
       setIsLoading(false);
     }
   };
 
-  // const queryParams = new URLSearchParams(window.location.search);
-  // const codess = queryParams.get('code');
-
-  // Form initial values and validation
   const initialValues = { email: "", password: "" };
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  // Form initial values and validation
   const signupInitialValues = {
     firstName: "",
     lastName: "",
@@ -174,24 +175,16 @@ const AuthPage = () => {
             email: values?.email,
             password: values?.password,
           });
-          // console.log("loginresponse", response);
           setLoader(false);
           if (response.data.subscription_status.requires_payment == true) {
             localStorage.setItem("id", response.data._id);
             localStorage.setItem("checkoutisbuyer", response?.data.isBuyer);
-            // console.log("isbuyer from email", data);
             const userData = response?.data;
-            // console.log("userData", userData);
             localStorage.setItem("user", JSON.stringify(response.data));
             setUser(userData);
-            // localStorage.setItem(
-            //   "user",
-            //   JSON.stringify(data?.session_response)
-            // );
             setIsAuthenticated(true);
             router.push("/stripe");
           } else if (response?.data) {
-            // Store subscription status in localStorage along with other user data
             const userData = {
               ...response.data,
               subscription_status: response.data.subscription_status,
@@ -199,12 +192,7 @@ const AuthPage = () => {
             loginUser(userData);
             localStorage.setItem("id", response?.data?._id);
             localStorage.setItem("checkoutisbuyer", response?.data?.isBuyer);
-            // Check if user is a buyer and handle subscription
             if (response.data.isBuyer) {
-              // console.log(
-              //   "Subscription status:",
-              //   response.data.subscription_status
-              // );
               if (
                 !response.data.subscription_status?.has_active_subscription &&
                 response.data.subscription_status?.requires_payment
@@ -214,11 +202,8 @@ const AuthPage = () => {
                 router.push("/homepagebuyer");
               }
             } else {
-              // Handle creator login
-
               router.push("/homepage");
             }
-            // toast.success("Login successful");
           } else {
             setIsLoading(false);
           }
@@ -256,34 +241,24 @@ const AuthPage = () => {
           );
 
           const data = await response.json();
-          console.log("data", data);
           if (data?.detail) {
             toast.warn(data?.detail);
           } else {
             localStorage.setItem("id", data?.data._id);
             localStorage.setItem("checkoutisbuyer", data?.data.isBuyer);
-            // console.log("isbuyer from email", data);
             const userData = data?.data.session_response;
-            // console.log("userData", userData);
             localStorage.setItem("user", JSON.stringify(userData));
             setUser(userData);
-            // localStorage.setItem(
-            //   "user",
-            //   JSON.stringify(data?.session_response)
-            // );
             setIsAuthenticated(true);
-            // loginUser(data);
             router.push("/stripe");
           }
           setLoader(false);
         }
       }
     } catch (error: any) {
-      console.error(isLogin ? "Login error:" : "Signup error:", error);
       setLoader(false);
 
       if (error.response?.status === 401) {
-        // setError("Incorrect email or password. Please try again.");
       } else {
         setError(
           error.response?.data?.message ||
@@ -310,7 +285,6 @@ const AuthPage = () => {
     setUserType(userType === "brand" ? "creator" : "brand");
     setError(null);
     setLinkedInError(null);
-    // Always set isLogin to true when switching to creator
     if (userType === "brand") {
       setIsLogin(true);
     }
@@ -321,26 +295,6 @@ const AuthPage = () => {
   }, [codess]);
 
   const signInWithLinkedIn = async (e: any) => {
-    // setIsLoading(true)
-    // e.preventDefault()
-    // // const result = await getAccessToken()
-    // // console.log(result,"token aagya")
-    // setLoader(true)
-    // const apiKey = '86kqbx17og1eeb';
-    // const redirectUri = 'https://synncportal.vercel.app/login';
-
-    // // Construct the URL for the request
-    // // const url = `https://www.linkedin.com/uas/oauth2/authorization?response_type=code` +
-    // //     `&client_id=${apiKey}` +
-    // //     `&scope=email%20openid%20profile` +
-    // //     `&redirect_uri=${redirectUri}`;
-
-    // const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=86kqbx17og1eeb&redirect_uri=${redirectUri}&state=foobar&scope=email%20openid%20profile`
-    // axios.get(url).then(response => {
-    //     console.log('Response Data:', response.data);
-    // }).catch(error => {
-    //     console.error('Error:', error.response ? error.response.data : error.message);
-    // });
     const redirectUri = `${window.location.origin}/login`;
     const clientId = "86kqbx17og1eeb";
     const state = "foobar";
@@ -351,12 +305,13 @@ const AuthPage = () => {
     window.location.href = authorizationUrl;
   };
 
-  function addClassToDiv(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+
+  function handleForgotPasswordClick(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ): void {
     event.preventDefault();
-    const forgetPasswordSection = document.querySelector('.forgetpasswordSection');
-    if (forgetPasswordSection) {
-      forgetPasswordSection.classList.add('showforgetpasswordSection');
-    }
+    setShowForgotPassword(true);
   }
 
   return codess ? (
@@ -382,7 +337,9 @@ const AuthPage = () => {
                 <div className="mb-4 tabs-box">
                   <button
                     className={`${
-                      userType === "creator" ? "btn-tab-selected" : "btn-tab-Nselected"
+                      userType === "creator"
+                        ? "btn-tab-selected"
+                        : "btn-tab-Nselected"
                     }`}
                     onClick={() => toggleUserType()}
                   >
@@ -390,7 +347,9 @@ const AuthPage = () => {
                   </button>
                   <button
                     className={` ${
-                      userType === "brand" ? "btn-tab-selected" : "btn-tab-Nselected"
+                      userType === "brand"
+                        ? "btn-tab-selected"
+                        : "btn-tab-Nselected"
                     }`}
                     onClick={() => toggleUserType()}
                   >
@@ -400,68 +359,121 @@ const AuthPage = () => {
 
                 {userType !== "creator" && isLogin && (
                   <div className="mb-4  forgetpasswordSection">
-                         <div className="back-to-login">
-                        <a onClick={() => {
-                        setIsLogin(true);
-                        const forgetPasswordSection = document.querySelector('.forgetpasswordSection');
-                        if (forgetPasswordSection) {
-                          forgetPasswordSection.classList.remove('showforgetpasswordSection');
-                        }
-                        }} className="Link-Txt fs-14 d-flex cursor">
-                        <Icon icon="material-symbols:arrow-back" className="me-2" width={20} height={20} />
+                    <div className="back-to-login">
+                      <a
+                        onClick={() => {
+                          setIsLogin(true);
+                          const forgetPasswordSection = document.querySelector(
+                            ".forgetpasswordSection"
+                          );
+                          if (forgetPasswordSection) {
+                            forgetPasswordSection.classList.remove(
+                              "showforgetpasswordSection"
+                            );
+                          }
+                        }}
+                        className="Link-Txt fs-14 d-flex cursor"
+                      >
+                        <Icon
+                          icon="material-symbols:arrow-back"
+                          className="me-2"
+                          width={20}
+                          height={20}
+                        />
                         Back to Sign In
-                        </a>
+                      </a>
                     </div>
                     <div className="content-area text-center">
-             
-                  <h1 className="headingtxt mt-5 mb-3">Reset Your Password</h1>
-                  <div className="sub-headingtxt text-center mb-4">Check your email for a link to reset your password.</div>
-                  <input
-                    type="email"
-                    name="forgotPasswordEmail"
-                    placeholder="Enter your email"
-                    className={`form-control ${forgotPasswordError ? "is-invalid" : ""}`}
-                    value={forgotPasswordEmail}
-                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                  />
-                  {forgotPasswordError && (
-                    <div className="invalid-feedback">{forgotPasswordError}</div>
-                  )}
-                  {forgotPasswordSuccess && (
-                    <div className="alert alert-success py-2 small mt-2" role="alert">
-                      {forgotPasswordSuccess}
+                      <h1 className="headingtxt mt-5 mb-3">
+                        Reset Your Password
+                      </h1>
+                      <div className="sub-headingtxt text-center mb-4">
+                        Check your email for a link to reset your password.
+                      </div>
+                      <input
+                        type="email"
+                        name="forgotPasswordEmail"
+                        placeholder="Enter your email"
+                        className={`form-control ${
+                          forgotPasswordError ? "is-invalid" : ""
+                        }`}
+                        value={forgotPasswordEmail}
+                        onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                      />
+                      {forgotPasswordError && (
+                        <div className="invalid-feedback">
+                          {forgotPasswordError}
+                        </div>
+                      )}
+                      {forgotPasswordSuccess && (
+                        <div
+                          className="alert alert-success py-2 small mt-2"
+                          role="alert"
+                        >
+                          {forgotPasswordSuccess}
+                        </div>
+                      )}
+                      <button
+                        type="button"
+                        className="SignIN-btn mb-3 mt-3"
+                        onClick={handleForgotPassword}
+                      >
+                        Send Reset Link
+                      </button>
+                      {forgotPasswordSuccess && (
+                        <div
+                          className="alert alert-success py-2 small mt-2"
+                          role="alert"
+                          style={{
+                            backgroundColor: "#f0fdfa",
+                            border: "1px solid  #99f6e4",
+                          }}
+                        >
+                          <div className="resetpassword-content">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              className="lucide lucide-mail text-teal-500 mr-3 mt-0.5 flex-shrink-0"
+                            >
+                              <rect
+                                width="20"
+                                height="16"
+                                x="2"
+                                y="4"
+                                rx="2"
+                              ></rect>
+                              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                            </svg>
+                            <div className="result-contentbox">
+                              <p>Email Sent</p>
+                              <p>
+                                We've sent a password reset link to your email
+                                address. Please check your inbox and follow the
+                                instructions to reset your password.
+                              </p>
+                              <p>
+                                Didn't receive an email? Check your spam folder
+                                or try again.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                    <button
-                    type="button"
-                    className="SignIN-btn mb-3 mt-3"
-                    onClick={handleForgotPassword}
-                    >
-                    Send Reset Link
-                    </button>
-                    {forgotPasswordSuccess && (
-                    <div className="alert alert-success py-2 small mt-2" role="alert" style={{ backgroundColor: '#f0fdfa', border: '1px solid  #99f6e4' }}>
-                      <div className="resetpassword-content">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-mail text-teal-500 mr-3 mt-0.5 flex-shrink-0"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                     <div className="result-contentbox">
-                     <p>Email Sent</p>
-                      <p>We've sent a password reset link to your email address. Please check your inbox and follow the instructions to reset your password.</p>
-                      <p>Didn't receive an email? Check your spam folder or try again.</p>
-                     </div>
-                     </div>
-                    </div>
-                    )}
-                </div></div>
-              )}
-
-
-
+                  </div>
+                )}
 
                 <h1 className="headingtxt mt-5 mb-3">
                   {userType === "brand" ? "Brand" : "Creator"} Sign{" "}
                   {userType === "creator" || isLogin ? "In" : "Up"}
                 </h1>
-   
               </div>
 
               {error && (
@@ -476,291 +488,350 @@ const AuthPage = () => {
                 </div>
               )}
 
-
-
               {userType !== "creator" && (
-            
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-
-                    handleSubmit(e, handleAuth);
-                  }}
-                >
-                   <div className="sub-headingtxt text-center mb-4">
-                   {isLogin
-                        ? "Find and hire top LinkedIn creators to grow your business."
-                        : userType === "brand"
-                        ? "Ready to connect with LinkedIn influencers? Set up your brand account below."
-                        : "Email"}
-                      {!isLogin && userType === "brand"}
-                                     
-                    </div>
-                  {!isLogin && (
-                    <>
-                      <div className="row mb-3">
-                        <div className="col-6">
-                          <label
-                            htmlFor="first_name"
-                            className="form-label fs-14"
-                          >
-                            First Name
-                          </label>
-                          <input
-                            type="text"
-                            name="first_name"
-                            placeholder="Enter your first name"
-                            className={`form-control ${
-                              errors.first_name ? "is-invalid" : ""
-                            }`}
-                            value={values.first_name || ""}
-                            onChange={handleChange}
+                <>
+                  {showForgotPassword ? (
+                    <div className="content-area text-center">
+                      <div className="back-to-login">
+                        <a
+                          onClick={() => setShowForgotPassword(false)}
+                          className="Link-Txt fs-14 d-flex cursor"
+                        >
+                          <Icon
+                            icon="material-symbols:arrow-back"
+                            className="me-2"
+                            width={20}
+                            height={20}
                           />
-                          {errors.first_name && (
-                            <div className="invalid-feedback">
-                              {errors.first_name}
-                            </div>
-                          )}
-                        </div>
-                        <div className="col-6">
-                          <label
-                            htmlFor="last_name"
-                            className="form-label fs-14"
-                          >
-                            Last Name
-                          </label>
-                          <input
-                            type="text"
-                            name="last_name"
-                            placeholder="Enter your last name"
-                            className={`form-control ${
-                              errors.last_name ? "is-invalid" : ""
-                            }`}
-                            value={values.last_name || ""}
-                            onChange={handleChange}
-                          />
-                          {errors.last_name && (
-                            <div className="invalid-feedback">
-                              {errors.last_name}
-                            </div>
-                          )}
-                        </div>
+                          Back to Sign In
+                        </a>
                       </div>
+                      <h1 className="headingtxt mt-5 mb-3">
+                        Reset Your Password
+                      </h1>
+                      <div className="sub-headingtxt text-center mb-4">
+                        Check your email for a link to reset your password.
+                      </div>
+                      <input
+                        type="email"
+                        name="forgotPasswordEmail"
+                        placeholder="Enter your email"
+                        className={`form-control ${
+                          forgotPasswordError ? "is-invalid" : ""
+                        }`}
+                        value={forgotPasswordEmail}
+                        onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                      />
+                      {forgotPasswordError && (
+                        <div className="invalid-feedback">
+                          {forgotPasswordError}
+                        </div>
+                      )}
+                      {forgotPasswordSuccess && (
+                        <div
+                          className="alert alert-success py-2 small mt-2"
+                          role="alert"
+                        >
+                          {forgotPasswordSuccess}
+                        </div>
+                      )}
+                      <button
+                        type="button"
+                        className="SignIN-btn mb-3 mt-3"
+                        onClick={handleForgotPassword}
+                      >
+                        Send Reset Link
+                      </button>
+                    </div>
+                  ) : (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit(e, handleAuth);
+                      }}
+                    >
+                      <div className="sub-headingtxt text-center mb-4">
+                        {isLogin
+                          ? "Find and hire top LinkedIn creators to grow your business."
+                          : userType === "brand"
+                          ? "Ready to connect with LinkedIn influencers? Set up your brand account below."
+                          : "Email"}
+                        {!isLogin && userType === "brand"}
+                      </div>
+                      {!isLogin && (
+                        <>
+                          <div className="row mb-3">
+                            <div className="col-6">
+                              <label
+                                htmlFor="first_name"
+                                className="form-label fs-14"
+                              >
+                                First Name
+                              </label>
+                              <input
+                                type="text"
+                                name="first_name"
+                                placeholder="Enter your first name"
+                                className={`form-control ${
+                                  errors.first_name ? "is-invalid" : ""
+                                }`}
+                                value={values.first_name || ""}
+                                onChange={handleChange}
+                              />
+                              {errors.first_name && (
+                                <div className="invalid-feedback">
+                                  {errors.first_name}
+                                </div>
+                              )}
+                            </div>
+                            <div className="col-6">
+                              <label
+                                htmlFor="last_name"
+                                className="form-label fs-14"
+                              >
+                                Last Name
+                              </label>
+                              <input
+                                type="text"
+                                name="last_name"
+                                placeholder="Enter your last name"
+                                className={`form-control ${
+                                  errors.last_name ? "is-invalid" : ""
+                                }`}
+                                value={values.last_name || ""}
+                                onChange={handleChange}
+                              />
+                              {errors.last_name && (
+                                <div className="invalid-feedback">
+                                  {errors.last_name}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="mb-3">
+                            <label
+                              htmlFor="company_name"
+                              className="form-label fs-14"
+                            >
+                              Company Name
+                            </label>
+                            <input
+                              type="text"
+                              name="company_name"
+                              placeholder="Enter your company name"
+                              className={`form-control ${
+                                errors.company_name ? "is-invalid" : ""
+                              }`}
+                              value={values.company_name || ""}
+                              onChange={handleChange}
+                            />
+                            {errors.company_name && (
+                              <div className="invalid-feedback">
+                                {errors.company_name}
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      )}
 
                       <div className="mb-3">
                         <label
-                          htmlFor="company_name"
+                          htmlFor={isLogin ? "email" : "email"}
                           className="form-label fs-14"
                         >
-                          Company Name
+                          {isLogin
+                            ? "Email"
+                            : userType === "brand"
+                            ? "Company Email"
+                            : "Email"}
+                          {!isLogin && userType === "brand"}
                         </label>
                         <input
-                          type="text"
-                          name="company_name"
-                          placeholder="Enter your company name"
+                          type="email"
+                          name={"email"}
+                          placeholder={
+                            isLogin
+                              ? "Enter your email"
+                              : userType === "brand"
+                              ? "Enter your company email"
+                              : "Enter your email"
+                          }
                           className={`form-control ${
-                            errors.company_name ? "is-invalid" : ""
+                            errors[isLogin ? "email" : "email"]
+                              ? "is-invalid"
+                              : ""
                           }`}
-                          value={values.company_name || ""}
+                          value={values[isLogin ? "email" : "email"] || ""}
                           onChange={handleChange}
                         />
-                        {errors.company_name && (
+                        {errors[isLogin ? "email" : "email"] && (
                           <div className="invalid-feedback">
-                            {errors.company_name}
+                            {errors[isLogin ? "email" : "email"]}
                           </div>
                         )}
                       </div>
-                    </>
-                  )}
-    
-                     
 
-                  <div className="mb-3">
-                    
-                    <label
-                      htmlFor={isLogin ? "email" : "email"}
-                      className="form-label fs-14"
-                    >
-                      {isLogin
-                        ? "Email"
-                        : userType === "brand"
-                        ? "Company Email"
-                        : "Email"}
-                      {!isLogin && userType === "brand"}
-                    </label>
-                    <input
-                      type="email"
-                      name={"email"}
-                      placeholder={
-                        isLogin
-                          ? "Enter your email"
-                          : userType === "brand"
-                          ? "Enter your company email"
-                          : "Enter your email"
-                      }
-                      className={`form-control ${
-                        errors[isLogin ? "email" : "email"] ? "is-invalid" : ""
-                      }`}
-                      value={values[isLogin ? "email" : "email"] || ""}
-                      onChange={handleChange}
-                    />
-                    {errors[isLogin ? "email" : "email"] && (
-                      <div className="invalid-feedback">
-                        {errors[isLogin ? "email" : "email"]}
-                      </div>
-                    )}
-                  </div>
-
-                  {!isLogin && (
-                    <div className="mb-3">
-                      <label
-                        htmlFor="company_website"
-                        className="form-label fs-14"
-                      >
-                        Company Website
-                      </label>
-                      <div className="input-group">
-                        <span className="input-group-text fs-14">https://</span>
-                        <input
-                          type="text"
-                          name="company_website"
-                          placeholder="Enter your company website"
-                          className={`form-control ${
-                            errors.company_website ? "is-invalid" : ""
-                          }`}
-                          value={values.company_website || ""}
-                          onChange={handleChange}
-                        />
-                        {errors.company_website && (
-                          <div className="invalid-feedback">
-                            {errors.company_website}
+                      {!isLogin && (
+                        <div className="mb-3">
+                          <label
+                            htmlFor="company_website"
+                            className="form-label fs-14"
+                          >
+                            Company Website
+                          </label>
+                          <div className="input-group">
+                            <span className="input-group-text fs-14">
+                              https://
+                            </span>
+                            <input
+                              type="text"
+                              name="company_website"
+                              placeholder="Enter your company website"
+                              className={`form-control ${
+                                errors.company_website ? "is-invalid" : ""
+                              }`}
+                              value={values.company_website || ""}
+                              onChange={handleChange}
+                            />
+                            {errors.company_website && (
+                              <div className="invalid-feedback">
+                                {errors.company_website}
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="mb-4">
-                    <div className="d-flex justify-content-between align-items-center">
-                    <label htmlFor="password" className="form-label fs-14">
-                      Password
-                      {!isLogin}
-                    </label>
-                    <a
-                      className="Link-Txt fs-14 cursor mb-2"
-                      onClick={addClassToDiv}
-                    >
-                      Forgot password?
-                    </a>
-                      </div>
-                    <div className="position-relative">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        placeholder={
-                          isLogin ? "Enter your password" : "Create a password"
-                        }
-                        className={`form-control ${
-                          errors.password ? "is-invalid" : ""
-                        }`}
-                        value={values.password || ""}
-                        onChange={handleChange}
-                      />
-                      {!showPassword ? (
-                        <Icon
-                          icon="solar:eye-outline"
-                          width={20}
-                          height={20}
-                          className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
-                          onClick={() => setShowPassword(true)}
-                        />
-                      ) : (
-                        <Icon
-                          icon="mage:eye-off"
-                          width={20}
-                          height={20}
-                          className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
-                          onClick={() => setShowPassword(false)}
-                        />
-                      )}
-                      {errors.password && (
-                        <div className="invalid-feedback">
-                          {errors.password}
                         </div>
                       )}
-                    </div>
-                  </div>
 
-                  <button
-                    type="submit"
-                    className="SignIN-btn mb-3 mt-3"
-                    disabled={loader}
-                  >
-                    {loader
-                      ? isLogin
-                        ? "Signing In..."
-                        : "Creating Account..."
-                      : isLogin
-                      ? "Sign In"
-                      : "Create an Account"}
-                    <Icon
-                      icon="material-symbols:arrow-forward"
-                      className="ms-2"
-                      width={20}
-                      height={20}
-                    />
-                  </button>
+                      <div className="mb-4">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <label
+                            htmlFor="password"
+                            className="form-label fs-14"
+                          >
+                            Password
+                            {!isLogin}
+                          </label>
+                          <a
+                            className="Link-Txt fs-14 cursor mb-2"
+                            onClick={handleForgotPasswordClick}
+                          >
+                            Forgot password?
+                          </a>
+                        </div>
+                        <div className="position-relative">
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder={
+                              isLogin
+                                ? "Enter your password"
+                                : "Create a password"
+                            }
+                            className={`form-control ${
+                              errors.password ? "is-invalid" : ""
+                            }`}
+                            value={values.password || ""}
+                            onChange={handleChange}
+                          />
+                          {!showPassword ? (
+                            <Icon
+                              icon="solar:eye-outline"
+                              width={20}
+                              height={20}
+                              className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
+                              onClick={() => setShowPassword(true)}
+                            />
+                          ) : (
+                            <Icon
+                              icon="mage:eye-off"
+                              width={20}
+                              height={20}
+                              className="position-absolute top-50 end-0 translate-middle-y me-3 cursor text-secondary"
+                              onClick={() => setShowPassword(false)}
+                            />
+                          )}
+                          {errors.password && (
+                            <div className="invalid-feedback">
+                              {errors.password}
+                            </div>
+                          )}
+                        </div>
+                      </div>
 
-                  <div className="text-center mb-3 mt-3 d-flex justify-content-center align-items-center gap-1">
-                    <span className="text-muted small fs-14">
-                      {isLogin
-                        ? "Need an account as a Brand? "
-                        : isLogin
-                        ? "Don't have an account? "
-                        : "Have an account? "}
-                    </span>
-                    <span
-                      onClick={toggleAuthMode}
-                      className="Link-Txt fs-14 cursor"
-                    >
-                      {isLogin ? "Sign up" : "Sign in"}
-                    </span>
-                  </div>
+                      <button
+                        type="submit"
+                        className="SignIN-btn mb-3 mt-3"
+                        disabled={loader}
+                      >
+                        {loader
+                          ? isLogin
+                            ? "Signing In..."
+                            : "Creating Account..."
+                          : isLogin
+                          ? "Sign In"
+                          : "Create an Account"}
+                        <Icon
+                          icon="material-symbols:arrow-forward"
+                          className="ms-2"
+                          width={20}
+                          height={20}
+                        />
+                      </button>
 
-                  {/* <hr className="my-4 text-warning" /> */}
-
-                  {/* <div className="text-center">
-                                <div className="d-flex justify-content-center gap-3 small text-muted">
-                                    <a href="#" className="text-decoration-none text-muted">Terms of service</a>
-                                    <span>•</span>
-                                    <a href="#" className="text-decoration-none text-muted">Privacy policy</a>
-                                </div>
-                            </div> */}
-                </form>
+                      <div className="text-center mb-3 mt-3 d-flex justify-content-center align-items-center gap-1">
+                        <span className="text-muted small fs-14">
+                          {isLogin
+                            ? "Need an account as a Brand? "
+                            : isLogin
+                            ? "Don't have an account? "
+                            : "Have an account? "}
+                        </span>
+                        <span
+                          onClick={toggleAuthMode}
+                          className="Link-Txt fs-14 cursor"
+                        >
+                          {isLogin ? "Sign up" : "Sign in"}
+                        </span>
+                      </div>
+                    </form>
+                  )}
+                </>
               )}
 
               {userType === "creator" && (
                 <>
-                 <div className="sub-headingtxt text-center mb-4" role="alert">Showcase your LinkedIn influence and earn through brand collaborations.</div>
+                  <div className="sub-headingtxt text-center mb-4" role="alert">
+                    Showcase your LinkedIn influence and earn through brand
+                    collaborations.
+                  </div>
                   <button
                     type="button"
                     onClick={(e: any) => {
-                      // setLoader(true);
                       signInWithLinkedIn(e);
-                      // Here you would typically initiate LinkedIn OAuth flow
-                      // For example:
-                      // window.location.href = 'your-linkedin-oauth-url'
                     }}
                     className="SignIN-linkedINbtn mb-3 mt-3"
-                    // disabled={loader}
                   >
-           <svg xmlns="http://www.w3.org/2000/svg" width="20.999" height="21" viewBox="0 0 20.999 21">
-  <path id="Icon_corebrands-linkedin-in" data-name="Icon corebrands-linkedin-in" d="M6.2,21H1.847V6.979H6.2ZM4.022,5.067A2.534,2.534,0,1,1,6.543,2.522,2.543,2.543,0,0,1,4.022,5.067ZM22.5,21H18.152V14.175c0-1.627-.033-3.713-2.264-3.713-2.264,0-2.611,1.767-2.611,3.6V21H8.928V6.979H13.1V8.892h.061a4.574,4.574,0,0,1,4.119-2.264c4.406,0,5.216,2.9,5.216,6.67V21Z" transform="translate(-1.5)" fill="#fff"/>
-</svg>
-
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20.999"
+                      height="21"
+                      viewBox="0 0 20.999 21"
+                    >
+                      <path
+                        id="Icon_corebrands-linkedin-in"
+                        data-name="Icon corebrands-linkedin-in"
+                        d="M6.2,21H1.847V6.979H6.2ZM4.022,5.067A2.534,2.534,0,1,1,6.543,2.522,2.543,2.543,0,0,1,4.022,5.067ZM22.5,21H18.152V14.175c0-1.627-.033-3.713-2.264-3.713-2.264,0-2.611,1.767-2.611,3.6V21H8.928V6.979H13.1V8.892h.061a4.574,4.574,0,0,1,4.119-2.264c4.406,0,5.216,2.9,5.216,6.67V21Z"
+                        transform="translate(-1.5)"
+                        fill="#fff"
+                      />
+                    </svg>
                     Continue with LinkedIn
                   </button>
-                  <div className="fs-14 py-2 text-center">We use LinkedIn to verify your professional profile and gather campaign analytics.</div>
+                  <div className="fs-14 py-2 text-center">
+                    We use LinkedIn to verify your professional profile and
+                    gather campaign analytics.
+                  </div>
                   <div className="text-center mb-3 mt-3 d-flex justify-content-center align-items-center gap-1">
                     <span className="text-muted small fs-14">
                       {isLogin
@@ -778,12 +849,17 @@ const AuthPage = () => {
                   </div>
                 </>
               )}
-                <div className="footer-pannel fs-12 text-center">
+              <div className="footer-pannel fs-12 text-center">
                 By signing in, you agree to our &nbsp;
-                <a href="/terms" className="Link-Txt fs-14 cursor">Terms</a> 
-                &nbsp; and  &nbsp;
-                <a href="/privacy" className="Link-Txt fs-14 cursor">Privacy Policy</a>.
-                </div>
+                <a href="/terms" className="Link-Txt fs-14 cursor">
+                  Terms
+                </a>
+                &nbsp; and &nbsp;
+                <a href="/privacy" className="Link-Txt fs-14 cursor">
+                  Privacy Policy
+                </a>
+                .
+              </div>
             </div>
           </div>
         </div>

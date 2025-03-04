@@ -22,35 +22,48 @@ export function LivePostDrawer({
 }: LivePostDrawerProps) {
   const [postUrl, setPostUrl] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
 
     if (!postUrl) {
       setError("Please enter a valid LinkedIn post URL");
+      setIsSubmitting(false);
       return;
     }
 
     if (!postUrl.includes("linkedin.com")) {
       setError("Please enter a valid LinkedIn post URL");
+      setIsSubmitting(false);
       return;
     }
 
-    const response = await addCampaignLiveLink({
-      campaign_id: campaignId,
-      creator_id: creatorId,
-      post_id: postId,
-      live_link: postUrl,
-    });
-    if (response) {
-      toast.success("LinkedIn post URL submitted successfully");
-    }
+    try {
+      const response = await addCampaignLiveLink({
+        campaign_id: campaignId,
+        creator_id: creatorId,
+        post_id: postId,
+        live_link: postUrl,
+      });
 
-    onSubmit();
-    setPostUrl("");
-    setError("");
+      if (response) {
+        onSubmit();
+        setPostUrl("");
+        setError("");
+      } else {
+        setError("Failed to submit LinkedIn post URL");
+      }
+    } catch (error) {
+      setError("An error occurred while submitting the post URL");
+      console.error("Error submitting post URL:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -147,9 +160,10 @@ export function LivePostDrawer({
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-green-500"
+                  disabled={isSubmitting}
+                  className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-green-500 disabled:tw-opacity-70"
                 >
-                  Submit Post Link
+                  {isSubmitting ? "Submitting..." : "Submit Post Link"}
                 </button>
               </div>
             </div>

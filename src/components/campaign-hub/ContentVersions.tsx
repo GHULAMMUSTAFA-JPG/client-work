@@ -73,23 +73,25 @@ export function ContentVersions({
       <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
         <div className="tw-flex tw-items-center tw-space-x-4">
           <h2 className="tw-text-lg tw-font-semibold">Content Versions</h2>
-          <div className="tw-flex tw-items-center tw-space-x-2">
-            <select
-              value={statusFilter}
-              onChange={(e) =>
-                setStatusFilter(
-                  e.target.value as "all" | keyof typeof statusFilterMap
-                )
-              }
-              className="tw-block tw-pl-3 tw-pr-10 tw-py-2 tw-text-base tw-border-gray-300 focus:tw-outline-none focus:tw-ring-primary focus:tw-border-primary tw-sm:text-sm tw-rounded-md"
-            >
-              <option value="all">All Versions</option>
-              <option value="approved">Approved</option>
-              <option value="pending">Pending</option>
-              <option value="draft">Draft</option>
-              <option value="rejected">Rejected</option>
-            </select>
-          </div>
+          {!!versions.length && (
+            <div className="tw-flex tw-items-center tw-space-x-2">
+              <select
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(
+                    e.target.value as "all" | keyof typeof statusFilterMap
+                  )
+                }
+                className="tw-block tw-pl-3 tw-pr-10 tw-py-2 tw-text-base tw-border-gray-300 focus:tw-outline-none focus:tw-ring-primary focus:tw-border-primary tw-sm:text-sm tw-rounded-md"
+              >
+                <option value="all">All Versions</option>
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+                <option value="draft">Draft</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+          )}
         </div>
         <button
           onClick={() => setIsCreatePostDrawerOpen(true)}
