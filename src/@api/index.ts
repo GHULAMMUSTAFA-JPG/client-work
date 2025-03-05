@@ -129,7 +129,7 @@ export const fetchBuyerDiscoveryData = async (
   }
   try {
     const response: any = await apiController.get(
-      `/dashboard/buyers/discover_creators/?email=${email}&search_query=${query}`
+      `/dashboard/buyers/discover_creators?email=${email}&search_query=${query}`
     );
 
     setIsLoading(false);
