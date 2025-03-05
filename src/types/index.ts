@@ -63,6 +63,7 @@ export interface Campaign {
 }
 
 export interface Post {
+  numberstatus: number;
   id: string;
   title: string;
   date: string;

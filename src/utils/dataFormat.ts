@@ -35,7 +35,9 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
   if (!posts || !Array.isArray(posts)) return [];
 
   return posts.map((post) => ({
+    numberstatus: post.Status,
     id: post._id,
+
     title: post.Post_Title || "Untitled",
     date: post.Submission_Date || "",
     status: mapStatus(post.Status),
@@ -270,8 +272,12 @@ export const extractCampaignFormData = (data: any) => {
 
 export const getCurrentPostStage = (post: any): number => {
   const { Content_Versions = [], Live_Link, Impressions } = post;
+  console.log(Impressions);
+  if (Impressions) {
+    console.log("impression found");
+    return 6;
+  }
   if (Live_Link) return 5;
-  if (Impressions) return 6;
 
   if (
     Content_Versions.length === 0 ||

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   X,
   DollarSign,
@@ -10,6 +10,8 @@ import {
   ExternalLink,
   Download,
 } from "lucide-react";
+import { apiController } from "@/@api/baseUrl";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface PaymentStatus {
   status: "pending" | "processing" | "completed" | "failed";
@@ -34,7 +36,32 @@ export function PaymentStatusDrawer({
   status,
 }: PaymentStatusDrawerProps) {
   if (!isOpen) return null;
+  const { user } = useAuth();
+  const [charges_enabled, setcharges_enabled] = useState(null);
+  const [onboarding_status, setonboarding_status] = useState(null);
+  const [checksloading, setchecksloading] = useState(false);
 
+  useEffect(() => {
+    const fetchAccountStatus = async () => {
+      try {
+        setchecksloading(true);
+        const response = await apiController.get(
+          `/payments/${user?.uuid}/account-status`
+        );
+        console.log("status", response);
+        if (response.status === 200) {
+          setcharges_enabled(response.data.charges_enabled);
+          setonboarding_status(response.data.onboarding_status);
+          setchecksloading(false);
+        }
+      } catch (error) {
+        setchecksloading(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAccountStatus();
+  }, []);
   const getStatusInfo = () => {
     switch (status.status) {
       case "completed":
@@ -114,7 +141,23 @@ export function PaymentStatusDrawer({
                     </div>
                   </div>
                 </div>
-
+                {charges_enabled !== false && onboarding_status !== false && (
+                  <div
+                    className={`tw-p-4 tw-rounded-lg tw-text-red-700 tw-bg-red-50 tw-border-red-200`}
+                  >
+                    <div className="tw-flex tw-items-start">
+                      {statusInfo.icon}
+                      <div className="tw-ml-3">
+                        <h3 className="tw-text-sm tw-font-medium">
+                          Stripe needs to be connected
+                        </h3>
+                        <p className="tw-mt-1 tw-text-sm">
+                          Visit settings to connect your Stripe account
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 {/* Payment Details */}
                 <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4 tw-space-y-4">
                   <h3 className="tw-text-sm tw-font-medium tw-text-gray-900">

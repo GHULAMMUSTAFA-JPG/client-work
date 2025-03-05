@@ -16,6 +16,7 @@ import Tooltip from "./Tooltip";
 import { useRouter } from "next/navigation";
 import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
 import { toast } from "react-toastify";
+import { apiController } from "@/@api/baseUrl";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -37,6 +38,22 @@ export function CreatorDetailView({
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
     null
   );
+  console.log("selectedContent", selectedContent);
+  console.log("selectedPost", selectedPost);
+  const handleProcessPaymentCheckout = async () => {
+    try {
+      const result = await apiController.post(
+        `/payments/create-checkout-session`,
+        { creator_id: creator.id, post_id: selectedPost?.id }
+      );
+      console.log("result", result);
+      if (result.status === 200) {
+        window.open(result.data.checkout_url, "_blank");
+      }
+    } catch (error) {
+      toast.error("An error occurred while processing payment.");
+    }
+  };
   const router = useRouter();
 
   const handleViewContent = (content: ContentItem) => {
@@ -273,8 +290,26 @@ export function CreatorDetailView({
                           Approve
                         </button>
                       )}
-                      {creator.paymentStatus !== "paid" && (
-                        <button className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2">
+                      {/* {creator.paymentStatus !== "paid" && (
+                        <button  className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2">
+                          <DollarSign className="tw-w-4 tw-h-4" />
+                          Process Payment
+                        </button>
+                      )} */}
+
+                      {selectedPost.numberstatus === 12 ? (
+                        <button
+                          onClick={() => handleProcessPaymentCheckout()}
+                          className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2"
+                        >
+                          <DollarSign className="tw-w-4 tw-h-4" />
+                          Process Payment
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                        >
                           <DollarSign className="tw-w-4 tw-h-4" />
                           Process Payment
                         </button>

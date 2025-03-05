@@ -95,6 +95,8 @@ function CampaignDetailsContent() {
 
   useEffect(() => {
     if (campaignActiveCreatorsData && creatorParam) {
+      // console.log("campaignActiveCreatorsData", campaignActiveCreatorsData);
+
       let creator = null;
 
       if (campaignActiveCreatorsData?.Active_Creators) {
@@ -102,6 +104,7 @@ function CampaignDetailsContent() {
           (c: any) => c.Creator_ID === creatorParam
         );
         if (activeCreator) {
+          console.log("activeCreator", activeCreator);
           creator = createCreatorFromData(activeCreator);
         }
       }
