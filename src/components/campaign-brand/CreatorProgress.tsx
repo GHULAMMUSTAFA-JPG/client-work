@@ -1,6 +1,6 @@
 import React from "react";
 import { MessageSquare, ExternalLink } from "lucide-react";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Tooltip";
 import { Creator } from "@/types";
 
 interface CreatorProgressProps {

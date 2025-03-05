@@ -6,7 +6,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { GB, US, CA } from "country-flag-icons/react/3x2";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Tooltip";
 import { Creator, CreatorStatus } from "@/types";
 
 const CountryFlag = ({ country }: { country: string }) => {

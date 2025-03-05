@@ -5,7 +5,7 @@ import { Edit } from "lucide-react";
 import { Campaign, Creator, CreatorStatus } from "@/types";
 import { CreatorDetailView } from "@/components/campaign-brand/CreatorDetailView";
 import CampaignStats from "@/components/campaign-brand/CampaignStats";
-import Tooltip from "@/components/campaign-brand/Tooltip";
+import Tooltip from "@/components/Tooltip";
 import CreatorList from "@/components/campaign-brand/CreatorList";
 import CampaignHeader from "@/components/campaign-brand/CampaignHeader";
 import EditCreateCampaign, {

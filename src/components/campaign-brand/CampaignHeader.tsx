@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowLeft, Edit, Globe, Lock } from "lucide-react";
 import { Campaign } from "@/types";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Tooltip";
 import Link from "next/link";
 
 interface CampaignHeaderProps {
