@@ -26,6 +26,8 @@ interface PaymentStatusDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   postId: string;
+  campaignId: string;
+  creatorId: string;
   status: PaymentStatus;
 }
 
@@ -33,6 +35,8 @@ export function PaymentStatusDrawer({
   isOpen,
   onClose,
   postId,
+  campaignId,
+  creatorId,
   status,
 }: PaymentStatusDrawerProps) {
   if (!isOpen) return null;
@@ -40,7 +44,22 @@ export function PaymentStatusDrawer({
   const [charges_enabled, setcharges_enabled] = useState(null);
   const [onboarding_status, setonboarding_status] = useState(null);
   const [checksloading, setchecksloading] = useState(false);
-
+  const [campaignstatus, setcampaignstatus] = useState<any>(null);
+  console.log("campaignId", campaignId);
+  const handleViewStripeDashboard = async () => {
+    try {
+      const response = await apiController.get(
+        `/payments/${user?.uuid}/generate-customer-portal`
+      );
+      console.log("responsevd", response);
+      if (response.status === 200) {
+        window.open(response.data.url, "_blank");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  console.log("status", status);
   useEffect(() => {
     const fetchAccountStatus = async () => {
       try {
@@ -61,6 +80,26 @@ export function PaymentStatusDrawer({
     };
 
     fetchAccountStatus();
+  }, []);
+  useEffect(() => {
+    const fetchPostPaymentStatus = async () => {
+      try {
+        setchecksloading(true);
+        const response = await apiController.get(
+          `/creators/campaigns/campaign-post-payment-status?creator_id=${creatorId}&campaign_id=${campaignId}&post_id=${postId}`
+        );
+        console.log("statusreeeee", response);
+        if (response.status === 200) {
+          setcampaignstatus(response.data);
+          setchecksloading(false);
+        }
+      } catch (error) {
+        setchecksloading(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchPostPaymentStatus();
   }, []);
   const getStatusInfo = () => {
     switch (status.status) {
@@ -128,20 +167,38 @@ export function PaymentStatusDrawer({
             <div className="tw-flex-1 tw-overflow-y-auto">
               <div className="tw-p-6 tw-space-y-6">
                 {/* Status Card */}
-                <div className={`tw-p-4 tw-rounded-lg ${statusInfo.color}`}>
-                  <div className="tw-flex tw-items-start">
-                    {statusInfo.icon}
-                    <div className="tw-ml-3">
-                      <h3 className="tw-text-sm tw-font-medium">
-                        {statusInfo.label}
-                      </h3>
-                      <p className="tw-mt-1 tw-text-sm">
-                        {statusInfo.description}
-                      </p>
+                {campaignstatus?.Payment_Status == 10 ? (
+                  <div
+                    className={`tw-p-4 tw-rounded-lg tw-text-green-700 tw-bg-green-50 tw-border-green-200`}
+                  >
+                    <div className="tw-flex tw-items-start">
+                      <CheckCircle className="tw-w-5 tw-h-5 tw-text-green-500" />
+                      <div className="tw-ml-3">
+                        <h3 className="tw-text-sm tw-font-medium">
+                          Payment Completed
+                        </h3>
+                        <p className="tw-mt-1 tw-text-sm">
+                          Payment has been processed and confirmed
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {charges_enabled !== false && onboarding_status !== false && (
+                ) : (
+                  <div className={`tw-p-4 tw-rounded-lg ${statusInfo.color}`}>
+                    <div className="tw-flex tw-items-start">
+                      {statusInfo.icon}
+                      <div className="tw-ml-3">
+                        <h3 className="tw-text-sm tw-font-medium">
+                          {statusInfo.label}
+                        </h3>
+                        <p className="tw-mt-1 tw-text-sm">
+                          {statusInfo.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {charges_enabled === false && onboarding_status === false && (
                   <div
                     className={`tw-p-4 tw-rounded-lg tw-text-red-700 tw-bg-red-50 tw-border-red-200`}
                   >
@@ -171,7 +228,7 @@ export function PaymentStatusDrawer({
                         Amount
                       </div>
                       <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                        ${status.amount.toLocaleString()}
+                        ${campaignstatus?.Budget}
                       </span>
                     </div>
 
@@ -181,7 +238,7 @@ export function PaymentStatusDrawer({
                         Due Date
                       </div>
                       <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                        {status.dueDate}
+                        {campaignstatus?.Due_Date}
                       </span>
                     </div>
 
@@ -191,7 +248,7 @@ export function PaymentStatusDrawer({
                         Payment Method
                       </div>
                       <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                        {status.paymentMethod}
+                        Stripe Account
                       </span>
                     </div>
 
@@ -201,7 +258,9 @@ export function PaymentStatusDrawer({
                         Transaction ID
                       </div>
                       <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                        {status.transactionId}
+                        {campaignstatus?.Transaction_ID
+                          ? campaignstatus?.Transaction_ID
+                          : "-"}
                       </span>
                     </div>
                   </div>
@@ -217,15 +276,17 @@ export function PaymentStatusDrawer({
                     Download Invoice
                   </a>
 
-                  <a
-                    href="https://stripe.com/dashboard"
-                    target="_blank"
+                  <div
+                    style={{ cursor: "pointer" }}
+                    // href="https://stripe.com/dashboard"
+                    // target="_blank"
+                    onClick={handleViewStripeDashboard}
                     rel="noopener noreferrer"
                     className="tw-flex tw-items-center tw-justify-center tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50"
                   >
                     <ExternalLink className="tw-w-4 tw-h-4 tw-mr-2" />
                     View in Stripe Dashboard
-                  </a>
+                  </div>
                 </div>
 
                 {/* Support Note */}
