@@ -7,7 +7,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { Campaign, CreatorStatus } from "@/types";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Tooltip";
 
 interface StatCardProps {
   icon: React.ReactNode;

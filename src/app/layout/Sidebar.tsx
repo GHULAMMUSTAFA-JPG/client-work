@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
         setIsActive(5);
       } else if (window.location.pathname == "/Profile") {
         setIsActive(6);
-      } else if (window.location.pathname == "/analytics") {
+      } else if (window.location.pathname == "/campaign-analytics") {
         setIsActive(7);
       } else {
         console.log("sdsd");
@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems }) => {
         setIsActive(3);
       } else if (window.location.pathname == "/companypage") {
         setIsActive(4);
-      } else if (window.location.pathname == "/analytics") {
+      } else if (window.location.pathname == "/campaign-analytics") {
         setIsActive(5);
       } else {
         console.log("sdksj");
