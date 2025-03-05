@@ -1,7 +1,6 @@
 "use client";
 import { getCampaignsCreatorsOverview, login } from "@/@api";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import CampaignOffcanvas from "@/components/campaignoffcanvas";
 import { useRouter } from "next/navigation";
@@ -223,16 +222,31 @@ function Campaigns() {
                                   <div className="card card-hover h-100">
                                     <div className="card-body d-flex flex-column">
                                       <div className="d-flex gap-2 mb-4">
-                                        <img
-                                          src={
-                                            campaign?.Company_Logo ||
-                                            defaultImagePath
-                                          }
-                                          className="border object-fit-cover rounded-circle flex-shrink-0"
-                                          alt="logo"
-                                          width={40}
-                                          height={40}
-                                        />
+                                        {campaign?.Company_Logo ? (
+                                          <img
+                                            src={campaign?.Company_Logo}
+                                            className="border object-fit-cover rounded-circle flex-shrink-0"
+                                            alt="logo"
+                                            width={40}
+                                            height={40}
+                                          />
+                                        ) : (
+                                          <div
+                                            className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
+                                            style={{
+                                              width: "40px",
+                                              height: "40px",
+                                            }}
+                                          >
+                                            <span className="fw-bold text-uppercase">
+                                              {campaign?.Company_Name
+                                                ? campaign.Company_Name.charAt(
+                                                    0
+                                                  )
+                                                : "C"}
+                                            </span>
+                                          </div>
+                                        )}
                                         <div>
                                           <p className="fw-medium mb-0 fs-16">
                                             {campaign?.Headline?.slice(0, 100)}
