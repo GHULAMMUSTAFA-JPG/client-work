@@ -279,7 +279,7 @@ export function CreatePostDrawer({
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
                       <span>
-                      Created Date(system)<span className="tw-text-red-500">*</span>
+                      Payout Date <span className="tw-text-red-500">*</span>
                       </span>
                       {fieldErrors.dueDate && (
                         <span className="tw-ml-2 tw-text-red-600 tw-text-xs">

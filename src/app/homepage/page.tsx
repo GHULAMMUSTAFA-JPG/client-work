@@ -257,8 +257,7 @@ function Homepage() {
                         @{userProfile?.Profile_URL || "No information"}
                       </p> */}
                   <p className="fs-14 fw-500 text-gray">
-                  {userProfile?.Current_Position ||
-                      "Senior Software Engineer"}
+                  {userProfile?.Job_Title || ""}
                   </p>
                     
                     </div>
@@ -381,7 +380,10 @@ function Homepage() {
 
                   </div>
 
-                <div className="ml-4">
+                <div className="ml-4 cursor-pointer" onClick={() => {
+              setIsPayoutDrawerOpen(true);
+              setSelectedPayoutType('total');
+            }}>
                 <p className="fs-13">Total Payouts</p>
                 <p className="fs-16 fw-bold text-red">$12,450</p>
                 <p className="fs-12 fw-400">Recieved</p>
@@ -507,6 +509,7 @@ function Homepage() {
 </div>
 <div className="mt-4">
   {selectedPayoutType === "total" && (
+    <div className="PayoutBox">
     <div>
       {/* Total Payouts Content */} 
       
@@ -530,13 +533,19 @@ function Homepage() {
        
           
             </div>
-            </div>
+            </div> </div>
+            <hr />
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <div className="fs-16 fw-500 text-black">Total Received</div>
+            <div className="fs-16 fw-500 text-teal">$12,450</div>
+          </div>
       
        {/* Total Payouts Content */}
+       </div>
 
-   </div>
   )}
   {selectedPayoutType === "upcoming" && (
+    <div className="PayoutBox">
     <div>
       {/* Upcoming Payouts Content */}
       <div className="notification_wrapper new_campaign_application">
@@ -556,14 +565,17 @@ function Homepage() {
               <p className="fs-11 fw-400 text-gray">Upcoming</p>
             </div>
              </div>
-       
-          
+  
+          </div>
             </div>
             </div>
       {/* Upcoming Payouts Content */}
-      
-     
-    </div>
+            <hr />
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <div className="fs-16 fw-500 text-black">Total Expected</div>
+            <div className="fs-16 fw-500 text-teal">$12,450</div>
+          </div>
+      </div>
   )}
 </div>
     {/* tabs */}            
