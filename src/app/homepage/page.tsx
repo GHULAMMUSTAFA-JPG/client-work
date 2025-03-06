@@ -86,7 +86,7 @@ function Homepage() {
              
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">Profile</p>
+                  <p className="mb-0 fs-16 fw-medium">Profile <span className="text-teal">(Creator)</span></p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
                       <Tooltip
@@ -240,10 +240,23 @@ function Homepage() {
                     </div>
 
                     <div className="d-flex gap-2 align-items-center mb-2">
-                      <p className="mb-0 fs-12 text-warning">
+                  {/*     <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
-                      </p>
+                      </p> */}
+                  <p className="fs-14 fw-500 text-gray">
+                  {userProfile?.Current_Position ||
+                      "Senior Software Engineer"}
+                  </p>
+                    
                     </div>
+
+                  <div className="d-flex gap-2 align-items-center mb-2">
+                  <p className="fs-14 fw-500 text-gray">
+                        {userProfile?.Current_Company}
+                  </p>
+                     </div>
+
+                    
                     {/* tags */}
                     {userProfile?.Audience_Interest.split(", ")?.length > 0 &&
                       userProfile?.Audience_Interest.split(", ")[0] !== "" && (
@@ -299,14 +312,14 @@ function Homepage() {
               </div>
               </div>
             </div>
-            <div className="statsbox-container-dash py-3">
+            <div className="statsbox-container-dash-4col py-3">
            <div className="d-flex align-items-center gap-2 box-effect-shadow">
                  <div className="p-2 rounded-full bg-gray-50">
                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-teal-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   </div>
 
                 <div className="ml-4">
-                  <p className="fs-14">Active Campaigns</p>
+                  <p className="fs-13">Active Campaigns</p>
                   <p className="fs-16 fw-bold text-red">3</p>
                 </div>
           </div>
@@ -317,19 +330,45 @@ function Homepage() {
                   </div>
 
                 <div className="ml-4">
-                <p className="fs-14">Pending Applications</p>
+                <p className="fs-13">Pending Applications</p>
                   <p className="fs-16 fw-bold text-red">5</p>
                 </div>
           </div>
 
           <div className="d-flex align-items-center gap-2 box-effect-shadow">
                  <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-green-svg"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="Group_38" data-name="Group 38" transform="translate(-1 -1)">
+    <circle id="Ellipse_2" data-name="Ellipse 2" cx="10" cy="10" r="10" transform="translate(2 2)" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_869" data-name="Path 869" d="M12,6v6l4,2" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
+
+
                   </div>
 
                 <div className="ml-4">
-                <p className="fs-14">Total Spend</p>
+                <p className="fs-13">Upcoming Payouts</p>
+                <p className="fs-16 fw-bold text-red">$7,750</p>
+                <p className="fs-12 fw-400">Expected</p>
+                </div>
+          </div>
+
+          <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="22" viewBox="0 0 14 22">
+  <g id="Group_37" data-name="Group 37" transform="translate(-5 -1)">
+    <line id="Line_1" data-name="Line 1" y2="20" transform="translate(12 2)" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_868" data-name="Path 868" d="M17,5H9.5a3.5,3.5,0,0,0,0,7h5a3.5,3.5,0,1,1,0,7H6" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
+
+                  </div>
+
+                <div className="ml-4">
+                <p className="fs-13">Total Payouts</p>
                 <p className="fs-16 fw-bold text-red">$12,450</p>
+                <p className="fs-12 fw-400">Recieved</p>
                 </div>
           </div>
   </div>
@@ -418,7 +457,7 @@ function Homepage() {
 
             <div className="card mb-3" style={{ height: "48%" }}>
               <div className="card-body">
-                <p className="mb-2 fs-16 fw-medium ">What's New (Notifications)</p>
+                <p className="mb-2 fs-16 fw-medium ">What's New</p>
                 {notifications?.notifications &&
                 notifications?.notifications?.length !== 0 ? (
                   notifications?.notifications

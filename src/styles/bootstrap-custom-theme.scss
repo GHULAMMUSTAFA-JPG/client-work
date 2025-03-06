@@ -1029,9 +1029,6 @@ body {
   align-items: center;
   transition: all 0.2s ease-in-out;
   
-
-  
-
   .chip-text {
     font-size: 12px;
     color: teal;
@@ -1216,6 +1213,41 @@ body {
 .statsbox-container-dash {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+ // border-top: 1px solid $border;
+  //background-color: #f8f9fa; // light gray background
+ // border-radius: 0 0 20px 20px;
+
+ .box-effect-shadow
+  {
+    background-color: $white;
+    box-shadow: 0px 0px 8px #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  }
+
+  .stats-box-dash {
+    padding: 1rem;
+    border-radius: 8px;
+
+    .stats-heading {
+      font-size: 10px;
+      color: #808080;
+      margin-bottom: 0.5rem;
+      font-weight: 300;
+    }
+
+    .stats-count-dash {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: $black;
+    }
+  }
+}
+
+.statsbox-container-dash-4col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
  // border-top: 1px solid $border;
   //background-color: #f8f9fa; // light gray background
