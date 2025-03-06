@@ -34,7 +34,9 @@ function CampaignDetailsContent() {
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab") as TabType | null;
   const creatorParam = searchParams.get("creator");
+  const postParam = searchParams.get("post");
   const { user } = useAuth();
+
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>(tabParam || "invited");
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
@@ -47,29 +49,35 @@ function CampaignDetailsContent() {
 
   const fetchCampaign = async () => {
     if (!user?._id) return;
+
     const campaignId = Array.isArray(campaign_id)
       ? campaign_id[0]
       : campaign_id;
-
     if (!campaignId) {
       redirect("/campaign-details");
+      return;
     }
 
     try {
       setIsLoading(true);
-      const data = (await getBrandCampaignApplications(campaignId)) as any;
-      const activeCreatorsData = await getBrandCampaignActiveCreators({
-        campaign_id: campaignId,
-        buyer_id: user._id,
-      });
+      const [campaignData, activeCreatorsData] = await Promise.all([
+        getBrandCampaignApplications(campaignId) as Promise<{ campaign: any }>,
+        getBrandCampaignActiveCreators({
+          campaign_id: campaignId,
+          buyer_id: user._id,
+        }),
+      ]);
 
-      if (data?.campaign) {
-        setCampaign(formatCampaignData(data.campaign));
+      if (campaignData?.campaign) {
+        setCampaign(formatCampaignData(campaignData.campaign));
         setCampaignFormData(
-          extractCampaignFormData(data.campaign) as CampaignFormData
+          extractCampaignFormData(campaignData.campaign) as CampaignFormData
         );
       }
-      if (activeCreatorsData) setCampaignActiveCreatorsData(activeCreatorsData);
+
+      if (activeCreatorsData) {
+        setCampaignActiveCreatorsData(activeCreatorsData);
+      }
     } catch (error) {
       console.error("Error fetching campaign data:", error);
     } finally {
@@ -80,6 +88,7 @@ function CampaignDetailsContent() {
   useEffect(() => {
     if (!campaign_id) {
       redirect("/campaign-details");
+      return;
     }
 
     if (user) {
@@ -94,26 +103,32 @@ function CampaignDetailsContent() {
   }, [tabParam]);
 
   useEffect(() => {
-    if (campaignActiveCreatorsData && creatorParam) {
-      // console.log("campaignActiveCreatorsData", campaignActiveCreatorsData);
+    if (!campaignActiveCreatorsData?.Active_Creators || !creatorParam) return;
 
-      let creator = null;
+    const activeCreator = campaignActiveCreatorsData.Active_Creators.find(
+      (c: any) => c.Creator_ID === creatorParam
+    );
 
-      if (campaignActiveCreatorsData?.Active_Creators) {
-        const activeCreator = campaignActiveCreatorsData.Active_Creators.find(
-          (c: any) => c.Creator_ID === creatorParam
+    if (activeCreator) {
+      const creator = createCreatorFromData(activeCreator);
+      setSelectedCreator(creator);
+
+      if (!postParam && creator.posts && creator.posts.length > 0) {
+        const firstPost = creator.posts[0];
+        router.push(
+          `/campaign-details/${campaign_id}?tab=${activeTab}&creator=${creator.id}&post=${firstPost.id}`,
+          { scroll: false }
         );
-        if (activeCreator) {
-          console.log("activeCreator", activeCreator);
-          creator = createCreatorFromData(activeCreator);
-        }
-      }
-
-      if (creator) {
-        setSelectedCreator(creator);
       }
     }
-  }, [campaignActiveCreatorsData, creatorParam]);
+  }, [
+    campaignActiveCreatorsData,
+    creatorParam,
+    postParam,
+    campaign_id,
+    activeTab,
+    router,
+  ]);
 
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
@@ -131,7 +146,6 @@ function CampaignDetailsContent() {
       creator_id: creatorId,
       status: newStatus,
     });
-
     setRefreshTrigger((prev) => prev + 1);
   };
 
@@ -153,8 +167,18 @@ function CampaignDetailsContent() {
     setRefreshTrigger((prev) => prev + 1);
   };
 
-  if (isLoading) return <Loader />;
+  const handleSelectCreator = (creator: Creator) => {
+    setSelectedCreator(creator);
+    const postParam = creator.posts?.length
+      ? `&post=${creator.posts[0].id}`
+      : "";
+    router.push(
+      `/campaign-details/${campaign_id}?tab=${activeTab}&creator=${creator.id}${postParam}`,
+      { scroll: false }
+    );
+  };
 
+  if (isLoading) return <Loader />;
   if (!campaign) return null;
 
   if (selectedCreator) {
@@ -165,6 +189,9 @@ function CampaignDetailsContent() {
         posts={selectedCreator.posts || []}
         campaignId={campaign_id as string}
         onUpdate={() => setRefreshTrigger((prev) => prev + 1)}
+        creators={campaign.creators}
+        selectedCreator={selectedCreator}
+        handelSelectedCreator={handleSelectCreator}
       />
     );
   }
@@ -208,6 +235,35 @@ function CampaignDetailsContent() {
     },
   ];
 
+  const renderActiveCreators = () => {
+    if (campaignActiveCreatorsData?.Active_Creators) {
+      return campaignActiveCreatorsData.Active_Creators.map((creator: any) => {
+        const creatorData = createCreatorFromData(creator);
+        return (
+          <CreatorProgress
+            key={creator.Creator_ID}
+            creator={creatorData}
+            campaignId={campaign_id as string}
+            activeTab={activeTab}
+            onViewDetails={() => handleSelectCreator(creatorData)}
+            onMessageCreator={() => handleMessageCreator(creator.Creator_ID)}
+          />
+        );
+      });
+    }
+
+    return filteredCreators.map((creator) => (
+      <CreatorProgress
+        key={creator.id}
+        creator={creator}
+        campaignId={campaign_id as string}
+        activeTab={activeTab}
+        onViewDetails={() => handleSelectCreator(creator)}
+        onMessageCreator={() => handleMessageCreator(creator.id)}
+      />
+    ));
+  };
+
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
       <div className="tw-mx-auto tw-px-4 tw-p-8">
@@ -247,49 +303,7 @@ function CampaignDetailsContent() {
           </div>
 
           {activeTab === "in_campaign" ? (
-            <div className="tw-space-y-6">
-              {campaignActiveCreatorsData &&
-              campaignActiveCreatorsData.Active_Creators
-                ? campaignActiveCreatorsData.Active_Creators.map(
-                    (creator: any) => {
-                      const creatorData = createCreatorFromData(creator);
-                      return (
-                        <CreatorProgress
-                          key={creator.Creator_ID}
-                          creator={creatorData}
-                          onViewDetails={() => {
-                            setSelectedCreator(creatorData);
-                            router.push(
-                              `/campaign-details/${campaign_id}?tab=${activeTab}&creator=${creator.Creator_ID}`,
-                              {
-                                scroll: false,
-                              }
-                            );
-                          }}
-                          onMessageCreator={() =>
-                            handleMessageCreator(creator.Creator_ID)
-                          }
-                        />
-                      );
-                    }
-                  )
-                : filteredCreators.map((creator) => (
-                    <CreatorProgress
-                      key={creator.id}
-                      creator={creator}
-                      onViewDetails={() => {
-                        setSelectedCreator(creator);
-                        router.push(
-                          `/campaign-details/${campaign_id}?tab=${activeTab}&creator=${creator.id}`,
-                          {
-                            scroll: false,
-                          }
-                        );
-                      }}
-                      onMessageCreator={() => handleMessageCreator(creator.id)}
-                    />
-                  ))}
-            </div>
+            <div className="tw-space-y-6">{renderActiveCreators()}</div>
           ) : (
             <CreatorList
               creators={filteredCreators}

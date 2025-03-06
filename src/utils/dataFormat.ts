@@ -1,4 +1,5 @@
 import { Status, Post, Campaign, Creator, CreatorStatus } from "@/types";
+import { formatDate } from ".";
 
 /**
  * Transforms post content versions into a standardized format
@@ -37,9 +38,8 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
   return posts.map((post) => ({
     numberstatus: post.Status,
     id: post._id,
-
     title: post.Post_Title || "Untitled",
-    date: post.Submission_Date || "",
+    date: formatDate(post.Submission_Date, true) || "",
     status: mapStatus(post.Status),
     content: post.Post_Description || "",
     impressions: post.Impressions?.Impressions || null,
@@ -49,7 +49,7 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
       id: content.Content_ID,
       type: determineContentType(content),
       content: content.Content_Text_Content || "",
-      date: content.Submitted_At || "",
+      date: formatDate(content.Submitted_At, true) || "",
       status: mapStatus(content.Status),
       images: content.Media_Content || [],
     })),
