@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { CalendarCheck, ExternalLink } from "lucide-react";
 import ApplyModal from "./ApplyModal";
 import { apiController } from "@/@api/baseUrl";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface CampaignAcceptanceCardProps {
   campaignName: string;
@@ -19,18 +21,24 @@ export const CampaignAcceptanceCard = ({
   isCreatorView = false,
 }: CampaignAcceptanceCardProps) => {
   const [selectedCampaign, setselectedCampaign] = useState(null);
-
+  const router = useRouter();
+  const { user } = useAuth();
+  console.log("user", user);
   const handleViewCampaign = async (id: any) => {
-    try {
-      const response = await apiController.get(`/dashboard/campaigns/${id}/`);
-      // const data = await response.json();
-      console.log(response);
-      if (response.status === 200) {
-        setselectedCampaign(response.data);
-      }
-    } catch (error) {
-      console.error(error);
+    if (user?.isBuyer) {
+      router.push(`/campaign-details?id=${id}`);
+    } else if (!user?.isBuyer) {
+      router.push(`/campaign-hub?id=${id}`);
     }
+    // try {
+    //   const response = await apiController.get(`/dashboard/campaigns/${id}/`);
+    //   console.log(response);
+    //   if (response.status === 200) {
+    //     setselectedCampaign(response.data);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   console.log("campaignid", campaignid);
   return (
@@ -62,8 +70,8 @@ export const CampaignAcceptanceCard = ({
             handleViewCampaign(campaignid);
           }}
           // className="btn btn-dark ms-2 btn-sm w-s mt-2"
-          data-bs-toggle="modal"
-          data-bs-target="#applyModal"
+          // data-bs-toggle="modal"
+          // data-bs-target="#applyModal"
           // href={campaignLink}
           className="d-flex align-items-center gap-1 text-primary text-decoration-none small fw-medium cursor ms-3"
           // target="_blank"

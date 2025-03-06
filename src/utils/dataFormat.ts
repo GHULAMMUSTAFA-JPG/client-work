@@ -271,8 +271,11 @@ export const extractCampaignFormData = (data: any) => {
 };
 
 export const getCurrentPostStage = (post: any): number => {
-  const { Content_Versions = [], Live_Link, Impressions } = post;
+  const { Content_Versions = [], Live_Link, Impressions, Status } = post;
   console.log(Impressions);
+  if (Status === 10) {
+    return 6; // Return 6 instead of 7 to ensure proper stage coloring
+  }
   if (Impressions) {
     console.log("impression found");
     return 6;

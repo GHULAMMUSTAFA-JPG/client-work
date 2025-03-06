@@ -28,6 +28,7 @@ interface PostProgressProps {
   currentStage: number;
   onSubmit: () => void;
   linkedinPostUrl: string;
+  postStatus?: number;
 }
 
 export function PostProgress({
@@ -38,6 +39,7 @@ export function PostProgress({
   currentStage,
   onSubmit,
   linkedinPostUrl,
+  postStatus,
 }: PostProgressProps) {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [isLivePostDrawerOpen, setIsLivePostDrawerOpen] = useState(false);
@@ -47,6 +49,9 @@ export function PostProgress({
     const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
     const thisStageIndex = stages.findIndex((s) => s.id === stage.id);
     console.log("stages", stages);
+    if (currentStage === 6 && stage.label === "Payment" && postStatus === 10) {
+      return { ...stage, status: "completed" as const };
+    }
     if (thisStageIndex < currentStageIndex) {
       return { ...stage, status: "completed" as const };
     } else if (thisStageIndex === currentStageIndex) {

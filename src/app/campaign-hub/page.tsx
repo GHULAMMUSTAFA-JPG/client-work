@@ -234,6 +234,7 @@ function CampaignHubContent() {
             currentStage={selectedPost ? getCurrentPostStage(selectedPost) : 1}
             onSubmit={getCampaignPostsList}
             linkedinPostUrl={selectedPost?.Live_Link || ""}
+            postStatus={selectedPost?.Status}
           />
 
           {selectedPostId ? (
