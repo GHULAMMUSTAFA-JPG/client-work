@@ -116,7 +116,7 @@ export function CreatePostDrawer({
             <div className="tw-px-6 tw-py-6 tw-border-b tw-border-gray-200">
               <div className="tw-flex tw-items-center tw-justify-between">
                 <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
-                  Finalize Your Post
+                Start new Post
                 </h2>
                 <button
                   onClick={onClose}
@@ -261,14 +261,17 @@ export function CreatePostDrawer({
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Clock className="tw-w-4 tw-h-4 tw-text-gray-400" />
-                      <span>Submission Date</span>
+                      <span>Submission Date to Go-Live Date</span>
                     </div>
                   </label>
-                  <div className="tw-mt-1">
-                    <div className="tw-px-4 tw-py-2 tw-bg-gray-50 tw-text-gray-700 tw-rounded-md tw-border tw-border-gray-200">
-                      {new Date().toLocaleDateString()}
-                    </div>
-                  </div>
+                    <input
+                    type="date"
+                    value={new Date().toISOString().split("T")[0]}
+                    onChange={(e) => {
+                      // Handle the change if needed
+                    }}
+                    className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
+                    />
                 </div>
                 {/* Due Date */}
                 <div>
@@ -276,7 +279,7 @@ export function CreatePostDrawer({
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
                       <span>
-                        Payout Date<span className="tw-text-red-500">*</span>
+                      Created Date(system)<span className="tw-text-red-500">*</span>
                       </span>
                       {fieldErrors.dueDate && (
                         <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
