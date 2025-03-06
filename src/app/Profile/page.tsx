@@ -392,9 +392,9 @@ function ProfilePage() {
               <div className="profile-image-content-text">
                 {/* Profile Info */}
                 <div className="mt-2">
-                  <h4 className="mb-1" id="name" onClick={editFieldHandler}>
+                  <div className="fs-20 fw-700 text-black mb-2" id="name" onClick={editFieldHandler}>
                     {userProfile?.Name}
-                    <div
+                   <div
                       className="editprofilebox"
                       onClick={() => handleSectionClick("about")}
                       style={{ cursor: "pointer" }}
@@ -410,17 +410,17 @@ function ProfilePage() {
                         <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
                       </svg>
                     </div>
-                  </h4>
-                  {/* <h6 className="text-muted mb-2">
-                    {userProfile?.Current_Position ||
+                  </div>
+                {/* Job Title */}
+                <span className="fs-14 fw-500 text-gray"> {userProfile?.Current_Position ||
                       "Senior Software Engineer"}
-                  </h6> */}
-
+                      </span>
+               
                   {/* Company and Location Row */}
                   {userProfile?.Current_Company && (
                     <div className="d-flex align-items-center gap-2 text-muted mb-2">
-                      <Icon icon="mdi:building" width={18} height={18} />
-                      <span>{userProfile?.Current_Company}</span>
+                     {/*  <Icon icon="mdi:building" width={18} height={18} /> */}
+                      <span className="fs-14 fw-500 text-gray">{userProfile?.Current_Company}</span>
                     </div>
                   )}
 
