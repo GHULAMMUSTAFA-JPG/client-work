@@ -1245,6 +1245,34 @@ body {
   }
 }
 
+.cursor-pointer
+{
+  cursor: pointer;
+} 
+.bg-tabs
+{
+  background-color: #f8f9fa;
+}
+.tab-payouts {
+  color: #000;
+  padding: 10px 12px;
+  border: 0px solid #ddd;
+  border-radius: 3px;
+  margin: 0 10px;
+  width: 50%;
+  text-align: center;
+}
+.tab-payouts-active {
+  color: #fff;
+  padding: 10px 12px;
+  border: 0px solid #ddd;
+  border-radius: 3px;
+  margin: 0 10px;
+  width: 50%;
+  text-align: center;
+  background-color: #0e594f;
+}
+
 .statsbox-container-dash-4col {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
