@@ -22,6 +22,7 @@ interface editDtoProps {
   description: string;
   skills: [string];
   current_company: string;
+  job_title: string;
   audience_interest: string;
   collaboration_packages: any;
 }
@@ -66,6 +67,7 @@ function ProfilePage() {
     description: "",
     skills: [""],
     current_company: "",
+    job_title: "",
     audience_interest: "",
     collaboration_packages: [
       {
@@ -172,6 +174,7 @@ function ProfilePage() {
         description: userProfile?.Description,
         skills: userProfile?.Skills,
         current_company: userProfile?.Current_Company,
+        job_title: userProfile?.Job_Title,
         audience_interest: userProfile?.Audience_Interest,
         collaboration_packages: collabPack,
       });
@@ -412,8 +415,8 @@ function ProfilePage() {
                     </div>
                   </div>
                 {/* Job Title */}
-                <span className="fs-14 fw-500 text-gray"> {userProfile?.Current_Position ||
-                      "Senior Software Engineer"}
+                <span className="fs-14 fw-500 text-gray"> {userProfile?.Job_Title ||
+                      ""}
                       </span>
                
                   {/* Company and Location Row */}
@@ -908,7 +911,7 @@ function ProfilePage() {
                           />
                         </div>
                         <div className="mb-4 section-box_container">
-                          <label className="mb-2">Current Company*</label>
+                          <label className="mb-2">Current Company URL*</label>
                           <input
                             type="text"
                             className="form-control"
@@ -916,6 +919,17 @@ function ProfilePage() {
                             onChange={changeHandler}
                             id="current_company"
                             placeholder="Synnc"
+                          />
+                        </div>
+                        <div className="mb-4 section-box_container">
+                          <label className="mb-2">Job Title *</label>
+                          <input
+                          type="text"
+                          className="form-control"
+                          value={editDetails.job_title}
+                          onChange={changeHandler}
+                          id="job_title"
+                          placeholder="Job Title"
                           />
                         </div>
                         <div

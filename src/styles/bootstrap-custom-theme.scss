@@ -1263,14 +1263,16 @@ body {
   text-align: center;
 }
 .tab-payouts-active {
-  color: #fff;
+  color: teal;
   padding: 10px 12px;
+  font-weight: 500;
   border: 0px solid #ddd;
-  border-radius: 3px;
+  border-radius: 6px;
   margin: 0 10px;
   width: 50%;
   text-align: center;
-  background-color: #0e594f;
+  background-color: #fff;
+  box-shadow: 0px 0px 3px #ddd;
 }
 
 .statsbox-container-dash-4col {
