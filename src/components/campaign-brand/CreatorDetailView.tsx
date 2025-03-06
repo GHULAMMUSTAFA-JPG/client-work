@@ -12,7 +12,7 @@ import {
   CloudFog,
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
-import Tooltip from "./Tooltip";
+import Tooltip from "../Tooltip";
 import { useRouter } from "next/navigation";
 import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
 import { toast } from "react-toastify";

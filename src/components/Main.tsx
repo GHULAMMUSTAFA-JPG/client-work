@@ -58,7 +58,6 @@ const Main = ({ children, isAuthenticated, user }: any) => {
     { label: "My Company", href: "/creatordashboard", icon: "bi bi-buildings" },
     { label: "Messages", href: "/inbox", icon: "bi bi-chat-left-text" },
     { label: "Profile", href: "/Profile", icon: "bi bi-person-circle" },
-    { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart-line" },
   ];
 
   const buyerMenuItems = [
@@ -71,7 +70,11 @@ const Main = ({ children, isAuthenticated, user }: any) => {
     },
     { label: "Messages", href: "/inbox", icon: "bi bi-chat-left-text" },
     { label: "Company Page", href: "/companypage", icon: "bi bi-buildings" },
-    { label: "Analytics", href: "/analytics", icon: "bi bi-bar-chart-line" },
+    {
+      label: "Analytics",
+      href: "/campaign-analytics",
+      icon: "bi bi-bar-chart-line",
+    },
   ];
 
   // Determine which menu items to show based on role
