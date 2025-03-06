@@ -261,7 +261,7 @@ export function CreatePostDrawer({
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Clock className="tw-w-4 tw-h-4 tw-text-gray-400" />
-                      <span>Submission Date to Go-Live Date</span>
+                      <span>Go-Live Date</span>
                     </div>
                   </label>
                     <input
