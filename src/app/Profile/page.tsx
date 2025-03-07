@@ -231,6 +231,15 @@ function ProfilePage() {
           toast.error("Linkedin username cannot be empty");
           return;
         }
+        if (
+          editDetails.profile_url &&
+          !/^[a-zA-Z0-9_-]+$/.test(editDetails.profile_url)
+        ) {
+          toast.error(
+            "LinkedIn username should only contain letters, numbers, underscores or dashes"
+          );
+          return;
+        }
         if (!editDetails.profile_url) {
           toast.error("Linkedin username cannot be empty");
           return;
@@ -385,7 +394,10 @@ function ProfilePage() {
             <div className="profile-image-content">
               <div className="profile-image">
                 <img
-                  src={userProfile?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
+                  src={
+                    userProfile?.Profile_Image ||
+                    "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+                  }
                   alt="Profile Picture"
                   width={150}
                   height={150}
@@ -395,9 +407,13 @@ function ProfilePage() {
               <div className="profile-image-content-text">
                 {/* Profile Info */}
                 <div className="mt-2">
-                  <div className="fs-20 fw-700 text-black mb-2" id="name" onClick={editFieldHandler}>
+                  <div
+                    className="fs-20 fw-700 text-black mb-2"
+                    id="name"
+                    onClick={editFieldHandler}
+                  >
                     {userProfile?.Name}
-                   <div
+                    <div
                       className="editprofilebox"
                       onClick={() => handleSectionClick("about")}
                       style={{ cursor: "pointer" }}
@@ -414,16 +430,19 @@ function ProfilePage() {
                       </svg>
                     </div>
                   </div>
-                {/* Job Title */}
-                <span className="fs-14 fw-500 text-gray"> {userProfile?.Job_Title ||
-                      ""}
-                      </span>
-               
+                  {/* Job Title */}
+                  <span className="fs-14 fw-500 text-gray">
+                    {" "}
+                    {userProfile?.Job_Title || ""}
+                  </span>
+
                   {/* Company and Location Row */}
                   {userProfile?.Current_Company && (
                     <div className="d-flex align-items-center gap-2 text-muted mb-2">
-                     {/*  <Icon icon="mdi:building" width={18} height={18} /> */}
-                      <span className="fs-14 fw-500 text-gray">{userProfile?.Current_Company}</span>
+                      {/*  <Icon icon="mdi:building" width={18} height={18} /> */}
+                      <span className="fs-14 fw-500 text-gray">
+                        {userProfile?.Current_Company}
+                      </span>
                     </div>
                   )}
 
@@ -845,16 +864,17 @@ function ProfilePage() {
                         <div className="mb-4 section-box_container">
                           <label className="mb-2">Profile photo</label>
                           <div className="position-relative">
-                          <div className="img-container-lg-general">
-                            <img
-                              src={
-                                editDetails.profile_image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                              }
-                              alt="Profile"
-                              width={80}
-                              height={80}
-                              className="mb-2"
-                            />
+                            <div className="img-container-lg-general">
+                              <img
+                                src={
+                                  editDetails.profile_image ||
+                                  "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+                                }
+                                alt="Profile"
+                                width={80}
+                                height={80}
+                                className="mb-2"
+                              />
                             </div>
                             <div
                               className="d-flex align-items-center gap-2"
@@ -924,12 +944,12 @@ function ProfilePage() {
                         <div className="mb-4 section-box_container">
                           <label className="mb-2">Job Title *</label>
                           <input
-                          type="text"
-                          className="form-control"
-                          value={editDetails.job_title}
-                          onChange={changeHandler}
-                          id="job_title"
-                          placeholder="Job Title"
+                            type="text"
+                            className="form-control"
+                            value={editDetails.job_title}
+                            onChange={changeHandler}
+                            id="job_title"
+                            placeholder="Job Title"
                           />
                         </div>
                         <div
