@@ -17,6 +17,7 @@ import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
 import { NodeNextRequest } from "next/dist/server/base-http/node";
+import { Drawer } from "@mui/material";
 
 function Homepage() {
   const { user, userProfile, setIsLoading, notifications, setIsActive } =
@@ -75,6 +76,18 @@ function Homepage() {
     campaigns?.Activated_Campaigns &&
     campaigns?.Activated_Campaigns?.length !== 0;
 
+  const [isPayoutDrawerOpen, setIsPayoutDrawerOpenState] = useState<boolean>(false);
+
+  function setIsPayoutDrawerOpen(open: boolean) {
+    setIsPayoutDrawerOpenState(open);
+  }
+
+  const [selectedPayoutType, setSelectedPayoutTypeState] = useState<string>("");
+
+  function setSelectedPayoutType(type: string) {
+    setSelectedPayoutTypeState(type);
+  }
+
   return (
     <>
       <div className="container-fluid">
@@ -86,7 +99,7 @@ function Homepage() {
              
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">Profile</p>
+                  <p className="mb-0 fs-16 fw-medium">Profile <span className="text-teal">(Creator)</span></p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
                       <Tooltip
@@ -240,10 +253,22 @@ function Homepage() {
                     </div>
 
                     <div className="d-flex gap-2 align-items-center mb-2">
-                      <p className="mb-0 fs-12 text-warning">
+                  {/*     <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
-                      </p>
+                      </p> */}
+                  <p className="fs-14 fw-500 text-gray">
+                  {userProfile?.Job_Title || ""}
+                  </p>
+                    
                     </div>
+
+                  <div className="d-flex gap-2 align-items-center mb-2">
+                  <p className="fs-14 fw-500 text-gray">
+                        {userProfile?.Current_Company}
+                  </p>
+                     </div>
+
+                    
                     {/* tags */}
                     {userProfile?.Audience_Interest.split(", ")?.length > 0 &&
                       userProfile?.Audience_Interest.split(", ")[0] !== "" && (
@@ -299,14 +324,14 @@ function Homepage() {
               </div>
               </div>
             </div>
-            <div className="statsbox-container-dash py-3">
+            <div className="statsbox-container-dash-4col py-3">
            <div className="d-flex align-items-center gap-2 box-effect-shadow">
                  <div className="p-2 rounded-full bg-gray-50">
                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-teal-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   </div>
 
                 <div className="ml-4">
-                  <p className="fs-14">Active Campaigns</p>
+                  <p className="fs-13">Active Campaigns</p>
                   <p className="fs-16 fw-bold text-red">3</p>
                 </div>
           </div>
@@ -317,19 +342,51 @@ function Homepage() {
                   </div>
 
                 <div className="ml-4">
-                <p className="fs-14">Pending Applications</p>
+                <p className="fs-13">Pending Applications</p>
                   <p className="fs-16 fw-bold text-red">5</p>
                 </div>
           </div>
 
           <div className="d-flex align-items-center gap-2 box-effect-shadow">
                  <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-green-svg"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="Group_38" data-name="Group 38" transform="translate(-1 -1)">
+    <circle id="Ellipse_2" data-name="Ellipse 2" cx="10" cy="10" r="10" transform="translate(2 2)" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_869" data-name="Path 869" d="M12,6v6l4,2" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
+
+
                   </div>
 
-                <div className="ml-4">
-                <p className="fs-14">Total Spend</p>
+                <div className="ml-4 cursor-pointer"   onClick={() => {
+              setIsPayoutDrawerOpen(true);
+              setSelectedPayoutType('upcoming');
+            }}>
+                <p className="fs-13">Upcoming Payouts</p>
+                <p className="fs-16 fw-bold text-red">$7,750</p>
+                <p className="fs-12 fw-400">Expected</p>
+                </div>
+          </div>
+
+          <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                 <div className="p-2 rounded-full bg-gray-50">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="22" viewBox="0 0 14 22">
+  <g id="Group_37" data-name="Group 37" transform="translate(-5 -1)">
+    <line id="Line_1" data-name="Line 1" y2="20" transform="translate(12 2)" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_868" data-name="Path 868" d="M17,5H9.5a3.5,3.5,0,0,0,0,7h5a3.5,3.5,0,1,1,0,7H6" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
+
+                  </div>
+
+                <div className="ml-4 cursor-pointer" onClick={() => {
+              setIsPayoutDrawerOpen(true);
+              setSelectedPayoutType('total');
+            }}>
+                <p className="fs-13">Total Payouts</p>
                 <p className="fs-16 fw-bold text-red">$12,450</p>
+                <p className="fs-12 fw-400">Recieved</p>
                 </div>
           </div>
   </div>
@@ -407,6 +464,123 @@ function Homepage() {
             </div>
           </div>
           <div className="col-md-4 ">
+
+            <Drawer
+              anchor="right"
+              open={isPayoutDrawerOpen}
+              onClose={() => setIsPayoutDrawerOpen(false)}
+            >
+              <div className="p-4" style={{ width: "500px" }}>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h5 className="mb-0">Payouts Details</h5>
+                  <Icon
+                  icon="mdi:close"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer"
+                  onClick={() => setIsPayoutDrawerOpen(false)}
+                  />
+                </div>
+                
+{/* tabs */}
+<div className="d-flex bg-tabs py-2 w-100" role="tablist" aria-orientation="horizontal">
+  <button
+    className={`tab-payouts ${
+      selectedPayoutType === "total" ? "tab-payouts-active" : ""
+    }`}
+    role="tab"
+    type="button"
+    aria-selected={selectedPayoutType === "total"}
+    onClick={() => setSelectedPayoutType("total")}
+  >
+    Total Payouts
+  </button>
+  <button
+    className={`tab-payouts  ${
+      selectedPayoutType === "upcoming" ? "tab-payouts-active" : ""
+    }`}
+    role="tab"
+    type="button"
+    aria-selected={selectedPayoutType === "upcoming"}
+    onClick={() => setSelectedPayoutType("upcoming")}
+  >
+    Upcoming Payouts
+  </button>
+</div>
+<div className="mt-4">
+  {selectedPayoutType === "total" && (
+    <div className="PayoutBox">
+    <div>
+      {/* Total Payouts Content */} 
+      
+      <div className="notification_wrapper new_campaign_application">
+        <div className="notify_icons"><svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
+  <path id="Icon_core-resize-both" data-name="Icon core-resize-both" d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z" transform="translate(-3.75 -3.75)"/>
+</svg>
+</div>
+        <div className="ml-3 w-100">
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="w-50"> 
+              <p className="fs-14 fw-500">hunt for Draft</p>
+              <p className="fs-11 fw-400 text-gray">Mar 05, 2025</p>
+            </div>
+
+            <div className="w-50 text-right">  
+              <p className="fs-14 fw-500 text-red">$ 2500</p>
+              <p className="fs-11 fw-400 text-gray">Paid</p>
+            </div>
+             </div>
+       
+          
+            </div>
+            </div> </div>
+            <hr />
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <div className="fs-16 fw-500 text-black">Total Received</div>
+            <div className="fs-16 fw-500 text-teal">$12,450</div>
+          </div>
+      
+       {/* Total Payouts Content */}
+       </div>
+
+  )}
+  {selectedPayoutType === "upcoming" && (
+    <div className="PayoutBox">
+    <div>
+      {/* Upcoming Payouts Content */}
+      <div className="notification_wrapper new_campaign_application">
+        <div className="notify_icons"><svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
+  <path id="Icon_core-resize-both" data-name="Icon core-resize-both" d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z" transform="translate(-3.75 -3.75)"/>
+</svg>
+</div>
+        <div className="ml-3 w-100">
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="w-50"> 
+              <p className="fs-14 fw-500">hunt for Draft</p>
+              <p className="fs-11 fw-400 text-gray">Expected: Mar 15, 2025</p>
+            </div>
+
+            <div className="w-50 text-right">  
+              <p className="fs-14 fw-500 text-red">$ 2500</p>
+              <p className="fs-11 fw-400 text-gray">Upcoming</p>
+            </div>
+             </div>
+  
+          </div>
+            </div>
+            </div>
+      {/* Upcoming Payouts Content */}
+            <hr />
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <div className="fs-16 fw-500 text-black">Total Expected</div>
+            <div className="fs-16 fw-500 text-teal">$12,450</div>
+          </div>
+      </div>
+  )}
+</div>
+    {/* tabs */}            
+              </div>
+            </Drawer>
            
             <div className="card mb-3">
               <div className="card-body">
@@ -418,7 +592,7 @@ function Homepage() {
 
             <div className="card mb-3" style={{ height: "48%" }}>
               <div className="card-body">
-                <p className="mb-2 fs-16 fw-medium ">What's New (Notifications)</p>
+                <p className="mb-2 fs-16 fw-medium ">What's New</p>
                 {notifications?.notifications &&
                 notifications?.notifications?.length !== 0 ? (
                   notifications?.notifications
@@ -500,6 +674,8 @@ function Homepage() {
 
    
           </div>
+
+          
         </div>
       </div>
 

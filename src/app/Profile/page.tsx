@@ -22,6 +22,7 @@ interface editDtoProps {
   description: string;
   skills: [string];
   current_company: string;
+  job_title: string;
   audience_interest: string;
   collaboration_packages: any;
 }
@@ -66,6 +67,7 @@ function ProfilePage() {
     description: "",
     skills: [""],
     current_company: "",
+    job_title: "",
     audience_interest: "",
     collaboration_packages: [
       {
@@ -172,6 +174,7 @@ function ProfilePage() {
         description: userProfile?.Description,
         skills: userProfile?.Skills,
         current_company: userProfile?.Current_Company,
+        job_title: userProfile?.Job_Title,
         audience_interest: userProfile?.Audience_Interest,
         collaboration_packages: collabPack,
       });
@@ -392,9 +395,9 @@ function ProfilePage() {
               <div className="profile-image-content-text">
                 {/* Profile Info */}
                 <div className="mt-2">
-                  <h4 className="mb-1" id="name" onClick={editFieldHandler}>
+                  <div className="fs-20 fw-700 text-black mb-2" id="name" onClick={editFieldHandler}>
                     {userProfile?.Name}
-                    <div
+                   <div
                       className="editprofilebox"
                       onClick={() => handleSectionClick("about")}
                       style={{ cursor: "pointer" }}
@@ -410,17 +413,17 @@ function ProfilePage() {
                         <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
                       </svg>
                     </div>
-                  </h4>
-                  {/* <h6 className="text-muted mb-2">
-                    {userProfile?.Current_Position ||
-                      "Senior Software Engineer"}
-                  </h6> */}
-
+                  </div>
+                {/* Job Title */}
+                <span className="fs-14 fw-500 text-gray"> {userProfile?.Job_Title ||
+                      ""}
+                      </span>
+               
                   {/* Company and Location Row */}
                   {userProfile?.Current_Company && (
                     <div className="d-flex align-items-center gap-2 text-muted mb-2">
-                      <Icon icon="mdi:building" width={18} height={18} />
-                      <span>{userProfile?.Current_Company}</span>
+                     {/*  <Icon icon="mdi:building" width={18} height={18} /> */}
+                      <span className="fs-14 fw-500 text-gray">{userProfile?.Current_Company}</span>
                     </div>
                   )}
 
@@ -908,7 +911,7 @@ function ProfilePage() {
                           />
                         </div>
                         <div className="mb-4 section-box_container">
-                          <label className="mb-2">Current Company*</label>
+                          <label className="mb-2">Current Company URL*</label>
                           <input
                             type="text"
                             className="form-control"
@@ -916,6 +919,17 @@ function ProfilePage() {
                             onChange={changeHandler}
                             id="current_company"
                             placeholder="Synnc"
+                          />
+                        </div>
+                        <div className="mb-4 section-box_container">
+                          <label className="mb-2">Job Title *</label>
+                          <input
+                          type="text"
+                          className="form-control"
+                          value={editDetails.job_title}
+                          onChange={changeHandler}
+                          id="job_title"
+                          placeholder="Job Title"
                           />
                         </div>
                         <div
