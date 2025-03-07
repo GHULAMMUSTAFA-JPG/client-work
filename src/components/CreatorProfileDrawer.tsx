@@ -87,8 +87,20 @@ export default function CreatorProfileDrawer({ creatorId }: CreatorProfileDrawer
       <div className="offcanvas-body" style={{ backgroundColor: "#f4f2ee" }}>
         {userProfile ? (
           <div>
+          
+<div className="container">
+<div className="main-profilebanner-drawer">
+        {/* Banner Image */}
+        <img
+                src={userProfile?.Banner_Image || defaultImagePath}
+                alt="Profile Banner"
+                className="object-fit-cover rounded-3 w-100 cover-img"
+                style={{ height: "200px" }}
+              />
+      </div>
+      <div className="col-md-10 mx-auto">  
 
-<div className="profile-box-container mb-4 position-relative">
+<div className="profile-box-container mb-4 position-relative"  style={{ marginTop: "-50px" }}>
             <div className="profile-topsection" >
               <div className="profile-image-content" style={{ width: "50%" }}>
               <div className="profile-image">
@@ -329,9 +341,55 @@ export default function CreatorProfileDrawer({ creatorId }: CreatorProfileDrawer
     </div>
   </div>
 </div>
+<div className="profile-right-column">
+            <div className="profile-box-container mb-4 mt-16 position-relative">
+              {/* Collaboration Section */}
+              <div className="aboutusSection">
+                <div className="letbox_campaigns">
+                  <h2 style={{ display: "flex" }} className="py-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
+                    </svg>
+                    &nbsp; Let's Collaborate
+                  </h2>
+                                              
+                   <div>
+                   <div className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors"><div className="d-flex align-items-center  justify-content-space-between mb-3"><div>
+                    <h3 className="font-semibold text-gray-900">1x Sponsored Post</h3></div>
+                   <span className="text-gray-900 font-medium">$ 900</span></div>
+                   <ul className="space-y-2 mb-4">
+                    <li className="flex items-start gap-2 text-gray-600">
+                    <div className="w-1 h-1 rounded-full bg-gray-400 mt-2.5">
+                      </div>1 LinkedIn post focusing on your brand
+                      </li>
+                       <li className="flex items-start gap-2 text-gray-600">
+                      <div className="w-1 h-1 rounded-full bg-gray-400 mt-2.5"></div>Basic performance analytics reported</li>
+                      <li className="flex items-start gap-2 text-gray-600"><div className="w-1 h-1 rounded-full bg-gray-400 mt-2.5"></div>~1 week turnaround</li>
+                      <li className="flex items-start gap-2 text-gray-600"><div className="w-1 h-1 rounded-full bg-gray-400 mt-2.5"></div>One round of revisions</li>
+                      </ul>
+                   <button className="btn btn-dark flex-shrink-0 btn-sm">Book Now</button>
+                   </div>
+                   </div>
+                                    
+
+
+               </div>
+            </div>
+          </div>
 </div>
-
-
+</div>
+</div>
+          </div>
           </div>
         ) : (
           <div className="text-center p-4">
@@ -341,5 +399,6 @@ export default function CreatorProfileDrawer({ creatorId }: CreatorProfileDrawer
         )}
       </div>
     </div>
+  
   );
 }
