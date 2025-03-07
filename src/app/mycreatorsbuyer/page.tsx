@@ -316,8 +316,8 @@ function Mycreatorsbuyer() {
                                               ADD TO
                                             </span>
                                           </button>
-                                          <ul
-                                            className="dropdown-menu p-2 dropdown-menu-end position-fixed"
+                                            <ul
+                                            className="border-radius0 py-2 px-2 dropdown-menu p-2 dropdown-menu-end position-fixed"
                                             style={{
                                               width: "400px",
                                               maxHeight: "300px",
@@ -325,105 +325,106 @@ function Mycreatorsbuyer() {
                                               top: "20%",
                                               left: "50%",
                                               transform: "translateX(-50%)",
+                                              boxShadow: "1px 1px 5px #dddddd",
                                             }}
-                                          >
+                                            >
                                             <div className="mb-3">
-                                              <p className="text-muted mb-2 fw-medium ">
-                                                Campaigns
+                                              <p className="fs-13 fw-500 text-black">
+                                              Campaigns
                                               </p>
                                               {activeCampaigns?.campaigns?.map(
-                                                (
-                                                  campaingElement: any,
-                                                  indexNum: number
-                                                ) => {
-                                                  return (
-                                                    <div
-                                                      key={indexNum}
-                                                      className="d-flex align-items-center mb-2 ms-2"
-                                                    >
-                                                      <span
-                                                        className="d-flex align-items-center fs-12 text-truncate"
-                                                        style={{
-                                                          maxWidth: "300px",
-                                                        }}
-                                                      >
-                                                        <Icon
-                                                          icon="tabler:target"
-                                                          className="me-2 flex-shrink-0"
-                                                        />
-                                                        {
-                                                          campaingElement?.Headline
-                                                        }
-                                                      </span>
-                                                      <button
-                                                        className="btn btn-sm btn-outline-secondary  ms-auto flex-shrink-0"
-                                                        onClick={() => {
-                                                          inviteCreator(
-                                                            campaingElement,
-                                                            user
-                                                          );
-                                                        }}
-                                                      >
-                                                        Add
-                                                      </button>
-                                                    </div>
-                                                  );
-                                                }
+                                              (
+                                                campaingElement: any,
+                                                indexNum: number
+                                              ) => {
+                                                return (
+                                                <div
+                                                  key={indexNum}
+                                                  className="d-flex align-items-center mb-2 ms-2 hover-bg-light"
+                                                >
+                                                  <span
+                                                  className="d-flex align-items-center fs-12 text-truncate"
+                                                  style={{
+                                                    maxWidth: "300px",
+                                                  }}
+                                                  >
+                                                  <Icon
+                                                    icon="tabler:target"
+                                                    className="me-2 flex-shrink-0"
+                                                  />
+                                                  {
+                                                    campaingElement?.Headline
+                                                  }
+                                                  </span>
+                                                  <button
+                                                  className="btn btn-dark ms-auto flex-shrink-0"
+                                                  onClick={() => {
+                                                    inviteCreator(
+                                                    campaingElement,
+                                                    user
+                                                    );
+                                                  }}
+                                                  >
+                                                  Add
+                                                  </button>
+                                                </div>
+                                                );
+                                              }
                                               )}
                                             </div>
 
                                             <div>
-                                              <p className="text-muted mb-2 fw-medium">
-                                                Lists
+                                              <p className="fs-13 fw-500 text-black">
+                                              Lists
                                               </p>
                                               {buyerList?.map(
-                                                (item: any, index: number) => (
-                                                  <div
-                                                    key={index}
-                                                    className="d-flex justify-content-between align-items-center mb-2 ms-2"
-                                                  >
-                                                    <span
-                                                      className="d-flex align-items-center fs-12 text-truncate"
-                                                      style={{
-                                                        maxWidth: "300px",
-                                                      }}
-                                                    >
-                                                      <Icon
-                                                        icon="tabler:target"
-                                                        className="me-2 flex-shrink-0"
-                                                      />
-                                                      {item?.List_Name}
-                                                    </span>
-                                                    <button
-                                                      className="btn btn-sm btn-outline-secondary"
-                                                      onClick={() =>
-                                                        addToCreatorList(
-                                                          item,
-                                                          user
-                                                        )
-                                                      }
-                                                    >
-                                                      Add
-                                                    </button>
-                                                  </div>
-                                                )
+                                              (item: any, index: number) => (
+                                                <div
+                                                key={index}
+                                                className="d-flex justify-content-between align-items-center mb-2 ms-2 hover-bg-light"
+                                                >
+                                                <span
+                                                  className="d-flex align-items-center fs-12 text-truncate"
+                                                  style={{
+                                                  maxWidth: "300px",
+                                                  }}
+                                                >
+                                                  <Icon
+                                                  icon="tabler:target"
+                                                  className="me-2 flex-shrink-0"
+                                                  />
+                                                  {item?.List_Name}
+                                                </span>
+                                                <button
+                                                  className="btn btn-dark"
+                                                  onClick={() =>
+                                                  addToCreatorList(
+                                                    item,
+                                                    user
+                                                  )
+                                                  }
+                                                >
+                                                  Add
+                                                </button>
+                                                </div>
+                                              )
                                               )}
 
                                               <div className="border-top mt-2 pt-2">
-                                                <a
-                                                  className="dropdown-item p-1 d-flex align-items-center"
-                                                  data-bs-toggle="modal"
-                                                  data-bs-target="#createNewListModal"
-                                                >
-                                                  <Icon
-                                                    icon="ri:add-fill"
-                                                    className="me-2"
-                                                  />
-                                                  Create New List
-                                                </a>
+                                              <a
+                                                className="dropdown-item p-1 d-flex align-items-center"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#createNewListModal"
+                                              >
+                                                <Icon
+                                                icon="ri:add-fill"
+                                                className="me-2"
+                                                />
+                                                Create New List
+                                              </a>
                                               </div>
                                             </div>
-                                          </ul>
+                                            </ul>
                                         </div>
                                       </td>
                                     </tr>
