@@ -1130,6 +1130,14 @@ body {
   border: 1px solid transparent;
 }
 
+.main-profilebanner-drawer {
+  background: $primary;
+  width: 100%;
+  min-height: 200px;
+  border-radius: 5px;
+  max-height: 200px;
+  overflow: hidden;
+}
 .main-profilebanner {
   background: $primary;
   width: 100%;
@@ -1138,6 +1146,7 @@ body {
   max-height: 300px;
   overflow: hidden;
 }
+
 
 .profile-image {
   width: 150px;
@@ -1847,3 +1856,99 @@ body {
   flex-direction: column;
   align-items: start;
 }
+
+
+.list-gridbox-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 30px 0;
+}
+.card-listbox-campaigns
+{
+  padding: 20px 15px;
+  border-radius: 5px;
+  border: 1px solid #e8e7e7;
+  background-color: #f7f7f7;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 4px #ddd;
+  &:hover {
+    background-color: #fff;
+    box-shadow: 0 0 10px #ddd;
+    border: 1px solid #1bb09d;
+  }
+}
+.card-listbox-campaigns-active
+{
+  padding: 20px 15px;
+  border-radius: 5px;
+  border: 1px solid #1bb09d;
+  background-color: #fff;
+  box-shadow: 0 0 10px #ddd;
+  transition: all 0.3s ease-in-out;
+}
+.card-header
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.card-header-title
+{
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+.card-header-subtitle
+{
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #6b7280;
+}
+.tag-icon svg
+{
+  stroke: #1bb09d;
+}
+.category-text
+{
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #1bb09d;
+}
+.icon-group
+{
+  display: flex;
+  gap: 10px;
+}
+.info-text
+{
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #6b7280;
+}
+
+.button-list
+{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: #1bb09d;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+  margin: 20px 0 auto;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: #169f8e;
+  }
+}
+
+
+
