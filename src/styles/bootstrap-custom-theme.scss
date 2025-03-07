@@ -97,9 +97,8 @@ body {
     align-items: center;
   }
   .btn:hover {
-    //color: $white;
     background-color: transparent;
-    //border-color: var(--bs-btn-hover-border-color);
+    color: black !important;
   }
 
   .btn-outline-dark:hover {
