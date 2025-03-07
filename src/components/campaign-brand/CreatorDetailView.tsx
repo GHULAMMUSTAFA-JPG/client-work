@@ -297,21 +297,23 @@ export function CreatorDetailView({
                         </button>
                       )} */}
 
-                      {selectedPost.numberstatus === 10 ? (
-                        <button
-                          disabled
-                          className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
-                        >
-                          <DollarSign className="tw-w-4 tw-h-4" />
-                          Payment Processed
-                        </button>
-                      ) : (
+                      {selectedPost.numberstatus === 12 ? (
                         <button
                           onClick={() => handleProcessPaymentCheckout()}
                           className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2"
                         >
                           <DollarSign className="tw-w-4 tw-h-4" />
                           Process Payment
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                        >
+                          <DollarSign className="tw-w-4 tw-h-4" />
+                          {selectedPost.numberstatus === 10
+                            ? "Payment Processed"
+                            : "Process Payment"}
                         </button>
                       )}
                     </div>

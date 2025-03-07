@@ -26,7 +26,7 @@ export const CampaignAcceptanceCard = ({
   console.log("user", user);
   const handleViewCampaign = async (id: any) => {
     if (user?.isBuyer) {
-      router.push(`/campaign-details?id=${id}`);
+      router.push(`/campaign-details/${id}`);
     } else if (!user?.isBuyer) {
       router.push(`/campaign-hub?id=${id}`);
     }
@@ -53,7 +53,9 @@ export const CampaignAcceptanceCard = ({
             style={{ width: "1.25rem", height: "1.25rem" }}
           />
           <h3 className="fw-medium text-dark mb-0 line-clamp-2">
-            {isCreatorView ? "Accepted to Campaign" : "Creator Accepted"}
+            {user.isBuyer
+              ? "Creator accepted to the campaign"
+              : "Congrats! Brand has accepted your application"}
           </h3>
         </div>
         <span className="small text-gray flex-shrink-0 ms-3">
