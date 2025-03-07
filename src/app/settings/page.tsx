@@ -229,7 +229,7 @@ function App() {
                           : "/Profile?edit=true"
                       );
                     }}
-                    className="btn btn-primary"
+                    className="btn btn-dark"
                   >
                     Edit
                   </div>
