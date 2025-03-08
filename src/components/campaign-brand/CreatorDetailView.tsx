@@ -185,12 +185,28 @@ export function CreatorDetailView({
             <ArrowLeft className="tw-w-4 tw-h-4 tw-mr-2" />
             Back to Campaign Overview
           </button>
-          <div
-            className="tw-flex tw-items-center tw-text-blue-600 hover:tw-text-blue-700"
+{/*           <div
+            className="tw-flex tw-items-center tw-text-blue-600 hover:tw-text-blue-700 cursor-pointer"
             data-bs-toggle="offcanvas"
             data-bs-target="#creatorProfileDrawer"
           >
-            <User className="tw-w-4 tw-h-4 tw-mr-2" />
+          
+            View Creator Profile
+          </div> */}
+
+          <div className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded-lg tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#creatorProfileDrawer"
+          >
+            {selectedCreator?.profilePicture ? (
+              <img
+                src={selectedCreator.profilePicture}
+                alt={selectedCreator.name}
+                className="tw-w-8 tw-h-8 tw-rounded-full tw-mr-2"
+              />
+            ) : (
+              <User className="tw-w-8 tw-h-8 tw-mr-2" />
+            )}
             View Creator Profile
           </div>
         </div>

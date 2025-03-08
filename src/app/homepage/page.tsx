@@ -381,7 +381,7 @@ function Homepage() {
 
                 <div className="ml-4">
                   <p className="fs-13">Active Campaigns</p>
-                  <p className="fs-16 fw-bold text-red">
+                  <p className="fs-16 fw-bold">
                     {campaigns?.Activated_Campaigns?.length}
                   </p>
                 </div>
@@ -410,7 +410,7 @@ function Homepage() {
 
                 <div className="ml-4">
                   <p className="fs-13">Pending Applications</p>
-                  <p className="fs-16 fw-bold text-red">
+                  <p className="fs-16 fw-bold">
                     {campaigns?.Submitted_Campaigns?.length}
                   </p>
                 </div>
@@ -464,7 +464,7 @@ function Homepage() {
                   }}
                 >
                   <p className="fs-13">Upcoming Payouts</p>
-                  <p className="fs-16 fw-bold text-red">
+                  <p className="fs-16 fw-bold">
                     ${payoutDetails.upcomingPayout.toLocaleString()}
                   </p>
                   <p className="fs-12 fw-400">Expected</p>
@@ -517,7 +517,7 @@ function Homepage() {
                   }}
                 >
                   <p className="fs-13">Total Payouts</p>
-                  <p className="fs-16 fw-bold text-red">
+                  <p className="fs-16 fw-bold">
                     ${payoutDetails.paidPayout.toLocaleString()}
                   </p>
                   <p className="fs-12 fw-400">Recieved</p>
