@@ -70,7 +70,7 @@ function Homepagebuyer() {
             <div className="card mb-3">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">Profile</p>
+                  <p className="mb-0 fs-16 fw-medium">Profile <span className="text-teal">(Brand)</span></p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
                       {/*  <Tooltip
@@ -330,87 +330,10 @@ function Homepagebuyer() {
                 </div>
               </div>
             </div>
-            <div className="statsbox-container-dash py-3">
-              <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                <div className="p-2 rounded-full bg-gray-50">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="text-teal-svg"
-                  >
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </div>
-
-                <div className="ml-4">
-                  <p className="fs-14">Active Campaigns</p>
-                  <p className="fs-16 fw-bold text-red">3</p>
-                </div>
-              </div>
-
-              <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                <div className="p-2 rounded-full bg-gray-50">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="text-blue-svg"
-                  >
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                </div>
-
-                <div className="ml-4">
-                  <p className="fs-14">Pending Applications</p>
-                  <p className="fs-16 fw-bold text-red">5</p>
-                </div>
-              </div>
-
-              <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                <div className="p-2 rounded-full bg-gray-50">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="text-green-svg"
-                  >
-                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
-                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
-                    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
-                  </svg>
-                </div>
-
-                <div className="ml-4">
-                  <p className="fs-14">Total Spend</p>
-                  <p className="fs-16 fw-bold text-red">$12,450</p>
-                </div>
-              </div>
-            </div>
+        
             <div className="card card-with-table">
               <div className="card-header p-3">
-                <div className="d-flex align-items-center justify-content-between gap-3">
+                <div className="d-flex align-items-center w-100 justify-content-between gap-3">
                   <p className="mb-0 fw-medium fs-16">Campaigns</p>
 
                   <button
@@ -524,7 +447,7 @@ function Homepagebuyer() {
             <div className="card mb-3">
               <div className="card-body">
                 <p className="mb-2 fs-16 fw-medium">
-                  What's New (Notifications)
+                  What's New
                 </p>
                 {notifications?.notifications?.length ? (
                   notifications.notifications

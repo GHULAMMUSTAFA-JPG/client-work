@@ -226,8 +226,9 @@ function Mycreatorsbuyer() {
             className="user-img img-fluid"
           />
           <div className="ms-2">
+            <div className="d-flex align-items-center gap-2">
             <div className="text-truncate fw-medium">{creator?.Name}</div>
-            <div className="d-flex align-items-center fs-14">
+            <div className=" fs-14">
               {creator?.Country_Code && (
                 <img
                   src={`https://flagcdn.com/${creator.Country_Code.toLowerCase()}.svg`}
@@ -237,10 +238,11 @@ function Mycreatorsbuyer() {
                   alt={creator.Country_Code}
                 />
               )}
+              </div>
+              </div>
               <span className="text-truncate text-secondary">
                 {creator?.Job_Title || ""}
               </span>
-            </div>
           </div>
         </div>
       </td>
@@ -781,7 +783,18 @@ function Mycreatorsbuyer() {
             </ul>
 <div className="container">
             <div className="row">
-              <div className="d-flex justify-content-between align-items-center py-3 px-3 gap-3">
+
+              <div className="col-12 mb-2">
+                <div className="tab-content" id="myTabContent">
+                  <div
+                    className="tab-pane fade show active"
+                    id="home-tab-pane"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
+                    tabIndex={0}
+                  >
+
+<div className="d-flex justify-content-between align-items-center py-3 px-3 gap-3">
                 <div className="tw-flex-1 tw-relative">
                   <Search className="tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-text-gray-400 tw-h-5 tw-w-5" />
                   <input
@@ -801,15 +814,7 @@ function Mycreatorsbuyer() {
                   Filter
                 </button>
               </div>
-              <div className="col-12 mb-2">
-                <div className="tab-content" id="myTabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="home-tab-pane"
-                    role="tabpanel"
-                    aria-labelledby="home-tab"
-                    tabIndex={0}
-                  >
+
                     <div className="card">
                       <div className="card-body p-0">
                         <div className="table-responsive">
