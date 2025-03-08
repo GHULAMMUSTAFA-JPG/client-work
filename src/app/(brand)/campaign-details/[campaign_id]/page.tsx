@@ -36,7 +36,6 @@ function CampaignDetailsContent() {
   const creatorParam = searchParams.get("creator");
   const postParam = searchParams.get("post");
   const { user } = useAuth();
-
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>(tabParam || "invited");
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
@@ -46,7 +45,6 @@ function CampaignDetailsContent() {
   const [campaignActiveCreatorsData, setCampaignActiveCreatorsData] =
     useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const fetchCampaign = async () => {
     if (!user?._id) return;
 
@@ -189,7 +187,13 @@ function CampaignDetailsContent() {
         posts={selectedCreator.posts || []}
         campaignId={campaign_id as string}
         onUpdate={() => setRefreshTrigger((prev) => prev + 1)}
-        creators={campaign.creators}
+        creators={campaignActiveCreatorsData.Active_Creators?.map(
+          (item: any) => ({
+            name: item.Name,
+            profilePicture: item.Profile_Image,
+            id: item.Creator_ID,
+          })
+        )}
         selectedCreator={selectedCreator}
         handelSelectedCreator={handleSelectCreator}
       />
