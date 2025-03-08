@@ -74,9 +74,9 @@ function Homepage() {
   };
   useEffect(() => {
     const fetchPayouts = async () => {
-      if (user?.email) {
+      if (user?.uuid) {
         try {
-          const userPosts = (await getCreatorPayouts(user.email)) as any[];
+          const userPosts = (await getCreatorPayouts(user.uuid)) as any[];
           const payoutData = calculatePayouts(userPosts);
           setPayoutDetails(payoutData);
         } catch (error) {
@@ -86,7 +86,7 @@ function Homepage() {
     };
 
     fetchPayouts();
-  }, [user?.email]);
+  }, [user?.uuid]);
 
   const shareProfile = () => {
     try {
