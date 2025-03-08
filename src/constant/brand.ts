@@ -43,9 +43,9 @@ export const CREATOR_FILTER_OPTIONS = {
     { value: "synnc", label: "Synnc Digital" },
   ],
   companySizeOptions: [
-    { value: "small", label: "Small (<50 employees)" },
-    { value: "medium", label: "Medium (51-1k)" },
-    { value: "large", label: "Large (1k+ employees)" },
+    { value: "0-50", label: "0 - 50 employees" },
+    { value: "51-1000", label: "51 - 1,000 employees" },
+    { value: "1000+", label: "1,000+ employees" },
   ],
   followerRangeOptions: [
     { value: "", label: "Select range" },

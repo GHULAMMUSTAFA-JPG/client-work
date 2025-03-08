@@ -1,10 +1,7 @@
 import { handleApiRequest } from "./utils";
 
-export const getCreatorPayouts = async (email: string) => {
-  return handleApiRequest(
-    "get",
-    `/creators/campaigns/creator-payouts/${email}`
-  );
+export const getCreatorPayouts = async (creator_id: string) => {
+  return handleApiRequest("get", `/creator/${creator_id}/payouts`);
 };
 
 export const discoverCreators = async (params: {
