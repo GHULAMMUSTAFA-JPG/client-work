@@ -49,9 +49,19 @@ export default function CreatorProgress({
             onClick={handleViewDetails}
           >
             <div className="tw-w-10 tw-h-10 tw-rounded-full tw-bg-gray-100 tw-flex tw-items-center tw-justify-center">
-              <span className="tw-text-lg tw-font-medium tw-text-gray-600">
-                {creator.name[0]}
-              </span>
+              {creator.profilePicture ? (
+                <img
+                  src={creator.profilePicture}
+                  alt={creator.name}
+                  className="tw-w-10 tw-h-10 tw-rounded-full tw-object-cover"
+                />
+              ) : (
+                <div className="tw-w-10 tw-h-10 tw-rounded-full tw-bg-gray-200 tw-flex tw-items-center tw-justify-center">
+                  <span className="tw-text-gray-500 tw-text-lg">
+                    {creator.name[0]}
+                  </span>
+                </div>
+              )}
             </div>
             <div>
               <h3 className="tw-font-medium tw-text-gray-900 ">

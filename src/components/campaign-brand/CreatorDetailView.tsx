@@ -156,23 +156,6 @@ export function CreatorDetailView({
     }
   };
 
-  const mapStatusToViewerStatus = (
-    status: number
-  ): "in-review" | "approved" | "rejected" | "published" | "draft" => {
-    switch (status) {
-      case Status.Approved:
-        return "approved";
-      case Status.Rejected:
-        return "rejected";
-      case Status.PendingApproval:
-        return "in-review";
-      case Status.Published:
-        return "published";
-      default:
-        return "draft";
-    }
-  };
-
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
       <div className="tw-mx-auto tw-px-4 tw-py-8">
