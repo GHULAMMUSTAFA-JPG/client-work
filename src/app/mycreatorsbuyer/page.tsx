@@ -292,9 +292,9 @@ function Mycreatorsbuyer() {
   const renderListCard = (entry: any, index: number) => (
     <div
       key={index}
-      className="tw-border tw-rounded-lg tw-p-4 tw-bg-white tw-shadow-sm"
+      className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm"
     >
-      <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
+      <div className="tw-flex tw-items-center tw-justify-between tw-mb-4 tw-mt-2">
         <h3 className="tw-font-medium tw-text-lg tw-truncate">
           {entry?.List_Name}
         </h3>
@@ -316,7 +316,7 @@ function Mycreatorsbuyer() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-pencil"
+                className="lucide lucide-pencil hover:text-blue-500"
               >
                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
                 <path d="m15 5 4 4"></path>
@@ -326,9 +326,9 @@ function Mycreatorsbuyer() {
           <Tooltip content="Delete list">
             <button
               onClick={() => actionFunction("delete", entry?._id)}
-              className="tw-p-1.5 tw-text-gray-500 tw-hover:text-gray-700 tw-transition-colors"
+              className="p-2 text-gray-600 hover:text-red-600 transition-colors"
             >
-              <svg
+                <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
                 height="18"
@@ -338,14 +338,14 @@ function Mycreatorsbuyer() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-trash2"
-              >
+                className="lucide lucide-trash"
+                >
                 <path d="M3 6h18"></path>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                 <line x1="10" x2="10" y1="11" y2="17"></line>
                 <line x1="14" x2="14" y1="11" y2="17"></line>
-              </svg>
+                </svg>
             </button>
           </Tooltip>
         </div>
@@ -779,15 +779,15 @@ function Mycreatorsbuyer() {
                 </button>
               </li>
             </ul>
-
+<div className="container">
             <div className="row">
-              <div className="tw-flex tw-items-center tw-space-x-4 pb-2">
+              <div className="d-flex justify-content-between align-items-center py-3 px-3 gap-3">
                 <div className="tw-flex-1 tw-relative">
                   <Search className="tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-text-gray-400 tw-h-5 tw-w-5" />
                   <input
                     type="text"
                     placeholder="Search creators by name, company, or job title"
-                    className="tw-w-full tw-pl-10 tw-pr-4 tw-py-2 tw-border tw-rounded-lg tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-teal-500"
+                    className="w-100 tw-pl-10 tw-pr-4 tw-py-3 mt-3 mb-3 tw-border tw-rounded-lg tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-teal-500"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyPress={handleKeyPress}
@@ -795,7 +795,7 @@ function Mycreatorsbuyer() {
                 </div>
                 <button
                   onClick={() => setIsFilterOpen(true)}
-                  className="tw-flex tw-items-center tw-px-4 tw-py-2 tw-border tw-rounded-lg tw-hover:bg-gray-50"
+                  className="tw-flex btn-dark tw-items-center tw-px-4 tw-py-2 tw-border tw-rounded-lg tw-hover:bg-gray-50"
                 >
                   <Filter className="tw-h-5 tw-w-5 tw-mr-2" />
                   Filter
@@ -873,6 +873,7 @@ function Mycreatorsbuyer() {
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
