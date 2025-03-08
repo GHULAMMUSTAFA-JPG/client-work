@@ -26,7 +26,7 @@ const CreatorsDropDown: React.FC<CreatorsDropDownProps> = ({
           {selectedCreator && (
             <>
               {selectedCreator.profilePicture ? (
-                <Image
+                <img
                   src={selectedCreator.profilePicture}
                   alt={selectedCreator.name}
                   width={48}
@@ -62,7 +62,7 @@ const CreatorsDropDown: React.FC<CreatorsDropDownProps> = ({
                 className="tw-w-full tw-flex tw-items-center tw-space-x-3 tw-p-3 hover:tw-bg-gray-50 tw-rounded-lg tw-transition-colors"
               >
                 {creator.profilePicture ? (
-                  <Image
+                  <img
                     src={creator.profilePicture}
                     alt={creator.name}
                     width={40}

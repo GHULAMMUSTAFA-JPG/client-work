@@ -21,7 +21,6 @@ import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
 import { PostViewer } from "../shared/PostViewer";
-import { getStatusStyles, getStatusLabel } from "../shared/utils";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -185,7 +184,7 @@ export function CreatorDetailView({
             <ArrowLeft className="tw-w-4 tw-h-4 tw-mr-2" />
             Back to Campaign Overview
           </button>
-{/*           <div
+          {/*           <div
             className="tw-flex tw-items-center tw-text-blue-600 hover:tw-text-blue-700 cursor-pointer"
             data-bs-toggle="offcanvas"
             data-bs-target="#creatorProfileDrawer"
@@ -194,7 +193,8 @@ export function CreatorDetailView({
             View Creator Profile
           </div> */}
 
-          <div className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded-lg tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
+          <div
+            className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded-lg tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
             data-bs-toggle="offcanvas"
             data-bs-target="#creatorProfileDrawer"
           >
