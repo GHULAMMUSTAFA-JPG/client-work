@@ -38,9 +38,24 @@ export default function Header() {
   const [socket, setSocket] = useState<any>();
   const [newMessage, setNewMessage] = useState<boolean>(false);
   const [totalUnreadMessage, setTotalUnreadMessage] = useState<number>(0);
+  const [userTypeLogin, setUserTypeLogin] = useState<string>("");
+
   useEffect(() => {
     setUser(localStorage.getItem("user"));
   }, []);
+
+  const loginUser = (userData: any) => {
+    setIsLoading(true);
+    localStorage.setItem("user", JSON.stringify(userData));
+    setIsAuthenticated(true);
+    setUser(userData);
+    if (userData.isBuyer) {
+        setUserTypeLogin("Buyer");
+    } else {
+        setUserTypeLogin("Brand");
+    }
+  };
+
 
   const navigateToSignIn = () => {
     logout();
@@ -223,7 +238,7 @@ export default function Header() {
                 className="img-fluid ps-3 ps-lg-0 mb-2 mb-lg-0"
               /> */}
         
-        {userProfile?.isBrand ? (
+        {userTypeLogin === "Buyer" ? (
         <svg xmlns="http://www.w3.org/2000/svg" width="107.8" height="44.279" viewBox="0 0 107.8 44.279">
         <g id="Group_40" data-name="Group 40" transform="translate(-2757.2 -9216)">
           <g id="weblogo-teel" transform="translate(2757.2 9224.696)">
@@ -607,3 +622,7 @@ export default function Header() {
     </>
   );
 }
+function setIsAuthenticated(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+
