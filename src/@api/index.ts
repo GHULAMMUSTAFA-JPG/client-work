@@ -122,14 +122,52 @@ export const fetchBuyerDiscoveryData = async (
   email: string,
   setData: any,
   setIsLoading: any,
-  query: string
+  query: string,
+  filters?: {
+    countries: string[];
+    jobTitles: string[];
+    companies: string[];
+    companySizes: string[];
+    followerRange: string;
+  }
 ) => {
   if (!query) {
     setIsLoading(true);
   }
   try {
+    const queryParams = new URLSearchParams();
+    queryParams.append("email", email);
+    queryParams.append("search_query", query);
+
+    if (filters) {
+      if (filters.companies?.length > 0) {
+        queryParams.append("company_names", filters.companies.join(","));
+      }
+
+      if (filters.jobTitles?.length > 0) {
+        queryParams.append("job_titles", filters.jobTitles.join(","));
+      }
+
+      if (filters.countries?.length > 0) {
+        queryParams.append("county_codes", filters.countries.join(","));
+      }
+
+      if (filters.companySizes?.length > 0) {
+        queryParams.append("company_sizes", filters.companySizes.join(","));
+      }
+
+      if (filters.followerRange) {
+        const [min, max] = filters.followerRange.split("-");
+        if (min) queryParams.append("min_followers", min);
+        if (max && max !== "+") queryParams.append("max_followers", max);
+        if (max === "+" && min) {
+          queryParams.append("min_followers", min);
+        }
+      }
+    }
+
     const response: any = await apiController.get(
-      `/dashboard/buyers/discover_creators?email=${email}&search_query=${query}`
+      `/dashboard/buyers/discover_creators?${queryParams.toString()}`
     );
 
     setIsLoading(false);
@@ -137,7 +175,6 @@ export const fetchBuyerDiscoveryData = async (
     return response;
   } catch (error) {
     setIsLoading(false);
-
     setData({
       External_Creators: [],
       Internal_Creators: [],

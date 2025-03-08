@@ -51,7 +51,7 @@ const CreatorsDropDown: React.FC<CreatorsDropDownProps> = ({
         </button>
 
         {isCreatorDropdownOpen && (
-          <div className="tw-absolute tw-top-full tw-left-0 tw-right-0 tw-mt-2 tw-bg-white tw-rounded-lg tw-shadow-lg tw-p-2 tw-z-10">
+          <div className="tw-absolute tw-top-full tw-left-0 tw-right-0 tw-mt-2 tw-bg-white tw-rounded-lg tw-shadow-lg tw-p-2 tw-z-10 tw-max-h-80 tw-overflow-y-auto">
             {creators.map((creator) => (
               <button
                 key={creator.id}

@@ -8,7 +8,8 @@ export const transformPostContent = (post: any) => {
   return (
     post?.Content_Versions?.map((content: any) => ({
       id: content.Content_ID,
-      date: content.Submitted_At || post.Created_At,
+      date:
+        formatDate(content.Submitted_At) || formatDate(post.Created_At, true),
       media: content.Media_Content || [],
       status: content.Status,
       title: content.Content_Title || post.Post_Title,

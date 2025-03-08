@@ -247,10 +247,3 @@ export const getCreatorCampaignsOverview = async (email: string) => {
     `/dashboard/campaigns/get_creator_campaigns_overview/${email}`
   );
 };
-
-export const getCreatorPayouts = async (creatorId: string) => {
-  return handleApiRequest(
-    "get",
-    `/creators/campaigns/creator-payouts/${creatorId}`
-  );
-};

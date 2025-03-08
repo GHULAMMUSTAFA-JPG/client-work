@@ -1,6 +1,9 @@
 import React from "react";
-import { X, User, ExternalLink, Eye, Heart, MousePointer } from "lucide-react";
+import { X, ExternalLink } from "lucide-react";
 import { Version } from "./ContentVersions";
+import { PostViewer } from "../shared/PostViewer";
+import { Status } from "@/types";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ContentVersionDrawerProps {
   isOpen: boolean;
@@ -14,6 +17,41 @@ export function ContentVersionDrawer({
   version,
 }: ContentVersionDrawerProps) {
   if (!isOpen) return null;
+
+  // Transform Version data to ViewerPost format
+  const viewerPost = {
+    id: version.id,
+    type: version.postType,
+    status: (() => {
+      switch (version.status) {
+        case Status.Approved:
+          return "approved";
+        case Status.Rejected:
+          return "rejected";
+        case Status.Published:
+          return "published";
+        case Status.InProgress:
+          return "draft";
+        default:
+          return "in-review";
+      }
+    })() as "approved" | "rejected" | "published" | "draft" | "in-review",
+    submittedOn: version.date,
+    author: {
+      name: "Content Creator",
+      role: "Creator",
+      avatar: "/assets/images/user1.jpg",
+    },
+    content: version.description || "",
+    image: version.media?.[0],
+    timestamp: version.date,
+    engagement: {
+      likes: version.metrics?.impressions || 0,
+      comments: version.metrics?.clicks || 0,
+      shares: version.metrics?.engagement || 0,
+    },
+  };
+
   return (
     <div className="tw-fixed tw-inset-0 tw-z-50 tw-overflow-hidden">
       <div
@@ -22,7 +60,7 @@ export function ContentVersionDrawer({
       />
 
       <div className="tw-fixed tw-inset-y-0 tw-right-0 tw-flex tw-max-w-full tw-pl-10">
-        <div className="tw-w-screen tw-max-w-md">
+        <div className="tw-w-screen tw-max-w-2xl">
           <div className="tw-flex tw-h-full tw-flex-col tw-bg-white tw-shadow-xl">
             {/* Header */}
             <div className="tw-px-6 tw-py-6 tw-border-b tw-border-gray-200">
@@ -40,101 +78,26 @@ export function ContentVersionDrawer({
             </div>
 
             <div className="tw-flex-1 tw-overflow-y-auto">
-              <div className="tw-p-6 tw-space-y-6">
-                <div>
-                  <h3 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
-                    Content Preview
-                  </h3>
+              <div className="tw-p-6">
+                <PostViewer post={viewerPost} preview={true} />
 
-                  <div className="tw-grid tw-grid-cols-2 tw-gap-4">
-                    {version.media?.map((item, idx) => (
-                      <img
-                        key={idx}
-                        src={item}
-                        alt={`Content preview ${idx + 1}`}
-                        className="tw-w-full tw-h-auto tw-rounded-lg tw-object-cover"
-                      />
-                    ))}
-                  </div>
-                  <div className="tw-py-2">
-                    <p className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
-                      Description
-                    </p>
-                    <p className="tw-text-sm tw-text-gray-600">
-                      {version.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Metrics */}
-                {version.metrics && (
-                  <div className="tw-bg-white tw-p-4 tw-rounded-lg tw-border tw-border-gray-200">
-                    <h3 className="tw-text-sm tw-font-medium tw-text-gray-900 tw-mb-4">
-                      Performance Metrics
-                    </h3>
-                    <div className="tw-grid tw-grid-cols-3 tw-gap-4">
-                      <div className="tw-space-y-1">
-                        <div className="tw-flex tw-items-center tw-text-sm tw-text-gray-500">
-                          <Eye className="tw-w-4 tw-h-4 tw-mr-1" />
-                          Impressions
-                        </div>
-                        <p className="tw-text-lg tw-font-medium tw-text-gray-900">
-                          {version.metrics.impressions.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className="tw-space-y-1">
-                        <div className="tw-flex tw-items-center tw-text-sm tw-text-gray-500">
-                          <MousePointer className="tw-w-4 tw-h-4 tw-mr-1" />
-                          Clicks
-                        </div>
-                        <p className="tw-text-lg tw-font-medium tw-text-gray-900">
-                          {version.metrics.clicks.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className="tw-space-y-1">
-                        <div className="tw-flex tw-items-center tw-text-sm tw-text-gray-500">
-                          <Heart className="tw-w-4 tw-h-4 tw-mr-1" />
-                          Engagement
-                        </div>
-                        <p className="tw-text-lg tw-font-medium tw-text-gray-900">
-                          {version.metrics.engagement}%
-                        </p>
-                      </div>
-                    </div>
-                    <p className="tw-mt-4 tw-text-xs tw-text-gray-500">
-                      Last updated: {version.metrics.lastUpdated}
-                    </p>
-                  </div>
-                )}
-
-                {/* Comments Section */}
+                {/* Feedback Section */}
                 {version.feedback && (
-                  <div>
+                  <div className="tw-mt-6">
                     <h3 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-4">
                       Feedback
                     </h3>
-                    <div className="tw-space-y-4">
-                      <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                        <div className="tw-flex tw-items-start tw-space-x-3">
-                          <div className="tw-flex-shrink-0">
-                            <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-gray-300 tw-flex tw-items-center tw-justify-center">
-                              <User className="tw-w-5 tw-h-5 tw-text-gray-500" />
-                            </div>
-                          </div>
-                          <div>
-                            <p className="tw-mt-1 tw-text-sm tw-text-gray-600">
-                              {version.feedback}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
+                      <p className="tw-text-sm tw-text-gray-600">
+                        {version.feedback}
+                      </p>
                     </div>
                   </div>
                 )}
 
                 {/* Live Post Link */}
                 {version.livePostLink && (
-                  <div className="tw-bg-green-50 tw-p-4 tw-rounded-lg">
+                  <div className="tw-mt-6 tw-bg-green-50 tw-p-4 tw-rounded-lg">
                     <div className="tw-flex tw-items-center tw-justify-between">
                       <span className="tw-text-sm tw-font-medium tw-text-green-800">
                         Live Post
