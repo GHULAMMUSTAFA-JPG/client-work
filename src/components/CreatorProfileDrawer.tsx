@@ -116,7 +116,9 @@ export default function CreatorProfileDrawer({ creatorId }: CreatorProfileDrawer
                 {userProfile?.Name}
                 </h4>
         
-             
+                    <p className="mb-0 fs-14"> 
+                  {userProfile?.Job_Title} 
+                </p>
 
                   <p className="mb-0 fs-14"> 
                   {userProfile?.Current_Company}
