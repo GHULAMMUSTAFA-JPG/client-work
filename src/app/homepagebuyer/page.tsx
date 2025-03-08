@@ -410,7 +410,7 @@ function Homepagebuyer() {
             </div>
             <div className="card card-with-table">
               <div className="card-header p-3">
-                <div className="d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center justify-content-between gap-3">
                   <p className="mb-0 fw-medium fs-16">Campaigns</p>
 
                   <button
