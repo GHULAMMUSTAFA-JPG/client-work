@@ -3,7 +3,7 @@ import { Plus, Eye } from "lucide-react";
 import { CampaignDrawer } from "./CampaignDrawer";
 import { ContentVersionDrawer } from "./ContentVersionDrawer";
 import { Status } from "@/types"; // Ensure the correct Status enum is imported
-import { getCampaignStatusStyles } from "./utils";
+import { getCampaignStatusStyles } from "../shared/utils";
 import { PostContentAddNewContent } from "./PostContentAddNewContent";
 import EmptyState from "../EmptyState";
 

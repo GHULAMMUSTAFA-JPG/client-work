@@ -169,8 +169,7 @@ export default function CreatorList({
                 </button>
               </Tooltip>
 
-              {(creator.status === CreatorStatus.Applied ||
-                creator.status === CreatorStatus.Invited) && (
+              {creator.status === CreatorStatus.Applied && (
                 <>
                   <Tooltip content="Approve creator for the campaign">
                     <button

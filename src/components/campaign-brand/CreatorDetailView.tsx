@@ -10,6 +10,7 @@ import {
   Eye,
   ThumbsDown,
   User,
+  Clock,
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
 import Tooltip from "../Tooltip";
@@ -19,6 +20,8 @@ import { toast } from "react-toastify";
 import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
+import { PostViewer } from "../shared/PostViewer";
+import { getStatusStyles, getStatusLabel } from "../shared/utils";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -151,6 +154,23 @@ export function CreatorDetailView({
     } catch (error) {
       toast.error("An error occurred while rejecting content.");
       console.error("Error rejecting content:", error);
+    }
+  };
+
+  const mapStatusToViewerStatus = (
+    status: number
+  ): "in-review" | "approved" | "rejected" | "published" | "draft" => {
+    switch (status) {
+      case Status.Approved:
+        return "approved";
+      case Status.Rejected:
+        return "rejected";
+      case Status.PendingApproval:
+        return "in-review";
+      case Status.Published:
+        return "published";
+      default:
+        return "draft";
     }
   };
 
@@ -433,10 +453,10 @@ export function CreatorDetailView({
       </div>
       {isDrawerOpen && selectedContent && (
         <div className="tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-50 tw-z-50">
-          <div className="tw-absolute tw-right-0 tw-top-0 tw-h-full tw-w-1/3 tw-bg-white tw-shadow-xl tw-flex tw-flex-col">
+          <div className="tw-absolute tw-right-0 tw-top-0 tw-h-full tw-w-1/2 tw-bg-white tw-shadow-xl tw-flex tw-flex-col">
             <div className="tw-p-6 tw-flex-1 tw-overflow-y-auto">
               <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
-                <h3 className="tw-text-lg tw-font-medium">Content Details</h3>
+                <h3 className="tw-text-lg tw-font-medium">Content Preview</h3>
                 <button
                   onClick={handleCloseDrawer}
                   className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-900 hover:tw-bg-gray-100 tw-rounded-lg tw-transition-colors"
@@ -445,79 +465,100 @@ export function CreatorDetailView({
                 </button>
               </div>
 
-              <div className="tw-space-y-6">
-                <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                  <div className="tw-mb-4">
-                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Type
-                    </h4>
-                    <p className="tw-text-sm tw-text-gray-600 tw-capitalize">
-                      {selectedContent.type}
-                    </p>
-                  </div>
-
-                  <div className="tw-mb-4">
-                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Status
-                    </h4>
-                    <span
-                      className={`tw-px-2 tw-py-1 tw-rounded-full tw-text-xs tw-font-medium ${
-                        selectedContent.status === "approved"
-                          ? "tw-bg-green-100 tw-text-green-800"
-                          : selectedContent.status === "in_review"
-                          ? "tw-bg-yellow-100 tw-text-yellow-800"
-                          : "tw-bg-gray-100 tw-text-gray-800"
-                      }`}
-                    >
-                      {selectedContent.status.replace("_", " ")}
-                    </span>
-                  </div>
-
-                  <div className="tw-mb-4">
-                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Submitted on
-                    </h4>
-                    <p className="tw-text-sm tw-text-gray-600">
-                      {selectedContent.date}
-                    </p>
-                  </div>
-
-                  {selectedContent.content && (
-                    <div className="tw-mb-4">
-                      <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                        Content
-                      </h4>
-                      <p className="tw-text-sm tw-text-gray-600">
-                        {selectedContent.content}
-                      </p>
-                    </div>
-                  )}
+              <div className="tw-flex tw-items-center tw-gap-3 tw-mb-6">
+                <div className="tw-flex tw-items-center tw-gap-1.5 tw-text-gray-600">
+                  <Clock className="tw-w-4 tw-h-4" />
+                  <span className="tw-text-sm">{selectedContent.date}</span>
                 </div>
 
-                {selectedContent.type === "image" &&
-                  selectedContent.images &&
-                  selectedContent.images.length > 0 && (
-                    <div>
-                      <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
-                        Media
-                      </h4>
-                      <div className="tw-grid tw-grid-cols-1 tw-gap-2">
-                        {selectedContent.images.map((image, index) => (
-                          <div
-                            key={index}
-                            className="tw-border tw-rounded-lg tw-overflow-hidden"
-                          >
-                            <img
-                              src={image}
-                              alt={`Content image ${index + 1}`}
-                              className="tw-w-full tw-h-auto"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                <div className="tw-h-4 tw-w-[1px] tw-bg-gray-200" />
+
+                <div className="tw-flex tw-items-center tw-gap-1.5">
+                  <div className="tw-px-2 tw-py-0.5 tw-bg-gray-100 tw-text-gray-700 tw-rounded-full tw-text-xs tw-font-medium tw-flex tw-items-center tw-gap-1.5">
+                    <FileText className="tw-w-3.5 tw-h-3.5" />
+                    <span className="tw-capitalize">
+                      {selectedContent.type}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="tw-h-4 tw-w-[1px] tw-bg-gray-200" />
+
+                <div
+                  className={`tw-px-2 tw-py-0.5 tw-rounded-full tw-text-xs tw-font-medium tw-flex tw-items-center tw-gap-1.5
+                  ${
+                    selectedContent.status === "in_review"
+                      ? "tw-bg-yellow-50 tw-text-yellow-700"
+                      : ""
+                  }
+                  ${
+                    selectedContent.status === "approved"
+                      ? "tw-bg-green-50 tw-text-green-700"
+                      : ""
+                  }
+                  ${
+                    selectedContent.status === "draft"
+                      ? "tw-bg-gray-100 tw-text-gray-700"
+                      : ""
+                  }
+                  ${
+                    selectedContent.status === "published"
+                      ? "tw-bg-blue-50 tw-text-blue-700"
+                      : ""
+                  }
+                `}
+                >
+                  <span
+                    className={`tw-w-1.5 tw-h-1.5 tw-rounded-full
+                    ${
+                      selectedContent.status === "in_review"
+                        ? "tw-bg-yellow-500"
+                        : ""
+                    }
+                    ${
+                      selectedContent.status === "approved"
+                        ? "tw-bg-green-500"
+                        : ""
+                    }
+                    ${
+                      selectedContent.status === "draft" ? "tw-bg-gray-500" : ""
+                    }
+                    ${
+                      selectedContent.status === "published"
+                        ? "tw-bg-blue-500"
+                        : ""
+                    }
+                  `}
+                  />
+                  <span>{selectedContent.status.replace("_", " ")}</span>
+                </div>
               </div>
+
+              <PostViewer
+                post={{
+                  id: selectedContent.id,
+                  type: selectedContent.type,
+                  status:
+                    selectedContent.status === "in_review"
+                      ? "in-review"
+                      : selectedContent.status,
+                  submittedOn: selectedContent.date,
+                  author: {
+                    name: selectedCreator?.name || "",
+                    role: selectedCreator?.jobTitle || "Creator",
+                    avatar: selectedCreator?.profilePicture || "",
+                  },
+                  content: selectedContent.content || "",
+                  image: selectedContent.images?.[0],
+                  timestamp: selectedContent.date || "",
+                  engagement: {
+                    likes: 1230,
+                    comments: 50,
+                    shares: 10,
+                  },
+                }}
+                preview={true}
+              />
             </div>
 
             {selectedContent.status === "in_review" && (
