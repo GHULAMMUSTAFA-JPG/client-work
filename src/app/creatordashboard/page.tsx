@@ -6,7 +6,7 @@ import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { defaultImagePath } from "@/components/constants";
 import { withAuthRole } from "@/utils/withAuthRole";
@@ -21,13 +21,20 @@ function CreatorDashboard() {
     growthRate: 0
   });
   // const router = useRouter()
+
+  const fetchData = useCallback(async () => {
+    const response: any = await fetch_dashboard_data(setIsLoading);
+    setUsers(response.data?.users);
+  }, [setIsLoading]);
+
   useEffect(() => {
     setIsActive(3);
     fetchData();
-  }, []);
+  }, [fetchData, setIsActive]);
+
   useEffect(() => {
     user?.email && fetchCompanyData(user?.email, setCompanyData, setIsLoading);
-  }, [user]);
+  }, [user, setIsLoading]);
   useEffect(() => {
     if (user?.email) {
       const getCreatorData = async () => {
@@ -47,11 +54,7 @@ function CreatorDashboard() {
       };
       getCreatorData();
     }
-  }, [user?.email]);
-    const fetchData = async () => {
-    const response: any = await fetch_dashboard_data(setIsLoading);
-    setUsers(response?.data?.users);
-  };
+  }, [user?.email, setIsLoading]);
 
   const handleInvite = () => {
     const subject = "Join Social27 Creator Platform";
@@ -69,17 +72,31 @@ function CreatorDashboard() {
     <div className="tw-max-w-7xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-py-6">
     <div className="tw-flex tw-items-center tw-gap-6 tw-mb-8">
     <div className="profile-image">
-      <img
-        src={
-          companyData?.Profile_Image ||
-          "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-        }
-         alt="Profile Picture"
-           />
-    </div>
+                {companyData?.Company_Logo !== "" ? (
+                  <Image
+                    src={companyData?.Company_Logo}
+                    alt="Profile Picture"
+                    width={150}
+                    height={150}
+                    className="rounded-circle"
+                    priority
+                  />
+                ) : (
+                  <div
+                    className="d-flex align-items-center justify-content-center bg-light rounded-circle"
+                    style={{ width: "150px", height: "150px" }}
+                  >
+                    <span className="fs-1 fw-bold text-uppercase">
+                      {companyData?.Company_Name?.charAt(0) || 
+                       companyData?.Email?.charAt(0) || 
+                       "N"}
+                    </span>
+                  </div>
+                )}
+              </div>
         <div className="tw-flex-1">
             <div className="tw-flex tw-items-center tw-gap-3">
-                <h1 className="tw-text-4xl tw-font-bold tw-text-gray-900">{companyData?.Company_Name}</h1>
+                <h1 className="tw-text-4xl tw-font-bold tw-text-gray-900"></h1>
                 <span className="bg-teal-light text-black tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium">Creator Platform</span>
             </div>
             <p className="tw-text-gray-600 tw-mt-2">Empowering our team to share, inspire, and grow together</p>

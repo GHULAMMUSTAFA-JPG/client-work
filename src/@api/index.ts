@@ -1043,3 +1043,13 @@ export const getCompanyActiveBuyersData = async (
     setIsLoading(false);
   }
 };
+
+export const fetchCreatorData = async (email: string) => {
+  try {
+    const response = await apiController.post('/dashboard/creators/creator_data', { email });
+    return response?.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
