@@ -199,6 +199,14 @@ body {
   .bg-teal {
     background-color: #1bb09d !important;
   }
+  .bg-teal-light {
+    background-color: #f0fdfa !important;
+  }
+  
+    .bg-very-light-gray{
+    background-color: #eee !important;
+  }
+  
   .bg-white {
     background-color: #ffffff !important;
   }
@@ -498,6 +506,42 @@ body {
       color: $white;
     }
   }
+
+  .button-lg-teal {
+    background: $primary;
+    color: $white;
+    padding: 12px 18px !important;
+    border: none !important;
+    border-radius: 6px;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+
+    &:hover {
+      &:hover {
+        background: darken($primary, 10%); /* Darkens the primary color by 10% */
+    }
+    }
+  }
+
+  .button-lg-white {
+    background: white;
+    color: black;
+    padding: 12px 18px !important;
+    border: none !important;
+    border-radius: 6px;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+
+    &:hover {
+      &:hover {
+        background: darken(white, 10%); /* Darkens the primary color by 10% */
+    }
+    }
+  }
+
+
+
+  
 
   .btn-link {
     background-color: $activated-subtle;
