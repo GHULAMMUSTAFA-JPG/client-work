@@ -10,7 +10,7 @@ import CreatorList from "@/components/campaign-brand/CreatorList";
 import CampaignHeader from "@/components/campaign-brand/CampaignHeader";
 import EditCreateCampaign, {
   CampaignFormData,
-} from "@/components/campaign-brand/EditCreateCampaign";
+} from "@/components/shared/EditCreateCampaign";
 import {
   createCreatorFromData,
   extractCampaignFormData,
