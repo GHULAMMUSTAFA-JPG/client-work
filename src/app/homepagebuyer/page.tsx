@@ -439,7 +439,6 @@ function Homepagebuyer() {
           <div className="col-md-4">
             <div className="card mb-3">
               <div className="card-body">
-                <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
                 <PostCalendar />
               </div>
             </div>

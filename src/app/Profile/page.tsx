@@ -1083,7 +1083,7 @@ function ProfilePage() {
                     >
                       <div className="d-flex justify-content-between mb-3 pt-2">
                         <h6 className="mb-0 ">Edit Section</h6>
-                        <div>
+                        <div className="d-flex align-items-center gap-2">
                           <button
                             className="bg-white border btn btn-sm"
                             onClick={handleCancel}
