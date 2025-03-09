@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
 import { handleFileUpload } from "@/@api";
 import { toast } from "react-toastify";
-import Image from "next/image";
 import { AVAILABLE_SKILLS } from "@/constant/campaign";
 import { createBrandCampaign, updateBrandCampaign } from "@/@api/campaign";
 

@@ -1,5 +1,18 @@
-import { apiController } from "./baseUrl";
+import axios from "axios";
 
+export const apiController = axios.create({
+  baseURL: "https://api.synnc.us/",
+  timeout: 600000,
+});
+
+apiController.interceptors.request.use((request) => {
+  if (localStorage.getItem("user")) {
+    request.headers.Authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("user") ?? "")?.token
+    }`;
+  }
+  return request;
+});
 export const handleApiRequest = async <T>(
   method: "get" | "post" | "put" | "delete",
   url: string,

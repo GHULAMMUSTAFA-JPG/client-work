@@ -28,8 +28,25 @@ export const getStatusStyles = (status: Status) => {
 
 export const getCampaignStatusStyles = (status: Status | CampaignStatus) => {
   const baseStyles =
-    "tw-inline-flex tw-items-center tw-px-2 tw-py-0.5 tw-text-xs tw-font-medium tw-rounded";
+    "tw-inline-flex tw-items-center tw-px-2.5 tw-py-0.5 tw-rounded-full tw-text-xs tw-font-medium";
 
+  // Handle CampaignStatus enum
+  if (Object.values(CampaignStatus).includes(status as CampaignStatus)) {
+    switch (status) {
+      case CampaignStatus.Draft:
+        return `${baseStyles} tw-bg-gray-100 tw-text-gray-800`;
+      case CampaignStatus.Live:
+        return `${baseStyles} tw-bg-green-100 tw-text-green-800`;
+      case CampaignStatus.Completed:
+        return `${baseStyles} tw-bg-blue-100 tw-text-blue-800`;
+      case CampaignStatus.Closed:
+        return `${baseStyles} tw-bg-gray-100 tw-text-gray-600`;
+      default:
+        return `${baseStyles} tw-bg-gray-100 tw-text-gray-800`;
+    }
+  }
+
+  // Handle Status enum
   switch (status) {
     case Status.Approved:
       return `${baseStyles} tw-bg-green-100 tw-text-green-800`;
@@ -48,7 +65,7 @@ export const getCampaignStatusStyles = (status: Status | CampaignStatus) => {
     case Status.Cancelled:
       return `${baseStyles} tw-bg-gray-100 tw-text-gray-600`;
     default:
-      return baseStyles;
+      return `${baseStyles} tw-bg-gray-100 tw-text-gray-800`;
   }
 };
 
@@ -295,5 +312,20 @@ export const getIcon = (postType: string) => {
           <path d="M16 17H8"></path>
         </svg>
       );
+  }
+};
+
+export const mapStatusString = (status: string): CampaignStatus => {
+  switch (status) {
+    case "Completed":
+      return CampaignStatus.Completed;
+    case "Draft":
+      return CampaignStatus.Draft;
+    case "Live":
+      return CampaignStatus.Live;
+    case "Closed":
+      return CampaignStatus.Closed;
+    default:
+      return CampaignStatus.Draft;
   }
 };

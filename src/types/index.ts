@@ -17,6 +17,8 @@ export enum CampaignStatus {
   Live = "Live",
   Completed = "Completed",
   Closed = "Closed",
+  Paused = "Paused",
+  Cancelled = "Cancelled",
 }
 
 export interface PaymentStatus {

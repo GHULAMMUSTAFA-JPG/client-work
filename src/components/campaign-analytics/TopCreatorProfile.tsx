@@ -21,11 +21,19 @@ interface TopCreatorProps {
 const TopCreatorProfile = ({ creator }: TopCreatorProps) => (
   <div className="tw-bg-white tw-rounded-xl tw-shadow-sm tw-p-6 tw-mb-8">
     <div className="tw-flex tw-items-start tw-space-x-6">
-      <img
-        src={creator.image}
-        alt={creator.name}
-        className="tw-w-24 tw-h-24 tw-rounded-lg tw-object-cover"
-      />
+      {creator.image ? (
+        <img
+          src={creator.image}
+          alt={creator.name}
+          className="tw-w-24 tw-h-24 tw-rounded-lg tw-object-cover"
+        />
+      ) : (
+        <div className="tw-w-24 tw-h-24 tw-rounded-lg tw-bg-blue-100 tw-flex tw-items-center tw-justify-center">
+          <span className="tw-text-3xl tw-font-bold tw-text-blue-700">
+            {creator.name.charAt(0).toUpperCase()}
+          </span>
+        </div>
+      )}
       <div className="tw-flex-grow">
         <div className="tw-flex tw-items-center tw-space-x-3 tw-mb-2">
           <h2 className="tw-text-2xl tw-font-bold">{creator.name}</h2>

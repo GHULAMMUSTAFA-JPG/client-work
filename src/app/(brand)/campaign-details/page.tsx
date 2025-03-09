@@ -5,8 +5,8 @@ import { Suspense } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import CampaignTable from "@/components/campaign-brand/CampaignTable";
 import { withAuthRole } from "@/utils/withAuthRole";
-import { CampaignFormData } from "@/components/campaign-brand/EditCreateCampaign";
-import EditCreateCampaign from "@/components/campaign-brand/EditCreateCampaign";
+import { CampaignFormData } from "@/components/shared/EditCreateCampaign";
+import EditCreateCampaign from "@/components/shared/EditCreateCampaign";
 import { getBrandCampaignList } from "@/@api/campaign";
 import { extractCampaignFormData } from "@/utils/dataFormat";
 import Loader from "@/components/loader";
@@ -19,8 +19,7 @@ function CampaignDetails() {
   const [campaignFormData, setCampaignFormData] =
     useState<CampaignFormData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  console.log("selectedCampaign", selectedCampaign);
-  console.log("campaignFormData", campaignFormData);
+
   const fetchCampaignList = async () => {
     if (!user?._id) return;
     try {
