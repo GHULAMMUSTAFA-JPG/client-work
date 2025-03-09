@@ -1,6 +1,6 @@
 "use client";
 
-import { fetch_dashboard_data, fetchCompanyData, handleFileUpload, updateProfileInformation } from "@/@api";
+import { fetch_dashboard_data, fetchCompanyData, handleFileUpload, updateProfileInformation, fetchCreatorData } from "@/@api";
 import Topcard from "@/components/topcard";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -15,6 +15,11 @@ function CreatorDashboard() {
   const { user, setIsLoading, setIsActive } = useAuth();
   const [users, setUsers] = useState<any[]>([]);
   const [companyData, setCompanyData] = useState<any>([]);
+  const [creatorStats, setCreatorStats] = useState({
+    totalCreators: 0,
+    totalEngagements: 0,
+    growthRate: 0
+  });
   // const router = useRouter()
   useEffect(() => {
     setIsActive(3);
@@ -23,38 +28,65 @@ function CreatorDashboard() {
   useEffect(() => {
     user?.email && fetchCompanyData(user?.email, setCompanyData, setIsLoading);
   }, [user]);
+  useEffect(() => {
+    if (user?.email) {
+      const getCreatorData = async () => {
+        setIsLoading(true);
+        try {
+          const response = await fetchCreatorData(user.email);
+          setCreatorStats({
+            totalCreators: response?.total_creators || 0,
+            totalEngagements: response?.total_engagements || 0,
+            growthRate: response?.growth_rate || 0
+          });
+        } catch (error) {
+          console.error('Error fetching creator data:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      getCreatorData();
+    }
+  }, [user?.email]);
     const fetchData = async () => {
     const response: any = await fetch_dashboard_data(setIsLoading);
-    setUsers(response.data?.users);
+    setUsers(response?.data?.users);
   };
+
+  const handleInvite = () => {
+    const subject = "Join Social27 Creator Platform";
+    const body = "Hey! I'd like to invite you to join Social27's Creator Platform.";
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open('mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body), '_blank');
+  return;
+  };
+
   return (
     <>
       
-    <div className="bg-teal-light p-4">
+    <div className="bg-very-light-gray p-3">
    
-    <div className="tw-max-w-7xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-py-12">
-    <div className="tw-flex tw-items-center tw-gap-6 tw-mb-12">
+    <div className="tw-max-w-7xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-py-6">
+    <div className="tw-flex tw-items-center tw-gap-6 tw-mb-8">
     <div className="profile-image">
-                <img
-                  src={                   
-                    "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                  }
-                  alt="Profile Picture"
-                  width={150}
-                  height={150}
-                  className=""
-                />
-              </div>
+      <img
+        src={
+          companyData?.Profile_Image ||
+          "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+        }
+         alt="Profile Picture"
+           />
+    </div>
         <div className="tw-flex-1">
             <div className="tw-flex tw-items-center tw-gap-3">
-                <h1 className="tw-text-4xl tw-font-bold tw-text-gray-900">Social27</h1>
-                <span className="tw-bg-primary-100 tw-text-primary-700 tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium">Creator Platform</span>
+                <h1 className="tw-text-4xl tw-font-bold tw-text-gray-900">{companyData?.Company_Name}</h1>
+                <span className="bg-teal-light text-black tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium">Creator Platform</span>
             </div>
             <p className="tw-text-gray-600 tw-mt-2">Empowering our team to share, inspire, and grow together</p>
         </div>
         <div className="tw-flex tw-gap-4">
             <button className="button-lg-teal">Start Creating</button>
-            <button className="button-lg-white">Invite Colleagues</button>
+            <button className="button-lg-white" onClick={handleInvite}>Invite Colleagues</button>
         </div>
     </div>
 
@@ -64,7 +96,7 @@ function CreatorDashboard() {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-users h-5 w-5 text-primary-600"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 <h3 className="tw-font-medium tw-text-gray-900">Total Creators</h3>
             </div>
-            <p className="tw-text-2xl tw-font-bold tw-text-gray-900">156</p>
+            <p className="tw-text-2xl tw-font-bold tw-text-gray-900">{creatorStats.totalCreators}</p>
         </div>
 
         <div className="tw-bg-white tw-rounded-xl tw-p-4 tw-shadow-sm tw-border tw-border-gray-100">
