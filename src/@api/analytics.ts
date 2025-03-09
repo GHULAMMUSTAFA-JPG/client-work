@@ -184,18 +184,23 @@ export interface DateRange {
 }
 
 export const getCampaignAnalytics = async (
-  campaignId: string
+  campaignId: string,
+  dateRange: DateRange
 ): Promise<CampaignAnalytics | null> => {
   return handleApiRequest<CampaignAnalytics>(
     "post",
     "/analytics/campaign-analytics",
-    { campaign_id: campaignId }
+    {
+      campaign_id: campaignId,
+      date_range: dateRange,
+    }
   );
 };
 
 export const getCampaignCreatorAnalytics = async (
   campaignId: string,
-  creatorId: string
+  creatorId: string,
+  dateRange: DateRange
 ): Promise<CampaignCreatorAnalytics | null> => {
   return handleApiRequest<CampaignCreatorAnalytics>(
     "post",
@@ -203,6 +208,7 @@ export const getCampaignCreatorAnalytics = async (
     {
       campaign_id: campaignId,
       creator_id: creatorId,
+      date_range: dateRange,
     }
   );
 };

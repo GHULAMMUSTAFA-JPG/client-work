@@ -7,7 +7,6 @@ interface Creator {
   impressions: number;
   engRate: number;
   reactions: number;
-  comments: number;
   trend: number;
 }
 
@@ -42,7 +41,7 @@ const CreatorsTable = ({ creators }: CreatorsTableProps) => (
           <th className="tw-pb-4">Impressions</th>
           <th className="tw-pb-4">Eng. Rate</th>
           <th className="tw-pb-4">Reactions</th>
-          <th className="tw-pb-4">Comments</th>
+
           <th className="tw-pb-4">Trend</th>
         </tr>
       </thead>
@@ -51,11 +50,19 @@ const CreatorsTable = ({ creators }: CreatorsTableProps) => (
           <tr key={creator.id} className="tw-border-t tw-border-gray-100">
             <td className="tw-py-4">
               <div className="tw-flex tw-items-center">
-                <img
-                  src={creator.profilePicture}
-                  alt={creator.name}
-                  className="tw-w-8 tw-h-8 tw-rounded-full tw-mr-3"
-                />
+                {creator.profilePicture ? (
+                  <img
+                    src={creator.profilePicture}
+                    alt={creator.name}
+                    className="tw-w-8 tw-h-8 tw-rounded-full tw-mr-3"
+                  />
+                ) : (
+                  <div className="tw-w-8 tw-h-8 tw-rounded-full tw-mr-3 tw-bg-blue-100 tw-flex tw-items-center tw-justify-center">
+                    <span className="tw-text-xs tw-font-bold tw-text-blue-700">
+                      {creator.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                )}
                 <div>
                   <div className="tw-font-medium">{creator.name}</div>
                   <div className="tw-text-gray-500">6 hours ago</div>
@@ -66,7 +73,6 @@ const CreatorsTable = ({ creators }: CreatorsTableProps) => (
             <td className="tw-py-4">{creator.impressions}</td>
             <td className="tw-py-4">{creator.engRate}</td>
             <td className="tw-py-4">{creator.reactions.toLocaleString()}</td>
-            <td className="tw-py-4">{creator.comments.toLocaleString()}</td>
             <td className="tw-py-4">
               <div className="tw-flex tw-items-center tw-text-green-600">
                 <ArrowUpIcon className="tw-w-4 tw-h-4 tw-mr-1" />
