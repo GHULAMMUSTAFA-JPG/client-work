@@ -249,7 +249,7 @@ function Homepage() {
                       </h5>
                       <img
                         src={`https://flagcdn.com/24x18/${
-                          userProfile?.Country_Code || "us"
+                          (userProfile?.Country_Code || "us").toLowerCase()
                         }.png`}
                         width={24}
                         height={14}

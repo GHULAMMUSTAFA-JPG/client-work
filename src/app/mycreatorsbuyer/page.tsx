@@ -9,6 +9,7 @@ import {
   getSavedList,
   getSpecificCreatorList,
   inviteCreatorCall,
+  fetchCompanyData,
 } from "@/@api";
 import CreateNewListModal from "@/components/CreateNewListModal";
 import ViewCreatorsModal from "@/components/ViewCreatorsModal";
@@ -21,6 +22,7 @@ import { Search, Filter, X, Plus, UserPlus } from "lucide-react";
 import { MultiSelect } from "@/components/MultiSelect";
 import { CREATOR_FILTER_OPTIONS } from "@/constant/brand";
 import Tooltip from "@/components/Tooltip";
+import MyCreatorsShell from "@/components/Mycreators-shell";
 
 // Add these interfaces at the top of the file, after the imports
 interface FilterState {
@@ -84,6 +86,12 @@ function Mycreatorsbuyer() {
   const [drawerType, setDrawerType] = useState<"campaign" | "list" | null>(
     null
   );
+  const [companyData, setCompanyData] = useState<any>([]);
+  const [creatorStats, setCreatorStats] = useState({
+    totalCreators: 0,
+    totalEngagements: 0,
+    growthRate: 0
+  });
 
   const fetchData = useCallback(async () => {
     const response: any = await fetch_dashboard_data();
@@ -113,6 +121,12 @@ function Mycreatorsbuyer() {
       );
     }
   }, [user?.email, query, activeFilters, setIsLoading]);
+
+  const getCompanyData = useCallback(async () => {
+    if (user?.email) {
+      fetchCompanyData(user.email, setCompanyData, setIsLoading);
+    }
+  }, [user?.email, setIsLoading]);
 
   // Filter functions
   const resetFilters = () => {
@@ -171,6 +185,12 @@ function Mycreatorsbuyer() {
     }
   };
 
+  const handleInvite = () => {
+    const subject = "Join Social27 Creator Platform";
+    const body = "Hey! I'd like to invite you to join Social27's Creator Platform.";
+    window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+  };
+
   // Effects
   useEffect(() => {
     fetchData();
@@ -199,6 +219,15 @@ function Mycreatorsbuyer() {
       getSpecificCreatorList(selectedId, setSelectedIdCreators, setIsLoading);
     }
   }, [selectedId, rendControl, setIsLoading]);
+
+  useEffect(() => {
+    if (user?.email) {
+      getCompanyData();
+    }
+  }, [user?.email, setIsLoading, getCompanyData]);
+
+  // Content block for My Creators tab
+ 
 
   // Render creator row
   const renderCreatorRow = (creator: any) => (
@@ -733,16 +762,30 @@ function Mycreatorsbuyer() {
               id="myTab"
               role="tablist"
             >
-              <li className="nav-item" role="presentation">
+           <li className="nav-item" role="presentation">
                 <button
                   className="nav-link active"
+                  id="mycreators-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#mycreators-tab-pane"
+                  type="button"
+                  role="tab"
+                  aria-controls="mycreators-tab-pane"
+                  aria-selected="true"
+                >
+                  My Creators
+                </button>
+              </li>
+              <li className="nav-item" role="presentation">
+                <button
+                  className="nav-link"
                   id="home-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#home-tab-pane"
                   type="button"
                   role="tab"
                   aria-controls="home-tab-pane"
-                  aria-selected="true"
+                  aria-selected="false"
                 >
                   Global Creators
                 </button>
@@ -761,13 +804,36 @@ function Mycreatorsbuyer() {
                   My Lists{" "}
                 </button>
               </li>
+
             </ul>
             <div className="container">
               <div className="row">
                 <div className="col-12 mb-2">
+
+
                   <div className="tab-content" id="myTabContent">
-                    <div
+
+                          
+                  <div
                       className="tab-pane fade show active"
+                      id="mycreators-tab-pane"
+                      role="tabpanel"
+                      aria-labelledby="mycreators-tab"
+                      tabIndex={0}
+                    >
+                 <MyCreatorsShell 
+        handleInvite={handleInvite}
+        companyData={companyData}
+        creatorStats={creatorStats}
+      >
+
+      </MyCreatorsShell>
+
+                    </div>
+
+
+                    <div
+                      className="tab-pane fade"
                       id="home-tab-pane"
                       role="tabpanel"
                       aria-labelledby="home-tab"
