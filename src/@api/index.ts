@@ -185,7 +185,7 @@ export const fetchBuyerDiscoveryData = async (
 };
 
 export const getSavedList = async (
-  email: string,
+  brand_id: string,
   setData: any,
   setIsLoading: any
 ) => {
@@ -193,7 +193,7 @@ export const getSavedList = async (
 
   try {
     const response: any = await apiController.get(
-      `/dashboard/buyers/get_buyer_list_names/${email}`
+      `/dashboard/buyers/${brand_id}/lists`
     );
     setIsLoading(false);
     setData(response?.data?.Lists);

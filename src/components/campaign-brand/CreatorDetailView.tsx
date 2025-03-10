@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
   ArrowLeft,
   FileText,
@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
 import Tooltip from "../Tooltip";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
 import { toast } from "react-toastify";
 import { apiController } from "@/@api/baseUrl";
@@ -27,7 +27,7 @@ interface CreatorDetailViewProps {
   onBack: () => void;
   posts: Post[];
   campaignId: string;
-  onUpdate: () => void;
+  onUpdate: (currentPostId?: string) => void;
   creators: Creator[];
   selectedCreator: Creator | null;
   handelSelectedCreator: (creator: Creator) => void;
@@ -43,15 +43,35 @@ export function CreatorDetailView({
   selectedCreator,
   handelSelectedCreator,
 }: CreatorDetailViewProps) {
-  const [selectedPost, setSelectedPost] = useState<Post | null>(posts[0]);
+  const initialPost = posts.length > 0 ? posts[0] : null;
+  const initialContent =
+    initialPost &&
+    initialPost.contentItems &&
+    initialPost.contentItems.length > 0
+      ? initialPost.contentItems[0]
+      : null;
+
+  const [selectedPost, setSelectedPost] = useState<Post | null>(initialPost);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
-    null
+    initialContent
   );
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    setSelectedPost(posts[0]);
-    setSelectedContent(posts[0].contentItems[0]);
-  }, [posts]);
+    const currentPostStillExists =
+      selectedPost && posts.some((post) => post.id === selectedPost.id);
+
+    if (!currentPostStillExists) {
+      if (posts.length > 0) {
+        setSelectedPost(posts[0]);
+        setSelectedContent(posts[0].contentItems[0]);
+      } else {
+        setSelectedPost(null);
+        setSelectedContent(null);
+      }
+    }
+  }, [posts, selectedPost]);
 
   const handleProcessPaymentCheckout = async () => {
     try {
@@ -66,7 +86,15 @@ export function CreatorDetailView({
       toast.error("An error occurred while processing payment.");
     }
   };
-  const router = useRouter();
+
+  const handleSelectPost = (post: Post) => {
+    setSelectedPost(post);
+    setSelectedContent(post.contentItems[0]);
+
+    const tab = searchParams.get("tab") || "in_campaign";
+    const url = `/campaign-details/${campaignId}?tab=${tab}&creator=${creator.id}&post=${post.id}`;
+    window.history.replaceState(null, "", url);
+  };
 
   const metrics = useMemo(() => {
     const totalImpressions = posts.reduce(
@@ -94,13 +122,16 @@ export function CreatorDetailView({
   }, [posts]);
 
   const handleApprovePost = async (postId: string) => {
+    const currentPostId = selectedPost?.id;
+
     await updatePostStatus({
       campaign_id: campaignId,
       creator_id: creator.id,
       post_id: postId,
       status: Status.Approved + "",
     });
-    onUpdate();
+
+    onUpdate(currentPostId);
   };
 
   const handleApproveContent = async () => {
@@ -117,7 +148,7 @@ export function CreatorDetailView({
       if (!result) {
         toast.error("Failed to approve content. Please try again.");
       }
-      onUpdate();
+      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while approving content.");
       console.error("Error approving content:", error);
@@ -139,12 +170,20 @@ export function CreatorDetailView({
       if (!result) {
         toast.error("Failed to reject content. Please try again.");
       }
-      onUpdate();
+      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while rejecting content.");
       console.error("Error rejecting content:", error);
     }
   };
+
+  // Function to prepare image for display
+  const prepareImageForDisplay = useCallback((imageUrl?: string) => {
+    if (!imageUrl) return undefined;
+
+    // Return the processed image URL
+    return imageUrl;
+  }, []);
 
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
@@ -191,10 +230,7 @@ export function CreatorDetailView({
                 {posts.map((post) => (
                   <button
                     key={post.id}
-                    onClick={() => {
-                      setSelectedPost(post);
-                      setSelectedContent(post.contentItems[0]);
-                    }}
+                    onClick={() => handleSelectPost(post)}
                     className={`tw-w-full tw-p-3 tw-rounded-lg tw-text-left tw-transition-colors
                       ${
                         selectedPost?.id === post.id
@@ -241,57 +277,57 @@ export function CreatorDetailView({
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="tw-col-span-9">
-            <div className="tw-space-y-6">
-              {/* Campaign Performance */}
-              <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
-                <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
-                  Campaign Performance
-                </h3>
-                <div className="tw-grid tw-grid-cols-3 tw-gap-6">
-                  <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
-                    <div className="tw-text-sm tw-text-gray-500">
-                      Total Impressions
+            <div className="tw-flex tw-flex-col tw-items-center">
+              <div className="tw-w-full tw-mb-6">
+                <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                  <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
+                    Campaign Performance
+                  </h3>
+                  <div className="tw-grid tw-grid-cols-3 tw-gap-6">
+                    <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-text-sm tw-text-gray-500">
+                        Total Impressions
+                      </div>
+                      <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
+                        {metrics.totalImpressions.toLocaleString()}
+                      </div>
+                      <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
+                        {posts.length > 0
+                          ? `${posts.length} posts`
+                          : "No posts yet"}
+                      </div>
                     </div>
-                    <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {metrics.totalImpressions.toLocaleString()}
+                    <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-text-sm tw-text-gray-500">
+                        Avg. Engagement Rate
+                      </div>
+                      <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
+                        {metrics.avgEngagement}%
+                      </div>
+                      <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
+                        {creator.averageEngagement
+                          ? `${creator.averageEngagement}% creator avg.`
+                          : "No data"}
+                      </div>
                     </div>
-                    <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      {posts.length > 0
-                        ? `${posts.length} posts`
-                        : "No posts yet"}
-                    </div>
-                  </div>
-                  <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
-                    <div className="tw-text-sm tw-text-gray-500">
-                      Avg. Engagement Rate
-                    </div>
-                    <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {metrics.avgEngagement}%
-                    </div>
-                    <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      {creator.averageEngagement
-                        ? `${creator.averageEngagement}% creator avg.`
-                        : "No data"}
-                    </div>
-                  </div>
-                  <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
-                    <div className="tw-text-sm tw-text-gray-500">
-                      Click-through Rate
-                    </div>
-                    <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {metrics.clickThroughRate}%
-                    </div>
-                    <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      Based on engagement
+                    <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-text-sm tw-text-gray-500">
+                        Click-through Rate
+                      </div>
+                      <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
+                        {metrics.clickThroughRate}%
+                      </div>
+                      <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
+                        Based on engagement
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {selectedPost && (
-                <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                <div className="tw-w-full tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
                   <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
                     <div>
                       <h3 className="tw-font-medium tw-text-gray-900">
@@ -364,7 +400,6 @@ export function CreatorDetailView({
                     </div>
                   </div>
 
-                  {/* Content Actions */}
                   {selectedContent &&
                     selectedContent.status === "in_review" && (
                       <div className="tw-flex tw-justify-end tw-gap-3 tw-mb-4">
@@ -390,31 +425,35 @@ export function CreatorDetailView({
                     )}
 
                   {selectedContent && (
-                    <PostViewer
-                      post={{
-                        id: selectedContent.id,
-                        type: selectedContent.type,
-                        status:
-                          selectedContent.status === "in_review"
-                            ? "in-review"
-                            : selectedContent.status,
-                        submittedOn: selectedContent.date,
-                        author: {
-                          name: selectedCreator?.name || "",
-                          role: selectedCreator?.jobTitle || "Creator",
-                          avatar: selectedCreator?.profilePicture || "",
-                        },
-                        content: selectedContent.content || "",
-                        image: selectedContent.images?.[0],
-                        timestamp: selectedContent.date || "",
-                        engagement: {
-                          likes: 1230,
-                          comments: 50,
-                          shares: 10,
-                        },
-                      }}
-                      preview={true}
-                    />
+                    <div className="tw-flex tw-justify-center">
+                      <PostViewer
+                        post={{
+                          id: selectedContent.id,
+                          type: selectedContent.type,
+                          status:
+                            selectedContent.status === "in_review"
+                              ? "in-review"
+                              : selectedContent.status,
+                          submittedOn: selectedContent.date,
+                          author: {
+                            name: selectedCreator?.name || "",
+                            role: selectedCreator?.jobTitle || "Creator",
+                            avatar: selectedCreator?.profilePicture || "",
+                          },
+                          content: selectedContent.content || "",
+                          image: prepareImageForDisplay(
+                            selectedContent.images?.[0]
+                          ),
+                          timestamp: selectedContent.date || "",
+                          engagement: {
+                            likes: 1230,
+                            comments: 50,
+                            shares: 10,
+                          },
+                        }}
+                        preview={true}
+                      />
+                    </div>
                   )}
                 </div>
               )}

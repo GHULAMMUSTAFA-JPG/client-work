@@ -1,12 +1,64 @@
+import { ChangeEvent } from "react";
+
+interface FilterItem {
+  Value: string;
+  Key: string;
+}
+
+interface FilterData {
+  companies?: FilterItem[];
+  country_codes?: FilterItem[];
+  job_titles?: FilterItem[];
+  employee_range?: FilterItem[];
+  follower_range?: FilterItem[];
+  sizes?: string[];
+  categories?: string[];
+  locations?: string[];
+}
+
+interface BrandFilterOffcanvasProps {
+  availablefilters?: FilterData;
+  sizes: string[];
+  regions: string[];
+  categories: string[];
+  companies: string[];
+  jobTitles: string[];
+  employeeRanges: string[];
+  followerRanges: string[];
+  interested: boolean;
+  setSizes: (sizes: string[]) => void;
+  setRegions: (regions: string[]) => void;
+  setCategories: (categories: string[]) => void;
+  setCompanies: (companies: string[]) => void;
+  setJobTitles: (jobTitles: string[]) => void;
+  setEmployeeRanges: (employeeRanges: string[]) => void;
+  setFollowerRanges: (followerRanges: string[]) => void;
+  setInterested: (interested: boolean) => void;
+  rerender: boolean;
+  setrerender: (rerender: boolean) => void;
+  setsearchquery: (query: string) => void;
+  setSortOption: (option: string) => void;
+  page: number;
+  setPage: (page: number) => void;
+}
+
 export default function BrandFilterOffcanvas({
   availablefilters,
   sizes,
   regions,
   categories,
+  companies,
+  jobTitles,
+  employeeRanges,
+  followerRanges,
   interested,
   setSizes,
   setRegions,
   setCategories,
+  setCompanies,
+  setJobTitles,
+  setEmployeeRanges,
+  setFollowerRanges,
   setInterested,
   rerender,
   setrerender,
@@ -14,54 +66,100 @@ export default function BrandFilterOffcanvas({
   setSortOption,
   page,
   setPage,
-}: any) {
-  const handleInstrustedChange = (event: any) => {
+}: BrandFilterOffcanvasProps) {
+  const handleInterestChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setInterested(event.target.checked);
   };
 
-  const handleSizeChange = (event: any) => {
+  // Generic handler for all filter types
+  const handleFilterChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    setter: (value: string[]) => void,
+    currentValues: string[]
+  ): void => {
     const { id, checked } = event.target;
-    setSizes((prev: any) =>
-      checked ? [...prev, id] : prev.filter((size: any) => size !== id)
+    setter(
+      checked
+        ? [...currentValues, id]
+        : currentValues.filter((value) => value !== id)
     );
   };
 
-  const handleCategoryChange = (event: any) => {
-    const { id, checked } = event.target;
-    setCategories((prev: any) =>
-      checked ? [...prev, id] : prev.filter((category: any) => category !== id)
-    );
-  };
-
-  const handleRegionChange = (event: any) => {
-    const { id, checked } = event.target;
-    setRegions((prev: any) =>
-      checked ? [...prev, id] : prev.filter((region: any) => region !== id)
-    );
-  };
-
-  const handleClearAll = () => {
+  const handleClearAll = (): void => {
     setSizes([]);
     setRegions([]);
     setCategories([]);
+    setCompanies([]);
+    setJobTitles([]);
+    setEmployeeRanges([]);
+    setFollowerRanges([]);
     setInterested(false);
     setsearchquery("");
+
     if (page !== 1) {
       setPage(1);
     }
+
     setSortOption("most_popular");
     setrerender(!rerender);
   };
-  const handleApplyFilter = () => {
+
+  const handleApplyFilter = (): void => {
     if (page !== 1) {
       setPage(1);
     }
+
     setrerender(!rerender);
-    (
-      document
-        .getElementById("filtersOffcanvas")
-        ?.querySelector(".btn-close") as HTMLButtonElement
-    ).click();
+
+    const closeButton = document
+      .getElementById("filtersOffcanvas")
+      ?.querySelector(".btn-close") as HTMLButtonElement;
+
+    if (closeButton) {
+      closeButton.click();
+    }
+  };
+
+  // Create filter section component to reduce redundancy
+  const FilterSection = ({
+    title,
+    items,
+    values,
+    setter,
+    isValueKey = false,
+  }: {
+    title: string;
+    items: any[] | undefined;
+    values: string[];
+    setter: (value: string[]) => void;
+    isValueKey?: boolean;
+  }) => {
+    if (!items || items.length === 0) return null;
+
+    return (
+      <div className="mb-4">
+        <h6 className="mb-3">{title}</h6>
+        {items.map((item) => {
+          const id = isValueKey ? item.Value : item;
+          const label = isValueKey ? item.Key : item;
+
+          return (
+            <div className="form-check form-check-inline" key={id}>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id={id}
+                checked={values.includes(id)}
+                onChange={(e) => handleFilterChange(e, setter, values)}
+              />
+              <label className="form-check-label" htmlFor={id}>
+                {label}
+              </label>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
@@ -76,12 +174,15 @@ export default function BrandFilterOffcanvas({
           type="button"
           className="btn-close"
           data-bs-dismiss="offcanvas"
+          aria-label="Close"
         ></button>
       </div>
+
       <div className="offcanvas-body">
         <p className="text-muted mb-4 fs-14">
           Refine your brand search with filters
         </p>
+
         <div className="row">
           <div className="mb-4 col-md-2">
             <h6 className="mb-3">Watching</h6>
@@ -91,67 +192,75 @@ export default function BrandFilterOffcanvas({
                 type="checkbox"
                 id="interested"
                 checked={interested}
-                onChange={handleInstrustedChange}
+                onChange={handleInterestChange}
               />
               <label className="form-check-label" htmlFor="interested">
                 Interested
               </label>
             </div>
           </div>
-          <div className="mb-4 col-md-10">
-            <h6 className="mb-3">Size</h6>
-            {availablefilters?.sizes.map((size: any) => (
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={size}
-                  checked={sizes.includes(size)}
-                  onChange={handleSizeChange}
-                />
-                <label className="form-check-label" htmlFor="small">
-                  {size}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mb-4">
-          <h6 className="mb-3">Category</h6>
-          {availablefilters?.categories.map((category: any) => (
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={category}
-                checked={categories.includes(category)}
-                onChange={handleCategoryChange}
-              />
-              <label className="form-check-label" htmlFor="small">
-                {category}
-              </label>
-            </div>
-          ))}
         </div>
 
-        <div className="mb-4">
-          <h6 className="mb-3">Region</h6>
+        <FilterSection
+          title="Size"
+          items={availablefilters?.sizes}
+          values={sizes}
+          setter={setSizes}
+        />
 
-          {availablefilters?.locations.map((location: any) => (
-            <div className="form-check form-check-inline" key={location}>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={location}
-                checked={regions.includes(location)}
-                onChange={handleRegionChange}
-              />
-              <label className="form-check-label" htmlFor={location}>
-                {location}
-              </label>
-            </div>
-          ))}
-        </div>
+        <FilterSection
+          title="Category"
+          items={availablefilters?.categories}
+          values={categories}
+          setter={setCategories}
+        />
+
+        <FilterSection
+          title="Region"
+          items={availablefilters?.locations}
+          values={regions}
+          setter={setRegions}
+        />
+
+        <FilterSection
+          title="Companies"
+          items={availablefilters?.companies}
+          values={companies}
+          setter={setCompanies}
+          isValueKey={true}
+        />
+
+        <FilterSection
+          title="Job Titles"
+          items={availablefilters?.job_titles}
+          values={jobTitles}
+          setter={setJobTitles}
+          isValueKey={true}
+        />
+
+        <FilterSection
+          title="Employee Range"
+          items={availablefilters?.employee_range}
+          values={employeeRanges}
+          setter={setEmployeeRanges}
+          isValueKey={true}
+        />
+
+        <FilterSection
+          title="Follower Range"
+          items={availablefilters?.follower_range}
+          values={followerRanges}
+          setter={setFollowerRanges}
+          isValueKey={true}
+        />
+
+        <FilterSection
+          title="Country"
+          items={availablefilters?.country_codes}
+          values={regions}
+          setter={setRegions}
+          isValueKey={true}
+        />
 
         <div className="mt-auto d-flex gap-2 pt-4 border-top">
           <button className="btn text-decoration-none" onClick={handleClearAll}>

@@ -13,3 +13,7 @@ export const discoverCreators = async (params: {
 }) => {
   return handleApiRequest("get", "/dashboard/buyers/discover_creators", params);
 };
+
+export const getCreatorUniqueFilters = async () => {
+  return handleApiRequest("get", "/unique_filters/creators");
+};
