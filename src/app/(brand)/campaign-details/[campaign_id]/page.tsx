@@ -186,7 +186,15 @@ function CampaignDetailsContent() {
         onBack={handleBack}
         posts={selectedCreator.posts || []}
         campaignId={campaign_id as string}
-        onUpdate={() => setRefreshTrigger((prev) => prev + 1)}
+        onUpdate={(currentPostId) => {
+          setRefreshTrigger((prev) => prev + 1);
+
+          if (currentPostId) {
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("post", currentPostId);
+            window.history.replaceState(null, "", currentUrl.toString());
+          }
+        }}
         creators={campaignActiveCreatorsData.Active_Creators?.map(
           (item: any) => ({
             name: item.Name,

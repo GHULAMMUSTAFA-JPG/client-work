@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { Plus, Eye } from "lucide-react";
+import { Eye, Save, Send } from "lucide-react";
 import { CampaignDrawer } from "./CampaignDrawer";
-import { ContentVersionDrawer } from "./ContentVersionDrawer";
-import { Status } from "@/types"; // Ensure the correct Status enum is imported
-import { getCampaignStatusStyles } from "../shared/utils";
-import { PostContentAddNewContent } from "./PostContentAddNewContent";
-import EmptyState from "../EmptyState";
+import { Status } from "@/types";
+import { PostViewer } from "../shared/PostViewer";
+import CreatePostContent from "./CreatePostContent";
 
 interface PerformanceMetrics {
   impressions: number;
@@ -37,14 +35,6 @@ interface ContentVersionsProps {
   onSubmit: () => void;
 }
 
-// **Mapping dropdown values to the Status enum**
-const statusFilterMap: Record<string, Status> = {
-  approved: Status.Approved,
-  pending: Status.PendingApproval,
-  draft: Status.InProgress,
-  rejected: Status.Rejected,
-};
-
 export function ContentVersions({
   versions,
   campaignId,
@@ -53,122 +43,125 @@ export function ContentVersions({
   canSubmit,
   onSubmit,
 }: ContentVersionsProps) {
-  const [statusFilter, setStatusFilter] = useState<
-    "all" | keyof typeof statusFilterMap
-  >("all");
-
   const [editingVersion, setEditingVersion] = useState<Version | null>(null);
   const [isCreatePostDrawerOpen, setIsCreatePostDrawerOpen] = useState(false);
   const [selectedVersion, setSelectedVersion] = useState<Version | null>(null);
 
-  const filteredVersions =
-    versions?.filter((version) =>
-      statusFilter === "all"
-        ? true
-        : version.status === statusFilterMap[statusFilter]
-    ) || [];
+  const firstVersion = versions && versions.length > 0 ? versions[0] : null;
+
+  const viewerPost = firstVersion
+    ? {
+        id: firstVersion.id,
+        type: firstVersion.postType,
+        status: (() => {
+          switch (firstVersion.status) {
+            case Status.Approved:
+              return "approved";
+            case Status.Rejected:
+              return "rejected";
+            case Status.Published:
+              return "published";
+            case Status.InProgress:
+              return "draft";
+            default:
+              return "in-review";
+          }
+        })() as "approved" | "rejected" | "published" | "draft" | "in-review",
+        submittedOn: firstVersion.date,
+        author: {
+          name: "Content Creator",
+          role: "Creator",
+          avatar: "/assets/images/user1.jpg",
+        },
+        content: firstVersion.description || "",
+        image: firstVersion.media?.[0],
+        timestamp: firstVersion.date,
+        engagement: {
+          likes: firstVersion.metrics?.impressions || 0,
+          comments: firstVersion.metrics?.clicks || 0,
+          shares: firstVersion.metrics?.engagement || 0,
+        },
+      }
+    : null;
+
+  const handleAddContent = () => {
+    setIsCreatePostDrawerOpen(true);
+  };
 
   return (
     <div className="tw-p-6">
-      <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
-        <div className="tw-flex tw-items-center tw-space-x-4">
-          <h2 className="tw-text-lg tw-font-semibold">Content Versions</h2>
-          {!!versions.length && (
-            <div className="tw-flex tw-items-center tw-space-x-2">
-              <select
-                value={statusFilter}
-                onChange={(e) =>
-                  setStatusFilter(
-                    e.target.value as "all" | keyof typeof statusFilterMap
-                  )
-                }
-                className="tw-block tw-pl-3 tw-pr-10 tw-py-2 tw-text-base tw-border-gray-300 focus:tw-outline-none focus:tw-ring-primary focus:tw-border-primary tw-sm:text-sm tw-rounded-md"
-              >
-                <option value="all">All Versions</option>
-                <option value="approved">Approved</option>
-                <option value="pending">Pending</option>
-                <option value="draft">Draft</option>
-                <option value="rejected">Rejected</option>
-              </select>
-            </div>
-          )}
-        </div>
-        <button
-          onClick={() => setIsCreatePostDrawerOpen(true)}
-          className="tw-inline-flex tw-items-center tw-px-4 tw-py-2 tw-border tw-border-transparent tw-rounded-md tw-shadow-sm tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-primary"
-        >
-          <Plus className="tw-w-4 tw-h-4 tw-mr-2" />
-          Add Content
-        </button>
-      </div>
-
       <div className="tw-space-y-4">
-        {filteredVersions.map((version) => (
-          <div
-            key={version.id}
-            className={`tw-bg-white tw-rounded-lg tw-border ${
-              version.status === Status.Rejected
-                ? "tw-border-red-200"
-                : "tw-border-gray-200"
-            } tw-overflow-hidden`}
-          >
-            <div className="tw-p-4">
-              <div className="tw-flex tw-items-start tw-justify-between tw-mb-4">
-                <div className="tw-flex tw-items-center tw-space-x-3">
-                  <div className="tw-flex-shrink-0 tw-h-16 tw-w-24">
-                    {version.media?.length ? (
-                      <img
-                        src={version.media[0]}
-                        alt={`Version from ${version.date}`}
-                        className="tw-h-16 tw-w-24 tw-object-cover tw-rounded-md"
-                      />
-                    ) : (
-                      <div className="tw-h-16 tw-w-24 tw-bg-gray-300 tw-rounded-md"></div>
-                    )}
-                  </div>
-
-                  <div>
-                    <div className="tw-flex tw-items-center tw-space-x-2">
-                      <span className="tw-text-sm tw-font-medium tw-text-gray-900">
-                        {version.title}
-                      </span>
-                      <span className={getCampaignStatusStyles(version.status)}>
-                        {Status[version.status]}
-                      </span>
-                    </div>
-                  </div>
+        {viewerPost ? (
+          <div className="tw-flex tw-justify-center">
+            <PostViewer post={viewerPost} preview={true} />
+            {firstVersion && (
+              <div className="tw-absolute tw-top-4 tw-right-4">
+                <button
+                  onClick={() => setSelectedVersion(firstVersion)}
+                  className="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-border tw-border-gray-300 tw-text-sm tw-font-medium tw-rounded-md tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-primary"
+                >
+                  <Eye className="tw-w-4 tw-h-4 tw-mr-1" />
+                  View Details
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="tw-bg-white tw-rounded-lg tw-shadow-lg tw-border tw-border-gray-100">
+            <div className="tw-border-b tw-border-gray-200 tw-bg-gray-50 tw-rounded-t-lg">
+              <div className="tw-px-6 tw-py-4 tw-flex tw-justify-between tw-items-center">
+                <div>
+                  <h2 className="tw-text-xl tw-font-medium tw-text-gray-800">
+                    Create Your First Content
+                  </h2>
+                  <p className="tw-text-sm tw-text-gray-600 tw-mt-1">
+                    Start by creating compelling content for your campaign
+                  </p>
                 </div>
-
-                <div className="tw-flex tw-items-center tw-space-x-2">
+                <div className="tw-flex tw-space-x-3">
                   <button
-                    onClick={() => setSelectedVersion(version)}
-                    className="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-border tw-border-gray-300 tw-text-sm tw-font-medium tw-rounded-md tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-primary"
+                    className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50"
+                    onClick={() =>
+                      document.getElementById("previewBtn")?.click()
+                    }
                   >
-                    <Eye className="tw-w-4 tw-h-4 tw-mr-1" />
-                    View Details
+                    <Eye className="tw-w-4 tw-h-4 tw-mr-1.5" />
+                    Preview
+                  </button>
+                  <button
+                    className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50"
+                    onClick={() =>
+                      document.getElementById("saveDraftBtn")?.click()
+                    }
+                  >
+                    <Save className="tw-w-4 tw-h-4 tw-mr-1.5" />
+                    Save Draft
+                  </button>
+                  <button
+                    className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-transparent tw-rounded-md tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark"
+                    onClick={() =>
+                      document.getElementById("submitBtn")?.click()
+                    }
+                  >
+                    <Send className="tw-w-4 tw-h-4 tw-mr-1.5" />
+                    Submit
                   </button>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
 
-      {!filteredVersions.length && (
-        <EmptyState
-          title="No Content Available"
-          description="Add new  Content to view its content versions."
-        />
-      )}
-      <PostContentAddNewContent
-        isOpen={isCreatePostDrawerOpen}
-        onClose={() => setIsCreatePostDrawerOpen(false)}
-        onSubmit={() => onSubmit()}
-        campaignId={campaignId}
-        creatorId={creatorId}
-        postId={postId}
-        canSubmit={canSubmit}
-      />
+            <div className="tw-py-10">
+              <CreatePostContent
+                campaignId={campaignId}
+                creatorId={creatorId}
+                postId={postId}
+                onSubmit={onSubmit}
+                canSubmit={canSubmit}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
       <CampaignDrawer
         isOpen={!!editingVersion}
@@ -180,14 +173,6 @@ export function ContentVersions({
         postType={editingVersion?.postType}
         initialData={editingVersion}
       />
-
-      {selectedVersion && (
-        <ContentVersionDrawer
-          isOpen={!!selectedVersion}
-          onClose={() => setSelectedVersion(null)}
-          version={selectedVersion}
-        />
-      )}
     </div>
   );
 }

@@ -18,6 +18,45 @@ import OffcanvasCreateCompaign from "@/components/offcanvascreatecompaign";
 import { Tooltip } from "@mui/material";
 import EmptyState from "@/components/EmptyState";
 import { withAuthRole } from "@/utils/withAuthRole";
+import { toast } from "react-toastify";
+import React from "react";
+
+// Custom CSS for notifications
+const notificationStyles: {
+  notificationSection: React.CSSProperties;
+  notificationHeader: React.CSSProperties;
+  notificationTitle: React.CSSProperties;
+  loadMoreButton: React.CSSProperties;
+} = {
+  notificationSection: {
+    maxHeight: "420px",
+    overflowY: "auto" as const,
+    paddingRight: "8px",
+    scrollbarWidth: "thin" as any,
+  },
+  notificationHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "15px",
+  },
+  notificationTitle: {
+    fontSize: "16px",
+    fontWeight: 500,
+    margin: 0,
+  },
+  loadMoreButton: {
+    background: "transparent",
+    border: "none",
+    color: "#4F46E5",
+    fontSize: "14px",
+    padding: "8px 16px",
+    cursor: "pointer",
+    borderRadius: "4px",
+    transition: "background 0.2s",
+    marginTop: "8px",
+  },
+};
 
 function Homepagebuyer() {
   const { user, setIsLoading, notifications, userProfile } = useAuth();
@@ -29,9 +68,66 @@ function Homepagebuyer() {
   const [linkCopied, setLinkCopied] = useState<boolean>(false);
   console.log("userProfile", userProfile);
   const router = useRouter();
+
+  // Function to get notification icon background color
+  const getNotificationColor = (iconType: string): string => {
+    switch (iconType) {
+      case "campaign_post_proposal":
+        return "#eef2ff"; // Indigo light
+      case "campaign_post_submission":
+        return "#ecfdf5"; // Green light
+      case "campaign_post_proposal_accepted":
+        return "#f0fdfa"; // Teal light
+      case "new_campaign_application":
+        return "#fff7ed"; // Orange light
+      case "campaign_application_accepted":
+        return "#eff6ff"; // Blue light
+      case "campaign_post_rejected":
+        return "#fef2f2"; // Red light
+      case "campaign_post_approved":
+        return "#f0fdf4"; // Green light
+      default:
+        return "#f9fafb"; // Gray light
+    }
+  };
+
+  // Add handleNotificationClick function to handle notification navigation
+  const handleNotificationClick = (notification: any) => {
+    // Only process if we have either Post_ID or Campaign_ID
+    if (!notification.Post_ID && !notification.Campaign_ID) {
+      return;
+    }
+
+    // Determine notification type for post-related notifications
+    const isPostRelatedNotification = [
+      "campaign_post_proposal",
+      "campaign_post_submission",
+      "campaign_post_proposal_accepted",
+    ].includes(notification.Notification_Icon_Type);
+
+    if (isPostRelatedNotification) {
+      // If we have both Campaign_ID and Post_ID, navigate to campaign details
+      if (notification.Campaign_ID && notification.Post_ID) {
+        router.push(
+          `/campaign-details/${notification.Campaign_ID}?tab=in_campaign&post=${notification.Post_ID}`
+        );
+      }
+      // If we only have Post_ID, navigate to post details
+      else if (notification.Post_ID) {
+        router.push(`/post-details?post=${notification.Post_ID}`);
+      }
+    } else {
+      // For future reference - handle other notification types if needed
+      console.log(
+        `Notification clicked: ${notification.Notification_Icon_Type}`
+      );
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [rendControl]);
+  console.log("notifications", notifications);
 
   useEffect(() => {
     if (user?.email) {
@@ -70,7 +166,9 @@ function Homepagebuyer() {
             <div className="card mb-3">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">Profile <span className="text-teal">(Brand)</span></p>
+                  <p className="mb-0 fs-16 fw-medium">
+                    Profile <span className="text-teal">(Brand)</span>
+                  </p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
                       {/*  <Tooltip
@@ -330,7 +428,7 @@ function Homepagebuyer() {
                 </div>
               </div>
             </div>
-        
+
             <div className="card card-with-table">
               <div className="card-header p-3">
                 <div className="d-flex align-items-center w-100 justify-content-between gap-3">
@@ -445,167 +543,264 @@ function Homepagebuyer() {
 
             <div className="card mb-3">
               <div className="card-body">
-                <p className="mb-2 fs-16 fw-medium">
-                  What's New
-                </p>
-                {notifications?.notifications?.length ? (
-                  notifications.notifications
-                    .slice(0, viewRow)
-                    .map((notify: any, index: number) => {
-                      const iconType = notify?.Notification_Icon_Type;
-                      const iconMap: { [key: string]: JSX.Element } = {
-                        new_campaign_application: (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="Notification_icon"
+                <div style={notificationStyles.notificationHeader}>
+                  <p style={notificationStyles.notificationTitle}>What's New</p>
+                  {notifications?.notifications?.length > 0 && (
+                    <span className="badge bg-primary rounded-pill">
+                      {
+                        notifications.notifications.filter(
+                          (n: any) => !n.Is_Seen
+                        ).length
+                      }
+                    </span>
+                  )}
+                </div>
+                <div style={notificationStyles.notificationSection}>
+                  {notifications?.notifications?.length ? (
+                    notifications.notifications
+                      .slice(0, viewRow)
+                      .map((notify: any, index: number) => {
+                        const iconType = notify?.Notification_Icon_Type;
+                        const iconMap: { [key: string]: JSX.Element } = {
+                          new_campaign_application: (
+                            <Icon
+                              icon="mdi:bell-plus-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#f97316" }}
+                            />
+                          ),
+                          campaign_application_accepted: (
+                            <Icon
+                              icon="mdi:check-circle-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#2563eb" }}
+                            />
+                          ),
+                          campaign_post_rejected: (
+                            <Icon
+                              icon="mdi:close-circle-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#ef4444" }}
+                            />
+                          ),
+                          campaign_post_approved: (
+                            <Icon
+                              icon="mdi:check-circle-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#10b981" }}
+                            />
+                          ),
+                          campaign_post_submission: (
+                            <Icon
+                              icon="mdi:file-document-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#059669" }}
+                            />
+                          ),
+                          campaign_post_proposal: (
+                            <Icon
+                              icon="mdi:file-plus-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#4f46e5" }}
+                            />
+                          ),
+                          campaign_post_proposal_accepted: (
+                            <Icon
+                              icon="mdi:file-check-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#0891b2" }}
+                            />
+                          ),
+                          default: (
+                            <Icon
+                              icon="mdi:information-outline"
+                              width="20"
+                              height="20"
+                              style={{ color: "#6b7280" }}
+                            />
+                          ),
+                        };
+                        const isClickable =
+                          (notify.Post_ID || notify.Campaign_ID) &&
+                          (notify.Notification_Icon_Type ===
+                            "campaign_post_proposal" ||
+                            notify.Notification_Icon_Type ===
+                              "campaign_post_submission" ||
+                            notify.Notification_Icon_Type ===
+                              "campaign_post_proposal_accepted");
+
+                        return (
+                          <div
+                            key={index}
+                            className={`notification_wrapper ${iconType} ${
+                              isClickable ? "notification-clickable" : ""
+                            } ${!notify.Is_Seen ? "notification-unread" : ""}`}
+                            onClick={
+                              isClickable
+                                ? () => handleNotificationClick(notify)
+                                : undefined
+                            }
+                            style={{
+                              cursor: isClickable ? "pointer" : "default",
+                              padding: "12px 16px",
+                              borderRadius: "8px",
+                              marginBottom: "10px",
+                              transition: "all 0.2s ease",
+                              boxShadow: isClickable
+                                ? "0 1px 3px rgba(0,0,0,0.1)"
+                                : "none",
+                              border: "1px solid #eaeaea",
+                              position: "relative",
+                              backgroundColor: !notify.Is_Seen
+                                ? "#f9f9ff"
+                                : "white",
+                            }}
+                            onMouseOver={(e) => {
+                              if (isClickable) {
+                                e.currentTarget.style.backgroundColor =
+                                  "#f5f5ff";
+                                e.currentTarget.style.boxShadow =
+                                  "0 2px 5px rgba(0,0,0,0.1)";
+                                e.currentTarget.style.borderColor = "#e0e0ff";
+                              }
+                            }}
+                            onMouseOut={(e) => {
+                              if (isClickable) {
+                                e.currentTarget.style.backgroundColor =
+                                  !notify.Is_Seen ? "#f9f9ff" : "white";
+                                e.currentTarget.style.boxShadow =
+                                  "0 1px 3px rgba(0,0,0,0.1)";
+                                e.currentTarget.style.borderColor = "#eaeaea";
+                              }
+                            }}
                           >
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                          </svg>
-                        ),
-                        campaign_application_accepted: (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="Notification_icon"
-                          >
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                          </svg>
-                        ),
-                        campaign_post_rejected: (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="Notification_icon"
-                          >
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                          </svg>
-                        ),
-                        campaign_post_approved: (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="Notification_icon"
-                          >
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                          </svg>
-                        ),
-                        campaign_post_submission: (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="Notification_icon"
-                          >
-                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                          </svg>
-                        ),
-                        default: (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            className="lucide lucide-message-square "
-                          >
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                          </svg>
-                        ),
-                      };
-                      return (
-                        <div
-                          key={index}
-                          className={`notification_wrapper ${iconType}`}
-                        >
-                          <div className="notify_icons">
-                            {iconMap[iconType] || iconMap["default"]}
-                          </div>
-                          <div className="ml-3">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <p className="text-sm font-medium text-gray-900">
-                                {notify?.Title}
-                              </p>
-                              <p className="fs-10 text-grey">5 min ago</p>
+                            {!notify.Is_Seen && (
+                              <span
+                                style={{
+                                  position: "absolute",
+                                  top: "12px",
+                                  right: "12px",
+                                  width: "8px",
+                                  height: "8px",
+                                  borderRadius: "50%",
+                                  backgroundColor: "#4F46E5",
+                                }}
+                              />
+                            )}
+                            <div className="d-flex align-items-start gap-3">
+                              <div
+                                className="notify_icons"
+                                style={{
+                                  backgroundColor: getNotificationColor(
+                                    notify.Notification_Icon_Type
+                                  ),
+                                  width: "36px",
+                                  height: "36px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  borderRadius: "50%",
+                                  flexShrink: 0,
+                                }}
+                              >
+                                {iconMap[iconType] || iconMap["default"]}
+                              </div>
+                              <div className="flex-grow-1">
+                                <div className="d-flex justify-content-between align-items-center mb-1">
+                                  <p
+                                    className="text-sm font-medium"
+                                    style={{
+                                      color: "#111827",
+                                      marginBottom: 0,
+                                      fontWeight: !notify.Is_Seen ? 600 : 500,
+                                    }}
+                                  >
+                                    {notify?.Title}
+                                  </p>
+                                  <p
+                                    className="fs-10 text-grey"
+                                    style={{
+                                      marginBottom: 0,
+                                      marginLeft: "8px",
+                                    }}
+                                  >
+                                    {notify?.Time_Ago}
+                                  </p>
+                                </div>
+                                <p
+                                  className="text-sm text-gray-500"
+                                  style={{ marginBottom: 0, lineHeight: "1.4" }}
+                                >
+                                  {notify?.Message}
+                                  {isClickable && (
+                                    <span className="ml-1 text-primary fs-10 d-inline-flex align-items-center">
+                                      {" "}
+                                      <span>(View details</span>
+                                      <Icon
+                                        icon="material-symbols:arrow-forward"
+                                        className="ms-1"
+                                        style={{ fontSize: "12px" }}
+                                      />
+                                      <span>)</span>
+                                    </span>
+                                  )}
+                                </p>
+                              </div>
                             </div>
-                            <p className="text-sm text-gray-500">
-                              {notify?.Message}
-                            </p>
                           </div>
-                        </div>
-                      );
-                    })
-                ) : (
-                  <EmptyState
-                    icon="bi bi-bell-slash"
-                    title="No New Notifications"
-                    description="You're all caught up! No new notifications at the moment."
-                    iconSize={32}
-                  />
-                )}
-                {notifications?.notifications?.length > 0 && (
-                  <div className="text-center mt-1">
-                    {notifications.notifications.length > 5 && (
-                      <button
-                        className="loadmorebtn"
-                        onClick={() => {
-                          if (viewRow >= notifications.notifications.length) {
-                            showViewRow(5);
-                          } else {
-                            showViewRow(notifications.notifications.length);
-                          }
-                        }}
-                      >
-                        {viewRow >= notifications.notifications.length
-                          ? "Show Less"
-                          : "Load More"}
-                      </button>
-                    )}
-                  </div>
-                )}
+                        );
+                      })
+                  ) : (
+                    <EmptyState
+                      icon="bi bi-bell-slash"
+                      title="No New Notifications"
+                      description="You're all caught up! No new notifications at the moment."
+                      iconSize={32}
+                    />
+                  )}
+                  {notifications?.notifications?.length > 0 && (
+                    <div className="text-center mt-3">
+                      {notifications.notifications.length > 5 && (
+                        <button
+                          style={{
+                            ...notificationStyles.loadMoreButton,
+                            backgroundColor:
+                              viewRow >= notifications.notifications.length
+                                ? "#f3f4f6"
+                                : "transparent",
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.backgroundColor = "#f3f4f6";
+                          }}
+                          onMouseOut={(e) => {
+                            if (viewRow < notifications.notifications.length) {
+                              e.currentTarget.style.backgroundColor =
+                                "transparent";
+                            }
+                          }}
+                          onClick={() => {
+                            if (viewRow >= notifications.notifications.length) {
+                              showViewRow(5);
+                            } else {
+                              showViewRow(notifications.notifications.length);
+                            }
+                          }}
+                        >
+                          {viewRow >= notifications.notifications.length
+                            ? "Show Less"
+                            : "Load More"}
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

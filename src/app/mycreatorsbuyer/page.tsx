@@ -97,10 +97,10 @@ function Mycreatorsbuyer() {
   }, [user?.email, setIsLoading]);
 
   const fetchCreatorList = useCallback(() => {
-    if (user?.email) {
-      getSavedList(user.email, setBuyerList, setIsLoading);
+    if (user?._id) {
+      getSavedList(user._id, setBuyerList, setIsLoading);
     }
-  }, [user?.email, setIsLoading]);
+  }, [user?._id, setIsLoading]);
 
   const fetchDiscoveryData = useCallback(() => {
     if (user?.email) {
@@ -227,22 +227,22 @@ function Mycreatorsbuyer() {
           />
           <div className="ms-2">
             <div className="d-flex align-items-center gap-2">
-            <div className="text-truncate fw-medium">{creator?.Name}</div>
-            <div className=" fs-14">
-              {creator?.Country_Code && (
-                <img
-                  src={`https://flagcdn.com/${creator.Country_Code.toLowerCase()}.svg`}
-                  width="24"
-                  height="18"
-                  className="me-2"
-                  alt={creator.Country_Code}
-                />
-              )}
+              <div className="text-truncate fw-medium">{creator?.Name}</div>
+              <div className=" fs-14">
+                {creator?.Country_Code && (
+                  <img
+                    src={`https://flagcdn.com/${creator.Country_Code.toLowerCase()}.svg`}
+                    width="24"
+                    height="18"
+                    className="me-2"
+                    alt={creator.Country_Code}
+                  />
+                )}
               </div>
-              </div>
-              <span className="text-truncate text-secondary">
-                {creator?.Job_Title || ""}
-              </span>
+            </div>
+            <span className="text-truncate text-secondary">
+              {creator?.Job_Title || ""}
+            </span>
           </div>
         </div>
       </td>
@@ -330,7 +330,7 @@ function Mycreatorsbuyer() {
               onClick={() => actionFunction("delete", entry?._id)}
               className="p-2 text-gray-600 hover:text-red-600 transition-colors"
             >
-                <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
                 height="18"
@@ -341,19 +341,19 @@ function Mycreatorsbuyer() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="lucide lucide-trash"
-                >
+              >
                 <path d="M3 6h18"></path>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
                 <line x1="10" x2="10" y1="11" y2="17"></line>
                 <line x1="14" x2="14" y1="11" y2="17"></line>
-                </svg>
+              </svg>
             </button>
           </Tooltip>
         </div>
       </div>
 
-     <div className="tw-flex tw-items-center tw-gap-4 tw-mb-4">
+      <div className="tw-flex tw-items-center tw-gap-4 tw-mb-4">
         <div className="tw-flex tw-items-center tw-gap-1 tw-text-sm tw-text-gray-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -762,104 +762,102 @@ function Mycreatorsbuyer() {
                 </button>
               </li>
             </ul>
-<div className="container">
-            <div className="row">
-
-              <div className="col-12 mb-2">
-                <div className="tab-content" id="myTabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="home-tab-pane"
-                    role="tabpanel"
-                    aria-labelledby="home-tab"
-                    tabIndex={0}
-                  >
-
-<div className="d-flex justify-content-between align-items-center py-3 px-3 gap-3">
-                <div className="tw-flex-1 tw-relative">
-                  <Search className="tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-text-gray-400 tw-h-5 tw-w-5" />
-                  <input
-                    type="text"
-                    placeholder="Search creators by name, company, or job title"
-                    className="w-100 tw-pl-10 tw-pr-4 tw-py-3 mt-3 mb-3 tw-border tw-rounded-lg tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-teal-500"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                  />
-                </div>
-                <button
-                  onClick={() => setIsFilterOpen(true)}
-                  className="tw-flex btn-dark tw-items-center tw-px-4 tw-py-2 tw-border tw-rounded-lg tw-hover:bg-gray-50"
-                >
-                  <Filter className="tw-h-5 tw-w-5 tw-mr-2" />
-                  Filter
-                </button>
-              </div>
-
-                    <div className="card">
-                      <div className="card-body p-0">
-                        <div className="table-responsive">
-                          <table className="table align-middle text-center mb-0">
-                            <thead>
-                              <tr>
-                                <th scope="col" className="text-start ps-4">
-                                  Creators
-                                </th>
-                                <th scope="col">Company</th>
-                                <th scope="col">Followers</th>
-                                <th scope="col">Impressions</th>
-                                <th scope="col">Engagements</th>
-                                <th scope="col">Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {buyersDetails?.Global_Creators?.length !== 0 &&
-                                buyersDetails?.Global_Creators?.map(
-                                  (creator: any) => renderCreatorRow(creator)
-                                )}
-                            </tbody>
-                          </table>
+            <div className="container">
+              <div className="row">
+                <div className="col-12 mb-2">
+                  <div className="tab-content" id="myTabContent">
+                    <div
+                      className="tab-pane fade show active"
+                      id="home-tab-pane"
+                      role="tabpanel"
+                      aria-labelledby="home-tab"
+                      tabIndex={0}
+                    >
+                      <div className="d-flex justify-content-between align-items-center py-3 px-3 gap-3">
+                        <div className="tw-flex-1 tw-relative">
+                          <Search className="tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-text-gray-400 tw-h-5 tw-w-5" />
+                          <input
+                            type="text"
+                            placeholder="Search creators by name, company, or job title"
+                            className="w-100 tw-pl-10 tw-pr-4 tw-py-3 mt-3 mb-3 tw-border tw-rounded-lg tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-teal-500"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                          />
                         </div>
+                        <button
+                          onClick={() => setIsFilterOpen(true)}
+                          className="tw-flex btn-dark tw-items-center tw-px-4 tw-py-2 tw-border tw-rounded-lg tw-hover:bg-gray-50"
+                        >
+                          <Filter className="tw-h-5 tw-w-5 tw-mr-2" />
+                          Filter
+                        </button>
                       </div>
-                    </div>
-                  </div>
 
-                  <div
-                    className="tab-pane fade"
-                    id="contact-tab-pane"
-                    role="tabpanel"
-                    aria-labelledby="contact-tab"
-                    tabIndex={0}
-                  >
-                    <div className="container">
-                      <div className="row">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div className="mt-3">
-                            <p className="fs-20 fw-600">My Lists</p>
-                            <p className="fs-14">Manage your creator lists</p>
+                      <div className="card">
+                        <div className="card-body p-0">
+                          <div className="table-responsive">
+                            <table className="table align-middle text-center mb-0">
+                              <thead>
+                                <tr>
+                                  <th scope="col" className="text-start ps-4">
+                                    Creators
+                                  </th>
+                                  <th scope="col">Company</th>
+                                  <th scope="col">Followers</th>
+                                  <th scope="col">Impressions</th>
+                                  <th scope="col">Engagements</th>
+                                  <th scope="col">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {buyersDetails?.Global_Creators?.length !== 0 &&
+                                  buyersDetails?.Global_Creators?.map(
+                                    (creator: any) => renderCreatorRow(creator)
+                                  )}
+                              </tbody>
+                            </table>
                           </div>
-                          <button
-                            type="button"
-                            className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded-md tw-hover:bg-teal-600 tw-flex tw-items-center tw-gap-2"
-                            data-bs-toggle="modal"
-                            data-bs-target="#createNewListModal"
-                            onClick={() => setSelectedList(undefined)}
-                          >
-                            <Plus className="tw-h-4 tw-w-4" />
-                            Create New List
-                          </button>
                         </div>
-                        <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-4 tw-mt-4">
-                          {buyerList?.map((entry: any, index: number) =>
-                            renderListCard(entry, index)
-                          )}
+                      </div>
+                    </div>
+
+                    <div
+                      className="tab-pane fade"
+                      id="contact-tab-pane"
+                      role="tabpanel"
+                      aria-labelledby="contact-tab"
+                      tabIndex={0}
+                    >
+                      <div className="container">
+                        <div className="row">
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="mt-3">
+                              <p className="fs-20 fw-600">My Lists</p>
+                              <p className="fs-14">Manage your creator lists</p>
+                            </div>
+                            <button
+                              type="button"
+                              className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded-md tw-hover:bg-teal-600 tw-flex tw-items-center tw-gap-2"
+                              data-bs-toggle="modal"
+                              data-bs-target="#createNewListModal"
+                              onClick={() => setSelectedList(undefined)}
+                            >
+                              <Plus className="tw-h-4 tw-w-4" />
+                              Create New List
+                            </button>
+                          </div>
+                          <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-4 tw-mt-4">
+                            {buyerList?.map((entry: any, index: number) =>
+                              renderListCard(entry, index)
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
         </div>

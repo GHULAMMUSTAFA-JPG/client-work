@@ -193,7 +193,6 @@ function CampaignHubContent() {
     }
   };
 
-  console.log("campaignData", campaignData);
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
       {campaignData && (
