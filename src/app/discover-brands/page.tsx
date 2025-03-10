@@ -285,10 +285,10 @@ export default function DiscoverBrandsPage() {
               {sortOption === "most_popular"
                 ? "Most Popular"
                 : sortOption === "largest_first"
-                ? "Largest First"
-                : sortOption === "smallest_first"
-                ? "Smallest First"
-                : ""}
+                  ? "Largest First"
+                  : sortOption === "smallest_first"
+                    ? "Smallest First"
+                    : ""}
               <ArrowDownUp size={13} />
             </button>
             <ul className="dropdown-menu dropdown-menu-end">

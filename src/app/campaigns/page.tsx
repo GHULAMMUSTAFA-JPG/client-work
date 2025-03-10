@@ -11,6 +11,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import EmptyState from "@/components/EmptyState";
 import { withAuthRole } from "@/utils/withAuthRole";
 import Link from "next/link";
+import BrandViewCampaignOffcanvas from "@/components/BrandViewCampaignOffcanvas";
 function Campaigns() {
   const router = useRouter();
   const [campaigns, setCampaigns] = useState<any>();
@@ -20,6 +21,9 @@ function Campaigns() {
     router.push(`/campaign-hub?id=${id}`);
   };
 
+  useEffect(() => {
+    console.log('selectedCampaign', selectedCampaign)
+  }, selectedCampaign)
   useEffect(() => {
     user?.email &&
       getCampaignsCreatorsOverview(user?.email, setCampaigns, setIsLoading);
@@ -114,8 +118,8 @@ function Campaigns() {
                                             <span className="fw-bold text-uppercase">
                                               {campaign?.Company_Name
                                                 ? campaign.Company_Name.charAt(
-                                                    0
-                                                  )
+                                                  0
+                                                )
                                                 : "C"}
                                             </span>
                                           </div>
@@ -241,8 +245,8 @@ function Campaigns() {
                                             <span className="fw-bold text-uppercase">
                                               {campaign?.Company_Name
                                                 ? campaign.Company_Name.charAt(
-                                                    0
-                                                  )
+                                                  0
+                                                )
                                                 : "C"}
                                             </span>
                                           </div>
@@ -327,6 +331,7 @@ function Campaigns() {
         </div>
       </section>
       <CampaignOffcanvas />
+      {/* <BrandViewCampaignOffcanvas brandid={brandId} companyname={companyName} /> */}
       <CampaignFilterModal selectedCampaign={selectedCampaign} />
     </>
   );
