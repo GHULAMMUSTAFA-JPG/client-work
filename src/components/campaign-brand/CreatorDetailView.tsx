@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
   ArrowLeft,
   FileText,
@@ -10,22 +10,24 @@ import {
   Eye,
   ThumbsDown,
   User,
+  Clock,
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
 import Tooltip from "../Tooltip";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
 import { toast } from "react-toastify";
 import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
+import { PostViewer } from "../shared/PostViewer";
 
 interface CreatorDetailViewProps {
   creator: Creator;
   onBack: () => void;
   posts: Post[];
   campaignId: string;
-  onUpdate: () => void;
+  onUpdate: (currentPostId?: string) => void;
   creators: Creator[];
   selectedCreator: Creator | null;
   handelSelectedCreator: (creator: Creator) => void;
@@ -41,15 +43,35 @@ export function CreatorDetailView({
   selectedCreator,
   handelSelectedCreator,
 }: CreatorDetailViewProps) {
-  const [selectedPost, setSelectedPost] = useState<Post | null>(posts[0]);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const initialPost = posts.length > 0 ? posts[0] : null;
+  const initialContent =
+    initialPost &&
+    initialPost.contentItems &&
+    initialPost.contentItems.length > 0
+      ? initialPost.contentItems[0]
+      : null;
+
+  const [selectedPost, setSelectedPost] = useState<Post | null>(initialPost);
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
-    null
+    initialContent
   );
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    setSelectedPost(posts[0]);
-  }, [posts]);
+    const currentPostStillExists =
+      selectedPost && posts.some((post) => post.id === selectedPost.id);
+
+    if (!currentPostStillExists) {
+      if (posts.length > 0) {
+        setSelectedPost(posts[0]);
+        setSelectedContent(posts[0].contentItems[0]);
+      } else {
+        setSelectedPost(null);
+        setSelectedContent(null);
+      }
+    }
+  }, [posts, selectedPost]);
 
   const handleProcessPaymentCheckout = async () => {
     try {
@@ -64,16 +86,14 @@ export function CreatorDetailView({
       toast.error("An error occurred while processing payment.");
     }
   };
-  const router = useRouter();
 
-  const handleViewContent = (content: ContentItem) => {
-    setSelectedContent(content);
-    setIsDrawerOpen(true);
-  };
+  const handleSelectPost = (post: Post) => {
+    setSelectedPost(post);
+    setSelectedContent(post.contentItems[0]);
 
-  const handleCloseDrawer = () => {
-    setIsDrawerOpen(false);
-    setSelectedContent(null);
+    const tab = searchParams.get("tab") || "in_campaign";
+    const url = `/campaign-details/${campaignId}?tab=${tab}&creator=${creator.id}&post=${post.id}`;
+    window.history.replaceState(null, "", url);
   };
 
   const metrics = useMemo(() => {
@@ -102,44 +122,47 @@ export function CreatorDetailView({
   }, [posts]);
 
   const handleApprovePost = async (postId: string) => {
+    const currentPostId = selectedPost?.id;
+
     await updatePostStatus({
       campaign_id: campaignId,
       creator_id: creator.id,
       post_id: postId,
       status: Status.Approved + "",
     });
-    onUpdate();
+
+    onUpdate(currentPostId);
   };
 
-  const handleApproveContent = async (contentId: string) => {
-    if (!selectedPost) return;
+  const handleApproveContent = async () => {
+    if (!selectedPost?.contentItems[0]) return;
     try {
       const result = await updatePostContentStatus({
         campaign_id: campaignId,
         creator_id: creator.id,
         post_id: selectedPost.id,
-        content_id: contentId,
+        content_id: selectedPost.contentItems[0].id,
         status: Status.Approved + "",
       });
 
       if (!result) {
         toast.error("Failed to approve content. Please try again.");
       }
-      onUpdate();
+      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while approving content.");
       console.error("Error approving content:", error);
     }
   };
 
-  const handleRejectContent = async (contentId: string, feedback?: string) => {
-    if (!selectedPost) return;
+  const handleRejectContent = async (feedback?: string) => {
+    if (!selectedPost?.contentItems[0]) return;
     try {
       const result = await updatePostContentStatus({
         campaign_id: campaignId,
         creator_id: creator.id,
         post_id: selectedPost.id,
-        content_id: contentId,
+        content_id: selectedPost.contentItems[0].id,
         status: Status.Rejected + "",
         feedback,
       });
@@ -147,12 +170,20 @@ export function CreatorDetailView({
       if (!result) {
         toast.error("Failed to reject content. Please try again.");
       }
-      onUpdate();
+      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while rejecting content.");
       console.error("Error rejecting content:", error);
     }
   };
+
+  // Function to prepare image for display
+  const prepareImageForDisplay = useCallback((imageUrl?: string) => {
+    if (!imageUrl) return undefined;
+
+    // Return the processed image URL
+    return imageUrl;
+  }, []);
 
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
@@ -165,12 +196,21 @@ export function CreatorDetailView({
             <ArrowLeft className="tw-w-4 tw-h-4 tw-mr-2" />
             Back to Campaign Overview
           </button>
+
           <div
-            className="tw-flex tw-items-center tw-text-blue-600 hover:tw-text-blue-700"
+            className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded-lg tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
             data-bs-toggle="offcanvas"
             data-bs-target="#creatorProfileDrawer"
           >
-            <User className="tw-w-4 tw-h-4 tw-mr-2" />
+            {selectedCreator?.profilePicture ? (
+              <img
+                src={selectedCreator.profilePicture}
+                alt={selectedCreator.name}
+                className="tw-w-8 tw-h-8 tw-rounded-full tw-mr-2"
+              />
+            ) : (
+              <User className="tw-w-8 tw-h-8 tw-mr-2" />
+            )}
             View Creator Profile
           </div>
         </div>
@@ -190,7 +230,7 @@ export function CreatorDetailView({
                 {posts.map((post) => (
                   <button
                     key={post.id}
-                    onClick={() => setSelectedPost(post)}
+                    onClick={() => handleSelectPost(post)}
                     className={`tw-w-full tw-p-3 tw-rounded-lg tw-text-left tw-transition-colors
                       ${
                         selectedPost?.id === post.id
@@ -237,58 +277,57 @@ export function CreatorDetailView({
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="tw-col-span-9">
-            <div className="tw-space-y-6">
-              {/* Campaign Performance */}
-              <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
-                <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
-                  Campaign Performance
-                </h3>
-                <div className="tw-grid tw-grid-cols-3 tw-gap-6">
-                  <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
-                    <div className="tw-text-sm tw-text-gray-500">
-                      Total Impressions
+            <div className="tw-flex tw-flex-col tw-items-center">
+              <div className="tw-w-full tw-mb-6">
+                <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                  <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
+                    Campaign Performance
+                  </h3>
+                  <div className="tw-grid tw-grid-cols-3 tw-gap-6">
+                    <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-text-sm tw-text-gray-500">
+                        Total Impressions
+                      </div>
+                      <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
+                        {metrics.totalImpressions.toLocaleString()}
+                      </div>
+                      <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
+                        {posts.length > 0
+                          ? `${posts.length} posts`
+                          : "No posts yet"}
+                      </div>
                     </div>
-                    <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {metrics.totalImpressions.toLocaleString()}
+                    <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-text-sm tw-text-gray-500">
+                        Avg. Engagement Rate
+                      </div>
+                      <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
+                        {metrics.avgEngagement}%
+                      </div>
+                      <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
+                        {creator.averageEngagement
+                          ? `${creator.averageEngagement}% creator avg.`
+                          : "No data"}
+                      </div>
                     </div>
-                    <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      {posts.length > 0
-                        ? `${posts.length} posts`
-                        : "No posts yet"}
-                    </div>
-                  </div>
-                  <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
-                    <div className="tw-text-sm tw-text-gray-500">
-                      Avg. Engagement Rate
-                    </div>
-                    <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {metrics.avgEngagement}%
-                    </div>
-                    <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      {creator.averageEngagement
-                        ? `${creator.averageEngagement}% creator avg.`
-                        : "No data"}
-                    </div>
-                  </div>
-                  <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
-                    <div className="tw-text-sm tw-text-gray-500">
-                      Click-through Rate
-                    </div>
-                    <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
-                      {metrics.clickThroughRate}%
-                    </div>
-                    <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
-                      Based on engagement
+                    <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-text-sm tw-text-gray-500">
+                        Click-through Rate
+                      </div>
+                      <div className="tw-text-2xl tw-font-semibold tw-text-gray-900">
+                        {metrics.clickThroughRate}%
+                      </div>
+                      <div className="tw-text-sm tw-text-teal-600 tw-mt-1">
+                        Based on engagement
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Selected Post Content */}
               {selectedPost && (
-                <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                <div className="tw-w-full tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
                   <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
                     <div>
                       <h3 className="tw-font-medium tw-text-gray-900">
@@ -361,207 +400,67 @@ export function CreatorDetailView({
                     </div>
                   </div>
 
-                  {/* Content Items */}
-                  <div className="tw-space-y-4">
-                    <h4 className="tw-font-medium tw-text-gray-700">
-                      Content Items
-                    </h4>
-                    {selectedPost.contentItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="tw-border tw-rounded-lg tw-p-4"
-                      >
-                        <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
+                  {selectedContent &&
+                    selectedContent.status === "in_review" && (
+                      <div className="tw-flex tw-justify-end tw-gap-3 tw-mb-4">
+                        <button
+                          onClick={() => handleRejectContent()}
+                          className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded-lg hover:tw-bg-red-50 tw-transition-colors"
+                        >
                           <div className="tw-flex tw-items-center tw-gap-2">
-                            <span className="tw-capitalize tw-text-sm tw-font-medium">
-                              {item.type}
-                            </span>
-                            <span
-                              className={`tw-text-xs tw-px-2 tw-py-1 tw-rounded-full
-                              ${
-                                item.status === "approved"
-                                  ? "tw-bg-green-100 tw-text-green-800"
-                                  : item.status === "in_review"
-                                  ? "tw-bg-yellow-100 tw-text-yellow-800"
-                                  : "tw-bg-gray-100 tw-text-gray-800"
-                              }
-                            `}
-                            >
-                              {item.status.replace("_", " ")}
-                            </span>
+                            <ThumbsDown className="tw-w-4 tw-h-4" />
+                            <span>Reject Content</span>
                           </div>
+                        </button>
+                        <button
+                          onClick={() => handleApproveContent()}
+                          className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-transition-colors"
+                        >
                           <div className="tw-flex tw-items-center tw-gap-2">
-                            {item.status === "in_review" && (
-                              <>
-                                <button
-                                  onClick={() => handleApproveContent(item.id)}
-                                  className="tw-p-2 tw-text-green-600 hover:tw-text-green-800 hover:tw-bg-green-50 tw-rounded-lg tw-transition-colors"
-                                  title="Approve content"
-                                >
-                                  <CheckCircle className="tw-w-4 tw-h-4" />
-                                </button>
-                                <button
-                                  onClick={() => handleRejectContent(item.id)}
-                                  className="tw-p-2 tw-text-red-600 hover:tw-text-red-800 hover:tw-bg-red-50 tw-rounded-lg tw-transition-colors"
-                                  title="Reject content"
-                                >
-                                  <ThumbsDown className="tw-w-4 tw-h-4" />
-                                </button>
-                              </>
-                            )}
-                            <Tooltip content="View content details">
-                              <button
-                                onClick={() => handleViewContent(item)}
-                                className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-900 hover:tw-bg-gray-100 tw-rounded-lg tw-transition-colors"
-                              >
-                                <Eye className="tw-w-4 tw-h-4" />
-                              </button>
-                            </Tooltip>
+                            <CheckCircle className="tw-w-4 tw-h-4" />
+                            <span>Approve Content</span>
                           </div>
-                        </div>
-                        <div className="tw-text-sm tw-text-gray-600 tw-truncate">
-                          {item.content}
-                        </div>
+                        </button>
                       </div>
-                    ))}
-                  </div>
+                    )}
+
+                  {selectedContent && (
+                    <div className="tw-flex tw-justify-center">
+                      <PostViewer
+                        post={{
+                          id: selectedContent.id,
+                          type: selectedContent.type,
+                          status:
+                            selectedContent.status === "in_review"
+                              ? "in-review"
+                              : selectedContent.status,
+                          submittedOn: selectedContent.date,
+                          author: {
+                            name: selectedCreator?.name || "",
+                            role: selectedCreator?.jobTitle || "Creator",
+                            avatar: selectedCreator?.profilePicture || "",
+                          },
+                          content: selectedContent.content || "",
+                          image: prepareImageForDisplay(
+                            selectedContent.images?.[0]
+                          ),
+                          timestamp: selectedContent.date || "",
+                          engagement: {
+                            likes: 1230,
+                            comments: 50,
+                            shares: 10,
+                          },
+                        }}
+                        preview={true}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
-      {isDrawerOpen && selectedContent && (
-        <div className="tw-fixed tw-inset-0 tw-bg-black tw-bg-opacity-50 tw-z-50">
-          <div className="tw-absolute tw-right-0 tw-top-0 tw-h-full tw-w-1/3 tw-bg-white tw-shadow-xl tw-flex tw-flex-col">
-            <div className="tw-p-6 tw-flex-1 tw-overflow-y-auto">
-              <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
-                <h3 className="tw-text-lg tw-font-medium">Content Details</h3>
-                <button
-                  onClick={handleCloseDrawer}
-                  className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-900 hover:tw-bg-gray-100 tw-rounded-lg tw-transition-colors"
-                >
-                  <X className="tw-w-5 tw-h-5" />
-                </button>
-              </div>
-
-              <div className="tw-space-y-6">
-                <div className="tw-bg-gray-50 tw-p-4 tw-rounded-lg">
-                  <div className="tw-mb-4">
-                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Type
-                    </h4>
-                    <p className="tw-text-sm tw-text-gray-600 tw-capitalize">
-                      {selectedContent.type}
-                    </p>
-                  </div>
-
-                  <div className="tw-mb-4">
-                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Status
-                    </h4>
-                    <span
-                      className={`tw-px-2 tw-py-1 tw-rounded-full tw-text-xs tw-font-medium ${
-                        selectedContent.status === "approved"
-                          ? "tw-bg-green-100 tw-text-green-800"
-                          : selectedContent.status === "in_review"
-                          ? "tw-bg-yellow-100 tw-text-yellow-800"
-                          : "tw-bg-gray-100 tw-text-gray-800"
-                      }`}
-                    >
-                      {selectedContent.status.replace("_", " ")}
-                    </span>
-                  </div>
-
-                  <div className="tw-mb-4">
-                    <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                      Submitted on
-                    </h4>
-                    <p className="tw-text-sm tw-text-gray-600">
-                      {selectedContent.date}
-                    </p>
-                  </div>
-
-                  {selectedContent.content && (
-                    <div className="tw-mb-4">
-                      <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                        Content
-                      </h4>
-                      <p className="tw-text-sm tw-text-gray-600">
-                        {selectedContent.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {selectedContent.type === "image" &&
-                  selectedContent.images &&
-                  selectedContent.images.length > 0 && (
-                    <div>
-                      <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
-                        Media
-                      </h4>
-                      <div className="tw-grid tw-grid-cols-1 tw-gap-2">
-                        {selectedContent.images.map((image, index) => (
-                          <div
-                            key={index}
-                            className="tw-border tw-rounded-lg tw-overflow-hidden"
-                          >
-                            <img
-                              src={image}
-                              alt={`Content image ${index + 1}`}
-                              className="tw-w-full tw-h-auto"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-              </div>
-            </div>
-
-            {selectedContent.status === "in_review" && (
-              <div className="tw-p-4 tw-border-t tw-bg-gray-50 tw-flex tw-justify-end tw-gap-3">
-                <button
-                  onClick={() => {
-                    router.push(`/inbox?id=${creator.id}`);
-                  }}
-                  className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-blue-500 tw-text-blue-600 tw-rounded-lg hover:tw-bg-blue-50 tw-transition-colors"
-                >
-                  <div className="tw-flex tw-items-center tw-gap-2">
-                    <MessageSquare className="tw-w-4 tw-h-4" />
-                    <span>Provide Feedback</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => {
-                    handleRejectContent(selectedContent.id);
-                    handleCloseDrawer();
-                  }}
-                  className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded-lg hover:tw-bg-red-50 tw-transition-colors"
-                >
-                  <div className="tw-flex tw-items-center tw-gap-2">
-                    <ThumbsDown className="tw-w-4 tw-h-4" />
-                    <span>Reject</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => {
-                    handleApproveContent(selectedContent.id);
-                    handleCloseDrawer();
-                  }}
-                  className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-transition-colors"
-                >
-                  <div className="tw-flex tw-items-center tw-gap-2">
-                    <CheckCircle className="tw-w-4 tw-h-4" />
-                    <span>Approve</span>
-                  </div>
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       <CreatorProfileDrawer creatorId={selectedCreator?.id || ""} />
     </div>

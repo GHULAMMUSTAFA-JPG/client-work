@@ -14,6 +14,7 @@ import {
 } from "@/@api";
 import Loader from "@/components/loader";
 import { defaultImagePath } from "@/components/constants";
+import LogoComponent from "@/components/LogoComponent";
 
 export default function Header() {
   const router = useRouter();
@@ -38,9 +39,17 @@ export default function Header() {
   const [socket, setSocket] = useState<any>();
   const [newMessage, setNewMessage] = useState<boolean>(false);
   const [totalUnreadMessage, setTotalUnreadMessage] = useState<number>(0);
+
   useEffect(() => {
     setUser(localStorage.getItem("user"));
   }, []);
+
+  const loginUser = (userData: any) => {
+    setIsLoading(true);
+    localStorage.setItem("user", JSON.stringify(userData));
+    setIsAuthenticated(true);
+    setUser(userData);
+  };
 
   const navigateToSignIn = () => {
     logout();
@@ -214,44 +223,7 @@ export default function Header() {
               data-bs-target="#offcanvasResponsive"
               aria-controls="offcanvasResponsive"
             />
-            <a className="navbar-brand">
-              <img
-                src="/assets/images/synnc-logo-new.png"
-                alt="logo"
-                width={80}
-                height={30}
-                className="img-fluid ps-3 ps-lg-0 mb-2 mb-lg-0"
-              />
-            </a>
-            {/* <Icon icon="ic:round-menu" width={24} height={24} type="button" className="d-none d-lg-block" /> */}
-            {/* <h5 className='mb-0 ms-3'>{pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}</h5> */}
-            {/* <button
-                            className="navbar-toggler bg-primary"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation"
-                        >
-                            <span className="navbar-toggler-icon"></span>
-                        </button> */}
-            {/* <div className="collapse navbar-collapse" id="navbarSupportedContent"> */}
-            {/* <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            Navigation items here
-                        </ul> */}
-            {/* <form className="d-flex" role="search">
-                                {(pathname !== '/' && pathname !== '/login') && (
-                                    <button
-                                        className="btn btn-sm btn-outline-primary me-2"
-                                        type="button" // Ensure button type is 'button'
-                                        onClick={navigateToSignIn}
-                                    >
-                                        {user?"Sign Out":"Sign In"}
-                                    </button>
-                                )} */}
-            {/* Register button if needed */}
-            {/* </form> */}
+            <LogoComponent role={user?.isBuyer ? "brand" : "creator"} />
 
             <div className="dropdown ms-auto">
               <FeedbackFish projectId={"0f9650767d04f4"}>
@@ -512,15 +484,16 @@ export default function Header() {
               >
                 <div className="d-flex align-items-center">
                   {userProfile?.Profile_Image || userProfile?.Company_Logo ? (
-                    <img
-                      src={
-                        userProfile?.Profile_Image || userProfile?.Company_Logo
-                      }
-                      alt="user"
-                      width={32}
-                      height={32}
-                      className="user-img rounded-circle"
-                    />
+                    <div className="img-container-topHeader">
+                      <img
+                        src={
+                          userProfile?.Profile_Image ||
+                          userProfile?.Company_Logo
+                        }
+                        alt="user"
+                        className=""
+                      />
+                    </div>
                   ) : (
                     <div
                       className="d-flex align-items-center justify-content-center bg-light rounded-circle"
@@ -593,4 +566,7 @@ export default function Header() {
       </header>
     </>
   );
+}
+function setIsAuthenticated(arg0: boolean) {
+  throw new Error("Function not implemented.");
 }

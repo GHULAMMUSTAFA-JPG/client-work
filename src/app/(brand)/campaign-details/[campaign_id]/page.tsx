@@ -10,7 +10,7 @@ import CreatorList from "@/components/campaign-brand/CreatorList";
 import CampaignHeader from "@/components/campaign-brand/CampaignHeader";
 import EditCreateCampaign, {
   CampaignFormData,
-} from "@/components/campaign-brand/EditCreateCampaign";
+} from "@/components/shared/EditCreateCampaign";
 import {
   createCreatorFromData,
   extractCampaignFormData,
@@ -36,7 +36,6 @@ function CampaignDetailsContent() {
   const creatorParam = searchParams.get("creator");
   const postParam = searchParams.get("post");
   const { user } = useAuth();
-
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>(tabParam || "invited");
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
@@ -46,7 +45,6 @@ function CampaignDetailsContent() {
   const [campaignActiveCreatorsData, setCampaignActiveCreatorsData] =
     useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const fetchCampaign = async () => {
     if (!user?._id) return;
 
@@ -188,8 +186,22 @@ function CampaignDetailsContent() {
         onBack={handleBack}
         posts={selectedCreator.posts || []}
         campaignId={campaign_id as string}
-        onUpdate={() => setRefreshTrigger((prev) => prev + 1)}
-        creators={campaign.creators}
+        onUpdate={(currentPostId) => {
+          setRefreshTrigger((prev) => prev + 1);
+
+          if (currentPostId) {
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("post", currentPostId);
+            window.history.replaceState(null, "", currentUrl.toString());
+          }
+        }}
+        creators={campaignActiveCreatorsData.Active_Creators?.map(
+          (item: any) => ({
+            name: item.Name,
+            profilePicture: item.Profile_Image,
+            id: item.Creator_ID,
+          })
+        )}
         selectedCreator={selectedCreator}
         handelSelectedCreator={handleSelectCreator}
       />

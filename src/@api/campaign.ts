@@ -1,25 +1,5 @@
 import { Status } from "@/types";
-import { apiController } from "./baseUrl";
-
-const handleApiRequest = async <T>(
-  method: "get" | "post" | "put" | "delete",
-  url: string,
-  payloadOrParams?: object
-): Promise<T | null> => {
-  try {
-    const response =
-      method === "get"
-        ? await apiController.get(url, { params: payloadOrParams })
-        : method === "delete"
-        ? await apiController.delete(url, { data: payloadOrParams })
-        : await apiController[method](url, payloadOrParams);
-
-    return response.data;
-  } catch (error) {
-    console.error(`API Error (${method.toUpperCase()} ${url}):`, error);
-    return null;
-  }
-};
+import { handleApiRequest } from "./utils";
 
 export const createCampaignPost = async (payload: {
   campaign_id: string;
@@ -258,5 +238,12 @@ export const updatePostStatus = async (payload: {
     "put",
     "/brands/campaigns/post-proposal-status",
     payload
+  );
+};
+
+export const getCreatorCampaignsOverview = async (email: string) => {
+  return handleApiRequest(
+    "get",
+    `/dashboard/campaigns/get_creator_campaigns_overview/${email}`
   );
 };

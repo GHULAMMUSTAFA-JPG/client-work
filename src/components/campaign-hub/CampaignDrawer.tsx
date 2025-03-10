@@ -9,7 +9,7 @@ import {
   Edit,
   Trash2,
 } from "lucide-react";
-import { getIcon, getStatusLabel, getStatusStyles } from "./utils";
+import { getIcon, getStatusLabel, getStatusStyles } from "../shared/utils";
 
 interface DrawerProps {
   isOpen: boolean;
@@ -151,6 +151,27 @@ export function CampaignDrawer({
     );
   };
 
+  const renderVersionStatus = () => {
+    if (!initialData?.status) return null;
+
+    return (
+      <div className="tw-mb-6">
+        <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-3">
+          Version Status
+        </h4>
+        <div className="tw-p-4 tw-bg-gray-50 tw-rounded-lg">
+          <span
+            className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium tw-border ${getStatusStyles(
+              initialData.status
+            )}`}
+          >
+            {getStatusLabel(initialData.status)}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   const renderActionButtons = () => {
     if (!isPost) return null;
 
@@ -220,6 +241,7 @@ export function CampaignDrawer({
                 </div>
 
                 {renderImportantDates()}
+                {renderVersionStatus()}
 
                 {initialData?.category && (
                   <div>

@@ -22,6 +22,7 @@ interface editDtoProps {
   description: string;
   skills: [string];
   current_company: string;
+  company_website: string;
   job_title: string;
   audience_interest: string;
   collaboration_packages: any;
@@ -36,6 +37,8 @@ interface editFieldProps {
   description: boolean;
   skills: boolean;
   current_company: boolean;
+  job_title: boolean;
+  company_website: boolean;
   audience_interest: boolean;
   collaboration_packages: boolean;
 }
@@ -67,6 +70,7 @@ function ProfilePage() {
     description: "",
     skills: [""],
     current_company: "",
+    company_website: "",
     job_title: "",
     audience_interest: "",
     collaboration_packages: [
@@ -87,6 +91,8 @@ function ProfilePage() {
     description: false,
     skills: false,
     current_company: false,
+    company_website: false,
+    job_title: false,
     audience_interest: false,
     collaboration_packages: false,
   });
@@ -174,6 +180,7 @@ function ProfilePage() {
         description: userProfile?.Description,
         skills: userProfile?.Skills,
         current_company: userProfile?.Current_Company,
+        company_website: userProfile?.Company_Website,
         job_title: userProfile?.Job_Title,
         audience_interest: userProfile?.Audience_Interest,
         collaboration_packages: collabPack,
@@ -223,10 +230,11 @@ function ProfilePage() {
           toast.error("Name cannot be empty");
           return;
         }
-        if (!editDetails.current_company) {
-          toast.error("Current company cannot be empty");
+        if (!editDetails.company_website) {
+          toast.error("Company website URL cannot be empty");
           return;
         }
+
         if (!editDetails.profile_url) {
           toast.error("Linkedin username cannot be empty");
           return;
@@ -935,9 +943,9 @@ function ProfilePage() {
                           <input
                             type="text"
                             className="form-control"
-                            value={editDetails.current_company}
+                            value={editDetails.company_website}
                             onChange={changeHandler}
-                            id="current_company"
+                            id="company_website"
                             placeholder="Synnc"
                           />
                         </div>
@@ -1075,7 +1083,7 @@ function ProfilePage() {
                     >
                       <div className="d-flex justify-content-between mb-3 pt-2">
                         <h6 className="mb-0 ">Edit Section</h6>
-                        <div>
+                        <div className="d-flex align-items-center gap-2">
                           <button
                             className="bg-white border btn btn-sm"
                             onClick={handleCancel}

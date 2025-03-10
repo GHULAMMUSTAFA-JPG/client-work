@@ -450,20 +450,10 @@ function CompanyPage() {
                       </div>
                     </Tooltip>
                   </h4>
-                  {/*        <h6 className="text-muted mb-2">
-                    {userProfile?.Current_Position ||
-                      "Senior Software Engineer"}
-                  </h6> */}
-
-                  {/* Company and Location Row */}
-                  {/*            <div className="d-flex align-items-center gap-2 text-muted mb-2">
-                    <Icon icon="mdi:building" width={18} height={18} />
-                    <span>
-                      {userProfile?.Current_Company || "TechCorp Industries"}
-                    </span>
-                  </div> */}
-
-                  {/* Skills Row */}
+                 
+                  <p className="mb-0 fs-14"> 
+                  {userProfile?.Job_Title} 
+                </p>
                   <div className="chips-container d-flex flex-wrap gap-2">
                     {userProfile?.Categories?.map(
                       (category: any, index: number) => {

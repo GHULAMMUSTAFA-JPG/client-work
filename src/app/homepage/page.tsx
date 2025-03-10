@@ -3,7 +3,6 @@
 import { fetch_dashboard_data, getCampaignsCreatorsOverview } from "@/@api";
 import withAuth from "@/utils/withAuth";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import PostCalendar from "@/components/Calendar";
 import EditProfileModal from "@/components/EditProfileModal";
@@ -11,13 +10,14 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { defaultImagePath } from "@/components/constants";
 import { Tooltip } from "@mui/material";
-import WelcomeBanner from "@/components/WelcomeBanner";
 import HowItWorks from "@/components/HowItWorks";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
 import { NodeNextRequest } from "next/dist/server/base-http/node";
 import { Drawer } from "@mui/material";
+import { getCreatorPayouts } from "@/@api/creator";
+import { calculatePayouts } from "@/utils/payoutUtils";
 
 function Homepage() {
   const { user, userProfile, setIsLoading, notifications, setIsActive } =
@@ -25,6 +25,19 @@ function Homepage() {
   const [users, setUsers] = useState<any[]>([]);
   const [campaigns, setCampaigns] = useState<any>();
   const [linkCopied, setLinkCopied] = useState<boolean>(false);
+  const [payouts, setPayouts] = useState<any>();
+  const [payoutDetails, setPayoutDetails] = useState<{
+    upcomingPayout: number;
+    paidPayout: number;
+    upcomingPayoutsList: any[];
+    paidPayoutsList: any[];
+  }>({
+    upcomingPayout: 0,
+    paidPayout: 0,
+    upcomingPayoutsList: [],
+    paidPayoutsList: [],
+  });
+
   const howItWorksSteeps = [
     {
       title: "Step 1: Claim your profile",
@@ -57,7 +70,23 @@ function Homepage() {
   const fetchData = async () => {
     const response: any = await fetch_dashboard_data();
     setUsers(response?.data?.users);
+    setPayouts(payouts);
   };
+  useEffect(() => {
+    const fetchPayouts = async () => {
+      if (user?.uuid) {
+        try {
+          const userPosts = (await getCreatorPayouts(user.uuid)) as any[];
+          const payoutData = calculatePayouts(userPosts);
+          setPayoutDetails(payoutData);
+        } catch (error) {
+          console.error("Failed to fetch payouts:", error);
+        }
+      }
+    };
+
+    fetchPayouts();
+  }, [user?.uuid]);
 
   const shareProfile = () => {
     try {
@@ -76,7 +105,8 @@ function Homepage() {
     campaigns?.Activated_Campaigns &&
     campaigns?.Activated_Campaigns?.length !== 0;
 
-  const [isPayoutDrawerOpen, setIsPayoutDrawerOpenState] = useState<boolean>(false);
+  const [isPayoutDrawerOpen, setIsPayoutDrawerOpenState] =
+    useState<boolean>(false);
 
   function setIsPayoutDrawerOpen(open: boolean) {
     setIsPayoutDrawerOpenState(open);
@@ -96,10 +126,11 @@ function Homepage() {
 
           <div className="col-md-8">
             <div className="card mb-1">
-             
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">Profile <span className="text-teal">(Creator)</span></p>
+                  <p className="mb-0 fs-16 fw-medium">
+                    Profile <span className="text-teal">(Creator)</span>
+                  </p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
                       <Tooltip
@@ -199,14 +230,17 @@ function Homepage() {
                 </div>
 
                 <div className="d-flex gap-3">
-                <div className="img-container-lg-general">
-                  <img
-                    src={userProfile?.Profile_Image || "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"}
-                    className="border object-fit-cover rounded-circle flex-shrink-0"
-                    alt="Profile Picture"
-                    width={80}
-                    height={80}
-                  />
+                  <div className="img-container-lg-general">
+                    <img
+                      src={
+                        userProfile?.Profile_Image ||
+                        "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+                      }
+                      className="border object-fit-cover rounded-circle flex-shrink-0"
+                      alt="Profile Picture"
+                      width={80}
+                      height={80}
+                    />
                   </div>
                   <div className="flex-grow-1 mb-3">
                     <div className="d-flex align-items-center gap-2 mb-2">
@@ -253,22 +287,20 @@ function Homepage() {
                     </div>
 
                     <div className="d-flex gap-2 align-items-center mb-2">
-                  {/*     <p className="mb-0 fs-12 text-warning">
+                      {/*     <p className="mb-0 fs-12 text-warning">
                         @{userProfile?.Profile_URL || "No information"}
                       </p> */}
-                  <p className="fs-14 fw-500 text-gray">
-                  {userProfile?.Job_Title || ""}
-                  </p>
-                    
+                      <p className="fs-14 fw-500 text-gray">
+                        {userProfile?.Job_Title || ""}
+                      </p>
                     </div>
 
-                  <div className="d-flex gap-2 align-items-center mb-2">
-                  <p className="fs-14 fw-500 text-gray">
+                    <div className="d-flex gap-2 align-items-center mb-2">
+                      <p className="fs-14 fw-500 text-gray">
                         {userProfile?.Current_Company}
-                  </p>
-                     </div>
+                      </p>
+                    </div>
 
-                    
                     {/* tags */}
                     {userProfile?.Audience_Interest.split(", ")?.length > 0 &&
                       userProfile?.Audience_Interest.split(", ")[0] !== "" && (
@@ -285,7 +317,7 @@ function Homepage() {
                           )}
                         </div>
                       )}
-         
+
                     <p className="mb-0 fs-12 text-warning">
                       {userProfile?.Description &&
                       userProfile?.Description?.length > 100
@@ -294,102 +326,204 @@ function Homepage() {
                     </p>
                   </div>
                 </div>
-             </div>
-             <div className="d-flex justify-content-between align-itmes-center">
-             <div className="statsbox-container-3">
-             <div className="stats-box">
-              <div className="stats-count">
-              {userProfile?.No_of_Followers}{" "}
               </div>
-              <div className="stats-heading">Followers</div>
-            </div>
-              </div>
+              <div className="d-flex justify-content-between align-itmes-center">
+                <div className="statsbox-container-3">
+                  <div className="stats-box">
+                    <div className="stats-count">
+                      {userProfile?.No_of_Followers}{" "}
+                    </div>
+                    <div className="stats-heading">Followers</div>
+                  </div>
+                </div>
 
-              <div className="statsbox-container-3">
-             <div className="stats-box">
-              <div className="stats-count">
-              {userProfile?.Average_Engagements}
-              </div>
-              <div className="stats-heading">Average Engagaements per post</div>
-            </div>
-              </div>
+                <div className="statsbox-container-3">
+                  <div className="stats-box">
+                    <div className="stats-count">
+                      {userProfile?.Average_Engagements}
+                    </div>
+                    <div className="stats-heading">
+                      Average Engagaements per post
+                    </div>
+                  </div>
+                </div>
 
-             <div className="statsbox-container-3">
-             <div className="stats-box">
-              <div className="stats-count">
-              {userProfile?.Average_Impressions}
-              </div>
-              <div className="stats-heading">Average Impressions per post</div>
-            </div>
-              </div>
+                <div className="statsbox-container-3">
+                  <div className="stats-box">
+                    <div className="stats-count">
+                      {userProfile?.Average_Impressions}
+                    </div>
+                    <div className="stats-heading">
+                      Average Impressions per post
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="statsbox-container-dash-4col py-3">
-           <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                 <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-teal-svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                  </div>
+              <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                <div className="p-2 rounded-full bg-gray-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="text-teal-svg"
+                  >
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </div>
 
                 <div className="ml-4">
                   <p className="fs-13">Active Campaigns</p>
-                  <p className="fs-16 fw-bold text-red">3</p>
+                  <p className="fs-16 fw-bold">
+                    {campaigns?.Activated_Campaigns?.length}
+                  </p>
                 </div>
-          </div>
+              </div>
 
-       <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                 <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="text-blue-svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                  </div>
+              <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                <div className="p-2 rounded-full bg-gray-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="text-blue-svg"
+                  >
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
 
                 <div className="ml-4">
-                <p className="fs-13">Pending Applications</p>
-                  <p className="fs-16 fw-bold text-red">5</p>
+                  <p className="fs-13">Pending Applications</p>
+                  <p className="fs-16 fw-bold">
+                    {campaigns?.Submitted_Campaigns?.length}
+                  </p>
                 </div>
-          </div>
+              </div>
 
-          <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                 <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
-  <g id="Group_38" data-name="Group 38" transform="translate(-1 -1)">
-    <circle id="Ellipse_2" data-name="Ellipse 2" cx="10" cy="10" r="10" transform="translate(2 2)" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_869" data-name="Path 869" d="M12,6v6l4,2" fill="none" stroke="#3b82f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg>
-
-
-                  </div>
-
-                <div className="ml-4 cursor-pointer"   onClick={() => {
-              setIsPayoutDrawerOpen(true);
-              setSelectedPayoutType('upcoming');
-            }}>
-                <p className="fs-13">Upcoming Payouts</p>
-                <p className="fs-16 fw-bold text-red">$7,750</p>
-                <p className="fs-12 fw-400">Expected</p>
+              <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                <div className="p-2 rounded-full bg-gray-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 22 22"
+                  >
+                    <g
+                      id="Group_38"
+                      data-name="Group 38"
+                      transform="translate(-1 -1)"
+                    >
+                      <circle
+                        id="Ellipse_2"
+                        data-name="Ellipse 2"
+                        cx="10"
+                        cy="10"
+                        r="10"
+                        transform="translate(2 2)"
+                        fill="none"
+                        stroke="#3b82f6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      />
+                      <path
+                        id="Path_869"
+                        data-name="Path 869"
+                        d="M12,6v6l4,2"
+                        fill="none"
+                        stroke="#3b82f6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      />
+                    </g>
+                  </svg>
                 </div>
-          </div>
 
-          <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                 <div className="p-2 rounded-full bg-gray-50">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="22" viewBox="0 0 14 22">
-  <g id="Group_37" data-name="Group 37" transform="translate(-5 -1)">
-    <line id="Line_1" data-name="Line 1" y2="20" transform="translate(12 2)" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_868" data-name="Path 868" d="M17,5H9.5a3.5,3.5,0,0,0,0,7h5a3.5,3.5,0,1,1,0,7H6" fill="none" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg>
-
-                  </div>
-
-                <div className="ml-4 cursor-pointer" onClick={() => {
-              setIsPayoutDrawerOpen(true);
-              setSelectedPayoutType('total');
-            }}>
-                <p className="fs-13">Total Payouts</p>
-                <p className="fs-16 fw-bold text-red">$12,450</p>
-                <p className="fs-12 fw-400">Recieved</p>
+                <div
+                  className="ml-4 cursor-pointer"
+                  onClick={() => {
+                    setIsPayoutDrawerOpen(true);
+                    setSelectedPayoutType("upcoming");
+                  }}
+                >
+                  <p className="fs-13">Upcoming Payouts</p>
+                  <p className="fs-16 fw-bold">
+                    ${payoutDetails.upcomingPayout.toLocaleString()}
+                  </p>
+                  <p className="fs-12 fw-400">Expected</p>
                 </div>
-          </div>
-  </div>
+              </div>
+
+              <div className="d-flex align-items-center gap-2 box-effect-shadow">
+                <div className="p-2 rounded-full bg-gray-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="22"
+                    viewBox="0 0 14 22"
+                  >
+                    <g
+                      id="Group_37"
+                      data-name="Group 37"
+                      transform="translate(-5 -1)"
+                    >
+                      <line
+                        id="Line_1"
+                        data-name="Line 1"
+                        y2="20"
+                        transform="translate(12 2)"
+                        fill="none"
+                        stroke="#22c55e"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      />
+                      <path
+                        id="Path_868"
+                        data-name="Path 868"
+                        d="M17,5H9.5a3.5,3.5,0,0,0,0,7h5a3.5,3.5,0,1,1,0,7H6"
+                        fill="none"
+                        stroke="#22c55e"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      />
+                    </g>
+                  </svg>
+                </div>
+
+                <div
+                  className="ml-4 cursor-pointer"
+                  onClick={() => {
+                    setIsPayoutDrawerOpen(true);
+                    setSelectedPayoutType("total");
+                  }}
+                >
+                  <p className="fs-13">Total Payouts</p>
+                  <p className="fs-16 fw-bold">
+                    ${payoutDetails.paidPayout.toLocaleString()}
+                  </p>
+                  <p className="fs-12 fw-400">Recieved</p>
+                </div>
+              </div>
+            </div>
             <div className="card h-10">
               {!hasActiveCampaigns && (
                 <div className="d-flex flex-column justify-content-center min-h-100 howitwork">
@@ -464,7 +598,6 @@ function Homepage() {
             </div>
           </div>
           <div className="col-md-4 ">
-
             <Drawer
               anchor="right"
               open={isPayoutDrawerOpen}
@@ -474,121 +607,187 @@ function Homepage() {
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <h5 className="mb-0">Payouts Details</h5>
                   <Icon
-                  icon="mdi:close"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer"
-                  onClick={() => setIsPayoutDrawerOpen(false)}
+                    icon="mdi:close"
+                    width={24}
+                    height={24}
+                    className="cursor-pointer"
+                    onClick={() => setIsPayoutDrawerOpen(false)}
                   />
                 </div>
-                
-{/* tabs */}
-<div className="d-flex bg-tabs py-2 w-100" role="tablist" aria-orientation="horizontal">
-  <button
-    className={`tab-payouts ${
-      selectedPayoutType === "total" ? "tab-payouts-active" : ""
-    }`}
-    role="tab"
-    type="button"
-    aria-selected={selectedPayoutType === "total"}
-    onClick={() => setSelectedPayoutType("total")}
-  >
-    Total Payouts
-  </button>
-  <button
-    className={`tab-payouts  ${
-      selectedPayoutType === "upcoming" ? "tab-payouts-active" : ""
-    }`}
-    role="tab"
-    type="button"
-    aria-selected={selectedPayoutType === "upcoming"}
-    onClick={() => setSelectedPayoutType("upcoming")}
-  >
-    Upcoming Payouts
-  </button>
-</div>
-<div className="mt-4">
-  {selectedPayoutType === "total" && (
-    <div className="PayoutBox">
-    <div>
-      {/* Total Payouts Content */} 
-      
-      <div className="notification_wrapper new_campaign_application">
-        <div className="notify_icons"><svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
-  <path id="Icon_core-resize-both" data-name="Icon core-resize-both" d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z" transform="translate(-3.75 -3.75)"/>
-</svg>
-</div>
-        <div className="ml-3 w-100">
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="w-50"> 
-              <p className="fs-14 fw-500">hunt for Draft</p>
-              <p className="fs-11 fw-400 text-gray">Mar 05, 2025</p>
-            </div>
 
-            <div className="w-50 text-right">  
-              <p className="fs-14 fw-500 text-red">$ 2500</p>
-              <p className="fs-11 fw-400 text-gray">Paid</p>
-            </div>
-             </div>
-       
-          
-            </div>
-            </div> </div>
-            <hr />
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <div className="fs-16 fw-500 text-black">Total Received</div>
-            <div className="fs-16 fw-500 text-teal">$12,450</div>
-          </div>
-      
-       {/* Total Payouts Content */}
-       </div>
+                {/* tabs */}
+                <div
+                  className="d-flex bg-tabs py-2 w-100"
+                  role="tablist"
+                  aria-orientation="horizontal"
+                >
+                  <button
+                    className={`tab-payouts ${
+                      selectedPayoutType === "total" ? "tab-payouts-active" : ""
+                    }`}
+                    role="tab"
+                    type="button"
+                    aria-selected={selectedPayoutType === "total"}
+                    onClick={() => setSelectedPayoutType("total")}
+                  >
+                    Total Payouts
+                  </button>
+                  <button
+                    className={`tab-payouts  ${
+                      selectedPayoutType === "upcoming"
+                        ? "tab-payouts-active"
+                        : ""
+                    }`}
+                    role="tab"
+                    type="button"
+                    aria-selected={selectedPayoutType === "upcoming"}
+                    onClick={() => setSelectedPayoutType("upcoming")}
+                  >
+                    Upcoming Payouts
+                  </button>
+                </div>
+                <div className="mt-4">
+                  {selectedPayoutType === "total" && (
+                    <div className="PayoutBox">
+                      <div>
+                        {/* Total Payouts Content */}
+                        {payoutDetails.paidPayoutsList.map((payout, index) => (
+                          <div
+                            key={index}
+                            className="notification_wrapper new_campaign_application"
+                          >
+                            <div className="notify_icons">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16.5"
+                                height="16.5"
+                                viewBox="0 0 16.5 16.5"
+                              >
+                                <path
+                                  id="Icon_core-resize-both"
+                                  data-name="Icon core-resize-both"
+                                  d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z"
+                                  transform="translate(-3.75 -3.75)"
+                                />
+                              </svg>
+                            </div>
+                            <div className="ml-3 w-100">
+                              <div className="d-flex justify-content-between align-items-center">
+                                <div className="w-50">
+                                  <p className="fs-14 fw-500">
+                                    {payout.postTitle}
+                                  </p>
+                                  <p className="fs-11 fw-400 text-gray">
+                                    {payout.date}
+                                  </p>
+                                </div>
 
-  )}
-  {selectedPayoutType === "upcoming" && (
-    <div className="PayoutBox">
-    <div>
-      {/* Upcoming Payouts Content */}
-      <div className="notification_wrapper new_campaign_application">
-        <div className="notify_icons"><svg xmlns="http://www.w3.org/2000/svg" width="16.5" height="16.5" viewBox="0 0 16.5 16.5">
-  <path id="Icon_core-resize-both" data-name="Icon core-resize-both" d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z" transform="translate(-3.75 -3.75)"/>
-</svg>
-</div>
-        <div className="ml-3 w-100">
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="w-50"> 
-              <p className="fs-14 fw-500">hunt for Draft</p>
-              <p className="fs-11 fw-400 text-gray">Expected: Mar 15, 2025</p>
-            </div>
+                                <div className="w-50 text-right">
+                                  <p className="fs-14 fw-500 text-red">
+                                    ${payout.budget}
+                                  </p>
+                                  <p className="fs-11 fw-400 text-gray">Paid</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {payoutDetails.paidPayoutsList.length === 0 && (
+                          <div className="text-center py-3">
+                            <p>No paid payouts yet</p>
+                          </div>
+                        )}
+                      </div>
+                      <hr />
+                      <div className="d-flex justify-content-between align-items-center mt-3">
+                        <div className="fs-16 fw-500 text-black">
+                          Total Received
+                        </div>
+                        <div className="fs-16 fw-500 text-teal">
+                          ${payoutDetails.paidPayout.toLocaleString()}
+                        </div>
+                      </div>
 
-            <div className="w-50 text-right">  
-              <p className="fs-14 fw-500 text-red">$ 2500</p>
-              <p className="fs-11 fw-400 text-gray">Upcoming</p>
-            </div>
-             </div>
-  
-          </div>
-            </div>
-            </div>
-      {/* Upcoming Payouts Content */}
-            <hr />
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <div className="fs-16 fw-500 text-black">Total Expected</div>
-            <div className="fs-16 fw-500 text-teal">$12,450</div>
-          </div>
-      </div>
-  )}
-</div>
-    {/* tabs */}            
+                      {/* Total Payouts Content */}
+                    </div>
+                  )}
+                  {selectedPayoutType === "upcoming" && (
+                    <div className="PayoutBox">
+                      <div>
+                        {/* Upcoming Payouts Content */}
+                        {payoutDetails.upcomingPayoutsList.map(
+                          (payout, index) => (
+                            <div
+                              key={index}
+                              className="notification_wrapper new_campaign_application"
+                            >
+                              <div className="notify_icons">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16.5"
+                                  height="16.5"
+                                  viewBox="0 0 16.5 16.5"
+                                >
+                                  <path
+                                    id="Icon_core-resize-both"
+                                    data-name="Icon core-resize-both"
+                                    d="M18.97,9.97,16.6,12.337,11.663,7.4l2.383-2.383L12.781,3.75H3.75v9l1.28,1.28,2.39-2.39,4.939,4.939L9.954,18.985l1.265,1.265H20.25v-9Zm-.22,8.78H12.311l2.17-2.17L7.42,9.519l-2.17,2.17V5.25h6.439L9.541,7.4,16.6,14.459l2.148-2.148Z"
+                                    transform="translate(-3.75 -3.75)"
+                                  />
+                                </svg>
+                              </div>
+                              <div className="ml-3 w-100">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div className="w-50">
+                                    <p className="fs-14 fw-500">
+                                      {payout.postTitle}
+                                    </p>
+                                    <p className="fs-11 fw-400 text-gray">
+                                      Expected: {payout.date}
+                                    </p>
+                                  </div>
+
+                                  <div className="w-50 text-right">
+                                    <p className="fs-14 fw-500 text-red">
+                                      ${payout.budget}
+                                    </p>
+                                    <p className="fs-11 fw-400 text-gray">
+                                      Upcoming
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        )}
+                        {payoutDetails.upcomingPayoutsList.length === 0 && (
+                          <div className="text-center py-3">
+                            <p>No upcoming payouts yet</p>
+                          </div>
+                        )}
+                      </div>
+                      {/* Upcoming Payouts Content */}
+                      <hr />
+                      <div className="d-flex justify-content-between align-items-center mt-3">
+                        <div className="fs-16 fw-500 text-black">
+                          Total Expected
+                        </div>
+                        <div className="fs-16 fw-500 text-teal">
+                          ${payoutDetails.upcomingPayout.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {/* tabs */}
               </div>
             </Drawer>
-           
+
             <div className="card mb-3">
               <div className="card-body">
-                <p className="mb-0 fs-16 fw-medium">Upcoming Posts</p>
-                <PostCalendar />
+               <PostCalendar />
               </div>
             </div>
-
 
             <div className="card mb-3" style={{ height: "48%" }}>
               <div className="card-body">
@@ -671,11 +870,7 @@ function Homepage() {
                 )}
               </div>
             </div>
-
-   
           </div>
-
-          
         </div>
       </div>
 

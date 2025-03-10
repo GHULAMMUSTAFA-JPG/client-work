@@ -301,7 +301,7 @@ const Inbox = () => {
           {selectedIds?.Recipient_ID ? (
             <div className="card h-100 border-0">
               <div className="card-header bg-white p-3">
-                <div className="d-flex align-items-center justify-between">
+                <div className="d-flex align-items-center justify-between gap-3">
                   {selectedIds?.Profile_Image && (
                     <img
                       src={selectedIds?.Profile_Image || defaultImagePath}
