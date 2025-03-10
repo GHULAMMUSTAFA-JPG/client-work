@@ -11,6 +11,7 @@ interface CampaignAcceptanceCardProps {
   acceptanceDate: string;
   campaignid: any;
   isCreatorView?: boolean;
+  name?: any;
 }
 
 export const CampaignAcceptanceCard = ({
@@ -19,6 +20,7 @@ export const CampaignAcceptanceCard = ({
   acceptanceDate,
   campaignid,
   isCreatorView = false,
+  name,
 }: CampaignAcceptanceCardProps) => {
   const [selectedCampaign, setselectedCampaign] = useState(null);
   const router = useRouter();
@@ -54,8 +56,8 @@ export const CampaignAcceptanceCard = ({
           />
           <h3 className="fw-medium text-dark mb-0 line-clamp-2">
             {user.isBuyer
-              ? "Creator accepted to the campaign"
-              : "Congrats! Brand has accepted your application"}
+              ? `${name} accepted to the campaign`
+              : `Congrats! ${name} has accepted your application`}
           </h3>
         </div>
         <span className="small text-gray flex-shrink-0 ms-3">

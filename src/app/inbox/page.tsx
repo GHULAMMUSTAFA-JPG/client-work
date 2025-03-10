@@ -34,7 +34,28 @@ const Inbox = () => {
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
   console.log("conversations", conversations);
   console.log("conversationstate", conversationstate);
+  useEffect(() => {
+    const idInUrl = searchParams.get("id");
 
+    if (
+      conversationstate?.length > 0 &&
+      !selectedIds?.Recipient_ID &&
+      !idInUrl
+    ) {
+      const firstConversation = conversationstate[0];
+      setSelectedIds({
+        Recipient_ID: firstConversation?.Last_Message?.Recipient_ID,
+        Message_ID: firstConversation?.Last_Message?.Message_ID,
+        Conversation_Id: firstConversation?._id,
+        Sender_ID: userProfile?._id,
+        Name: firstConversation?.Name,
+        Profile_Image: firstConversation?.Profile_Image,
+      });
+
+      // Also mark the conversation as read
+      readMessage(firstConversation);
+    }
+  }, [conversationstate, searchParams, selectedIds?.Recipient_ID]);
   useEffect(() => {
     console.log("useeefffff");
 
@@ -291,14 +312,14 @@ const Inbox = () => {
                     />
                   )}
                   <h6 className="mb-0 fs-14">{selectedIds?.Name}</h6>
-                  <button
+                  {/* <button
                     className="btn btn-link text-primary"
                     onClick={() =>
                       toast.info("View Campaign - Feature Coming Soon!")
                     }
                   >
                     View Campaign
-                  </button>
+                  </button> */}
                 </div>
               </div>
 
@@ -399,6 +420,7 @@ const Inbox = () => {
                                   campaignLink="https://example.com"
                                   acceptanceDate={msg.Timestamp}
                                   campaignid={msg.Campaign_Details.Campaign_ID}
+                                  name={selectedIds?.Name}
                                 />
                               </div>
                             </div>
