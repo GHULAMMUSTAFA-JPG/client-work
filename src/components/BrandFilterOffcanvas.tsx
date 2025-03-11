@@ -145,7 +145,33 @@ export default function BrandFilterOffcanvas({
   </g>
 </svg> &nbsp;
 {title}</h6>
-        <hr className="mb-3"/>
+
+<div className="tw-relative mb-3">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className="lucide lucide-search tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-h-4 tw-w-4 tw-text-gray-400"
+      aria-hidden="true">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.3-4.3"></path>
+    </svg>
+    
+    <input 
+      type="text" 
+      id="search-input"
+      className="tw-w-full tw-pl-10 tw-pr-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-2 focus:tw-ring-teal-500 focus:tw-border-transparent focus:tw-shadow-md"
+      placeholder={`${title}...`}
+      aria-label="Search countries"
+    />
+  </div>
+  <div className="px-2 py-1 tw-text-xs tw-font-medium tw-text-gray-500">Popular Choices</div>
         {items.map((item) => {
           const id = isValueKey ? item.Value : item;
           const label = isValueKey ? item.Key : item;
@@ -159,7 +185,7 @@ export default function BrandFilterOffcanvas({
                 checked={values.includes(id)}
                 onChange={(e) => handleFilterChange(e, setter, values)}
               />
-              <label className="form-check-label text-black" htmlFor={id}>
+              <label className="tw-text-sm tw-text-gray-700" htmlFor={id}>
                 {label}
               </label>
             </div>
