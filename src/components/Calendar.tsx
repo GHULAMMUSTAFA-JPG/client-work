@@ -52,35 +52,48 @@ const PostCalendar = () => {
         </div>
       
         
-        <div className="space-y-4">
-          {upcomingPosts.map((day, index) => (
-            <div key={index} className="d-flex align-items-center justify-content-between py-2 px-4 rounded-lg bg-gray-100 tw-border tw-rounded-half mt-3 hover:bg-gray-500">
-              <div className="w-24 text-sm font-medium">
-                {format(day.date, 'MMM dd')}
-              </div>
-              <div className="flex-1">
-               
-                <div className="space-y-2">
-                  {day.events.map((event, eventIndex) => (
-                    <Tooltip key={eventIndex} content={event.campaign}>
-                      <div
-                        className={`inline-block px-3 py-1 tw-rounded-full text-sm mr-2 mt-2 mb-2 cursor-pointer ${
-                          event.type === 'due'
-                            ? 'tw-bg-blue-100 tw-text-blue-700'
-                            : 'tw-bg-green-100 tw-text-green-700'
-                        }`}
-                      >
-                        {event.type === 'due' ? 'Due: ' : 'Live: '}
-                        {event.campaign}
-                      </div>
-                    </Tooltip>
-                  ))}
-                </div>
-              
-              </div>
+        <div>
+  <div className="tw-p-3 tw-border-b tw-border-gray-100 last:tw-border-b-0">
+    <div className="tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-2">Mar 10</div>
+    <div className="tw-space-y-2">
+      <div className="tw-relative">
+        <button className="tw-w-full tw-flex tw-items-center tw-justify-between tw-p-2 tw-rounded-md hover:tw-bg-gray-50 tw-transition-all tw-duration-200">
+          <div className="tw-flex tw-items-center tw-min-w-0 gap-2">
+          <div className="img-container-topHeader">
+            <img src="https://cdn.synnc.us/brand/692b7820-71e6-4aa3-b024-3811c6b15c5b.jpg" className="border object-fit-cover rounded-circle flex-shrink-0" alt="Profile Picture" width="30" height="30" />
             </div>
-          ))}
-        </div>
+            <div className="tw-truncate tw-text-left">
+              <h3 className="tw-text-sm tw-font-medium tw-text-gray-900 tw-truncate">Tech Trends 2025</h3>
+              <p className="tw-text-xs tw-text-gray-500 tw-truncate">The Future of AI in Enterprise</p>
+              <p className="tw-text-xs tw-text-gray-400 tw-truncate">Jane Smith</p>
+            </div>
+          </div>
+          <span className="tw-ml-2 tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-rounded-full tw-flex-shrink-0 tw-bg-[#FFEBEE] tw-text-[#C62828]">Due Today</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div className="tw-p-3 tw-border-b tw-border-gray-100 last:tw-border-b-0">
+    <div className="tw-text-sm tw-font-medium tw-text-gray-500 tw-mb-2">Mar 12</div>
+    <div className="tw-space-y-2">
+      <div className="tw-relative">
+        <button className="tw-w-full tw-flex tw-items-center tw-justify-between tw-p-2 tw-rounded-md hover:tw-bg-gray-50 tw-transition-all tw-duration-200">
+          <div className="tw-flex tw-items-center tw-min-w-0 gap-3">
+          <div className="img-container-topHeader">
+            <img src="https://cdn.synnc.us/brand/692b7820-71e6-4aa3-b024-3811c6b15c5b.jpg" className="border object-fit-cover rounded-circle flex-shrink-0" alt="Profile Picture" width="30" height="30" />
+            </div>
+            <div className="tw-truncate tw-text-left">
+              <h3 className="tw-text-sm tw-font-medium tw-text-gray-900 tw-truncate">AI Insights</h3>
+              <p className="tw-text-xs tw-text-gray-500 tw-truncate">Machine Learning Best Practices</p>
+            </div>
+          </div>
+          <span className="tw-ml-2 tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-rounded-full tw-flex-shrink-0 tw-bg-[#E8F5E9] tw-text-[#2E7D32]">Live</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     );
 };
