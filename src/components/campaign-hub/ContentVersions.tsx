@@ -51,37 +51,37 @@ export function ContentVersions({
 
   const viewerPost = firstVersion
     ? {
-        id: firstVersion.id,
-        type: firstVersion.postType,
-        status: (() => {
-          switch (firstVersion.status) {
-            case Status.Approved:
-              return "approved";
-            case Status.Rejected:
-              return "rejected";
-            case Status.Published:
-              return "published";
-            case Status.InProgress:
-              return "draft";
-            default:
-              return "in-review";
-          }
-        })() as "approved" | "rejected" | "published" | "draft" | "in-review",
-        submittedOn: firstVersion.date,
-        author: {
-          name: "Content Creator",
-          role: "Creator",
-          avatar: "/assets/images/user1.jpg",
-        },
-        content: firstVersion.description || "",
-        image: firstVersion.media?.[0],
-        timestamp: firstVersion.date,
-        engagement: {
-          likes: firstVersion.metrics?.impressions || 0,
-          comments: firstVersion.metrics?.clicks || 0,
-          shares: firstVersion.metrics?.engagement || 0,
-        },
-      }
+      id: firstVersion.id,
+      type: firstVersion.postType,
+      status: (() => {
+        switch (firstVersion.status) {
+          case Status.Approved:
+            return "approved";
+          case Status.Rejected:
+            return "rejected";
+          case Status.Published:
+            return "published";
+          case Status.InProgress:
+            return "draft";
+          default:
+            return "in-review";
+        }
+      })() as "approved" | "rejected" | "published" | "draft" | "in-review",
+      submittedOn: firstVersion.date,
+      author: {
+        name: "Content Creator",
+        role: "Creator",
+        avatar: "/assets/images/user1.jpg",
+      },
+      content: firstVersion.description || "",
+      image: firstVersion.media?.[0],
+      timestamp: firstVersion.date,
+      engagement: {
+        likes: firstVersion.metrics?.impressions || 0,
+        comments: firstVersion.metrics?.clicks || 0,
+        shares: firstVersion.metrics?.engagement || 0,
+      },
+    }
     : null;
 
   const handleAddContent = () => {
@@ -96,13 +96,13 @@ export function ContentVersions({
             <PostViewer post={viewerPost} preview={true} />
             {firstVersion && (
               <div className="tw-absolute tw-top-4 tw-right-4">
-                <button
+                {/* <button
                   onClick={() => setSelectedVersion(firstVersion)}
                   className="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-border tw-border-gray-300 tw-text-sm tw-font-medium tw-rounded-md tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-offset-2 focus:tw-ring-primary"
                 >
                   <Eye className="tw-w-4 tw-h-4 tw-mr-1" />
-                  View Details
-                </button>
+                  View Details ss
+                </button> */}
               </div>
             )}
           </div>
