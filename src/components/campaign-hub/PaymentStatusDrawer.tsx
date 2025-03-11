@@ -23,7 +23,6 @@ interface PaymentStatus {
 }
 
 interface PaymentStatusDrawerProps {
-  isOpen: boolean;
   onClose: () => void;
   postId: string;
   campaignId: string;
@@ -32,14 +31,12 @@ interface PaymentStatusDrawerProps {
 }
 
 export function PaymentStatusDrawer({
-  isOpen,
   onClose,
   postId,
   campaignId,
   creatorId,
   status,
 }: PaymentStatusDrawerProps) {
-  if (!isOpen) return null;
   const { user } = useAuth();
   const [charges_enabled, setcharges_enabled] = useState(null);
   const [onboarding_status, setonboarding_status] = useState(null);
@@ -59,7 +56,6 @@ export function PaymentStatusDrawer({
       console.error("Error fetching data:", error);
     }
   };
-  console.log("status", status);
   useEffect(() => {
     const fetchAccountStatus = async () => {
       try {

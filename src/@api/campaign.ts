@@ -27,12 +27,27 @@ export const createCampaignPostContent = async (payload: {
   content_title: string;
   content_text_content: string;
   media_content: string[];
+  google_drive_link?: string;
+  is_draft: boolean;
 }) =>
   handleApiRequest(
     "post",
     "/creators/campaigns/campaign-post-content",
     payload
   );
+
+export const updateCampaignPostContent = async (payload: {
+  campaign_id: string;
+  creator_id: string;
+  content_id: string;
+  post_id: string;
+  content_title: string;
+  content_text_content: string;
+  media_content: string[];
+  google_drive_link?: string;
+  is_draft: boolean;
+}) =>
+  handleApiRequest("put", "/creators/campaigns/campaign-post-content", payload);
 
 export const updatePostContentStatus = async (payload: {
   campaign_id: string;
