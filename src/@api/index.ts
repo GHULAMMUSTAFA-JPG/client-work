@@ -1054,12 +1054,52 @@ export const fetchCreatorData = async (email: string) => {
   }
 };
 
-export const fetchCreatorByCompany = async () => {
+export const fetchCreatorByCompany = async (userId: string) => {
   try {
-    const response = await apiController.post('/dashboard/creators/creator_data');
+    const response = await apiController.get(
+      `/dashboard/creators/${userId}/by-company/list?page=1&limit=30`
+    );
     return response?.data;
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     throw error;
   }
 };
+
+export const fetchCreatorCalendar = async (
+  userId: string,
+  startDate: string,
+  endDate: string
+) => {
+  try {
+    const response = await apiController.get(
+      `/dashboard/creators/${userId}/calendar?start_date=${encodeURIComponent(
+        startDate
+      )}&end_date=${encodeURIComponent(endDate)}`
+    );
+    return response?.data;
+  } catch (error) {
+    console.error("Error fetching creator calendar:", error);
+    throw error;
+  }
+};
+
+
+export const fetchBrandCalendar = async (
+  userId: string,
+  startDate: string,
+  endDate: string
+) => {
+  try {
+    const response = await apiController.get(
+      `/dashboard/buyers/${userId}/calendar?start_date=${encodeURIComponent(
+        startDate
+      )}&end_date=${encodeURIComponent(endDate)}`
+    );
+    return response?.data;
+  } catch (error) {
+    console.error("Error fetching creator calendar:", error);
+    throw error;
+  }
+};
+
