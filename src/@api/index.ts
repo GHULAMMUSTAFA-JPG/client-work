@@ -1,6 +1,7 @@
 import axios from "axios";
 import { apiController } from "./baseUrl";
 import { toast } from "react-toastify";
+import { formatISO } from "date-fns";
 
 export const fetch_dashboard_data = (setIsLoading?: any) => {
   setIsLoading && setIsLoading(true);
@@ -1066,35 +1067,34 @@ export const fetchCreatorByCompany = async (userId: string) => {
   }
 };
 
-export const fetchCreatorCalendar = async (
-  userId: string,
-  startDate: string,
-  endDate: string
-) => {
-  try {
-    const response = await apiController.get(
-      `/dashboard/creators/${userId}/calendar?start_date=${encodeURIComponent(
-        startDate
-      )}&end_date=${encodeURIComponent(endDate)}`
-    );
-    return response?.data;
-  } catch (error) {
-    console.error("Error fetching creator calendar:", error);
-    throw error;
-  }
-};
-
-
 export const fetchBrandCalendar = async (
-  userId: string,
-  startDate: string,
-  endDate: string
+  brandId: string,
+  startDate: Date,
+  endDate: Date
 ) => {
   try {
     const response = await apiController.get(
-      `/dashboard/buyers/${userId}/calendar?start_date=${encodeURIComponent(
-        startDate
-      )}&end_date=${encodeURIComponent(endDate)}`
+      `/dashboard/buyers/${brandId}/calendar?start_date=${encodeURIComponent(
+        formatISO(startDate)
+      )}&end_date=${encodeURIComponent(formatISO(endDate))}`
+    );
+    return response?.data;
+  } catch (error) {
+    console.error("Error fetching brand calendar:", error);
+    throw error;
+  }
+};
+
+export const fetchCreatorCalendar = async (
+  creatorId: string,
+  startDate: Date,
+  endDate: Date
+) => {
+  try {
+    const response = await apiController.get(
+      `/dashboard/creators/${creatorId}/calendar?start_date=${encodeURIComponent(
+        formatISO(startDate)
+      )}&end_date=${encodeURIComponent(formatISO(endDate))}`
     );
     return response?.data;
   } catch (error) {
@@ -1102,4 +1102,5 @@ export const fetchBrandCalendar = async (
     throw error;
   }
 };
+
 
