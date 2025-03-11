@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Clock,
   Globe,
@@ -7,6 +7,10 @@ import {
   MessageSquare,
   Share2,
   Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Link as LinkIcon,
+  ExternalLink,
 } from "lucide-react";
 
 interface ViewerPost {
@@ -21,6 +25,8 @@ interface ViewerPost {
   };
   content: string;
   image?: string;
+  images?: string[];
+  links?: string[];
   timestamp: string;
   engagement: {
     likes: number;
@@ -35,6 +41,30 @@ interface PostViewerProps {
 }
 
 export function PostViewer({ post, preview = false }: PostViewerProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const allImages = post.image
+    ? [post.image, ...(post.images || [])]
+    : post.images || [];
+
+  const hasMultipleImages = allImages.length > 1;
+
+  const nextImage = () => {
+    if (hasMultipleImages) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === allImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (hasMultipleImages) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
+      );
+    }
+  };
+
   const formatNumber = (num: number) => {
     if (num >= 1000) {
       return `${(num / 1000).toFixed(1)}k`;
@@ -166,23 +196,83 @@ export function PostViewer({ post, preview = false }: PostViewerProps) {
           {formatContent(post.content)}
         </div>
 
-        {/* Post Media */}
-        {post.image && (
-          <div className="tw-mb-4 tw-flex tw-justify-center tw-overflow-hidden">
-            <div className="tw-relative tw-w-full tw-min-w-[400px] tw-max-w-[520px] tw-bg-gray-50 tw-flex tw-items-center tw-justify-center tw-rounded-md">
-              <img
-                src={post.image}
-                alt="Post content"
-                className="tw-object-contain tw-max-h-[450px] tw-max-w-full tw-rounded-md"
-                style={{
-                  aspectRatio: "auto",
-                  objectPosition: "center",
-                }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
+        {/* Post Links */}
+        {post.links && post.links.length > 0 && (
+          <div className="tw-mb-4">
+            <div className="tw-font-medium tw-text-sm tw-mb-2 tw-flex tw-items-center">
+              <LinkIcon className="tw-w-4 tw-h-4 tw-mr-1.5 tw-text-gray-500" />
+              <span>Links</span>
             </div>
+            <div className="tw-space-y-2">
+              {post.links.map((link, index) => (
+                <a
+                  key={index}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tw-flex tw-items-center tw-gap-2 tw-p-2 tw-bg-gray-50 tw-rounded tw-text-xs tw-text-blue-600 hover:tw-text-blue-800 tw-border tw-border-gray-200"
+                >
+                  <LinkIcon className="tw-w-3.5 tw-h-3.5 tw-flex-shrink-0" />
+                  <span className="tw-truncate">{link}</span>
+                  <ExternalLink className="tw-w-3.5 tw-h-3.5 tw-ml-auto tw-flex-shrink-0" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Post Media */}
+        {allImages.length > 0 && (
+          <div className="tw-mb-4 tw-relative">
+            <div className="tw-flex tw-justify-center tw-overflow-hidden">
+              <div className="tw-relative tw-w-full tw-min-w-[400px] tw-max-w-[520px] tw-bg-gray-50 tw-flex tw-items-center tw-justify-center tw-rounded-md">
+                <img
+                  src={allImages[currentImageIndex]}
+                  alt={`Post content ${currentImageIndex + 1}`}
+                  className="tw-object-contain tw-max-h-[450px] tw-max-w-full tw-rounded-md"
+                  style={{
+                    aspectRatio: "auto",
+                    objectPosition: "center",
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+              </div>
+            </div>
+
+            {hasMultipleImages && (
+              <>
+                {/* Image pagination dots */}
+                <div className="tw-absolute tw-bottom-3 tw-left-0 tw-right-0 tw-flex tw-justify-center tw-gap-1.5">
+                  {allImages.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`tw-w-2 tw-h-2 tw-rounded-full ${
+                        currentImageIndex === index
+                          ? "tw-bg-primary"
+                          : "tw-bg-gray-300"
+                      }`}
+                      onClick={() => setCurrentImageIndex(index)}
+                    />
+                  ))}
+                </div>
+
+                {/* Navigation arrows */}
+                <button
+                  className="tw-absolute tw-left-2 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-bg-white tw-rounded-full tw-p-1 tw-shadow-md tw-opacity-70 hover:tw-opacity-100"
+                  onClick={prevImage}
+                >
+                  <ChevronLeft className="tw-w-5 tw-h-5" />
+                </button>
+                <button
+                  className="tw-absolute tw-right-2 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-bg-white tw-rounded-full tw-p-1 tw-shadow-md tw-opacity-70 hover:tw-opacity-100"
+                  onClick={nextImage}
+                >
+                  <ChevronRight className="tw-w-5 tw-h-5" />
+                </button>
+              </>
+            )}
           </div>
         )}
 

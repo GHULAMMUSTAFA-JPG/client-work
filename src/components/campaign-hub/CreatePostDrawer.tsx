@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { X, Calendar, Clock, AlertCircle, DollarSign } from "lucide-react";
+import {
+  X,
+  Calendar,
+  Clock,
+  AlertCircle,
+  DollarSign,
+  Loader2,
+} from "lucide-react";
 import { linkedInPostTypes } from "@/types/linkedin";
 import { createCampaignPost } from "@/@api/campaign";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -25,6 +32,7 @@ export function CreatePostDrawer({
   const [budget, setBudget] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,6 +73,8 @@ export function CreatePostDrawer({
     }
 
     setError("");
+    setIsLoading(true);
+
     const postData = {
       campaign_id: campaignId,
       creator_id: creatorId,
@@ -76,28 +86,34 @@ export function CreatePostDrawer({
       due_date: new Date(dueDate).toISOString(),
     };
 
-    const response = await createCampaignPost(postData);
+    try {
+      const response = await createCampaignPost(postData);
 
-    if (!response) {
-      setError("Failed to create post. Please try again.");
-      return;
-    }
-
-    if (response && typeof response === "object" && "_id" in response) {
-      const currentCampaignId = searchParams.get("id");
-      if (currentCampaignId) {
-        const url = `/campaign-hub?id=${currentCampaignId}&postId=${response._id}`;
-        router.push(url);
+      if (!response) {
+        setError("Failed to create post. Please try again.");
+        return;
       }
-    }
 
-    setPostType("");
-    setBudget("");
-    setDueDate("");
-    setDescription("");
-    setFieldErrors({});
-    onClose();
-    onSubmit();
+      if (response && typeof response === "object" && "_id" in response) {
+        const currentCampaignId = searchParams.get("id");
+        if (currentCampaignId) {
+          const url = `/campaign-hub?id=${currentCampaignId}&postId=${response._id}`;
+          router.push(url);
+        }
+      }
+
+      setPostType("");
+      setBudget("");
+      setDueDate("");
+      setDescription("");
+      setFieldErrors({});
+      onClose();
+      onSubmit();
+    } catch (error) {
+      setError("An error occurred while creating the post. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const today = new Date().toISOString().split("T")[0];
@@ -116,7 +132,7 @@ export function CreatePostDrawer({
             <div className="tw-px-6 tw-py-6 tw-border-b tw-border-gray-200">
               <div className="tw-flex tw-items-center tw-justify-between">
                 <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
-                Start new Post
+                  Start new Post
                 </h2>
                 <button
                   onClick={onClose}
@@ -257,29 +273,13 @@ export function CreatePostDrawer({
                   </div>
                 </div>
 
-                <div>
-                  <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
-                    <div className="tw-flex tw-items-center tw-space-x-2">
-                      <Clock className="tw-w-4 tw-h-4 tw-text-gray-400" />
-                      <span>Go-Live Date</span>
-                    </div>
-                  </label>
-                    <input
-                    type="date"
-                    value={new Date().toISOString().split("T")[0]}
-                    onChange={(e) => {
-                      // Handle the change if needed
-                    }}
-                    className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-primary focus:tw-border-primary"
-                    />
-                </div>
                 {/* Due Date */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     <div className="tw-flex tw-items-center tw-space-x-2">
                       <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
                       <span>
-                      Payout Date <span className="tw-text-red-500">*</span>
+                        Payout Date <span className="tw-text-red-500">*</span>
                       </span>
                       {fieldErrors.dueDate && (
                         <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
@@ -341,15 +341,24 @@ export function CreatePostDrawer({
                   type="button"
                   onClick={onClose}
                   className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white tw-border tw-border-gray-300 tw-rounded-md hover:tw-bg-gray-50"
+                  disabled={isLoading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark tw-rounded-md"
+                  disabled={isLoading}
+                  className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark tw-rounded-md disabled:tw-opacity-70 disabled:tw-cursor-not-allowed tw-flex tw-items-center tw-justify-center"
                 >
-                  Send Post for Brand Review
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="tw-w-4 tw-h-4 tw-mr-2 tw-animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Send Post for Brand Review"
+                  )}
                 </button>
               </div>
             </div>

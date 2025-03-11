@@ -26,6 +26,7 @@ export const transformPostContent = (post: any) => {
             shares: post.Impressions.Shares || 0,
           }
         : undefined,
+      isDraft: content.Is_Draft,
     })) ?? []
   );
 };

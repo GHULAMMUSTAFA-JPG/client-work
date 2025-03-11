@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const apiController = axios.create({
   baseURL: "https://api.synnc.us/",
@@ -13,22 +13,45 @@ apiController.interceptors.request.use((request) => {
   }
   return request;
 });
-export const handleApiRequest = async <T>(
-  method: "get" | "post" | "put" | "delete",
-  url: string,
-  payloadOrParams?: object
-): Promise<T | null> => {
-  try {
-    const response =
-      method === "get"
-        ? await apiController.get(url, { params: payloadOrParams })
-        : method === "delete"
-        ? await apiController.delete(url, { data: payloadOrParams })
-        : await apiController[method](url, payloadOrParams);
 
+export const handleApiRequest = async <T>(
+  method: string,
+  endpoint: string,
+  data?: any,
+  options?: AxiosRequestConfig
+): Promise<T> => {
+  try {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL;
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const config: AxiosRequestConfig = {
+      baseURL,
+      method,
+      url: endpoint,
+      headers,
+      ...options,
+    };
+
+    if (method.toLowerCase() === "get") {
+      config.params = data;
+    } else {
+      config.data = data;
+    }
+
+    const response = await axios(config);
     return response.data;
-  } catch (error) {
-    console.error(`API Error (${method.toUpperCase()} ${url}):`, error);
-    return null;
+  } catch (error: any) {
+    console.error(`API Error (${method} ${endpoint}):`, error);
+
+    // Log more details about the error response
+    if (error.response) {
+      console.error("Error response data:", error.response.data);
+      console.error("Error response status:", error.response.status);
+      console.error("Error response headers:", error.response.headers);
+    }
+
+    throw error;
   }
 };
