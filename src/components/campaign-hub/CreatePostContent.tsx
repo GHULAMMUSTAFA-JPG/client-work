@@ -189,6 +189,7 @@ export default function CreatePostContent({
         content_title: content.text,
         content_text_content: content.text,
         media_content: mediaContent,
+        is_draft:isDraft
       };
 
       if (isDraft) {
