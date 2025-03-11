@@ -167,7 +167,7 @@ function Homepagebuyer() {
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <p className="mb-0 fs-16 fw-medium">
-                    Profile <span className="text-teal">(Brand)</span>
+                   Brand Profile
                   </p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">

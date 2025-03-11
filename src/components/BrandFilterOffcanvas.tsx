@@ -137,27 +137,96 @@ export default function BrandFilterOffcanvas({
     if (!items || items.length === 0) return null;
 
     return (
-      <div className="mb-4">
-        <h6 className="mb-3">{title}</h6>
-        {items.map((item) => {
-          const id = isValueKey ? item.Value : item;
-          const label = isValueKey ? item.Key : item;
+      <div className="accordion-item">
+        <h2 className="accordion-header">
+          <button 
+            className="accordion-button fs-14 fw-500 d-flex gap-2 align-items-center p-3 tw-justify-between"
+            type="button"
+            data-bs-toggle="collapse" 
+            data-bs-target={`#${title.replace(/\s+/g, '')}-collapse`}
+            aria-expanded="true"
+            style={{backgroundColor: 'transparent'}}
+          >
+            <span className="w-100">{title}</span>
+         
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              className="lucide lucide-chevron-down"
+              style={{
+                transform: 'rotate(0deg)',
+                transition: 'transform 0.2s ease'
+              }}
+            >
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+        </h2>
 
-          return (
-            <div className="form-check form-check-inline" key={id}>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id={id}
-                checked={values.includes(id)}
-                onChange={(e) => handleFilterChange(e, setter, values)}
+        <div 
+          id={`${title.replace(/\s+/g, '')}-collapse`}
+          className="accordion-collapse collapse show"
+        >
+          <div className="accordion-body mt-3">
+            <div className="tw-relative mb-3">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="lucide lucide-search tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-h-4 tw-w-4 tw-text-gray-400"
+                aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              
+              <input 
+                type="text" 
+                id="search-input"
+                className="tw-w-full tw-pl-10 tw-pr-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-2 focus:tw-ring-teal-500 focus:tw-border-transparent focus:tw-shadow-md"
+                placeholder={`${title}...`}
+                aria-label="Search countries"
               />
-              <label className="form-check-label" htmlFor={id}>
-                {label}
-              </label>
             </div>
-          );
-        })}
+
+            <div className="py-1 tw-text-xs tw-font-medium tw-text-gray-500 mb-2">Popular Choices</div>
+
+            {items.map((item) => {
+              const id = isValueKey ? item.Value : item;
+              const label = isValueKey ? item.Key : item;
+
+              return (
+                <div className="form-check form-check px-3 hover:tw-bg-gray-50 py-2 d-flex align-items-center tw-justify-between" key={id}>
+                  <div>
+                  <input
+                    className="form-check-input text-black"
+                    type="checkbox"
+                    id={id}
+                    checked={values.includes(id)}
+                    onChange={(e) => handleFilterChange(e, setter, values)}
+                  />
+                  <label className="tw-text-sm tw-text-gray-700" htmlFor={id}>
+                    {label}
+                  </label>
+                  </div>
+                  <span className="fs-10 tw-text-gray-400">150</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   };
@@ -169,7 +238,7 @@ export default function BrandFilterOffcanvas({
       id="filtersOffcanvas"
     >
       <div className="offcanvas-header border-bottom">
-        <h5 className="offcanvas-title">Filters</h5>
+        <h5 className="offcanvas-title">Refine Your Creator Search</h5>
         <button
           type="button"
           className="btn-close"
@@ -177,29 +246,21 @@ export default function BrandFilterOffcanvas({
           aria-label="Close"
         ></button>
       </div>
+      <div className="mt-auto d-flex gap-2 pt-4 px-3">
+          <button className="tw-flex-1 tw-px-4 tw-py-2 tw-text-gray-700 tw-bg-gray-100 tw-rounded-md hover:tw-bg-gray-200" onClick={handleClearAll}>
+            Reset All
+          </button>
+          <button
+            onClick={handleApplyFilter}
+            className="tw-flex-1 tw-px-4 tw-py-2 tw-text-white tw-bg-teal-600 tw-rounded-md hover:tw-bg-teal-700"
+          >
+            Apply Filters
+          </button>
+        </div>
 
       <div className="offcanvas-body">
-        <p className="text-muted mb-4 fs-14">
-          Refine your brand search with filters
-        </p>
+      
 
-        <div className="row">
-          <div className="mb-4 col-md-2">
-            <h6 className="mb-3">Watching</h6>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="interested"
-                checked={interested}
-                onChange={handleInterestChange}
-              />
-              <label className="form-check-label" htmlFor="interested">
-                Interested
-              </label>
-            </div>
-          </div>
-        </div>
 
         <FilterSection
           title="Size"
@@ -262,18 +323,20 @@ export default function BrandFilterOffcanvas({
           isValueKey={true}
         />
 
-        <div className="mt-auto d-flex gap-2 pt-4 border-top">
-          <button className="btn text-decoration-none" onClick={handleClearAll}>
-            Clear all
-          </button>
-          <button
-            onClick={handleApplyFilter}
-            className="btn btn-primary ms-auto"
-          >
-            Apply filters
-          </button>
+{/*             <h6 className="mb-3">Watching</h6>
+            <input
+                className="form-check-input"
+                type="checkbox"
+                id="interested"
+                checked={interested}
+                onChange={handleInterestChange}
+              />
+              <label className="form-check-label" htmlFor="interested">
+                Interested
+              </label> */}
+          </div>
         </div>
-      </div>
-    </div>
+
+   
   );
 }

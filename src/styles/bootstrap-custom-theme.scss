@@ -2056,3 +2056,31 @@ body {
     background-color: #169f8e;
   }
 }
+#filtersOffcanvas
+{
+  width: 30% !important;
+}
+
+.table thead th {
+  background-color: #1bb09d12 !important;
+  color: #000 !important;
+  font-weight: 500;
+  padding: 1rem;
+}
+
+.accordion-item {
+  margin-bottom: 0rem !important;
+ 
+  margin: 3px 0;
+    margin-bottom: 3px;
+}
+.accordion-header
+{
+  background: #0d94880a;
+}
+.accordion-collapse {
+  margin: 0 15px;
+  padding: 5px 20px;
+  border: 1px solid #0d948814;
+  background: #fff;
+}
