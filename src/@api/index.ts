@@ -1053,3 +1053,13 @@ export const fetchCreatorData = async (email: string) => {
     throw error;
   }
 };
+
+export const fetchCreatorByCompany = async () => {
+  try {
+    const response = await apiController.post('/dashboard/creators/creator_data');
+    return response?.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
