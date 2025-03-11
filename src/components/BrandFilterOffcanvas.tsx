@@ -138,21 +138,28 @@ export default function BrandFilterOffcanvas({
 
     return (
       <div className="mb-4">
-        <h6 className="mb-3">{title}</h6>
+        <h6 className="mb-3 fs-14 fw-500 d-flex gap-2 align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <g id="Icon_feather-arrow-right-circle" data-name="Icon feather-arrow-right-circle" transform="translate(-1 -1)">
+    <path id="Path_875" data-name="Path 875" d="M22,12A10,10,0,1,1,12,2,10,10,0,0,1,22,12Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_876" data-name="Path 876" d="M12,16l4-4L12,8M8,12h8" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg> &nbsp;
+{title}</h6>
+        <hr className="mb-3"/>
         {items.map((item) => {
           const id = isValueKey ? item.Value : item;
           const label = isValueKey ? item.Key : item;
 
           return (
-            <div className="form-check form-check-inline" key={id}>
+            <div className="form-check form-check" key={id}>
               <input
-                className="form-check-input"
+                className="form-check-input text-black"
                 type="checkbox"
                 id={id}
                 checked={values.includes(id)}
                 onChange={(e) => handleFilterChange(e, setter, values)}
               />
-              <label className="form-check-label" htmlFor={id}>
+              <label className="form-check-label text-black" htmlFor={id}>
                 {label}
               </label>
             </div>
@@ -169,7 +176,7 @@ export default function BrandFilterOffcanvas({
       id="filtersOffcanvas"
     >
       <div className="offcanvas-header border-bottom">
-        <h5 className="offcanvas-title">Filters</h5>
+        <h5 className="offcanvas-title">Refine Your Creator Search</h5>
         <button
           type="button"
           className="btn-close"
@@ -177,12 +184,20 @@ export default function BrandFilterOffcanvas({
           aria-label="Close"
         ></button>
       </div>
+      <div className="mt-auto d-flex gap-2 pt-4 px-3">
+          <button className="tw-flex-1 tw-px-4 tw-py-2 tw-text-gray-700 tw-bg-gray-100 tw-rounded-md hover:tw-bg-gray-200" onClick={handleClearAll}>
+            Reset All
+          </button>
+          <button
+            onClick={handleApplyFilter}
+            className="tw-flex-1 tw-px-4 tw-py-2 tw-text-white tw-bg-teal-600 tw-rounded-md hover:tw-bg-teal-700"
+          >
+            Apply Filters
+          </button>
+        </div>
 
       <div className="offcanvas-body">
-        <p className="text-muted mb-4 fs-14">
-          Refine your brand search with filters
-        </p>
-
+      
         <div className="row">
           <div className="mb-4 col-md-2">
             <h6 className="mb-3">Watching</h6>
@@ -262,17 +277,7 @@ export default function BrandFilterOffcanvas({
           isValueKey={true}
         />
 
-        <div className="mt-auto d-flex gap-2 pt-4 border-top">
-          <button className="btn text-decoration-none" onClick={handleClearAll}>
-            Clear all
-          </button>
-          <button
-            onClick={handleApplyFilter}
-            className="btn btn-primary ms-auto"
-          >
-            Apply filters
-          </button>
-        </div>
+
       </div>
     </div>
   );
