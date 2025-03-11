@@ -137,60 +137,96 @@ export default function BrandFilterOffcanvas({
     if (!items || items.length === 0) return null;
 
     return (
-      <div className="mb-4">
-        <h6 className="mb-3 fs-14 fw-500 d-flex gap-2 align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
-  <g id="Icon_feather-arrow-right-circle" data-name="Icon feather-arrow-right-circle" transform="translate(-1 -1)">
-    <path id="Path_875" data-name="Path 875" d="M22,12A10,10,0,1,1,12,2,10,10,0,0,1,22,12Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="Path_876" data-name="Path 876" d="M12,16l4-4L12,8M8,12h8" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-  </g>
-</svg> &nbsp;
-{title}</h6>
+      <div className="accordion-item">
+        <h2 className="accordion-header">
+          <button 
+            className="accordion-button fs-14 fw-500 d-flex gap-2 align-items-center p-3 tw-justify-between"
+            type="button"
+            data-bs-toggle="collapse" 
+            data-bs-target={`#${title.replace(/\s+/g, '')}-collapse`}
+            aria-expanded="true"
+            style={{backgroundColor: 'transparent'}}
+          >
+            <span className="w-100">{title}</span>
+         
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              className="lucide lucide-chevron-down"
+              style={{
+                transform: 'rotate(0deg)',
+                transition: 'transform 0.2s ease'
+              }}
+            >
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+        </h2>
 
-<div className="tw-relative mb-3">
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      width="24" 
-      height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      className="lucide lucide-search tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-h-4 tw-w-4 tw-text-gray-400"
-      aria-hidden="true">
-      <circle cx="11" cy="11" r="8"></circle>
-      <path d="m21 21-4.3-4.3"></path>
-    </svg>
-    
-    <input 
-      type="text" 
-      id="search-input"
-      className="tw-w-full tw-pl-10 tw-pr-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-2 focus:tw-ring-teal-500 focus:tw-border-transparent focus:tw-shadow-md"
-      placeholder={`${title}...`}
-      aria-label="Search countries"
-    />
-  </div>
-  <div className="px-2 py-1 tw-text-xs tw-font-medium tw-text-gray-500">Popular Choices</div>
-        {items.map((item) => {
-          const id = isValueKey ? item.Value : item;
-          const label = isValueKey ? item.Key : item;
-
-          return (
-            <div className="form-check form-check" key={id}>
-              <input
-                className="form-check-input text-black"
-                type="checkbox"
-                id={id}
-                checked={values.includes(id)}
-                onChange={(e) => handleFilterChange(e, setter, values)}
+        <div 
+          id={`${title.replace(/\s+/g, '')}-collapse`}
+          className="accordion-collapse collapse show"
+        >
+          <div className="accordion-body mt-3">
+            <div className="tw-relative mb-3">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="lucide lucide-search tw-absolute tw-left-3 tw-top-1/2 tw-transform -tw-translate-y-1/2 tw-h-4 tw-w-4 tw-text-gray-400"
+                aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              
+              <input 
+                type="text" 
+                id="search-input"
+                className="tw-w-full tw-pl-10 tw-pr-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-2 focus:tw-ring-teal-500 focus:tw-border-transparent focus:tw-shadow-md"
+                placeholder={`${title}...`}
+                aria-label="Search countries"
               />
-              <label className="tw-text-sm tw-text-gray-700" htmlFor={id}>
-                {label}
-              </label>
             </div>
-          );
-        })}
+
+            <div className="py-1 tw-text-xs tw-font-medium tw-text-gray-500 mb-2">Popular Choices</div>
+
+            {items.map((item) => {
+              const id = isValueKey ? item.Value : item;
+              const label = isValueKey ? item.Key : item;
+
+              return (
+                <div className="form-check form-check px-3 hover:tw-bg-gray-50 py-2 d-flex align-items-center tw-justify-between" key={id}>
+                  <div>
+                  <input
+                    className="form-check-input text-black"
+                    type="checkbox"
+                    id={id}
+                    checked={values.includes(id)}
+                    onChange={(e) => handleFilterChange(e, setter, values)}
+                  />
+                  <label className="tw-text-sm tw-text-gray-700" htmlFor={id}>
+                    {label}
+                  </label>
+                  </div>
+                  <span className="fs-10 tw-text-gray-400">150</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   };
@@ -224,23 +260,7 @@ export default function BrandFilterOffcanvas({
 
       <div className="offcanvas-body">
       
-        <div className="row">
-          <div className="mb-4 col-md-2">
-            <h6 className="mb-3">Watching</h6>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="interested"
-                checked={interested}
-                onChange={handleInterestChange}
-              />
-              <label className="form-check-label" htmlFor="interested">
-                Interested
-              </label>
-            </div>
-          </div>
-        </div>
+
 
         <FilterSection
           title="Size"
@@ -303,8 +323,20 @@ export default function BrandFilterOffcanvas({
           isValueKey={true}
         />
 
+{/*             <h6 className="mb-3">Watching</h6>
+            <input
+                className="form-check-input"
+                type="checkbox"
+                id="interested"
+                checked={interested}
+                onChange={handleInterestChange}
+              />
+              <label className="form-check-label" htmlFor="interested">
+                Interested
+              </label> */}
+          </div>
+        </div>
 
-      </div>
-    </div>
+   
   );
 }

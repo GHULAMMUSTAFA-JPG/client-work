@@ -108,7 +108,7 @@ function DiscoverCreator() {
               <h2 className="fs-20 fw-700">Discover Brand Campaigns</h2> 
               <p className="mt-2 fs-14">Find and collaborate with top brands looking for creators like you. Apply to campaigns that match your expertise and audience to monetize your content.</p>
                 <div className="mt-1 flex items-center">
-                <div className="flex items-center text-sm text-teal-600 text-red">
+                <div className="flex items-center text-sm text-teal-600 text-red tw-hidden">
                   <span className="font-medium">9 campaigns available</span>
                   <span className="mx-2">•</span><span>5 highly matched</span>
               </div></div>
