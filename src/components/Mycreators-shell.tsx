@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { defaultImagePath } from "@/components/constants";
-import { fetchCreatorData } from '@/@api';
+import { fetchCreatorByCompany, fetchCreatorData } from '@/@api';
 
 interface MyCreatorsShellProps {
   children?: React.ReactNode;
@@ -18,18 +18,20 @@ const MyCreatorsShell: React.FC<MyCreatorsShellProps> = ({ children, handleInvit
 
   useEffect(() => {
     const loggedUser = JSON.parse(localStorage.getItem("user") ?? "null");
-    const loggedUserEmail = loggedUser?.email;
+    console.log('loggedUser', loggedUser)
+    const userId = loggedUser?.uuid; // Ensure this field exists
 
-    setLoggedInUser(loggedUser);
-
-    if (loggedUserEmail) {
-      fetchCreatorData(loggedUserEmail)
-        .then((data) => {
-          console.log("API Response:", data);
-          setCreatorData(data);
-        })
-        .catch((error) => console.error("Error fetching creator data:", error));
+    if (!userId) {
+      console.error("No company ID found!");
+      return;
     }
+
+    fetchCreatorByCompany(userId)
+      .then((data) => {
+        console.log("API Response:", data);
+        setCreatorData(data);
+      })
+      .catch((error) => console.error("Error fetching creator data:", error));
   }, []);
 
   return (
