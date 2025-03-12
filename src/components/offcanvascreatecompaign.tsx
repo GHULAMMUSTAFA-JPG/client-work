@@ -312,7 +312,7 @@ function OffcanvasCreateCompaign(props: any) {
             <div className="col-md-6">
               {/* Basic Campaign Info Section */}
               <div className="mb-4">
-                <h6 className="mb-3">Basic Campaign Info</h6>
+                <h6 className="mb-3">Public/Private Campaign Info</h6>
                 <div className="mb-3 border mb-3 p-3 rounded">
                   <label className="form-label mb-0">
                     Is this a publicly visible campaign? *
@@ -356,12 +356,17 @@ function OffcanvasCreateCompaign(props: any) {
                     <option>USD</option>
                   </select>
                   <input
-                    type="number"
+                    type="text"
                     id="Budget"
                     value={dto?.Budget}
                     className="form-control"
-                    placeholder="0"
-                    onChange={updateDto}
+                    placeholder="0.00"
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (/^\d*\.?\d{0,2}$/.test(value)) {
+                        updateDto(e);
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -677,7 +682,7 @@ function OffcanvasCreateCompaign(props: any) {
           aria-label="Close"
           onClick={() => Newmapper()}
         >
-          Discard
+          Close
         </button>
         <button
           className="btn btn-info"
