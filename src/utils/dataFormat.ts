@@ -42,7 +42,7 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
     id: post._id,
     title: post.Post_Title || "Untitled",
     date: formatDate(post.Submission_Date, true) || "",
-    status: mapStatus(post.Status),
+    status: mapPostStatus(post.Status),
     content: post.Post_Description || "",
     impressions: post.Impressions?.Impressions || null,
     engagement: post.Impressions?.Engagement_Rate || null,
@@ -52,16 +52,55 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
       type: determineContentType(content),
       content: content.Content_Text_Content || "",
       date: formatDate(content.Submitted_At, true) || "",
-      status: mapStatus(content.Status),
+      status: mapPostStatus(content.Status),
       images: content.Media_Content || [],
     })),
   }));
 };
 
 /**
+ * Maps numeric status to string status compatible with Post type
+ */
+const mapPostStatus = (
+  status: number
+): "in_review" | "approved" | "published" => {
+  switch (status) {
+    case Status.PendingApproval:
+    case Status.InProgress:
+    case Status.Rejected:
+    case Status.Paused:
+    case Status.Cancelled:
+    case Status.Unpaid:
+    case Status.PaymentProcessing:
+      return "in_review";
+    case Status.Approved:
+    case Status.Completed:
+    case Status.Paid:
+    case Status.PostImpressionUploaded:
+      return "approved";
+    case Status.Published:
+      return "published";
+    default:
+      return "in_review";
+  }
+};
+
+/**
  * Maps numeric status to string status
  */
-const mapStatus = (status: number): "in_review" | "approved" | "published" => {
+const mapStatus = (
+  status: number
+):
+  | "in_review"
+  | "approved"
+  | "published"
+  | "rejected"
+  | "paused"
+  | "cancelled"
+  | "unpaid"
+  | "paid"
+  | "payment_processing"
+  | "impression_uploaded" => {
   switch (status) {
     case Status.PendingApproval:
     case Status.InProgress:
@@ -71,8 +110,22 @@ const mapStatus = (status: number): "in_review" | "approved" | "published" => {
       return "approved";
     case Status.Published:
       return "published";
+    case Status.Rejected:
+      return "rejected";
+    case Status.Paused:
+      return "paused";
+    case Status.Cancelled:
+      return "cancelled";
+    case Status.Unpaid:
+      return "unpaid";
+    case Status.Paid:
+      return "paid";
+    case Status.PaymentProcessing:
+      return "payment_processing";
+    case Status.PostImpressionUploaded:
+      return "impression_uploaded";
     default:
-      return "in_review"; // Default fallback
+      return "in_review";
   }
 };
 

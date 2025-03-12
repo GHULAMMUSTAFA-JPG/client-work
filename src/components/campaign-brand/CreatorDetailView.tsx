@@ -45,6 +45,7 @@ export function CreatorDetailView({
   handelSelectedCreator,
 }: CreatorDetailViewProps) {
   const initialPost = posts.length > 0 ? posts[0] : null;
+  console.log("posts", posts);
   const initialContent =
     initialPost &&
     initialPost.contentItems &&
@@ -157,6 +158,7 @@ export function CreatorDetailView({
 
     onUpdate(currentPostId);
   };
+  console.log(selectedPost);
 
   const handleApproveContent = async () => {
     if (!selectedPost?.contentItems[0]) return;
