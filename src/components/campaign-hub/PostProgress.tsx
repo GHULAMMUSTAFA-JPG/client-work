@@ -257,20 +257,21 @@ export function PostProgress({
             }}
           />
 
-          <PaymentStatusDrawer
-            isOpen={isPaymentDrawerOpen}
-            onClose={() => setIsPaymentDrawerOpen(false)}
-            postId={postId}
-            campaignId={campaignId}
-            creatorId={creatorId}
-            status={{
-              status: "processing",
-              amount: 300,
-              dueDate: "2024-03-31",
-              paymentMethod: "Bank Transfer",
-              transactionId: "TRX123456",
-            }}
-          />
+          {isPaymentDrawerOpen && (
+            <PaymentStatusDrawer
+              onClose={() => setIsPaymentDrawerOpen(false)}
+              postId={postId}
+              campaignId={campaignId}
+              creatorId={creatorId}
+              status={{
+                status: "processing",
+                amount: 300,
+                dueDate: "2024-03-31",
+                paymentMethod: "Bank Transfer",
+                transactionId: "TRX123456",
+              }}
+            />
+          )}
         </>
       )}
     </div>
