@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  X,
-  Calendar,
-  Clock,
-  AlertCircle,
-  DollarSign,
-  Loader2,
-} from "lucide-react";
+import { X, Calendar, AlertCircle, DollarSign, Loader2 } from "lucide-react";
 import { linkedInPostTypes } from "@/types/linkedin";
 import { createCampaignPost } from "@/@api/campaign";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -31,6 +24,7 @@ export function CreatePostDrawer({
   const [postType, setPostType] = useState("");
   const [budget, setBudget] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [goLiveDate, setGoLiveDate] = useState("");
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,9 +54,23 @@ export function CreatePostDrawer({
       errors.dueDate = "Please select a due date";
       hasErrors = true;
     }
+    if (!goLiveDate) {
+      errors.goLiveDate = "Please select a go live date";
+      hasErrors = true;
+    }
     if (!description) {
       errors.description = "Please enter a post description";
       hasErrors = true;
+    }
+
+    if (goLiveDate && dueDate) {
+      const goLiveDateObj = new Date(goLiveDate);
+      const dueDateObj = new Date(dueDate);
+
+      if (goLiveDateObj > dueDateObj) {
+        errors.goLiveDate = "Go live date cannot be after payout date";
+        hasErrors = true;
+      }
     }
 
     setFieldErrors(errors);
@@ -82,7 +90,7 @@ export function CreatePostDrawer({
       category: postType,
       title: postType,
       description,
-      submission_date: new Date().toISOString(),
+      submission_date: new Date(goLiveDate).toISOString(),
       due_date: new Date(dueDate).toISOString(),
     };
 
@@ -105,6 +113,7 @@ export function CreatePostDrawer({
       setPostType("");
       setBudget("");
       setDueDate("");
+      setGoLiveDate("");
       setDescription("");
       setFieldErrors({});
       onClose();
@@ -117,6 +126,50 @@ export function CreatePostDrawer({
   };
 
   const today = new Date().toISOString().split("T")[0];
+
+  const handleDueDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDueDate = e.target.value;
+    setDueDate(newDueDate);
+
+    setFieldErrors({ ...fieldErrors, dueDate: "" });
+
+    if (goLiveDate) {
+      const goLiveDateObj = new Date(goLiveDate);
+      const dueDateObj = new Date(newDueDate);
+
+      if (goLiveDateObj > dueDateObj) {
+        setFieldErrors((prev) => ({
+          ...prev,
+          goLiveDate: "Go live date cannot be after payout date",
+        }));
+      } else {
+        // Clear go live date error if it's valid now
+        setFieldErrors((prev) => ({
+          ...prev,
+          goLiveDate: "",
+        }));
+      }
+    }
+  };
+
+  const handleGoLiveDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newGoLiveDate = e.target.value;
+    setGoLiveDate(newGoLiveDate);
+
+    setFieldErrors({ ...fieldErrors, goLiveDate: "" });
+
+    if (dueDate) {
+      const goLiveDateObj = new Date(newGoLiveDate);
+      const dueDateObj = new Date(dueDate);
+
+      if (goLiveDateObj > dueDateObj) {
+        setFieldErrors((prev) => ({
+          ...prev,
+          goLiveDate: "Go live date cannot be after payout date",
+        }));
+      }
+    }
+  };
 
   return (
     <div className="tw-fixed tw-inset-0 tw-z-50 tw-overflow-hidden">
@@ -261,7 +314,6 @@ export function CreatePostDrawer({
                   </div>
                 </div>
 
-                {/* Campaign Status */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     Campaign Status
@@ -273,7 +325,34 @@ export function CreatePostDrawer({
                   </div>
                 </div>
 
-                {/* Due Date */}
+                {/* Go Live Date */}
+                <div>
+                  <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
+                    <div className="tw-flex tw-items-center tw-space-x-2">
+                      <Calendar className="tw-w-4 tw-h-4 tw-text-gray-400" />
+                      <span>
+                        Go Live Date <span className="tw-text-red-500">*</span>
+                      </span>
+                      {fieldErrors.goLiveDate && (
+                        <span className="tw-ml-2 tw-text-red-600 tw-text-xs">
+                          {fieldErrors.goLiveDate}
+                        </span>
+                      )}
+                    </div>
+                  </label>
+                  <input
+                    type="date"
+                    value={goLiveDate}
+                    onChange={handleGoLiveDateChange}
+                    min={today}
+                    className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
+                      fieldErrors.goLiveDate
+                        ? "tw-border-red-500"
+                        : "tw-border-gray-300"
+                    } tw-rounded-md focus:tw-ring-primary focus:tw-border-primary`}
+                  />
+                </div>
+
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     <div className="tw-flex tw-items-center tw-space-x-2">
@@ -291,11 +370,8 @@ export function CreatePostDrawer({
                   <input
                     type="date"
                     value={dueDate}
-                    onChange={(e) => {
-                      setDueDate(e.target.value);
-                      setFieldErrors({ ...fieldErrors, dueDate: "" });
-                    }}
-                    min={today}
+                    onChange={handleDueDateChange}
+                    min={goLiveDate || today}
                     className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
                       fieldErrors.dueDate
                         ? "tw-border-red-500"
@@ -304,7 +380,6 @@ export function CreatePostDrawer({
                   />
                 </div>
 
-                {/* Description */}
                 <div>
                   <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1">
                     Description <span className="tw-text-red-500">*</span>
@@ -334,7 +409,6 @@ export function CreatePostDrawer({
               </form>
             </div>
 
-            {/* Footer */}
             <div className="tw-px-6 tw-py-4 tw-border-t tw-border-gray-200">
               <div className="tw-flex tw-justify-end tw-space-x-3">
                 <button
