@@ -233,7 +233,7 @@ export default function BrandViewCampaignOffcanvas({
     onClick={() => handleApply(campaign._id, index)}
     className="tw-px-4 tw-py-2 tw-bg-emerald-600 tw-text-white tw-rounded-lg hover:tw-bg-emerald-700 tw-text-sm tw-font-medium"
   >
-    Apply for Campaign
+    Apply Now
   </button>
 )}
 
