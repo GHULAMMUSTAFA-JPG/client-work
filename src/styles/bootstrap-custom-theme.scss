@@ -2061,6 +2061,12 @@ body {
   width: 30% !important;
 }
 
+#campaignsOffcanvas
+{
+  width: 40% !important;
+}
+
+
 .table thead th {
   background-color: #1bb09d12 !important;
   color: #000 !important;
@@ -2083,4 +2089,17 @@ body {
   padding: 5px 20px;
   border: 1px solid #0d948814;
   background: #fff;
+}
+
+.campaign-box-border
+{
+  border-radius: 5px;
+  border: 1px solid #f1f1f1;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    border: 1px solid #efefef;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   
+  }
 }
