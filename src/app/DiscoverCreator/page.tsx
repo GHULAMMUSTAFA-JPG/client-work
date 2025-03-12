@@ -111,6 +111,169 @@ function DiscoverCreator() {
 
   const [isReadMore, setIsReadMore] = useState<boolean>(false);
 
+
+
+  // Define the header content with campaign data
+  const headerContent = selectedCampaign && (
+    <div className="tw-flex tw-items-center tw-space-x-4">
+      <div className="img-container-topHeader">
+        <img
+          src={selectedCampaign?.Company_Logo || "https://cdn.synnc.us/brand/fc331bd6-a9a5-4496-a38a-09964d080e24.png"}
+          alt=""
+          className=""
+        />
+      </div>
+      <div>
+        <h2 className="tw-text-2xl tw-font-bold tw-text-gray-900">{selectedCampaign?.Company_Name || "Unknown Brand"}</h2>
+        <p className="tw-text-gray-600">
+          Testttt Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultricies orci sed nisi auctor.
+        </p>
+      </div>
+    </div>
+  );
+
+  // Define the body content with campaign data
+  const bodyContent = selectedCampaign && (
+    <div className="p-4 campaign-box-border">
+      <div className="tw-flex tw-justify-between tw-items-start tw-mb-4">
+        <h3 className="tw-text-lg tw-font-semibold tw-text-gray-900">{selectedCampaign.Headline || "N/A"}</h3>
+        <div className="tw-flex tw-space-x-2">
+          <span className="tw-flex tw-items-center tw-text-xs tw-font-medium tw-text-red-600 tw-bg-red-50 tw-px-2 tw-py-1 tw-rounded">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-flame tw-w-3 tw-h-3 tw-mr-1"
+            >
+              <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+            </svg>
+            Urgent
+          </span>
+        </div>
+      </div>
+
+      <p className="tw-text-gray-600 tw-mb-4">{selectedCampaign.Brief_Description || "No description available"}</p>
+
+      <div className="tw-space-y-4">
+        <div>
+          <h4 className="tw-text-sm tw-font-semibold tw-text-gray-900 tw-mb-2">Duration</h4>
+          <p className="tw-text-sm tw-text-gray-700">
+            {selectedCampaign.Is_Ongoing ? "On Going" : `${selectedCampaign.Start_Date || "N/A"} - ${selectedCampaign.End_Date || "N/A"}`}
+          </p>
+        </div>
+
+        <div>
+          <h4 className="tw-text-sm tw-font-semibold tw-text-gray-900 tw-mb-2">Requirements</h4>
+          <ul className="tw-space-y-2">
+            <li className="tw-text-sm tw-text-gray-700">{selectedCampaign.Campaign_Details || "No details available"}</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="tw-text-sm tw-font-semibold tw-text-gray-900 tw-mb-2">Platforms</h4>
+          <div className="tw-flex tw-flex-wrap tw-gap-2">
+            {selectedCampaign.Target_Audience?.length > 0 ? (
+              selectedCampaign.Target_Audience.map((platform: string, index: number) => (
+                <span
+                  key={index}
+                  className="tw-inline-flex tw-items-center tw-px-2 tw-py-1 tw-rounded-full tw-text-xs tw-font-medium tw-bg-gray-100 tw-text-gray-800"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-globe tw-w-3 tw-h-3 tw-mr-1"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    <path d="M2 12h20" />
+                  </svg>
+                  {platform}
+                </span>
+              ))
+            ) : (
+              <span className="tw-inline-flex tw-items-center tw-px-2 tw-py-1 tw-rounded-full tw-text-xs tw-font-medium tw-bg-gray-100 tw-text-gray-800">
+                No platforms specified
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="tw-flex tw-items-center tw-justify-between tw-pt-4">
+          <div className="tw-flex tw-items-center tw-space-x-2">
+            <span className="tw-flex tw-items-center tw-text-xs tw-font-medium tw-text-green-600 tw-bg-green-50 tw-px-2 tw-py-1 tw-rounded">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-dollar-sign tw-w-3 tw-h-3 tw-mr-1"
+              >
+                <line x1="12" x2="12" y1="2" y2="22" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+              ${selectedCampaign.Budget?.toLocaleString() || "N/A"} per post
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Define the footer content with campaign data
+  const footerContent = selectedCampaign && (
+    <div className="d-flex justify-content-end gap-2">
+      <button
+        className="btn btn-outline-dark btn-sm"
+        data-bs-dismiss="offcanvas"
+      >
+        Cancel
+      </button>
+      {selectedCampaign.Is_Applied ? (
+        <button disabled className="btn btn-dark btn-sm">
+          Applied
+        </button>
+      ) : selectedCampaign.Is_Invited ? (
+        <button disabled className="btn btn-dark btn-sm">
+          Invited
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            const offcanvasElement = offcanvasRef.current;
+            if (offcanvasElement) {
+              const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+              offcanvas.hide();
+            }
+            // Assuming handleApply exists in SidebarDrawerCanvas
+            SidebarDrawerCanvas?.prototype?.handleApply?.(selectedCampaign._id);
+          }}
+          className="btn btn-info btn-sm"
+          disabled={selectedCampaign.Is_Applied || selectedCampaign.Is_Invited}
+        >
+          Apply Now
+        </button>
+      )}
+    </div>
+  );
+
   return (
     <>
       <section className="dashboard">
@@ -467,9 +630,9 @@ function DiscoverCreator() {
       <SidebarDrawerCanvas
         ref={offcanvasRef}
         data={selectedCampaign}
-      // headerContent={headerContent}
-      // bodyContent={bodyContent}
-      // footerContent={footerContent}
+        headerContent={headerContent}
+        bodyContent={bodyContent}
+        footerContent={footerContent}
       />
 
       {/* <BrandViewCampaignOffcanvas brandid={brandId} companyname={companyName} /> */}
