@@ -84,6 +84,7 @@ export interface ContentItem {
   date: string;
   status: "draft" | "in_review" | "approved" | "published";
   images: string[];
+  links: string[];
 }
 
 export enum CreatorStatus {

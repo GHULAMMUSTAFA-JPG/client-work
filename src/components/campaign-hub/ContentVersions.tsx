@@ -6,6 +6,7 @@ import { PostViewer } from "../shared/PostViewer";
 import CreatePostContent from "./CreatePostContent";
 import { useAuth } from "@/contexts/AuthContext";
 import { updateCampaignPostContent } from "@/@api/campaign";
+import { isImageUrl } from "@/utils";
 
 interface PerformanceMetrics {
   impressions: number;
@@ -38,15 +39,6 @@ interface ContentVersionsProps {
   onSubmit: () => void;
 }
 
-const isImageUrl = (url: string) => {
-  return (
-    /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url) ||
-    url.includes("/image") ||
-    url.includes("/images") ||
-    url.startsWith("data:image/")
-  );
-};
-
 export function ContentVersions({
   versions,
   campaignId,
@@ -68,7 +60,7 @@ export function ContentVersions({
 
   const firstVersion = versions && versions.length > 0 ? versions[0] : null;
   const isDraft = firstVersion?.isDraft || false;
-
+  console.log("versions", versions);
   const processMedia = (mediaItems?: string[]) => {
     if (!mediaItems || mediaItems.length === 0)
       return { images: [], links: [] };
