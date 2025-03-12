@@ -12,6 +12,7 @@ import EmptyState from "@/components/EmptyState";
 import { withAuthRole } from "@/utils/withAuthRole";
 import Link from "next/link";
 import BrandViewCampaignOffcanvas from "@/components/BrandViewCampaignOffcanvas";
+import { Key } from "lucide-react";
 function Campaigns() {
   const router = useRouter();
   const [campaigns, setCampaigns] = useState<any>();
@@ -70,7 +71,7 @@ function Campaigns() {
                       aria-controls="submitted-campaigns"
                       aria-selected="false"
                     >
-                      Applications (
+                      Pending Applications (
                       {campaigns?.Submitted_Campaigns?.length || 0})
                     </button>
                   </li>
@@ -93,107 +94,62 @@ function Campaigns() {
                             (campaign: any, index: number) => {
                               return (
                                 <div key={index} className="col-md-4">
-                                  <div
-                                    className="card card-hover h-100"
-                                    onClick={() => handleRowClick(campaign._id)}
-                                  >
-                                    <div className="card-body d-flex flex-column">
-                                      <div className="d-flex gap-2 mb-4">
-                                        {campaign?.Company_Logo ? (
-                                          <img
-                                            src={campaign.Company_Logo}
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={40}
-                                            height={40}
-                                          />
-                                        ) : (
-                                          <div
-                                            className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
-                                            style={{
-                                              width: "40px",
-                                              height: "40px",
-                                            }}
-                                          >
-                                            <span className="fw-bold text-uppercase">
-                                              {campaign?.Company_Name
-                                                ? campaign.Company_Name.charAt(
-                                                  0
-                                                )
-                                                : "C"}
-                                            </span>
-                                          </div>
-                                        )}
-                                        <div>
-                                          <p className="fw-medium mb-0 fs-16">
-                                            {campaign?.Headline?.slice(0, 100)}
-                                          </p>
+                                  <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm cursor-pointer" onClick={() => handleRowClick(campaign._id)}>
+      <div className="tw-flex tw-items-start tw-justify-between">
+            <div className="tw-flex tw-items-start tw-space-x-4">
+              <div className="img-container-topHeader">
+              {campaign?.Company_Logo ? (
+        <img
+          src={campaign.Company_Logo}
+          className=""
+          alt="logo"
+          width={40}
+          height={40}
+        />
+      ) : (
+        <div
+          className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
+          style={{
+            width: "40px",
+            height: "40px",
+          }}
+        >
+          <span className="fw-bold text-uppercase">
+            {campaign?.Company_Name
+              ? campaign.Company_Name.charAt(
+                0
+              )
+              : "C"}
+          </span>
+        </div>
+      )}
+              </div>
+              <div>
+                
+                <div className="tw-text-gray-600 tw-mt-1">
+                  <p className="fw-medium mb-0 fs-16">{campaign?.Headline?.slice(0, 100)}</p>
+                  <div className="d-flex align-items-center">
+          <p className="fs-12 text-warning mb-0">
+            {campaign?.Created_At}
+          </p>
+          <div className="vr mx-2"></div>
+          <p className="fs-12 text-warning mb-0">
+            {campaign?.Time_Ago}
+          </p>
+        </div>
+                </div>
+                <div className="tw-flex tw-flex-wrap tw-gap-2 tw-mt-2">
+                {campaign?.Target_Audience?.map((audience: string, index: number) => (
+                   <span key={index} className="chips">{audience}</span>
+                 ))}
+                </div>
+                 </div>
+            </div>
+          </div>
 
-                                          <div className="d-flex align-items-center">
-                                            <p className="fs-12 text-warning mb-0">
-                                              {campaign?.Created_At}
-                                            </p>
-                                            <div className="vr mx-2"></div>
-                                            <p className="fs-12 text-warning mb-0">
-                                              {campaign?.Time_Ago}
-                                            </p>
-                                          </div>
-                                        </div>
-                                        {/* {campaign.Company_Website && (
-                                          <Link
-                                            href={`${campaign.Company_Website}`}
-                                            target="_blank"
-                                          >
-                                            <Icon
-                                              icon="mdi:web"
-                                              width="18"
-                                              height="18"
-                                              className="text-warning ms-1"
-                                            />
-                                          </Link>
-                                        )}
-                                        {campaign.Company_Linkedin && (
-                                          <Link
-                                            href={`https://${campaign.Company_Linkedin}`}
-                                            target="_blank"
-                                          >
-                                            <Icon
-                                              icon="mdi:linkedin"
-                                              width="18"
-                                              height="18"
-                                              className="text-info ms-2"
-                                            />
-                                          </Link>
-                                        )} */}
-                                        {/* <Icon
-                                          icon="mdi:linkedin"
-                                          width={18}
-                                          height={18}
-                                          className="text-info ms-auto"
-                                        />
-                                        <Icon
-                                          icon="mdi:web"
-                                          width={18}
-                                          height={18}
-                                          className="text-warning ms-1"
-                                        /> */}
-                                      </div>
-                                      <div className="d-flex gap-2 mb-4 align-items-center">
-                                        <Icon
-                                          icon="solar:eye-broken"
-                                          width="18"
-                                          height="18"
-                                          className="text-gray flex-shrink-0"
-                                        />
-                                        <p className="mb-0">
-                                          {campaign?.Target_Audience?.join(
-                                            " , "
-                                          )}
-                                        </p>
-                                      </div>
-                                    </div>
+
+</div>
                                   </div>
-                                </div>
                               );
                             }
                           )}
@@ -223,89 +179,68 @@ function Campaigns() {
                             (campaign: any, index: number) => {
                               return (
                                 <div key={index} className="col-md-4">
-                                  <div className="card card-hover h-100">
-                                    <div className="card-body d-flex flex-column">
-                                      <div className="d-flex gap-2 mb-4">
-                                        {campaign?.Company_Logo ? (
-                                          <img
-                                            src={campaign?.Company_Logo}
-                                            className="border object-fit-cover rounded-circle flex-shrink-0"
-                                            alt="logo"
-                                            width={40}
-                                            height={40}
-                                          />
-                                        ) : (
-                                          <div
-                                            className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
-                                            style={{
-                                              width: "40px",
-                                              height: "40px",
-                                            }}
-                                          >
-                                            <span className="fw-bold text-uppercase">
-                                              {campaign?.Company_Name
-                                                ? campaign.Company_Name.charAt(
-                                                  0
-                                                )
-                                                : "C"}
-                                            </span>
-                                          </div>
-                                        )}
-                                        <div>
-                                          <p className="fw-medium mb-0 fs-16">
-                                            {campaign?.Headline?.slice(0, 100)}
-                                          </p>
-                                          <div className="d-flex align-items-center">
-                                            <p className="fs-12 text-warning mb-0">
-                                              {campaign?.Created_At}
-                                            </p>
-                                            <div className="vr mx-2"></div>
-                                            <p className="fs-12 text-warning mb-0">
-                                              {campaign?.Time_Ago}
-                                            </p>
-                                          </div>
-                                        </div>
-                                        {/* <Icon
-                                          icon="mdi:linkedin"
-                                          width={18}
-                                          height={18}
-                                          className="text-info ms-auto"
-                                        />
-                                        <Icon
-                                          icon="mdi:web"
-                                          width={18}
-                                          height={18}
-                                          className="text-warning ms-1"
-                                        /> */}
-                                      </div>
-                                      <div className="d-flex gap-2 mb-4 align-items-center">
-                                        <Icon
-                                          icon="solar:eye-broken"
-                                          width="18"
-                                          height="18"
-                                          className="text-gray flex-shrink-0"
-                                        />
-                                        <p className="mb-0">
-                                          {campaign?.Target_Audience?.join(
-                                            " , "
-                                          )}
-                                        </p>
-                                      </div>
-                                      <div className="d-flex gap-3 justify-content-end">
-                                        <button
-                                          className="btn btn-dark"
-                                          key={index}
-                                          onClick={() => {
-                                            setSelectedCampaign(campaign);
-                                          }}
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#exampleModal"
-                                        >
-                                          Detail
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
+                                   <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm">
+      <div className="tw-flex tw-items-start tw-justify-between">
+            <div className="tw-flex tw-items-start tw-space-x-4">
+              <div className="img-container-topHeader">
+              {campaign?.Company_Logo ? (
+        <img
+          src={campaign.Company_Logo}
+          className=""
+          alt="logo"
+          width={40}
+          height={40}
+        />
+      ) : (
+        <div
+          className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
+          style={{
+            width: "40px",
+            height: "40px",
+          }}
+        >
+          <span className="fw-bold text-uppercase">
+            {campaign?.Company_Name
+              ? campaign.Company_Name.charAt(
+                0
+              )
+              : "C"}
+          </span>
+        </div>
+      )}
+              </div>
+              <div>
+                
+                <div className="tw-text-gray-600 tw-mt-1">
+                  <p className="fw-medium mb-0 fs-16">{campaign?.Headline?.slice(0, 100)}</p>
+                  <div className="d-flex align-items-center">
+          <p className="fs-12 text-warning mb-0">
+            {campaign?.Created_At}
+          </p>
+          <div className="vr mx-2"></div>
+          <p className="fs-12 text-warning mb-0">
+            {campaign?.Time_Ago}
+          </p>
+        </div>
+                <div className="tw-flex tw-flex-wrap tw-gap-2 tw-mt-2">
+                {campaign?.Target_Audience?.map((audience: string, index: number) => (
+                   <span key={index} className="chips">{audience}</span>
+                 ))}
+                </div>
+                </div>
+          
+                 </div>     
+         
+            </div>
+          </div>
+          <div className="tw-flex tw-justify-end tw-items-center tw-p-4">
+  <button  className="tw-border tw-border-teal-500 tw-text-teal-500 tw-bg-white tw-px-4 tw-py-2 tw-rounded-md hover:tw-bg-teal-500 hover:tw-text-white tw-transition-colors">
+    View Details
+  </button>
+</div>
+
+
+</div>
                                 </div>
                               );
                             }
