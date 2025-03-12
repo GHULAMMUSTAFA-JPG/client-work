@@ -18,7 +18,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import BrandViewCampaignOffcanvas from "@/components/BrandViewCampaignOffcanvas";
 import SidebarDrawerCanvas from "@/components/sidebar-drawer";
-import * as bootstrap from "bootstrap";
+// import * as bootstrap from "bootstrap";
 import BrandViewCampaign from "@/components/sidebar-drawer";
 
 function DiscoverCreator() {
@@ -33,15 +33,24 @@ function DiscoverCreator() {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const offcanvasRef = useRef<HTMLDivElement>(null); // Ref to control the offcanvas
 
-  // Toggle sidebar with the campaign data
+  // // Toggle sidebar with the campaign data
+  // const toggleSidebar = (campaign: any) => {
+  //   const offcanvasElement = offcanvasRef.current;
+  //   if (offcanvasElement && campaign) {
+  //     setSelectedCampaign(campaign);
+  //     const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+  //     offcanvas.show();
+  //     console.log("Toggling with campaign:", campaign);
+  //   }
+  // };
+
   const toggleSidebar = (campaign: any) => {
-    const offcanvasElement = offcanvasRef.current;
-    if (offcanvasElement && campaign) {
-      setSelectedCampaign(campaign);
-      const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
-      offcanvas.show();
-      console.log("Toggling with campaign:", campaign);
-    }
+    setSelectedCampaign(campaign);
+    setIsSidebarOpen(true);
+    console.log("Toggling with campaign:", campaign);
+  };  // Close sidebar
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
   };
   useEffect(() => {
     if (isSidebarOpen) {
@@ -259,8 +268,8 @@ function DiscoverCreator() {
           onClick={() => {
             const offcanvasElement = offcanvasRef.current;
             if (offcanvasElement) {
-              const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
-              offcanvas.hide();
+              // const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+              // offcanvas.hide();
             }
             // Assuming handleApply exists in SidebarDrawerCanvas
             SidebarDrawerCanvas?.prototype?.handleApply?.(selectedCampaign._id);
