@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, ChangeEvent } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useAuth } from "@/contexts/AuthContext";
 import { handleFileUpload } from "@/@api";
@@ -241,6 +241,10 @@ function EditCreateCampaign({
     }
   };
 
+  function updateDto(e: ChangeEvent<HTMLInputElement>) {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div
       className="offcanvas offcanvas-end offcanvas-create-campaign"
@@ -265,7 +269,7 @@ function EditCreateCampaign({
           <div className="row g-5">
             <div className="col-md-6">
               <div className="mb-4">
-                <h6 className="mb-3">Basic Campaign Info</h6>
+                <h6 className="mb-3">Public/Private Campaign Info</h6>
                 <div className="mb-3 border mb-3 p-3 rounded">
                   <label className="form-label mb-0">
                     Is this a publicly visible campaign? *
@@ -275,6 +279,7 @@ function EditCreateCampaign({
                       Creators can see the info below and apply to partner
                     </div>
                     <div className="form-check form-switch">
+                      
                       <input
                         className="form-check-input"
                         type="checkbox"
@@ -308,12 +313,18 @@ function EditCreateCampaign({
                     <option>USD</option>
                   </select>
                   <input
-                    type="number"
+                    type="text"
                     id="budget"
-                    value={formData.budget}
+                    value={formData.budget || ""}
                     className="form-control"
-                    placeholder="0"
-                    onChange={handleInputChange}
+                    placeholder="0.00"
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "" || /^\d*\.?\d{0,2}$/.test(value)) {
+                        setFormData((prev) => ({ ...prev, budget: value ? parseFloat(value) : 0 }));
+                        // Function not implemented
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -605,7 +616,7 @@ function EditCreateCampaign({
           aria-label="Close"
           onClick={resetForm}
         >
-          Discard
+          Close
         </button>
         <button
           className="btn btn-info"

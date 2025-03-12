@@ -328,7 +328,7 @@ export default function DiscoverBrandsPage() {
           <div
             key={brand._id}
             ref={index === brands.length - 1 ? lastBrandElementRef : undefined}
-            className="card mb-3"
+            className="card card-hover mb-3"
           >
             <div className="card-body p-4">
               <div className="row">

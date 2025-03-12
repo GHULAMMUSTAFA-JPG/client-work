@@ -307,7 +307,7 @@ function DiscoverCreator() {
                     }}
                     className="form-control custom-input-brand"
                     id="exampleFormControlInput1"
-                    placeholder="Search campaigns by brands, topic, or budget.."
+                    placeholder="Search campaigns by brands and topic.."
                     onKeyDown={(e: any) => {
                       e.key == "Enter" && searchCampaign();
                     }}
@@ -425,9 +425,7 @@ function DiscoverCreator() {
 
                       <div className="action_wrapper">
                         <div className="d-flex justify-content-end flex-column">
-                          <p className="fs-13 mb-0 text-right text-black">
-                            ${campaign?.Budget} per post
-                          </p>
+                         
 
                         </div>
                         <div className="learnmore-btn d-flex justify-content-end">

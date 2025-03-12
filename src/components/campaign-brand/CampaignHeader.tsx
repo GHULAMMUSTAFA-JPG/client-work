@@ -25,6 +25,8 @@ export default function CampaignHeader({ campaign }: CampaignHeaderProps) {
   const StatusIcon = statusInfo[campaign.status].icon;
 
   return (
+    <div>
+          
     <div className="tw-mb-8">
       <Link
         href="/campaign-details"
@@ -34,8 +36,25 @@ export default function CampaignHeader({ campaign }: CampaignHeaderProps) {
         All Campaigns
       </Link>
 
-      <div className="tw-flex tw-justify-between tw-items-center">
-        <div>
+       {/*  Notification Html is here  */}
+       <div className="mynotify tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500">
+           <div className="tw-flex tw-items-center tw-gap-3">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-info tw-w-5 tw-h-5 tw-text-blue-500 tw-flex-shrink-0">
+               <circle cx="12" cy="12" r="10"></circle>
+               <path d="M12 16v-4"></path>
+               <path d="M12 8h.01"></path>
+             </svg>
+             <div className="tw-text-sm tw-text-gray-600">
+               <span>Your campaign 'Invite Creator' is created successfully! &nbsp;
+                 <a href="#" className="tw-text-blue-600 hover:tw-text-blue-800 tw-font-medium">Invite creators</a> to participate.
+               </span>
+             </div>
+           </div>
+         </div>
+                {/*  Notification Html is here  */}
+
+      <div className="tw-flex tw-justify-between tw-items-center mt-5">
+        <div style={{ marginTop: '50px' }}>
           <div className="tw-flex tw-items-center tw-gap-3">
             <h1 className="tw-text-2xl tw-font-bold">{campaign.name}</h1>
             <Tooltip content={statusInfo[campaign.status].tooltip}>
@@ -55,6 +74,10 @@ export default function CampaignHeader({ campaign }: CampaignHeaderProps) {
           </div>
         </div>
       </div>
+
     </div>
+        
+    </div>
+
   );
 }
