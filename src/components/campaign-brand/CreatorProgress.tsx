@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { MessageSquare, ExternalLink } from "lucide-react";
 import Tooltip from "../Tooltip";
 import { Creator } from "@/types";
 import { useRouter } from "next/navigation";
+import ChatModal from "../ChatModal";
 
 interface CreatorProgressProps {
   creator: Creator;
@@ -20,7 +21,30 @@ export default function CreatorProgress({
   activeTab,
 }: CreatorProgressProps) {
   const router = useRouter();
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const handleOpenChatModal = () => {
+    const offcanvasElement = document.getElementById("creatorProfileDrawer");
+    // if (offcanvasElement) {
+    //   const offcanvas = Offcanvas.getInstance(offcanvasElement);
+    //   if (offcanvas) {
+    //     offcanvas.hide();
+    //   }
+    // }
+    setIsChatModalOpen(true);
+  };
 
+  const handleCloseChatModal = (setSelectedIds: any) => {
+    setSelectedIds({
+      Message_ID: null,
+      Recipient_ID: null,
+      Sender_ID: null,
+      Conversation_Id: null,
+      Profile_Image: null,
+      Name: null,
+      index: null,
+    });
+    setIsChatModalOpen(false);
+  };
   const getStageLabel = () => {
     if (creator.postsCompleted === creator.totalPosts) {
       return "Completed";
@@ -125,10 +149,13 @@ export default function CreatorProgress({
         <div className="tw-col-span-2 tw-flex tw-justify-end tw-space-x-2">
           <Tooltip content="Send message to creator">
             <button
-              onClick={() => onMessageCreator?.(creator.id)}
+              // onClick={() => onMessageCreator?.(creator.id)}
               className="tw-p-2 tw-text-gray-600 hover:tw-text-gray-900 hover:tw-bg-gray-100 tw-rounded-lg tw-transition-colors"
             >
-              <MessageSquare className="tw-w-5 tw-h-5" />
+              <MessageSquare
+                onClick={handleOpenChatModal}
+                className="tw-w-5 tw-h-5"
+              />
             </button>
           </Tooltip>
           <Tooltip content="View creator details">
@@ -141,6 +168,11 @@ export default function CreatorProgress({
           </Tooltip>
         </div>
       </div>
+      <ChatModal
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={creator.id}
+      />
     </div>
   );
 }

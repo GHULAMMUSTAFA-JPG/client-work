@@ -21,6 +21,7 @@ import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
 import { PostViewer } from "../shared/PostViewer";
+import ChatModal from "../ChatModal";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -57,7 +58,30 @@ export function CreatorDetailView({
   );
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const handleOpenChatModal = () => {
+    const offcanvasElement = document.getElementById("creatorProfileDrawer");
+    // if (offcanvasElement) {
+    //   const offcanvas = Offcanvas.getInstance(offcanvasElement);
+    //   if (offcanvas) {
+    //     offcanvas.hide();
+    //   }
+    // }
+    setIsChatModalOpen(true);
+  };
 
+  const handleCloseChatModal = (setSelectedIds: any) => {
+    setSelectedIds({
+      Message_ID: null,
+      Recipient_ID: null,
+      Sender_ID: null,
+      Conversation_Id: null,
+      Profile_Image: null,
+      Name: null,
+      index: null,
+    });
+    setIsChatModalOpen(false);
+  };
   useEffect(() => {
     const currentPostStillExists =
       selectedPost && posts.some((post) => post.id === selectedPost.id);
@@ -363,7 +387,7 @@ export function CreatorDetailView({
                     <div className="tw-flex tw-items-center tw-gap-3">
                       <button
                         className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded-lg hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
-                        onClick={() => router.push(`/inbox?id=${creator.id}`)}
+                        onClick={handleOpenChatModal}
                       >
                         <MessageSquare className="tw-w-4 tw-h-4" />
                         Message
@@ -463,6 +487,11 @@ export function CreatorDetailView({
       </div>
 
       <CreatorProfileDrawer creatorId={selectedCreator?.id || ""} />
+      <ChatModal
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={creator.id}
+      />
     </div>
   );
 }
