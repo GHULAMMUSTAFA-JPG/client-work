@@ -795,7 +795,7 @@ Choose a campaign to invite this creator and collaborate seamlessly
                   aria-controls="mycreators-tab-pane"
                   aria-selected="true"
                 >
-                  My Creators
+                  My Company Creators
                 </button>
               </li>
               <li className="nav-item" role="presentation">

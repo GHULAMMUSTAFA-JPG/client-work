@@ -423,8 +423,11 @@ function ProfilePage() {
                     {userProfile?.Name}
                     <div
                       className="editprofilebox"
-                      onClick={() => handleSectionClick("about")}
-                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        // Placeholder for future functionality
+                      }}
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#creator-profile-drawer-Offcanvas"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -474,13 +477,6 @@ function ProfilePage() {
                 style={{ display: "flex", alignItems: "center" }}
                 className="profileactionsbtn"
               >
-                {/*    <button
-                  className="btn btn-primary d-flex align-items-center gap-1"
-                  onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
-                >
-                  <Icon icon="mdi:message" width={18} height={18} />
-                  Message me
-                </button> */}
                 <button className="btn btn-outline-primary d-flex align-items-center gap-1">
                   <Icon icon="mdi:plus" width={18} height={18} />
                   Add to list
@@ -546,29 +542,22 @@ function ProfilePage() {
             </div>
           </div>
           <div className="statsbox-container">
-            {/* <div className="stats-box">
-              <div className="stats-count">
-                {userProfile?.Profile_Views || "1,234"}
-              </div>
-              <div className="stats-heading">Profile views</div>
-            </div> */}
             <div className="stats-box">
               <div className="stats-count">
                 {userProfile?.Average_Impressions || "0"}
               </div>
-              <div className="stats-heading fs-13">Average Post Impressions</div>
-            </div>
-            {/* <div className="stats-box">
-              <div className="stats-count">
-                {userProfile?.Search_Appearances || "0"}
+              <div className="stats-heading fs-13">
+                Average Post Impressions
               </div>
-              <div className="stats-heading">Search appearances</div>
-            </div> */}
+            </div>
+
             <div className="stats-box">
               <div className="stats-count">
                 {userProfile?.Average_Engagements}
               </div>
-              <div className="stats-heading fs-13">Average Post Engagements</div>
+              <div className="stats-heading fs-13">
+                Average Post Engagements
+              </div>
             </div>
             <div className="stats-box">
               <div className="stats-count">
@@ -688,19 +677,6 @@ function ProfilePage() {
                       onClick={() => handleSectionClick("collaboration")}
                     />
                   )}
-
-                  {/* <div className="d-flex justify-content-between align-items-center">
-                    {userProfile?.Collaboration_Packages?.length < 1 && (
-                      <Icon
-                        icon="mdi:plus"
-                        width="24"
-                        height="24"
-                        className="text-muted"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleSectionClick("collaboration")}
-                      />
-                    )}
-                  </div> */}
                 </div>
                 {/* Collaboration Cards */}
                 <div className="mt-4">
@@ -742,504 +718,474 @@ function ProfilePage() {
                       }
                     )
                   ) : (
-                    <>
-                      {/* <div className="packagebox mb-3">
-                        <div className="card-body d-flex justify-content-between align-items-center">
-                          <div className="card-content">
-                            <h6>1x Sponsored Post</h6>
-                            <p className="package-description mb-0">
-                              I'll create a LinkedIn post to educate my audience
-                              on the benefits of your company's offerings, or
-                              for anything else you're interested in promoting,
-                              like an upcoming event.
-                            </p>
-                          </div>
-                          <div className="ms-5 text-end">
-                            <h6 className="package-prize mb-5">$ 900</h6>
-                          </div>
-                        </div>
-                        <div className="buttonboxcard">
-                          <button
-                            className="booknowbtn"
-                            onClick={() => handleSectionClick("collaboration")}
-                          >
-                            Book Now
-                          </button>
-                        </div>
-                      </div>
-                      <div className="packagebox mb-3">
-                        <div className="card-body d-flex justify-content-between align-items-center">
-                          <div className="card-content">
-                            <h6>
-                              3x Sponsored Post Series (Most Popular • 20%
-                              Discount)
-                            </h6>
-                            <p className="package-description mb-0">
-                              I'll create a series of posts to educate my
-                              audience on a specific topic, mentioning your
-                              brand throughout and how you can help.
-                            </p>
-                          </div>
-                          <div className="ms-5 text-end">
-                            <h6 className="package-prize mb-5">$ 2100</h6>
-                          </div>
-                        </div>
-                        <div className="buttonboxcard">
-                          <button
-                            className="booknowbtn"
-                            onClick={() => handleSectionClick("collaboration")}
-                          >
-                            Book Now
-                          </button>
-                        </div>
-                      </div> */}
-                    </>
+                    <></>
                   )}
                 </div>
 
                 {/* sidebar sections starts here */}
-                <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
-                  <div className="profile-sidebar-wraper">
-                    <div
-                      className={`profilee-container ${
-                        activeSection === "about"
-                          ? "d-none d-md-block d-lg-block"
-                          : "d-none"
-                      }`}
-                    >
-                      {/* Edit profile starts here */}
-                      <div className="d-flex justify-content-between align-items-center mb-3 px-3">
-                        <h6 className="mb-0 ">Edit Profile</h6>
-                        <div className="d-flex align-items-center gap-2">
-                          <button
-                            className="bg-white border btn btn-sm"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="btn btn-dark btn-sm ms-3"
-                            onClick={submitHandler}
-                          >
-                            Save
-                          </button>
-                        </div>
-                      </div>
 
-                      <div className="pb-2 profile-sidebar-scroll">
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Banner image</label>
-                          <div className="position-relative">
-                            <img
-                              src={editDetails.banner_image || defaultImagePath}
-                              alt="Banner"
-                              width={500}
-                              height={100}
-                              className="w-100 rounded-3 mb-2"
-                              style={{ objectFit: "cover" }}
-                            />
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ cursor: "pointer" }}
-                            >
-                              <span
-                                className="text-muted"
-                                onClick={handleClick}
-                              >
-                                Choose a photo
-                              </span>
-                              <Icon
-                                icon="material-symbols:delete-outline"
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  setEditDetails((prev: any) => {
-                                    return { ...prev, ["banner_image"]: "" };
-                                  });
-                                }}
-                              />
-                              <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={(e: any) => {
-                                  fileHandler(e, "banner_image");
-                                }}
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Profile photo</label>
-                          <div className="position-relative">
-                            <div className="img-container-lg-general">
-                              <img
-                                src={
-                                  editDetails.profile_image ||
-                                  "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
-                                }
-                                alt="Profile"
-                                width={80}
-                                height={80}
-                                className="mb-2"
-                              />
-                            </div>
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ cursor: "pointer" }}
-                            >
-                              <span
-                                onClick={handleClick1}
-                                className="text-muted"
-                              >
-                                Choose a photo
-                              </span>
-                              <Icon
-                                icon="material-symbols:delete-outline"
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  setEditDetails((prev: any) => {
-                                    return { ...prev, ["profile_image"]: "" };
-                                  });
-                                }}
-                              />
-                              <input
-                                type="file"
-                                ref={fileInputRef1}
-                                onChange={(e: any) => {
-                                  fileHandler(e, "profile_image");
-                                }}
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Name*</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.name}
-                            onChange={changeHandler}
-                            id="name"
-                            placeholder="John Doe"
-                            maxLength={50}
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Linkedin Username*</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.profile_url}
-                            onChange={changeHandler}
-                            id="profile_url"
-                            placeholder="john-doe"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Current Company URL*</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.company_website}
-                            onChange={changeHandler}
-                            id="company_website"
-                            placeholder="Synnc"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Job Title *</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.job_title}
-                            onChange={changeHandler}
-                            id="job_title"
-                            placeholder="Job Title"
-                          />
-                        </div>
-                        <div
-                          className="mb-4 section-box_container"
-                          ref={dropdownRef}
-                        >
-                          <label className="mb-2">Categories*</label>
-                          <div className="position-relative">
-                            <div
-                              className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
-                              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            >
-                              {selectedSkills.length > 0 ? (
-                                <>
-                                  {selectedSkills.map((skill) => (
-                                    <span
-                                      key={skill}
-                                      className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
-                                    >
-                                      {skill}
-                                      <Icon
-                                        icon="mdi:close"
-                                        className="cursor-pointer"
-                                        width={16}
-                                        height={16}
-                                        onClick={(e) =>
-                                          handleRemoveSkill(skill, e)
-                                        }
-                                      />
-                                    </span>
-                                  ))}
-                                  {selectedSkills.length > 1 && (
-                                    <span
-                                      className="text-muted ms-2 cursor-pointer"
-                                      onClick={() => {
-                                        setSelectedSkills([]);
-                                        setEditDetails((prev: any) => ({
-                                          ...prev,
-                                          audience_interest: "",
-                                        }));
-                                      }}
-                                    >
-                                      Clear all
-                                    </span>
-                                  )}
-                                </>
-                              ) : (
-                                <span className="text-muted">
-                                  Select up to 5 categories
-                                </span>
-                              )}
-                            </div>
-
-                            {isDropdownOpen && (
-                              <div
-                                className="position-absolute start-0 w-100 mt-1 bg-white border rounded-3 shadow-sm"
-                                style={{
-                                  maxHeight: "200px",
-                                  overflowY: "auto",
-                                  top: "calc(100% + 5px)",
-                                  zIndex: 1050,
-                                  position: "fixed",
-                                  width: "inherit",
-                                }}
-                              >
-                                {AVAILABLE_SKILLS.map((skill) => (
-                                  <div
-                                    key={skill}
-                                    className={`px-3 py-2 cursor-pointer hover-bg-light ${
-                                      selectedSkills.includes(skill)
-                                        ? "bg-light"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      if (selectedSkills.length < 5) {
-                                        handleSkillSelect(skill);
-                                      }
-                                    }}
-                                  >
-                                    {skill}
-                                    {selectedSkills.includes(skill) && (
-                                      <Icon
-                                        icon="mdi:check"
-                                        className="float-end"
-                                      />
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                          {selectedSkills.length >= 5 && (
-                            <small className="text-muted">
-                              Maximum 5 categories can be selected
-                            </small>
-                          )}
-                        </div>
-
-                        <div className="mb-4 bg-white">
-                          <label className="mb-2">
-                            *About Me (Description)
-                          </label>
-                          <small className="d-block text-muted mb-2">
-                            Welcome brands and introduce yourself
-                          </small>
-                          <textarea
-                            className="form-control"
-                            rows={10}
-                            value={editDetails.description}
-                            onChange={changeHandler}
-                            id="description"
-                            placeholder="Welcome to my profile! I use this to collaborate with great brands and other creators..."
-                          />
-                        </div>
-                      </div>
+                <div
+                  className="offcanvas offcanvas-end"
+                  tabIndex={-1}
+                  id="creator-profile-drawer-Offcanvas"
+                  style={{ width: '30%' }}
+                >
+                  <div className="offcanvas-header border-bottom">
+                    <div>
+                      <h5 className="offcanvas-title">Edit Profile</h5>
+                      
                     </div>
-                    {/* Main lets colorborate box Section starts here */}
-                    <div
-                      style={{ paddingLeft: "13px" }}
-                      className={`profilee-container  ${
-                        activeSection === "collaboration" ? "" : "d-none"
-                      }`}
-                    >
-                      <div className="d-flex justify-content-between mb-3 pt-2">
-                        <h6 className="mb-0 ">Edit Section</h6>
-                        <div className="d-flex align-items-center gap-2">
-                          <button
-                            className="bg-white border btn btn-sm"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="btn btn-dark btn-sm ms-3"
-                            onClick={submitCardDetails}
-                          >
-                            Save
-                          </button>
-                        </div>
-                      </div>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="offcanvas"
+                    ></button>
+                  </div>
 
-                      {/* package Content Section starts here */}
-                      <div className="pb-2 main-box">
-                        <h6 className="mb-1">Let's Collaborate</h6>
-                        <p className="text-muted">
-                          Add your collaboration packages here
-                        </p>
-                        {/* Stats Section */}
-                        <div
-                          style={{
-                            overflowY: "scroll",
-                            backgroundColor: "white",
-                          }}
-                          className="mb-4 section-box_container"
-                        >
-                          <div className="card mb-3">
-                            {/* <div className="card-header bg-white">
-                              <h6 className="mb-0">Package</h6>
-                          </div> */}
+                  <div className="offcanvas-body">
+                  <div
+    className={`profilee-container ${
+      activeSection === "about"
+        ? "d-none d-md-block d-lg-block"
+        : "d-none"
+    }`}
+  >
+    {/* Edit profile starts here */}
+    <div className="d-flex justify-content-between align-items-center mb-3 px-3">
+      <h6 className="mb-0 "></h6>
+      <div className="d-flex align-items-center gap-2">
+        <button
+          className="bg-white border btn btn-sm"
+          data-bs-dismiss="offcanvas"
+        >
+          Cancel
+        </button>
+        <button
+          className="btn btn-dark btn-sm ms-3"
+          onClick={submitHandler}
+        >
+          Save
+        </button>
+      </div>
+    </div>
 
-                            {/* Card 1 */}
-                            {preview &&
-                              cardDetails &&
-                              cardDetails?.length !== 0 &&
-                              cardDetails?.map((ele: any, index: number) => {
-                                return (
-                                  <div className="card-body" key={index}>
-                                    <div>
-                                      <div className="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 className="mb-0">
-                                          Card {index + 1}
-                                        </h6>
-                                        <Icon
-                                          icon="material-symbols:delete-outline"
-                                          className="cursor-pointer"
-                                          onClick={() => deleteSection(index)}
-                                        />
-                                      </div>
+    <div className="pb-2 profile-sidebar-scroll">
+      <div className="mb-4 section-box_container">
+        <label className="mb-2">Banner image</label>
+        <div className="position-relative">
+          <img
+            src={editDetails.banner_image || defaultImagePath}
+            alt="Banner"
+            width={500}
+            height={100}
+            className="w-100 rounded-3 mb-2"
+            style={{ objectFit: "cover" }}
+          />
+          <div
+            className="d-flex align-items-center gap-2"
+            style={{ cursor: "pointer" }}
+          >
+            <span
+              className="text-muted"
+              onClick={handleClick}
+            >
+              Choose a photo
+            </span>
+            <Icon
+              icon="material-symbols:delete-outline"
+              className="cursor-pointer"
+              onClick={() => {
+                setEditDetails((prev: any) => {
+                  return { ...prev, ["banner_image"]: "" };
+                });
+              }}
+            />
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={(e: any) => {
+                fileHandler(e, "banner_image");
+              }}
+              style={{ display: "none" }}
+            />
+          </div>
+        </div>
+      </div>
 
-                                      {/* Title */}
-                                      <div className="mb-3">
-                                        <label className="mb-2">Title *</label>
-                                        <input
-                                          id="package_name"
-                                          required={true}
-                                          defaultValue={ele.package_name}
-                                          onChange={(e) => valueAdder(e, index)}
-                                          type="text"
-                                          className="form-control"
-                                          placeholder="1x Sponsored Post"
-                                        />
-                                      </div>
+      <div className="mb-4 section-box_container">
+        <label className="mb-2">Profile photo</label>
+        <div className="position-relative">
+          <div className="img-container-lg-general">
+            <img
+              src={
+                editDetails.profile_image ||
+                "https://e1cdn.social27.com/digitalevents/synnc/no-pic-synnc.jpg"
+              }
+              alt="Profile"
+              width={80}
+              height={80}
+              className="mb-2"
+            />
+          </div>
+          <div
+            className="d-flex align-items-center gap-2"
+            style={{ cursor: "pointer" }}
+          >
+            <span
+              onClick={handleClick1}
+              className="text-muted"
+            >
+              Choose a photo
+            </span>
+            <Icon
+              icon="material-symbols:delete-outline"
+              className="cursor-pointer"
+              onClick={() => {
+                setEditDetails((prev: any) => {
+                  return { ...prev, ["profile_image"]: "" };
+                });
+              }}
+            />
+            <input
+              type="file"
+              ref={fileInputRef1}
+              onChange={(e: any) => {
+                fileHandler(e, "profile_image");
+              }}
+              style={{ display: "none" }}
+            />
+          </div>
+        </div>
+      </div>
 
-                                      {/* Description */}
-                                      <div className="mb-3">
-                                        <label className="mb-2">
-                                          Description
-                                        </label>
-                                        <textarea
-                                          className="form-control"
-                                          rows={5}
-                                          defaultValue={
-                                            ele?.package_description
-                                          }
-                                          onChange={(e) => valueAdder(e, index)}
-                                          id="package_description"
-                                          placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
-                                        />
-                                      </div>
+      <div className="mb-4 section-box_container">
+        <label className="mb-2">Name*</label>
+        <input
+          type="text"
+          className="form-control"
+          value={editDetails.name}
+          onChange={changeHandler}
+          id="name"
+          placeholder="John Doe"
+          maxLength={50}
+        />
+      </div>
+      <div className="mb-4 section-box_container">
+        <label className="mb-2">Linkedin Username*</label>
+        <input
+          type="text"
+          className="form-control"
+          value={editDetails.profile_url}
+          onChange={changeHandler}
+          id="profile_url"
+          placeholder="john-doe"
+        />
+      </div>
+      <div className="mb-4 section-box_container">
+        <label className="mb-2">Current Company URL*</label>
+        <input
+          type="text"
+          className="form-control"
+          value={editDetails.company_website}
+          onChange={changeHandler}
+          id="company_website"
+          placeholder="Synnc"
+        />
+      </div>
+      <div className="mb-4 section-box_container">
+        <label className="mb-2">Job Title *</label>
+        <input
+          type="text"
+          className="form-control"
+          value={editDetails.job_title}
+          onChange={changeHandler}
+          id="job_title"
+          placeholder="Job Title"
+        />
+      </div>
+      <div
+        className="mb-4 section-box_container"
+        ref={dropdownRef}
+      >
+        <label className="mb-2">Categories*</label>
+        <div className="position-relative">
+          <div
+            className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {selectedSkills.length > 0 ? (
+              <>
+                {selectedSkills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
+                  >
+                    {skill}
+                    <Icon
+                      icon="mdi:close"
+                      className="cursor-pointer"
+                      width={16}
+                      height={16}
+                      onClick={(e) =>
+                        handleRemoveSkill(skill, e)
+                      }
+                    />
+                  </span>
+                ))}
+                {selectedSkills.length > 1 && (
+                  <span
+                    className="text-muted ms-2 cursor-pointer"
+                    onClick={() => {
+                      setSelectedSkills([]);
+                      setEditDetails((prev: any) => ({
+                        ...prev,
+                        audience_interest: "",
+                      }));
+                    }}
+                  >
+                    Clear all
+                  </span>
+                )}
+              </>
+            ) : (
+              <span className="text-muted">
+                Select up to 5 categories
+              </span>
+            )}
+          </div>
 
-                                      {/* Price */}
-                                      <div>
-                                        <label className="mb-2">Price</label>
-                                        <input
-                                          id="package_price"
-                                          min="0"
-                                          defaultValue={
-                                            ele?.package_price
-                                              ? ele?.package_price
-                                              : 0
-                                          }
-                                          type="number"
-                                          onChange={(e) => {
-                                            valueAdder(e, index);
-                                          }}
-                                          className="form-control"
-                                          placeholder="$ 100"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                          </div>
-                          <button
-                            className="btn btn-outline-dark w-100"
-                            onClick={() => {
-                              setPreview(false);
+          {isDropdownOpen && (
+            <div
+              className="position-absolute start-0 w-100 mt-1 bg-white border rounded-3 shadow-sm"
+              style={{
+                maxHeight: "200px",
+                overflowY: "auto",
+                top: "calc(100% + 5px)",
+                zIndex: 1050,
+                position: "fixed",
+                width: "inherit",
+              }}
+            >
+              {AVAILABLE_SKILLS.map((skill) => (
+                <div
+                  key={skill}
+                  className={`px-3 py-2 cursor-pointer hover-bg-light ${
+                    selectedSkills.includes(skill)
+                      ? "bg-light"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    if (selectedSkills.length < 5) {
+                      handleSkillSelect(skill);
+                    }
+                  }}
+                >
+                  {skill}
+                  {selectedSkills.includes(skill) && (
+                    <Icon
+                      icon="mdi:check"
+                      className="float-end"
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        {selectedSkills.length >= 5 && (
+          <small className="text-muted">
+            Maximum 5 categories can be selected
+          </small>
+        )}
+      </div>
 
-                              // Ensure cardDetails is always an array before manipulating
-                              const newEntry = {
-                                package_name: "",
-                                package_description: "",
-                                package_price: 0,
-                              };
+      <div className="mb-4 bg-white">
+        <label className="mb-2">
+          *About Me (Description)
+        </label>
+        <small className="d-block text-muted mb-2">
+          Welcome brands and introduce yourself
+        </small>
+        <textarea
+          className="form-control"
+          rows={10}
+          value={editDetails.description}
+          onChange={changeHandler}
+          id="description"
+          placeholder="Welcome to my profile! I use this to collaborate with great brands and other creators..."
+        />
+      </div>
+    </div>
+  </div>
+  {/* Main lets colorborate box Section starts here */}
+  <div
+    style={{ paddingLeft: "13px" }}
+    className={`profilee-container  ${
+      activeSection === "collaboration" ? "" : "d-none"
+    }`}
+  >
+    <div className="d-flex justify-content-between mb-3 pt-2">
+      <h6 className="mb-0 ">Edit Section</h6>
+      
+      <div className="d-flex align-items-center gap-2">
+        <button
+          className="bg-white border btn btn-sm"
+          onClick={handleCancel}
+        >
+          Cancel
+        </button>
+        <button
+          className="btn btn-dark btn-sm ms-3"
+          onClick={submitCardDetails}
+        >
+          Save
+        </button>
+      </div>
+    </div>
 
-                              // Using spread operator to create a new array if cardDetails is already defined
-                              const newArray = Array.isArray(cardDetails)
-                                ? [...cardDetails]
-                                : [];
-                              newArray.push(newEntry);
+    {/* package Content Section starts here */}
+    <div className="pb-2 main-box">
+      <h6 className="mb-1">Let's Collaborate</h6>
+      <p className="text-muted">
+        Add your collaboration packages here
+      </p>
+      {/* Stats Section */}
+      <div
+        style={{
+          overflowY: "scroll",
+          backgroundColor: "white",
+        }}
+        className="mb-4 section-box_container"
+      >
+        <div className="card mb-3">
+          {/* <div className="card-header bg-white">
+            <h6 className="mb-0">Package</h6>
+        </div> */}
 
-                              setCardDetails(newArray);
-
-                              setTimeout(() => {
-                                setPreview(true);
-                              }, 100);
-                            }}
-                          >
-                            + Add Card
-                          </button>
-                        </div>
-
-                        <button
-                          className="btn btn-outline-danger w-100 mt-auto"
-                          onClick={() => {
-                            setPreview(false);
-
-                            setCardDetails([]);
-                            setTimeout(() => {
-                              setPreview(true);
-                            }, 100);
-                          }}
-                        >
-                          Delete Block
-                        </button>
-                      </div>
-                      {/* package Content Section ends here */}
+          {/* Card 1 */}
+          {preview &&
+            cardDetails &&
+            cardDetails?.length !== 0 &&
+            cardDetails?.map((ele: any, index: number) => {
+              return (
+                <div className="card-body" key={index}>
+                  <div>
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <h6 className="mb-0">
+                        Card {index + 1}
+                      </h6>
+                      <Icon
+                        icon="material-symbols:delete-outline"
+                        className="cursor-pointer"
+                        onClick={() => deleteSection(index)}
+                      />
                     </div>
-                    {/* Main lets colorborate box Section starts here */}
+
+                    {/* Title */}
+                    <div className="mb-3">
+                      <label className="mb-2">Title *</label>
+                      <input
+                        id="package_name"
+                        required={true}
+                        defaultValue={ele.package_name}
+                        onChange={(e) => valueAdder(e, index)}
+                        type="text"
+                        className="form-control"
+                        placeholder="1x Sponsored Post"
+                      />
+                    </div>
+
+                    {/* Description */}
+                    <div className="mb-3">
+                      <label className="mb-2">
+                        Description
+                      </label>
+                      <textarea
+                        className="form-control"
+                        rows={5}
+                        defaultValue={
+                          ele?.package_description
+                        }
+                        onChange={(e) => valueAdder(e, index)}
+                        id="package_description"
+                        placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
+                      />
+                    </div>
+
+                    {/* Price */}
+                    <div>
+                      <label className="mb-2">Price</label>
+                      <input
+                        id="package_price"
+                        min="0"
+                        defaultValue={
+                          ele?.package_price
+                            ? ele?.package_price
+                            : 0
+                        }
+                        type="number"
+                        onChange={(e) => {
+                          valueAdder(e, index);
+                        }}
+                        className="form-control"
+                        placeholder="$ 100"
+                      />
+                    </div>
                   </div>
                 </div>
+              );
+            })}
+        </div>
+        <button
+          className="btn btn-outline-dark w-100"
+          onClick={() => {
+            setPreview(false);
+
+            // Ensure cardDetails is always an array before manipulating
+            const newEntry = {
+              package_name: "",
+              package_description: "",
+              package_price: 0,
+            };
+
+            // Using spread operator to create a new array if cardDetails is already defined
+            const newArray = Array.isArray(cardDetails)
+              ? [...cardDetails]
+              : [];
+            newArray.push(newEntry);
+
+            setCardDetails(newArray);
+
+            setTimeout(() => {
+              setPreview(true);
+            }, 100);
+          }}
+        >
+          + Add Card
+        </button>
+      </div>
+
+      <button
+        className="btn btn-outline-danger w-100 mt-auto"
+        onClick={() => {
+          setPreview(false);
+
+          setCardDetails([]);
+          setTimeout(() => {
+            setPreview(true);
+          }, 100);
+        }}
+      >
+        Delete Block
+      </button>
+    </div>
+    {/* package Content Section ends here */}
+  </div>
+
+
+                  </div>
+                </div>
+
                 {/* sidebar sections ends here */}
               </div>
             </div>
