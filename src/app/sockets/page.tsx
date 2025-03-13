@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function ChatApp() {
