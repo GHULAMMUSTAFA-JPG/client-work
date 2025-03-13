@@ -263,3 +263,15 @@ export const getCreatorCampaignsOverview = async (email: string) => {
     `/dashboard/campaigns/get_creator_campaigns_overview/${email}`
   );
 };
+
+export const deleteCreatorCampaignPost = async (params: {
+  campaign_id: string;
+  post_id: string;
+  creator_id: string;
+}) => {
+  const { campaign_id, post_id, creator_id } = params;
+  return handleApiRequest(
+    "delete",
+    `/creators/campaigns/${campaign_id}/campaign-post/${post_id}?creator_id=${creator_id}`
+  );
+};

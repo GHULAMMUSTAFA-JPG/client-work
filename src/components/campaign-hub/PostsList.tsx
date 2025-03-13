@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { Eye, AlertTriangle, Plus } from "lucide-react";
 import { CampaignDrawer } from "./CampaignDrawer";
-import {
-  getCampaignStatusStyles,
-  getIcon,
-  getStatusLabel,
-  getStatusStyles,
-} from "../shared/utils";
+import { getIcon, getStatusLabel } from "../shared/utils";
 import { CampaignStatus, Status } from "@/types";
+import { deleteCreatorCampaignPost } from "@/@api/campaign";
 
 interface Post {
   id: string;
@@ -20,14 +16,18 @@ interface Post {
   goLiveDate?: string;
   dueDate?: string;
   Created_At: string;
+  creatorId?: string;
 }
 
 interface PostsListProps {
   posts: Post[];
   selectedPostId: string | null;
   campaignStatus: CampaignStatus;
+  campaignId: string;
   onPostSelect: (postId: string) => void;
   onCreatePost: () => void;
+  creatorId: string;
+  onSubmit?: () => void;
 }
 
 export function PostsList({
@@ -36,8 +36,12 @@ export function PostsList({
   onPostSelect,
   onCreatePost,
   campaignStatus,
+  campaignId,
+  creatorId,
+  onSubmit,
 }: PostsListProps) {
   const [viewingPost, setViewingPost] = useState<Post | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   console.log("viewingPost", viewingPost);
   return (
     <div className="tw-w-96 tw-border-r tw-border-gray-200 tw-overflow-y-auto">
@@ -142,6 +146,32 @@ export function PostsList({
           submittedDate: viewingPost?.submittedDate,
           goLiveDate: viewingPost?.goLiveDate,
           createdAt: viewingPost?.Created_At,
+        }}
+        isLoading={isDeleting}
+        onDelete={async () => {
+          if (viewingPost?.id) {
+            try {
+              setIsDeleting(true);
+              await deleteCreatorCampaignPost({
+                campaign_id: campaignId,
+                post_id: viewingPost.id,
+                creator_id: creatorId,
+              });
+
+              // Close the modal after successful deletion
+              setViewingPost(null);
+
+              // Refresh the campaign posts list by calling the parent component's onSubmit function
+              // We need to pass this function as a prop from the parent component
+              if (onSubmit) {
+                onSubmit();
+              }
+            } catch (error) {
+              console.error("Error deleting post:", error);
+            } finally {
+              setIsDeleting(false);
+            }
+          }
         }}
       />
     </div>
