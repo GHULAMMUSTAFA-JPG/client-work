@@ -432,32 +432,49 @@ const PostCalendar = () => {
         <div className="tw-text-center tw-py-4">Loading posts...</div>
       ) : upcomingPosts && upcomingPosts.Posts.length > 0 ? (
         Object.entries(groupedPosts).map(([date, posts]) => (
-          <div key={date} className="tw-mb-6">
-            <h3 className="tw-text-lg tw-font-semibold tw-mb-2">
+          <div key={date} className="tw-mb-6 tw-border-b">
+            <h3 className="tw-text-sm tw-font-medium tw-text-gray-500 mb-3">
               {format(parseISO(date), 'EEEE, MMMM d, yyyy')}
             </h3>
             {posts.map((post) => (
-              <div key={post._id} className="tw-border tw-p-3 tw-rounded-md tw-mb-2">
+              <div key={post._id} className="tw-p-2 tw-mb-2 hover:tw-bg-gray-100 cursor-pointer">
+                <div className="tw-flex tw-items-center tw-min-w-0 gap-2 tw-justify-between">
+                  <div className="tw-flex tw-items-center gap-2">
+                            <div className="img-container-topHeader">
+                                <img
+                                 src={
+                                   user?.isBuyer
+                                      ? post.Creator_Profile_Image || "https://via.placeholder.com/30"
+                                      : post.Company_Logo || "https://via.placeholder.com/30"
+                                  }
+                                  className=""
+                                 alt="Profile Picture"
+                                
+                                />
+                              </div>
                 <div>
-                  <p className="tw-font-medium">{post.Post_Title}</p>
+                  <p className="tw-text-sm tw-font-medium tw-text-gray-900">{post.Post_Title}</p>
                   <p className="tw-text-sm tw-text-gray-500">{post.Campaign_Headline}</p>
                   <p className="tw-text-xs tw-text-gray-400">
                     Submitted on: {format(parseISO(post.Submission_Date), 'PPP')}
                   </p>
                 </div>
+                </div>
+                <div className="tw-flex tw-items-center tw-px-2.5 tw-py-1 tw-rounded-full tw-bg-[#E8F5E9] tw-text-[#2E7D32]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-check-circle w-4 h-4 mr-1"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg><span className="tw-text-xs tw-font-medium">Published</span></div>
+              </div>
               </div>
             ))}
           </div>
         ))
       ) : (
-        <p>No posts available for the selected period.</p>
+        <p className="tw-flex tw-items-center tw-justify-center tw-bg-teal-50 tw-text-black tw-font-medium tw-py-2 tw-px-4 tw-rounded-md">No posts available for the selected period.</p>
       )}
 
       {upcomingPosts && upcomingPosts.Posts.length > ITEMS_PER_PAGE && visibleItems < upcomingPosts.Posts.length && (
         <div className="tw-text-center tw-mt-4">
           <button
             onClick={handleLoadMore}
-            className="tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-blue-600 tw-transition-all"
+            className="tw-bg-teal-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-teal-600 tw-transition-all"
           >
             Load More
           </button>

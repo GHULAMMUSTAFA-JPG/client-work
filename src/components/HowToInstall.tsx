@@ -3,7 +3,7 @@ import React from "react";
 
 const HowToInstall = () => {
   return (
-    <div style={{ zIndex: 1 }} className="accordion " id="installAccordion">
+    <div style={{ zIndex: 1 }} className="accordion mb-3" id="installAccordion">
       <div className="accordion-item border rounded">
         <h2 className="accordion-header" id="headingInstall">
           <button

@@ -556,7 +556,7 @@ function ProfilePage() {
               <div className="stats-count">
                 {userProfile?.Average_Impressions || "0"}
               </div>
-              <div className="stats-heading">Average Post Impressions</div>
+              <div className="stats-heading fs-13">Average Post Impressions</div>
             </div>
             {/* <div className="stats-box">
               <div className="stats-count">
@@ -568,13 +568,13 @@ function ProfilePage() {
               <div className="stats-count">
                 {userProfile?.Average_Engagements}
               </div>
-              <div className="stats-heading">Average Post Engagements</div>
+              <div className="stats-heading fs-13">Average Post Engagements</div>
             </div>
             <div className="stats-box">
               <div className="stats-count">
                 {userProfile?.No_of_Followers || "0"}
               </div>
-              <div className="stats-heading">Followers</div>
+              <div className="stats-heading fs-13">Followers</div>
             </div>
           </div>
         </div>

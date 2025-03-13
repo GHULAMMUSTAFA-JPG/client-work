@@ -361,7 +361,10 @@ function Homepage() {
               </div>
             </div>
             <div className="statsbox-container-dash-4col py-3">
-              <div className="d-flex align-items-center gap-2 box-effect-shadow cursor-pointer" onClick={() => router.push('/campaigns')}>
+
+
+
+{/*               <div className="d-flex align-items-center gap-2 box-effect-shadow cursor-pointer" onClick={() => router.push('/campaigns')}>
                 <div className="p-2 rounded-full bg-gray-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21.022" viewBox="0 0 21 21.022">
   <g id="Icon_ion-megaphone-outline" data-name="Icon ion-megaphone-outline" transform="translate(-1.5 -1.478)">
@@ -378,9 +381,14 @@ function Homepage() {
                     {campaigns?.Activated_Campaigns?.length}
                   </p>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="d-flex align-items-center gap-2 box-effect-shadow cursor-pointer" onClick={() => {
+<div className="tw-bg-white tw-rounded-lg tw-border tw-border-gray-100 tw-p-6 tw-hover:tw-bg-gray-400 cursor-pointer" onClick={() => router.push('/campaigns')}><div className="tw-flex tw-items-center tw-justify-between"><div><p className="tw-text-sm tw-text-gray-500">Active Campaigns</p><h3 className="tw-text-2xl tw-font-semibold tw-mt-1">{campaigns?.Activated_Campaigns?.length}</h3></div><div className="tw-bg-blue-50 tw-p-3 tw-rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="21" height="21.022" viewBox="0 0 21 21.022"><g id="Icon_ion-megaphone-outline" data-name="Icon ion-megaphone-outline" transform="translate(-1.5 -1.478)"><path id="Path_870" data-name="Path 870" d="M19.122,2.448S15.061,7.5,11.25,7.5H3.75A.75.75,0,0,0,3,8.25v4.5a.75.75,0,0,0,.75.75h7.5c3.811,0,7.872,5.073,7.872,5.073a.684.684,0,0,0,1.128-.461V2.906a.667.667,0,0,0-1.128-.458ZM3,12s-.75-.281-.75-1.5S3,9,3,9m18,2.531a1.084,1.084,0,0,0,0-2.062M12,7.5v6m-6.75-6v6" fill="none" stroke="#1bb09d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path id="Path_871" data-name="Path 871" d="M6.75,13.5v7.875a.375.375,0,0,0,.375.375H9.609a.75.75,0,0,0,.717-.972C9.933,19.518,9,18.1,9,15.75h.75A.75.75,0,0,0,10.5,15v-.75a.75.75,0,0,0-.75-.75H9" fill="none" stroke="#1bb09d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></g></svg></div></div><div className="tw-mt-4 tw-flex tw-items-center tw-text-sm tw-text-gray-500"></div></div>
+
+
+
+
+             {/*  <div className="d-flex align-items-center gap-2 box-effect-shadow cursor-pointer" onClick={() => {
                 router.push('/campaigns');
                 setTimeout(() => {
                   (document.querySelector('[data-bs-target="#submitted-campaigns"]') as HTMLElement)?.click();
@@ -400,9 +408,19 @@ function Homepage() {
                     {campaigns?.Submitted_Campaigns?.length}
                   </p>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="d-flex align-items-center gap-2 box-effect-shadow">
+
+<div className="tw-bg-white tw-rounded-lg tw-border tw-border-gray-100 tw-p-6 tw-hover:tw-bg-gray-400 cursor-pointer" onClick={() => {
+                router.push('/campaigns');
+                setTimeout(() => {
+                  (document.querySelector('[data-bs-target="#submitted-campaigns"]') as HTMLElement)?.click();
+                }, 100);
+              }}><div className="tw-flex tw-items-center tw-justify-between"><div><p className="tw-text-sm tw-text-gray-500">Pending Applications</p><h3 className="tw-text-2xl tw-font-semibold tw-mt-1">{campaigns?.Submitted_Campaigns?.length}</h3></div><div className="tw-bg-blue-50 tw-p-3 tw-rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="22.89" height="22.89" viewBox="0 0 22.89 22.89">
+  <path id="Icon_material-twotone-connect-without-contact" data-name="Icon material-twotone-connect-without-contact" d="M12.3,15.734H10.011a10.3,10.3,0,0,1,10.3-10.3V7.722A8.006,8.006,0,0,0,12.3,15.734ZM20.312,12.3V10.011a5.724,5.724,0,0,0-5.722,5.722h2.289A3.429,3.429,0,0,1,20.312,12.3ZM7.722,4.289A2.289,2.289,0,1,0,5.433,6.578,2.281,2.281,0,0,0,7.722,4.289Zm5.093.572H10.526A3.422,3.422,0,0,1,7.15,7.722H3.717A1.714,1.714,0,0,0,2,9.439V12.3H8.867V9.714a5.688,5.688,0,0,0,3.948-4.853Zm8.641,14.306a2.289,2.289,0,1,0-2.289-2.289A2.281,2.281,0,0,0,21.456,19.167Zm1.717,1.144H19.739a3.422,3.422,0,0,1-3.376-2.862H14.074A5.688,5.688,0,0,0,18.023,22.3V24.89H24.89V22.028A1.714,1.714,0,0,0,23.173,20.312Z" transform="translate(-2 -2)" fill="#1b57b0"/>
+</svg></div></div><div className="tw-mt-4 tw-flex tw-items-center tw-text-sm tw-text-gray-500"></div></div>
+
+       {/*        <div className="d-flex align-items-center gap-2 box-effect-shadow">
                 <div className="p-2 rounded-full bg-gray-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="27" height="24" viewBox="0 0 27 24">
   <path id="Icon_fa-solid-hand-holding-dollar" data-name="Icon fa-solid-hand-holding-dollar" d="M14.625,1.125v.492c.3.056.591.127.853.2A1.126,1.126,0,1,1,14.9,3.989a5.936,5.936,0,0,0-1.416-.234,1.89,1.89,0,0,0-.909.206.537.537,0,0,0-.164.141.223.223,0,0,0-.033.131v.028a.536.536,0,0,0,.155.122,6.123,6.123,0,0,0,1.284.473l.042.014a7.354,7.354,0,0,1,1.777.717,2.463,2.463,0,0,1,1.238,2.1,2.578,2.578,0,0,1-1.252,2.273,3.489,3.489,0,0,1-1,.413v.5a1.125,1.125,0,0,1-2.25,0v-.534c-.445-.108-.853-.248-1.2-.366-.1-.033-.192-.066-.281-.094A1.127,1.127,0,0,1,11.6,7.744l.342.117a5.682,5.682,0,0,0,1.589.389,1.7,1.7,0,0,0,.9-.192.435.435,0,0,0,.15-.136.316.316,0,0,0,.038-.192V7.72c0-.047,0-.1-.187-.216a5.7,5.7,0,0,0-1.27-.483l-.089-.028a7.454,7.454,0,0,1-1.706-.675A2.37,2.37,0,0,1,10.12,4.252a2.525,2.525,0,0,1,1.3-2.222,3.656,3.656,0,0,1,.947-.384v-.52a1.125,1.125,0,0,1,2.25,0ZM26.634,15.764a1.873,1.873,0,0,1-.4,2.62L20.3,22.758A6.381,6.381,0,0,1,16.519,24H1.5A1.5,1.5,0,0,1,0,22.5v-3A1.5,1.5,0,0,1,1.5,18H3.225l2.1-1.687A5.988,5.988,0,0,1,9.08,15H16.5a1.5,1.5,0,0,1,0,3H12.75a.75.75,0,0,0,0,1.5H18.4l5.611-4.134A1.873,1.873,0,0,1,26.634,15.764ZM9.075,18h0Z" fill="#1b57b0"/>
@@ -424,60 +442,58 @@ function Homepage() {
                   </p>
                   <p className="fs-12 fw-400">Expected</p>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="d-flex align-items-center gap-2 box-effect-shadow">
-                <div className="p-2 rounded-full bg-gray-50">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="14"
-                    height="22"
-                    viewBox="0 0 14 22"
-                  >
-                    <g
-                      id="Group_37"
-                      data-name="Group 37"
-                      transform="translate(-5 -1)"
-                    >
-                      <line
-                        id="Line_1"
-                        data-name="Line 1"
-                        y2="20"
-                        transform="translate(12 2)"
-                        fill="none"
-                        stroke="#22c55e"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                      />
-                      <path
-                        id="Path_868"
-                        data-name="Path 868"
-                        d="M17,5H9.5a3.5,3.5,0,0,0,0,7h5a3.5,3.5,0,1,1,0,7H6"
-                        fill="none"
-                        stroke="#22c55e"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                      />
-                    </g>
-                  </svg>
-                </div>
 
-                <div
-                  className="ml-4 cursor-pointer"
-                  onClick={() => {
+ <div className="tw-bg-white tw-rounded-lg tw-border tw-border-gray-100 tw-p-6 tw-hover:tw-bg-gray-400 cursor-pointer"  onClick={() => {
                     setIsPayoutDrawerOpen(true);
-                    setSelectedPayoutType("total");
-                  }}
+                    setSelectedPayoutType("upcoming");
+                  }}><div className="tw-flex tw-items-center tw-justify-between"><div><p className="tw-text-sm tw-text-gray-500">Upcoming Payouts</p><h3 className="tw-text-2xl tw-font-semibold tw-mt-1">${payoutDetails.upcomingPayout.toLocaleString()}</h3></div><div className="tw-bg-blue-50 tw-p-3 tw-rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="27" height="24" viewBox="0 0 27 24">
+                  <path id="Icon_fa-solid-hand-holding-dollar" data-name="Icon fa-solid-hand-holding-dollar" d="M14.625,1.125v.492c.3.056.591.127.853.2A1.126,1.126,0,1,1,14.9,3.989a5.936,5.936,0,0,0-1.416-.234,1.89,1.89,0,0,0-.909.206.537.537,0,0,0-.164.141.223.223,0,0,0-.033.131v.028a.536.536,0,0,0,.155.122,6.123,6.123,0,0,0,1.284.473l.042.014a7.354,7.354,0,0,1,1.777.717,2.463,2.463,0,0,1,1.238,2.1,2.578,2.578,0,0,1-1.252,2.273,3.489,3.489,0,0,1-1,.413v.5a1.125,1.125,0,0,1-2.25,0v-.534c-.445-.108-.853-.248-1.2-.366-.1-.033-.192-.066-.281-.094A1.127,1.127,0,0,1,11.6,7.744l.342.117a5.682,5.682,0,0,0,1.589.389,1.7,1.7,0,0,0,.9-.192.435.435,0,0,0,.15-.136.316.316,0,0,0,.038-.192V7.72c0-.047,0-.1-.187-.216a5.7,5.7,0,0,0-1.27-.483l-.089-.028a7.454,7.454,0,0,1-1.706-.675A2.37,2.37,0,0,1,10.12,4.252a2.525,2.525,0,0,1,1.3-2.222,3.656,3.656,0,0,1,.947-.384v-.52a1.125,1.125,0,0,1,2.25,0ZM26.634,15.764a1.873,1.873,0,0,1-.4,2.62L20.3,22.758A6.381,6.381,0,0,1,16.519,24H1.5A1.5,1.5,0,0,1,0,22.5v-3A1.5,1.5,0,0,1,1.5,18H3.225l2.1-1.687A5.988,5.988,0,0,1,9.08,15H16.5a1.5,1.5,0,0,1,0,3H12.75a.75.75,0,0,0,0,1.5H18.4l5.611-4.134A1.873,1.873,0,0,1,26.634,15.764ZM9.075,18h0Z" fill="#1b57b0"/>
+                </svg></div></div><div className="tw-mt-4 tw-flex tw-items-center tw-text-sm tw-text-gray-500">Expected</div></div>
+
+
+
+
+
+<div className="tw-bg-white tw-rounded-lg tw-border tw-border-gray-100 tw-p-6 tw-hover:tw-bg-gray-400 cursor-pointer"  onClick={() => {
+                    setIsPayoutDrawerOpen(true);
+                    setSelectedPayoutType("upcoming");
+                  }}><div className="tw-flex tw-items-center tw-justify-between"><div><p className="tw-text-sm tw-text-gray-500">Total Payouts</p><h3 className="tw-text-2xl tw-font-semibold tw-mt-1">${payoutDetails.paidPayout.toLocaleString()}</h3></div><div className="tw-bg-blue-50 tw-p-3 tw-rounded-full"> <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="22"
+                  viewBox="0 0 14 22"
                 >
-                  <p className="fs-13">Total Payouts</p>
-                  <p className="fs-16 fw-bold">
-                    ${payoutDetails.paidPayout.toLocaleString()}
-                  </p>
-                  <p className="fs-12 fw-400">Recieved</p>
-                </div>
-              </div>
+                  <g
+                    id="Group_37"
+                    data-name="Group 37"
+                    transform="translate(-5 -1)"
+                  >
+                    <line
+                      id="Line_1"
+                      data-name="Line 1"
+                      y2="20"
+                      transform="translate(12 2)"
+                      fill="none"
+                      stroke="#22c55e"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    />
+                    <path
+                      id="Path_868"
+                      data-name="Path 868"
+                      d="M17,5H9.5a3.5,3.5,0,0,0,0,7h5a3.5,3.5,0,1,1,0,7H6"
+                      fill="none"
+                      stroke="#22c55e"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    />
+                  </g>
+                </svg></div></div><div className="tw-mt-4 tw-flex tw-items-center tw-text-sm tw-text-gray-500">Received</div></div>
+
             </div>
             <div className="card h-10">
               {!hasActiveCampaigns && (
@@ -522,16 +538,17 @@ function Homepage() {
                               >
                                 <div className="card-body py-2 ps-2 pe-3">
                                   <div className="d-flex gap-3 align-items-center">
+                                    <div className="img-container-topHeader">
                                     <img
                                       src={
                                         element?.Company_Logo ||
                                         defaultImagePath
                                       }
-                                      className="border object-fit-cover rounded flex-shrink-0"
+                                      className=""
                                       alt="logo"
-                                      width={32}
-                                      height={32}
+                                     
                                     />
+                                    </div>
                                     <p className="mb-0 fw-medium">
                                       {element?.Headline}
                                     </p>

@@ -71,7 +71,7 @@ export interface Post {
   id: string;
   title: string;
   date: string;
-  status: "in_review" | "approved" | "published";
+  status: "in_review" | "approved" | "published" | "rejected";
   content: string;
   impressions: number | null;
   engagement: number | null;
@@ -86,6 +86,7 @@ export interface ContentItem {
   date: string;
   status: "draft" | "in_review" | "approved" | "published";
   images: string[];
+  links: string[];
 }
 
 export enum CreatorStatus {

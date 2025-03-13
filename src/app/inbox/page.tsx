@@ -254,7 +254,7 @@ const Inbox = () => {
                     });
                   }}
                   key={index}
-                  className={`d-flex align-items-center p-3 border-bottom hover-bg-light cursor-pointer ${
+                  className={`d-flex align-items-center gap-3 p-3 border-bottom hover-bg-light cursor-pointer ${
                     selectedIds?.Recipient_ID ===
                     chat?.Last_Message?.Recipient_ID
                       ? "active"
@@ -262,17 +262,17 @@ const Inbox = () => {
                   }`}
                 >
                   {chat?.Profile_Image ? (
+                    <div className="img-container-topHeader">
                     <img
                       src={chat.Profile_Image}
                       alt="Profile"
-                      width={40}
-                      height={40}
-                      className="rounded-circle me-2 flex-shrink-0"
+                     className=""
                     />
+                    </div>
                   ) : (
                     <div
                       className="d-flex align-items-center justify-content-center bg-light rounded-circle me-2 flex-shrink-0"
-                      style={{ width: "40px", height: "40px" }}
+                      style={{ width: "50px", height: "50px" }}
                     >
                       <span className="fw-bold text-uppercase">
                         {chat?.Name ? chat.Name.charAt(0) : "A"}
@@ -300,16 +300,16 @@ const Inbox = () => {
         <div className="col-md-8 col-lg-9 p-0">
           {selectedIds?.Recipient_ID ? (
             <div className="card h-100 border-0">
-              <div className="card-header bg-white p-3">
+              <div className="tw-bg-white tw-shadow-md py-2 px-3">
                 <div className="d-flex align-items-center justify-between gap-3">
                   {selectedIds?.Profile_Image && (
+                      <div className="img-container-topHeader">
                     <img
                       src={selectedIds?.Profile_Image || defaultImagePath}
                       alt="Profile"
-                      width={40}
-                      height={40}
-                      className="rounded-circle me-2"
+                     className=""
                     />
+                    </div>
                   )}
                   <h6 className="mb-0 fs-14">{selectedIds?.Name}</h6>
                   {/* <button

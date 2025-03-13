@@ -506,23 +506,23 @@ body {
     display: flex;
     align-items: center;
     color: $primary;
-    border: 1px solid $primary;
+    border: 1px solid #1bb09d;
 
     &:hover {
       color: $white;
-      background-color: $primary;
-      border: 1px solid $primary;
+      background-color: #1bb09d;
+      border: 1px solid #1bb09d;
     }
   }
 
   .btn-dark {
-    background: $primary;
+    background: #1bb09d;
     color: $white;
     border: none !important;
 
     &:hover {
-      background: $primary;
-      color: $white;
+      background: #179f8d;
+      color: white!important;
     }
   }
 
@@ -2066,6 +2066,14 @@ body {
   width: 40% !important;
 }
 
+.mynotify {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  width: 90%;
+  margin: 20px auto;
+}
 
 .table thead th {
   background-color: #1bb09d12 !important;

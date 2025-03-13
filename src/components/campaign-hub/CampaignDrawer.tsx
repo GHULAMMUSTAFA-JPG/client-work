@@ -8,6 +8,7 @@ import {
   Globe,
   Edit,
   Trash2,
+  Loader,
 } from "lucide-react";
 import { getIcon, getStatusLabel, getStatusStyles } from "../shared/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -24,6 +25,7 @@ interface DrawerProps {
   isPost?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
+  isLoading?: boolean;
 }
 
 export function CampaignDrawer({
@@ -36,6 +38,7 @@ export function CampaignDrawer({
   initialData,
   onEdit,
   onDelete,
+  isLoading = false,
 }: DrawerProps) {
   console.log("initialData", initialData);
   if (!isOpen) return null;
@@ -192,6 +195,7 @@ export function CampaignDrawer({
               <button
                 onClick={onEdit}
                 className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-blue-50 tw-text-blue-600 tw-rounded-md hover:tw-bg-blue-100"
+                disabled={isLoading}
               >
                 <Edit className="tw-w-4 tw-h-4 tw-mr-2" />
                 <span className="tw-text-sm tw-font-medium">Edit Post</span>
@@ -199,9 +203,23 @@ export function CampaignDrawer({
               <button
                 onClick={onDelete}
                 className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-red-50 tw-text-red-600 tw-rounded-md hover:tw-bg-red-100"
+                disabled={isLoading}
               >
-                <Trash2 className="tw-w-4 tw-h-4 tw-mr-2" />
-                <span className="tw-text-sm tw-font-medium">Delete Post</span>
+                {isLoading ? (
+                  <>
+                    <Loader className="tw-w-4 tw-h-4 tw-mr-2 tw-animate-spin" />
+                    <span className="tw-text-sm tw-font-medium">
+                      Deleting...
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="tw-w-4 tw-h-4 tw-mr-2" />
+                    <span className="tw-text-sm tw-font-medium">
+                      Delete Post
+                    </span>
+                  </>
+                )}
               </button>
             </div>
           </>

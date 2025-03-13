@@ -549,8 +549,12 @@ function Mycreatorsbuyer() {
         <div className="tw-flex tw-items-center tw-justify-between tw-p-6 tw-border-b">
           <div>
             <h2 className="tw-text-xl tw-font-semibold">Invite to Campaign</h2>
-            <p className="tw-text-sm tw-text-gray-500 tw-mt-1">
-              Select a campaign to invite this creator to
+            <p className="tw-text-sm tw-text-gray-500 tw-mt-1 tw-flex tw-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12.829" height="12.828" viewBox="0 0 12.829 12.828">
+  <path id="Icon_feather-arrow-down-right" data-name="Icon feather-arrow-down-right" d="M7,7,17,17M17,7V17H7" transform="translate(-5.586 -5.586)" fill="none" stroke="#1bb09d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+</svg>
+
+Choose a campaign to invite this creator and collaborate seamlessly
             </p>
           </div>
           <button
@@ -558,20 +562,21 @@ function Mycreatorsbuyer() {
               setIsDrawerOpen(false);
               setDrawerType(null);
             }}
-            className="tw-text-gray-400 tw-hover:text-gray-600"
+            className="tw-text-gray-400 hover:text-gray-600"
           >
             <X className="tw-h-6 tw-w-6" />
           </button>
         </div>
 
-        <div className="tw-flex-1 tw-overflow-y-auto">
+        <div className="tw-flex-1 tw-overflow-y-auto tw-bg-gray-50">
           <div className="tw-p-6">
             <div className="tw-space-y-4">
               {activeCampaigns?.campaigns?.map(
                 (campaign: any, index: number) => (
-                  <div
-                    key={index}
-                    className="tw-border tw-rounded-lg tw-p-4 tw-hover:border-teal-500 tw-cursor-pointer tw-transition-all"
+               
+                  <Tooltip   key={index} content="Invite to campaign">
+                         <div
+                          className="tw-bg-white tw-border-gray-100 tw-border tw-rounded-mg py-4 px-3 tw-shadow-sm hover:tw-shadow-lg tw-round-md tw-cursor-pointer tw-transition-all"
                     onClick={async () => {
                       await inviteCreator(campaign, {
                         _id: selectedCreatorId,
@@ -580,6 +585,7 @@ function Mycreatorsbuyer() {
                       setDrawerType(null);
                     }}
                   >
+                     
                     <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
                       <h3 className="tw-font-medium">{campaign?.Headline}</h3>
                       <span className="tw-text-xs tw-px-2 tw-py-1 tw-rounded-full tw-bg-green-100 tw-text-green-800">
@@ -627,7 +633,7 @@ function Mycreatorsbuyer() {
                         </span>
                       </div>
 
-                      <div className="tw-flex tw-flex-wrap tw-gap-1 tw-mt-2">
+                      <div className="tw-flex tw-flex-wrap tw-gap-1 tw-mt-2 mb-3">
                         {campaign?.Target_Audience?.map(
                           (tag: string, i: number) => (
                             <span
@@ -668,6 +674,7 @@ function Mycreatorsbuyer() {
                       </div>
                     </div>
                   </div>
+                  </Tooltip>
                 )
               )}
             </div>

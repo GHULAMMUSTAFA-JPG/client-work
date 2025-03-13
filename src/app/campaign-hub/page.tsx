@@ -225,6 +225,9 @@ function CampaignHubContent() {
           onPostSelect={handleSelectedPostChange}
           onCreatePost={() => setIsCreatePostDrawerOpen(true)}
           campaignStatus={CampaignStatus.Live}
+          campaignId={campaignData?._id}
+          creatorId={user.uuid}
+          onSubmit={getCampaignPostsList}
         />
 
         <div className="tw-flex-1 ">
@@ -248,6 +251,7 @@ function CampaignHubContent() {
               postId={selectedPostId}
               onSubmit={getCampaignPostsList}
               canSubmit={true}
+              postStatus={selectedPost?.Status}
             />
           ) : (
             <EmptyState
