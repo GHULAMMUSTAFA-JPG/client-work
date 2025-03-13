@@ -24,6 +24,7 @@ import { PostViewer } from "../shared/PostViewer";
 import ChatModal from "../ChatModal";
 import { isImageUrl } from "@/utils";
 import { CampaignDrawer } from "../campaign-hub/CampaignDrawer";
+import { ChatDrawer } from "../ChatDrawer";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -576,10 +577,15 @@ export function CreatorDetailView({
       </div>
 
       <CreatorProfileDrawer creatorId={selectedCreator?.id || ""} />
-      <ChatModal
+      {/* <ChatModal
         open={isChatModalOpen}
         onClose={handleCloseChatModal}
         recipientId={creator.id}
+      /> */}
+      <ChatDrawer
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={creator?.id}
       />
     </div>
   );

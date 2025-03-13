@@ -1,80 +1,22 @@
-// // hooks/useNotificationSocket.tsx
-// import { useEffect, useState } from 'react';
-// import { Socket } from 'socket.io-client';
-// import socketService from '../services/socketService';
-
-// interface SocketHookReturn {
-//     socket: Socket | null;
-//     isConnected: boolean;
-//     emitEvent: (event: string, data: unknown) => void;
-// }
-
-// function useNotificationSocket<T>(
-//     eventName: string,
-//     callback: (data: T) => void
-// ): SocketHookReturn {
-//     const [socket, setSocket] = useState<Socket | null>(null);
-//     const [isConnected, setIsConnected] = useState<boolean>(false);
-
-//     useEffect(() => {
-//         const socketInstance = socketService.connect();
-//         setSocket(socketInstance);
-//         setIsConnected(socketService.isConnected());
-
-//         socketInstance.on('connect', () => {
-//             setIsConnected(true);
-//         });
-
-//         socketInstance.on('disconnect', () => {
-//             setIsConnected(false);
-//         });
-
-//         if (eventName && callback) {
-//             socketInstance.on(eventName, callback);
-//         }
-
-//         return () => {
-//             if (eventName && callback) {
-//                 socketInstance.off(eventName, callback);
-//             }
-//         };
-//     }, [eventName, callback]);
-
-//     const emitEvent = (event: string, data: unknown): void => {
-//         if (socket && isConnected) {
-//             socket.emit(event, data);
-//         }
-//     };
-
-//     return {
-//         socket,
-//         isConnected,
-//         emitEvent,
-//     };
-// }
-
-// export default useNotificationSocket;
-
-
-
 // hooks/useNotificationSocket.tsx
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import socketService from '../services/socketService';
+import socketService, { NotificationData, NotificationEventType } from '../services/socketService';
+import { toast } from 'react-toastify';
 
-// Define Socket type based on the return type of io
 type Socket = ReturnType<typeof io>;
 
-interface SocketHookReturn {
-    socket: Socket | null;
-    isConnected: boolean;
-    emitEvent: (event: string, data: unknown) => void;
+interface JoinData {
+    userId?: string;
+    groupId: string;
 }
 
-function useNotificationSocket<T>(
-    eventName: string,
-    callback: (data: T) => void
-): SocketHookReturn {
+interface SocketHookReturn {
+    isConnected: boolean;
+    joinGroup: (joinData: JoinData) => void;
+}
+
+function useNotificationSocket(): SocketHookReturn {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
@@ -91,27 +33,45 @@ function useNotificationSocket<T>(
             setIsConnected(false);
         });
 
-        if (eventName && callback) {
-            socketInstance.on(eventName, callback);
-        }
+        socketService.listenForUserNotifications<any>((data) => {
+            console.log('User notification:', data);
+        });
+
+        socketService.listenForCommonNotifications((data: NotificationData) => {
+            console.log('Notification data:', data);
+            const { event_type, message } = data.m.OtherFields;
+            switch (event_type) {
+                case NotificationEventType.CampaignPostCreated:
+                    toast.success(`Campaign Post Created: ${message}`);
+                    break;
+                case NotificationEventType.CampaignPostProposalAccepted:
+                    toast.success(`Proposal Accepted: ${message}`);
+                    break;
+                case NotificationEventType.CampaignPostProposalRejected:
+                    toast.success(`Proposal Rejected: ${message}`);
+                    break;
+                case NotificationEventType.PaymentSucceeded:
+                    toast.success(`Payment Succeeded: ${message}`);
+                    break;
+                default:
+                    toast.success(`Notification: ${message}`);
+                    break;
+            }
+        });
 
         return () => {
-            if (eventName && callback) {
-                socketInstance.off(eventName, callback);
-            }
+            socketService.removeUserNotificationListener();
+            socketService.removeCommonNotificationListener();
         };
-    }, [eventName, callback]);
+    }, []);
 
-    const emitEvent = (event: string, data: unknown): void => {
-        if (socket && isConnected) {
-            socket.emit(event, data);
-        }
+    const joinGroup = (joinData: JoinData): void => {
+        socketService.emitJoinData(joinData);
     };
 
     return {
-        socket,
         isConnected,
-        emitEvent,
+        joinGroup,
     };
 }
 
