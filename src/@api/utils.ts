@@ -1,25 +1,12 @@
 import axios, { AxiosRequestConfig } from "axios";
-
-export const apiController = axios.create({
-  baseURL: "https://api.synnc.us/",
-  timeout: 600000,
-});
-
-apiController.interceptors.request.use((request) => {
-  if (localStorage.getItem("user")) {
-    request.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("user") ?? "")?.token
-    }`;
-  }
-  return request;
-});
+import { apiController } from "./baseUrl";
 
 export const handleApiRequest = async <T>(
   method: string,
   endpoint: string,
   data?: any,
   options?: AxiosRequestConfig
-): Promise<T> => {
+): Promise<T | null> => {
   try {
     const baseURL = process.env.NEXT_PUBLIC_API_URL;
     const headers = {
@@ -50,8 +37,7 @@ export const handleApiRequest = async <T>(
       console.error("Error response status:", error.response.status);
       console.error("Error response headers:", error.response.headers);
     }
-
-    throw error;
+    return null;
   }
 };
 interface UploadOptions {

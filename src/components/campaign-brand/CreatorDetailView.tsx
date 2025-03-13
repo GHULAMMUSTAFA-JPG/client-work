@@ -22,6 +22,7 @@ import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
 import { PostViewer } from "../shared/PostViewer";
 import ChatModal from "../ChatModal";
+import { isImageUrl } from "@/utils";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -148,16 +149,25 @@ export function CreatorDetailView({
   const handleApprovePost = async (postId: string) => {
     const currentPostId = selectedPost?.id;
 
-    await updatePostStatus({
-      campaign_id: campaignId,
-      creator_id: creator.id,
-      post_id: postId,
-      status: Status.Approved + "",
-    });
+    try {
+      const result = await updatePostStatus({
+        campaign_id: campaignId,
+        creator_id: creator.id,
+        post_id: postId,
+        status: Status.Approved + "",
+      });
 
-    onUpdate(currentPostId);
+      if (result) {
+        toast.success("Post approved successfully");
+        onUpdate(currentPostId);
+      } else {
+        toast.error("Failed to approve post. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while approving post.");
+      console.error("Error approving post:", error);
+    }
   };
-  console.log(selectedPost);
 
   const handleApproveContent = async () => {
     if (!selectedPost?.contentItems[0]) return;
@@ -170,10 +180,12 @@ export function CreatorDetailView({
         status: Status.Approved + "",
       });
 
-      if (!result) {
+      if (result) {
+        toast.success("Content approved successfully");
+        onUpdate(selectedPost.id);
+      } else {
         toast.error("Failed to approve content. Please try again.");
       }
-      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while approving content.");
       console.error("Error approving content:", error);
@@ -192,35 +204,23 @@ export function CreatorDetailView({
         feedback,
       });
 
-      if (!result) {
+      if (result) {
+        toast.success("Content rejected successfully");
+        onUpdate(selectedPost.id);
+      } else {
         toast.error("Failed to reject content. Please try again.");
       }
-      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while rejecting content.");
       console.error("Error rejecting content:", error);
     }
   };
 
-  // Function to prepare image for display
   const prepareImageForDisplay = useCallback((imageUrl?: string) => {
     if (!imageUrl) return undefined;
-
-    // Return the processed image URL
     return imageUrl;
   }, []);
 
-  // Function to check if a URL is an image
-  const isImageUrl = (url: string) => {
-    return (
-      /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url) ||
-      url.includes("/image") ||
-      url.includes("/images") ||
-      url.startsWith("data:image/")
-    );
-  };
-
-  // Process media content into images and links
   const processMedia = (mediaItems?: string[]) => {
     if (!mediaItems || mediaItems.length === 0)
       return { images: [], links: [] };
