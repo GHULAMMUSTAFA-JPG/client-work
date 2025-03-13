@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@feedback-fish/react": "^1.2.2",
     "@iconify/react": "^4.1.1",
-    "@mui/material": "^5.15.4",
+    "@mui/material": "^5.16.14",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@reduxjs/toolkit": "^2.2.5",
     "@tinymce/tinymce-react": "^5.1.1",

@@ -21,6 +21,8 @@ import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
 import { PostViewer } from "../shared/PostViewer";
+import ChatModal from "../ChatModal";
+import { isImageUrl } from "@/utils";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -44,6 +46,7 @@ export function CreatorDetailView({
   handelSelectedCreator,
 }: CreatorDetailViewProps) {
   const initialPost = posts.length > 0 ? posts[0] : null;
+  console.log("posts", posts);
   const initialContent =
     initialPost &&
     initialPost.contentItems &&
@@ -55,9 +58,31 @@ export function CreatorDetailView({
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
     initialContent
   );
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const handleOpenChatModal = () => {
+    const offcanvasElement = document.getElementById("creatorProfileDrawer");
+    // if (offcanvasElement) {
+    //   const offcanvas = Offcanvas.getInstance(offcanvasElement);
+    //   if (offcanvas) {
+    //     offcanvas.hide();
+    //   }
+    // }
+    setIsChatModalOpen(true);
+  };
 
+  const handleCloseChatModal = (setSelectedIds: any) => {
+    setSelectedIds({
+      Message_ID: null,
+      Recipient_ID: null,
+      Sender_ID: null,
+      Conversation_Id: null,
+      Profile_Image: null,
+      Name: null,
+      index: null,
+    });
+    setIsChatModalOpen(false);
+  };
   useEffect(() => {
     const currentPostStillExists =
       selectedPost && posts.some((post) => post.id === selectedPost.id);
@@ -124,14 +149,24 @@ export function CreatorDetailView({
   const handleApprovePost = async (postId: string) => {
     const currentPostId = selectedPost?.id;
 
-    await updatePostStatus({
-      campaign_id: campaignId,
-      creator_id: creator.id,
-      post_id: postId,
-      status: Status.Approved + "",
-    });
+    try {
+      const result = await updatePostStatus({
+        campaign_id: campaignId,
+        creator_id: creator.id,
+        post_id: postId,
+        status: Status.Approved + "",
+      });
 
-    onUpdate(currentPostId);
+      if (result) {
+        toast.success("Post approved successfully");
+        onUpdate(currentPostId);
+      } else {
+        toast.error("Failed to approve post. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while approving post.");
+      console.error("Error approving post:", error);
+    }
   };
 
   const handleApproveContent = async () => {
@@ -145,10 +180,12 @@ export function CreatorDetailView({
         status: Status.Approved + "",
       });
 
-      if (!result) {
+      if (result) {
+        toast.success("Content approved successfully");
+        onUpdate(selectedPost.id);
+      } else {
         toast.error("Failed to approve content. Please try again.");
       }
-      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while approving content.");
       console.error("Error approving content:", error);
@@ -167,23 +204,40 @@ export function CreatorDetailView({
         feedback,
       });
 
-      if (!result) {
+      if (result) {
+        toast.success("Content rejected successfully");
+        onUpdate(selectedPost.id);
+      } else {
         toast.error("Failed to reject content. Please try again.");
       }
-      onUpdate(selectedPost.id);
     } catch (error) {
       toast.error("An error occurred while rejecting content.");
       console.error("Error rejecting content:", error);
     }
   };
 
-  // Function to prepare image for display
   const prepareImageForDisplay = useCallback((imageUrl?: string) => {
     if (!imageUrl) return undefined;
-
-    // Return the processed image URL
     return imageUrl;
   }, []);
+
+  const processMedia = (mediaItems?: string[]) => {
+    if (!mediaItems || mediaItems.length === 0)
+      return { images: [], links: [] };
+
+    const images: string[] = [];
+    const links: string[] = [];
+
+    mediaItems.forEach((item) => {
+      if (item && isImageUrl(item)) {
+        images.push(item);
+      } else if (item) {
+        links.push(item);
+      }
+    });
+
+    return { images, links };
+  };
 
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
@@ -363,7 +417,7 @@ export function CreatorDetailView({
                     <div className="tw-flex tw-items-center tw-gap-3">
                       <button
                         className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded-lg hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
-                        onClick={() => router.push(`/inbox?id=${creator.id}`)}
+                        onClick={handleOpenChatModal}
                       >
                         <MessageSquare className="tw-w-4 tw-h-4" />
                         Message
@@ -425,34 +479,58 @@ export function CreatorDetailView({
                     )}
 
                   {selectedContent && (
-                    <div className="tw-flex tw-justify-center">
-                      <PostViewer
-                        post={{
-                          id: selectedContent.id,
-                          type: selectedContent.type,
-                          status:
-                            selectedContent.status === "in_review"
-                              ? "in-review"
-                              : selectedContent.status,
-                          submittedOn: selectedContent.date,
-                          author: {
-                            name: selectedCreator?.name || "",
-                            role: selectedCreator?.jobTitle || "Creator",
-                            avatar: selectedCreator?.profilePicture || "",
-                          },
-                          content: selectedContent.content || "",
-                          image: prepareImageForDisplay(
-                            selectedContent.images?.[0]
-                          ),
-                          timestamp: selectedContent.date || "",
-                          engagement: {
-                            likes: 1230,
-                            comments: 50,
-                            shares: 10,
-                          },
-                        }}
-                        preview={true}
-                      />
+                    <div className="tw-flex tw-justify-center tw-w-full tw-overflow-x-hidden">
+                      {(() => {
+                        // Process media once outside the JSX
+                        const mediaContent = processMedia(
+                          selectedContent.images
+                        );
+                        const firstImage =
+                          mediaContent.images.length > 0
+                            ? prepareImageForDisplay(mediaContent.images[0])
+                            : undefined;
+
+                        const additionalImages =
+                          mediaContent.images.length > 1
+                            ? mediaContent.images
+                                .slice(1)
+                                .map((img) => prepareImageForDisplay(img) || "")
+                            : [];
+
+                        const allLinks = mediaContent.links.concat(
+                          selectedContent.links || []
+                        );
+
+                        return (
+                          <PostViewer
+                            post={{
+                              id: selectedContent.id,
+                              type: selectedContent.type,
+                              status:
+                                selectedContent.status === "in_review"
+                                  ? "in-review"
+                                  : selectedContent.status,
+                              submittedOn: selectedContent.date,
+                              author: {
+                                name: selectedCreator?.name || "",
+                                role: selectedCreator?.jobTitle || "Creator",
+                                avatar: selectedCreator?.profilePicture || "",
+                              },
+                              content: selectedContent.content || "",
+                              image: firstImage,
+                              images: additionalImages,
+                              links: allLinks,
+                              timestamp: selectedContent.date || "",
+                              engagement: {
+                                likes: 1230,
+                                comments: 50,
+                                shares: 10,
+                              },
+                            }}
+                            preview={true}
+                          />
+                        );
+                      })()}
                     </div>
                   )}
                 </div>
@@ -463,6 +541,11 @@ export function CreatorDetailView({
       </div>
 
       <CreatorProfileDrawer creatorId={selectedCreator?.id || ""} />
+      <ChatModal
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={creator.id}
+      />
     </div>
   );
 }

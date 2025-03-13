@@ -16,7 +16,7 @@ export const updatePostProposalStatus = async (payload: {
   campaign_id: string;
   creator_id: string;
   post_id: string;
-  status: string;
+  status: number;
 }) =>
   handleApiRequest("put", "/brands/campaigns/post-proposal-status", payload);
 
@@ -68,6 +68,7 @@ export const addCampaignLiveLink = async (payload: {
   creator_id: string;
   post_id: string;
   live_link: string;
+  embed_link?: string;
 }) =>
   handleApiRequest("put", "/creators/campaigns/campaign-live-link", payload);
 
@@ -260,5 +261,17 @@ export const getCreatorCampaignsOverview = async (email: string) => {
   return handleApiRequest(
     "get",
     `/dashboard/campaigns/get_creator_campaigns_overview/${email}`
+  );
+};
+
+export const deleteCreatorCampaignPost = async (params: {
+  campaign_id: string;
+  post_id: string;
+  creator_id: string;
+}) => {
+  const { campaign_id, post_id, creator_id } = params;
+  return handleApiRequest(
+    "delete",
+    `/creators/campaigns/${campaign_id}/campaign-post/${post_id}?creator_id=${creator_id}`
   );
 };

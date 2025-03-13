@@ -11,6 +11,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import Tooltip from "@mui/material/Tooltip";
 import { useEffect, useState } from "react";
+import ChatModal from "./ChatModal";
+import { Offcanvas } from "bootstrap";
 
 interface CreatorProfileDrawerProps {
   creatorId: string;
@@ -21,10 +23,33 @@ export default function CreatorProfileDrawer({
 }: CreatorProfileDrawerProps) {
   const { user, setIsLoading, isLoading } = useAuth();
   const [userProfile, setUserDetails] = useState<any>(null);
-  const router = useRouter();
   const [activeCampaigns, setActiveCampaigns] = useState<any>(null);
   const [buyerList, setBuyerList] = useState<any>([]);
+  const router = useRouter();
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const handleOpenChatModal = () => {
+    const offcanvasElement = document.getElementById("creatorProfileDrawer");
+    // if (offcanvasElement) {
+    //   const offcanvas = Offcanvas.getInstance(offcanvasElement);
+    //   if (offcanvas) {
+    //     offcanvas.hide();
+    //   }
+    // }
+    setIsChatModalOpen(true);
+  };
 
+  const handleCloseChatModal = (setSelectedIds: any) => {
+    setSelectedIds({
+      Message_ID: null,
+      Recipient_ID: null,
+      Sender_ID: null,
+      Conversation_Id: null,
+      Profile_Image: null,
+      Name: null,
+      index: null,
+    });
+    setIsChatModalOpen(false);
+  };
   useEffect(() => {
     const fetchData = async () => {
       if (creatorId) {
@@ -168,10 +193,11 @@ export default function CreatorProfileDrawer({
                     </div>
                     <div className="action-btn-profile d-flex align-items-center justify-content-end">
                       <button
+                        type="button"
                         className="btn btn-dark me-2"
-                        onClick={() => {
-                          router.push(`/inbox?id=${userProfile?._id}`);
-                        }}
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                        onClick={handleOpenChatModal}
                       >
                         <Icon icon="mdi:chat" className="me-1" />
                         Chat
@@ -446,6 +472,11 @@ export default function CreatorProfileDrawer({
           </div>
         )}
       </div>
+      <ChatModal
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={userProfile?._id}
+      />
     </div>
   );
 }

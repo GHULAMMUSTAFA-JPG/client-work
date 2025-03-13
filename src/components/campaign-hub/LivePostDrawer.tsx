@@ -21,6 +21,7 @@ export function LivePostDrawer({
   postId,
 }: LivePostDrawerProps) {
   const [postUrl, setPostUrl] = useState("");
+  const [embedLink, setEmbedLink] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -49,6 +50,7 @@ export function LivePostDrawer({
         creator_id: creatorId,
         post_id: postId,
         live_link: postUrl,
+        embed_link: embedLink,
       });
 
       if (response) {
@@ -128,6 +130,32 @@ export function LivePostDrawer({
                       {error}
                     </p>
                   )}
+                </div>
+                <div>
+                  <label
+                    htmlFor="embed-link"
+                    className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1"
+                  >
+                    LinkedIn Post Embed Link
+                  </label>
+                  <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
+                    <div className="tw-absolute tw-inset-y-0 tw-left-0 tw-pl-3 tw-flex tw-items-center tw-pointer-events-none">
+                      <LinkIcon className="tw-h-5 tw-w-5 tw-text-gray-400" />
+                    </div>
+                    <input
+                      type="url"
+                      id="embed-link"
+                      value={embedLink}
+                      onChange={(e) => setEmbedLink(e.target.value)}
+                      className={`tw-block tw-w-full tw-pl-10 tw-pr-12 tw-py-2 tw-border ${
+                        error ? "tw-border-red-300" : "tw-border-gray-300"
+                      } tw-rounded-md tw-focus:outline-none tw-focus:ring-[#0A66C2] tw-focus:border-[#0A66C2]`}
+                      placeholder="https://www.linkedin.com/embed/feed/update/..."
+                    />
+                    <div className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center">
+                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-gray-400" />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="tw-bg-[#0A66C2]/5 tw-rounded-lg tw-p-4 tw-border tw-border-[#0A66C2]/10">
