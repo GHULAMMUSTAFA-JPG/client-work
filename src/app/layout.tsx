@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Main from "@/components/Main";
 import "@/styles/globals.css";
+import SocketProvider from "@/components/SocketProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -75,12 +76,17 @@ function RootLayout({ children }: RootLayoutProps) {
       </head>
 
       <body>
-        <AuthProvider>
+        {/* <AuthProvider>
           {" "}
-          {/* Wrap with AuthProvider */}
           <Main>{children}</Main>
+        </AuthProvider> */}
+        <AuthProvider>
+          <SocketProvider> {/* Add SocketProvider here */}
+            <Main>{children}</Main>
+            <ToastContainer position="top-right" autoClose={5000} />
+          </SocketProvider>
         </AuthProvider>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
 
         {/* Navigation Tip Alert */}
         {/* {showTip && (
