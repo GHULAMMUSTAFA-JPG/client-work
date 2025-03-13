@@ -68,6 +68,7 @@ export const addCampaignLiveLink = async (payload: {
   creator_id: string;
   post_id: string;
   live_link: string;
+  embed_link?: string;
 }) =>
   handleApiRequest("put", "/creators/campaigns/campaign-live-link", payload);
 

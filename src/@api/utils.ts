@@ -45,7 +45,6 @@ export const handleApiRequest = async <T>(
   } catch (error: any) {
     console.error(`API Error (${method} ${endpoint}):`, error);
 
-    // Log more details about the error response
     if (error.response) {
       console.error("Error response data:", error.response.data);
       console.error("Error response status:", error.response.status);
@@ -109,7 +108,6 @@ export const uploadFiles = async (
       const formData = new FormData();
       formData.append("file_request", file);
 
-      // Add any additional options as form data
       Object.entries(options).forEach(([key, value]) => {
         if (value) {
           const snakeCaseKey = key.replace(
