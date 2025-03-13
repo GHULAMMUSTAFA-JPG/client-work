@@ -110,6 +110,7 @@ function CampaignDetailsContent() {
     if (activeCreator) {
       const creator = createCreatorFromData(activeCreator);
       setSelectedCreator(creator);
+      console.log("---------------------activeCreator", activeCreator, creator);
 
       if (!postParam && creator.posts && creator.posts.length > 0) {
         const firstPost = creator.posts[0];

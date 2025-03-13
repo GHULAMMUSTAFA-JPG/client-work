@@ -52,7 +52,6 @@ export function ContentVersions({
   const [error, setError] = useState<string | null>(null);
   const [hasContentChanges, setHasContentChanges] = useState(false);
   const [isContentLoading, setIsContentLoading] = useState(false);
-
   const handleSaveDraftRef = useRef<() => void>(() => {});
   const handleSubmitRef = useRef<() => void>(() => {});
   const handlePreviewRef = useRef<() => void>(() => {});
@@ -60,7 +59,6 @@ export function ContentVersions({
 
   const firstVersion = versions && versions.length > 0 ? versions[0] : null;
   const isDraft = firstVersion?.isDraft || false;
-  console.log("versions", versions);
   const processMedia = (mediaItems?: string[]) => {
     if (!mediaItems || mediaItems.length === 0)
       return { images: [], links: [] };

@@ -16,7 +16,7 @@ export const updatePostProposalStatus = async (payload: {
   campaign_id: string;
   creator_id: string;
   post_id: string;
-  status: string;
+  status: number;
 }) =>
   handleApiRequest("put", "/brands/campaigns/post-proposal-status", payload);
 
