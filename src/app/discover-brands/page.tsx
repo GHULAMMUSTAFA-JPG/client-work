@@ -328,7 +328,7 @@ export default function DiscoverBrandsPage() {
           <div
             key={brand._id}
             ref={index === brands.length - 1 ? lastBrandElementRef : undefined}
-            className="card card-hover mb-3"
+            className="card hover:tw-bg-gray-50 hover:tw-shadow-sm mb-3"
           >
             <div className="card-body p-4">
               <div className="row">
@@ -338,7 +338,7 @@ export default function DiscoverBrandsPage() {
                       <img
                         src={brand.Company_Logo}
                         alt={brand.Company_Name}
-                        className="w-100 h-100 object-fit-cover"
+                        className=""
                       />
                     ) : (
                       <div className="d-flex align-items-center justify-content-center bg-light rounded-circle w-100 h-100">
@@ -353,7 +353,7 @@ export default function DiscoverBrandsPage() {
                 </div>
                 <div className="col">
                   <div className="d-flex align-items-center gap-2 mb-2">
-                    <h5 className="card-title mb-0">{brand.Company_Name}</h5>
+                    <h5 className="fs-20 mb-0">{brand.Company_Name}</h5>
                     <div className="d-flex gap-1">
                       {brand.Company_Website && (
                         <Link
@@ -410,7 +410,7 @@ export default function DiscoverBrandsPage() {
                         setCompanyName(brand.Company_Name);
                         setBrandId(brand._id);
                       }}
-                      className="btn btn-dark ms-2 w-s"
+                      className="tw-px-4 tw-py-2 tw-bg-emerald-600 tw-text-white tw-rounded-lg hover:tw-bg-emerald-700 tw-text-sm tw-font-medium"
                       data-bs-toggle="offcanvas"
                       data-bs-target="#campaignsOffcanvas"
                     >
@@ -422,7 +422,7 @@ export default function DiscoverBrandsPage() {
                         onClick={() =>
                           handleInterested("remove", brand._id, index)
                         }
-                        className="btn btn-outline-primary"
+                        className="tw-px-4 tw-py-2 tw-border tw-border-emerald-600 tw-text-emerald-600 tw-rounded-lg hover:tw-bg-emerald-600 hover:tw-text-white tw-transition"
                       >
                         <Undo2 size={16} />
                         <span>Interested</span>
@@ -432,7 +432,7 @@ export default function DiscoverBrandsPage() {
                         onClick={() =>
                           handleInterested("add", brand._id, index)
                         }
-                        className="btn btn-outline-primary"
+                        className="tw-px-4 tw-py-2 tw-border tw-border-emerald-600 tw-text-emerald-600 tw-rounded-lg hover:tw-bg-emerald-600 hover:tw-text-white tw-transition"
                       >
                         I'm Interested
                       </button>

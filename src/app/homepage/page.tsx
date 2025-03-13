@@ -538,16 +538,17 @@ function Homepage() {
                               >
                                 <div className="card-body py-2 ps-2 pe-3">
                                   <div className="d-flex gap-3 align-items-center">
+                                    <div className="img-container-topHeader">
                                     <img
                                       src={
                                         element?.Company_Logo ||
                                         defaultImagePath
                                       }
-                                      className="border object-fit-cover rounded flex-shrink-0"
+                                      className=""
                                       alt="logo"
-                                      width={32}
-                                      height={32}
+                                     
                                     />
+                                    </div>
                                     <p className="mb-0 fw-medium">
                                       {element?.Headline}
                                     </p>
