@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MessageSquare,
   CheckCircle,
@@ -8,6 +8,7 @@ import {
 import { GB, US, CA } from "country-flag-icons/react/3x2";
 import Tooltip from "../Tooltip";
 import { Creator, CreatorStatus } from "@/types";
+import CreatorProfileDrawer from "../CreatorProfileDrawer";
 
 const CountryFlag = ({ country }: { country: string }) => {
   const flags: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -31,6 +32,8 @@ export default function CreatorList({
   onStatusChange,
   onMessageCreator,
 }: CreatorListProps) {
+  const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
+
   const getStatusBadgeClass = (status: Creator["status"]) => {
     const baseClasses =
       "tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium";
@@ -88,7 +91,12 @@ export default function CreatorList({
             key={creator.id}
             className="tw-grid tw-grid-cols-12 tw-gap-4 tw-p-4 tw-items-center hover:tw-bg-gray-50 tw-transition-colors tw-duration-150"
           >
-            <div className="tw-col-span-3">
+            <div
+              className="tw-col-span-3 tw-cursor-pointer"
+              onClick={() => setSelectedCreator(creator)}
+              data-bs-toggle="offcanvas"
+              data-bs-target="#creatorProfileDrawer"
+            >
               <div className="tw-flex tw-items-center tw-space-x-3">
                 {creator.profilePicture ? (
                   <img
@@ -197,6 +205,8 @@ export default function CreatorList({
           </div>
         ))}
       </div>
+
+      <CreatorProfileDrawer creatorId={selectedCreator?.id || ""} />
     </div>
   );
 }
