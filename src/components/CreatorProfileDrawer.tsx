@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Tooltip from "@mui/material/Tooltip";
 import { useEffect, useState } from "react";
 import ChatModal from "./ChatModal";
+import { ChatDrawer } from "./ChatDrawer";
 import { Offcanvas } from "bootstrap";
 
 interface CreatorProfileDrawerProps {
@@ -28,13 +29,6 @@ export default function CreatorProfileDrawer({
   const router = useRouter();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const handleOpenChatModal = () => {
-    const offcanvasElement = document.getElementById("creatorProfileDrawer");
-    // if (offcanvasElement) {
-    //   const offcanvas = Offcanvas.getInstance(offcanvasElement);
-    //   if (offcanvas) {
-    //     offcanvas.hide();
-    //   }
-    // }
     setIsChatModalOpen(true);
   };
 
@@ -195,8 +189,8 @@ export default function CreatorProfileDrawer({
                       <button
                         type="button"
                         className="btn btn-dark me-2"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
+                        // data-bs-dismiss="offcanvas"
+                        // aria-label="Close"
                         onClick={handleOpenChatModal}
                       >
                         <Icon icon="mdi:chat" className="me-1" />
@@ -472,7 +466,12 @@ export default function CreatorProfileDrawer({
           </div>
         )}
       </div>
-      <ChatModal
+      {/* <ChatModal
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={userProfile?._id}
+      /> */}
+      <ChatDrawer
         open={isChatModalOpen}
         onClose={handleCloseChatModal}
         recipientId={userProfile?._id}
