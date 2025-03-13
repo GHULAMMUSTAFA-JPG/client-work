@@ -39,6 +39,11 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
 
   return posts.map((post) => ({
     numberstatus: post.Status,
+    dueDate: formatDate(post.Due_Date) || "",
+    description: post.Post_Description || "",
+    budget: post.Budget,
+    submittedAt: formatDate(post.Created_At) || "",
+    category: post.Category,
     id: post._id,
     title: post.Post_Title || "Untitled",
     date: formatDate(post.Submission_Date, true) || "",

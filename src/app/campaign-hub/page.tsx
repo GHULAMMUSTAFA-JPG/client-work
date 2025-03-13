@@ -143,8 +143,10 @@ function CampaignHubContent() {
       id: post._id,
       category: post.Category || "unknown-category",
       title: post.Post_Title,
+      description: post.Post_Description,
       status: post.Status ? post.Status : "unknown",
       budget: post.Budget || 0,
+      dueDate: formatDate(post.Due_Date),
       mediaContent:
         post.Content_Versions?.flatMap(
           (content: any) => content.Media_Content

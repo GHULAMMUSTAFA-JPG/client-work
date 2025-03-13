@@ -22,6 +22,7 @@ import CreatorsDropDown from "./CreatorsDropDown";
 import CreatorProfileDrawer from "../CreatorProfileDrawer";
 import { PostViewer } from "../shared/PostViewer";
 import ChatModal from "../ChatModal";
+import { CampaignDrawer } from "../campaign-hub/CampaignDrawer";
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -56,6 +57,8 @@ export function CreatorDetailView({
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
     initialContent
   );
+  console.log("posts", posts);
+  const [viewingPost, setViewingPost] = useState<Post | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
@@ -69,6 +72,7 @@ export function CreatorDetailView({
     // }
     setIsChatModalOpen(true);
   };
+  console.log("viewingPost", viewingPost);
 
   const handleCloseChatModal = (setSelectedIds: any) => {
     setSelectedIds({
@@ -279,9 +283,27 @@ export function CreatorDetailView({
                         {post.status.replace("_", " ")}
                       </span>
                     </div>
-                    <h4 className="tw-font-medium tw-text-sm tw-mb-1">
-                      {post.title}
-                    </h4>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        height: "50px",
+                      }}
+                    >
+                      <h4 className="tw-font-medium tw-text-sm tw-mb-1">
+                        {post.title}
+                      </h4>
+                      <div className="status-box">
+                        <button
+                          onClick={() => setViewingPost(post)}
+                          className="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-1 tw-text-xs tw-text-gray-600 hover:tw-text-gray-900"
+                        >
+                          <Eye className="tw-w-3 tw-h-3 tw-mr-1" />
+                          View Details
+                        </button>
+                      </div>
+                    </div>
                     <p className="tw-text-xs tw-text-gray-500">{post.date}</p>
                     {post.status !== "in_review" && (
                       <div className="tw-mt-2 tw-space-y-1">
@@ -297,6 +319,18 @@ export function CreatorDetailView({
                     )}
                   </button>
                 ))}
+                <CampaignDrawer
+                  isOpen={!!viewingPost}
+                  onClose={() => setViewingPost(null)}
+                  title="Post Details"
+                  description={viewingPost?.description || ""}
+                  dueDate={viewingPost?.dueDate || ""}
+                  type="details"
+                  isPost={true}
+                  initialData={{
+                    ...viewingPost,
+                  }}
+                />
               </div>
             </div>
           </div>

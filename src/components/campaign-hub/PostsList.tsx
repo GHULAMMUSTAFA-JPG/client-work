@@ -37,6 +37,7 @@ export function PostsList({
   onCreatePost,
   campaignStatus,
 }: PostsListProps) {
+  console.log("posts", posts);
   const [viewingPost, setViewingPost] = useState<Post | null>(null);
   console.log("viewingPost", viewingPost);
   return (
@@ -134,7 +135,7 @@ export function PostsList({
         onClose={() => setViewingPost(null)}
         title="Post Details"
         description={viewingPost?.description || ""}
-        dueDate={viewingPost?.Created_At || ""}
+        dueDate={viewingPost?.dueDate || ""}
         type="details"
         isPost={true}
         initialData={{

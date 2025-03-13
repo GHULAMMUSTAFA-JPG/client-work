@@ -10,6 +10,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { getIcon, getStatusLabel, getStatusStyles } from "../shared/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface DrawerProps {
   isOpen: boolean;
@@ -36,16 +37,19 @@ export function CampaignDrawer({
   onEdit,
   onDelete,
 }: DrawerProps) {
+  console.log("initialData", initialData);
   if (!isOpen) return null;
-
+  const { user } = useAuth();
   const renderStatusAndBudget = () => (
     <div className="tw-flex tw-items-center tw-justify-between">
       <span
         className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium tw-border ${getStatusStyles(
-          initialData?.status
+          user.isBuyer ? initialData?.numberstatus : initialData?.status
         )}`}
       >
-        {getStatusLabel(initialData?.status)}
+        {getStatusLabel(
+          user.isBuyer ? initialData?.numberstatus : initialData?.status
+        )}
       </span>
       <div className="tw-flex tw-items-center tw-text-green-600">
         <span className="tw-text-lg tw-font-semibold">
@@ -162,10 +166,12 @@ export function CampaignDrawer({
         <div className="tw-p-4 tw-bg-gray-50 tw-rounded-lg">
           <span
             className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium tw-border ${getStatusStyles(
-              initialData.status
+              user.isBuyer ? initialData?.numberstatus : initialData?.status
             )}`}
           >
-            {getStatusLabel(initialData.status)}
+            {getStatusLabel(
+              user.isBuyer ? initialData?.numberstatus : initialData?.status
+            )}
           </span>
         </div>
       </div>
@@ -237,7 +243,7 @@ export function CampaignDrawer({
                     {initialData?.title}
                   </h3>
                   {renderStatusAndBudget()}
-                  <p>{description}</p>
+                  {/* <p>{description}</p> */}
                 </div>
 
                 {renderImportantDates()}
