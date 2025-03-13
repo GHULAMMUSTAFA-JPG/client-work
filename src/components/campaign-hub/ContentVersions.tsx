@@ -37,6 +37,7 @@ interface ContentVersionsProps {
   postId: string;
   canSubmit: boolean;
   onSubmit: () => void;
+  postStatus: Status;
 }
 
 export function ContentVersions({
@@ -46,6 +47,7 @@ export function ContentVersions({
   postId,
   canSubmit,
   onSubmit,
+  postStatus,
 }: ContentVersionsProps) {
   const [editingVersion, setEditingVersion] = useState<Version | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -77,7 +79,6 @@ export function ContentVersions({
     return { images, links };
   };
 
-  // Separate media into images and links
   const mediaContent = processMedia(firstVersion?.media);
 
   const viewerPost = firstVersion
@@ -139,7 +140,6 @@ export function ContentVersions({
     setHasContentChanges(hasChanges);
   };
 
-  // Store handlers from child components
   const storePreviewHandler = (handler: () => void) => {
     handlePreviewRef.current = handler;
   };
@@ -169,7 +169,7 @@ export function ContentVersions({
           </div>
         )}
 
-        {viewerPost && !isEditing ? (
+        {viewerPost && !isEditing && !isDraft ? (
           <div>
             <div className="tw-flex tw-justify-between tw-items-center tw-mb-4">
               <h2 className="tw-text-xl tw-font-medium tw-text-gray-800">
@@ -188,12 +188,9 @@ export function ContentVersions({
                     className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-transparent tw-rounded-md tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark"
                     onClick={() => {
                       if (!isContentLoading && firstVersion) {
-                        // Create a direct submit function that bypasses edit mode
                         const submitDirectly = async () => {
                           setIsContentLoading(true);
                           try {
-                            // Use the same API endpoint that's used in CreatePostContent
-                            // but set is_draft to false to submit instead of save as draft
                             await updateCampaignPostContent({
                               campaign_id: campaignId,
                               creator_id: creatorId,
@@ -209,7 +206,7 @@ export function ContentVersions({
                               google_drive_link: "",
                               is_draft: false,
                             });
-                            // After successful submission, call onSubmit to refresh the data
+
                             onSubmit();
                           } catch (error) {
                             setError(
@@ -234,7 +231,7 @@ export function ContentVersions({
               <PostViewer post={viewerPost} preview={true} />
             </div>
           </div>
-        ) : isEditing && firstVersion ? (
+        ) : (isDraft && firstVersion) || (isEditing && firstVersion) ? (
           <div className="tw-bg-white tw-rounded-lg tw-shadow-lg tw-border tw-border-gray-100">
             <div className="tw-border-b tw-border-gray-200 tw-bg-gray-50 tw-rounded-t-lg">
               <div className="tw-px-6 tw-py-4 tw-flex tw-justify-between tw-items-center">
@@ -275,17 +272,17 @@ export function ContentVersions({
                     {isContentLoading ? "Saving..." : "Save Draft"}
                   </button>
                   <button
-                    className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-transparent tw-rounded-md tw-text-sm tw-font-medium tw-text-white ${
-                      isContentLoading
-                        ? "tw-bg-primary-light tw-cursor-not-allowed"
-                        : "tw-bg-primary hover:tw-bg-primary-dark"
+                    className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-transparent tw-rounded-md tw-text-sm tw-font-medium ${
+                      postStatus === Status.Approved
+                        ? "tw-bg-primary hover:tw-bg-primary-dark tw-text-white"
+                        : "tw-text-gray-400 tw-bg-gray-100 tw-cursor-not-allowed"
                     }`}
                     onClick={() => {
-                      if (!isContentLoading) {
+                      if (!isContentLoading && postStatus === Status.Approved) {
                         handleSubmitRef.current();
                       }
                     }}
-                    disabled={isContentLoading}
+                    disabled={postStatus !== Status.Approved}
                   >
                     {isContentLoading ? (
                       <Loader className="tw-w-4 tw-h-4 tw-mr-1.5 tw-animate-spin" />

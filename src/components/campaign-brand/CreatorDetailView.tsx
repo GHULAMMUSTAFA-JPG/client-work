@@ -57,7 +57,6 @@ export function CreatorDetailView({
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
     initialContent
   );
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const handleOpenChatModal = () => {

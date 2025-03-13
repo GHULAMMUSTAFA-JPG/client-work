@@ -246,6 +246,7 @@ function CampaignHubContent() {
               postId={selectedPostId}
               onSubmit={getCampaignPostsList}
               canSubmit={true}
+              postStatus={selectedPost?.Status}
             />
           ) : (
             <EmptyState
