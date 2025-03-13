@@ -110,9 +110,7 @@ function ApplyModal({ selectedCampaign, disable }: any) {
                   </div>
                 </div>
                 <div className="d-flex justify-content-between align-items-center  gap-4 flex-wrap">
-                  <h5 className="m-0 text-bold">
-                    $ {selectedCampaign?.Budget.toLocaleString()}
-                  </h5>
+             
                   {selectedCampaign?.Start_Date &&
                   selectedCampaign?.End_Date ? (
                     <span className="text-muted">
