@@ -574,7 +574,7 @@ Choose a campaign to invite this creator and collaborate seamlessly
               {activeCampaigns?.campaigns?.map(
                 (campaign: any, index: number) => (
                
-                  <Tooltip   key={index} content="Click the box to invite the campaign">
+                  <Tooltip   key={index} content="Invite to campaign">
                          <div
                           className="tw-bg-white tw-border-gray-100 tw-border tw-rounded-mg py-4 px-3 tw-shadow-sm hover:tw-shadow-lg tw-round-md tw-cursor-pointer tw-transition-all"
                     onClick={async () => {

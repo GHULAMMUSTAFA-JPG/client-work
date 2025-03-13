@@ -467,7 +467,7 @@ const PostCalendar = () => {
           </div>
         ))
       ) : (
-        <p className='text-align-center py-3'>No posts available for the selected period.</p>
+        <p className="tw-flex tw-items-center tw-justify-center tw-bg-teal-50 tw-text-black tw-font-medium tw-py-2 tw-px-4 tw-rounded-md">No posts available for the selected period.</p>
       )}
 
       {upcomingPosts && upcomingPosts.Posts.length > ITEMS_PER_PAGE && visibleItems < upcomingPosts.Posts.length && (
