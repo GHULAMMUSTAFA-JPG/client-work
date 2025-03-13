@@ -94,7 +94,7 @@ function Campaigns() {
                             (campaign: any, index: number) => {
                               return (
                                 <div key={index} className="col-md-4">
-                                  <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm cursor-pointer" onClick={() => handleRowClick(campaign._id)}>
+                                  <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm cursor-pointer hover:tw-bg-gray-50 hover:tw-shadow-sm py-4" onClick={() => handleRowClick(campaign._id)}>
       <div className="tw-flex tw-items-start tw-justify-between">
             <div className="tw-flex tw-items-start tw-space-x-4">
               <div className="img-container-topHeader">
@@ -179,7 +179,7 @@ function Campaigns() {
                             (campaign: any, index: number) => {
                               return (
                                 <div key={index} className="col-md-4">
-                                   <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm">
+                                   <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm hover:tw-bg-gray-50 hover:tw-shadow-sm">
       <div className="tw-flex tw-items-start tw-justify-between">
             <div className="tw-flex tw-items-start tw-space-x-4">
               <div className="img-container-topHeader">
@@ -188,15 +188,14 @@ function Campaigns() {
           src={campaign.Company_Logo}
           className=""
           alt="logo"
-          width={40}
-          height={40}
+        
         />
       ) : (
         <div
           className="d-flex align-items-center justify-content-center bg-light rounded-circle flex-shrink-0"
           style={{
-            width: "40px",
-            height: "40px",
+            width: "50px",
+            height: "50px",
           }}
         >
           <span className="fw-bold text-uppercase">
@@ -234,7 +233,7 @@ function Campaigns() {
             </div>
           </div>
           <div className="tw-flex tw-justify-end tw-items-center tw-p-4">
-  <button  className="tw-border tw-border-teal-500 tw-text-teal-500 tw-bg-white tw-px-4 tw-py-2 tw-rounded-md hover:tw-bg-teal-500 hover:tw-text-white tw-transition-colors">
+  <button   className="tw-border tw-border-teal-500 tw-text-teal-500 tw-bg-white tw-px-4 tw-py-2 tw-rounded-md hover:tw-bg-teal-500 hover:tw-text-white tw-transition-colors">
     View Details
   </button>
 </div>
