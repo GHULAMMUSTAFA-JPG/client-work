@@ -11,6 +11,7 @@ import {
   Loader,
 } from "lucide-react";
 import { getIcon, getStatusLabel, getStatusStyles } from "../shared/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface DrawerProps {
   isOpen: boolean;
@@ -39,16 +40,19 @@ export function CampaignDrawer({
   onDelete,
   isLoading = false,
 }: DrawerProps) {
+  console.log("initialData", initialData);
   if (!isOpen) return null;
-
+  const { user } = useAuth();
   const renderStatusAndBudget = () => (
     <div className="tw-flex tw-items-center tw-justify-between">
       <span
         className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium tw-border ${getStatusStyles(
-          initialData?.status
+          user.isBuyer ? initialData?.numberstatus : initialData?.status
         )}`}
       >
-        {getStatusLabel(initialData?.status)}
+        {getStatusLabel(
+          user.isBuyer ? initialData?.numberstatus : initialData?.status
+        )}
       </span>
       <div className="tw-flex tw-items-center tw-text-green-600">
         <span className="tw-text-lg tw-font-semibold">
@@ -165,10 +169,12 @@ export function CampaignDrawer({
         <div className="tw-p-4 tw-bg-gray-50 tw-rounded-lg">
           <span
             className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-rounded-full tw-text-sm tw-font-medium tw-border ${getStatusStyles(
-              initialData.status
+              user.isBuyer ? initialData?.numberstatus : initialData?.status
             )}`}
           >
-            {getStatusLabel(initialData.status)}
+            {getStatusLabel(
+              user.isBuyer ? initialData?.numberstatus : initialData?.status
+            )}
           </span>
         </div>
       </div>
@@ -180,36 +186,44 @@ export function CampaignDrawer({
 
     return (
       <div className="tw-mb-6">
-        <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-3">
-          Actions
-        </h4>
-        <div className="tw-flex tw-space-x-3">
-          <button
-            onClick={onEdit}
-            className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-blue-50 tw-text-blue-600 tw-rounded-md hover:tw-bg-blue-100"
-            disabled={isLoading}
-          >
-            <Edit className="tw-w-4 tw-h-4 tw-mr-2" />
-            <span className="tw-text-sm tw-font-medium">Edit Post</span>
-          </button>
-          <button
-            onClick={onDelete}
-            className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-red-50 tw-text-red-600 tw-rounded-md hover:tw-bg-red-100"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loader className="tw-w-4 tw-h-4 tw-mr-2 tw-animate-spin" />
-                <span className="tw-text-sm tw-font-medium">Deleting...</span>
-              </>
-            ) : (
-              <>
-                <Trash2 className="tw-w-4 tw-h-4 tw-mr-2" />
-                <span className="tw-text-sm tw-font-medium">Delete Post</span>
-              </>
-            )}
-          </button>
-        </div>
+        {!user.isBuyer && (
+          <>
+            <h4 className="tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-3">
+              Actions
+            </h4>
+            <div className="tw-flex tw-space-x-3">
+              <button
+                onClick={onEdit}
+                className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-blue-50 tw-text-blue-600 tw-rounded-md hover:tw-bg-blue-100"
+                disabled={isLoading}
+              >
+                <Edit className="tw-w-4 tw-h-4 tw-mr-2" />
+                <span className="tw-text-sm tw-font-medium">Edit Post</span>
+              </button>
+              <button
+                onClick={onDelete}
+                className="tw-flex tw-items-center tw-px-3 tw-py-2 tw-bg-red-50 tw-text-red-600 tw-rounded-md hover:tw-bg-red-100"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader className="tw-w-4 tw-h-4 tw-mr-2 tw-animate-spin" />
+                    <span className="tw-text-sm tw-font-medium">
+                      Deleting...
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="tw-w-4 tw-h-4 tw-mr-2" />
+                    <span className="tw-text-sm tw-font-medium">
+                      Delete Post
+                    </span>
+                  </>
+                )}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     );
   };
@@ -251,7 +265,7 @@ export function CampaignDrawer({
                     {initialData?.title}
                   </h3>
                   {renderStatusAndBudget()}
-                  <p>{description}</p>
+                  {/* <p>{description}</p> */}
                 </div>
 
                 {renderImportantDates()}

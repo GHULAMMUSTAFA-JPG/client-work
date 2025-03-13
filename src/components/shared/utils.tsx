@@ -21,6 +21,8 @@ export const getStatusStyles = (status: Status) => {
       return `${baseStyles} tw-bg-purple-100 tw-text-purple-800 tw-border tw-border-purple-200`;
     case Status.Cancelled:
       return `${baseStyles} tw-bg-gray-300 tw-text-gray-600 tw-border tw-border-gray-400`;
+    case Status.PostImpressionUploaded:
+      return `${baseStyles} tw-bg-blue-100 tw-text-blue-600 tw-border tw-border-blue-400`;
     default:
       return baseStyles;
   }
@@ -70,6 +72,8 @@ export const getCampaignStatusStyles = (status: Status | CampaignStatus) => {
 };
 
 export const getStatusLabel = (status: Status) => {
+  console.log("status", status);
+
   switch (status) {
     case Status.PendingApproval:
       return "Awaiting Approval";

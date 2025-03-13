@@ -66,6 +66,8 @@ export interface Campaign {
 
 export interface Post {
   numberstatus: number;
+  description: string;
+  dueDate: any;
   id: string;
   title: string;
   date: string;
