@@ -42,3 +42,12 @@ export function formatDate(
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const isImageUrl = (url: string) => {
+  return (
+    /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url) ||
+    url.includes("/image") ||
+    url.includes("/images") ||
+    url.startsWith("data:image/")
+  );
+};

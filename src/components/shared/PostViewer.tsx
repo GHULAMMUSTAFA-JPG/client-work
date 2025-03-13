@@ -113,7 +113,7 @@ export function PostViewer({ post, preview = false }: PostViewerProps) {
 
   return (
     <div
-      className={`tw-bg-white tw-rounded-lg tw-shadow-sm tw-overflow-hidden tw-max-w-[600px] tw-min-w-[450px] tw-mx-auto tw-font-sans ${
+      className={`tw-bg-white tw-rounded-lg tw-shadow-sm tw-overflow-hidden tw-w-full xs:tw-max-w-[420px] sm:tw-max-w-[480px] md:tw-max-w-[520px] lg:tw-max-w-[550px] tw-mx-auto tw-font-sans ${
         preview ? "tw-border tw-border-gray-200" : ""
       }`}
     >
@@ -199,10 +199,6 @@ export function PostViewer({ post, preview = false }: PostViewerProps) {
         {/* Post Links */}
         {post.links && post.links.length > 0 && (
           <div className="tw-mb-4">
-            <div className="tw-font-medium tw-text-sm tw-mb-2 tw-flex tw-items-center">
-              <LinkIcon className="tw-w-4 tw-h-4 tw-mr-1.5 tw-text-gray-500" />
-              <span>Links</span>
-            </div>
             <div className="tw-space-y-2">
               {post.links.map((link, index) => (
                 <a
@@ -210,11 +206,10 @@ export function PostViewer({ post, preview = false }: PostViewerProps) {
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="tw-flex tw-items-center tw-gap-2 tw-p-2 tw-bg-gray-50 tw-rounded tw-text-xs tw-text-blue-600 hover:tw-text-blue-800 tw-border tw-border-gray-200"
+                  className="tw-flex tw-items-center tw-gap-2 tw-p-2 tw-rounded tw-text-xs tw-text-blue-600 hover:tw-text-blue-800"
                 >
                   <LinkIcon className="tw-w-3.5 tw-h-3.5 tw-flex-shrink-0" />
                   <span className="tw-truncate">{link}</span>
-                  <ExternalLink className="tw-w-3.5 tw-h-3.5 tw-ml-auto tw-flex-shrink-0" />
                 </a>
               ))}
             </div>
@@ -225,11 +220,11 @@ export function PostViewer({ post, preview = false }: PostViewerProps) {
         {allImages.length > 0 && (
           <div className="tw-mb-4 tw-relative">
             <div className="tw-flex tw-justify-center tw-overflow-hidden">
-              <div className="tw-relative tw-w-full tw-min-w-[400px] tw-max-w-[520px] tw-bg-gray-50 tw-flex tw-items-center tw-justify-center tw-rounded-md">
+              <div className="tw-relative tw-w-full tw-bg-gray-50 tw-flex tw-items-center tw-justify-center tw-rounded-md">
                 <img
                   src={allImages[currentImageIndex]}
                   alt={`Post content ${currentImageIndex + 1}`}
-                  className="tw-object-contain tw-max-h-[450px] tw-max-w-full tw-rounded-md"
+                  className="tw-object-contain tw-max-h-[350px] sm:tw-max-h-[400px] md:tw-max-h-[450px] tw-w-full tw-rounded-md"
                   style={{
                     aspectRatio: "auto",
                     objectPosition: "center",

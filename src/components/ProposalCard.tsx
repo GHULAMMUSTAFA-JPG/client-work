@@ -77,7 +77,7 @@ export const ProposalCard = ({
           creator_id: creator_id,
           campaign_id: Campaign_ID,
           post_id: Post_ID,
-          status: status,
+          status: parseInt(status, 10),
         }
       );
       console.log("response", response);

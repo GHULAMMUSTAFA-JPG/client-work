@@ -45,6 +45,7 @@ export function CreatorDetailView({
   handelSelectedCreator,
 }: CreatorDetailViewProps) {
   const initialPost = posts.length > 0 ? posts[0] : null;
+  console.log("posts", posts);
   const initialContent =
     initialPost &&
     initialPost.contentItems &&
@@ -56,7 +57,6 @@ export function CreatorDetailView({
   const [selectedContent, setSelectedContent] = useState<ContentItem | null>(
     initialContent
   );
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const handleOpenChatModal = () => {
@@ -157,6 +157,7 @@ export function CreatorDetailView({
 
     onUpdate(currentPostId);
   };
+  console.log(selectedPost);
 
   const handleApproveContent = async () => {
     if (!selectedPost?.contentItems[0]) return;
@@ -208,6 +209,35 @@ export function CreatorDetailView({
     // Return the processed image URL
     return imageUrl;
   }, []);
+
+  // Function to check if a URL is an image
+  const isImageUrl = (url: string) => {
+    return (
+      /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url) ||
+      url.includes("/image") ||
+      url.includes("/images") ||
+      url.startsWith("data:image/")
+    );
+  };
+
+  // Process media content into images and links
+  const processMedia = (mediaItems?: string[]) => {
+    if (!mediaItems || mediaItems.length === 0)
+      return { images: [], links: [] };
+
+    const images: string[] = [];
+    const links: string[] = [];
+
+    mediaItems.forEach((item) => {
+      if (item && isImageUrl(item)) {
+        images.push(item);
+      } else if (item) {
+        links.push(item);
+      }
+    });
+
+    return { images, links };
+  };
 
   return (
     <div className="tw-min-h-screen tw-bg-gray-50">
@@ -449,34 +479,58 @@ export function CreatorDetailView({
                     )}
 
                   {selectedContent && (
-                    <div className="tw-flex tw-justify-center">
-                      <PostViewer
-                        post={{
-                          id: selectedContent.id,
-                          type: selectedContent.type,
-                          status:
-                            selectedContent.status === "in_review"
-                              ? "in-review"
-                              : selectedContent.status,
-                          submittedOn: selectedContent.date,
-                          author: {
-                            name: selectedCreator?.name || "",
-                            role: selectedCreator?.jobTitle || "Creator",
-                            avatar: selectedCreator?.profilePicture || "",
-                          },
-                          content: selectedContent.content || "",
-                          image: prepareImageForDisplay(
-                            selectedContent.images?.[0]
-                          ),
-                          timestamp: selectedContent.date || "",
-                          engagement: {
-                            likes: 1230,
-                            comments: 50,
-                            shares: 10,
-                          },
-                        }}
-                        preview={true}
-                      />
+                    <div className="tw-flex tw-justify-center tw-w-full tw-overflow-x-hidden">
+                      {(() => {
+                        // Process media once outside the JSX
+                        const mediaContent = processMedia(
+                          selectedContent.images
+                        );
+                        const firstImage =
+                          mediaContent.images.length > 0
+                            ? prepareImageForDisplay(mediaContent.images[0])
+                            : undefined;
+
+                        const additionalImages =
+                          mediaContent.images.length > 1
+                            ? mediaContent.images
+                                .slice(1)
+                                .map((img) => prepareImageForDisplay(img) || "")
+                            : [];
+
+                        const allLinks = mediaContent.links.concat(
+                          selectedContent.links || []
+                        );
+
+                        return (
+                          <PostViewer
+                            post={{
+                              id: selectedContent.id,
+                              type: selectedContent.type,
+                              status:
+                                selectedContent.status === "in_review"
+                                  ? "in-review"
+                                  : selectedContent.status,
+                              submittedOn: selectedContent.date,
+                              author: {
+                                name: selectedCreator?.name || "",
+                                role: selectedCreator?.jobTitle || "Creator",
+                                avatar: selectedCreator?.profilePicture || "",
+                              },
+                              content: selectedContent.content || "",
+                              image: firstImage,
+                              images: additionalImages,
+                              links: allLinks,
+                              timestamp: selectedContent.date || "",
+                              engagement: {
+                                likes: 1230,
+                                comments: 50,
+                                shares: 10,
+                              },
+                            }}
+                            preview={true}
+                          />
+                        );
+                      })()}
                     </div>
                   )}
                 </div>
