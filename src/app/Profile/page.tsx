@@ -12,7 +12,15 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
 import { withAuthRole } from "@/utils/withAuthRole";
-import { Tooltip } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tooltip,
+} from "@mui/material";
+import { apiController } from "@/@api/baseUrl";
+import { Box } from "lucide-react";
 interface editDtoProps {
   email: string;
   name: string;
@@ -25,6 +33,8 @@ interface editDtoProps {
   company_website: string;
   job_title: string;
   audience_interest: string;
+  industry: any;
+  seniority: any;
   collaboration_packages: any;
 }
 
@@ -61,6 +71,7 @@ function ProfilePage() {
   const fileInputRef1: any = useRef(null);
   const [preview, setPreview] = useState<boolean>(true);
   const router = useRouter();
+  console.log("userProfile", userProfile);
   const [editDetails, setEditDetails] = useState<editDtoProps>({
     email: user?.Email,
     name: "",
@@ -73,6 +84,8 @@ function ProfilePage() {
     company_website: "",
     job_title: "",
     audience_interest: "",
+    industry: [],
+    seniority: "",
     collaboration_packages: [
       {
         package_name: "",
@@ -107,8 +120,14 @@ function ProfilePage() {
   const [showSidebar, setShowSidebar] = useState(false);
   const searchParams = useSearchParams();
   const dropdownRef = useRef<any>(null);
+  const dropdownRefIndustry = useRef<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpenIndustry, setIsDropdownOpenIndustry] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [seniority, setSeniority] = useState<any>("");
+  const [categories, setcategories] = useState<any>([]);
+  // console.log("catr", categories && categories[1].Values);
   // console.log("cardDetails", cardDetails);
   // console.log("preview", preview);
   const AVAILABLE_SKILLS = [
@@ -161,6 +180,26 @@ function ProfilePage() {
   }, [setIsActive]);
 
   useEffect(() => {
+    const fetchCategoryData = async () => {
+      try {
+        const response = await apiController.get("/categories");
+        console.log(response);
+        if (response.status === 200) {
+          setcategories(response.data.categories);
+        }
+        // setCompanyData(response?.data);
+        // setIsLoading && setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        // setIsLoading && setIsLoading(false);
+        // setCompanyData({});
+      }
+    };
+
+    fetchCategoryData();
+  }, []);
+
+  useEffect(() => {
     let collabPack: any = [];
     userProfile?.Collaboration_Packages?.map((element: any) => {
       const entry = {
@@ -183,9 +222,18 @@ function ProfilePage() {
         company_website: userProfile?.Company_Website,
         job_title: userProfile?.Job_Title,
         audience_interest: userProfile?.Audience_Interest,
+        industry: userProfile?.Industry,
+        seniority: userProfile?.Seniority,
         collaboration_packages: collabPack,
       });
   }, [userProfile]);
+
+  const handleChangeSeniority = (event: any) => {
+    setSeniority(event.target.value);
+    setEditDetails((prev: any) => {
+      return { ...prev, seniority: event.target.value };
+    });
+  };
 
   const changeHandler = async (e: any) => {
     setEditDetails((prev: any) => {
@@ -351,6 +399,17 @@ function ProfilePage() {
     setIsDropdownOpen(false);
   };
 
+  const handleIndustrySelect = (industry: string) => {
+    if (!selectedIndustries.includes(industry)) {
+      setSelectedIndustries([...selectedIndustries, industry]);
+      setEditDetails((prev: any) => ({
+        ...prev,
+        industry: [...selectedIndustries, industry],
+      }));
+    }
+    setIsDropdownOpenIndustry(false);
+  };
+
   const handleRemoveSkill = (skillToRemove: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const updatedSkills = selectedSkills.filter(
@@ -360,6 +419,21 @@ function ProfilePage() {
     setEditDetails((prev: any) => ({
       ...prev,
       audience_interest: updatedSkills.join(", "),
+    }));
+  };
+
+  const handleRemoveIndustry = (
+    industryToRemove: string,
+    e: React.MouseEvent
+  ) => {
+    e.stopPropagation();
+    const updatedindustries = selectedIndustries.filter(
+      (industry) => industry !== industryToRemove
+    );
+    setSelectedIndustries(updatedindustries);
+    setEditDetails((prev: any) => ({
+      ...prev,
+      industry: updatedindustries,
     }));
   };
 
@@ -374,9 +448,28 @@ function ProfilePage() {
   }, []);
 
   useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRefIndustry.current &&
+        !dropdownRefIndustry.current.contains(event.target)
+      ) {
+        setIsDropdownOpenIndustry(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
     if (userProfile?.Audience_Interest) {
       const skills = userProfile.Audience_Interest.split(", ").filter(Boolean);
       setSelectedSkills(skills);
+    }
+    if (userProfile?.Industry) {
+      setSelectedIndustries(userProfile?.Industry);
+    }
+    if (userProfile?.Seniority) {
+      setSeniority(userProfile?.Seniority);
     }
   }, [userProfile]);
   const TargetAudience = userProfile?.Audience_Interest.split(", ");
@@ -556,7 +649,9 @@ function ProfilePage() {
               <div className="stats-count">
                 {userProfile?.Average_Impressions || "0"}
               </div>
-              <div className="stats-heading fs-13">Average Post Impressions</div>
+              <div className="stats-heading fs-13">
+                Average Post Impressions
+              </div>
             </div>
             {/* <div className="stats-box">
               <div className="stats-count">
@@ -568,7 +663,9 @@ function ProfilePage() {
               <div className="stats-count">
                 {userProfile?.Average_Engagements}
               </div>
-              <div className="stats-heading fs-13">Average Post Engagements</div>
+              <div className="stats-heading fs-13">
+                Average Post Engagements
+              </div>
             </div>
             <div className="stats-box">
               <div className="stats-count">
@@ -964,7 +1061,7 @@ function ProfilePage() {
                           className="mb-4 section-box_container"
                           ref={dropdownRef}
                         >
-                          <label className="mb-2">Categories*</label>
+                          <label className="mb-2">Functions*</label>
                           <div className="position-relative">
                             <div
                               className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
@@ -1023,29 +1120,31 @@ function ProfilePage() {
                                   width: "inherit",
                                 }}
                               >
-                                {AVAILABLE_SKILLS.map((skill) => (
-                                  <div
-                                    key={skill}
-                                    className={`px-3 py-2 cursor-pointer hover-bg-light ${
-                                      selectedSkills.includes(skill)
-                                        ? "bg-light"
-                                        : ""
-                                    }`}
-                                    onClick={() => {
-                                      if (selectedSkills.length < 5) {
-                                        handleSkillSelect(skill);
-                                      }
-                                    }}
-                                  >
-                                    {skill}
-                                    {selectedSkills.includes(skill) && (
-                                      <Icon
-                                        icon="mdi:check"
-                                        className="float-end"
-                                      />
-                                    )}
-                                  </div>
-                                ))}
+                                {categories[1].Values.map(
+                                  (skill: any, index: any) => (
+                                    <div
+                                      key={index}
+                                      className={`px-3 py-2 cursor-pointer hover-bg-light ${
+                                        selectedSkills.includes(skill)
+                                          ? "bg-light"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        if (selectedSkills.length < 5) {
+                                          handleSkillSelect(skill);
+                                        }
+                                      }}
+                                    >
+                                      {skill}
+                                      {selectedSkills.includes(skill) && (
+                                        <Icon
+                                          icon="mdi:check"
+                                          className="float-end"
+                                        />
+                                      )}
+                                    </div>
+                                  )
+                                )}
                               </div>
                             )}
                           </div>
@@ -1055,7 +1154,140 @@ function ProfilePage() {
                             </small>
                           )}
                         </div>
+                        <div
+                          className="mb-4 section-box_container"
+                          ref={dropdownRefIndustry}
+                        >
+                          <label className="mb-2">Industry*</label>
+                          <div className="position-relative">
+                            <div
+                              className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
+                              onClick={() =>
+                                setIsDropdownOpenIndustry(
+                                  !isDropdownOpenIndustry
+                                )
+                              }
+                            >
+                              {selectedIndustries.length > 0 ? (
+                                <>
+                                  {selectedIndustries.map((industry) => (
+                                    <span
+                                      key={industry}
+                                      className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
+                                    >
+                                      {industry}
+                                      <Icon
+                                        icon="mdi:close"
+                                        className="cursor-pointer"
+                                        width={16}
+                                        height={16}
+                                        onClick={(e) =>
+                                          handleRemoveIndustry(industry, e)
+                                        }
+                                      />
+                                    </span>
+                                  ))}
+                                  {selectedIndustries.length > 1 && (
+                                    <span
+                                      className="text-muted ms-2 cursor-pointer"
+                                      onClick={() => {
+                                        setSelectedIndustries([]);
+                                        setEditDetails((prev: any) => ({
+                                          ...prev,
+                                          industry: [],
+                                        }));
+                                      }}
+                                    >
+                                      Clear all
+                                    </span>
+                                  )}
+                                </>
+                              ) : (
+                                <span className="text-muted">
+                                  Select up to 5 industries
+                                </span>
+                              )}
+                            </div>
 
+                            {isDropdownOpenIndustry && (
+                              <div
+                                className="position-absolute start-0 w-100 mt-1 bg-white border rounded-3 shadow-sm"
+                                style={{
+                                  maxHeight: "200px",
+                                  overflowY: "auto",
+                                  top: "calc(100% + 5px)",
+                                  zIndex: 1050,
+                                  position: "fixed",
+                                  width: "inherit",
+                                }}
+                              >
+                                {categories[2].Values.map(
+                                  (industry: any, index: any) => (
+                                    <div
+                                      key={index}
+                                      className={`px-3 py-2 cursor-pointer hover-bg-light ${
+                                        selectedIndustries.includes(industry)
+                                          ? "bg-light"
+                                          : ""
+                                      }`}
+                                      onClick={() => {
+                                        if (selectedIndustries.length < 5) {
+                                          handleIndustrySelect(industry);
+                                        }
+                                      }}
+                                    >
+                                      {industry}
+                                      {selectedIndustries.includes(
+                                        industry
+                                      ) && (
+                                        <Icon
+                                          icon="mdi:check"
+                                          className="float-end"
+                                        />
+                                      )}
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            )}
+                          </div>
+                          {selectedIndustries.length >= 5 && (
+                            <small className="text-muted">
+                              Maximum 5 industries can be selected
+                            </small>
+                          )}
+                        </div>
+                        <div style={{ marginBottom: "24px" }}>
+                          <div style={{ minWidth: 120 }}>
+                            <label className="mb-2">Seniority*</label>
+                            <FormControl fullWidth>
+                              <InputLabel
+                                sx={{ fontSize: "15px" }}
+                                id="demo-simple-select-label"
+                              >
+                                Seniority
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={editDetails?.seniority}
+                                label="seniority"
+                                onChange={handleChangeSeniority}
+                                size="small"
+                                sx={{ padding: "0px", fontSize: "10px" }}
+                              >
+                                {categories[0] &&
+                                  categories[0].Values.map(
+                                    (seniority: any, index: any) => (
+                                      <MenuItem key={index} value={seniority}>
+                                        {seniority}
+                                      </MenuItem>
+                                    )
+                                  )}
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
                         <div className="mb-4 bg-white">
                           <label className="mb-2">
                             *About Me (Description)
