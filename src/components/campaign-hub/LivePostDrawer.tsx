@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { X, Link as LinkIcon, ExternalLink, AlertCircle } from "lucide-react";
-import { toast } from "react-toastify";
+import {
+  X,
+  Link as LinkIcon,
+  ExternalLink,
+  AlertCircle,
+  HelpCircle,
+} from "lucide-react";
 import { addCampaignLiveLink } from "@/@api/campaign";
 
 interface LivePostDrawerProps {
@@ -134,28 +139,29 @@ export function LivePostDrawer({
                 <div>
                   <label
                     htmlFor="embed-link"
-                    className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1"
+                    className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1 tw-flex tw-items-center"
                   >
                     LinkedIn Post Embed Link
+                    <div className="tw-relative tw-ml-2 tw-group tw-inline-block">
+                      <HelpCircle className="tw-h-4 tw-w-4 tw-text-gray-400 hover:tw-text-gray-600 tw-cursor-help" />
+                      <div className="tw-hidden group-hover:tw-block tw-absolute tw-z-50 tw-left-1/2 tw-transform tw--translate-x-1/2 tw-bottom-full tw-mb-2 tw-w-64 tw-p-2 tw-bg-gray-800 tw-text-white tw-text-xs tw-rounded tw-shadow-lg">
+                        <p>
+                          Paste the embed code from LinkedIn to show an
+                          interactive embedded post. Click the three dots on a
+                          LinkedIn post and select "Embed this post" to get the
+                          embed link.
+                        </p>
+                        <div className="tw-absolute tw-left-1/2 tw-transform tw--translate-x-1/2 tw-top-full tw--mt-1 tw-border-4 tw-border-transparent tw-border-t-gray-800"></div>
+                      </div>
+                    </div>
                   </label>
-                  <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
-                    <div className="tw-absolute tw-inset-y-0 tw-left-0 tw-pl-3 tw-flex tw-items-center tw-pointer-events-none">
-                      <LinkIcon className="tw-h-5 tw-w-5 tw-text-gray-400" />
-                    </div>
-                    <input
-                      type="url"
-                      id="embed-link"
-                      value={embedLink}
-                      onChange={(e) => setEmbedLink(e.target.value)}
-                      className={`tw-block tw-w-full tw-pl-10 tw-pr-12 tw-py-2 tw-border ${
-                        error ? "tw-border-red-300" : "tw-border-gray-300"
-                      } tw-rounded-md tw-focus:outline-none tw-focus:ring-[#0A66C2] tw-focus:border-[#0A66C2]`}
-                      placeholder="https://www.linkedin.com/embed/feed/update/..."
-                    />
-                    <div className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center">
-                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-gray-400" />
-                    </div>
-                  </div>
+                  <textarea
+                    id="embedCode"
+                    value={embedLink}
+                    onChange={(e) => setEmbedLink(e.target.value)}
+                    placeholder="https://www.linkedin.com/embed/feed/update/..."
+                    className="tw-w-full tw-h-24 tw-px-4 tw-py-2 tw-border tw-border-gray-300 tw-rounded-lg tw-focus:tw-ring-2 tw-focus:tw-ring-blue-500 tw-focus:tw-border-transparent tw-resize-none tw-font-mono tw-text-sm"
+                  />
                 </div>
 
                 <div className="tw-bg-[#0A66C2]/5 tw-rounded-lg tw-p-4 tw-border tw-border-[#0A66C2]/10">
@@ -188,7 +194,7 @@ export function LivePostDrawer({
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !postUrl || !embedLink}
                   className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-green-500 disabled:tw-opacity-70"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Post Link"}
