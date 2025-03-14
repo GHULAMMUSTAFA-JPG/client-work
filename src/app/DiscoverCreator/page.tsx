@@ -161,7 +161,7 @@ function DiscoverCreator() {
                   }}
                 >
                   <div className="card hover:tw-bg-gray-50 hover:tw-shadow-sw py-2">
-                    <div className="card-body-box d-flex justify-content-between gap-3 item-content-start">
+                    <div className="card-body-box d-flex justify-content-between gap-3 item-content-start tw-items-center">
 
                       <div className="d-flex align-items-center gap-3 justify-content-start">
                       <div className="img-container-lg">
