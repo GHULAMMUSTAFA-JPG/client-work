@@ -186,7 +186,6 @@ export function CreatorDetailView({
       console.error("Error approving content:", error);
     }
   };
-  console.log("----------------------------------selectedPost", selectedPost);
   const handleRejectContent = async (feedback?: string) => {
     if (!selectedPost?.contentItems[0]) return;
     try {
