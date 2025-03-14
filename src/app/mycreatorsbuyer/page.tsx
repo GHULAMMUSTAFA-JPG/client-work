@@ -24,7 +24,6 @@ import { CREATOR_FILTER_OPTIONS } from "@/constant/brand";
 import Tooltip from "@/components/Tooltip";
 import MyCreatorsShell from "@/components/Mycreators-shell";
 
-// Add these interfaces at the top of the file, after the imports
 interface FilterState {
   countries: string[];
   jobTitles: string[];
@@ -90,8 +89,9 @@ function Mycreatorsbuyer() {
   const [creatorStats, setCreatorStats] = useState({
     totalCreators: 0,
     totalEngagements: 0,
-    growthRate: 0
+    growthRate: 0,
   });
+  console.log("buyerList", buyerList);
 
   const fetchData = useCallback(async () => {
     const response: any = await fetch_dashboard_data();
@@ -187,8 +187,14 @@ function Mycreatorsbuyer() {
 
   const handleInvite = () => {
     const subject = "Join Social27 Creator Platform";
-    const body = "Hey! I'd like to invite you to join Social27's Creator Platform.";
-    window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    const body =
+      "Hey! I'd like to invite you to join Social27's Creator Platform.";
+    window.open(
+      `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        body
+      )}`,
+      "_blank"
+    );
   };
 
   // Effects
@@ -227,7 +233,6 @@ function Mycreatorsbuyer() {
   }, [user?.email, setIsLoading, getCompanyData]);
 
   // Content block for My Creators tab
- 
 
   // Render creator row
   const renderCreatorRow = (creator: any) => (
@@ -550,11 +555,26 @@ function Mycreatorsbuyer() {
           <div>
             <h2 className="tw-text-xl tw-font-semibold">Invite to Campaign</h2>
             <p className="tw-text-sm tw-text-gray-500 tw-mt-1 tw-flex tw-items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12.829" height="12.828" viewBox="0 0 12.829 12.828">
-  <path id="Icon_feather-arrow-down-right" data-name="Icon feather-arrow-down-right" d="M7,7,17,17M17,7V17H7" transform="translate(-5.586 -5.586)" fill="none" stroke="#1bb09d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-</svg>
-
-Choose a campaign to invite this creator and collaborate seamlessly
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12.829"
+                height="12.828"
+                viewBox="0 0 12.829 12.828"
+              >
+                <path
+                  id="Icon_feather-arrow-down-right"
+                  data-name="Icon feather-arrow-down-right"
+                  d="M7,7,17,17M17,7V17H7"
+                  transform="translate(-5.586 -5.586)"
+                  fill="none"
+                  stroke="#1bb09d"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+              </svg>
+              Choose a campaign to invite this creator and collaborate
+              seamlessly
             </p>
           </div>
           <button
@@ -573,107 +593,105 @@ Choose a campaign to invite this creator and collaborate seamlessly
             <div className="tw-space-y-4">
               {activeCampaigns?.campaigns?.map(
                 (campaign: any, index: number) => (
-               
-                  <Tooltip   key={index} content="Invite to campaign">
-                         <div
-                          className="tw-bg-white tw-border-gray-100 tw-border tw-rounded-mg py-4 px-3 tw-shadow-sm hover:tw-shadow-lg tw-round-md tw-cursor-pointer tw-transition-all"
-                    onClick={async () => {
-                      await inviteCreator(campaign, {
-                        _id: selectedCreatorId,
-                      });
-                      setIsDrawerOpen(false);
-                      setDrawerType(null);
-                    }}
-                  >
-                     
-                    <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
-                      <h3 className="tw-font-medium">{campaign?.Headline}</h3>
-                      <span className="tw-text-xs tw-px-2 tw-py-1 tw-rounded-full tw-bg-green-100 tw-text-green-800">
-                        {campaign?.Is_Ongoing ? "Ongoing" : "Fixed Duration"}
-                      </span>
-                    </div>
-
-                    <div className="tw-space-y-2">
-                      <div className="tw-flex tw-items-center tw-gap-2 tw-text-sm tw-text-gray-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="tw-text-teal-600"
-                        >
-                          <circle cx="12" cy="12" r="10" />
-                          <path d="M12 6v6l4 2" />
-                        </svg>
-                        <span>{campaign?.Time_Ago}</span>
-                      </div>
-
-                      <div className="tw-flex tw-items-center tw-gap-2 tw-text-sm tw-text-gray-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="tw-text-blue-600"
-                        >
-                          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        <span>
-                          Budget: ${campaign?.Budget?.toLocaleString()}
+                  <Tooltip key={index} content="Invite to campaign">
+                    <div
+                      className="tw-bg-white tw-border-gray-100 tw-border tw-rounded-mg py-4 px-3 tw-shadow-sm hover:tw-shadow-lg tw-round-md tw-cursor-pointer tw-transition-all"
+                      onClick={async () => {
+                        await inviteCreator(campaign, {
+                          _id: selectedCreatorId,
+                        });
+                        setIsDrawerOpen(false);
+                        setDrawerType(null);
+                      }}
+                    >
+                      <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
+                        <h3 className="tw-font-medium">{campaign?.Headline}</h3>
+                        <span className="tw-text-xs tw-px-2 tw-py-1 tw-rounded-full tw-bg-green-100 tw-text-green-800">
+                          {campaign?.Is_Ongoing ? "Ongoing" : "Fixed Duration"}
                         </span>
                       </div>
 
-                      <div className="tw-flex tw-flex-wrap tw-gap-1 tw-mt-2 mb-3">
-                        {campaign?.Target_Audience?.map(
-                          (tag: string, i: number) => (
-                            <span
-                              key={i}
-                              className="tw-px-2 tw-py-1 tw-text-xs tw-bg-gray-100 tw-rounded-full tw-text-gray-600"
-                            >
-                              {tag}
-                            </span>
-                          )
-                        )}
-                      </div>
+                      <div className="tw-space-y-2">
+                        <div className="tw-flex tw-items-center tw-gap-2 tw-text-sm tw-text-gray-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="tw-text-teal-600"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 6v6l4 2" />
+                          </svg>
+                          <span>{campaign?.Time_Ago}</span>
+                        </div>
 
-                      <div className="tw-grid tw-grid-cols-3 tw-gap-2 tw-mt-3">
-                        <div className="tw-text-center tw-p-2 tw-bg-gray-50 tw-rounded">
-                          <div className="tw-text-sm tw-font-medium">
-                            {campaign?.Creator_Insights?.Invited}
-                          </div>
-                          <div className="tw-text-xs tw-text-gray-500">
-                            Invited
-                          </div>
+                        <div className="tw-flex tw-items-center tw-gap-2 tw-text-sm tw-text-gray-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="tw-text-blue-600"
+                          >
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                          </svg>
+                          <span>
+                            Budget: ${campaign?.Budget?.toLocaleString()}
+                          </span>
                         </div>
-                        <div className="tw-text-center tw-p-2 tw-bg-gray-50 tw-rounded">
-                          <div className="tw-text-sm tw-font-medium">
-                            {campaign?.Creator_Insights?.Approved}
-                          </div>
-                          <div className="tw-text-xs tw-text-gray-500">
-                            Approved
-                          </div>
+
+                        <div className="tw-flex tw-flex-wrap tw-gap-1 tw-mt-2 mb-3">
+                          {campaign?.Target_Audience?.map(
+                            (tag: string, i: number) => (
+                              <span
+                                key={i}
+                                className="tw-px-2 tw-py-1 tw-text-xs tw-bg-gray-100 tw-rounded-full tw-text-gray-600"
+                              >
+                                {tag}
+                              </span>
+                            )
+                          )}
                         </div>
-                        <div className="tw-text-center tw-p-2 tw-bg-gray-50 tw-rounded">
-                          <div className="tw-text-sm tw-font-medium">
-                            {campaign?.Creator_Insights?.In_Discussion}
+
+                        <div className="tw-grid tw-grid-cols-3 tw-gap-2 tw-mt-3">
+                          <div className="tw-text-center tw-p-2 tw-bg-gray-50 tw-rounded">
+                            <div className="tw-text-sm tw-font-medium">
+                              {campaign?.Creator_Insights?.Invited}
+                            </div>
+                            <div className="tw-text-xs tw-text-gray-500">
+                              Invited
+                            </div>
                           </div>
-                          <div className="tw-text-xs tw-text-gray-500">
-                            In Discussion
+                          <div className="tw-text-center tw-p-2 tw-bg-gray-50 tw-rounded">
+                            <div className="tw-text-sm tw-font-medium">
+                              {campaign?.Creator_Insights?.Approved}
+                            </div>
+                            <div className="tw-text-xs tw-text-gray-500">
+                              Approved
+                            </div>
+                          </div>
+                          <div className="tw-text-center tw-p-2 tw-bg-gray-50 tw-rounded">
+                            <div className="tw-text-sm tw-font-medium">
+                              {campaign?.Creator_Insights?.In_Discussion}
+                            </div>
+                            <div className="tw-text-xs tw-text-gray-500">
+                              In Discussion
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   </Tooltip>
                 )
               )}
@@ -734,7 +752,7 @@ Choose a campaign to invite this creator and collaborate seamlessly
                     <div>
                       <h4 className="tw-font-medium">{list?.List_Name}</h4>
                       <p className="tw-text-sm tw-text-gray-500">
-                        {list?.Creators?.length || 0} creators
+                        {list?.List_Creators?.length || 0} creators
                       </p>
                     </div>
                     <button
@@ -769,7 +787,6 @@ Choose a campaign to invite this creator and collaborate seamlessly
               id="myTab"
               role="tablist"
             >
-          
               <li className="nav-item" role="presentation">
                 <button
                   className="nav-link active"
@@ -812,33 +829,24 @@ Choose a campaign to invite this creator and collaborate seamlessly
                   My Lists{" "}
                 </button>
               </li>
-
             </ul>
             <div className="container">
               <div className="row">
                 <div className="col-12 mb-2">
-
-
                   <div className="tab-content" id="myTabContent">
-
-                          
-                  <div
+                    <div
                       className="tab-pane fade"
                       id="mycreators-tab-pane"
                       role="tabpanel"
                       aria-labelledby="mycreators-tab"
                       tabIndex={0}
                     >
-                 <MyCreatorsShell 
-        handleInvite={handleInvite}
-        companyData={companyData}
-        creatorStats={creatorStats}
-      >
-
-      </MyCreatorsShell>
-
+                      <MyCreatorsShell
+                        handleInvite={handleInvite}
+                        companyData={companyData}
+                        creatorStats={creatorStats}
+                      ></MyCreatorsShell>
                     </div>
-
 
                     <div
                       className="tab-pane fade show active"
