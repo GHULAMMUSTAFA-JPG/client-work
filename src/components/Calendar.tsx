@@ -427,12 +427,13 @@ const PostCalendar = () => {
           <option value="90">Next 90 Days</option>
         </select>
       </div>
-
+      <div className="tw-h-80 tw-overflow-y-auto">
       {loading ? (
         <div className="tw-text-center tw-py-4">Loading posts...</div>
       ) : upcomingPosts && upcomingPosts.Posts.length > 0 ? (
         Object.entries(groupedPosts).map(([date, posts]) => (
-          <div key={date} className="tw-mb-6 tw-border-b">
+        
+          <div key={date}  className="tw-mb-6 tw-border-b">
             <h3 className="tw-text-sm tw-font-medium tw-text-gray-500 mb-3">
               {format(parseISO(date), 'EEEE, MMMM d, yyyy')}
             </h3>
@@ -460,16 +461,23 @@ const PostCalendar = () => {
                   </p>
                 </div>
                 </div>
-                <div className="tw-flex tw-items-center tw-px-2.5 tw-py-1 tw-rounded-full tw-bg-[#E8F5E9] tw-text-[#2E7D32]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-check-circle w-4 h-4 mr-1"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg><span className="tw-text-xs tw-font-medium">Published</span></div>
+                <div className="tw-flex gap-2 tw-items-center tw-px-2.5 tw-py-1 tw-rounded-full tw-bg-[#E8F5E9] tw-text-[#2E7D32]"><svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="15.341" viewBox="0 0 15.49 15.341">
+  <g id="Group_42" data-name="Group 42" transform="translate(-1.318 -1.348)">
+    <path id="Path_877" data-name="Path 877" d="M16.1,8.4v.649A7.05,7.05,0,1,1,11.919,2.6" transform="translate(0 0)" fill="none" stroke="#1bb09d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_878" data-name="Path 878" d="M9,8.935l2.115,2.115L18.165,4" transform="translate(-2.065 -0.592)" fill="none" stroke="#1bb09d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>
+<span className="tw-text-xs tw-font-medium">Published</span></div>
               </div>
               </div>
             ))}
           </div>
+        
         ))
       ) : (
-        <p className="tw-flex tw-items-center tw-justify-center tw-bg-teal-50 tw-text-black tw-font-medium tw-py-2 tw-px-4 tw-rounded-md">No posts available for the selected period.</p>
+        <p className="tw-flex tw-items-center tw-justify-center tw-bg-teal-50 tw-text-black tw-font-medium tw-py-2 tw-px-4 tw-rounded-md ht-300p">No posts available for the selected period.</p>
       )}
-
+</div>
       {upcomingPosts && upcomingPosts.Posts.length > ITEMS_PER_PAGE && visibleItems < upcomingPosts.Posts.length && (
         <div className="tw-text-center tw-mt-4">
           <button

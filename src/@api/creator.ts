@@ -17,3 +17,16 @@ export const discoverCreators = async (params: {
 export const getCreatorUniqueFilters = async () => {
   return handleApiRequest("get", "/unique_filters/creators");
 };
+
+export const deleteCreatorFromList = async (params: {
+  List_Id: string;
+  Creator_Id: string;
+}) => {
+  return handleApiRequest(
+    "delete",
+    "/dashboard/buyers/remove_creator_from_list",
+    {
+      data: params,
+    }
+  );
+};

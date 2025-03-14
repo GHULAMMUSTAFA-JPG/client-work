@@ -516,8 +516,11 @@ function ProfilePage() {
                     {userProfile?.Name}
                     <div
                       className="editprofilebox"
-                      onClick={() => handleSectionClick("about")}
-                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        // Placeholder for future functionality
+                      }}
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#creator-profile-drawer-Offcanvas"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -567,13 +570,6 @@ function ProfilePage() {
                 style={{ display: "flex", alignItems: "center" }}
                 className="profileactionsbtn"
               >
-                {/*    <button
-                  className="btn btn-primary d-flex align-items-center gap-1"
-                  onClick={() => router.push(`/inbox?id=${userProfile?._id}`)}
-                >
-                  <Icon icon="mdi:message" width={18} height={18} />
-                  Message me
-                </button> */}
                 <button className="btn btn-outline-primary d-flex align-items-center gap-1">
                   <Icon icon="mdi:plus" width={18} height={18} />
                   Add to list
@@ -639,12 +635,6 @@ function ProfilePage() {
             </div>
           </div>
           <div className="statsbox-container">
-            {/* <div className="stats-box">
-              <div className="stats-count">
-                {userProfile?.Profile_Views || "1,234"}
-              </div>
-              <div className="stats-heading">Profile views</div>
-            </div> */}
             <div className="stats-box">
               <div className="stats-count">
                 {userProfile?.Average_Impressions || "0"}
@@ -785,19 +775,6 @@ function ProfilePage() {
                       onClick={() => handleSectionClick("collaboration")}
                     />
                   )}
-
-                  {/* <div className="d-flex justify-content-between align-items-center">
-                    {userProfile?.Collaboration_Packages?.length < 1 && (
-                      <Icon
-                        icon="mdi:plus"
-                        width="24"
-                        height="24"
-                        className="text-muted"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleSectionClick("collaboration")}
-                      />
-                    )}
-                  </div> */}
                 </div>
                 {/* Collaboration Cards */}
                 <div className="mt-4">
@@ -839,64 +816,30 @@ function ProfilePage() {
                       }
                     )
                   ) : (
-                    <>
-                      {/* <div className="packagebox mb-3">
-                        <div className="card-body d-flex justify-content-between align-items-center">
-                          <div className="card-content">
-                            <h6>1x Sponsored Post</h6>
-                            <p className="package-description mb-0">
-                              I'll create a LinkedIn post to educate my audience
-                              on the benefits of your company's offerings, or
-                              for anything else you're interested in promoting,
-                              like an upcoming event.
-                            </p>
-                          </div>
-                          <div className="ms-5 text-end">
-                            <h6 className="package-prize mb-5">$ 900</h6>
-                          </div>
-                        </div>
-                        <div className="buttonboxcard">
-                          <button
-                            className="booknowbtn"
-                            onClick={() => handleSectionClick("collaboration")}
-                          >
-                            Book Now
-                          </button>
-                        </div>
-                      </div>
-                      <div className="packagebox mb-3">
-                        <div className="card-body d-flex justify-content-between align-items-center">
-                          <div className="card-content">
-                            <h6>
-                              3x Sponsored Post Series (Most Popular • 20%
-                              Discount)
-                            </h6>
-                            <p className="package-description mb-0">
-                              I'll create a series of posts to educate my
-                              audience on a specific topic, mentioning your
-                              brand throughout and how you can help.
-                            </p>
-                          </div>
-                          <div className="ms-5 text-end">
-                            <h6 className="package-prize mb-5">$ 2100</h6>
-                          </div>
-                        </div>
-                        <div className="buttonboxcard">
-                          <button
-                            className="booknowbtn"
-                            onClick={() => handleSectionClick("collaboration")}
-                          >
-                            Book Now
-                          </button>
-                        </div>
-                      </div> */}
-                    </>
+                    <></>
                   )}
                 </div>
 
                 {/* sidebar sections starts here */}
-                <div className={`col col-md-4 ${showSidebar ? "" : "d-none"}`}>
-                  <div className="profile-sidebar-wraper">
+
+                <div
+                  className="offcanvas offcanvas-end"
+                  tabIndex={-1}
+                  id="creator-profile-drawer-Offcanvas"
+                  style={{ width: "30%" }}
+                >
+                  <div className="offcanvas-header border-bottom">
+                    <div>
+                      <h5 className="offcanvas-title">Edit Profile</h5>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="offcanvas"
+                    ></button>
+                  </div>
+
+                  <div className="offcanvas-body">
                     <div
                       className={`profilee-container ${
                         activeSection === "about"
@@ -906,11 +849,11 @@ function ProfilePage() {
                     >
                       {/* Edit profile starts here */}
                       <div className="d-flex justify-content-between align-items-center mb-3 px-3">
-                        <h6 className="mb-0 ">Edit Profile</h6>
+                        <h6 className="mb-0 "></h6>
                         <div className="d-flex align-items-center gap-2">
                           <button
                             className="bg-white border btn btn-sm"
-                            onClick={handleCancel}
+                            data-bs-dismiss="offcanvas"
                           >
                             Cancel
                           </button>
@@ -1347,8 +1290,8 @@ function ProfilePage() {
                         >
                           <div className="card mb-3">
                             {/* <div className="card-header bg-white">
-                              <h6 className="mb-0">Package</h6>
-                          </div> */}
+            <h6 className="mb-0">Package</h6>
+        </div> */}
 
                             {/* Card 1 */}
                             {preview &&
@@ -1469,9 +1412,9 @@ function ProfilePage() {
                       </div>
                       {/* package Content Section ends here */}
                     </div>
-                    {/* Main lets colorborate box Section starts here */}
                   </div>
                 </div>
+
                 {/* sidebar sections ends here */}
               </div>
             </div>

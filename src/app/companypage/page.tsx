@@ -434,8 +434,10 @@ function CompanyPage() {
                     <Tooltip title="Edit Profile" arrow placement="top">
                       <div
                         className="editprofilebox"
-                        onClick={() => handleSectionClick("about")}
-                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          // Placeholder for future functionality
+                        }} data-bs-toggle="offcanvas"
+                        data-bs-target="#brand-profile-drawer-Offcanvas"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -707,476 +709,496 @@ function CompanyPage() {
                 {/* Campaigns */}
 
                 {/* sidebar sections starts here */}
-                <div className={`col-md-4 ${showSidebar ? "" : "d-none"}`}>
-                  <div className="profile-sidebar-wraper">
-                    {/* First edit section */}
-                    <div
-                      className={`profilee-container ${
-                        activeSection === "about" ? "" : "d-none"
-                      }`}
-                    >
-                      <div className="d-flex justify-content-between align-items-center mb-3 px-3">
-                        <h6 className="mb-0 ">Edit Profile</h6>
-                        <div style={{ display: "flex" }}>
-                          <button
-                            className="bg-white border btn btn-sm"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="btn btn-dark btn-sm ms-3"
-                            onClick={submitHandler}
-                          >
-                            Save
-                          </button>
-                        </div>
-                      </div>
+                <div
+className="offcanvas offcanvas-end"
+tabIndex={-1}
+id="brand-profile-drawer-Offcanvas"
+style={{ width: '30%' }}
+>
+<div className="offcanvas-header border-bottom">
+    <div>
+    <h5 className="offcanvas-title">Edit Profile</h5>
+   
+  </div> 
+  <button
+    type="button"
+    className="btn-close"
+    data-bs-dismiss="offcanvas"
+  ></button>
+</div>
 
-                      <div className="pb-2 profile-sidebar-scroll">
-                        <div className="mb-4 section-box_container hidebanner">
-                          <label className="mb-2">Banner image</label>
-                          <div className="position-relative">
-                            <img
-                              src={
-                                editDetails?.company_banner !== ""
-                                  ? editDetails?.company_banner
-                                  : defaultImagePath
-                              }
-                              alt="Banner"
-                              width={500}
-                              height={100}
-                              className="w-100 rounded-3 mb-2"
-                              style={{ objectFit: "cover" }}
-                            />
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ cursor: "pointer" }}
-                            >
-                              <span
-                                onClick={handleClick}
-                                className="text-muted"
-                              >
-                                Choose a photo
-                              </span>
-                              <Icon
-                                onClick={() => {
-                                  setEditDetails((prev: any) => {
-                                    return { ...prev, ["company_banner"]: "" };
-                                  });
-                                }}
-                                icon="material-symbols:delete-outline"
-                                className="cursor-pointer"
-                              />
-                              <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={(e: any) => {
-                                  fileHandler(e, "company_banner");
-                                }}
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          </div>
-                        </div>
+<div className="offcanvas-body">
 
-                        <div className="mb-4 section-box_container">
-                          <label className="py-1">Company Logo </label>
-                          <div className="fs-10 mb-2">
-                            Please upload an image of 150px × 150px for the best
-                            quality
-                          </div>
-                          <div className="position-relative">
-                            <div className="img-container-lg-general">
-                              {editDetails.company_logo !== "" ? (
-                                <img
-                                  src={editDetails.company_logo}
-                                  alt="Profile"
-                                  width={80}
-                                  height={80}
-                                  className="mb-2"
-                                />
-                              ) : (
-                                <div
-                                  className="d-flex align-items-center justify-content-center bg-light rounded-circle"
-                                  style={{ width: "150px", height: "150px" }}
-                                >
-                                  <span className="fs-1 fw-bold text-uppercase">
-                                    {userProfile?.Company_Name
-                                      ? userProfile.Company_Name.charAt(0)
-                                      : userProfile?.Email
-                                      ? userProfile.Email.charAt(0)
-                                      : "N"}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                            <div
-                              className="d-flex align-items-center gap-2"
-                              style={{ cursor: "pointer" }}
-                            >
-                              <span
-                                onClick={handleClick1}
-                                className="text-muted"
-                              >
-                                Choose a photo
-                              </span>
-                              <Icon
-                                onClick={() => {
-                                  setEditDetails((prev: any) => {
-                                    return { ...prev, ["company_logo"]: "" };
-                                  });
-                                }}
-                                icon="material-symbols:delete-outline"
-                                className="cursor-pointer"
-                              />
-                              <input
-                                type="file"
-                                ref={fileInputRef1}
-                                onChange={(e: any) => {
-                                  fileHandler(e, "company_logo");
-                                }}
-                                style={{ display: "none" }}
-                              />
-                            </div>
-                          </div>
-                        </div>
+{/* First edit section */}
+<div
+  className={`profilee-container ${
+    activeSection === "about" ? "" : "d-none"
+  }`}
+>
+  <div className="d-flex justify-content-between align-items-center mb-3 px-3">
+    <h6 className="mb-0 "></h6>
+    <div style={{ display: "flex" }}>
+      <button
+        className="bg-white border btn btn-sm"
+        data-bs-dismiss="offcanvas"
+      >
+        Cancel
+      </button>
+      <button
+        className="btn btn-dark btn-sm ms-3"
+        onClick={submitHandler}
+      >
+        Save
+      </button>
+    </div>
+  </div>
 
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Company Name*</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.company_name}
-                            onChange={changeHandler}
-                            id="company_name"
-                            placeholder="Synnc"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">About Me(Description)</label>
-                          <textarea
-                            className="form-control"
-                            placeholder="Synnc is a platform that connects brands with creators to help them grow their business."
-                            value={editDetails.company_description}
-                            onChange={changeHandler}
-                            id="company_description"
-                            rows={4}
-                          ></textarea>
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Company Website</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.company_website}
-                            onChange={changeHandler}
-                            id="company_website"
-                            placeholder="https://www.synnc.com"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Company Linkedin</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.company_linkedin}
-                            onChange={changeHandler}
-                            id="company_linkedin"
-                            placeholder="https://www.linkedin.com/company/synnc"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Location</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.location}
-                            onChange={changeHandler}
-                            id="location"
-                            placeholder="United States"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Employees(est)</label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            value={editDetails.no_of_employees}
-                            min={0}
-                            onChange={changeHandler}
-                            id="no_of_employees"
-                            placeholder="e.g 100"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Year founded(est)</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={editDetails.year_founded}
-                            onChange={changeHandler}
-                            id="year_founded"
-                            placeholder="e.g 2024"
-                          />
-                        </div>
-                        <div className="mb-4 section-box_container">
-                          <label className="mb-2">Size</label>
-                          <select
-                            className="form-select form-select-sm"
-                            value={editDetails.size}
-                            onChange={changeHandler}
-                            id="size"
-                          >
-                            <option
-                              disabled
-                              selected
-                              value=""
-                              className="small text-muted"
-                            >
-                              Select size
-                            </option>
-                            <option value="Small" className="small">
-                              Small
-                            </option>
-                            <option value="Medium" className="small">
-                              Medium
-                            </option>
-                            <option value="Large" className="small">
-                              Large
-                            </option>
-                          </select>
-                        </div>
+  <div className="pb-2 profile-sidebar-scroll">
+    <div className="mb-4 section-box_container hidebanner">
+      <label className="mb-2">Banner image</label>
+      <div className="position-relative">
+        <img
+          src={
+            editDetails?.company_banner !== ""
+              ? editDetails?.company_banner
+              : defaultImagePath
+          }
+          alt="Banner"
+          width={500}
+          height={100}
+          className="w-100 rounded-3 mb-2"
+          style={{ objectFit: "cover" }}
+        />
+        <div
+          className="d-flex align-items-center gap-2"
+          style={{ cursor: "pointer" }}
+        >
+          <span
+            onClick={handleClick}
+            className="text-muted"
+          >
+            Choose a photo
+          </span>
+          <Icon
+            onClick={() => {
+              setEditDetails((prev: any) => {
+                return { ...prev, ["company_banner"]: "" };
+              });
+            }}
+            icon="material-symbols:delete-outline"
+            className="cursor-pointer"
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={(e: any) => {
+              fileHandler(e, "company_banner");
+            }}
+            style={{ display: "none" }}
+          />
+        </div>
+      </div>
+    </div>
 
-                        <div
-                          className="mb-4 section-box_container"
-                          ref={dropdownRef}
-                        >
-                          <label className="mb-2 mt-3">Categories</label>
-                          <div className="position-relative">
-                            <div
-                              className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
-                              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            >
-                              {selectedCategories.length > 0 ? (
-                                <>
-                                  {selectedCategories.map((category) => (
-                                    <span
-                                      key={category}
-                                      className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
-                                    >
-                                      {category}
-                                      <Icon
-                                        icon="mdi:close"
-                                        className="cursor-pointer"
-                                        width={16}
-                                        height={16}
-                                        onClick={(e) =>
-                                          handleRemoveCategory(category, e)
-                                        }
-                                      />
-                                    </span>
-                                  ))}
-                                  {selectedCategories.length > 1 && (
-                                    <span
-                                      className="text-muted ms-2 cursor-pointer"
-                                      onClick={handleClearAllCategories}
-                                    >
-                                      Clear all
-                                    </span>
-                                  )}
-                                </>
-                              ) : (
-                                <span className="text-muted">
-                                  Select up to 5 categories
-                                </span>
-                              )}
-                            </div>
+    <div className="mb-4 section-box_container">
+      <label className="py-1">Company Logo </label>
+      <div className="fs-10 mb-2">
+        Please upload an image of 150px × 150px for the best
+        quality
+      </div>
+      <div className="position-relative">
+        <div className="img-container-lg-general">
+          {editDetails.company_logo !== "" ? (
+            <img
+              src={editDetails.company_logo}
+              alt="Profile"
+              width={80}
+              height={80}
+              className="mb-2"
+            />
+          ) : (
+            <div
+              className="d-flex align-items-center justify-content-center bg-light rounded-circle"
+              style={{ width: "150px", height: "150px" }}
+            >
+              <span className="fs-1 fw-bold text-uppercase">
+                {userProfile?.Company_Name
+                  ? userProfile.Company_Name.charAt(0)
+                  : userProfile?.Email
+                  ? userProfile.Email.charAt(0)
+                  : "N"}
+              </span>
+            </div>
+          )}
+        </div>
+        <div
+          className="d-flex align-items-center gap-2"
+          style={{ cursor: "pointer" }}
+        >
+          <span
+            onClick={handleClick1}
+            className="text-muted"
+          >
+            Choose a photo
+          </span>
+          <Icon
+            onClick={() => {
+              setEditDetails((prev: any) => {
+                return { ...prev, ["company_logo"]: "" };
+              });
+            }}
+            icon="material-symbols:delete-outline"
+            className="cursor-pointer"
+          />
+          <input
+            type="file"
+            ref={fileInputRef1}
+            onChange={(e: any) => {
+              fileHandler(e, "company_logo");
+            }}
+            style={{ display: "none" }}
+          />
+        </div>
+      </div>
+    </div>
 
-                            {isDropdownOpen && (
-                              <div
-                                className="position-absolute bottom-100 start-0 w-100 mb-1 bg-white border rounded-3 shadow-sm z-3"
-                                style={{
-                                  maxHeight: "200px",
-                                  overflowY: "auto",
-                                }}
-                              >
-                                {categoryOptions.map((option) => (
-                                  <div
-                                    key={option.value}
-                                    className={`px-3 py-2 cursor-pointer hover-bg-light ${
-                                      selectedCategories.includes(option.value)
-                                        ? "bg-light"
-                                        : ""
-                                    }`}
-                                    onClick={() =>
-                                      handleCategorySelect(option.value)
-                                    }
-                                  >
-                                    {option.label}
-                                    {selectedCategories.includes(
-                                      option.value
-                                    ) && (
-                                      <Icon
-                                        icon="mdi:check"
-                                        className="float-end"
-                                      />
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                          {selectedCategories.length >= 5 && (
-                            <small className="text-muted">
-                              Maximum 5 categories can be selected
-                            </small>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Company Name*</label>
+      <input
+        type="text"
+        className="form-control"
+        value={editDetails.company_name}
+        onChange={changeHandler}
+        id="company_name"
+        placeholder="Synnc"
+      />
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">About Me(Description)</label>
+      <textarea
+        className="form-control"
+        placeholder="Synnc is a platform that connects brands with creators to help them grow their business."
+        value={editDetails.company_description}
+        onChange={changeHandler}
+        id="company_description"
+        rows={4}
+      ></textarea>
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Company Website</label>
+      <input
+        type="text"
+        className="form-control"
+        value={editDetails.company_website}
+        onChange={changeHandler}
+        id="company_website"
+        placeholder="https://www.synnc.com"
+      />
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Company Linkedin</label>
+      <input
+        type="text"
+        className="form-control"
+        value={editDetails.company_linkedin}
+        onChange={changeHandler}
+        id="company_linkedin"
+        placeholder="https://www.linkedin.com/company/synnc"
+      />
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Location</label>
+      <input
+        type="text"
+        className="form-control"
+        value={editDetails.location}
+        onChange={changeHandler}
+        id="location"
+        placeholder="United States"
+      />
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Employees(est)</label>
+      <input
+        type="number"
+        className="form-control"
+        value={editDetails.no_of_employees}
+        min={0}
+        onChange={changeHandler}
+        id="no_of_employees"
+        placeholder="e.g 100"
+      />
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Year founded(est)</label>
+      <input
+        type="text"
+        className="form-control"
+        value={editDetails.year_founded}
+        onChange={changeHandler}
+        id="year_founded"
+        placeholder="e.g 2024"
+      />
+    </div>
+    <div className="mb-4 section-box_container">
+      <label className="mb-2">Size</label>
+      <select
+        className="form-select form-select-sm"
+        value={editDetails.size}
+        onChange={changeHandler}
+        id="size"
+      >
+        <option
+          disabled
+          selected
+          value=""
+          className="small text-muted"
+        >
+          Select size
+        </option>
+        <option value="Small" className="small">
+          Small
+        </option>
+        <option value="Medium" className="small">
+          Medium
+        </option>
+        <option value="Large" className="small">
+          Large
+        </option>
+      </select>
+    </div>
 
-                    {/* Second edit section */}
-                    <div
-                      className={`profile-container ${
-                        activeSection === "collaboration" ? "" : "d-none"
-                      }`}
-                    >
-                      <div className="d-flex justify-content-between mb-3 pt-2">
-                        <h6 className="mb-0 ">Edit Section</h6>
-                        <div>
-                          <button
-                            className="bg-white border btn btn-sm"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button className="btn btn-dark btn-sm ms-3">
-                            Save
-                          </button>
-                        </div>
-                      </div>
+    <div
+      className="mb-4 section-box_container"
+      ref={dropdownRef}
+    >
+      <label className="mb-2 mt-3">Categories</label>
+      <div className="position-relative">
+        <div
+          className="form-select d-flex align-items-center flex-wrap gap-2 min-height-auto cursor-pointer"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          {selectedCategories.length > 0 ? (
+            <>
+              {selectedCategories.map((category) => (
+                <span
+                  key={category}
+                  className="bg-dark-subtle text-dark px-2 py-1 rounded-pill d-flex align-items-center gap-1"
+                >
+                  {category}
+                  <Icon
+                    icon="mdi:close"
+                    className="cursor-pointer"
+                    width={16}
+                    height={16}
+                    onClick={(e) =>
+                      handleRemoveCategory(category, e)
+                    }
+                  />
+                </span>
+              ))}
+              {selectedCategories.length > 1 && (
+                <span
+                  className="text-muted ms-2 cursor-pointer"
+                  onClick={handleClearAllCategories}
+                >
+                  Clear all
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="text-muted">
+              Select up to 5 categories
+            </span>
+          )}
+        </div>
 
-                      {/* Content Section */}
-                      <div className="pb-2 main-box">
-                        <h6 className="mb-1">Let's Collaborate</h6>
-                        <p className="text-muted">
-                          Add your collaboration packages here
-                        </p>
-                        {/* Stats Section */}
-                        <div className="mb-4">
-                          <div className="card mb-3">
-                            {/* <div className="card-header bg-white">
-                                        <h6 className="mb-0">Package</h6>
-                                    </div> */}
+        {isDropdownOpen && (
+          <div
+            className="position-absolute bottom-100 start-0 w-100 mb-1 bg-white border rounded-3 shadow-sm z-3"
+            style={{
+              maxHeight: "200px",
+              overflowY: "auto",
+            }}
+          >
+            {categoryOptions.map((option) => (
+              <div
+                key={option.value}
+                className={`px-3 py-2 cursor-pointer hover-bg-light ${
+                  selectedCategories.includes(option.value)
+                    ? "bg-light"
+                    : ""
+                }`}
+                onClick={() =>
+                  handleCategorySelect(option.value)
+                }
+              >
+                {option.label}
+                {selectedCategories.includes(
+                  option.value
+                ) && (
+                  <Icon
+                    icon="mdi:check"
+                    className="float-end"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {selectedCategories.length >= 5 && (
+        <small className="text-muted">
+          Maximum 5 categories can be selected
+        </small>
+      )}
+    </div>
+  </div>
+</div>
 
-                            {/* Card 1 */}
-                            {preview &&
-                              cardDetails &&
-                              cardDetails?.length !== 0 &&
-                              cardDetails?.map((ele: any, index: number) => {
-                                return (
-                                  <div className="card-body" key={index}>
-                                    <div>
-                                      <div className="d-flex justify-content-between align-items-center mb-2">
-                                        <h6 className="mb-0">
-                                          Card {index + 1}
-                                        </h6>
-                                        <Icon
-                                          icon="material-symbols:delete-outline"
-                                          className="cursor-pointer"
-                                        />
-                                      </div>
+{/* Second edit section */}
+<div
+  className={`profile-container ${
+    activeSection === "collaboration" ? "" : "d-none"
+  }`}
+>
+  <div className="d-flex justify-content-between mb-3 pt-2">
+    <h6 className="mb-0 ">Edit Section</h6>
+    <div>
+      <button
+        className="bg-white border btn btn-sm"
+        onClick={handleCancel}
+      >
+        Cancel
+      </button>
+      <button className="btn btn-dark btn-sm ms-3">
+        Save
+      </button>
+    </div>
+  </div>
 
-                                      {/* Title */}
-                                      <div className="mb-3">
-                                        <label className="mb-2">Title</label>
-                                        <input
-                                          id="package_name"
-                                          defaultValue={ele.package_name}
-                                          onChange={(e) => valueAdder(e, index)}
-                                          type="text"
-                                          className="form-control"
-                                          placeholder="1x Sponsored Post"
-                                        />
-                                      </div>
+  {/* Content Section */}
+  <div className="pb-2 main-box">
+    <h6 className="mb-1">Let's Collaborate</h6>
+    <p className="text-muted">
+      Add your collaboration packages here
+    </p>
+    {/* Stats Section */}
+    <div className="mb-4">
+      <div className="card mb-3">
+        {/* <div className="card-header bg-white">
+                    <h6 className="mb-0">Package</h6>
+                </div> */}
 
-                                      {/* Description */}
-                                      <div className="mb-3">
-                                        <label className="mb-2">
-                                          Description
-                                        </label>
-                                        <textarea
-                                          className="form-control"
-                                          rows={5}
-                                          defaultValue={
-                                            ele?.package_description
-                                          }
-                                          onChange={(e) => valueAdder(e, index)}
-                                          id="package_description"
-                                          placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
-                                        />
-                                      </div>
+        {/* Card 1 */}
+        {preview &&
+          cardDetails &&
+          cardDetails?.length !== 0 &&
+          cardDetails?.map((ele: any, index: number) => {
+            return (
+              <div className="card-body" key={index}>
+                <div>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <h6 className="mb-0">
+                      Card {index + 1}
+                    </h6>
+                    <Icon
+                      icon="material-symbols:delete-outline"
+                      className="cursor-pointer"
+                    />
+                  </div>
 
-                                      {/* Price */}
-                                      <div>
-                                        <label className="mb-2">Price</label>
-                                        <input
-                                          id="package_price"
-                                          defaultValue={
-                                            ele?.package_price
-                                              ? ele?.package_price
-                                              : 0
-                                          }
-                                          type="number"
-                                          onChange={(e) => valueAdder(e, index)}
-                                          className="form-control"
-                                          placeholder="$ 100"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                          </div>
-                          <button
-                            className="btn btn-outline-dark w-100"
-                            onClick={() => {
-                              setPreview(false);
-                              const newEntry = {
-                                package_name: "",
-                                package_description: "",
-                                package_price: 0,
-                              };
-                              const newArray: any = cardDetails;
-                              newArray?.push(newEntry);
-                              setCardDetails(newArray);
-                              setTimeout(() => {
-                                setPreview(true);
-                              }, 100);
-                            }}
-                          >
-                            + Add Card
-                          </button>
-                        </div>
+                  {/* Title */}
+                  <div className="mb-3">
+                    <label className="mb-2">Title</label>
+                    <input
+                      id="package_name"
+                      defaultValue={ele.package_name}
+                      onChange={(e) => valueAdder(e, index)}
+                      type="text"
+                      className="form-control"
+                      placeholder="1x Sponsored Post"
+                    />
+                  </div>
 
-                        <button
-                          className="btn btn-outline-danger w-100 mt-auto"
-                          onClick={() => {
-                            setPreview(false);
+                  {/* Description */}
+                  <div className="mb-3">
+                    <label className="mb-2">
+                      Description
+                    </label>
+                    <textarea
+                      className="form-control"
+                      rows={5}
+                      defaultValue={
+                        ele?.package_description
+                      }
+                      onChange={(e) => valueAdder(e, index)}
+                      id="package_description"
+                      placeholder="I'll create a LinkedIn post to educate my audience on the benefits of your company's offerings, or for anything else you're interested in promoting, like an upcoming event."
+                    />
+                  </div>
 
-                            setCardDetails([]);
-                            setTimeout(() => {
-                              setPreview(true);
-                            }, 100);
-                          }}
-                        >
-                          Delete Block
-                        </button>
-                      </div>
-                    </div>
+                  {/* Price */}
+                  <div>
+                    <label className="mb-2">Price</label>
+                    <input
+                      id="package_price"
+                      defaultValue={
+                        ele?.package_price
+                          ? ele?.package_price
+                          : 0
+                      }
+                      type="number"
+                      onChange={(e) => valueAdder(e, index)}
+                      className="form-control"
+                      placeholder="$ 100"
+                    />
                   </div>
                 </div>
+              </div>
+            );
+          })}
+      </div>
+      <button
+        className="btn btn-outline-dark w-100"
+        onClick={() => {
+          setPreview(false);
+          const newEntry = {
+            package_name: "",
+            package_description: "",
+            package_price: 0,
+          };
+          const newArray: any = cardDetails;
+          newArray?.push(newEntry);
+          setCardDetails(newArray);
+          setTimeout(() => {
+            setPreview(true);
+          }, 100);
+        }}
+      >
+        + Add Card
+      </button>
+    </div>
+
+    <button
+      className="btn btn-outline-danger w-100 mt-auto"
+      onClick={() => {
+        setPreview(false);
+
+        setCardDetails([]);
+        setTimeout(() => {
+          setPreview(true);
+        }, 100);
+      }}
+    >
+      Delete Block
+    </button>
+  </div>
+</div>
+
+</div>
+
+</div>
                 {/* sidebar sections ends here */}
               </div>
             </div>
