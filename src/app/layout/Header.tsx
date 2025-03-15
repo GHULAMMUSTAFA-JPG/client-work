@@ -1266,12 +1266,12 @@ export default function Header() {
   });
 
   // Join the socket group with user ID when userProfile is available
-  useEffect(() => {
-    if (userProfile?._id && isConnected) {
-      joinGroup({ userId: userProfile._id, groupId: userProfile._id });
-      console.log("Joined socket group with userId:", userProfile._id);
-    }
-  }, [userProfile, isConnected, joinGroup]);
+  // useEffect(() => {
+  //   if (userProfile?._id && isConnected) {
+  //     joinGroup({ userId: `synnc_notifs_${userProfile._id}`, groupId: `synnc_notifs_${userProfile._id}` });
+  //     console.log("Joined socket group with userId:", userProfile._id);
+  //   }
+  // }, [userProfile, isConnected, joinGroup]);
 
   useEffect(() => {
     console.log("Is Socket Connected:", isConnected);
