@@ -182,7 +182,7 @@ const ListDrawer = ({
                   }}
                   data-bs-toggle="modal"
                   data-bs-target="#createNewListModal"
-                  className="tw-flex tw-items-center tw-gap-2 tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded-md tw-hover:bg-teal-600"
+                  className="tw-flex tw-itmes-center tw-gap-2 tw-justify-center tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
                 >
                   <Plus className="tw-h-4 tw-w-4" />
                   Create New List
