@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   X,
   Link as LinkIcon,
@@ -16,6 +16,8 @@ interface LivePostDrawerProps {
   campaignId: string;
   creatorId: string;
   postId: string;
+  initialPostUrl?: string;
+  initialEmbedLink?: string;
 }
 
 export function LivePostDrawer({
@@ -25,12 +27,24 @@ export function LivePostDrawer({
   campaignId,
   creatorId,
   postId,
+  initialPostUrl = "",
+  initialEmbedLink = "",
 }: LivePostDrawerProps) {
-  const [postUrl, setPostUrl] = useState("");
-  const [embedLink, setEmbedLink] = useState("");
+  const [postUrl, setPostUrl] = useState(initialPostUrl);
+  const [embedLink, setEmbedLink] = useState(initialEmbedLink);
   const [error, setError] = useState("");
   const [embedError, setEmbedError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Update state when initial values change or drawer opens
+  useEffect(() => {
+    if (isOpen) {
+      setPostUrl(initialPostUrl);
+      setEmbedLink(initialEmbedLink);
+      setError("");
+      setEmbedError("");
+    }
+  }, [isOpen, initialPostUrl, initialEmbedLink]);
 
   if (!isOpen) return null;
 
@@ -66,8 +80,6 @@ export function LivePostDrawer({
 
       if (response) {
         onSubmit();
-        setPostUrl("");
-        setEmbedLink("");
         setError("");
         setEmbedError("");
       } else {
