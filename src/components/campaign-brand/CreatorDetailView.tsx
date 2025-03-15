@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
 import Tooltip from "../Tooltip";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
+import { useRouter, useParams, useSearchParams, usePathname } from "next/navigation";
+import { updatePostStatus, updatePostContentStatus, getBrandCampaignActiveCreators } from "@/@api/campaign";
 import { toast } from "react-toastify";
 import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
@@ -24,6 +24,9 @@ import { PostViewer } from "../shared/PostViewer";
 import ChatModal from "../ChatModal";
 import { isImageUrl } from "@/utils";
 import { CampaignDrawer } from "../campaign-hub/CampaignDrawer";
+import useNotificationSocket from "@/app/services/useNotificationSocket";
+import { NotificationData } from "@/app/services/socketService";
+
 
 interface CreatorDetailViewProps {
   creator: Creator;
@@ -35,7 +38,10 @@ interface CreatorDetailViewProps {
   selectedCreator: Creator | null;
   handelSelectedCreator: (creator: Creator) => void;
 }
-
+// Define the expected response type for getBrandCampaignActiveCreators
+interface CampaignActiveCreatorsResponse {
+  creators: Creator[]; // Adjust this based on your actual API response structure
+}
 export function CreatorDetailView({
   creator,
   onBack,
@@ -50,8 +56,8 @@ export function CreatorDetailView({
   console.log("posts", posts);
   const initialContent =
     initialPost &&
-    initialPost.contentItems &&
-    initialPost.contentItems.length > 0
+      initialPost.contentItems &&
+      initialPost.contentItems.length > 0
       ? initialPost.contentItems[0]
       : null;
 
@@ -63,7 +69,10 @@ export function CreatorDetailView({
   const [viewingPost, setViewingPost] = useState<Post | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [loggedInUser, setLoggedInUser] = useState<any>();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const pathname = usePathname(); // Add this to get the current pathname
   const handleOpenChatModal = () => {
     const offcanvasElement = document.getElementById("creatorProfileDrawer");
     // if (offcanvasElement) {
@@ -76,6 +85,89 @@ export function CreatorDetailView({
   };
   console.log("viewingPost", viewingPost);
 
+  useEffect(() => {
+    console.log("Current posts state:", posts);
+  }, [posts]);
+
+  // Inside CreatorDetailView component
+  const { isConnected } = useNotificationSocket({
+    onNotification: (data: NotificationData) => {
+      const { event_type, meta_data } = data.m.OtherFields;
+      const { Campaign_ID, Creator_ID, Post_ID } = meta_data || {};
+
+      console.log("Notification received:", { event_type, Campaign_ID, Creator_ID, Post_ID });
+
+      if (
+        [
+          "campaign_post_created",
+          "campaign_post_proposal_accepted",
+          "campaign_post_proposal_rejected",
+          "payment_succeeded",
+        ].includes(event_type) &&
+        Campaign_ID &&
+        Creator_ID &&
+        Post_ID
+      ) {
+        const url = `/campaign-details/${Campaign_ID}?tab=in_campaign&creator=${Creator_ID}&post=${Post_ID}`;
+        const isSameUrl =
+          pathname.startsWith(`/campaign-details/${Campaign_ID}`) &&
+          searchParams.get('creator') === Creator_ID &&
+          searchParams.get('post') === Post_ID;
+
+        console.log("URL check:", { pathname, creator: searchParams.get('creator'), post: searchParams.get('post'), isSameUrl });
+
+        if (isSameUrl) {
+          console.log("Auto-refreshing data for:", { Campaign_ID, Creator_ID, Post_ID });
+          refreshData(Campaign_ID, Creator_ID, Post_ID);
+        } else {
+          console.log("Navigating to:", url);
+          router.push(url); // Optional: Remove if handled solely by toast click
+        }
+      }
+    },
+  });
+
+  const refreshData = async (campaignId: string, creatorId: string, postId: string) => {
+    if (!loggedInUser?._id) {
+      console.log("No logged-in user ID found");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = (await getBrandCampaignActiveCreators({
+        campaign_id: campaignId,
+        buyer_id: loggedInUser._id,
+      })) as CampaignActiveCreatorsResponse;
+
+      console.log("API response:", response);
+
+      const updatedCreator = response.creators.find((c: Creator) => c.id === creatorId);
+      if (updatedCreator?.posts) {
+        console.log("Updated posts:", updatedCreator.posts);
+        posts = updatedCreator.posts; // Fixed: Use setPosts instead of direct assignment
+        const updatedPost = updatedCreator.posts.find((p: Post) => p.id === postId);
+        if (updatedPost) {
+          console.log("Updated selected post:", updatedPost);
+          setSelectedPost(updatedPost); // Auto-select the new Post_ID from notification
+          setSelectedContent(updatedPost.contentItems[0] || null);
+          // Update URL to reflect new postId without navigation
+          const newUrl = `/campaign-details/${campaignId}?tab=in_campaign&creator=${creatorId}&post=${postId}`;
+          window.history.replaceState(null, "", newUrl);
+        } else {
+          console.log("Post not found in updated data:", postId);
+        }
+        toast.success("Post data refreshed successfully");
+      } else {
+        console.log("No posts found for creator:", creatorId);
+      }
+    } catch (error) {
+      console.error("Error refreshing data:", error);
+      toast.error("Failed to refresh post data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const handleCloseChatModal = (setSelectedIds: any) => {
     setSelectedIds({
       Message_ID: null,
@@ -88,6 +180,37 @@ export function CreatorDetailView({
     });
     setIsChatModalOpen(false);
   };
+
+  // // fetch campaings creators view
+  // useEffect(() => {
+  //   try {
+  //     setIsLoading(true);
+  //     const userData = localStorage.getItem("user");
+  //     const user = userData ? JSON.parse(userData) : "default_user";
+  //     setLoggedInUser(user)
+  //     getBrandCampaignActiveCreators({
+  //       campaign_id: campaignId,
+  //       buyer_id: user._id,
+  //     })
+
+
+  //     // if (campaignData?.campaign) {
+  //     //   setCampaign(formatCampaignData(campaignData.campaign));
+  //     //   setCampaignFormData(
+  //     //     extractCampaignFormData(campaignData.campaign) as CampaignFormData
+  //     //   );
+  //     // }
+
+  //     // if (activeCreatorsData) {
+  //     //   setCampaignActiveCreatorsData(activeCreatorsData);
+  //     // }
+  //   } catch (error) {
+  //     console.error("Error fetching campaign data:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }, [])
+
   useEffect(() => {
     const currentPostStillExists =
       selectedPost && posts.some((post) => post.id === selectedPost.id);
@@ -139,7 +262,7 @@ export function CreatorDetailView({
     const avgEngagement =
       engagementRates.length > 0
         ? engagementRates.reduce((sum, rate) => sum + rate, 0) /
-          engagementRates.length
+        engagementRates.length
         : 0;
 
     const clickThroughRate = avgEngagement * 0.6;
@@ -291,10 +414,9 @@ export function CreatorDetailView({
                     key={post.id}
                     onClick={() => handleSelectPost(post)}
                     className={`tw-w-full tw-p-3 tw-rounded-lg tw-text-left tw-transition-colors
-                      ${
-                        selectedPost?.id === post.id
-                          ? "tw-bg-teal-50 tw-ring-1 tw-ring-teal-500"
-                          : "hover:tw-bg-gray-50"
+                      ${selectedPost?.id === post.id
+                        ? "tw-bg-teal-50 tw-ring-1 tw-ring-teal-500"
+                        : "hover:tw-bg-gray-50"
                       }
                     `}
                   >
@@ -302,13 +424,12 @@ export function CreatorDetailView({
                       <FileText className="tw-w-4 tw-h-4 tw-text-gray-500" />
                       <span
                         className={`tw-text-xs tw-px-2 tw-py-1 tw-rounded-full
-                        ${
-                          post.status === "approved"
+                        ${post.status === "approved"
                             ? "tw-bg-green-100 tw-text-green-800"
                             : post.status === "in_review"
-                            ? "tw-bg-yellow-100 tw-text-yellow-800"
-                            : "tw-bg-teal-100 tw-text-teal-800"
-                        }
+                              ? "tw-bg-yellow-100 tw-text-yellow-800"
+                              : "tw-bg-teal-100 tw-text-teal-800"
+                          }
                       `}
                       >
                         {post.status.replace("_", " ")}
@@ -528,8 +649,8 @@ export function CreatorDetailView({
                         const additionalImages =
                           mediaContent.images.length > 1
                             ? mediaContent.images
-                                .slice(1)
-                                .map((img) => prepareImageForDisplay(img) || "")
+                              .slice(1)
+                              .map((img) => prepareImageForDisplay(img) || "")
                             : [];
 
                         const allLinks = mediaContent.links.concat(

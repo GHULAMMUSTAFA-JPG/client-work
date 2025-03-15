@@ -20,14 +20,24 @@ export default function SocketProvider({ children }: SocketProviderProps) {
     useEffect(() => {
         // Ensure this runs only on the client
         if (typeof window !== "undefined") {
-            const userData = localStorage.getItem("user");
-            const userId = userData ? JSON.parse(userData)?._id : "default_user";
+            let userData: any
+            userData = localStorage.getItem("user");
+            //for creator api will send uuid and for branch _id
+            let userId = userData ? JSON.parse(userData)?._id : null;
+            if (!userId) {
+                userId = userData ? JSON.parse(userData)?.uuid : null
+            }
+            console.log(userId, "userId");
             setLoggedInUserId(userId || "default_user");
         }
     }, []);
 
     useEffect(() => {
+        console.log('loggedInUserId out', loggedInUserId)
+        console.log('isConnected out', isConnected)
         if (isConnected && loggedInUserId !== "default_user") {
+            console.log('loggedInUserId in', loggedInUserId)
+            console.log('isConnected in', isConnected)
             // Register user-specific notifications
             joinGroup({
                 userId: loggedInUserId,
@@ -38,7 +48,7 @@ export default function SocketProvider({ children }: SocketProviderProps) {
 
             // Register common notifications
             joinGroup({
-                groupId: environment.production ? "synnc_notifs_" : "synnc_notifs_",
+                groupId: environment.production ? `synnc_notifs_${loggedInUserId}` : `synnc_notifs_${loggedInUserId}`,
             });
         }
     }, [isConnected, joinGroup, loggedInUserId]);
