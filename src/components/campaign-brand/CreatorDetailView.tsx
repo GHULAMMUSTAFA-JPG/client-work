@@ -247,7 +247,7 @@ export function CreatorDetailView({
             </button>
 
             <div
-              className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded-lg tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
+              className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
               data-bs-toggle="offcanvas"
               data-bs-target="#creatorProfileDrawer"
             >
@@ -271,7 +271,7 @@ export function CreatorDetailView({
                 selectedCreator={selectedCreator}
                 setSelectedCreator={handelSelectedCreator}
               />
-              <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-4">
+              <div className="tw-bg-white tw-rounded tw-shadow-sm tw-border tw-p-4">
                 <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
                   Campaign Posts
                 </h3>
@@ -280,7 +280,7 @@ export function CreatorDetailView({
                     <button
                       key={post.id}
                       onClick={() => handleSelectPost(post)}
-                      className={`tw-w-full tw-p-3 tw-rounded-lg tw-text-left tw-transition-colors
+                      className={`tw-w-full tw-p-3 tw-rounded tw-text-left tw-transition-colors
                         ${
                           selectedPost?.id === post.id
                             ? "tw-bg-teal-50 tw-ring-1 tw-ring-teal-500"
@@ -315,10 +315,10 @@ export function CreatorDetailView({
                         <h4 className="tw-font-medium tw-text-sm tw-mb-1">
                           {post.title}
                         </h4>
-                        <div className="status-box">
+                        <div className="status-box00">
                           <button
                             onClick={() => setViewingPost(post)}
-                            className="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-1 tw-text-xs tw-text-gray-600 hover:tw-text-gray-900"
+                            className="tw-w-full tw-bg-teal-500 tw-rounded tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-2 tw-text-xs tw-text-white"
                           >
                             <Eye className="tw-w-3 tw-h-3 tw-mr-1" />
                             View Details
@@ -359,12 +359,12 @@ export function CreatorDetailView({
             <div className="tw-col-span-9">
               <div className="tw-flex tw-flex-col tw-items-center">
                 <div className="tw-w-full tw-mb-6">
-                  <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                  <div className="tw-bg-white tw-rounded tw-shadow-sm tw-border tw-p-6">
                     <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
                       Campaign Performance
                     </h3>
                     <div className="tw-grid tw-grid-cols-3 tw-gap-6">
-                      <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-bg-gray-50 tw-rounded tw-p-4">
                         <div className="tw-text-sm tw-text-gray-500">
                           Total Impressions
                         </div>
@@ -377,7 +377,7 @@ export function CreatorDetailView({
                             : "No posts yet"}
                         </div>
                       </div>
-                      <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-bg-gray-50 tw-rounded tw-p-4">
                         <div className="tw-text-sm tw-text-gray-500">
                           Avg. Engagement Rate
                         </div>
@@ -390,7 +390,7 @@ export function CreatorDetailView({
                             : "No data"}
                         </div>
                       </div>
-                      <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-bg-gray-50 tw-rounded tw-p-4">
                         <div className="tw-text-sm tw-text-gray-500">
                           Click-through Rate
                         </div>
@@ -406,7 +406,7 @@ export function CreatorDetailView({
                 </div>
 
                 {selectedPost && (
-                  <div className="tw-w-full tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                  <div className="tw-w-full tw-bg-white tw-rounded tw-shadow-sm tw-border tw-p-6">
                     <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
                       <div>
                         <h3 className="tw-font-medium tw-text-gray-900">
@@ -441,7 +441,7 @@ export function CreatorDetailView({
                       </div>
                       <div className="tw-flex tw-items-center tw-gap-3">
                         <button
-                          className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded-lg hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
+                          className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
                           onClick={handleOpenChatModal}
                         >
                           <MessageSquare className="tw-w-4 tw-h-4" />
@@ -449,7 +449,7 @@ export function CreatorDetailView({
                         </button>
                         {selectedPost.status === "in_review" && (
                           <button
-                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2"
+                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2"
                             onClick={() => handleApprovePost(selectedPost.id)}
                           >
                             <CheckCircle className="tw-w-4 tw-h-4" />
@@ -460,7 +460,7 @@ export function CreatorDetailView({
                         {selectedPost.numberstatus === 12 ? (
                           <button
                             onClick={() => handleProcessPaymentCheckout()}
-                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2"
+                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2"
                           >
                             <DollarSign className="tw-w-4 tw-h-4" />
                             Process Payment
@@ -468,7 +468,7 @@ export function CreatorDetailView({
                         ) : (
                           <button
                             disabled
-                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
                           >
                             <DollarSign className="tw-w-4 tw-h-4" />
                             {selectedPost.numberstatus === 10
@@ -484,7 +484,7 @@ export function CreatorDetailView({
                         <div className="tw-flex tw-justify-end tw-gap-3 tw-mb-4">
                           <button
                             onClick={() => handleRejectContent()}
-                            className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded-lg hover:tw-bg-red-50 tw-transition-colors"
+                            className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded hover:tw-bg-red-50 tw-transition-colors"
                           >
                             <div className="tw-flex tw-items-center tw-gap-2">
                               <ThumbsDown className="tw-w-4 tw-h-4" />
@@ -493,7 +493,7 @@ export function CreatorDetailView({
                           </button>
                           <button
                             onClick={() => handleApproveContent()}
-                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-transition-colors"
+                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded hover:tw-bg-green-700 tw-transition-colors"
                           >
                             <div className="tw-flex tw-items-center tw-gap-2">
                               <CheckCircle className="tw-w-4 tw-h-4" />
@@ -510,7 +510,7 @@ export function CreatorDetailView({
                           const Metrics = () => {
                             return (
                               <div className="tw-w-60 tw-mr-6">
-                                <div className="tw-mt-3 tw-p-4 tw-rounded-lg tw-border tw-bg-white tw-shadow-sm">
+                                <div className="tw-mt-3 tw-p-4 tw-rounded tw-border tw-bg-white tw-shadow-sm">
                                   <h4 className="tw-font-medium tw-text-sm tw-mb-3 tw-text-gray-700">
                                     Post Performance
                                   </h4>
