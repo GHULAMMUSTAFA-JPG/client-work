@@ -68,7 +68,7 @@ export const addCampaignLiveLink = async (payload: {
   creator_id: string;
   post_id: string;
   live_link: string;
-  embed_link?: string;
+  embeded_link: string;
 }) =>
   handleApiRequest("put", "/creators/campaigns/campaign-live-link", payload);
 
@@ -77,16 +77,32 @@ export const addCampaignPostImpressions = async (payload: {
   creator_id: string;
   post_id: string;
   impressions: number;
-  clicks: number;
-  engagement_rate: number;
+  reactions: number;
+  engagements: number;
   comments: number;
-  shares: number;
-}) =>
-  handleApiRequest(
+  reposts: number;
+  impressions_proof: string | File;
+}) => {
+  const formData = new FormData();
+  Object.entries(payload).forEach(([key, value]) => {
+    if (value instanceof File && key === "impressions_proof") {
+      formData.append(key, value);
+    } else {
+      formData.append(key, value.toString());
+    }
+  });
+
+  return handleApiRequest(
     "put",
     "/creators/campaigns/campaign-post-impressions",
-    payload
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
+};
 
 export const getCampaignCreatorPosts = async (params: {
   creator_id: string;

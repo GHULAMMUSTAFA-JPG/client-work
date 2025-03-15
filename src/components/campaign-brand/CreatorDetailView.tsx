@@ -626,13 +626,10 @@ export function CreatorDetailView({
                                   )}
                                   <div className="tw-flex-1 tw-max-w-3xl">
                                     <div className="tw-flex tw-justify-center">
-                                      <iframe
-                                        src={selectedPost?.embedLink}
-                                        height="650"
-                                        width="604"
-                                        frameBorder="0"
-                                        allowFullScreen
-                                        title="Embedded post"
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html: selectedPost.embedLink,
+                                        }}
                                       />
                                     </div>
                                   </div>

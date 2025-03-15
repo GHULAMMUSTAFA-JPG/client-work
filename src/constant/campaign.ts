@@ -4,36 +4,42 @@ export const postStages = [
     label: "Draft Upload",
     description: "Upload your initial content draft for review",
     status: "completed" as const,
+    isEditable: false,
   },
   {
     id: 2,
     label: "See Feedback",
     description: "Review feedback from the brand team",
     status: "completed" as const,
+    isEditable: false,
   },
   {
     id: 3,
     label: "Approved",
     description: "Content has been approved by the brand",
     status: "completed" as const,
+    isEditable: false,
   },
   {
     id: 4,
     label: "Live Post Link",
     description: "Share the link to your published content",
     status: "completed" as const,
+    isEditable: true,
   },
   {
     id: 5,
     label: "Impression Upload",
     description: "Upload engagement metrics and impressions",
     status: "pending" as const,
+    isEditable: true,
   },
   {
     id: 6,
     label: "Payment",
     description: "Payment processing and completion",
     status: "inactive" as const,
+    isEditable: false,
   },
 ];
 

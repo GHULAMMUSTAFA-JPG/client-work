@@ -410,7 +410,7 @@ export default function DiscoverBrandsPage() {
                         setCompanyName(brand.Company_Name);
                         setBrandId(brand._id);
                       }}
-                      className="tw-px-4 tw-py-2 tw-bg-emerald-600 tw-text-white tw-rounded-lg hover:tw-bg-emerald-700 tw-text-sm tw-font-medium"
+                      className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
                       data-bs-toggle="offcanvas"
                       data-bs-target="#campaignsOffcanvas"
                     >
@@ -422,7 +422,7 @@ export default function DiscoverBrandsPage() {
                         onClick={() =>
                           handleInterested("remove", brand._id, index)
                         }
-                        className="tw-px-4 tw-py-2 tw-border tw-border-emerald-600 tw-text-emerald-600 tw-rounded-lg hover:tw-bg-emerald-600 hover:tw-text-white tw-transition"
+                        className="tw-px-4 tw-border tw-border-teal-600 tw-py-2 tw-rounded tw-text-teal-600 hover:tw-text-teal-800"
                       >
                         <Undo2 size={16} />
                         <span>Interested</span>
@@ -432,7 +432,7 @@ export default function DiscoverBrandsPage() {
                         onClick={() =>
                           handleInterested("add", brand._id, index)
                         }
-                        className="tw-px-4 tw-py-2 tw-border tw-border-emerald-600 tw-text-emerald-600 tw-rounded-lg hover:tw-bg-emerald-600 hover:tw-text-white tw-transition"
+                        className="tw-px-4 tw-border tw-border-gray-500 tw-py-2 tw-rounded tw-text-gray-600 hover:tw-text-teal-800"
                       >
                         I'm Interested
                       </button>
