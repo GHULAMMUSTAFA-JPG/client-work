@@ -95,7 +95,7 @@ function AllCampaigns() {
             </div>
 
             <button
-              className="tw-flex tw-items-center tw-px-4 tw-py-2 tw-bg-gray-900 tw-text-white tw-rounded-lg hover:tw-bg-gray-800"
+              className="tw-flex tw-items-center tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight2"
             >
