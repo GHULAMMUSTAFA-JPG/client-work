@@ -41,14 +41,12 @@ export default function SocketProvider({ children }: SocketProviderProps) {
             // Register user-specific notifications
             joinGroup({
                 userId: loggedInUserId,
-                groupId: environment.production
-                    ? `synnc_notifs_${loggedInUserId}`
-                    : `synnc_notifs_${loggedInUserId}`,
+                groupId: `synnc_notifs_${loggedInUserId}`,
             });
 
             // Register common notifications
             joinGroup({
-                groupId: environment.production ? `synnc_notifs_${loggedInUserId}` : `synnc_notifs_${loggedInUserId}`,
+                groupId: `synnc_notifs_${loggedInUserId}`,
             });
         }
     }, [isConnected, joinGroup, loggedInUserId]);
