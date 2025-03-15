@@ -51,3 +51,29 @@ export const isImageUrl = (url: string) => {
     url.startsWith("data:image/")
   );
 };
+
+export const isValidLinkedInUrl = (url: string) => {
+  if (!url.trim()) return false;
+
+  try {
+    const urlObj = new URL(url);
+
+    if (!urlObj.hostname.includes("linkedin.com")) return false;
+    return (
+      url.includes("linkedin.com/posts/") ||
+      url.includes("linkedin.com/feed/update/") ||
+      url.includes("linkedin.com/pulse/")
+    );
+  } catch (e) {
+    return false;
+  }
+};
+
+export const isValidEmbedCode = (code: string) => {
+  if (!code.trim()) return false;
+  return (
+    code.includes("<iframe") &&
+    code.includes("linkedin.com/embed") &&
+    code.includes("</iframe>")
+  );
+};

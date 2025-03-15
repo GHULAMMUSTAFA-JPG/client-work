@@ -55,7 +55,7 @@ export const formatBrandCreatorPosts = (posts: any[]): Post[] => {
     reposts: post.Impressions?.Shares || 0,
     link: post.Live_Link || undefined,
     liveLink: post.Live_Link || undefined,
-    embedLink: post.Embed_Link || undefined,
+    embedLink: post.Embeded_Link || undefined,
     contentItems: (post.Content_Versions || []).map((content: any) => ({
       id: content.Content_ID,
       type: determineContentType(content),

@@ -18,6 +18,7 @@ interface PostStage {
   value?: string | number;
   status: "completed" | "pending" | "inactive" | "rejected";
   icon?: React.ReactNode;
+  isEditable?: boolean;
 }
 
 interface PostProgressProps {
@@ -29,6 +30,7 @@ interface PostProgressProps {
   onSubmit: () => void;
   linkedinPostUrl: string;
   postStatus?: number;
+  embeddedLink?: string;
 }
 
 export function PostProgress({
@@ -39,16 +41,24 @@ export function PostProgress({
   currentStage,
   onSubmit,
   linkedinPostUrl,
+  embeddedLink,
   postStatus,
 }: PostProgressProps) {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [isLivePostDrawerOpen, setIsLivePostDrawerOpen] = useState(false);
   const [isImpressionsDrawerOpen, setIsImpressionsDrawerOpen] = useState(false);
   const [isPaymentDrawerOpen, setIsPaymentDrawerOpen] = useState(false);
+
+  // Add a style block for the non-editable cursor
+  const nonEditableStyle = {
+    cursor: "default",
+    pointerEvents: "none" as const,
+  };
+
   const updatedStages = stages.map((stage) => {
     const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
     const thisStageIndex = stages.findIndex((s) => s.id === stage.id);
-    console.log("stages", stages);
+
     if (currentStage === 6 && stage.label === "Payment" && postStatus === 10) {
       return { ...stage, status: "completed" as const };
     }
@@ -62,8 +72,7 @@ export function PostProgress({
       return { ...stage, status: "inactive" as const };
     }
   });
-  console.log("updatedStages", updatedStages);
-  console.log("currentStage", currentStage);
+
   const getStageIcon = (stage: PostStage) => {
     if (stage.icon) return stage.icon;
 
@@ -118,7 +127,11 @@ export function PostProgress({
   };
 
   const handleStageClick = (stage: PostStage, index: number) => {
-    if (stage.id === currentStage) {
+    // Allow clicking on the current stage OR any previous editable stage
+    const isCurrentStage = stage.id === currentStage;
+    const isPreviousStage = stage.id < currentStage;
+
+    if ((isCurrentStage || isPreviousStage) && stage.isEditable) {
       switch (stage.label) {
         case "Live Post Link":
           setIsLivePostDrawerOpen(true);
@@ -159,10 +172,13 @@ export function PostProgress({
         <div className="tw-relative tw-flex tw-justify-between">
           {updatedStages.map((stage, index) => {
             const colors = getStageColor(stage, hoveredStage === stage.id);
-            const approvedStageIndex = stages.findIndex(
-              (s) => s.label === "Approved"
-            );
-            const isBeforeApproved = index <= approvedStageIndex;
+            const isCurrentStage = stage.id === currentStage;
+            const isPreviousStage = stage.id < currentStage;
+            const isEditable = stage.isEditable === true;
+
+            // Allow interaction if it's the current stage OR a previous editable stage
+            const isInteractive =
+              (isCurrentStage || isPreviousStage) && isEditable;
 
             return (
               <div
@@ -180,6 +196,15 @@ export function PostProgress({
                       <p className="tw-text-sm tw-text-gray-300">
                         {stage.description}
                       </p>
+                      {isEditable && (
+                        <p className="tw-text-xs tw-text-green-300 tw-mt-1">
+                          {isPreviousStage
+                            ? "Can be modified"
+                            : isCurrentStage
+                            ? "Ready to edit"
+                            : ""}
+                        </p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -187,16 +212,13 @@ export function PostProgress({
                 {/* Step Button */}
                 <button
                   onClick={() => handleStageClick(stage, index)}
+                  style={!isInteractive ? nonEditableStyle : undefined}
                   className={`
                     tw-relative tw-z-10 tw-w-8 tw-h-8 tw-rounded-full tw-border-2 tw-flex tw-items-center tw-justify-center
                     tw-transition-all tw-duration-200 ${colors.bg} ${
                     colors.border
                   }
-                    ${
-                      isBeforeApproved
-                        ? "tw-cursor-pointer hover:tw-scale-110"
-                        : "tw-cursor-pointer hover:tw-bg-gray-50"
-                    }
+                    ${isInteractive ? "hover:tw-scale-110" : ""}
                   `}
                 >
                   {stage.status === "completed" ? (
@@ -242,6 +264,8 @@ export function PostProgress({
             campaignId={campaignId}
             creatorId={creatorId}
             postId={postId}
+            initialPostUrl={linkedinPostUrl}
+            initialEmbedLink={embeddedLink}
           />
 
           <ImpressionsDrawer
@@ -251,6 +275,7 @@ export function PostProgress({
             campaignId={campaignId}
             creatorId={creatorId}
             linkedinPostUrl={linkedinPostUrl}
+            embeddedLink={embeddedLink}
             onSubmit={() => {
               setIsImpressionsDrawerOpen(false);
               onSubmit();
