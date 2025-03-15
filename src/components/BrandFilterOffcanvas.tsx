@@ -246,22 +246,10 @@ export default function BrandFilterOffcanvas({
           aria-label="Close"
         ></button>
       </div>
-      <div className="mt-auto d-flex gap-2 pt-4 px-3">
-          <button className="tw-flex-1 tw-px-4 tw-py-2 tw-text-gray-700 tw-bg-gray-100 tw-rounded-md hover:tw-bg-gray-200" onClick={handleClearAll}>
-            Reset All
-          </button>
-          <button
-            onClick={handleApplyFilter}
-            className="tw-flex-1 tw-px-4 tw-py-2 tw-text-white tw-bg-teal-600 tw-rounded-md hover:tw-bg-teal-700"
-          >
-            Apply Filters
-          </button>
-        </div>
+
 
       <div className="offcanvas-body">
       
-
-
         <FilterSection
           title="Size"
           items={availablefilters?.sizes}
@@ -323,18 +311,18 @@ export default function BrandFilterOffcanvas({
           isValueKey={true}
         />
 
-{/*             <h6 className="mb-3">Watching</h6>
-            <input
-                className="form-check-input"
-                type="checkbox"
-                id="interested"
-                checked={interested}
-                onChange={handleInterestChange}
-              />
-              <label className="form-check-label" htmlFor="interested">
-                Interested
-              </label> */}
-          </div>
+      </div>
+
+      <div className="offcanvas-footer border-top p-3 bg-white">
+      <div className="tw-flex tw-justify-end tw-space-x-3">
+  <button className="tw-px-4 tw-py-2 tw-border tw-rounded tw-text-gray-600 hover:tw-text-gray-800" onClick={handleClearAll}>Reset All</button>
+  <button className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"   onClick={handleApplyFilter}>
+  Apply Filters 
+  </button>
+</div>
+      </div>
+
+
         </div>
 
    

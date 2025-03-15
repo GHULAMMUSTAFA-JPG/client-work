@@ -94,7 +94,7 @@ function Campaigns() {
                             (campaign: any, index: number) => {
                               return (
                                 <div key={index} className="col-md-4">
-                                  <div className="tw-border tw-rounded-lg tw-p-6 tw-bg-white tw-shadow-sm cursor-pointer hover:tw-bg-gray-50 hover:tw-shadow-sm py-4" onClick={() => handleRowClick(campaign._id)}>
+                                  <div className="tw-border tw-rounded-md  tw-bg-white tw-shadow-sm cursor-pointer hover:tw-bg-gray-50 hover:tw-shadow-sm tw-py-10 tw-px-6" onClick={() => handleRowClick(campaign._id)}>
       <div className="tw-flex tw-items-start tw-justify-between">
             <div className="tw-flex tw-items-start tw-space-x-4">
               <div className="img-container-topHeader">
@@ -233,7 +233,7 @@ function Campaigns() {
             </div>
           </div>
           <div className="tw-flex tw-justify-end tw-items-center tw-p-4">
-  <button   className="tw-border tw-border-teal-500 tw-text-teal-500 tw-bg-white tw-px-4 tw-py-2 tw-rounded-md hover:tw-bg-teal-500 hover:tw-text-white tw-transition-colors">
+  <button   className="tw-border tw-border-teal-500 tw-text-teal-500 tw-bg-white tw-px-4 tw-py-2 tw-rounded hover:tw-bg-teal-500 hover:tw-text-white tw-transition-colors">
     View Details
   </button>
 </div>
