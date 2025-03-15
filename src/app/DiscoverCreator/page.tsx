@@ -284,11 +284,12 @@ function DiscoverCreator() {
 className="offcanvas offcanvas-end"
 tabIndex={-1}
 id="applyPostCreatorOffcanvas"
+style={{ width: '40%' }}
 >
   <div className="offcanvas-header border-bottom">
     <div>
       <h5 className="offcanvas-title">Campaign Details</h5>
-      <p className="text-muted fs-12 mb-0"> Available collaboration opportunities </p>
+    
     </div>
     <button
     type="button"
@@ -296,7 +297,7 @@ id="applyPostCreatorOffcanvas"
     data-bs-dismiss="offcanvas"
   ></button>
   </div>
-  <div className="offcanvas-body">
+  <div className="offcanvas-body flex-grow-1 overflow-auto">
     <div className="sidebar-content py-2 px-3 bg-light-gray">
       <div className="d-flex justify-content-between align-items-center gap-3 py-2">
         <div className="profileInfo py-1 px-3">
@@ -394,11 +395,14 @@ id="applyPostCreatorOffcanvas"
         </div>
       </div>
     </div>
-    <div className="sidebar-footer">
-      <div className="d-flex justify-content-end gap-2 py-2 px-3 bg-light-gray">
-        <button className="btn btn-outline-dark btn-sm"  data-bs-dismiss="offcanvas">Cancel</button>
-        <button
-            className={`btn ${
+   
+  
+  </div>
+  <div className="offcanvas-footer border-top p-3 bg-white">
+      <div className="tw-flex tw-justify-end tw-space-x-3">
+  <button className="tw-px-4 tw-py-2 tw-border tw-rounded tw-text-gray-600 hover:tw-text-gray-800" data-bs-dismiss="offcanvas">Cancel</button>
+  <button
+            className={`tw-px-4 tw-py-2 tw-bg-emerald-500 tw-text-white tw-rounded hover:tw-bg-emerald-600 ${
            selectedCampaign?.Is_Applied ? "btn-dark" : "btn-info"
            }`}
            onClick={(e) => {
@@ -412,9 +416,13 @@ id="applyPostCreatorOffcanvas"
         disabled={selectedCampaign?.Is_Applied}
         >
         {selectedCampaign?.Is_Applied ? "Applied" : "Apply"} </button>
-      </div>
+  
+</div>
+
+
+
+
     </div>
-  </div>
 </div>
   {/* drawer box ends here  */}
       </section>

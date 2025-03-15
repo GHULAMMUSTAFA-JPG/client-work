@@ -205,33 +205,27 @@ export default function BrandViewCampaignOffcanvas({
 
     <div className="tw-flex tw-items-center tw-justify-between tw-pt-4">
       <div className="tw-flex tw-items-center tw-space-x-2">
-        <span className="tw-flex tw-items-center tw-text-xs tw-font-medium tw-text-green-600 tw-bg-green-50 tw-px-2 tw-py-1 tw-rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-dollar-sign tw-w-3 tw-h-3 tw-mr-1">
-            <line x1="12" x2="12" y1="2" y2="22"></line>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-          </svg>
-          $2,000 Hardcoded
-        </span>
+       
       </div>
 
 
       {campaign.Is_Applied ? (
 
-  <button disabled className="tw-px-4 tw-py-2 tw-bg-gray-600 tw-text-white tw-rounded-lg">
+  <button disabled className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600">
   Applied
 </button>
 
 
 ) : campaign.Is_Invited ? (
 
-  <button disabled className="tw-px-4 tw-py-2 tw-bg-gray-600 tw-text-white tw-rounded-lg">
+  <button disabled className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600">
   Invited
 </button>
   
 ) : (
   <button
     onClick={() => handleApply(campaign._id, index)}
-    className="tw-px-4 tw-py-2 tw-bg-emerald-600 tw-text-white tw-rounded-lg hover:tw-bg-emerald-700 tw-text-sm tw-font-medium"
+    className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
   >
     Apply Now
   </button>
