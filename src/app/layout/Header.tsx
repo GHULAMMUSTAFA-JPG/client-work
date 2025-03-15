@@ -1203,6 +1203,7 @@ export default function Header() {
   const [newNotificationCount, setNewNotificationCount] = useState<number>(0);
   const [newMessage, setNewMessage] = useState<boolean>(false);
   const [totalUnreadMessage, setTotalUnreadMessage] = useState<number>(0);
+  const [eventTypes, setEventTypes] = useState<any>();
 
   // Use notification socket with callback to update state
   const { isConnected, joinGroup } = useNotificationSocket({
@@ -1211,16 +1212,23 @@ export default function Header() {
       const { event_type, message, meta_data, notification_icon_type, title } = data.m.OtherFields;
 
       const supportedEventTypes = [
+        "apply_campaign",
+        "campaign_application_approved",
         "campaign_post_created",
         "campaign_post_proposal_accepted",
         "campaign_post_proposal_rejected",
+        "campaign_post_content_created",
+        "campaign_live_link_generated",
         "payment_succeeded",
+        "payment_initiated",
         "new_campaign_application",
         "campaign_application_accepted",
         "post_content_posted",
+        "post_impression_posted",
         "post_content_approved",
         "post_content_rejected",
       ];
+      setEventTypes(supportedEventTypes)
 
       if (!supportedEventTypes.includes(event_type)) {
         console.log("Event type not supported:", event_type);
@@ -1295,7 +1303,7 @@ export default function Header() {
   }, [user, rendControl]);
 
   const handleNotificationClick = (notify: Notification) => {
-    const { Campaign_ID, Creator_ID, Post_ID } = notify.Meta_Data;
+    const { _id, Campaign_ID, Creator_ID, Post_ID } = notify.Meta_Data;
 
     // Update notifications state with the clicked notification marked as seen
     setNotifications((prev: NotificationListProps) => {
@@ -1308,12 +1316,47 @@ export default function Header() {
     });
 
     // Construct the URL dynamically and navigate
-    if (Campaign_ID && Creator_ID) {
-      let url = `/campaign-details/${Campaign_ID}?tab=in_campaign&creator=${Creator_ID}`;
-      if (Post_ID && notify.Event_Type.includes("post")) {
-        url += `&post=${Post_ID}`;
-      }
-      router.push(url);
+    // if(eventTypes)
+    // if (Campaign_ID && Creator_ID) {
+    //   let url = `/campaign-details/${Campaign_ID}?tab=in_campaign&creator=${Creator_ID}`;
+    //   if (Post_ID && notify.Event_Type.includes("post")) {
+    //     url += `&post=${Post_ID}`;
+    //   }
+    //   router.push(url);
+    // }
+
+
+    // Define different URLs based on the event type
+    // Define different URLs based on the event type
+    let url = "";
+    switch (notify.Event_Type) {
+      case "apply_campaign":
+        url = `/campaign-details/${_id}?tab=applied`;
+        break;
+      case "campaign_application_approved":
+        url = `/campaign-hub?id=${Campaign_ID}`;
+        break;
+      case "campaign_post_created":
+      case "campaign_post_content_created":
+      case "campaign_live_link_generated":
+      case "post_impression_posted":
+        url = `/campaign-details/${Campaign_ID}?tab=in_campaign&creator=${Creator_ID}&post=${Post_ID}`;
+        break;
+      case "campaign_post_proposal_accepted":
+      case "post_content_approved":
+      case "post_content_rejected":
+      case "payment_initiated":
+      case "payment_succeeded":
+        url = `/campaign-hub?id=${Campaign_ID}&postId=${Post_ID}`;
+        break;
+      default:
+        console.warn(`Unhandled event type: ${notify.Event_Type}`);
+        return;
+    }
+
+    // Navigate to the URL
+    if (url) {
+      router.push(url); // Open in a new tab
     }
   };
 
