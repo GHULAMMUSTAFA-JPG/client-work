@@ -11,6 +11,7 @@ import {
   Upload,
   Image as ImageIcon,
   Check,
+  Link as LinkIcon,
 } from "lucide-react";
 import {
   addCampaignPostImpressions,
@@ -36,6 +37,7 @@ interface ImpressionsDrawerProps {
   creatorId: string;
   onSubmit: () => void;
   linkedinPostUrl: string;
+  embeddedLink?: string;
 }
 
 export function ImpressionsDrawer({
@@ -46,6 +48,7 @@ export function ImpressionsDrawer({
   creatorId,
   onSubmit,
   linkedinPostUrl: initialLinkedinPostUrl,
+  embeddedLink: initialEmbeddedLink,
 }: ImpressionsDrawerProps) {
   const [impressionsData, setImpressionsData] = useState<ImpressionsData>({
     impressions: 0,
@@ -59,9 +62,15 @@ export function ImpressionsDrawer({
   const [linkedinPostUrl, setLinkedinPostUrl] = useState<string>(
     initialLinkedinPostUrl || ""
   );
+  const [embeddedLink, setEmbeddedLink] = useState<string>(
+    initialEmbeddedLink || ""
+  );
   const [isEditingUrl, setIsEditingUrl] = useState(false);
+  const [isEditingEmbeddedLink, setIsEditingEmbeddedLink] = useState(false);
   const [urlError, setUrlError] = useState<string>("");
+  const [embeddedLinkError, setEmbeddedLinkError] = useState<string>("");
   const [isSavingUrl, setIsSavingUrl] = useState(false);
+  const [isSavingEmbeddedLink, setIsSavingEmbeddedLink] = useState(false);
   const [proofImage, setProofImage] = useState<File | null>(null);
   const [proofImagePreview, setProofImagePreview] = useState<string | null>(
     null
@@ -72,22 +81,31 @@ export function ImpressionsDrawer({
   const [isFormValid, setIsFormValid] = useState(true);
   const [formSubmitAttempted, setFormSubmitAttempted] = useState(false);
   const [urlValidationAttempted, setUrlValidationAttempted] = useState(false);
+  const [embeddedLinkValidationAttempted, setEmbeddedLinkValidationAttempted] =
+    useState(false);
 
   React.useEffect(() => {
     const isUrlInvalid =
       (isEditingUrl && (!linkedinPostUrl || linkedinPostUrl.trim() === "")) ||
       !!urlError;
 
+    const isEmbeddedLinkInvalid = isEditingEmbeddedLink && !!embeddedLinkError;
+
     const areRequiredFieldsMissing = impressionsData.impressions <= 0;
     const isProofMissing = !proofImagePreview && !proofImageUrl;
     const isInvalid =
-      isUrlInvalid || areRequiredFieldsMissing || isProofMissing;
+      isUrlInvalid ||
+      isEmbeddedLinkInvalid ||
+      areRequiredFieldsMissing ||
+      isProofMissing;
 
     setIsFormValid(!isInvalid);
   }, [
     isEditingUrl,
     linkedinPostUrl,
     urlError,
+    isEditingEmbeddedLink,
+    embeddedLinkError,
     impressionsData.impressions,
     proofImagePreview,
     proofImageUrl,
@@ -191,14 +209,6 @@ export function ImpressionsDrawer({
     }
   };
 
-  const toggleEditUrl = () => {
-    if (isEditingUrl) {
-      setLinkedinPostUrl(initialLinkedinPostUrl || "");
-    }
-    setIsEditingUrl(!isEditingUrl);
-    setUrlError("");
-  };
-
   const saveUrl = async () => {
     setUrlValidationAttempted(true);
 
@@ -232,6 +242,37 @@ export function ImpressionsDrawer({
     }
   };
 
+  const saveEmbeddedLink = async () => {
+    setEmbeddedLinkValidationAttempted(true);
+
+    if (embeddedLink && !embeddedLink.startsWith("http")) {
+      setEmbeddedLinkError(
+        "Please enter a valid URL starting with http:// or https://"
+      );
+      return;
+    }
+
+    try {
+      setIsSavingEmbeddedLink(true);
+      await addCampaignLiveLink({
+        campaign_id: campaignId,
+        creator_id: creatorId,
+        post_id: postId,
+        embed_link: embeddedLink,
+        live_link: linkedinPostUrl,
+      });
+
+      setEmbeddedLinkError("");
+      setIsEditingEmbeddedLink(false);
+      setEmbeddedLinkValidationAttempted(false);
+    } catch (error) {
+      setEmbeddedLinkError("Failed to update embedded link");
+      console.error("Error updating embedded link:", error);
+    } finally {
+      setIsSavingEmbeddedLink(false);
+    }
+  };
+
   return (
     <div className="tw-fixed tw-inset-0 tw-z-50 tw-overflow-hidden">
       <div
@@ -261,98 +302,142 @@ export function ImpressionsDrawer({
 
             <div className="tw-flex-1 tw-overflow-y-auto">
               <div className="tw-p-6">
-                <div className="tw-mb-6 tw-p-4 tw-bg-gray-50 tw-rounded-lg tw-border tw-border-gray-200">
-                  <div className="tw-flex tw-items-center tw-justify-between tw-mb-4">
+                <div className="tw-mb-6 tw-p-4 tw-bg-white tw-rounded-lg tw-border tw-border-gray-200">
+                  <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
                     <h3 className="tw-text-sm tw-font-medium tw-text-gray-900">
                       LinkedIn Post
                     </h3>
-                    <div className="tw-flex tw-items-center">
-                      {isEditingUrl ? (
-                        <>
-                          <button
-                            onClick={() => {
-                              setLinkedinPostUrl(initialLinkedinPostUrl || "");
-                              setIsEditingUrl(false);
-                              setUrlError("");
-                            }}
-                            disabled={isSavingUrl}
-                            className="tw-text-sm tw-text-red-600 hover:tw-text-red-700 tw-flex tw-items-center tw-mr-2 disabled:tw-opacity-50"
-                          >
-                            <X className="tw-w-4 tw-h-4 tw-mr-1" />
-                            Cancel
-                          </button>
-                          <button
-                            onClick={saveUrl}
-                            disabled={isSavingUrl}
-                            className="tw-text-sm tw-text-green-600 hover:tw-text-green-700 tw-flex tw-items-center tw-mr-2 disabled:tw-opacity-50"
-                          >
-                            {isSavingUrl ? (
-                              <span>Saving...</span>
-                            ) : (
-                              <>
-                                <Check className="tw-w-4 tw-h-4 tw-mr-1" />
-                                Save
-                              </>
-                            )}
-                          </button>
-                        </>
-                      ) : (
-                        <button
-                          onClick={toggleEditUrl}
-                          className="tw-text-sm tw-text-gray-600 hover:tw-text-gray-700 tw-flex tw-items-center"
-                        >
-                          <Edit2 className="tw-w-4 tw-h-4 tw-mr-1" />
-                          Edit
-                        </button>
-                      )}
-                    </div>
+                    <button
+                      onClick={() => {
+                        setIsEditingUrl(true);
+                        setIsEditingEmbeddedLink(true);
+                      }}
+                      className="tw-text-sm tw-text-[#0A66C2] hover:tw-text-[#0A66C2]/80"
+                    >
+                      Edit
+                    </button>
                   </div>
 
-                  {isEditingUrl ? (
-                    <div className="tw-mb-4">
-                      <input
-                        type="url"
-                        value={linkedinPostUrl}
-                        onChange={(e) => setLinkedinPostUrl(e.target.value)}
-                        placeholder="Enter LinkedIn post URL"
-                        className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
-                          urlError && urlValidationAttempted
-                            ? "tw-border-red-500"
-                            : "tw-border-gray-300"
-                        } tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]`}
-                      />
-                      {urlError && urlValidationAttempted && (
-                        <p className="tw-mt-1 tw-text-sm tw-text-red-600">
-                          {urlError}
-                        </p>
-                      )}
+                  {isEditingUrl || isEditingEmbeddedLink ? (
+                    <div className="tw-space-y-5">
+                      <div className="tw-bg-white tw-p-3 tw-rounded-md tw-border tw-border-gray-200">
+                        <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+                          <div className="tw-flex tw-items-center">
+                            <LinkIcon className="tw-w-4 tw-h-4 tw-mr-2 tw-text-[#0A66C2]" />
+                            LinkedIn Post URL
+                          </div>
+                        </label>
+                        <input
+                          type="url"
+                          value={linkedinPostUrl}
+                          onChange={(e) => setLinkedinPostUrl(e.target.value)}
+                          placeholder="Enter LinkedIn post URL"
+                          className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
+                            urlError && urlValidationAttempted
+                              ? "tw-border-red-500 tw-ring-1 tw-ring-red-500"
+                              : "tw-border-gray-300 focus:tw-ring-2 focus:tw-ring-[#0A66C2]/40"
+                          } tw-rounded-md focus:tw-border-[#0A66C2] tw-transition-all tw-duration-200 tw-bg-gray-50 hover:tw-bg-white focus:tw-bg-white`}
+                        />
+                        {urlError && urlValidationAttempted && (
+                          <p className="tw-mt-1 tw-text-sm tw-text-red-600 tw-flex tw-items-center">
+                            <AlertCircle className="tw-w-3 tw-h-3 tw-mr-1 tw-flex-shrink-0" />
+                            {urlError}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="tw-bg-white tw-p-3 tw-rounded-md tw-border tw-border-gray-200">
+                        <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-2">
+                          <div className="tw-flex tw-items-center">
+                            <ExternalLink className="tw-w-4 tw-h-4 tw-mr-2 tw-text-[#0A66C2]" />
+                            Embedded Link
+                          </div>
+                        </label>
+                        <textarea
+                          value={embeddedLink}
+                          onChange={(e) => setEmbeddedLink(e.target.value)}
+                          placeholder="Enter embedded link URL"
+                          rows={3}
+                          className={`tw-w-full tw-px-3 tw-py-2 tw-border ${
+                            embeddedLinkError && embeddedLinkValidationAttempted
+                              ? "tw-border-red-500 tw-ring-1 tw-ring-red-500"
+                              : "tw-border-gray-300 focus:tw-ring-2 focus:tw-ring-[#0A66C2]/40"
+                          } tw-rounded-md focus:tw-border-[#0A66C2] tw-transition-all tw-duration-200 tw-bg-gray-50 hover:tw-bg-white focus:tw-bg-white tw-resize-none`}
+                        />
+                        {embeddedLinkError &&
+                          embeddedLinkValidationAttempted && (
+                            <p className="tw-mt-1 tw-text-sm tw-text-red-600 tw-flex tw-items-center">
+                              <AlertCircle className="tw-w-3 tw-h-3 tw-mr-1 tw-flex-shrink-0" />
+                              {embeddedLinkError}
+                            </p>
+                          )}
+                      </div>
+
+                      <div className="tw-flex tw-justify-end tw-space-x-3 tw-mt-4">
+                        <button
+                          onClick={() => {
+                            setLinkedinPostUrl(initialLinkedinPostUrl || "");
+                            setEmbeddedLink(initialEmbeddedLink || "");
+                            setIsEditingUrl(false);
+                            setIsEditingEmbeddedLink(false);
+                            setUrlError("");
+                            setEmbeddedLinkError("");
+                          }}
+                          disabled={isSavingUrl || isSavingEmbeddedLink}
+                          className="tw-text-sm tw-text-red-600 hover:tw-text-red-700 tw-flex tw-items-center disabled:tw-opacity-50 tw-transition-colors"
+                        >
+                          <X className="tw-w-4 tw-h-4 tw-mr-1" />
+                          Cancel
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (isEditingUrl) saveUrl();
+                            if (isEditingEmbeddedLink) saveEmbeddedLink();
+                          }}
+                          disabled={isSavingUrl || isSavingEmbeddedLink}
+                          className="tw-text-sm tw-text-green-600 hover:tw-text-green-700 tw-flex tw-items-center disabled:tw-opacity-50 tw-transition-colors"
+                        >
+                          {isSavingUrl || isSavingEmbeddedLink ? (
+                            <span className="tw-flex tw-items-center">
+                              <div className="tw-animate-spin tw-rounded-full tw-h-3 tw-w-3 tw-border-t-2 tw-border-b-2 tw-border-green-600 tw-mr-2"></div>
+                              Saving...
+                            </span>
+                          ) : (
+                            <>
+                              <Check className="tw-w-4 tw-h-4 tw-mr-1" />
+                              Save
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="tw-text-sm tw-mb-4">
-                      {linkedinPostUrl || initialLinkedinPostUrl ? (
+                    <div className="tw-mt-2">
+                      {linkedinPostUrl ? (
                         <Link
-                          href={linkedinPostUrl || initialLinkedinPostUrl}
+                          href={linkedinPostUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="tw-text-[#0A66C2] hover:tw-text-[#0A66C2]/80 tw-break-all tw-flex tw-items-center"
+                          className="tw-flex tw-items-center tw-text-[#0A66C2] hover:tw-underline"
                         >
-                          <span>
-                            {linkedinPostUrl || initialLinkedinPostUrl}
-                          </span>
-                          <ExternalLink className="tw-h-4 tw-w-4 tw-ml-1 tw-flex-shrink-0" />
+                          <Eye className="tw-h-4 tw-w-4 tw-mr-2" />
+                          View Post
+                          <ExternalLink className="tw-h-3.5 tw-w-3.5 tw-ml-1.5 tw-opacity-70" />
                         </Link>
                       ) : (
-                        <div className="tw-flex tw-items-center tw-justify-between">
-                          <span className="tw-italic tw-text-gray-400">
-                            No URL provided
-                          </span>
-                          <span className="tw-text-xs tw-text-gray-400">
-                            (Click Edit to add one)
-                          </span>
+                        <div className="tw-text-gray-400 tw-text-sm tw-italic">
+                          No post URL provided
                         </div>
                       )}
                     </div>
                   )}
+                </div>
+
+                <div className="tw-mb-6">
+                  <h3 className="tw-text-sm tw-font-medium tw-text-gray-900 tw-mb-2">
+                    Reactions
+                  </h3>
+                  <div className="tw-h-px tw-bg-gray-200 tw-w-full"></div>
                 </div>
 
                 {error && (
@@ -418,24 +503,6 @@ export function ImpressionsDrawer({
 
                     <div className="tw-space-y-2">
                       <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
-                        <div className="tw-flex tw-items-center tw-space-x-2">
-                          <Heart className="tw-w-4 tw-h-4 tw-text-gray-400" />
-                          <span>Engagement Rate (%)</span>
-                        </div>
-                      </label>
-                      <input
-                        type="text"
-                        value={impressionsData.engagement}
-                        onChange={(e) =>
-                          handleInputChange("engagement", e.target.value)
-                        }
-                        className="tw-w-full tw-px-3 tw-py-2 tw-border tw-border-gray-300 tw-rounded-md focus:tw-ring-[#0A66C2] focus:tw-border-[#0A66C2]"
-                        inputMode="decimal"
-                      />
-                    </div>
-
-                    <div className="tw-space-y-2">
-                      <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
                         Comments
                       </label>
                       <input
@@ -451,7 +518,7 @@ export function ImpressionsDrawer({
 
                     <div className="tw-space-y-2">
                       <label className="tw-block tw-text-sm tw-font-medium tw-text-gray-700">
-                        Shares
+                        Reposts
                       </label>
                       <input
                         type="text"

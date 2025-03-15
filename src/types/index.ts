@@ -48,6 +48,8 @@ export interface Creator {
   postsCompleted?: number;
   totalPosts?: number;
   posts?: Post[];
+  liveLink?: string;
+  embedLink?: string;
 }
 
 export interface Campaign {
@@ -74,9 +76,14 @@ export interface Post {
   status: "in_review" | "approved" | "published" | "rejected";
   content: string;
   impressions: number | null;
-  engagement: number | null;
   link?: string;
   contentItems: ContentItem[];
+  liveLink?: string;
+  embedLink?: string;
+  clicks?: number;
+  comments?: number;
+  reposts?: number;
+  engagementRate?: number;
 }
 
 export interface ContentItem {
@@ -87,6 +94,8 @@ export interface ContentItem {
   status: "draft" | "in_review" | "approved" | "published";
   images: string[];
   links: string[];
+  embeddedLink?: string;
+  liveLink?: string;
 }
 
 export enum CreatorStatus {

@@ -104,7 +104,7 @@ const MyCreatorsShell: React.FC<MyCreatorsShellProps> = ({ children, handleInvit
 
       <div className="tw-max-w-7xl tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8 tw-py-12">
         <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
-          <h2 className="tw-text-xl tw-font-bold tw-text-gray-900">All Creators</h2>
+          <h2 className="tw-text-xl tw-font-bold tw-text-gray-900">Company Creators</h2>
           <div className="tw-flex tw-gap-3">
             <select className="tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-px-3 tw-py-1.5 tw-text-sm focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-primary-500 focus:tw-border-primary-500">
               <option value="followers">Most Followers</option>

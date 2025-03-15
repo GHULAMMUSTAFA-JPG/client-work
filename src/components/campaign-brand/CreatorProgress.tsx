@@ -3,7 +3,7 @@ import { MessageSquare, ExternalLink } from "lucide-react";
 import Tooltip from "../Tooltip";
 import { Creator } from "@/types";
 import { useRouter } from "next/navigation";
-import ChatModal from "../ChatModal";
+import { ChatDrawer } from "../ChatDrawer";
 
 interface CreatorProgressProps {
   creator: Creator;
@@ -168,10 +168,15 @@ export default function CreatorProgress({
           </Tooltip>
         </div>
       </div>
-      <ChatModal
+      {/* <ChatModal
         open={isChatModalOpen}
         onClose={handleCloseChatModal}
         recipientId={creator.id}
+      /> */}
+      <ChatDrawer
+        open={isChatModalOpen}
+        onClose={handleCloseChatModal}
+        recipientId={creator?.id}
       />
     </div>
   );
