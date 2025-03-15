@@ -676,7 +676,7 @@ function OffcanvasCreateCompaign(props: any) {
       </div>
       <div className="border-top d-flex gap-3 justify-content-end p-3">
         <button
-          className="btn btn-outline-info"
+          className="tw-px-4 tw-py-2 tw-border tw-rounded tw-border-gray-300 tw-text-gray-600 hover:tw-text-gray-800"
           style={{ width: "120px", display: "flex", justifyContent: "center" }}
           data-bs-dismiss="offcanvas"
           aria-label="Close"
@@ -685,7 +685,7 @@ function OffcanvasCreateCompaign(props: any) {
           Close
         </button>
         <button
-          className="btn btn-info"
+          className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
           style={{ width: "120px", display: "flex", justifyContent: "center" }}
           onClick={handleSubmit}
         >
