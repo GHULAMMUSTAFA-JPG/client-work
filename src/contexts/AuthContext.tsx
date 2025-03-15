@@ -216,8 +216,8 @@ interface AuthContextType {
   setSockets: (sockets: any) => void;
   sockets: any;
   restartSocket: boolean;
-  selectedIds: selectedIdProps;
-  setSelectedIds: (ids: selectedIdProps) => void;
+  selectedIds: any;
+  setSelectedIds: any;
   isActive: number;
   setIsActive: (active: number) => void;
   setIsAuthenticated: (auth: boolean) => void;
