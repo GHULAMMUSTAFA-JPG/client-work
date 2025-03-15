@@ -40,9 +40,9 @@ export function CampaignDrawer({
   onDelete,
   isLoading = false,
 }: DrawerProps) {
-  console.log("initialData", initialData);
-  if (!isOpen) return null;
   const { user } = useAuth();
+  if (!isOpen) return null;
+
   const renderStatusAndBudget = () => (
     <div className="tw-flex tw-items-center tw-justify-between">
       <span

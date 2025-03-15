@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { addCampaignLiveLink } from "@/@api/campaign";
 import { isValidEmbedCode, isValidLinkedInUrl } from "@/utils";
+import Link from "next/link";
 
 interface LivePostDrawerProps {
   isOpen: boolean;
@@ -45,6 +46,13 @@ export function LivePostDrawer({
       setEmbedError("");
     }
   }, [isOpen, initialPostUrl, initialEmbedLink]);
+
+  // Check if values have been changed from initial values
+  const hasChanges =
+    postUrl !== initialPostUrl || embedLink !== initialEmbedLink;
+
+  // Check if in edit mode (initial values are provided)
+  const isEditMode = initialPostUrl !== "" || initialEmbedLink !== "";
 
   if (!isOpen) return null;
 
@@ -108,7 +116,7 @@ export function LivePostDrawer({
                 <div className="tw-flex tw-items-center tw-space-x-3">
                   <LinkIcon className="tw-w-6 tw-h-6 tw-text-[#0A66C2]" />
                   <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
-                    Add Live Post Link
+                    {isEditMode ? "Edit Live Post Link" : "Add Live Post Link"}
                   </h2>
                 </div>
                 <button
@@ -157,9 +165,13 @@ export function LivePostDrawer({
                       } tw-rounded-md tw-focus:outline-none tw-focus:ring-[#0A66C2] tw-focus:border-[#0A66C2]`}
                       placeholder="https://www.linkedin.com/posts/..."
                     />
-                    <div className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center">
-                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-gray-400" />
-                    </div>
+                    <Link
+                      href={postUrl}
+                      target="_blank"
+                      className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center "
+                    >
+                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-blue-500" />
+                    </Link>
                   </div>
                   {error && (
                     <p className="tw-mt-2 tw-text-sm tw-text-red-600">
@@ -254,7 +266,8 @@ export function LivePostDrawer({
                   disabled={
                     isSubmitting ||
                     !isValidLinkedInUrl(postUrl) ||
-                    !isValidEmbedCode(embedLink)
+                    !isValidEmbedCode(embedLink) ||
+                    (isEditMode && !hasChanges) // Disable if in edit mode and no changes made
                   }
                   className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-green-500 disabled:tw-opacity-70"
                 >

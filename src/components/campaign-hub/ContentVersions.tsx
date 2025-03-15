@@ -61,6 +61,10 @@ export function ContentVersions({
 
   const firstVersion = versions && versions.length > 0 ? versions[0] : null;
   const isDraft = firstVersion?.isDraft || false;
+
+  // Helper function to clean URLs by removing blob: prefix
+  const cleanUrl = (url: string) => url.replace(/^blob:/, "");
+
   const processMedia = (mediaItems?: string[]) => {
     if (!mediaItems || mediaItems.length === 0)
       return { images: [], links: [] };
@@ -70,9 +74,9 @@ export function ContentVersions({
 
     mediaItems.forEach((item) => {
       if (item && isImageUrl(item)) {
-        images.push(item);
+        images.push(cleanUrl(item));
       } else if (item) {
-        links.push(item);
+        links.push(cleanUrl(item));
       }
     });
 
