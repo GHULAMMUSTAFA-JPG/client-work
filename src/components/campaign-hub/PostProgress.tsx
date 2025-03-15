@@ -29,6 +29,7 @@ interface PostProgressProps {
   onSubmit: () => void;
   linkedinPostUrl: string;
   postStatus?: number;
+  embeddedLink?: string;
 }
 
 export function PostProgress({
@@ -39,6 +40,7 @@ export function PostProgress({
   currentStage,
   onSubmit,
   linkedinPostUrl,
+  embeddedLink,
   postStatus,
 }: PostProgressProps) {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
@@ -48,7 +50,7 @@ export function PostProgress({
   const updatedStages = stages.map((stage) => {
     const currentStageIndex = stages.findIndex((s) => s.id === currentStage);
     const thisStageIndex = stages.findIndex((s) => s.id === stage.id);
-    console.log("stages", stages);
+
     if (currentStage === 6 && stage.label === "Payment" && postStatus === 10) {
       return { ...stage, status: "completed" as const };
     }
@@ -62,8 +64,7 @@ export function PostProgress({
       return { ...stage, status: "inactive" as const };
     }
   });
-  console.log("updatedStages", updatedStages);
-  console.log("currentStage", currentStage);
+
   const getStageIcon = (stage: PostStage) => {
     if (stage.icon) return stage.icon;
 
@@ -251,6 +252,7 @@ export function PostProgress({
             campaignId={campaignId}
             creatorId={creatorId}
             linkedinPostUrl={linkedinPostUrl}
+            embeddedLink={embeddedLink}
             onSubmit={() => {
               setIsImpressionsDrawerOpen(false);
               onSubmit();

@@ -55,7 +55,6 @@ function CampaignHubContent() {
         creator_id: user?.uuid as string,
         campaign_id: code,
       });
-
       setCampaignData(response);
       if (response && (response as any).Posts.length) {
         const postId = searchParams.get("postId");
@@ -147,6 +146,8 @@ function CampaignHubContent() {
       status: post.Status ? post.Status : "unknown",
       budget: post.Budget || 0,
       dueDate: formatDate(post.Due_Date),
+      liveLink: post.Live_Link,
+      embededLink: post.Embed_Link,
       mediaContent:
         post.Content_Versions?.flatMap(
           (content: any) => content.Media_Content
@@ -179,6 +180,7 @@ function CampaignHubContent() {
       }
     }
   };
+
   const handleTabChange = (tab: Status | "all") => {
     setActiveTab(tab);
     if (tab === "all") {
@@ -240,6 +242,7 @@ function CampaignHubContent() {
             onSubmit={getCampaignPostsList}
             linkedinPostUrl={selectedPost?.Live_Link || ""}
             postStatus={selectedPost?.Status}
+            embeddedLink={selectedPost?.Embeded_Link || ""}
           />
 
           {selectedPostId ? (
