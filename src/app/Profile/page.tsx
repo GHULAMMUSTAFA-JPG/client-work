@@ -570,7 +570,7 @@ function ProfilePage() {
                 style={{ display: "flex", alignItems: "center" }}
                 className="profileactionsbtn"
               >
-                <button className="btn btn-outline-primary d-flex align-items-center gap-1">
+                <button className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50">
                   <Icon icon="mdi:plus" width={18} height={18} />
                   Add to list
                 </button>
@@ -580,7 +580,7 @@ function ProfilePage() {
                     href={`https://www.linkedin.com/in/${userProfile?.Profile_URL}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-linkedin"
+                    className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -626,7 +626,7 @@ function ProfilePage() {
                   href="https://chrome.google.com/webstore/category/extensions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-sm btn-outline-primary ms-3 d-flex align-items-center"
+                  className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-transparent tw-rounded-md tw-text-sm tw-font-medium tw-text-white tw-bg-primary hover:tw-bg-primary-dark"
                 >
                   <Icon icon="mdi:download" width={18} height={18} />
                   <span>Download Chrome Extension</span>

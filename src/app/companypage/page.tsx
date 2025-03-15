@@ -476,7 +476,7 @@ function CompanyPage() {
                   href={userProfile?.Company_Website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`btn btn-linkedin ${
+                  className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 ${
                     !userProfile?.Company_Website ? "hidebanner" : ""
                   }`}
                 >
@@ -498,7 +498,7 @@ function CompanyPage() {
                   href={`https://${userProfile?.Company_Linkedin}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`btn btn-linkedin ${
+                  className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-border tw-border-gray-300 tw-rounded-md tw-text-sm tw-font-medium tw-text-gray-700 tw-bg-white hover:tw-bg-gray-50 ${
                     !userProfile?.Company_Linkedin ? "hidebanner" : ""
                   }`}
                 >

@@ -113,13 +113,13 @@ const FilterSidebar = ({
           <div className="tw-flex tw-justify-end tw-space-x-3">
             <button
               onClick={onResetFilters}
-              className="tw-px-4 tw-py-2 tw-text-gray-600 tw-hover:text-gray-800"
+              className="tw-px-4 tw-py-2 tw-border tw-rounded tw-border-gray-300 tw-text-gray-600 hover:tw-text-gray-800"
             >
               Reset
             </button>
             <button
               onClick={onApplyFilters}
-              className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded-md tw-hover:bg-teal-600"
+              className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
             >
               Apply Filters
             </button>

@@ -33,7 +33,7 @@ const MyListsTab = ({
           </div>
           <button
             type="button"
-            className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded-md tw-hover:bg-teal-600 tw-flex tw-items-center tw-gap-2"
+            className="tw-flex tw-itmes-center tw-gap-2 tw-justify-center tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
             data-bs-toggle="modal"
             data-bs-target="#createNewListModal"
             onClick={onCreateList}
@@ -86,7 +86,7 @@ const MyListsTab = ({
               </p>
               <button
                 onClick={onCreateList}
-                className="tw-mt-4 tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded-md tw-hover:bg-teal-600"
+                className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
                 data-bs-toggle="modal"
                 data-bs-target="#createNewListModal"
               >

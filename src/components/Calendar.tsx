@@ -482,7 +482,7 @@ const PostCalendar = () => {
         <div className="tw-text-center tw-mt-4">
           <button
             onClick={handleLoadMore}
-            className="tw-bg-teal-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg hover:tw-bg-teal-600 tw-transition-all"
+            className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
           >
             Load More
           </button>

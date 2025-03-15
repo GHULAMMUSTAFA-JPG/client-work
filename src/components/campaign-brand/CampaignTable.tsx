@@ -24,7 +24,7 @@ const CampaignTable = ({
               <div className="d-flex align-items-center justify-content-between mb-3">
                 <p className="fs-18 fw-medium mb-0">Campaigns</p>
                 <button
-                  className="btn btn-info btn-sm"
+                  className="tw-flex tw-itmes-center tw-gap-2 tw-justify-center tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#offcanvasRight2"
                   aria-controls="offcanvasRight2"
