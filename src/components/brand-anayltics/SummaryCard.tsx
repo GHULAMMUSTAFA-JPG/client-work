@@ -5,7 +5,7 @@ interface SummaryCardProps {
   value: string | number;
   icon: React.ReactNode;
   iconBgColor: string;
-  iconColor?: string; // Made optional since it's not used in the component
+  iconColor?: string;
   subtitle: React.ReactNode;
   subtitleValue: React.ReactNode;
 }

@@ -187,7 +187,7 @@ export const getCampaignAnalytics = async (
   campaignId: string,
   dateRange: DateRange
 ): Promise<CampaignAnalytics | null> => {
-  return handleApiRequest<CampaignAnalytics>(
+  const response = await handleApiRequest<CampaignAnalytics>(
     "post",
     "/analytics/campaign-analytics",
     {
@@ -195,6 +195,7 @@ export const getCampaignAnalytics = async (
       date_range: dateRange,
     }
   );
+  return response.success ? response.data : null;
 };
 
 export const getCampaignCreatorAnalytics = async (
@@ -202,7 +203,7 @@ export const getCampaignCreatorAnalytics = async (
   creatorId: string,
   dateRange: DateRange
 ): Promise<CampaignCreatorAnalytics | null> => {
-  return handleApiRequest<CampaignCreatorAnalytics>(
+  const response = await handleApiRequest<CampaignCreatorAnalytics>(
     "post",
     "/analytics/campaign-creator-analytics",
     {
@@ -211,6 +212,7 @@ export const getCampaignCreatorAnalytics = async (
       date_range: dateRange,
     }
   );
+  return response.success ? response.data : null;
 };
 
 export const getBuyerAnalytics = async (
@@ -225,5 +227,5 @@ export const getBuyerAnalytics = async (
       date_range: dateRange,
     }
   );
-  return response?.data || null;
+  return response.success ? response.data.data : null;
 };

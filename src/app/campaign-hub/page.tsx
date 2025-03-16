@@ -55,24 +55,26 @@ function CampaignHubContent() {
         creator_id: user?.uuid as string,
         campaign_id: code,
       });
-      setCampaignData(response);
-      if (response && (response as any).Posts.length) {
+      if (response?.success) {
+        setCampaignData(response.data);
+      }
+      if (response?.success && (response.data as any).Posts.length) {
         const postId = searchParams.get("postId");
         let firstPost;
 
         if (postId) {
           firstPost =
-            (response as any).Posts.find((post: any) => post._id === postId) ||
-            (response as any).Posts[0];
+            (response.data as any).Posts.find(
+              (post: any) => post._id === postId
+            ) || (response.data as any).Posts[0];
         } else {
-          firstPost = (response as any).Posts[0];
+          firstPost = (response.data as any).Posts[0];
         }
 
         const contentList = transformPostContent(firstPost);
         setContentVersion(contentList);
         setSelectedPostId(firstPost._id);
 
-        // Update URL with the selected post ID
         if (firstPost._id !== postId) {
           updateUrlWithPostId(code, firstPost._id);
         }
@@ -243,6 +245,17 @@ function CampaignHubContent() {
             linkedinPostUrl={selectedPost?.Live_Link || ""}
             postStatus={selectedPost?.Status}
             embeddedLink={selectedPost?.Embeded_Link || ""}
+            initialImpressions={
+              selectedPost?.Impressions
+                ? {
+                    impressions: selectedPost.Impressions.Impressions || 0,
+                    clicks: selectedPost.Impressions.Clicks || 0,
+                    engagement: selectedPost.Impressions.Engagement_Rate || 0,
+                    comments: selectedPost.Impressions.Comments || 0,
+                    shares: selectedPost.Impressions.Shares || 0,
+                  }
+                : undefined
+            }
           />
 
           {selectedPostId ? (

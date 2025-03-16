@@ -97,17 +97,17 @@ export function CreatePostDrawer({
     try {
       const response = await createCampaignPost(postData);
 
-      if (!response) {
+      if (!response?.success) {
         setError("Failed to create post. Please try again.");
         return;
       }
 
-      if (response && typeof response === "object" && "_id" in response) {
-        const currentCampaignId = searchParams.get("id");
-        if (currentCampaignId) {
-          const url = `/campaign-hub?id=${currentCampaignId}&postId=${response._id}`;
-          router.push(url);
-        }
+      const currentCampaignId = searchParams.get("id");
+      if (currentCampaignId) {
+        const url = `/campaign-hub?id=${currentCampaignId}&postId=${
+          (response.data as { _id: string })._id
+        }`;
+        router.push(url);
       }
 
       setPostType("");

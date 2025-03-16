@@ -5,7 +5,6 @@ import {
   getCampaignStatusStyles,
   mapStatusString,
 } from "@/components/shared/utils";
-import { CampaignStatus } from "@/types";
 
 const CampaignTableRow = ({ campaign }: { campaign: CampaignMetric }) => (
   <tr className="tw-border-t tw-border-gray-100 hover:tw-bg-gray-50">
