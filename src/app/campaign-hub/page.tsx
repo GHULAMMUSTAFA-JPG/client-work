@@ -268,6 +268,7 @@ function CampaignHubContent() {
               onSubmit={getCampaignPostsList}
               canSubmit={true}
               postStatus={selectedPost?.Status}
+              postEmbedLink={selectedPost?.Embeded_Link || ""}
             />
           ) : (
             <EmptyState

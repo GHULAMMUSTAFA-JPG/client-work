@@ -105,7 +105,6 @@ export default function CreatorProgress({
           <div className="tw-font-medium">{getStageLabel()}</div>
         </div>
 
-        {/* Posts Completed - 1 col */}
         <div className="tw-col-span-1">
           <div className="tw-text-sm tw-text-gray-500">Posts</div>
           <div className="tw-font-medium">
@@ -113,7 +112,6 @@ export default function CreatorProgress({
           </div>
         </div>
 
-        {/* Stats - 2 cols */}
         <div className="tw-col-span-2">
           <div className="tw-space-y-1">
             <div>
@@ -145,7 +143,6 @@ export default function CreatorProgress({
           </div>
         </div>
 
-        {/* Actions - 2 cols */}
         <div className="tw-col-span-2 tw-flex tw-justify-end tw-space-x-2">
           <Tooltip content="Send message to creator">
             <button
