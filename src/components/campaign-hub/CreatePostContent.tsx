@@ -377,7 +377,7 @@ export default function CreatePostContent({
         );
       }
 
-      if (!response) {
+      if (!response?.success) {
         setError(
           `Failed to ${
             isDraft
@@ -392,7 +392,7 @@ export default function CreatePostContent({
       }
 
       resetForm();
-      onSubmit(response);
+      onSubmit(response?.data);
     } catch (err: any) {
       console.error(
         `Error ${isDraft ? "saving draft" : "submitting content"}:`,

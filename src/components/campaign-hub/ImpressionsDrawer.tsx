@@ -17,7 +17,6 @@ import {
 } from "@/@api/campaign";
 import Link from "next/link";
 import Image from "next/image";
-import { isValidEmbedCode } from "@/utils";
 
 interface ImpressionsData {
   impressions: number;
@@ -36,6 +35,13 @@ interface ImpressionsDrawerProps {
   linkedinPostUrl: string;
   embeddedLink?: string;
   onSubmit: () => void;
+  initialImpressions?: {
+    impressions: number;
+    clicks: number;
+    engagement: number;
+    comments: number;
+    shares: number;
+  };
 }
 
 export function ImpressionsDrawer({
@@ -47,16 +53,19 @@ export function ImpressionsDrawer({
   onSubmit,
   linkedinPostUrl: propLinkedinPostUrl,
   embeddedLink: propEmbeddedLink,
+  initialImpressions,
 }: ImpressionsDrawerProps) {
   const initialLinkedinPostUrlRef = useRef(propLinkedinPostUrl || "");
   const initialEmbeddedLinkRef = useRef(propEmbeddedLink || "");
-  const [impressionsData, setImpressionsData] = useState<ImpressionsData>({
-    impressions: 0,
-    clicks: 0,
-    engagement: 0,
-    comments: 0,
-    shares: 0,
-  });
+  const [impressionsData, setImpressionsData] = useState<ImpressionsData>(
+    initialImpressions || {
+      impressions: 0,
+      clicks: 0,
+      engagement: 0,
+      comments: 0,
+      shares: 0,
+    }
+  );
   const [linkedinPostUrl, setLinkedinPostUrl] = useState<string>(
     propLinkedinPostUrl || ""
   );
@@ -91,8 +100,32 @@ export function ImpressionsDrawer({
       setEmbeddedLink(propEmbeddedLink || "");
       initialLinkedinPostUrlRef.current = propLinkedinPostUrl || "";
       initialEmbeddedLinkRef.current = propEmbeddedLink || "";
+      setFormSubmitAttempted(false);
+      setIsFormValid(true);
+      setError("");
+      setUrlError("");
+      setEmbeddedLinkError("");
+      setIsEditingUrl(false);
+      setIsEditingEmbeddedLink(false);
+      setUrlValidationAttempted(false);
+      setEmbeddedLinkValidationAttempted(false);
+      setImpressionsData(
+        initialImpressions || {
+          impressions: 0,
+          clicks: 0,
+          engagement: 0,
+          comments: 0,
+          shares: 0,
+        }
+      );
+      setProofImage(null);
+      setProofImagePreview(null);
+      setProofImageUrl("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
-  }, [isOpen, propLinkedinPostUrl, propEmbeddedLink]);
+  }, [isOpen, propLinkedinPostUrl, propEmbeddedLink, initialImpressions]);
 
   useEffect(() => {
     const isUrlInvalid =
@@ -101,13 +134,21 @@ export function ImpressionsDrawer({
 
     const isEmbeddedLinkInvalid = isEditingEmbeddedLink && !!embeddedLinkError;
 
+    const hasValuesChanged =
+      impressionsData.impressions !== (initialImpressions?.impressions || 0) ||
+      impressionsData.clicks !== (initialImpressions?.clicks || 0) ||
+      impressionsData.engagement !== (initialImpressions?.engagement || 0) ||
+      impressionsData.comments !== (initialImpressions?.comments || 0) ||
+      impressionsData.shares !== (initialImpressions?.shares || 0);
+
     const areRequiredFieldsMissing = impressionsData.impressions <= 0;
     const isProofMissing = !proofImagePreview && !proofImageUrl;
     const isInvalid =
       isUrlInvalid ||
       isEmbeddedLinkInvalid ||
       areRequiredFieldsMissing ||
-      isProofMissing;
+      isProofMissing ||
+      !hasValuesChanged;
 
     setIsFormValid(!isInvalid);
   }, [
@@ -116,9 +157,10 @@ export function ImpressionsDrawer({
     urlError,
     isEditingEmbeddedLink,
     embeddedLinkError,
-    impressionsData.impressions,
+    impressionsData,
     proofImagePreview,
     proofImageUrl,
+    initialImpressions,
   ]);
 
   if (!isOpen) return null;
@@ -159,6 +201,23 @@ export function ImpressionsDrawer({
     e.preventDefault();
     setFormSubmitAttempted(true);
 
+    const hasValuesChanged =
+      impressionsData.impressions !== (initialImpressions?.impressions || 0) ||
+      impressionsData.clicks !== (initialImpressions?.clicks || 0) ||
+      impressionsData.engagement !== (initialImpressions?.engagement || 0) ||
+      impressionsData.comments !== (initialImpressions?.comments || 0) ||
+      impressionsData.shares !== (initialImpressions?.shares || 0);
+
+    if (!hasValuesChanged) {
+      setError("Please update at least one metric value before submitting.");
+      return;
+    }
+
+    if (!proofImagePreview && !proofImageUrl) {
+      setError("Please upload a proof image of your LinkedIn analytics.");
+      return;
+    }
+
     if (!isFormValid) {
       return;
     }
@@ -181,7 +240,7 @@ export function ImpressionsDrawer({
 
       const response = await addCampaignPostImpressions(payload);
 
-      if (response) {
+      if (response?.success) {
         setImpressionsData({
           impressions: 0,
           clicks: 0,
@@ -198,7 +257,8 @@ export function ImpressionsDrawer({
         onSubmit();
       } else {
         setError(
-          "LinkedIn metrics verification failed. The screenshot does not contain any LinkedIn post analytics metrics that can be validated."
+          response?.details ||
+            "LinkedIn metrics verification failed. The screenshot does not contain any LinkedIn post analytics metrics that can be validated."
         );
       }
     } catch (error: any) {
@@ -438,6 +498,13 @@ export function ImpressionsDrawer({
     );
   };
 
+  const hasValuesChanged =
+    impressionsData.impressions !== (initialImpressions?.impressions || 0) ||
+    impressionsData.clicks !== (initialImpressions?.clicks || 0) ||
+    impressionsData.engagement !== (initialImpressions?.engagement || 0) ||
+    impressionsData.comments !== (initialImpressions?.comments || 0) ||
+    impressionsData.shares !== (initialImpressions?.shares || 0);
+
   const renderProofImageUploader = () => (
     <div
       className={`tw-border-2 tw-border-dashed ${
@@ -479,9 +546,6 @@ export function ImpressionsDrawer({
             <Upload className="tw-h-4 tw-w-4 tw-mr-2" />
             Replace Image
           </button>
-          {error && error.includes("image") && (
-            <p className="tw-mt-2 tw-text-sm tw-text-red-600">{error}</p>
-          )}
         </div>
       ) : (
         <div className="tw-text-center">
@@ -728,8 +792,13 @@ export function ImpressionsDrawer({
 
                 {formSubmitAttempted && !isFormValid && !isSubmitting && (
                   <p className="tw-text-xs tw-text-red-500 tw-mt-2 tw-text-center">
-                    Please fill in all required fields marked with * and
-                    complete any editing in progress
+                    {!proofImagePreview && !proofImageUrl
+                      ? "Please upload a proof image of your LinkedIn analytics"
+                      : impressionsData.impressions <= 0
+                      ? "Please enter valid impressions"
+                      : !hasValuesChanged
+                      ? "Please update at least one metric value"
+                      : "Please fill in all required fields marked with * and complete any editing in progress"}
                   </p>
                 )}
               </div>

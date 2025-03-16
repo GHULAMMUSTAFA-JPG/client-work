@@ -24,8 +24,10 @@ function CampaignDetails() {
     if (!user?._id) return;
     try {
       setLoading(true);
-      const campaignList = (await getBrandCampaignList(user?.email)) as any;
-      setCampaignList(campaignList?.campaigns || []);
+      const response = await getBrandCampaignList(user?.email);
+      if (response?.success) {
+        setCampaignList((response.data as any)?.campaigns || []);
+      }
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching campaign list:", error);

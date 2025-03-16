@@ -37,7 +37,6 @@ export function LivePostDrawer({
   const [embedError, setEmbedError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Update state when initial values change or drawer opens
   useEffect(() => {
     if (isOpen) {
       setPostUrl(initialPostUrl);
@@ -46,12 +45,9 @@ export function LivePostDrawer({
       setEmbedError("");
     }
   }, [isOpen, initialPostUrl, initialEmbedLink]);
-
-  // Check if values have been changed from initial values
   const hasChanges =
     postUrl !== initialPostUrl || embedLink !== initialEmbedLink;
 
-  // Check if in edit mode (initial values are provided)
   const isEditMode = initialPostUrl !== "" || initialEmbedLink !== "";
 
   if (!isOpen) return null;
@@ -86,7 +82,7 @@ export function LivePostDrawer({
         embeded_link: embedLink,
       });
 
-      if (response) {
+      if (response?.success) {
         onSubmit();
         setError("");
         setEmbedError("");

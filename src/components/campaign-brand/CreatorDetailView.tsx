@@ -6,16 +6,13 @@ import {
   MessageSquare,
   CheckCircle,
   DollarSign,
-  X,
   Eye,
   ThumbsDown,
   User,
-  Clock,
   MousePointer,
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
-import Tooltip from "../Tooltip";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
 import { toast } from "react-toastify";
 import { apiController } from "@/@api/baseUrl";
@@ -152,7 +149,7 @@ export function CreatorDetailView({
         status: Status.Approved + "",
       });
 
-      if (result) {
+      if (result?.success) {
         toast.success("Post approved successfully");
         onUpdate(currentPostId);
       } else {
@@ -175,7 +172,7 @@ export function CreatorDetailView({
         status: Status.Approved + "",
       });
 
-      if (result) {
+      if (result?.success) {
         toast.success("Content approved successfully");
         onUpdate(selectedPost.id);
       } else {

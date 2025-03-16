@@ -49,8 +49,8 @@ export function CampaignHeader({
     const response = await getStripeLoginLink(userId);
     setLoadingEarnings(false);
 
-    if (response?.url) {
-      window.open(response.url, "_blank", "noopener noreferrer");
+    if (response?.success && response.data?.url) {
+      window.open(response.data.url, "_blank", "noopener noreferrer");
     } else {
       toast.error("Missing Stripe account");
     }

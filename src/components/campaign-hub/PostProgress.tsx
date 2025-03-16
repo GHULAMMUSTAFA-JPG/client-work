@@ -31,6 +31,13 @@ interface PostProgressProps {
   linkedinPostUrl: string;
   postStatus?: number;
   embeddedLink?: string;
+  initialImpressions?: {
+    impressions: number;
+    clicks: number;
+    engagement: number;
+    comments: number;
+    shares: number;
+  };
 }
 
 export function PostProgress({
@@ -43,13 +50,13 @@ export function PostProgress({
   linkedinPostUrl,
   embeddedLink,
   postStatus,
+  initialImpressions,
 }: PostProgressProps) {
   const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [isLivePostDrawerOpen, setIsLivePostDrawerOpen] = useState(false);
   const [isImpressionsDrawerOpen, setIsImpressionsDrawerOpen] = useState(false);
   const [isPaymentDrawerOpen, setIsPaymentDrawerOpen] = useState(false);
 
-  // Add a style block for the non-editable cursor
   const nonEditableStyle = {
     cursor: "default",
     pointerEvents: "none" as const,
@@ -126,8 +133,7 @@ export function PostProgress({
     }
   };
 
-  const handleStageClick = (stage: PostStage, index: number) => {
-    // Allow clicking on the current stage OR any previous editable stage
+  const handleStageClick = (stage: PostStage) => {
     const isCurrentStage = stage.id === currentStage;
     const isPreviousStage = stage.id < currentStage;
 
@@ -211,7 +217,7 @@ export function PostProgress({
 
                 {/* Step Button */}
                 <button
-                  onClick={() => handleStageClick(stage, index)}
+                  onClick={() => handleStageClick(stage)}
                   style={!isInteractive ? nonEditableStyle : undefined}
                   className={`
                     tw-relative tw-z-10 tw-w-8 tw-h-8 tw-rounded-full tw-border-2 tw-flex tw-items-center tw-justify-center
@@ -232,9 +238,17 @@ export function PostProgress({
                   )}
                 </button>
 
-                {/* Step Label */}
                 <div className="tw-mt-4">
-                  <div className="tw-flex tw-items-center tw-justify-center tw-space-x-1">
+                  <div
+                    className={`tw-flex tw-items-center tw-justify-center tw-space-x-1 ${
+                      stage.isEditable ? "tw-cursor-pointer" : ""
+                    }`}
+                    onClick={
+                      stage.isEditable
+                        ? () => handleStageClick(stage)
+                        : undefined
+                    }
+                  >
                     {getStageIcon(stage)}
                     <span
                       className={`tw-text-sm tw-font-medium ${
@@ -280,6 +294,7 @@ export function PostProgress({
               setIsImpressionsDrawerOpen(false);
               onSubmit();
             }}
+            initialImpressions={initialImpressions}
           />
 
           {isPaymentDrawerOpen && (

@@ -1,12 +1,23 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { apiController } from "./baseUrl";
 
+interface ApiErrorResponse {
+  success: false;
+  message?: string;
+  details?: string;
+}
+
+interface ApiSuccessResponse<T> {
+  success: true;
+  data: T;
+}
+
 export const handleApiRequest = async <T>(
   method: string,
   endpoint: string,
   data?: any,
   options?: AxiosRequestConfig
-): Promise<T | null> => {
+): Promise<ApiSuccessResponse<T> | ApiErrorResponse> => {
   try {
     const baseURL = process.env.NEXT_PUBLIC_API_URL;
     const headers = {
@@ -28,18 +39,19 @@ export const handleApiRequest = async <T>(
     }
 
     const response = await apiController(config);
-    return response.data;
+    return {
+      success: true,
+      data: response.data,
+    };
   } catch (error: any) {
-    console.error(`API Error (${method} ${endpoint}):`, error);
-
-    if (error.response) {
-      console.error("Error response data:", error.response.data);
-      console.error("Error response status:", error.response.status);
-      console.error("Error response headers:", error.response.headers);
-    }
-    return null;
+    return {
+      success: false,
+      message: error.response?.data?.message,
+      details: error.response?.data?.details,
+    };
   }
 };
+
 interface UploadOptions {
   campaignId?: string;
   postId?: string;
