@@ -85,6 +85,7 @@ export interface Post {
   reposts?: number;
   engagementRate?: number;
   reactions?: number;
+  Budget?:number;
 }
 
 export interface ContentItem {
