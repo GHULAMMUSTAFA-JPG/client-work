@@ -107,10 +107,10 @@ export function PostsList({
                       <span className="fs-10">Click to select</span>
                     </div>
                   </div>
-                  <div className="status-box">
+                  <div className="status-box00">
                     <button
                       onClick={() => setViewingPost(post)}
-                      className="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-1 tw-text-xs tw-text-gray-600 hover:tw-text-gray-900"
+                      className="tw-w-full tw-bg-teal-500 tw-rounded tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-2 tw-text-xs tw-text-white"
                     >
                       <Eye className="tw-w-3 tw-h-3 tw-mr-1" />
                       View Details
