@@ -66,6 +66,7 @@ export function CreatorDetailView({
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const searchParams = useSearchParams();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  console.log("paidchild", paid);
   const handleOpenChatModal = () => {
     setIsChatModalOpen(true);
   };
@@ -88,9 +89,8 @@ export function CreatorDetailView({
 
     if (!currentPostStillExists) {
       if (posts.length > 0) {
-        
         setSelectedPost(posts[0]);
-        console.log('setSelectedPost', selectedPost);
+        console.log("setSelectedPost", selectedPost);
         setSelectedContent(posts[0].contentItems[0]);
       } else {
         setSelectedPost(null);
@@ -101,7 +101,7 @@ export function CreatorDetailView({
 
   const handleSelectPost = (post: Post) => {
     setSelectedPost(post);
-    console.log('setSelectedPost', selectedPost);
+    console.log("setSelectedPost", selectedPost);
     setSelectedContent(post.contentItems[0]);
 
     const tab = searchParams.get("tab") || "in_campaign";
@@ -434,33 +434,31 @@ export function CreatorDetailView({
               </div>
             </div>
           )}
-          {
-            (paid = 1 && (
-              <div className=" tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500">
-                <div className="tw-flex tw-items-center tw-gap-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="lucide lucide-info tw-w-5 tw-h-5 tw-text-blue-500 tw-flex-shrink-0"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                  </svg>
-                  <div className="tw-text-sm tw-text-blue-600">
-                    <span>Your payment has been processed successfully.</span>
-                  </div>
+          {paid == 1 && (
+            <div className=" tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500">
+              <div className="tw-flex tw-items-center tw-gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-info tw-w-5 tw-h-5 tw-text-blue-500 tw-flex-shrink-0"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4"></path>
+                  <path d="M12 8h.01"></path>
+                </svg>
+                <div className="tw-text-sm tw-text-blue-600">
+                  <span>Your payment has been processed successfully.</span>
                 </div>
               </div>
-            ))
-          }
+            </div>
+          )}
           <div className="tw-grid tw-grid-cols-12 tw-gap-6">
             <div className="tw-col-span-3">
               <CreatorsDropDown
@@ -529,7 +527,6 @@ export function CreatorDetailView({
                             <BarChart3 className="tw-w-3 tw-h-3 tw-mr-1" />
                             {post.impressions?.toLocaleString()} impressions
                           </div>
-                    
                         </div>
                       )}
                     </button>
@@ -607,9 +604,9 @@ export function CreatorDetailView({
                           {selectedPost.title}
                         </h3>
                         <p className="tw-text-sm tw-text-gray-500">
-                        Go Live Date:  {selectedPost.dueDate}
+                          Go Live Date: {selectedPost.dueDate}
                         </p>
-                               
+
                         <div className="tw-flex tw-items-center tw-mt-2 tw-space-x-2">
                           {selectedCreator?.profilePicture ? (
                             <img
@@ -654,25 +651,21 @@ export function CreatorDetailView({
 
                         {selectedPost.numberstatus ===
                         Status.PostImpressionUploaded ? (
-                          <div
-                             className="tw-px-4 tw-py-2 tw-bg-teal-50 tw-text-black tw-rounded-lg tw-flex tw-items-center tw-gap-2"
-                          >
+                          <div className="tw-px-4 tw-py-2 tw-bg-teal-50 tw-text-black tw-rounded-lg tw-flex tw-items-center tw-gap-2">
                             <DollarSign className="tw-w-4 tw-h-4" />
                             {isProcessingPayment
                               ? "Processing..."
                               : "Process Payment"}
                           </div>
                         ) : (
-                          <div
-                           
-                            className="tw-px-4 tw-py-2 tw-text-black tw-flex tw-items-center tw-gap-1 fw-500 fs-15"
-                          >
-                            <DollarSign className="tw-w-4 tw-h-4" /><span>5000</span>
+                          <div className="tw-px-4 tw-py-2 tw-text-black tw-flex tw-items-center tw-gap-1 fw-500 fs-15">
+                            <DollarSign className="tw-w-4 tw-h-4" />
+                            <span>5000</span>
                             <span className="tw-bg-teal-50 tw-rounded-lg  tw-text-black tw-px-4 tw-py-2 fw-400 tw-ml-3 fs-12">
-                            {selectedPost.numberstatus === 10
-                              ? "Payment Processed"
-                              : "Process Payment"}
-                              </span>
+                              {selectedPost.numberstatus === 10
+                                ? "Payment Processed"
+                                : "Process Payment"}
+                            </span>
                           </div>
                         )}
                       </div>
