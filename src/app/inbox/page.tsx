@@ -518,131 +518,104 @@ import { ApprovedCard } from "@/components/ApprovedCard";
 
 const Inbox = () => {
   const [input, setInput] = useState<string>("");
-  const {
-    userProfile,
-    conversations,
-    sockets,
-    setSockets,
-    setSelectedIds,
-    selectedIds,
-    restartSocket,
-    user,
-    setConversations,
-    isAuthenticated,
-  } = useAuth();
+  const { userProfile, conversations, setSelectedIds, selectedIds } = useAuth();
+  const [socket, setSocket] = useState<WebSocket | null>(null);
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>("");
   const [conversationstate, setconversationstate] = useState(
-    conversations?.conversations || []
+    conversations?.conversations
   );
   const [sentmessagesarray, setsentmessagesarray] = useState<any>([]);
+
   const searchParams = useSearchParams();
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
-  const socketRef = useRef<WebSocket | null>(null);
-  const isReconnecting = useRef<boolean>(false);
 
-  // WebSocket Initialization
+  // Initialize WebSocket
   useEffect(() => {
-    const initializeWebSocket = () => {
-      if (isReconnecting.current || socketRef.current) return;
-
-      if (isAuthenticated) {
-        const storedUser = localStorage.getItem("user");
-        let userId = storedUser ? JSON.parse(storedUser)?._id : null;
-        if (!userId) {
-          userId = storedUser ? JSON.parse(storedUser)?.uuid : null;
-        }
-
-        const socketUrl = `${process.env.NEXT_PUBLIC_SOCKET_URL}/ws/message/${userId}`;
-        if (!process.env.NEXT_PUBLIC_SOCKET_URL) {
-          console.error("NEXT_PUBLIC_SOCKET_URL is not defined in .env");
-          return;
-        }
-
-        isReconnecting.current = true;
-        const ws = new WebSocket(socketUrl);
-
-        ws.onopen = () => {
-          console.log("WebSocket connection established");
-          isReconnecting.current = false;
-          socketRef.current = ws;
-          setSockets(ws);
-
-          const data: any = {
-            notification: false,
-            recipient_id: userId,
-          };
-          ws.send(JSON.stringify(data));
-
-          if (user?.email) {
-            const dtoForHistory: any = {
-              email: user?.email,
-            };
-            ws.send(JSON.stringify(dtoForHistory));
-          }
-        };
-
-        ws.onmessage = (event) => {
-          console.log("WebSocket message received:", event.data);
-          const data = JSON.parse(event.data);
-          if (data.type === "new_message") {
-            setConversations((prev: any) => {
-              const updatedConversations = { ...prev };
-              const conversation = updatedConversations.conversations.find(
-                (c: any) => c._id === data.conversation_id
-              );
-              if (conversation) {
-                conversation.messages = [data.message, ...conversation.messages];
-                conversation.Last_Message = data.message;
-                conversation.conversation_new_messages =
-                  (conversation.conversation_new_messages || 0) + 1;
-              }
-              return updatedConversations;
-            });
-          }
-        };
-
-        ws.onclose = () => {
-          console.log("WebSocket connection closed");
-          if (socketRef.current === ws) {
-            socketRef.current = null;
-            setSockets(null);
-          }
-          if (!isReconnecting.current) {
-            isReconnecting.current = true;
-            setTimeout(() => {
-              isReconnecting.current = false;
-              initializeWebSocket();
-            }, 2000);
-          }
-        };
-
-        ws.onerror = (error) => {
-          console.error("WebSocket error:", error);
-        };
-      }
-    };
-
-    if (!socketRef.current && isAuthenticated) {
-      initializeWebSocket();
+    // if (isAuthenticated) {
+    const storedUser = localStorage.getItem("user");
+    let user = storedUser ? JSON.parse(storedUser) : null;
+    let userId = storedUser ? JSON.parse(storedUser)?._id : null;
+    if (!userId) {
+      userId = storedUser ? JSON.parse(storedUser)?.uuid : null;
     }
 
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.close();
-        socketRef.current = null;
-        setSockets(null);
+    const socketUrl = `${process.env.NEXT_PUBLIC_SOCKET_URL}/ws/message/${userId}`;
+    if (!process.env.NEXT_PUBLIC_SOCKET_URL) {
+      console.error("NEXT_PUBLIC_SOCKET_URL is not defined in .env");
+      return;
+    }
+
+    const ws = new WebSocket(socketUrl);// Replace with your actual WebSocket URL
+    // }
+    ws.onopen = () => {
+      console.log("WebSocket connection established");
+      // socketRef.current = ws;
+      setSocket(ws);
+
+      const data: any = {
+        notification: false,
+        recipient_id: userId,
+      };
+      ws.send(JSON.stringify(data));
+
+      if (user?.email) {
+        const dtoForHistory: any = {
+          email: user?.email,
+        };
+        ws.send(JSON.stringify(dtoForHistory));
       }
     };
-  }, [isAuthenticated, user?.email, restartSocket, setSockets, setConversations]);
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setconversationstate(data.conversations);
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket error:", error);
+      toast.error("WebSocket connection error");
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket disconnected");
+    };
+
+    setSocket(ws);
+
+    return () => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close();
+      }
+    };
+  }, []);
+
+  const restartSocket = () => {
+    if (socket) {
+      socket.close();
+    }
+    const storedUser = localStorage.getItem("user");
+    let user = storedUser ? JSON.parse(storedUser) : null;
+    let userId = storedUser ? JSON.parse(storedUser)?._id : null;
+    if (!userId) {
+      userId = storedUser ? JSON.parse(storedUser)?.uuid : null;
+    }
+
+    const socketUrl = `${process.env.NEXT_PUBLIC_SOCKET_URL}/ws/message/${userId}`;
+    if (!process.env.NEXT_PUBLIC_SOCKET_URL) {
+      console.error("NEXT_PUBLIC_SOCKET_URL is not defined in .env");
+      return;
+    }
+
+    const ws = new WebSocket(socketUrl);// Replace with your actual WebSocket URL
+    setSocket(ws);
+  };
 
   useEffect(() => {
-    const idInUrl = searchParams.get("id");
-
     if (
       conversationstate?.length > 0 &&
       !selectedIds?.Recipient_ID &&
-      !idInUrl
+      !searchParams.get("id")
     ) {
       const firstConversation = conversationstate[0];
       setSelectedIds({
@@ -653,7 +626,6 @@ const Inbox = () => {
         Name: firstConversation?.Name,
         Profile_Image: firstConversation?.Profile_Image,
       });
-
       readMessage(firstConversation);
     }
   }, [conversationstate, searchParams, selectedIds?.Recipient_ID]);
@@ -664,16 +636,14 @@ const Inbox = () => {
         (chat: any) =>
           chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
       );
-
       const currentMessages = currentConversation?.messages || [];
       const updatedSentMessages = sentmessagesarray.filter((sentMsg: any) => {
         return !currentMessages.some(
           (convMsg: any) => convMsg.Frontend_Message_ID === sentMsg.messageId
         );
       });
-
       setsentmessagesarray(updatedSentMessages);
-      setconversationstate(conversations?.conversations || []);
+      setconversationstate(conversations?.conversations);
     }
   }, [conversations, selectedIds?.Recipient_ID]);
 
@@ -687,7 +657,6 @@ const Inbox = () => {
       const conversation = conversationstate?.find(
         (chat: any) => chat?.Last_Message?.Recipient_ID === id
       );
-
       setSelectedIds((prev: any) => ({
         ...prev,
         Recipient_ID: id,
@@ -695,12 +664,13 @@ const Inbox = () => {
         Name: conversation?.Name || null,
         Profile_Image: conversation?.Profile_Image || null,
       }));
-
       fetchProfileDataByIds(id, setSelectedIds);
     }
   }, [searchParams]);
 
   const sendMessage = async () => {
+    if (!socket) return;
+
     const messageId = Date.now().toString();
     const newMessage = {
       Message: input,
@@ -708,7 +678,6 @@ const Inbox = () => {
       Time_Ago: "",
       user: "sender",
       messageId: messageId,
-      Frontend_Message_ID: messageId,
     };
     setsentmessagesarray((prev: any) => [...prev, newMessage]);
 
@@ -716,14 +685,12 @@ const Inbox = () => {
       recipient_id: selectedIds?.Recipient_ID,
       message: input,
       message_id: messageId,
-      conversation_id: selectedIds?.Conversation_Id,
-      type: "new_message",
     });
 
-    if (sockets && sockets.readyState === WebSocket.OPEN) {
+    if (socket.readyState === WebSocket.OPEN) {
       setconversationstate((prev: any) => {
         return prev.map((chat: any) => {
-          if (chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID) {
+          if (chat?.Last_Message?.Recipient_ID === selectedIds.Recipient_ID) {
             return {
               ...chat,
               messages: [...chat.messages],
@@ -732,51 +699,52 @@ const Inbox = () => {
           return chat;
         });
       });
-
-      sockets.send(data);
+      socket.send(data);
       setInput("");
     } else {
       toast.warn(
         "Error while connecting. Please check your connection and try again"
       );
+      restartSocket();
     }
   };
 
   useEffect(() => {
     const currentConversation = conversationstate?.find(
       (chat: any) =>
-        chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+        chat?.Last_Message?.Recipient_ID === selectedIds.Recipient_ID
     );
 
     if (
-      selectedIds?.Recipient_ID &&
+      socket &&
+      selectedIds.Recipient_ID &&
       currentConversation?.conversation_new_messages > 0
     ) {
       const data = {
         conversation_id: currentConversation._id,
         sender_id: userProfile?._id,
-        type: "read_message",
       };
-      if (sockets && sockets.readyState === WebSocket.OPEN) {
-        sockets.send(JSON.stringify(data));
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(data));
       }
     }
-  }, [conversationstate]);
+  }, [conversationstate, socket]);
 
   useEffect(() => {
     if (endOfMessagesRef.current) {
       endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [selectedIds?.Recipient_ID, conversationstate, sentmessagesarray]);
+  }, [selectedIds?.Recipient_ID, conversationstate]);
 
   const readMessage = async (conversation: any) => {
+    if (!socket) return;
+
     const data = {
       conversation_id: conversation?._id,
       sender_id: userProfile?._id,
-      type: "read_message",
     };
-    if (sockets && sockets.readyState === WebSocket.OPEN) {
-      sockets.send(JSON.stringify(data));
+    if (socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify(data));
     }
   };
 
@@ -785,7 +753,7 @@ const Inbox = () => {
       if (searchText) {
         const filteredConversations = conversations.conversations.filter(
           (chat: any) =>
-            chat?.Name?.toLowerCase().includes(searchText.toLowerCase())
+            chat?.Name.toLowerCase().includes(searchText.toLowerCase())
         );
         setconversationstate(filteredConversations);
       } else {
@@ -797,10 +765,12 @@ const Inbox = () => {
   return (
     <div className="container-fluid chatbot-container">
       <div className="row bg-white">
+        {/* Left Sidebar */}
         <div className="col-md-4 col-lg-3 border-end p-0">
           <div className="p-3 border-bottom">
             <h5 className="mb-0">Messages</h5>
           </div>
+
           <div className="p-3 border-bottom">
             <div className="input-group">
               <span className="input-group-text bg-form border-0">
@@ -819,6 +789,7 @@ const Inbox = () => {
               />
             </div>
           </div>
+
           <div className="conversation-list">
             {conversationstate?.length === 0 ? (
               <EmptyState
@@ -842,7 +813,6 @@ const Inbox = () => {
                       Sender_ID: userProfile?._id,
                       Name: chat?.Name,
                       Profile_Image: chat?.Profile_Image,
-                      index,
                     });
                   }}
                   key={index}
@@ -853,7 +823,11 @@ const Inbox = () => {
                 >
                   {chat?.Profile_Image ? (
                     <div className="img-container-topHeader">
-                      <img src={chat.Profile_Image} alt="Profile" className="" />
+                      <img
+                        src={chat.Profile_Image}
+                        alt="Profile"
+                        className=""
+                      />
                     </div>
                   ) : (
                     <div
@@ -881,6 +855,8 @@ const Inbox = () => {
             )}
           </div>
         </div>
+
+        {/* Chat Area */}
         <div className="col-md-8 col-lg-9 p-0">
           {selectedIds?.Recipient_ID ? (
             <div className="card h-100 border-0">
@@ -898,91 +874,103 @@ const Inbox = () => {
                   <h6 className="mb-0 fs-14">{selectedIds?.Name}</h6>
                 </div>
               </div>
+
               <div className="card-body p-4">
                 {conversationstate &&
                   (() => {
                     const currentConversation = conversationstate.find(
                       (chat: any) =>
-                        chat?.Last_Message?.Recipient_ID === selectedIds?.Recipient_ID
+                        chat?.Last_Message?.Recipient_ID ===
+                        selectedIds?.Recipient_ID
                     );
 
                     if (!currentConversation) return null;
 
                     const creator_id = currentConversation.Creator_ID;
-                    return currentConversation?.messages.map((msg: any, index: number) => (
-                      <div key={index}>
-                        {msg.Message_Type === "conversation_message" ? (
-                          <div
-                            className={`mb-3 ${msg.user !== "sender"
-                              ? ""
-                              : "d-flex justify-content-end flex-column"
-                              }`}
-                          >
+                    return currentConversation?.messages.map(
+                      (msg: any, index: number) => (
+                        <div key={index}>
+                          {msg.Message_Type === "conversation_message" ? (
                             <div
-                              className={`p-3 rounded d-inline-block ${msg.user !== "sender"
-                                ? "bg-light"
-                                : "bg-primary text-white ms-auto"
+                              className={`mb-3 ${msg.user !== "sender"
+                                ? ""
+                                : "d-flex justify-content-end flex-column"
                                 }`}
                             >
-                              {msg.Message}
+                              <div
+                                className={`p-3 rounded d-inline-block ${msg.user !== "sender"
+                                  ? "bg-light"
+                                  : "bg-primary text-white ms-auto"
+                                  }`}
+                              >
+                                {msg.Message}
+                              </div>
+                              <small className="text-muted d-block ms-auto">
+                                {msg.Time_Ago}
+                              </small>
                             </div>
-                            <small className="text-muted d-block ms-auto">
-                              {msg.Time_Ago}
-                            </small>
-                          </div>
-                        ) : msg.Message_Type === "campaign_post_proposal" ? (
-                          <div
-                            className={`mb-3 ${msg.user !== "sender"
-                              ? ""
-                              : "d-flex justify-content-end flex-column"
-                              }`}
-                          >
+                          ) : msg.Message_Type === "campaign_post_proposal" ? (
                             <div
-                              className={`p-3 rounded d-inline-block ${msg.user !== "sender" ? "" : "text-white ms-auto"
+                              className={`mb-3 ${msg.user !== "sender"
+                                ? ""
+                                : "d-flex justify-content-end flex-column"
                                 }`}
                             >
-                              <ProposalCard
-                                Campaign_ID={msg.Post_Details.Campaign_ID}
-                                Post_ID={msg.Post_Details.Post_ID}
-                                creator_id={creator_id}
-                                campaignName={msg.Post_Details.Campaign_Headline}
-                                postTitle={msg.Post_Details.Post_Title}
-                                amount={msg.Post_Details.Budget}
-                                submissionDate={msg.Post_Details.Created_At}
-                                status={
-                                  msg.Post_Details.Proposal_Status === 1
-                                    ? "pending"
-                                    : msg.Post_Details.Proposal_Status === 2
-                                      ? "approved"
-                                      : "rejected"
-                                }
-                                rules={msg.Post_Details.Post_Description}
-                              />
+                              <div
+                                className={`p-3 rounded d-inline-block ${msg.user !== "sender"
+                                  ? ""
+                                  : "text-white ms-auto"
+                                  }`}
+                              >
+                                <ProposalCard
+                                  Campaign_ID={msg.Post_Details.Campaign_ID}
+                                  Post_ID={msg.Post_Details.Post_ID}
+                                  creator_id={creator_id}
+                                  campaignName={
+                                    msg.Post_Details.Campaign_Headline
+                                  }
+                                  postTitle={msg.Post_Details.Post_Title}
+                                  amount={msg.Post_Details.Budget}
+                                  submissionDate={msg.Post_Details.Created_At}
+                                  status={
+                                    msg.Post_Details.Proposal_Status === 1
+                                      ? "pending"
+                                      : msg.Post_Details.Proposal_Status === 2
+                                        ? "approved"
+                                        : "rejected"
+                                  }
+                                  rules={msg.Post_Details.Post_Description}
+                                />
+                              </div>
                             </div>
-                          </div>
-                        ) : msg.Message_Type === "campaign_creator_accepted" ? (
-                          <div
-                            className={`mb-3 ${msg.user !== "sender"
-                              ? ""
-                              : "d-flex justify-content-end flex-column"
-                              }`}
-                          >
+                          ) : msg.Message_Type === "campaign_creator_accepted" ? (
                             <div
-                              className={`p-3 rounded d-inline-block ${msg.user !== "sender" ? "" : "text-white ms-auto"
+                              className={`mb-3 ${msg.user !== "sender"
+                                ? ""
+                                : "d-flex justify-content-end flex-column"
                                 }`}
                             >
-                              <CampaignAcceptanceCard
-                                campaignName={msg.Campaign_Details.Campaign_Headline}
-                                campaignLink="https://example.com"
-                                acceptanceDate={msg.Timestamp}
-                                campaignid={msg.Campaign_Details.Campaign_ID}
-                                name={selectedIds?.Name}
-                              />
+                              <div
+                                className={`p-3 rounded d-inline-block ${msg.user !== "sender"
+                                  ? ""
+                                  : "text-white ms-auto"
+                                  }`}
+                              >
+                                <CampaignAcceptanceCard
+                                  campaignName={
+                                    msg.Campaign_Details.Campaign_Headline
+                                  }
+                                  campaignLink="https://example.com"
+                                  acceptanceDate={msg.Timestamp}
+                                  campaignid={msg.Campaign_Details.Campaign_ID}
+                                  name={selectedIds?.Name}
+                                />
+                              </div>
                             </div>
-                          </div>
-                        ) : null}
-                      </div>
-                    ));
+                          ) : null}
+                        </div>
+                      )
+                    );
                   })()}
                 {sentmessagesarray.map((msg: any, index: number) => (
                   <div key={index}>
@@ -1001,13 +989,14 @@ const Inbox = () => {
                         {msg.Message}
                       </div>
                       <small className="text-muted d-block ms-auto">
-                        {msg.Time_Ago || "Just now"}
+                        {msg.Time_Ago}
                       </small>
                     </div>
                   </div>
                 ))}
                 <div ref={endOfMessagesRef}></div>
               </div>
+
               <div className="card-footer bg-white p-3">
                 <div className="input-group">
                   <textarea
@@ -1016,7 +1005,7 @@ const Inbox = () => {
                     onChange={(e) => setInput(e.target.value)}
                     value={input}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
+                      if (e.key === "Enter") {
                         e.preventDefault();
                         sendMessage();
                       }
