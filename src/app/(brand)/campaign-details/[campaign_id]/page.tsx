@@ -8,6 +8,7 @@ import CampaignStats from "@/components/campaign-brand/CampaignStats";
 import Tooltip from "@/components/Tooltip";
 import CreatorList from "@/components/campaign-brand/CreatorList";
 import CampaignHeader from "@/components/campaign-brand/CampaignHeader";
+
 import EditCreateCampaign, {
   CampaignFormData,
 } from "@/components/shared/EditCreateCampaign";
@@ -49,6 +50,14 @@ function CampaignDetailsContent() {
   const [campaignActiveCreatorsData, setCampaignActiveCreatorsData] =
     useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [paid, setPaid] = useState<any>(null);
+  useEffect(() => {
+    const paidValue = searchParams.get("paid"); // Get the 'paid' query param
+    if (paidValue) {
+      setPaid(paidValue);
+    }
+  }, [searchParams]);
+  console.log("paid", paid);
   const fetchCampaign = async () => {
     if (!user?._id) return;
 
@@ -188,6 +197,7 @@ function CampaignDetailsContent() {
   if (selectedCreator) {
     return (
       <CreatorDetailView
+        paid={paid}
         creator={selectedCreator}
         onBack={handleBack}
         posts={selectedCreator.posts || []}

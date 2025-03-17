@@ -28,6 +28,7 @@ import { CampaignDrawer } from "../campaign-hub/CampaignDrawer";
 import { ChatDrawer } from "../ChatDrawer";
 
 interface CreatorDetailViewProps {
+  paid: any;
   creator: Creator;
   onBack: () => void;
   posts: Post[];
@@ -39,6 +40,7 @@ interface CreatorDetailViewProps {
 }
 
 export function CreatorDetailView({
+  paid,
   creator,
   onBack,
   posts,
@@ -207,7 +209,7 @@ export function CreatorDetailView({
       post_id: selectedPost?.id!,
     });
     if (result?.success && result?.data?.checkout_url) {
-      window.open(result?.data?.checkout_url, "_blank");
+      window.open(result?.data?.checkout_url, "_self");
     }
     setIsProcessingPayment(false);
   };
@@ -404,7 +406,58 @@ export function CreatorDetailView({
               View Creator Profile
             </div>
           </div>
-
+          {paid == 0 && (
+            <div className=" tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500">
+              <div className="tw-flex tw-items-center tw-gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-info tw-w-5 tw-h-5 tw-text-red-500 tw-flex-shrink-0"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4"></path>
+                  <path d="M12 8h.01"></path>
+                </svg>
+                <div className="tw-text-sm tw-text-red-600">
+                  <span>Unfortunately, we couldn't process your payment.</span>
+                </div>
+              </div>
+            </div>
+          )}
+          {
+            (paid = 1 && (
+              <div className=" tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500">
+                <div className="tw-flex tw-items-center tw-gap-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="lucide lucide-info tw-w-5 tw-h-5 tw-text-blue-500 tw-flex-shrink-0"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 16v-4"></path>
+                    <path d="M12 8h.01"></path>
+                  </svg>
+                  <div className="tw-text-sm tw-text-blue-600">
+                    <span>Your payment has been processed successfully.</span>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
           <div className="tw-grid tw-grid-cols-12 tw-gap-6">
             <div className="tw-col-span-3">
               <CreatorsDropDown
