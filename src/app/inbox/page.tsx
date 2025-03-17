@@ -821,14 +821,7 @@ const Inbox = () => {
           </div>
           <div className="conversation-list">
             {conversationstate?.length === 0 ? (
-              <EmptyState
-                icon="bi bi-chat-dots-fill"
-                title="No Messages Yet"
-                description="This is where you'll communicate with brands about campaigns."
-                secondaryDescription="Once you apply for a campaign, brands will contact you here."
-                buttonText="Explore Campaigns"
-                buttonLink="/campaigns"
-              />
+            <div></div>
             ) : (
               conversationstate?.map((chat: any, index: number) => (
                 <div
