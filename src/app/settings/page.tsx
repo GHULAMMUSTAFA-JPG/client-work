@@ -112,13 +112,13 @@ function App() {
         const response = await apiController.get(
           `/payments/${user?.uuid}/generate-customer-portal`
         );
-        window.open(response.data.url, "_blank");
+        window.open(response.data.url, "_self");
         console.log("handlestripe", response);
       } else if (charges_enabled == false && onboarding_status == true) {
         const response = await apiController.get(
           `/payments/${user?.uuid}/generate-customer-portal`
         );
-        window.open(response.data.url, "_blank");
+        window.open(response.data.url, "_self");
 
         console.log("not called");
       } else {
@@ -171,7 +171,7 @@ function App() {
         `/payments/create-customer-portal?user_id=${user?._id}`
       );
       if (response.status === 200) {
-        window.open(response.data, "_blank");
+        window.open(response.data, "_self");
       }
     } catch (error) {
       console.log(error);
