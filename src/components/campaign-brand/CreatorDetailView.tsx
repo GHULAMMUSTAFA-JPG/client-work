@@ -86,7 +86,9 @@ export function CreatorDetailView({
 
     if (!currentPostStillExists) {
       if (posts.length > 0) {
+        
         setSelectedPost(posts[0]);
+        console.log('setSelectedPost', selectedPost);
         setSelectedContent(posts[0].contentItems[0]);
       } else {
         setSelectedPost(null);
@@ -97,6 +99,7 @@ export function CreatorDetailView({
 
   const handleSelectPost = (post: Post) => {
     setSelectedPost(post);
+    console.log('setSelectedPost', selectedPost);
     setSelectedContent(post.contentItems[0]);
 
     const tab = searchParams.get("tab") || "in_campaign";
@@ -473,10 +476,7 @@ export function CreatorDetailView({
                             <BarChart3 className="tw-w-3 tw-h-3 tw-mr-1" />
                             {post.impressions?.toLocaleString()} impressions
                           </div>
-                          <div className="tw-flex tw-items-center tw-text-xs tw-text-gray-600">
-                            <MessageSquare className="tw-w-3 tw-h-3 tw-mr-1" />
-                            {post.engagementRate}% engagement
-                          </div>
+                    
                         </div>
                       )}
                     </button>
@@ -554,8 +554,9 @@ export function CreatorDetailView({
                           {selectedPost.title}
                         </h3>
                         <p className="tw-text-sm tw-text-gray-500">
-                          Submitted on {selectedPost.date}
+                        Go Live Date:  {selectedPost.dueDate}
                         </p>
+                               
                         <div className="tw-flex tw-items-center tw-mt-2 tw-space-x-2">
                           {selectedCreator?.profilePicture ? (
                             <img
@@ -600,26 +601,26 @@ export function CreatorDetailView({
 
                         {selectedPost.numberstatus ===
                         Status.PostImpressionUploaded ? (
-                          <button
-                            onClick={() => handleProcessPaymentCheckout()}
-                            disabled={isProcessingPayment}
-                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                          <div
+                             className="tw-px-4 tw-py-2 tw-bg-teal-50 tw-text-black tw-rounded-lg tw-flex tw-items-center tw-gap-2"
                           >
                             <DollarSign className="tw-w-4 tw-h-4" />
                             {isProcessingPayment
                               ? "Processing..."
                               : "Process Payment"}
-                          </button>
+                          </div>
                         ) : (
-                          <button
-                            disabled
-                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                          <div
+                           
+                            className="tw-px-4 tw-py-2 tw-text-black tw-flex tw-items-center tw-gap-1 fw-500 fs-15"
                           >
-                            <DollarSign className="tw-w-4 tw-h-4" />
+                            <DollarSign className="tw-w-4 tw-h-4" /><span>5000</span>
+                            <span className="tw-bg-teal-50 tw-rounded-lg  tw-text-black tw-px-4 tw-py-2 fw-400 tw-ml-3 fs-12">
                             {selectedPost.numberstatus === 10
                               ? "Payment Processed"
                               : "Process Payment"}
-                          </button>
+                              </span>
+                          </div>
                         )}
                       </div>
                     </div>
