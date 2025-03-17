@@ -14,332 +14,125 @@ import {
   Avatar,
   CircularProgress,
 } from "@mui/material";
-// import CloseIcon from "@mui/icons-material/Close";
-// import SendIcon from "@mui/icons-material/Send";
 import { useAuth } from "@/contexts/AuthContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { fetchProfileDataByIds } from "@/@api";
 import { defaultImagePath } from "@/components/constants";
-import { CampaignAcceptanceCard } from "./CampaignAcceptanceCard";
-import { ProposalCard } from "./ProposalCard";
 
 interface ChatModalProps {
   open: boolean;
-  onClose: any;
+  onClose: () => void;
   recipientId?: string;
 }
 
 const ChatModal = ({ open, onClose, recipientId }: ChatModalProps) => {
   const [input, setInput] = useState<string>("");
-  console.log("input", input);
   const [loading, setLoading] = useState<boolean>(true);
-  const [sentMessages, setSentMessages] = useState<any[]>([]);
-
-  const {
-    userProfile,
-    conversations,
-    sockets,
-    setSelectedIds,
-    selectedIds,
-    restartSockets,
-  } = useAuth();
-
+  const [messages, setMessages] = useState<any[]>([]);
+  const { userProfile } = useAuth();
+  const socketRef = useRef<WebSocket | null>(null);
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
-  const [currentConversation, setCurrentConversation] = useState<any>(null);
-  console.log("currentConversation", currentConversation);
-  // Load conversation data when modal opens
+
+  // WebSocket connection
   useEffect(() => {
     if (open && recipientId) {
       setLoading(true);
+      setMessages([]); // Clear messages when opening
 
-      // Find the conversation that matches the recipient_id
-      const conversation = conversations?.conversations?.find(
-        (chat: any) => chat?.Last_Message?.Recipient_ID === recipientId
-      );
+      // Establish WebSocket connection
+      socketRef.current = new WebSocket(`wss://echo.websocket.org/`);
 
-      setCurrentConversation(conversation);
+      socketRef.current.onopen = () => {
+        console.log("WebSocket connected");
+        socketRef.current?.send(JSON.stringify({ type: "join", recipientId }));
+      };
 
-      // Set selected IDs for context
-      setSelectedIds({
-        Recipient_ID: recipientId,
-        Conversation_Id: conversation?._id || null,
-        Name: conversation?.Name || null,
-        Profile_Image: conversation?.Profile_Image || null,
-        Sender_ID: userProfile?._id,
-      });
+      socketRef.current.onmessage = (event) => {
+        const newMessage = JSON.parse(event.data);
+        setMessages((prev) => [...prev, newMessage]);
+      };
 
-      // If no conversation found, fetch profile data
-      if (!conversation) {
-        fetchProfileDataByIds(recipientId, setSelectedIds);
-      }
+      socketRef.current.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
 
-      // Mark as read if there's a conversation
-      // if (conversation) {
-      //   readMessage(currentConversation);
-      // }
+      socketRef.current.onclose = () => {
+        console.log("WebSocket closed, attempting to reconnect...");
+      };
 
       setLoading(false);
-      setSentMessages([]);
     }
-  }, [open, recipientId, conversations]);
 
-  // Scroll to bottom when messages update
+    return () => {
+      socketRef.current?.close();
+    };
+  }, [open, recipientId]);
+
+  // Auto-scroll to latest message
   useEffect(() => {
-    if (endOfMessagesRef.current) {
-      endOfMessagesRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [currentConversation, sentMessages]);
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  // Mark message as read
-  const readMessage = async (conversation: any) => {
-    const data = {
-      conversation_id: conversation?._id,
-      sender_id: userProfile?._id,
-    };
-    if (sockets && sockets.readyState === WebSocket.OPEN) {
-      sockets.send(JSON.stringify(data));
-    }
-  };
+  const sendMessage = () => {
+    if (!input.trim() || !socketRef.current) return;
 
-  // Send a new message
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const messageId = Date.now().toString();
     const newMessage = {
-      Message: input,
-      Message_Type: "conversation_message",
-      Time_Ago: "Just now",
-      user: "sender",
-      messageId: messageId,
+      senderId: userProfile?._id,
+      recipientId,
+      text: input,
+      timestamp: new Date().toISOString(),
     };
 
-    setSentMessages((prev) => [...prev, newMessage]);
-
-    const data = JSON.stringify({
-      recipient_id: selectedIds?.Recipient_ID || recipientId,
-      message: input,
-      message_id: messageId,
-    });
-
-    if (sockets && sockets.readyState === WebSocket.OPEN) {
-      sockets.send(data);
-      setInput("");
-    } else {
-      alert(
-        "Error while connecting. Please check your connection and try again"
-      );
-      restartSockets();
-    }
+    socketRef.current.send(JSON.stringify(newMessage));
+    setMessages((prev) => [...prev, newMessage]);
+    setInput("");
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={() => onClose(setSelectedIds)}
-      fullWidth
-      disableEnforceFocus
-      maxWidth="sm"
-      PaperProps={{
-        sx: {
-          height: "70vh",
-          display: "flex",
-          flexDirection: "column",
-        },
-      }}
-    >
-      <DialogTitle sx={{ borderBottom: "1px solid #eee", p: 2 }}>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Box display="flex" alignItems="center">
-            {selectedIds?.Profile_Image ? (
-              <Avatar
-                src={selectedIds.Profile_Image}
-                alt={selectedIds?.Name || "User"}
-                sx={{ mr: 1 }}
-              />
-            ) : (
-              <Avatar sx={{ mr: 1 }}>
-                {selectedIds?.Name ? selectedIds.Name.charAt(0) : "U"}
-              </Avatar>
-            )}
-            <Typography variant="h6">{selectedIds?.Name || "Chat"}</Typography>
-          </Box>
-          <IconButton onClick={onClose} size="small">
-            {/* <CloseIcon /> */}
-          </IconButton>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle>
+        <Box display="flex" alignItems="center">
+          <Avatar src={defaultImagePath} sx={{ mr: 1 }} />
+          <Typography variant="h6">Chat</Typography>
         </Box>
       </DialogTitle>
-
-      <DialogContent sx={{ p: 2, flexGrow: 1, overflow: "auto" }}>
+      
+      <DialogContent sx={{ height: "60vh", overflowY: "auto" }}>
         {loading ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="100%"
-          >
+          <Box display="flex" justifyContent="center" height="100%">
             <CircularProgress />
           </Box>
+        ) : messages.length > 0 ? (
+          messages.map((msg, index) => (
+            <Box
+              key={index}
+              sx={{
+                textAlign: msg.senderId === userProfile?._id ? "right" : "left",
+                my: 1,
+              }}
+            >
+              <Typography sx={{ p: 1, backgroundColor: "lightgray", borderRadius: 2 }}>
+                {msg.text}
+              </Typography>
+            </Box>
+          ))
         ) : (
-          <>
-            {currentConversation ? (
-              (() => {
-                // Extract creator_id for future use
-                const creator_id = currentConversation.Creator_ID;
-
-                return currentConversation.messages?.map(
-                  (msg: any, index: number) => (
-                    <div key={index}>
-                      {msg.Message_Type == "conversation_message" ? (
-                        <div
-                          className={`mb-3 ${
-                            msg.user !== "sender"
-                              ? ""
-                              : "d-flex justify-content-end flex-column"
-                          }`}
-                        >
-                          <div
-                            className={`p-3 rounded d-inline-block ${
-                              msg.user !== "sender"
-                                ? "bg-light"
-                                : "bg-primary text-white ms-auto"
-                            }`}
-                          >
-                            {msg.Message}
-                          </div>
-                          <small className="text-muted d-block ms-auto">
-                            {msg.Time_Ago}
-                          </small>
-                        </div>
-                      ) : msg.Message_Type == "campaign_post_proposal" ? (
-                        <div
-                          className={`mb-3 ${
-                            msg.user !== "sender"
-                              ? ""
-                              : "d-flex justify-content-end flex-column"
-                          }`}
-                        >
-                          <div
-                            className={`p-3 rounded d-inline-block ${
-                              msg.user !== "sender" ? "" : " text-white ms-auto"
-                            }`}
-                          >
-                            <ProposalCard
-                              Campaign_ID={msg.Post_Details.Campaign_ID}
-                              Post_ID={msg.Post_Details.Post_ID}
-                              creator_id={creator_id}
-                              campaignName={msg.Post_Details.Campaign_Headline}
-                              postTitle={msg.Post_Details.Post_Title}
-                              amount={msg.Post_Details.Budget}
-                              submissionDate={msg.Post_Details.Created_At}
-                              status={
-                                msg.Post_Details.Proposal_Status == 1
-                                  ? "pending"
-                                  : msg.Post_Details.Proposal_Status == 2
-                                  ? "approved"
-                                  : "rejected"
-                              }
-                              rules={msg.Post_Details.Post_Description}
-                            />
-                          </div>
-                        </div>
-                      ) : msg.Message_Type == "campaign_creator_accepted" ? (
-                        <div
-                          className={`mb-3 ${
-                            msg.user !== "sender"
-                              ? ""
-                              : "d-flex justify-content-end flex-column"
-                          }`}
-                        >
-                          <div
-                            className={`p-3 rounded d-inline-block ${
-                              msg.user !== "sender" ? "" : "text-white ms-auto"
-                            }`}
-                          >
-                            <CampaignAcceptanceCard
-                              campaignName={
-                                msg.Campaign_Details.Campaign_Headline
-                              }
-                              campaignLink="https://example.com"
-                              acceptanceDate={msg.Timestamp}
-                              campaignid={msg.Campaign_Details.Campaign_ID}
-                              name={selectedIds?.Name}
-                            />
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  )
-                );
-              })()
-            ) : (
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <Typography color="text.secondary">No messages yet</Typography>
-              </Box>
-            )}
-            {sentMessages.map((msg, index) => (
-              <div key={index}>
-                <div
-                  className={`mb-3 ${
-                    msg.user !== "sender"
-                      ? ""
-                      : "d-flex justify-content-end flex-column"
-                  }`}
-                >
-                  <div
-                    className={`p-3 rounded d-inline-block ${
-                      msg.user !== "sender"
-                        ? "bg-light"
-                        : "bg-primary text-white ms-auto"
-                    }`}
-                  >
-                    {msg.Message}
-                  </div>
-                  <small className="text-muted d-block ms-auto">
-                    {msg.Time_Ago}
-                  </small>
-                </div>
-              </div>
-            ))}
-
-            <div ref={endOfMessagesRef} />
-          </>
+          <Typography>No messages yet.</Typography>
         )}
+        <div ref={endOfMessagesRef} />
       </DialogContent>
 
-      <DialogActions sx={{ p: 2, borderTop: "1px solid #eee" }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          display="flex"
-          width="100%"
-        >
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Type your message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-              }
-            }}
-            size="small"
-            sx={{ mr: 1 }}
-          />
-          <button
-            className="btn btn-primary"
-            onClick={sendMessage}
-            disabled={!input.trim()}
-          >
-            <Icon icon="mynaui:send" width={24} height={24} />
-          </button>
-        </Box>
+      <DialogActions>
+        <TextField
+          fullWidth
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Type a message..."
+        />
+        <IconButton onClick={sendMessage} disabled={!input.trim()}>
+          <Icon icon="mynaui:send" width={24} height={24} />
+        </IconButton>
       </DialogActions>
     </Dialog>
   );
