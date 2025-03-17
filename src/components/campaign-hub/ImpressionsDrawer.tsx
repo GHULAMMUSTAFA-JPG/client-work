@@ -257,7 +257,12 @@ export function ImpressionsDrawer({
         onSubmit();
       } else {
         setError(
-          response?.details ||
+          `${response?.message} ${
+            Array.isArray(response?.discrepancies) &&
+            response.discrepancies.length > 0
+              ? response.discrepancies.join(", ")
+              : ""
+          }` ||
             "LinkedIn metrics verification failed. The screenshot does not contain any LinkedIn post analytics metrics that can be validated."
         );
       }

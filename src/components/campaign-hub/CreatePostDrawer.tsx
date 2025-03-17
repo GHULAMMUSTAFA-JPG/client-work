@@ -101,15 +101,7 @@ export function CreatePostDrawer({
         setError("Failed to create post. Please try again.");
         return;
       }
-
-      const currentCampaignId = searchParams.get("id");
-      if (currentCampaignId) {
-        const url = `/campaign-hub?id=${currentCampaignId}&postId=${
-          (response.data as { _id: string })._id
-        }`;
-        router.push(url);
-      }
-
+      onSubmit();
       setPostType("");
       setBudget("");
       setDueDate("");
@@ -117,7 +109,11 @@ export function CreatePostDrawer({
       setDescription("");
       setFieldErrors({});
       onClose();
-      onSubmit();
+
+      /*    const currentCampaignId = searchParams.get("id");
+      if (currentCampaignId) {
+        router.push(`/campaign-hub?id=${currentCampaignId}`);
+      } */
     } catch (error) {
       setError("An error occurred while creating the post. Please try again.");
     } finally {

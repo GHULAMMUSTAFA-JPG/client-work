@@ -4,12 +4,12 @@ import { apiController } from "./baseUrl";
 interface ApiErrorResponse {
   success: false;
   message?: string;
-  details?: string;
+  discrepancies?: string;
 }
 
 interface ApiSuccessResponse<T> {
   success: true;
-  data: T;
+  data: T | any;
 }
 
 export const handleApiRequest = async <T>(
@@ -47,7 +47,7 @@ export const handleApiRequest = async <T>(
     return {
       success: false,
       message: error.response?.data?.message,
-      details: error.response?.data?.details,
+      discrepancies: error.response?.data?.discrepancies,
     };
   }
 };
