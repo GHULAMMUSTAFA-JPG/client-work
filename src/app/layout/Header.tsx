@@ -622,9 +622,7 @@ interface NotificationResponse {
 }
 
 interface UnseenNotificationResponse {
-  data: {
-    total: number;
-  };
+  count: number;
 }
 
 export default function Header() {
@@ -746,7 +744,7 @@ export default function Header() {
         setTotalPages(historyData.pagination.Total_Pages);
 
         // Set unseen count
-        setNewNotificationCount(unseenData.data.total || 0);
+        setNewNotificationCount(unseenData.count || 0);
       } catch (error) {
         console.error("Error fetching notifications:", error);
       }

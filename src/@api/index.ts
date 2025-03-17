@@ -1122,7 +1122,7 @@ export const fetchNotificationHistory = async (recipientId: string, page = 1, li
 export const fetchUnseenNotificationCount = async (recipientId: string, page = 1, limit = 10) => {
   try {
     const response = await apiController.get(
-      `/notifications_rest/notifications/unseen?recipient_id=${recipientId}&page=${page}&limit=${limit}`
+      `/notifications_rest/notifications/unseen/count?recipient_id=${recipientId}`
     );
     console.log("Unseen Notification Response:", response.data);
     return response?.data;
