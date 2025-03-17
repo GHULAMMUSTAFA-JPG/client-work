@@ -435,7 +435,7 @@ function Homepagebuyer() {
                   <p className="mb-0 fw-medium fs-16">Campaigns</p>
 
                   <button
-                    className="tw-flex tw-px-4 tw-py-2 tw-bg-emerald-500 tw-text-white tw-rounded-lg hover:tw-bg-emerald-600 tw-text-sm tw-font-medium"
+                    className="tw-flex tw-itmes-center tw-gap-2 tw-justify-center tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight2"
                     aria-controls="offcanvasRight2"

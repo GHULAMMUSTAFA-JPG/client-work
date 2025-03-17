@@ -14,7 +14,6 @@ import HowItWorks from "@/components/HowItWorks";
 import EmptyState from "@/components/EmptyState";
 import Link from "next/link";
 import HowToInstall from "@/components/HowToInstall";
-import { NodeNextRequest } from "next/dist/server/base-http/node";
 import { Drawer } from "@mui/material";
 import { getCreatorPayouts } from "@/@api/creator";
 import { calculatePayouts } from "@/utils/payoutUtils";
@@ -37,7 +36,6 @@ function Homepage() {
     upcomingPayoutsList: [],
     paidPayoutsList: [],
   });
-
   const howItWorksSteeps = [
     {
       title: "Step 1: Claim your profile",
@@ -76,9 +74,11 @@ function Homepage() {
     const fetchPayouts = async () => {
       if (user?.uuid) {
         try {
-          const userPosts = (await getCreatorPayouts(user.uuid)) as any[];
-          const payoutData = calculatePayouts(userPosts);
-          setPayoutDetails(payoutData);
+          const response = await getCreatorPayouts(user.uuid);
+          if (response?.success) {
+            const payoutData = calculatePayouts(response.data as any[]);
+            setPayoutDetails(payoutData);
+          }
         } catch (error) {
           console.error("Failed to fetch payouts:", error);
         }
@@ -128,9 +128,7 @@ function Homepage() {
             <div className="card mb-1">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <p className="mb-0 fs-16 fw-medium">
-                   Creator Profile
-                  </p>
+                  <p className="mb-0 fs-16 fw-medium">Creator Profile</p>
                   <div className="d-flex align-items-center">
                     <div className="d-flex gap-2 align-items-center">
                       <Tooltip
@@ -248,9 +246,9 @@ function Homepage() {
                         {userProfile?.Name}
                       </h5>
                       <img
-                        src={`https://flagcdn.com/24x18/${
-                          (userProfile?.Country_Code || "us").toLowerCase()
-                        }.png`}
+                        src={`https://flagcdn.com/24x18/${(
+                          userProfile?.Country_Code || "us"
+                        ).toLowerCase()}.png`}
                         width={24}
                         height={14}
                       />
@@ -361,63 +359,159 @@ function Homepage() {
               </div>
             </div>
             <div className="tw-grid tw-grid-cols-4 tw-gap-4 tw-py-4">
-  {/* Active Campaigns */}
-  <div className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-blue-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer" onClick={() => router.push('/campaigns')}>
-    <div className="tw-flex tw-items-start tw-justify-between">
-      <div>
-        <p className="tw-text-sm tw-text-gray-600 tw-mb-1">Active Campaigns</p>
-        <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">{campaigns?.Activated_Campaigns?.length}</h3>
-      </div>
-      <div className="text-blue-500 bg-opacity-10 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-megaphone w-6 h-6"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg></div>
-    </div>
-  </div>
+              {/* Active Campaigns */}
+              <div
+                className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-blue-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer"
+                onClick={() => router.push("/campaigns")}
+              >
+                <div className="tw-flex tw-items-start tw-justify-between">
+                  <div>
+                    <p className="tw-text-sm tw-text-gray-600 tw-mb-1">
+                      Active Campaigns
+                    </p>
+                    <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">
+                      {campaigns?.Activated_Campaigns?.length}
+                    </h3>
+                  </div>
+                  <div className="text-blue-500 bg-opacity-10 p-3 rounded-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="lucide lucide-megaphone w-6 h-6"
+                    >
+                      <path d="m3 11 18-5v12L3 14v-3z"></path>
+                      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
-  {/* Pending Applications */}
-  <div className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-purple-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer" onClick={() => {
-                router.push('/campaigns');
-                setTimeout(() => {
-                  (document.querySelector('[data-bs-target="#submitted-campaigns"]') as HTMLElement)?.click();
-                }, 100);
-              }}>
-    <div className="tw-flex tw-items-start tw-justify-between">
-      <div>
-        <p className="tw-text-sm tw-text-gray-600 tw-mb-1">Pending Applications</p>
-        <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">{campaigns?.Submitted_Campaigns?.length}</h3>
-      </div>
-      <div className="text-purple-500 bg-opacity-10 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-clock4 w-6 h-6"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
-    </div>
-  </div>
+              {/* Pending Applications */}
+              <div
+                className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-purple-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer"
+                onClick={() => {
+                  router.push("/campaigns");
+                  setTimeout(() => {
+                    (
+                      document.querySelector(
+                        '[data-bs-target="#submitted-campaigns"]'
+                      ) as HTMLElement
+                    )?.click();
+                  }, 100);
+                }}
+              >
+                <div className="tw-flex tw-items-start tw-justify-between">
+                  <div>
+                    <p className="tw-text-sm tw-text-gray-600 tw-mb-1">
+                      Pending Applications
+                    </p>
+                    <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">
+                      {campaigns?.Submitted_Campaigns?.length}
+                    </h3>
+                  </div>
+                  <div className="text-purple-500 bg-opacity-10 p-3 rounded-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="lucide lucide-clock4 w-6 h-6"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
-  {/* Upcoming Payouts */}
-  <div className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-green-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer" onClick={() => {
-                    setIsPayoutDrawerOpen(true);
-                    setSelectedPayoutType("upcoming");
-                  }}>
-    <div className="tw-flex tw-items-start tw-justify-between">
-      <div>
-        <p className="tw-text-sm tw-text-gray-600 tw-mb-1">Upcoming Payouts</p>
-        <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">${payoutDetails.upcomingPayout.toLocaleString()}</h3>
-      </div>
-      <div className="text-green-500 bg-opacity-10 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-wallet w-6 h-6"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg></div>
-    </div>
-  </div>
+              {/* Upcoming Payouts */}
+              <div
+                className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-green-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer"
+                onClick={() => {
+                  setIsPayoutDrawerOpen(true);
+                  setSelectedPayoutType("upcoming");
+                }}
+              >
+                <div className="tw-flex tw-items-start tw-justify-between">
+                  <div>
+                    <p className="tw-text-sm tw-text-gray-600 tw-mb-1">
+                      Upcoming Payouts
+                    </p>
+                    <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">
+                      ${payoutDetails.upcomingPayout.toLocaleString()}
+                    </h3>
+                  </div>
+                  <div className="text-green-500 bg-opacity-10 p-3 rounded-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="lucide lucide-wallet w-6 h-6"
+                    >
+                      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+                      <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
 
-  {/* Total Payouts */}
-  <div className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-yellow-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer" onClick={() => {
-                    setIsPayoutDrawerOpen(true);
-                    setSelectedPayoutType("upcoming");
-                  }}>
-    <div className="tw-flex items-start tw-justify-between">
-      <div>
-        <p className="tw-text-sm tw-text-gray-600 tw-mb-1">Total Payouts</p>
-        <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">${payoutDetails.paidPayout.toLocaleString()}</h3>
-      </div>
-      <div className="text-yellow-500 bg-opacity-10 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-piggy-bank w-6 h-6"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2h0V5z"></path><path d="M2 9v1c0 1.1.9 2 2 2h1"></path><path d="M16 11h0"></path></svg></div>
-    </div>
-  </div>
-</div>
-
-
+              {/* Total Payouts */}
+              <div
+                className="tw-bg-white tw-rounded-xl tw-p-6 tw-shadow-lg tw-border-l-4 tw-border-yellow-500 hover:tw-scale-105 tw-transition-all tw-duration-300 cursor-pointer"
+                onClick={() => {
+                  setIsPayoutDrawerOpen(true);
+                  setSelectedPayoutType("upcoming");
+                }}
+              >
+                <div className="tw-flex items-start tw-justify-between">
+                  <div>
+                    <p className="tw-text-sm tw-text-gray-600 tw-mb-1">
+                      Total Payouts
+                    </p>
+                    <h3 className="tw-text-2xl tw-font-bold tw-text-gray-800">
+                      ${payoutDetails.paidPayout.toLocaleString()}
+                    </h3>
+                  </div>
+                  <div className="text-yellow-500 bg-opacity-10 p-3 rounded-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="lucide lucide-piggy-bank w-6 h-6"
+                    >
+                      <path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2h0V5z"></path>
+                      <path d="M2 9v1c0 1.1.9 2 2 2h1"></path>
+                      <path d="M16 11h0"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="card h-10">
               {!hasActiveCampaigns && (
@@ -454,7 +548,7 @@ function Homepage() {
                               <div
                                 onClick={() => {
                                   router.push(
-                                    `/SubmitCampaigns?id=${element?._id}`
+                                    `/campaign-hub?id=${element?._id}`
                                   );
                                 }}
                                 key={index}
@@ -463,15 +557,14 @@ function Homepage() {
                                 <div className="card-body py-2 ps-2 pe-3">
                                   <div className="d-flex gap-3 align-items-center">
                                     <div className="img-container-topHeader">
-                                    <img
-                                      src={
-                                        element?.Company_Logo ||
-                                        defaultImagePath
-                                      }
-                                      className=""
-                                      alt="logo"
-                                     
-                                    />
+                                      <img
+                                        src={
+                                          element?.Company_Logo ||
+                                          defaultImagePath
+                                        }
+                                        className=""
+                                        alt="logo"
+                                      />
                                     </div>
                                     <p className="mb-0 fw-medium">
                                       {element?.Headline}
@@ -681,7 +774,7 @@ function Homepage() {
 
             <div className="card mb-3">
               <div className="card-body">
-               <PostCalendar />
+                <PostCalendar />
               </div>
             </div>
 

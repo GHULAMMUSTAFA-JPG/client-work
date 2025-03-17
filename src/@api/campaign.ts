@@ -68,7 +68,7 @@ export const addCampaignLiveLink = async (payload: {
   creator_id: string;
   post_id: string;
   live_link: string;
-  embed_link?: string;
+  embeded_link: string;
 }) =>
   handleApiRequest("put", "/creators/campaigns/campaign-live-link", payload);
 
@@ -77,16 +77,33 @@ export const addCampaignPostImpressions = async (payload: {
   creator_id: string;
   post_id: string;
   impressions: number;
-  clicks: number;
-  engagement_rate: number;
+  reactions: number;
+  engagements: number;
   comments: number;
-  shares: number;
-}) =>
-  handleApiRequest(
+  reposts: number;
+  impressions_proof: string | File;
+}) => {
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(payload)) {
+    if (key === "impressions_proof" && value instanceof File) {
+      formData.append(key, value);
+    } else {
+      formData.append(key, String(value));
+    }
+  }
+
+  return handleApiRequest(
     "put",
     "/creators/campaigns/campaign-post-impressions",
-    payload
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
+};
 
 export const getCampaignCreatorPosts = async (params: {
   creator_id: string;
@@ -274,4 +291,11 @@ export const deleteCreatorCampaignPost = async (params: {
     "delete",
     `/creators/campaigns/${campaign_id}/campaign-post/${post_id}?creator_id=${creator_id}`
   );
+};
+
+export const processPaymentCheckout = async (payload: {
+  creator_id: string;
+  post_id: string;
+}) => {
+  return handleApiRequest("post", `/payments/create-checkout-session`, payload);
 };

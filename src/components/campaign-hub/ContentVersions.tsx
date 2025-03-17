@@ -38,6 +38,7 @@ interface ContentVersionsProps {
   canSubmit: boolean;
   onSubmit: () => void;
   postStatus: Status;
+  postEmbedLink?: string;
 }
 
 export function ContentVersions({
@@ -48,6 +49,7 @@ export function ContentVersions({
   canSubmit,
   onSubmit,
   postStatus,
+  postEmbedLink,
 }: ContentVersionsProps) {
   const [editingVersion, setEditingVersion] = useState<Version | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -61,6 +63,8 @@ export function ContentVersions({
 
   const firstVersion = versions && versions.length > 0 ? versions[0] : null;
   const isDraft = firstVersion?.isDraft || false;
+  const cleanUrl = (url: string) => url.replace(/^blob:/, "");
+
   const processMedia = (mediaItems?: string[]) => {
     if (!mediaItems || mediaItems.length === 0)
       return { images: [], links: [] };
@@ -70,9 +74,9 @@ export function ContentVersions({
 
     mediaItems.forEach((item) => {
       if (item && isImageUrl(item)) {
-        images.push(item);
+        images.push(cleanUrl(item));
       } else if (item) {
-        links.push(item);
+        links.push(cleanUrl(item));
       }
     });
 
@@ -228,7 +232,11 @@ export function ContentVersions({
               )}
             </div>
             <div className="tw-flex tw-justify-center">
-              <PostViewer post={viewerPost} preview={true} />
+              {postEmbedLink ? (
+                <div dangerouslySetInnerHTML={{ __html: postEmbedLink }} />
+              ) : (
+                <PostViewer post={viewerPost} preview={true} />
+              )}
             </div>
           </div>
         ) : (isDraft && firstVersion) || (isEditing && firstVersion) ? (

@@ -97,19 +97,11 @@ export function CreatePostDrawer({
     try {
       const response = await createCampaignPost(postData);
 
-      if (!response) {
+      if (!response?.success) {
         setError("Failed to create post. Please try again.");
         return;
       }
-
-      if (response && typeof response === "object" && "_id" in response) {
-        const currentCampaignId = searchParams.get("id");
-        if (currentCampaignId) {
-          const url = `/campaign-hub?id=${currentCampaignId}&postId=${response._id}`;
-          router.push(url);
-        }
-      }
-
+      onSubmit();
       setPostType("");
       setBudget("");
       setDueDate("");
@@ -117,7 +109,11 @@ export function CreatePostDrawer({
       setDescription("");
       setFieldErrors({});
       onClose();
-      onSubmit();
+
+      /*    const currentCampaignId = searchParams.get("id");
+      if (currentCampaignId) {
+        router.push(`/campaign-hub?id=${currentCampaignId}`);
+      } */
     } catch (error) {
       setError("An error occurred while creating the post. Please try again.");
     } finally {

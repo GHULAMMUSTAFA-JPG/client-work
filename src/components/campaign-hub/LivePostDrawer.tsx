@@ -1,7 +1,14 @@
-import React, { useState } from "react";
-import { X, Link as LinkIcon, ExternalLink, AlertCircle } from "lucide-react";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import {
+  X,
+  Link as LinkIcon,
+  ExternalLink,
+  AlertCircle,
+  HelpCircle,
+} from "lucide-react";
 import { addCampaignLiveLink } from "@/@api/campaign";
+import { isValidEmbedCode, isValidLinkedInUrl } from "@/utils";
+import Link from "next/link";
 
 interface LivePostDrawerProps {
   isOpen: boolean;
@@ -10,6 +17,8 @@ interface LivePostDrawerProps {
   campaignId: string;
   creatorId: string;
   postId: string;
+  initialPostUrl?: string;
+  initialEmbedLink?: string;
 }
 
 export function LivePostDrawer({
@@ -19,11 +28,27 @@ export function LivePostDrawer({
   campaignId,
   creatorId,
   postId,
+  initialPostUrl = "",
+  initialEmbedLink = "",
 }: LivePostDrawerProps) {
-  const [postUrl, setPostUrl] = useState("");
-  const [embedLink, setEmbedLink] = useState("");
+  const [postUrl, setPostUrl] = useState(initialPostUrl);
+  const [embedLink, setEmbedLink] = useState(initialEmbedLink);
   const [error, setError] = useState("");
+  const [embedError, setEmbedError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setPostUrl(initialPostUrl);
+      setEmbedLink(initialEmbedLink);
+      setError("");
+      setEmbedError("");
+    }
+  }, [isOpen, initialPostUrl, initialEmbedLink]);
+  const hasChanges =
+    postUrl !== initialPostUrl || embedLink !== initialEmbedLink;
+
+  const isEditMode = initialPostUrl !== "" || initialEmbedLink !== "";
 
   if (!isOpen) return null;
 
@@ -31,15 +56,19 @@ export function LivePostDrawer({
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
-
-    if (!postUrl) {
-      setError("Please enter a valid LinkedIn post URL");
+    setEmbedError("");
+    if (!isValidLinkedInUrl(postUrl)) {
+      setError(
+        "Please enter a valid LinkedIn post URL (must be a direct link to a post)"
+      );
       setIsSubmitting(false);
       return;
     }
 
-    if (!postUrl.includes("linkedin.com")) {
-      setError("Please enter a valid LinkedIn post URL");
+    if (!isValidEmbedCode(embedLink)) {
+      setEmbedError(
+        "Please enter a valid LinkedIn embed code containing an iframe with the correct format"
+      );
       setIsSubmitting(false);
       return;
     }
@@ -50,13 +79,13 @@ export function LivePostDrawer({
         creator_id: creatorId,
         post_id: postId,
         live_link: postUrl,
-        embed_link: embedLink,
+        embeded_link: embedLink,
       });
 
-      if (response) {
+      if (response?.success) {
         onSubmit();
-        setPostUrl("");
         setError("");
+        setEmbedError("");
       } else {
         setError("Failed to submit LinkedIn post URL");
       }
@@ -83,7 +112,7 @@ export function LivePostDrawer({
                 <div className="tw-flex tw-items-center tw-space-x-3">
                   <LinkIcon className="tw-w-6 tw-h-6 tw-text-[#0A66C2]" />
                   <h2 className="tw-text-xl tw-font-semibold tw-text-gray-900">
-                    Add Live Post Link
+                    {isEditMode ? "Edit Live Post Link" : "Add Live Post Link"}
                   </h2>
                 </div>
                 <button
@@ -95,7 +124,7 @@ export function LivePostDrawer({
               </div>
             </div>
 
-            <div className="tw-flex-1 tw-overflow-y-auto">
+            <div className="tw-flex-1 tw-overflow-y-auto ">
               <form onSubmit={handleSubmit} className="tw-p-6 tw-space-y-6">
                 <div>
                   <label
@@ -103,11 +132,22 @@ export function LivePostDrawer({
                     className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1"
                   >
                     LinkedIn Post URL
+                    <div className="tw-relative tw-ml-2 tw-group tw-inline-block 0">
+                      <HelpCircle className="tw-h-4 tw-w-4 tw-text-gray-400 hover:tw-text-gray-600 tw-cursor-help" />
+                      <div className="tw-hidden group-hover:tw-block tw-absolute tw-z-50 tw-left-1/2 tw-transform tw--translate-x-1/2 tw-top-full  tw-w-64 tw-p-2 tw-bg-gray-800 tw-text-white tw-text-xs tw-rounded tw-shadow-lg">
+                        <p>
+                          Click three dots (…), select 'Copy link to post,' then
+                          paste it here.
+                        </p>
+                        <div className="tw-absolute tw-left-1/2 tw-transform tw--translate-x-1/2 tw-top-full tw--mt-1 tw-border-4 tw-border-transparent tw-border-t-gray-800"></div>
+                      </div>
+                    </div>
                   </label>
                   <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
                     <div className="tw-absolute tw-inset-y-0 tw-left-0 tw-pl-3 tw-flex tw-items-center tw-pointer-events-none">
                       <LinkIcon className="tw-h-5 tw-w-5 tw-text-gray-400" />
                     </div>
+
                     <input
                       type="url"
                       id="post-url"
@@ -121,41 +161,72 @@ export function LivePostDrawer({
                       } tw-rounded-md tw-focus:outline-none tw-focus:ring-[#0A66C2] tw-focus:border-[#0A66C2]`}
                       placeholder="https://www.linkedin.com/posts/..."
                     />
-                    <div className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center">
-                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-gray-400" />
-                    </div>
+                    <Link
+                      href={postUrl}
+                      target="_blank"
+                      className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center "
+                    >
+                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-blue-500" />
+                    </Link>
                   </div>
                   {error && (
                     <p className="tw-mt-2 tw-text-sm tw-text-red-600">
                       {error}
                     </p>
                   )}
+                  {postUrl && !isValidLinkedInUrl(postUrl) && !error && (
+                    <p className="tw-mt-2 tw-text-sm tw-text-amber-600">
+                      URL must be a direct link to a LinkedIn post
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
                     htmlFor="embed-link"
-                    className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1"
+                    className="tw-block tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-1 tw-flex tw-items-center"
                   >
-                    LinkedIn Post Embed Link
+                    LinkedIn Post Embed Code
+                    <div className="tw-relative tw-ml-2 tw-group tw-inline-block">
+                      <HelpCircle className="tw-h-4 tw-w-4 tw-text-gray-400 hover:tw-text-gray-600 tw-cursor-help" />
+                      <div className="tw-hidden group-hover:tw-block tw-absolute tw-z-50 tw-left-1/2 tw-transform tw--translate-x-1/2 tw-bottom-full tw-mb-2 tw-w-64 tw-p-2 tw-bg-gray-800 tw-text-white tw-text-xs tw-rounded tw-shadow-lg">
+                        <p>
+                          Click three dots (…), select 'Embed this post,' copy
+                          the entire iframe code, and paste it here. The code
+                          should look like:
+                          <code className="tw-block tw-mt-1 tw-text-xs tw-bg-gray-700 tw-p-1 tw-rounded">
+                            &lt;iframe
+                            src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:..."
+                            height="399" width="504"
+                            frameborder="0"&gt;&lt;/iframe&gt;
+                          </code>
+                        </p>
+                        <div className="tw-absolute tw-left-1/2 tw-transform tw--translate-x-1/2 tw-top-full tw--mt-1 tw-border-4 tw-border-transparent tw-border-t-gray-800"></div>
+                      </div>
+                    </div>
                   </label>
-                  <div className="tw-mt-1 tw-relative tw-rounded-md tw-shadow-sm">
-                    <div className="tw-absolute tw-inset-y-0 tw-left-0 tw-pl-3 tw-flex tw-items-center tw-pointer-events-none">
-                      <LinkIcon className="tw-h-5 tw-w-5 tw-text-gray-400" />
-                    </div>
-                    <input
-                      type="url"
-                      id="embed-link"
-                      value={embedLink}
-                      onChange={(e) => setEmbedLink(e.target.value)}
-                      className={`tw-block tw-w-full tw-pl-10 tw-pr-12 tw-py-2 tw-border ${
-                        error ? "tw-border-red-300" : "tw-border-gray-300"
-                      } tw-rounded-md tw-focus:outline-none tw-focus:ring-[#0A66C2] tw-focus:border-[#0A66C2]`}
-                      placeholder="https://www.linkedin.com/embed/feed/update/..."
-                    />
-                    <div className="tw-absolute tw-inset-y-0 tw-right-0 tw-pr-3 tw-flex tw-items-center">
-                      <ExternalLink className="tw-h-5 tw-w-5 tw-text-gray-400" />
-                    </div>
-                  </div>
+                  <textarea
+                    id="embedCode"
+                    value={embedLink}
+                    onChange={(e) => {
+                      setEmbedLink(e.target.value);
+                      setEmbedError("");
+                    }}
+                    placeholder='<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:1234567890" height="399" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>'
+                    className={`tw-w-full tw-h-24 tw-px-4 tw-py-2 tw-border ${
+                      embedError ? "tw-border-red-300" : "tw-border-gray-300"
+                    } tw-rounded-lg tw-focus:tw-ring-2 tw-focus:tw-ring-blue-500 tw-focus:tw-border-transparent tw-resize-none tw-font-mono tw-text-sm`}
+                  />
+                  {embedError && (
+                    <p className="tw-mt-2 tw-text-sm tw-text-red-600">
+                      {embedError}
+                    </p>
+                  )}
+                  {embedLink && !isValidEmbedCode(embedLink) && !embedError && (
+                    <p className="tw-mt-2 tw-text-sm tw-text-amber-600">
+                      Embed code must contain a LinkedIn iframe with src,
+                      height, and width attributes
+                    </p>
+                  )}
                 </div>
 
                 <div className="tw-bg-[#0A66C2]/5 tw-rounded-lg tw-p-4 tw-border tw-border-[#0A66C2]/10">
@@ -188,7 +259,12 @@ export function LivePostDrawer({
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  disabled={
+                    isSubmitting ||
+                    !isValidLinkedInUrl(postUrl) ||
+                    !isValidEmbedCode(embedLink) ||
+                    (isEditMode && !hasChanges) // Disable if in edit mode and no changes made
+                  }
                   className="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white tw-bg-green-600 hover:tw-bg-green-700 tw-rounded-md tw-focus:outline-none tw-focus:ring-2 tw-focus:ring-offset-2 tw-focus:ring-green-500 disabled:tw-opacity-70"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Post Link"}

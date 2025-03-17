@@ -6,17 +6,18 @@ import {
   MessageSquare,
   CheckCircle,
   DollarSign,
-  X,
   Eye,
   ThumbsDown,
   User,
-  Clock,
   MousePointer,
 } from "lucide-react";
 import { Creator, Post, ContentItem, Status } from "@/types";
-import Tooltip from "../Tooltip";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { updatePostStatus, updatePostContentStatus } from "@/@api/campaign";
+import { useSearchParams } from "next/navigation";
+import {
+  updatePostStatus,
+  updatePostContentStatus,
+  processPaymentCheckout,
+} from "@/@api/campaign";
 import { toast } from "react-toastify";
 import { apiController } from "@/@api/baseUrl";
 import CreatorsDropDown from "./CreatorsDropDown";
@@ -60,6 +61,7 @@ export function CreatorDetailView({
     initialContent
   );
   const [viewingPost, setViewingPost] = useState<Post | null>(null);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const searchParams = useSearchParams();
   const [isChatModalOpen, setIsChatModalOpen] = useState(false);
   const handleOpenChatModal = () => {
@@ -92,20 +94,6 @@ export function CreatorDetailView({
       }
     }
   }, [posts, selectedPost]);
-
-  const handleProcessPaymentCheckout = async () => {
-    try {
-      const result = await apiController.post(
-        `/payments/create-checkout-session`,
-        { creator_id: creator.id, post_id: selectedPost?.id }
-      );
-      if (result.status === 200) {
-        window.open(result.data.checkout_url, "_blank");
-      }
-    } catch (error) {
-      toast.error("An error occurred while processing payment.");
-    }
-  };
 
   const handleSelectPost = (post: Post) => {
     setSelectedPost(post);
@@ -144,70 +132,49 @@ export function CreatorDetailView({
   const handleApprovePost = async (postId: string) => {
     const currentPostId = selectedPost?.id;
 
-    try {
-      const result = await updatePostStatus({
-        campaign_id: campaignId,
-        creator_id: creator.id,
-        post_id: postId,
-        status: Status.Approved + "",
-      });
+    const result = await updatePostStatus({
+      campaign_id: campaignId,
+      creator_id: creator.id,
+      post_id: postId,
+      status: Status.Approved + "",
+    });
 
-      if (result) {
-        toast.success("Post approved successfully");
-        onUpdate(currentPostId);
-      } else {
-        toast.error("Failed to approve post. Please try again.");
-      }
-    } catch (error) {
-      toast.error("An error occurred while approving post.");
-      console.error("Error approving post:", error);
+    if (result?.success) {
+      toast.success("Post approved successfully");
+      onUpdate(currentPostId);
     }
   };
 
   const handleApproveContent = async () => {
     if (!selectedPost?.contentItems[0]) return;
-    try {
-      const result = await updatePostContentStatus({
-        campaign_id: campaignId,
-        creator_id: creator.id,
-        post_id: selectedPost.id,
-        content_id: selectedPost.contentItems[0].id,
-        status: Status.Approved + "",
-      });
 
-      if (result) {
-        toast.success("Content approved successfully");
-        onUpdate(selectedPost.id);
-      } else {
-        toast.error("Failed to approve content. Please try again.");
-      }
-    } catch (error) {
-      toast.error("An error occurred while approving content.");
-      console.error("Error approving content:", error);
+    const result = await updatePostContentStatus({
+      campaign_id: campaignId,
+      creator_id: creator.id,
+      post_id: selectedPost.id,
+      content_id: selectedPost.contentItems[0].id,
+      status: Status.Approved + "",
+    });
+
+    if (result?.success) {
+      onUpdate(selectedPost.id);
     }
   };
-  console.log("----------------------------------selectedPost", selectedPost);
   const handleRejectContent = async (feedback?: string) => {
     if (!selectedPost?.contentItems[0]) return;
-    try {
-      const result = await updatePostContentStatus({
-        campaign_id: campaignId,
-        creator_id: creator.id,
-        post_id: selectedPost.id,
-        content_id: selectedPost.contentItems[0].id,
-        status: Status.Rejected + "",
-        feedback,
-      });
 
-      if (result) {
-        toast.success("Content rejected successfully");
-        onUpdate(selectedPost.id);
-      } else {
-        toast.error("Failed to reject content. Please try again.");
-      }
-    } catch (error) {
-      toast.error("An error occurred while rejecting content.");
-      console.error("Error rejecting content:", error);
+    const result = await updatePostContentStatus({
+      campaign_id: campaignId,
+      creator_id: creator.id,
+      post_id: selectedPost.id,
+      content_id: selectedPost.contentItems[0].id,
+      status: Status.Rejected + "",
+      feedback,
+    });
+
+    if (result.success) {
+      toast.success("Content rejected successfully");
+      onUpdate(selectedPost.id);
     }
   };
 
@@ -233,6 +200,179 @@ export function CreatorDetailView({
 
     return { images, links };
   };
+  const handleProcessPaymentCheckout = async () => {
+    setIsProcessingPayment(true);
+    const result = await processPaymentCheckout({
+      creator_id: creator.id,
+      post_id: selectedPost?.id!,
+    });
+    if (result?.success && result?.data?.checkout_url) {
+      window.open(result?.data?.checkout_url, "_blank");
+    }
+    setIsProcessingPayment(false);
+  };
+
+  const renderEmbedContent = useMemo(() => {
+    if (!selectedPost?.embedLink) return null;
+    return (
+      <div className="tw-flex-1 tw-max-w-3xl">
+        <div className="tw-flex tw-justify-center">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: selectedPost.embedLink,
+            }}
+          />
+        </div>
+      </div>
+    );
+  }, [selectedPost?.embedLink]);
+
+  const Metrics = () => {
+    if (!selectedPost) return null;
+
+    return (
+      <div className="tw-w-60 tw-mr-6">
+        <div className="tw-mt-3 tw-p-4 tw-rounded tw-border tw-bg-white tw-shadow-sm">
+          <h4 className="tw-font-medium tw-text-sm tw-mb-3 tw-text-gray-700">
+            Post Performance
+          </h4>
+          {selectedPost?.impressions !== null && (
+            <div className="tw-flex tw-items-center tw-mb-3">
+              <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-blue-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
+                <Eye className="tw-w-4 tw-h-4 tw-text-blue-500" />
+              </div>
+              <div className="tw-flex-1">
+                <div className="tw-text-xs tw-text-gray-500">Impressions</div>
+                <div className="tw-font-semibold tw-text-gray-800">
+                  {selectedPost.impressions?.toLocaleString() || 0}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedPost?.reactions && (
+            <div className="tw-flex tw-items-center tw-mb-3">
+              <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-purple-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
+                <MousePointer className="tw-w-4 tw-h-4 tw-text-purple-500" />
+              </div>
+              <div className="tw-flex-1">
+                <div className="tw-text-xs tw-text-gray-500">Reactions</div>
+                <div className="tw-font-semibold tw-text-gray-800">
+                  {selectedPost.reactions.toLocaleString()}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedPost?.comments !== null &&
+            selectedPost?.comments !== undefined && (
+              <div className="tw-flex tw-items-center tw-mb-3">
+                <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-orange-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
+                  <MessageSquare className="tw-w-4 tw-h-4 tw-text-orange-500" />
+                </div>
+                <div className="tw-flex-1">
+                  <div className="tw-text-xs tw-text-gray-500">Comments</div>
+                  <div className="tw-font-semibold tw-text-gray-800">
+                    {selectedPost.comments.toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            )}
+
+          {selectedPost?.reposts !== null &&
+            selectedPost?.reposts !== undefined && (
+              <div className="tw-flex tw-items-center">
+                <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-pink-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
+                  <svg
+                    className="tw-w-4 tw-h-4 tw-text-pink-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7 17L17 7M17 7H8M17 7V16"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="tw-flex-1">
+                  <div className="tw-text-xs tw-text-gray-500">Reposts</div>
+                  <div className="tw-font-semibold tw-text-gray-800">
+                    {selectedPost.reposts.toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            )}
+        </div>
+      </div>
+    );
+  };
+
+  const renderMainContent = () => {
+    if (!selectedContent) return null;
+
+    if (selectedPost?.embedLink) {
+      return (
+        <div className="tw-flex tw-w-full">
+          {selectedContent.status !== "in_review" && <Metrics />}
+          {renderEmbedContent}
+        </div>
+      );
+    }
+
+    const mediaContent = processMedia(selectedContent.images || []);
+    const firstImage =
+      mediaContent.images.length > 0
+        ? prepareImageForDisplay(mediaContent.images[0])
+        : undefined;
+    const additionalImages =
+      mediaContent.images.length > 1
+        ? mediaContent.images
+            .slice(1)
+            .map((img) => prepareImageForDisplay(img) || "")
+        : [];
+    const allLinks = mediaContent.links
+      .concat(selectedContent.links || [])
+      .map((link) => link.replace(/^blob:/, ""));
+
+    return (
+      <div className="tw-flex tw-w-full">
+        <Metrics />
+        <div className="tw-flex-1">
+          <PostViewer
+            post={{
+              id: selectedContent.id,
+              type: selectedContent.type,
+              status:
+                selectedContent.status === "in_review"
+                  ? "in-review"
+                  : selectedContent.status,
+              submittedOn: selectedContent.date,
+              author: {
+                name: selectedCreator?.name || "",
+                role: selectedCreator?.jobTitle || "Creator",
+                avatar: selectedCreator?.profilePicture || "",
+              },
+              content: selectedContent.content || "",
+              image: firstImage,
+              images: additionalImages,
+              links: allLinks,
+              timestamp: selectedContent.date || "",
+              engagement: {
+                likes: 1230,
+                comments: 50,
+                shares: 10,
+              },
+            }}
+            preview={true}
+          />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -248,7 +388,7 @@ export function CreatorDetailView({
             </button>
 
             <div
-              className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded-lg tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
+              className="tw-flex tw-items-center bg-white tw-p-2 tw-rounded tw-shadow-sm tw-cursor-pointer tw-text-blue-600 hover:tw-text-gray-800"
               data-bs-toggle="offcanvas"
               data-bs-target="#creatorProfileDrawer"
             >
@@ -272,7 +412,7 @@ export function CreatorDetailView({
                 selectedCreator={selectedCreator}
                 setSelectedCreator={handelSelectedCreator}
               />
-              <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-4">
+              <div className="tw-bg-white tw-rounded tw-shadow-sm tw-border tw-p-4">
                 <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
                   Campaign Posts
                 </h3>
@@ -281,7 +421,7 @@ export function CreatorDetailView({
                     <button
                       key={post.id}
                       onClick={() => handleSelectPost(post)}
-                      className={`tw-w-full tw-p-3 tw-rounded-lg tw-text-left tw-transition-colors
+                      className={`tw-w-full tw-p-3 tw-rounded tw-text-left tw-transition-colors
                         ${
                           selectedPost?.id === post.id
                             ? "tw-bg-teal-50 tw-ring-1 tw-ring-teal-500"
@@ -316,10 +456,10 @@ export function CreatorDetailView({
                         <h4 className="tw-font-medium tw-text-sm tw-mb-1">
                           {post.title}
                         </h4>
-                        <div className="status-box">
+                        <div className="status-box00">
                           <button
                             onClick={() => setViewingPost(post)}
-                            className="tw-w-full tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-1 tw-text-xs tw-text-gray-600 hover:tw-text-gray-900"
+                            className="tw-w-full tw-bg-teal-500 tw-rounded tw-flex tw-items-center tw-justify-center tw-px-3 tw-py-2 tw-text-xs tw-text-white"
                           >
                             <Eye className="tw-w-3 tw-h-3 tw-mr-1" />
                             View Details
@@ -360,12 +500,12 @@ export function CreatorDetailView({
             <div className="tw-col-span-9">
               <div className="tw-flex tw-flex-col tw-items-center">
                 <div className="tw-w-full tw-mb-6">
-                  <div className="tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                  <div className="tw-bg-white tw-rounded tw-shadow-sm tw-border tw-p-6">
                     <h3 className="tw-font-medium tw-text-gray-900 tw-mb-4">
                       Campaign Performance
                     </h3>
                     <div className="tw-grid tw-grid-cols-3 tw-gap-6">
-                      <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-bg-gray-50 tw-rounded tw-p-4">
                         <div className="tw-text-sm tw-text-gray-500">
                           Total Impressions
                         </div>
@@ -378,7 +518,7 @@ export function CreatorDetailView({
                             : "No posts yet"}
                         </div>
                       </div>
-                      <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-bg-gray-50 tw-rounded tw-p-4">
                         <div className="tw-text-sm tw-text-gray-500">
                           Avg. Engagement Rate
                         </div>
@@ -391,7 +531,7 @@ export function CreatorDetailView({
                             : "No data"}
                         </div>
                       </div>
-                      <div className="tw-bg-gray-50 tw-rounded-lg tw-p-4">
+                      <div className="tw-bg-gray-50 tw-rounded tw-p-4">
                         <div className="tw-text-sm tw-text-gray-500">
                           Click-through Rate
                         </div>
@@ -407,7 +547,7 @@ export function CreatorDetailView({
                 </div>
 
                 {selectedPost && (
-                  <div className="tw-w-full tw-bg-white tw-rounded-lg tw-shadow-sm tw-border tw-p-6">
+                  <div className="tw-w-full tw-bg-white tw-rounded tw-shadow-sm tw-border tw-p-6">
                     <div className="tw-flex tw-items-center tw-justify-between tw-mb-6">
                       <div>
                         <h3 className="tw-font-medium tw-text-gray-900">
@@ -442,7 +582,7 @@ export function CreatorDetailView({
                       </div>
                       <div className="tw-flex tw-items-center tw-gap-3">
                         <button
-                          className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded-lg hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
+                          className="tw-px-4 tw-py-2 tw-text-gray-700 tw-border tw-rounded hover:tw-bg-gray-50 tw-flex tw-items-center tw-gap-2"
                           onClick={handleOpenChatModal}
                         >
                           <MessageSquare className="tw-w-4 tw-h-4" />
@@ -450,7 +590,7 @@ export function CreatorDetailView({
                         </button>
                         {selectedPost.status === "in_review" && (
                           <button
-                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2"
+                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded hover:tw-bg-green-700 tw-flex tw-items-center tw-gap-2"
                             onClick={() => handleApprovePost(selectedPost.id)}
                           >
                             <CheckCircle className="tw-w-4 tw-h-4" />
@@ -458,18 +598,22 @@ export function CreatorDetailView({
                           </button>
                         )}
 
-                        {selectedPost.numberstatus === 12 ? (
+                        {selectedPost.numberstatus ===
+                        Status.PostImpressionUploaded ? (
                           <button
                             onClick={() => handleProcessPaymentCheckout()}
-                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2"
+                            disabled={isProcessingPayment}
+                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
                           >
                             <DollarSign className="tw-w-4 tw-h-4" />
-                            Process Payment
+                            {isProcessingPayment
+                              ? "Processing..."
+                              : "Process Payment"}
                           </button>
                         ) : (
                           <button
                             disabled
-                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded-lg hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                            className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-2 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
                           >
                             <DollarSign className="tw-w-4 tw-h-4" />
                             {selectedPost.numberstatus === 10
@@ -485,7 +629,7 @@ export function CreatorDetailView({
                         <div className="tw-flex tw-justify-end tw-gap-3 tw-mb-4">
                           <button
                             onClick={() => handleRejectContent()}
-                            className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded-lg hover:tw-bg-red-50 tw-transition-colors"
+                            className="tw-px-4 tw-py-2 tw-bg-white tw-border tw-border-red-500 tw-text-red-600 tw-rounded hover:tw-bg-red-50 tw-transition-colors"
                           >
                             <div className="tw-flex tw-items-center tw-gap-2">
                               <ThumbsDown className="tw-w-4 tw-h-4" />
@@ -494,7 +638,7 @@ export function CreatorDetailView({
                           </button>
                           <button
                             onClick={() => handleApproveContent()}
-                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded-lg hover:tw-bg-green-700 tw-transition-colors"
+                            className="tw-px-4 tw-py-2 tw-bg-green-600 tw-text-white tw-rounded hover:tw-bg-green-700 tw-transition-colors"
                           >
                             <div className="tw-flex tw-items-center tw-gap-2">
                               <CheckCircle className="tw-w-4 tw-h-4" />
@@ -506,203 +650,7 @@ export function CreatorDetailView({
 
                     {selectedContent && (
                       <div className="tw-flex tw-justify-center tw-w-full tw-overflow-x-hidden">
-                        {(() => {
-                          // Prepare status indicator component
-                          const Metrics = () => {
-                            return (
-                              <div className="tw-w-60 tw-mr-6">
-                                <div className="tw-mt-3 tw-p-4 tw-rounded-lg tw-border tw-bg-white tw-shadow-sm">
-                                  <h4 className="tw-font-medium tw-text-sm tw-mb-3 tw-text-gray-700">
-                                    Post Performance
-                                  </h4>
-                                  {selectedPost?.impressions !== null && (
-                                    <div className="tw-flex tw-items-center tw-mb-3">
-                                      <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-blue-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
-                                        <Eye className="tw-w-4 tw-h-4 tw-text-blue-500" />
-                                      </div>
-                                      <div className="tw-flex-1">
-                                        <div className="tw-text-xs tw-text-gray-500">
-                                          Impressions
-                                        </div>
-                                        <div className="tw-font-semibold tw-text-gray-800">
-                                          {selectedPost.impressions?.toLocaleString() ||
-                                            0}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )}
-                                  {selectedPost?.engagementRate !== null && (
-                                    <div className="tw-flex tw-items-center tw-mb-3">
-                                      <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-green-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
-                                        <BarChart3 className="tw-w-4 tw-h-4 tw-text-green-500" />
-                                      </div>
-                                      <div className="tw-flex-1">
-                                        <div className="tw-text-xs tw-text-gray-500">
-                                          Engagement Rate
-                                        </div>
-                                        <div className="tw-font-semibold tw-text-gray-800">
-                                          {selectedPost.engagementRate}%
-                                          {creator.averageEngagement && (
-                                            <span className="tw-text-xs tw-ml-2 tw-text-gray-500">
-                                              (Avg: {creator.averageEngagement}
-                                              %)
-                                            </span>
-                                          )}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )}
-                                  {selectedPost?.clicks !== null &&
-                                    selectedPost?.clicks !== undefined && (
-                                      <div className="tw-flex tw-items-center tw-mb-3">
-                                        <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-purple-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
-                                          <MousePointer className="tw-w-4 tw-h-4 tw-text-purple-500" />
-                                        </div>
-                                        <div className="tw-flex-1">
-                                          <div className="tw-text-xs tw-text-gray-500">
-                                            Clicks
-                                          </div>
-                                          <div className="tw-font-semibold tw-text-gray-800">
-                                            {selectedPost.clicks.toLocaleString()}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                  {selectedPost?.comments !== null &&
-                                    selectedPost?.comments !== undefined && (
-                                      <div className="tw-flex tw-items-center tw-mb-3">
-                                        <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-orange-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
-                                          <MessageSquare className="tw-w-4 tw-h-4 tw-text-orange-500" />
-                                        </div>
-                                        <div className="tw-flex-1">
-                                          <div className="tw-text-xs tw-text-gray-500">
-                                            Comments
-                                          </div>
-                                          <div className="tw-font-semibold tw-text-gray-800">
-                                            {selectedPost.comments.toLocaleString()}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                  {selectedPost?.reposts !== null &&
-                                    selectedPost?.reposts !== undefined && (
-                                      <div className="tw-flex tw-items-center">
-                                        <div className="tw-w-8 tw-h-8 tw-rounded-full tw-bg-pink-50 tw-flex tw-items-center tw-justify-center tw-mr-3">
-                                          <svg
-                                            className="tw-w-4 tw-h-4 tw-text-pink-500"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M7 17L17 7M17 7H8M17 7V16"
-                                              stroke="currentColor"
-                                              strokeWidth="2"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                            />
-                                          </svg>
-                                        </div>
-                                        <div className="tw-flex-1">
-                                          <div className="tw-text-xs tw-text-gray-500">
-                                            Reposts
-                                          </div>
-                                          <div className="tw-font-semibold tw-text-gray-800">
-                                            {selectedPost.reposts.toLocaleString()}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-                                </div>
-                              </div>
-                            );
-                          };
-
-                          const renderMainContent = () => {
-                            if (selectedPost?.embedLink) {
-                              return (
-                                <div className="tw-flex tw-w-full">
-                                  {selectedContent.status !== "in_review" && (
-                                    <Metrics />
-                                  )}
-                                  <div className="tw-flex-1 tw-max-w-3xl">
-                                    <div className="tw-flex tw-justify-center">
-                                      <iframe
-                                        src={selectedPost?.embedLink}
-                                        height="650"
-                                        width="604"
-                                        frameBorder="0"
-                                        allowFullScreen
-                                        title="Embedded post"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            }
-
-                            const mediaContent = processMedia(
-                              selectedContent.images
-                            );
-                            const firstImage =
-                              mediaContent.images.length > 0
-                                ? prepareImageForDisplay(mediaContent.images[0])
-                                : undefined;
-
-                            const additionalImages =
-                              mediaContent.images.length > 1
-                                ? mediaContent.images
-                                    .slice(1)
-                                    .map(
-                                      (img) => prepareImageForDisplay(img) || ""
-                                    )
-                                : [];
-
-                            const allLinks = mediaContent.links
-                              .concat(selectedContent.links || [])
-                              .map((link) => link.replace(/^blob:/, ""));
-
-                            return (
-                              <div className="tw-flex tw-w-full">
-                                <Metrics />
-                                <div className="tw-flex-1">
-                                  <PostViewer
-                                    post={{
-                                      id: selectedContent.id,
-                                      type: selectedContent.type,
-                                      status:
-                                        selectedContent.status === "in_review"
-                                          ? "in-review"
-                                          : selectedContent.status,
-                                      submittedOn: selectedContent.date,
-                                      author: {
-                                        name: selectedCreator?.name || "",
-                                        role:
-                                          selectedCreator?.jobTitle ||
-                                          "Creator",
-                                        avatar:
-                                          selectedCreator?.profilePicture || "",
-                                      },
-                                      content: selectedContent.content || "",
-                                      image: firstImage,
-                                      images: additionalImages,
-                                      links: allLinks,
-                                      timestamp: selectedContent.date || "",
-                                      engagement: {
-                                        likes: 1230,
-                                        comments: 50,
-                                        shares: 10,
-                                      },
-                                    }}
-                                    preview={true}
-                                  />
-                                </div>
-                              </div>
-                            );
-                          };
-
-                          return renderMainContent();
-                        })()}
+                        {renderMainContent()}
                       </div>
                     )}
                   </div>

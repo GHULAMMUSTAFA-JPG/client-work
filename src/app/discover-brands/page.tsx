@@ -179,8 +179,8 @@ export default function DiscoverBrandsPage() {
     const fetchFilters = async () => {
       try {
         const response = await getCreatorUniqueFilters();
-        if (response) {
-          setAvailableFilters(response as FilterResponse);
+        if (response.success) {
+          setAvailableFilters(response.data as FilterResponse);
         }
       } catch (error) {
         console.error("Error fetching filters:", error);
@@ -255,14 +255,34 @@ export default function DiscoverBrandsPage() {
         </div>
 
         <div className="col-auto d-flex gap-2">
-         
-        <button
+          <button
             className="tw-flex tw-items-center tw-space-x-2 tw-px-4 tw-py-2 tw-bg-white tw-rounded-md tw-shadow hover:tw-bg-gray-50 gap-2"
             data-bs-toggle="offcanvas"
             data-bs-target="#filtersOffcanvas"
             style={{ color: "black" }}
           >
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-sliders-horizontal h-5 w-5"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="lucide lucide-sliders-horizontal h-5 w-5"
+            >
+              <line x1="21" x2="14" y1="4" y2="4"></line>
+              <line x1="10" x2="3" y1="4" y2="4"></line>
+              <line x1="21" x2="12" y1="12" y2="12"></line>
+              <line x1="8" x2="3" y1="12" y2="12"></line>
+              <line x1="21" x2="16" y1="20" y2="20"></line>
+              <line x1="12" x2="3" y1="20" y2="20"></line>
+              <line x1="14" x2="14" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="10" y2="14"></line>
+              <line x1="16" x2="16" y1="18" y2="22"></line>
+            </svg>
             Filters
           </button>
 
@@ -286,10 +306,10 @@ export default function DiscoverBrandsPage() {
               {sortOption === "most_popular"
                 ? "Most Popular"
                 : sortOption === "largest_first"
-                  ? "Largest First"
-                  : sortOption === "smallest_first"
-                    ? "Smallest First"
-                    : ""}
+                ? "Largest First"
+                : sortOption === "smallest_first"
+                ? "Smallest First"
+                : ""}
               <ArrowDownUp size={13} />
             </button>
             <ul className="dropdown-menu dropdown-menu-end">
@@ -410,7 +430,7 @@ export default function DiscoverBrandsPage() {
                         setCompanyName(brand.Company_Name);
                         setBrandId(brand._id);
                       }}
-                      className="tw-px-4 tw-py-2 tw-bg-emerald-600 tw-text-white tw-rounded-lg hover:tw-bg-emerald-700 tw-text-sm tw-font-medium"
+                      className="tw-px-4 tw-py-2 tw-bg-teal-500 tw-text-white tw-rounded hover:tw-bg-teal-600"
                       data-bs-toggle="offcanvas"
                       data-bs-target="#campaignsOffcanvas"
                     >
@@ -422,7 +442,7 @@ export default function DiscoverBrandsPage() {
                         onClick={() =>
                           handleInterested("remove", brand._id, index)
                         }
-                        className="tw-px-4 tw-py-2 tw-border tw-border-emerald-600 tw-text-emerald-600 tw-rounded-lg hover:tw-bg-emerald-600 hover:tw-text-white tw-transition"
+                        className="tw-px-4 tw-border tw-border-teal-600 tw-py-2 tw-rounded tw-text-teal-600 hover:tw-text-teal-800"
                       >
                         <Undo2 size={16} />
                         <span>Interested</span>
@@ -432,7 +452,7 @@ export default function DiscoverBrandsPage() {
                         onClick={() =>
                           handleInterested("add", brand._id, index)
                         }
-                        className="tw-px-4 tw-py-2 tw-border tw-border-emerald-600 tw-text-emerald-600 tw-rounded-lg hover:tw-bg-emerald-600 hover:tw-text-white tw-transition"
+                        className="tw-px-4 tw-border tw-border-gray-500 tw-py-2 tw-rounded tw-text-gray-600 hover:tw-text-teal-800"
                       >
                         I'm Interested
                       </button>

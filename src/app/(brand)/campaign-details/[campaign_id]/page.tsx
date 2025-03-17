@@ -28,6 +28,10 @@ import Loader from "@/components/loader";
 
 type TabType = "invited" | "applied" | "in_campaign";
 
+interface CampaignResponse {
+  campaign: any;
+}
+
 function CampaignDetailsContent() {
   const router = useRouter();
   const { campaign_id } = useParams();
@@ -59,11 +63,13 @@ function CampaignDetailsContent() {
     try {
       setIsLoading(true);
       const [campaignData, activeCreatorsData] = await Promise.all([
-        getBrandCampaignApplications(campaignId) as Promise<{ campaign: any }>,
+        getBrandCampaignApplications(campaignId).then((response) =>
+          response?.success ? (response.data as CampaignResponse) : null
+        ),
         getBrandCampaignActiveCreators({
           campaign_id: campaignId,
           buyer_id: user._id,
-        }),
+        }).then((response) => (response?.success ? response.data : null)),
       ]);
 
       if (campaignData?.campaign) {
