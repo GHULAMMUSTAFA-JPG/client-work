@@ -112,13 +112,13 @@ function App() {
         const response = await apiController.get(
           `/payments/${user?.uuid}/generate-customer-portal`
         );
-        window.open(response.data.url, "_self");
+        window.open(response.data.url, "_blank");
         console.log("handlestripe", response);
       } else if (charges_enabled == false && onboarding_status == true) {
         const response = await apiController.get(
           `/payments/${user?.uuid}/generate-customer-portal`
         );
-        window.open(response.data.url, "_self");
+        window.open(response.data.url, "_blank");
 
         console.log("not called");
       } else {
@@ -127,7 +127,7 @@ function App() {
         );
         console.log("responseconnect", response);
         if (response.status === 200) {
-          window.open(response.data.url, "_blank");
+          window.open(response.data.url, "_self");
         }
       }
 
@@ -145,7 +145,7 @@ function App() {
 
   const handlestripedashboard = async () => {
     try {
-      if (!user.isBuyer) {
+      if (!user?.isBuyer) {
         const response = await apiController.get(
           `/payments/${user?.uuid}/generate-customer-portal`
         );
@@ -171,7 +171,7 @@ function App() {
         `/payments/create-customer-portal?user_id=${user?._id}`
       );
       if (response.status === 200) {
-        window.open(response.data, "_self");
+        window.open(response.data, "_blank");
       }
     } catch (error) {
       console.log(error);
@@ -473,9 +473,49 @@ function App() {
                   <p className="fw-medium fs-16">Quick Actions</p>
                 </div>
 
+                {user?.isBuyer == false &&
+                  (onboarding_status == false || charges_enabled == false) && (
+                    <div className=" tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500 tw-mt-6">
+                      <div className="tw-flex tw-items-center tw-gap-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          className="lucide lucide-info tw-w-5 tw-h-5 tw-text-blue-500 tw-flex-shrink-0"
+                        >
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <path d="M12 16v-4"></path>
+                          <path d="M12 8h.01"></path>
+                        </svg>
+                        <div className="tw-text-sm tw-text-gray-600">
+                          <span>
+                            Your stripe account is not connected to collect
+                            payments.&nbsp;
+                            <a
+                              href="#"
+                              className="tw-text-blue-600 hover:tw-text-blue-800 tw-font-medium"
+                            >
+                              Click to Connect!
+                            </a>{" "}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 <div
                   onClick={handlestripedashboard}
-                  className="stripes_Cont d-flex justify-content-between tw-cursor-pointer"
+                  className={`stripes_Cont d-flex justify-content-between tw-cursor-pointer ${
+                    user?.isBuyer == false &&
+                    (onboarding_status === false || charges_enabled === false)
+                      ? "tw-opacity-50 tw-pointer-events-none"
+                      : ""
+                  }`}
                 >
                   <div className="stripe_icon">
                     <svg
@@ -518,7 +558,12 @@ function App() {
 
                 <div
                   onClick={handlestripedashboard}
-                  className="stripes_Cont d-flex justify-content-between tw-cursor-pointer"
+                  className={`stripes_Cont d-flex justify-content-between tw-cursor-pointer ${
+                    user?.isBuyer == false &&
+                    (onboarding_status === false || charges_enabled === false)
+                      ? "tw-opacity-50 tw-pointer-events-none"
+                      : ""
+                  }`}
                 >
                   <div className="stripe_icon">
                     {" "}

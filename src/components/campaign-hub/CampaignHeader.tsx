@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Target,
@@ -12,6 +12,8 @@ import {
 import { CampaignDrawer } from "./CampaignDrawer";
 import { getStripeLoginLink } from "@/@api/campaign";
 import { toast } from "react-toastify";
+import { apiController } from "@/@api/baseUrl";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface CampaignHeaderProps {
   onBack: () => void;
@@ -41,6 +43,30 @@ export function CampaignHeader({
 }: CampaignHeaderProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [loadingEarnings, setLoadingEarnings] = useState(false);
+  const [charges_enabled, setcharges_enabled] = useState(null);
+  const [onboarding_status, setonboarding_status] = useState(null);
+  const { user } = useAuth();
+  useEffect(() => {
+    const fetchAccountStatus = async () => {
+      try {
+        // setchecksloading(true);
+        const response = await apiController.get(
+          `/payments/${user?.uuid}/account-status`
+        );
+        console.log("status", response);
+        if (response.status === 200) {
+          setcharges_enabled(response.data.charges_enabled);
+          setonboarding_status(response.data.onboarding_status);
+          // setchecksloading(false);
+        }
+      } catch (error) {
+        // setchecksloading(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAccountStatus();
+  }, []);
 
   const handleViewEarnings = async () => {
     if (!userId) return alert("Stripe account ID is missing.");
@@ -80,7 +106,11 @@ export function CampaignHeader({
 
             <button
               onClick={handleViewEarnings}
-              className="tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-text-sm tw-text-primary hover:tw-text-primary-dark tw-border tw-border-primary hover:tw-bg-primary/5 tw-rounded-md"
+              className={`tw-inline-flex tw-items-center tw-px-3 tw-py-1.5 tw-text-sm tw-text-primary hover:tw-text-primary-dark tw-border tw-border-primary hover:tw-bg-primary/5 tw-rounded-md ${
+                onboarding_status === false || charges_enabled === false
+                  ? "tw-opacity-50 tw-pointer-events-none"
+                  : ""
+              }`}
               disabled={loadingEarnings}
               title="View your earnings in Stripe Dashboard"
             >
@@ -90,7 +120,40 @@ export function CampaignHeader({
             </button>
           </div>
         </div>
-
+        {(onboarding_status == false || charges_enabled == false) && (
+          <div className=" tw-bg-white tw-rounded-lg tw-shadow-sm tw-p-4 tw-mb-6 tw-border-l-4 tw-border-green-500 tw-mt-6">
+            <div className="tw-flex tw-items-center tw-gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-info tw-w-5 tw-h-5 tw-text-blue-500 tw-flex-shrink-0"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4"></path>
+                <path d="M12 8h.01"></path>
+              </svg>
+              <div className="tw-text-sm tw-text-gray-600">
+                <span>
+                  Your stripe account is not connected to collect
+                  payments.&nbsp;
+                  <a
+                    href="#"
+                    className="tw-text-blue-600 hover:tw-text-blue-800 tw-font-medium"
+                  >
+                    Click to Connect!
+                  </a>{" "}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
         <div>
           <div className="tw-flex tw-items-center tw-space-x-4">
             <Target className="tw-w-8 tw-h-8 tw-text-primary" />
