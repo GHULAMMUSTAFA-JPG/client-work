@@ -510,6 +510,18 @@ export function CreatorDetailView({
                         <h4 className="tw-font-medium tw-text-sm tw-mb-1">
                           {post.title}
                         </h4>
+              
+                      </div>
+                      <p className="tw-text-xs tw-text-gray-500">{post.date}</p>
+                     
+                      {post.status !== "in_review" && ( 
+                        <div className="tw-flex tw-items-center tw-justify-between">
+                        <div className="tw-mt-2 tw-space-y-1">
+                          <div className="tw-flex tw-items-center tw-text-xs tw-text-gray-600">
+                            <BarChart3 className="tw-w-3 tw-h-3 tw-mr-1" />
+                            {post.impressions?.toLocaleString()} impressions
+                          </div>
+                        </div>
                         <div className="status-box00">
                           <button
                             onClick={() => setViewingPost(post)}
@@ -519,14 +531,6 @@ export function CreatorDetailView({
                             View Details
                           </button>
                         </div>
-                      </div>
-                      <p className="tw-text-xs tw-text-gray-500">{post.date}</p>
-                      {post.status !== "in_review" && (
-                        <div className="tw-mt-2 tw-space-y-1">
-                          <div className="tw-flex tw-items-center tw-text-xs tw-text-gray-600">
-                            <BarChart3 className="tw-w-3 tw-h-3 tw-mr-1" />
-                            {post.impressions?.toLocaleString()} impressions
-                          </div>
                         </div>
                       )}
                     </button>
@@ -651,12 +655,16 @@ export function CreatorDetailView({
 
                         {selectedPost.numberstatus ===
                         Status.PostImpressionUploaded ? (
-                          <div className="tw-px-4 tw-py-2 tw-bg-teal-50 tw-text-black tw-rounded-lg tw-flex tw-items-center tw-gap-2">
-                            <DollarSign className="tw-w-4 tw-h-4" />
-                            {isProcessingPayment
-                              ? "Processing..."
-                              : "Process Payment"}
-                          </div>
+                          <button
+                          onClick={() => handleProcessPaymentCheckout()}
+                          disabled={isProcessingPayment}
+                          className="tw-px-4 tw-py-2 tw-bg-teal-600 tw-text-white tw-rounded hover:tw-bg-teal-700 tw-flex tw-items-center tw-gap-1 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                        >
+                          <DollarSign className="tw-w-4 tw-h-4" /><span></span>
+                          {isProcessingPayment
+                            ? "Processing..."
+                            : "Process Payment"}
+                        </button>
                         ) : (
                           <div className="tw-px-4 tw-py-2 tw-text-black tw-flex tw-items-center tw-gap-1 fw-500 fs-15">
                             <DollarSign className="tw-w-4 tw-h-4" />
