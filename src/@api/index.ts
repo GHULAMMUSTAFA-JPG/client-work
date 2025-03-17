@@ -1104,3 +1104,32 @@ export const fetchCreatorCalendar = async (
 };
 
 
+// Fetch notification history
+export const fetchNotificationHistory = async (recipientId: string, page = 1, limit = 10) => {
+  try {
+    const response = await apiController.get(
+      `/notifications_rest/notifications/all?recipient_id=${recipientId}&page=${page}&limit=${limit}`
+    );
+    console.log("Notification History Response:", response.data);
+    return response?.data;
+  } catch (error) {
+    console.error("Error fetching notification history:", error);
+    throw error;
+  }
+};
+
+// Fetch unseen notification count
+export const fetchUnseenNotificationCount = async (recipientId: string, page = 1, limit = 10) => {
+  try {
+    const response = await apiController.get(
+      `/notifications_rest/notifications/unseen/count?recipient_id=${recipientId}`
+    );
+    console.log("Unseen Notification Response:", response.data);
+    return response?.data;
+  } catch (error) {
+    console.error("Error fetching unseen notification count:", error);
+    throw error;
+  }
+};
+
+
